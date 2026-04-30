@@ -282,6 +282,29 @@
 }
 
 /* ═══════════════════════════════════════════
+   LANDING ANIMATIONS
+   ═══════════════════════════════════════════ */
+@keyframes popupFloat {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-6px);
+	}
+}
+
+@keyframes chipFloat {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-8px);
+	}
+}
+
+/* ═══════════════════════════════════════════
    BASE
    ═══════════════════════════════════════════ */
 @layer base {

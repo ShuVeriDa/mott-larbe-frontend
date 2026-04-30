@@ -1,0 +1,56 @@
+"use client";
+
+import type { MouseEvent } from "react";
+import { cn } from "@/shared/lib/cn";
+
+export type DemoTokenStatus = "default" | "studied" | "unknown";
+
+interface DemoTokenProps {
+	word: string;
+	status?: DemoTokenStatus;
+	active: boolean;
+	onSelect: (word: string, el: HTMLElement) => void;
+	children: React.ReactNode;
+}
+
+export const DemoToken = ({
+	word,
+	status = "default",
+	active,
+	onSelect,
+	children,
+}: DemoTokenProps) => {
+	const handle = (e: MouseEvent<HTMLSpanElement>) => {
+		e.stopPropagation();
+		onSelect(word, e.currentTarget);
+	};
+
+	return (
+		<span
+			data-demo-token
+			data-word={word}
+			role="button"
+			tabIndex={0}
+			onClick={handle}
+			onKeyDown={(e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					onSelect(word, e.currentTarget as HTMLElement);
+				}
+			}}
+			className={cn(
+				"inline cursor-pointer rounded-[3px] px-[2px] py-[1px] transition-colors hover:bg-acc/10",
+				status === "studied" &&
+					!active &&
+					"border-b-[1.5px] border-dotted border-grn pb-[1px]",
+				status === "unknown" &&
+					!active &&
+					"bg-amb-bg font-medium text-amb-t",
+				active &&
+					"!bg-acc-bg !text-acc-t font-semibold outline outline-[0.5px] outline-acc/25",
+			)}
+		>
+			{children}
+		</span>
+	);
+};

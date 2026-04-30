@@ -1,4 +1,267 @@
 {
+	"landing": {
+		"meta": {
+			"title": "Mott Larbe — learn Chechen through reading",
+			"description": "Language platform: real texts with click-to-translate, morphological analysis and personal vocabulary. Levels A1–C2."
+		},
+		"brand": {
+			"name": "Mott Larbe",
+			"sub": "language. platform"
+		},
+		"nav": {
+			"features": "Features",
+			"how": "How it works",
+			"pricing": "Pricing",
+			"faq": "FAQ",
+			"login": "Sign in",
+			"start": "Start free",
+			"theme": "Toggle theme",
+			"menu": "Menu",
+			"close": "Close"
+		},
+		"hero": {
+			"eyebrow": "Chechen · A1–C2",
+			"titleStart": "Learn Chechen",
+			"titleEm": "through reading",
+			"titleEnd": "— word by word",
+			"sub": "Real texts with instant click-to-translate, morphological breakdown and a personal vocabulary. No tab-switching, no dictionary lookups.",
+			"start": "Start free",
+			"how": "How it works",
+			"meta": {
+				"free": "Free plan",
+				"noCard": "No credit card",
+				"fast": "5 minutes to launch"
+			},
+			"chip1Title": "+1 to vocabulary",
+			"chip1Sub": "Word saved",
+			"chip2Title": "Review",
+			"chip2Sub": "12 words today",
+			"readerTitle": "«Kxialla yössina zezag»",
+			"readerLevel": "B1",
+			"readerOriginal": "Цхьа де тхо хьалха гIайгIане хилларехь, амма цул тIаьхьа кхета луучу хан йоьссира.",
+			"readerHl": "кхета",
+			"readerTranslation": "At dawn we walked quietly, and then I began to understand.",
+			"popupBase": "Base:",
+			"popupBaseValue": "кхета",
+			"popupPos": "verb",
+			"popupTrans": "to understand",
+			"popupExtra": "to grasp, to realize",
+			"popupTags": "pres.,3rd p.,sg.",
+			"popupAdd": "Add to vocabulary"
+		},
+		"stats": {
+			"texts": "Texts in library",
+			"words": "Words in dictionary",
+			"levels": "Six CEFR levels",
+			"systems": "Review systems",
+			"textsPrefix": "1",
+			"textsValue": "200+",
+			"wordsPrefix": "45",
+			"wordsValue": "K",
+			"levelsPrefix": "A1",
+			"levelsValue": "—C2",
+			"systemsPrefix": "",
+			"systemsValue": "2"
+		},
+		"features": {
+			"eyebrow": "Features",
+			"title": "Everything you need to read in Chechen",
+			"sub": "The platform is built around one idea: every word is an entry point into the dictionary. Here's what that gives you in practice.",
+			"items": {
+				"click": {
+					"title": "Click → translation",
+					"desc": "Click any word — a card appears instantly: translation, base form, grammatical form, examples."
+				},
+				"morphology": {
+					"title": "Morphology",
+					"desc": "The complex grammar of Chechen is parsed automatically: cases, classes, tenses. Lemmatization and normalization."
+				},
+				"dictionary": {
+					"title": "Personal vocabulary",
+					"desc": "Saved words, folders, statuses (new / learning / known), statistics and quick search through your entries."
+				},
+				"srs": {
+					"title": "Spaced repetition",
+					"desc": "SM-2 algorithm + the proprietary Decks system: NEW → OLD → NUMBERED. Cards adapt to your pace."
+				},
+				"texts": {
+					"title": "Real texts",
+					"desc": "Literature, history, folktales, news. Texts with A1–C2 levels, tags, reading time and automatic difficulty scoring."
+				},
+				"progress": {
+					"title": "Progress and statistics",
+					"desc": "Streaks, weekly activity, text progress, word-by-level breakdown. See what you learned and when."
+				}
+			}
+		},
+		"how": {
+			"eyebrow": "How it works",
+			"title": "Three steps to fluent reading",
+			"sub": "No need to cram word lists — learn the language in its natural environment.",
+			"steps": {
+				"choose": {
+					"title": "Pick a text",
+					"desc": "Library by levels A1–C2 with tags, difficulty score and reading time. Want it simpler — pick A1."
+				},
+				"read": {
+					"title": "Read and click",
+					"desc": "Unfamiliar word — click. Translation, base form and grammar appear right in the text. One click — added to vocabulary."
+				},
+				"review": {
+					"title": "Reinforce by review",
+					"desc": "A short review session every day. The system knows which words to show today and which to postpone."
+				}
+			}
+		},
+		"demo": {
+			"eyebrow": "Try it yourself",
+			"title": "Reading as it is",
+			"sub": "This is what a regular reading session looks like. Highlights show what the system knows about each word.",
+			"textTitle": "Chechen folklore · A young man's tale",
+			"textAuthor": "Folk tale · page 2 of 5",
+			"level": "A2",
+			"page": "P. 2/5",
+			"time": "≈ 8 min",
+			"legendCurrent": "current word",
+			"legendKnown": "in vocabulary",
+			"legendUnknown": "unknown",
+			"addBtn": "Add to vocabulary",
+			"addedBtn": "In vocabulary",
+			"baseLabel": "Base:"
+		},
+		"pricing": {
+			"eyebrow": "Pricing",
+			"title": "Simple pricing, no surprises",
+			"sub": "Start free. When you want more — switch to Premium or Pro.",
+			"monthly": "Monthly",
+			"yearly": "Yearly",
+			"save": "−20%",
+			"perMonth": "/ mo",
+			"forever": "forever",
+			"popular": "Popular",
+			"plans": {
+				"free": {
+					"name": "Free",
+					"tagline": "To try out the platform.",
+					"priceM": "$0",
+					"priceY": "$0",
+					"cta": "Start free",
+					"features": [
+						"Access to all A1–B1 texts",
+						"Up to 50 translations per day",
+						"Personal vocabulary up to 500 words"
+					],
+					"disabled": [
+						"No spaced repetition",
+						"No advanced statistics"
+					]
+				},
+				"premium": {
+					"name": "Premium",
+					"tagline": "For serious learning.",
+					"priceM": "$8",
+					"priceY": "$6.4",
+					"cta": "Choose Premium",
+					"features": [
+						"All A1–C2 texts",
+						"Unlimited translations",
+						"Vocabulary up to 10,000 words",
+						"Spaced repetition",
+						"Advanced statistics"
+					]
+				},
+				"pro": {
+					"name": "Pro",
+					"tagline": "Maximum capabilities.",
+					"priceM": "$15",
+					"priceY": "$12",
+					"cta": "Choose Pro",
+					"features": [
+						"Everything from Premium",
+						"Unlimited vocabulary",
+						"Early access to new texts",
+						"Priority support",
+						"Advanced analytics"
+					]
+				}
+			}
+		},
+		"faq": {
+			"eyebrow": "FAQ",
+			"title": "Frequently asked questions",
+			"items": [
+				{
+					"q": "What level can I start at?",
+					"a": "Any. The platform suits both complete beginners (A1) and those who already read fluently (C1–C2). Texts are organised by level, so you can begin with the simplest."
+				},
+				{
+					"q": "How do «Decks» differ from regular spaced repetition?",
+					"a": "They're two independent systems. SM-2 is the classic algorithm with intervals and 0–5 ratings. Decks is a proprietary system: words are distributed across decks (NEW → OLD → NUMBERED), numbered decks rotate every day. Use either — or both."
+				},
+				{
+					"q": "Can I cancel my subscription?",
+					"a": "Yes, anytime in one click. Access to paid features stays until the end of the paid period — then the account switches to the free plan automatically without losing data."
+				},
+				{
+					"q": "What happens to my vocabulary if I stop using the service?",
+					"a": "Your personal vocabulary, text progress and review history are preserved as long as the account exists. They can be exported anytime."
+				},
+				{
+					"q": "Which languages are supported?",
+					"a": "Currently — Chechen (CHE) with translation to Russian (RU). The architecture supports adding other languages; new directions will be added based on community requests."
+				},
+				{
+					"q": "Is there a mobile app?",
+					"a": "The web version is adapted for phones and tablets — opens in a browser and works like a native app. Dedicated iOS/Android apps are planned."
+				}
+			]
+		},
+		"cta": {
+			"titleStart": "Start reading in Chechen",
+			"titleEm": "today",
+			"sub": "Free plan — no credit card. A couple of clicks until your first text.",
+			"primary": "Create account",
+			"secondary": "I already have an account",
+			"foot": "You can switch to a paid plan anytime. Cancel in one click."
+		},
+		"footer": {
+			"about": "A language platform for learning Chechen through reading real texts with instant translation.",
+			"product": "Product",
+			"company": "Company",
+			"legal": "Legal",
+			"links": {
+				"features": "Features",
+				"pricing": "Pricing",
+				"faq": "FAQ",
+				"changelog": "What's new",
+				"about": "About",
+				"blog": "Blog",
+				"contacts": "Contacts",
+				"support": "Support",
+				"terms": "Terms of use",
+				"privacy": "Privacy policy",
+				"cookies": "Cookies"
+			},
+			"copy": "© 2026 Mott Larbe. All rights reserved."
+		},
+		"demoWords": {
+			"вехаш": { "base": "ваха", "pos": "verb", "trans": "living", "extra": "dwelling, residing", "tags": ["part.", "pres."] },
+			"хилла": { "base": "хила", "pos": "verb", "trans": "was, existed", "extra": "happened, occurred", "tags": ["past", "3rd p."] },
+			"кIант": { "base": "кIант", "pos": "noun", "trans": "boy, young man", "extra": "lad, son", "tags": ["cl. 1", "sg."] },
+			"да-нана": { "base": "да-нана", "pos": "noun", "trans": "parents", "extra": "lit. «father-mother»", "tags": ["sg."] },
+			"доттагIий": { "base": "доттагI", "pos": "noun", "trans": "friends", "extra": "companions, mates", "tags": ["pl."] },
+			"хIорда": { "base": "хIорд", "pos": "noun", "trans": "sea", "extra": "body of water", "tags": ["sg.", "erg."] },
+			"маьлхан": { "base": "малх", "pos": "adj.", "trans": "solar, sunny", "extra": "related to the sun", "tags": ["sg.", "gen."] },
+			"олхазарш": { "base": "олхазар", "pos": "noun", "trans": "birds", "extra": "winged ones", "tags": ["pl."] },
+			"волавелла": { "base": "дIавала", "pos": "verb", "trans": "set off", "extra": "started on the way", "tags": ["past", "3rd p."] },
+			"вала": { "base": "вала", "pos": "verb", "trans": "to go, set off", "extra": "to head to", "tags": ["inf."] },
+			"кхечу": { "base": "кхин", "pos": "pron.", "trans": "another, other", "extra": "not this one", "tags": ["erg.", "sg."] },
+			"тарх": { "base": "тарх", "pos": "noun", "trans": "rock, cliff", "extra": "stone slab", "tags": ["sg."] },
+			"шиъ": { "base": "шиъ", "pos": "num.", "trans": "two", "extra": "", "tags": ["card."] },
+			"кхета": { "base": "кхета", "pos": "verb", "trans": "to understand", "extra": "to grasp, to realize", "tags": ["pres.", "3rd p."] },
+			"бала": { "base": "бала", "pos": "noun", "trans": "grief, woe", "extra": "suffering, misfortune", "tags": ["sg."] }
+		}
+	},
 	"nav": {
 		"learning": "Learning",
 		"home": "Home",
