@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -76,12 +77,9 @@ const buildSections = (lang: string): NavSection[] => [
 	},
 ];
 
-export interface SideNavProps {
-	activeHref: string;
-}
-
-export const SideNav = ({ activeHref }: SideNavProps) => {
+export const SideNav = () => {
 	const { t, lang } = useI18n();
+	const pathname = usePathname();
 	const sections = buildSections(lang);
 
 	return (
@@ -91,9 +89,7 @@ export const SideNav = ({ activeHref }: SideNavProps) => {
 		>
 			<div className="flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 				<div className="flex items-center gap-2.5 border-hairline border-b border-bd-1 px-3.5 py-[16px_14px] pt-4 pb-3.5">
-					<div className="flex size-[30px] items-center justify-center rounded-[8px] bg-acc text-white shadow-[0_2px_6px_rgba(34,84,211,0.35)]">
-						<LogoIcon />
-					</div>
+					<LogoIcon />
 					<span className="font-display text-sm font-medium tracking-[-0.1px] text-t-1">
 						Мотт Ларбе
 					</span>
@@ -108,7 +104,7 @@ export const SideNav = ({ activeHref }: SideNavProps) => {
 							{t(section.titleKey)}
 						</div>
 						{section.items.map((item) => {
-							const active = activeHref === item.href;
+							const active = pathname === item.href;
 							return (
 								<Link
 									key={item.href}

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -46,12 +47,9 @@ const buildItems = (lang: string): BottomNavItem[] => [
 	},
 ];
 
-export interface BottomNavProps {
-	activeHref: string;
-}
-
-export const BottomNav = ({ activeHref }: BottomNavProps) => {
+export const BottomNav = () => {
 	const { t, lang } = useI18n();
+	const pathname = usePathname();
 	const items = buildItems(lang);
 
 	return (
@@ -61,7 +59,7 @@ export const BottomNav = ({ activeHref }: BottomNavProps) => {
 		>
 			<div className="mx-auto flex h-full max-w-[1120px] items-stretch">
 				{items.map((item) => {
-					const active = activeHref === item.href;
+					const active = pathname === item.href;
 					return (
 						<Link
 							key={item.href}

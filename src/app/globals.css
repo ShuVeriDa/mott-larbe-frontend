@@ -8,7 +8,8 @@
    DESIGN TOKENS — LIGHT THEME (DEFAULT)
    ═══════════════════════════════════════════ */
 :root {
-	--bg: #f5f4f0;
+	--bg: #e8e6df;
+	--panel: #f5f4f0;
 	--surf: #ffffff;
 	--surf-2: #f0efe9;
 	--surf-3: #e8e6df;
@@ -46,9 +47,12 @@
 	--ros-bg: #fce8ef;
 	--ros-t: #8c1f42;
 
-	--shadow-sm-token: 0 1px 3px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.04);
-	--shadow-md-token: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
-	--shadow-lg-token: 0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+	--shadow-sm-token:
+		0 1px 3px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.04);
+	--shadow-md-token:
+		0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+	--shadow-lg-token:
+		0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
 	--background: oklch(1 0 0);
 	--foreground: oklch(0.147 0.004 49.25);
 	--card: oklch(1 0 0);
@@ -87,7 +91,8 @@
    DESIGN TOKENS — DARK THEME
    ═══════════════════════════════════════════ */
 [data-theme="dark"] {
-	--bg: #0e0e0f;
+	--bg: #0a0a09;
+	--panel: #0e0e0f;
 	--surf: #1c1c1f;
 	--surf-2: #222226;
 	--surf-3: #28282d;
@@ -167,6 +172,7 @@
 @theme inline {
 	/* Surfaces */
 	--color-bg: var(--bg);
+	--color-panel: var(--panel);
 	--color-surf: var(--surf);
 	--color-surf-2: var(--surf-2);
 	--color-surf-3: var(--surf-3);
@@ -272,7 +278,7 @@
    ═══════════════════════════════════════════ */
 /* Hairline border — 0.5px, основной шаг бордеров в дизайн-системе */
 @utility border-hairline {
-	border-width: 0.5px;
+	border-width: 0px;
 }
 
 /* ═══════════════════════════════════════════
@@ -281,7 +287,7 @@
 @layer base {
 	html {
 		color-scheme: light dark;
-    @apply font-sans;
+		@apply font-sans;
 	}
 
 	body {
@@ -289,10 +295,12 @@
 		color: var(--t-1);
 		font-family: var(--font-sans);
 		line-height: 1.5;
-		transition: background 0.25s, color 0.25s;
-    @apply bg-background text-foreground;
+		transition:
+			background 0.25s,
+			color 0.25s;
+		/* @apply bg-background text-foreground; */
 	}
-  * {
-    @apply border-border outline-ring/50;
+	* {
+		@apply border-border outline-ring/50;
 	}
 }

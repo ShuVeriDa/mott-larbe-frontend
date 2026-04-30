@@ -1,8 +1,8 @@
 import axios from "axios";
-import { ACCESS_TOKEN_STORAGE_KEY, API_BASE_URL } from "@/shared/config";
+import { ACCESS_TOKEN_STORAGE_KEY, API_URL } from "@/shared/config";
 
 export const http = axios.create({
-	baseURL: API_BASE_URL,
+	baseURL: API_URL,
 	withCredentials: true,
 });
 

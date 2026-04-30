@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { I18nProvider } from "@/shared/lib/i18n";
 import {
 	DEFAULT_LOCALE,
 	LOCALES,
 	getDictionary,
 	hasLocale,
 } from "@/i18n/locales";
-import { AppShell } from "@/widgets/app-shell";
 import { VocabularyPage } from "@/widgets/vocabulary-page";
 
 const SITE_URL =
@@ -64,15 +62,7 @@ const Page = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
-	const dict = await getDictionary(lang);
-
-	return (
-		<I18nProvider lang={lang} dict={dict}>
-			<AppShell activeHref={`/${lang}/vocabulary`}>
-				<VocabularyPage />
-			</AppShell>
-		</I18nProvider>
-	);
+	return <VocabularyPage />;
 };
 
 export default Page;

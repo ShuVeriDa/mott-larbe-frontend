@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -20,6 +20,11 @@ export const VocabularyDrawer = ({
 }: VocabularyDrawerProps) => {
 	const { t } = useI18n();
 	const { data: stats } = useDictionaryStats();
+	const [mounted, setMounted] = useState(false);
+
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
 	useEffect(() => {
 		if (!open) return;
@@ -30,7 +35,7 @@ export const VocabularyDrawer = ({
 		};
 	}, [open]);
 
-	if (typeof window === "undefined") return null;
+	if (!mounted) return null;
 
 	return createPortal(
 		<>
