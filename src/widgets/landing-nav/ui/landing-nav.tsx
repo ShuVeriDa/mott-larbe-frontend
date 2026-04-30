@@ -10,6 +10,7 @@ import {
 import { LandingThemeToggle } from "@/features/landing-theme-toggle";
 import { useI18n } from "@/shared/lib/i18n";
 import { BrandMark } from "@/shared/ui/brand-mark";
+import { Typography } from "@/shared/ui/typography";
 
 interface LandingNavProps {
 	loginHref: string;
@@ -37,14 +38,20 @@ export const LandingNav = ({ loginHref, startHref }: LandingNavProps) => {
 						aria-label={t("landing.brand.name")}
 					>
 						<BrandMark className="h-[34px] w-[28px] drop-shadow-[0_2px_4px_rgba(34,84,211,0.18)]" />
-						<span className="flex flex-col">
-							<span className="font-display text-base font-medium leading-[1.1] tracking-[-0.2px] text-t-1">
+						<Typography tag="span" className="flex flex-col">
+							<Typography
+								tag="span"
+								className="font-display text-base font-medium leading-[1.1] tracking-[-0.2px] text-t-1"
+							>
 								{t("landing.brand.name")}
-							</span>
-							<span className="mt-px text-[9.5px] uppercase tracking-[1px] text-t-3 max-[640px]:hidden">
+							</Typography>
+							<Typography
+								tag="span"
+								className="mt-px text-[9.5px] uppercase tracking-[1px] text-t-3 max-[640px]:hidden"
+							>
 								{t("landing.brand.sub")}
-							</span>
-						</span>
+							</Typography>
+						</Typography>
 					</Link>
 
 					<nav className="flex items-center gap-1 max-[900px]:hidden">

@@ -2,8 +2,10 @@ import { http } from "@/shared/api";
 import type {
 	CreateDictionaryEntryDto,
 	DictionaryEntry,
+	DictionaryEntryDetail,
 	DictionaryListQuery,
 	DictionaryListResponse,
+	DictionaryNeighborsResponse,
 	DictionaryStats,
 	DueResponse,
 	UpdateDictionaryEntryDto,
@@ -37,6 +39,24 @@ export const dictionaryApi = {
 
 	due: async (): Promise<DueResponse> => {
 		const { data } = await http.get<DueResponse>("/dictionary/due");
+		return data;
+	},
+
+	detail: async (id: string): Promise<DictionaryEntryDetail> => {
+		const { data } = await http.get<DictionaryEntryDetail>(
+			`/dictionary/${id}`,
+		);
+		return data;
+	},
+
+	neighbors: async (
+		id: string,
+		query: DictionaryListQuery = {},
+	): Promise<DictionaryNeighborsResponse> => {
+		const { data } = await http.get<DictionaryNeighborsResponse>(
+			`/dictionary/${id}/neighbors`,
+			{ params: buildParams(query) },
+		);
 		return data;
 	},
 

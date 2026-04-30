@@ -5,6 +5,7 @@ import {
 	useBillingPeriod,
 } from "@/features/landing-pricing-toggle";
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 import { PlanCard, type PlanKey } from "./plan-card";
 
 interface PricingPlanDef {
@@ -66,18 +67,22 @@ export const LandingPricing = ({ startHref }: LandingPricingProps) => {
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
 				<header className="mb-12 text-center max-[640px]:mb-9">
-					<span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-acc-bg px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[1.2px] text-acc-t">
+					<Typography
+						tag="span"
+						className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-acc-bg px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[1.2px] text-acc-t"
+					>
 						{t("landing.pricing.eyebrow")}
-					</span>
-					<h2
+					</Typography>
+					<Typography
+						tag="h2"
 						id="pricing-title"
 						className="mx-auto max-w-[720px] font-display text-[38px] font-semibold leading-[1.15] tracking-[-0.7px] text-t-1 max-[900px]:text-[32px] max-[640px]:text-[26px] max-[640px]:tracking-[-0.5px]"
 					>
 						{t("landing.pricing.title")}
-					</h2>
-					<p className="mx-auto mt-3.5 max-w-[620px] text-base leading-[1.55] text-t-2 max-[640px]:text-[14.5px]">
+					</Typography>
+					<Typography className="mx-auto mt-3.5 max-w-[620px] text-base leading-[1.55] text-t-2 max-[640px]:text-[14.5px]">
 						{t("landing.pricing.sub")}
-					</p>
+					</Typography>
 					<PricingToggle value={period} onChange={setPeriod} />
 				</header>
 

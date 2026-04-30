@@ -4,6 +4,7 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 
 export const ThemeToggle = () => {
 	const { t } = useI18n();
@@ -32,7 +33,9 @@ export const ThemeToggle = () => {
 			) : (
 				<Moon className="size-[15px] shrink-0 text-t-3" strokeWidth={1.5} />
 			)}
-			<span>{dark ? t("nav.lightTheme") : t("nav.darkTheme")}</span>
+			<Typography tag="span">
+				{dark ? t("nav.lightTheme") : t("nav.darkTheme")}
+			</Typography>
 		</button>
 	);
 };

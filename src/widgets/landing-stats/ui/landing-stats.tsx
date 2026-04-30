@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 
 interface StatItem {
 	prefixKey: string;
@@ -44,9 +45,9 @@ export const LandingStats = () => {
 						<div key={item.labelKey} className="text-center">
 							<div className="font-display text-[30px] font-semibold leading-[1.05] tracking-[-0.5px] text-t-1 max-[900px]:text-[26px]">
 								{t(item.prefixKey)}
-								<em className="not-italic text-acc-t">
+								<Typography tag="em" className="not-italic text-acc-t">
 									{t(item.emKey)}
-								</em>
+								</Typography>
 							</div>
 							<div className="mt-1.5 text-[11.5px] uppercase tracking-[0.8px] text-t-3">
 								{t(item.labelKey)}

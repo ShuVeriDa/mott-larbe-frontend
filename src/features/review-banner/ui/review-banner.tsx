@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { formatReviewIn } from "@/shared/lib/format-relative-time";
+import { Typography } from "@/shared/ui/typography";
 import { useDueWords } from "@/entities/dictionary";
 
 export interface ReviewBannerProps {
@@ -30,14 +31,22 @@ export const ReviewBanner = ({ lang }: ReviewBannerProps) => {
 				aria-hidden="true"
 				className="absolute inset-y-0 left-0 w-[3px] rounded-r-[2px] bg-amb"
 			/>
-			<span className="shrink-0 font-display text-[26px] leading-none text-amb">
+			<Typography
+				tag="span"
+				className="shrink-0 font-display text-[26px] leading-none text-amb"
+			>
 				{data.count}
-			</span>
+			</Typography>
 			<div className="flex-1 min-w-0">
-				<h2 className="text-[12.5px] font-semibold text-t-1">
+				<Typography
+					tag="h2"
+					className="text-[12.5px] font-semibold text-t-1"
+				>
 					{t("vocabulary.review.title")}
-				</h2>
-				<p className="text-[11.5px] text-t-2 truncate">{subtitle}</p>
+				</Typography>
+				<Typography className="text-[11.5px] text-t-2 truncate">
+					{subtitle}
+				</Typography>
 			</div>
 			<Link
 				href={`/${lang}/review`}

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, Check, PlayCircle } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 import { ReaderMock } from "./reader-mock";
 
 interface LandingHeroProps {
@@ -28,25 +29,29 @@ export const LandingHero = ({ startHref }: LandingHeroProps) => {
 
 			<div className="relative z-[1] mx-auto grid w-full max-w-[1120px] grid-cols-[1.05fr_1fr] items-center gap-14 max-[900px]:grid-cols-1 max-[900px]:gap-14">
 				<div>
-					<span className="mb-[22px] inline-flex items-center gap-1.5 rounded-full border-hairline border-acc/25 bg-acc-bg px-[11px] py-[5px] text-[11.5px] font-semibold text-acc-t">
+					<Typography
+						tag="span"
+						className="mb-[22px] inline-flex items-center gap-1.5 rounded-full border-hairline border-acc/25 bg-acc-bg px-[11px] py-[5px] text-[11.5px] font-semibold text-acc-t"
+					>
 						<span className="h-1.5 w-1.5 rounded-full bg-acc" />
 						{t("landing.hero.eyebrow")}
-					</span>
+					</Typography>
 
-					<h1
+					<Typography
+						tag="h1"
 						id="hero-title"
 						className="mb-[22px] font-display text-[56px] font-semibold leading-[1.05] tracking-[-1px] text-t-1 max-[900px]:text-[44px] max-[640px]:text-[34px] max-[640px]:tracking-[-0.5px]"
 					>
 						{t("landing.hero.titleStart")}{" "}
-						<em className="not-italic font-medium text-acc-t italic">
+						<Typography tag="em" className="not-italic font-medium text-acc-t italic">
 							{t("landing.hero.titleEm")}
-						</em>{" "}
+						</Typography>{" "}
 						{t("landing.hero.titleEnd")}
-					</h1>
+					</Typography>
 
-					<p className="mb-8 max-w-[520px] text-[17px] leading-[1.55] text-t-2 max-[900px]:text-base max-[640px]:text-[15px]">
+					<Typography className="mb-8 max-w-[520px] text-[17px] leading-[1.55] text-t-2 max-[900px]:text-base max-[640px]:text-[15px]">
 						{t("landing.hero.sub")}
-					</p>
+					</Typography>
 
 					<div className="flex flex-wrap gap-2.5 max-[640px]:flex-col">
 						<Link
@@ -66,18 +71,18 @@ export const LandingHero = ({ startHref }: LandingHeroProps) => {
 					</div>
 
 					<div className="mt-[26px] flex flex-wrap items-center gap-[18px] text-[12.5px] text-t-3 max-[640px]:flex-col max-[640px]:items-start max-[640px]:gap-2">
-						<span className="flex items-center gap-1.5">
+						<Typography tag="span" className="flex items-center gap-1.5">
 							<Check size={13} strokeWidth={2} className="text-grn" />
 							{t("landing.hero.meta.free")}
-						</span>
-						<span className="flex items-center gap-1.5">
+						</Typography>
+						<Typography tag="span" className="flex items-center gap-1.5">
 							<Check size={13} strokeWidth={2} className="text-grn" />
 							{t("landing.hero.meta.noCard")}
-						</span>
-						<span className="flex items-center gap-1.5">
+						</Typography>
+						<Typography tag="span" className="flex items-center gap-1.5">
 							<Check size={13} strokeWidth={2} className="text-grn" />
 							{t("landing.hero.meta.fast")}
-						</span>
+						</Typography>
 					</div>
 				</div>
 

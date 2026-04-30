@@ -2,6 +2,7 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import type { LearningLevel } from "@/shared/types";
+import { Typography } from "@/shared/ui/typography";
 import type { DictionaryStats } from "@/entities/dictionary";
 
 interface Row {
@@ -50,7 +51,8 @@ export const StatsList = ({ stats }: StatsListProps) => {
 	return (
 		<ul className="flex flex-col gap-[5px]">
 			{rows.map((row) => (
-				<li
+				<Typography
+					tag="li"
 					key={row.key}
 					className="flex items-center justify-between rounded-[8px] border-hairline border-bd-1 bg-surf-2 px-2.5 py-2 transition-colors hover:border-bd-2"
 				>
@@ -59,10 +61,14 @@ export const StatsList = ({ stats }: StatsListProps) => {
 							aria-hidden="true"
 							className={`size-[7px] rounded-full ${row.dotClass}`}
 						/>
-						<span className="text-xs text-t-2">{row.label}</span>
+						<Typography tag="span" className="text-xs text-t-2">
+							{row.label}
+						</Typography>
 					</div>
-					<span className="font-display text-[16px] text-t-1">{row.value}</span>
-				</li>
+					<Typography tag="span" className="font-display text-[16px] text-t-1">
+						{row.value}
+					</Typography>
+				</Typography>
 			))}
 		</ul>
 	);

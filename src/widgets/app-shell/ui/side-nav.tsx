@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Avatar } from "@/shared/ui/avatar";
+import { Typography } from "@/shared/ui/typography";
 import {
 	ChechenIcon,
 	GrammarIcon,
@@ -90,9 +91,12 @@ export const SideNav = () => {
 			<div className="flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 				<div className="flex items-center gap-2.5 border-hairline border-b border-bd-1 px-3.5 py-[16px_14px] pt-4 pb-3.5">
 					<LogoIcon />
-					<span className="font-display text-sm font-medium tracking-[-0.1px] text-t-1">
+					<Typography
+						tag="span"
+						className="font-display text-sm font-medium tracking-[-0.1px] text-t-1"
+					>
 						Мотт Ларбе
-					</span>
+					</Typography>
 				</div>
 
 				{sections.map((section, secIdx) => (
@@ -143,9 +147,9 @@ export const SideNav = () => {
 					<div className="mb-1 text-xs font-semibold text-t-1">
 						{t("nav.freePlan")}
 					</div>
-					<p className="mb-2.5 text-[11px] leading-[1.55] text-t-3">
+					<Typography className="mb-2.5 text-[11px] leading-[1.55] text-t-3">
 						{t("nav.freePlanDesc")}
-					</p>
+					</Typography>
 					<Link
 						href={`/${lang}/subscription`}
 						className="block h-7 w-full rounded-md bg-acc text-center text-[11.5px] font-semibold leading-7 text-white transition-opacity hover:opacity-[0.88]"

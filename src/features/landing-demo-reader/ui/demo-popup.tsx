@@ -4,6 +4,7 @@ import { Plus, X } from "lucide-react";
 import type { CSSProperties } from "react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 import type { DemoWordEntry } from "@/entities/landing";
 
 interface DemoPopupProps {
@@ -61,8 +62,10 @@ export const DemoPopup = ({
 				</div>
 				<div className="text-[11px] text-t-3">
 					{t("landing.demo.baseLabel")}{" "}
-					<strong className="font-medium text-t-2">{data.base}</strong> ·{" "}
-					{data.pos}
+					<Typography tag="strong" className="font-medium text-t-2">
+						{data.base}
+					</Typography>{" "}
+					· {data.pos}
 				</div>
 			</div>
 			<div className="border-hairline border-b border-bd-1 px-[13px] py-[9px]">
@@ -78,12 +81,13 @@ export const DemoPopup = ({
 			{data.tags.length > 0 ? (
 				<div className="flex flex-wrap gap-1 border-hairline border-b border-bd-1 px-[13px] py-[7px]">
 					{data.tags.map((tag) => (
-						<span
+						<Typography
+							tag="span"
 							key={tag}
 							className="rounded bg-surf-2 px-[6px] py-[2px] text-[9.5px] font-semibold uppercase tracking-[0.4px] text-t-2"
 						>
 							{tag}
-						</span>
+						</Typography>
 					))}
 				</div>
 			) : null}

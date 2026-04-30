@@ -4,6 +4,7 @@ import { ChevronDown, Plus } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 
 export const ReaderMock = () => {
 	const { t } = useI18n();
@@ -35,14 +36,14 @@ export const ReaderMock = () => {
 						<path d="M2 6l3 3 5-5" />
 					</svg>
 				</span>
-				<span>
-					<span className="block font-semibold text-t-1">
+				<Typography tag="span">
+					<Typography tag="span" className="block font-semibold text-t-1">
 						{t("landing.hero.chip1Title")}
-					</span>
-					<span className="mt-px block text-[10.5px] text-t-3">
+					</Typography>
+					<Typography tag="span" className="mt-px block text-[10.5px] text-t-3">
 						{t("landing.hero.chip1Sub")}
-					</span>
-				</span>
+					</Typography>
+				</Typography>
 			</div>
 
 			<div className="absolute -bottom-3.5 left-7 z-[4] flex items-center gap-2 rounded-[10px] border-hairline border-bd-2 bg-surf px-3 py-2.5 text-[12px] shadow-md max-[640px]:hidden animate-[chipFloat_6s_ease-in-out_infinite_reverse]">
@@ -59,14 +60,14 @@ export const ReaderMock = () => {
 						<path d="M3 6c0-1.66 1.34-3 3-3M9 6c0 1.66-1.34 3-3 3M8.5 2.5L9 4l1.5-.5M3.5 9.5L3 8l-1.5.5" />
 					</svg>
 				</span>
-				<span>
-					<span className="block font-semibold text-t-1">
+				<Typography tag="span">
+					<Typography tag="span" className="block font-semibold text-t-1">
 						{t("landing.hero.chip2Title")}
-					</span>
-					<span className="mt-px block text-[10.5px] text-t-3">
+					</Typography>
+					<Typography tag="span" className="mt-px block text-[10.5px] text-t-3">
 						{t("landing.hero.chip2Sub")}
-					</span>
-				</span>
+					</Typography>
+				</Typography>
 			</div>
 
 			<div className="overflow-hidden rounded-[14px] border-hairline border-bd-2 bg-surf shadow-lg transition-transform duration-300 -rotate-1 hover:rotate-0 max-[640px]:rotate-0">
@@ -86,22 +87,29 @@ export const ReaderMock = () => {
 						className="h-[9px] w-[9px] rounded-full"
 						style={{ background: "#3dc87a", opacity: 0.55 }}
 					/>
-					<span className="ml-2.5 truncate font-display text-[12px] italic text-t-2">
+					<Typography
+						tag="span"
+						className="ml-2.5 truncate font-display text-[12px] italic text-t-2"
+					>
 						{t("landing.hero.readerTitle")}
-					</span>
-					<span className="ml-auto rounded bg-acc-bg px-[7px] py-[2px] text-[9.5px] font-semibold uppercase tracking-[0.5px] text-acc-t">
+					</Typography>
+					<Typography
+						tag="span"
+						className="ml-auto rounded bg-acc-bg px-[7px] py-[2px] text-[9.5px] font-semibold uppercase tracking-[0.5px] text-acc-t"
+					>
 						{t("landing.hero.readerLevel")}
-					</span>
+					</Typography>
 				</div>
 
 				<div className="px-[30px] py-7 font-display text-[17px] leading-[1.75] text-t-1 max-[640px]:px-[22px] max-[640px]:py-[22px] max-[640px]:text-[15px] max-[640px]:leading-[1.65]">
-					<p>
+					<Typography>
 						{tokens.map((tok, i) => {
 							if (!tok.trim()) return tok;
 							const clean = tok.replace(/[.,!?;:«»]/g, "");
 							const isHl = clean === hl && highlighted === hl;
 							return (
-								<span
+								<Typography
+									tag="span"
 									key={`${tok}-${i}`}
 									role="button"
 									tabIndex={0}
@@ -116,13 +124,13 @@ export const ReaderMock = () => {
 									)}
 								>
 									{tok}
-								</span>
+								</Typography>
 							);
 						})}
-					</p>
-					<p className="mt-[14px] text-[14px] italic text-t-3">
+					</Typography>
+					<Typography className="mt-[14px] text-[14px] italic text-t-3">
 						{t("landing.hero.readerTranslation")}
-					</p>
+					</Typography>
 				</div>
 
 				<div className="absolute left-[38%] top-[47%] z-[5] w-[240px] overflow-hidden rounded-[11px] border-hairline border-bd-2 bg-surf shadow-lg animate-[popupFloat_4s_ease-in-out_infinite] max-[640px]:left-[32%] max-[640px]:top-1/2 max-[640px]:w-[200px]">
@@ -133,9 +141,9 @@ export const ReaderMock = () => {
 						</div>
 						<div className="text-[11px] text-t-3">
 							{t("landing.hero.popupBase")}{" "}
-							<strong className="font-medium text-t-2">
+							<Typography tag="strong" className="font-medium text-t-2">
 								{t("landing.hero.popupBaseValue")}
-							</strong>{" "}
+							</Typography>{" "}
 							· {t("landing.hero.popupPos")}
 						</div>
 					</div>
@@ -150,12 +158,13 @@ export const ReaderMock = () => {
 					{tags.length > 0 ? (
 						<div className="flex flex-wrap gap-1 border-hairline border-b border-bd-1 px-[13px] py-[7px]">
 							{tags.map((tag) => (
-								<span
+								<Typography
+									tag="span"
 									key={tag}
 									className="rounded bg-surf-2 px-[6px] py-[2px] text-[9.5px] font-semibold uppercase tracking-[0.4px] text-t-2"
 								>
 									{tag}
-								</span>
+								</Typography>
 							))}
 						</div>
 					) : null}

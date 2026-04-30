@@ -8,6 +8,7 @@ import {
 } from "@/features/landing-demo-reader";
 import type { DemoWordEntry } from "@/entities/landing";
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 import {
 	DemoParagraph,
 	type DemoTokenSpec,
@@ -100,18 +101,22 @@ export const LandingDemo = ({ wordsDict }: LandingDemoProps) => {
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
 				<header className="mb-12 text-center max-[640px]:mb-9">
-					<span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-acc-bg px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[1.2px] text-acc-t">
+					<Typography
+						tag="span"
+						className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-acc-bg px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[1.2px] text-acc-t"
+					>
 						{t("landing.demo.eyebrow")}
-					</span>
-					<h2
+					</Typography>
+					<Typography
+						tag="h2"
 						id="demo-title"
 						className="mx-auto max-w-[720px] font-display text-[38px] font-semibold leading-[1.15] tracking-[-0.7px] text-t-1 max-[900px]:text-[32px] max-[640px]:text-[26px] max-[640px]:tracking-[-0.5px]"
 					>
 						{t("landing.demo.title")}
-					</h2>
-					<p className="mx-auto mt-3.5 max-w-[620px] text-base leading-[1.55] text-t-2 max-[640px]:text-[14.5px]">
+					</Typography>
+					<Typography className="mx-auto mt-3.5 max-w-[620px] text-base leading-[1.55] text-t-2 max-[640px]:text-[14.5px]">
 						{t("landing.demo.sub")}
-					</p>
+					</Typography>
 				</header>
 
 				<div
@@ -134,9 +139,12 @@ export const LandingDemo = ({ wordsDict }: LandingDemoProps) => {
 								{t("landing.demo.textAuthor")}
 							</div>
 						</div>
-						<span className="rounded bg-grn-bg px-2 py-[3px] text-[10px] font-semibold uppercase tracking-[0.5px] text-grn-t">
+						<Typography
+							tag="span"
+							className="rounded bg-grn-bg px-2 py-[3px] text-[10px] font-semibold uppercase tracking-[0.5px] text-grn-t"
+						>
 							{t("landing.demo.level")}
-						</span>
+						</Typography>
 					</div>
 
 					<div className="relative px-[50px] py-9 font-display text-[19px] leading-[1.85] text-t-1 max-[900px]:px-[30px] max-[900px]:py-7 max-[900px]:text-[17px] max-[640px]:px-5 max-[640px]:py-6 max-[640px]:text-base max-[640px]:leading-[1.7]">
@@ -167,33 +175,33 @@ export const LandingDemo = ({ wordsDict }: LandingDemoProps) => {
 					</div>
 
 					<div className="flex items-center justify-between border-hairline border-t border-bd-1 bg-surf-2 px-5 py-3.5 text-[12px] text-t-3 max-[640px]:px-4 max-[640px]:py-3 max-[640px]:text-[11.5px]">
-						<span>{t("landing.demo.page")}</span>
+						<Typography tag="span">{t("landing.demo.page")}</Typography>
 						<div className="mx-4 h-1 flex-1 max-w-[200px] overflow-hidden rounded-[2px] bg-surf-4 max-[640px]:mx-3">
 							<div
 								className="h-full rounded-[2px] bg-acc"
 								style={{ width: "38%" }}
 							/>
 						</div>
-						<span>{t("landing.demo.time")}</span>
+						<Typography tag="span">{t("landing.demo.time")}</Typography>
 					</div>
 				</div>
 
 				<div className="mt-[18px] flex flex-wrap justify-center gap-3.5 text-[11.5px] text-t-3">
-					<span className="flex items-center gap-1.5">
+					<Typography tag="span" className="flex items-center gap-1.5">
 						<span className="block h-[10px] w-[10px] rounded-[3px] border-hairline border-acc/25 bg-acc-bg" />
 						{t("landing.demo.legendCurrent")}
-					</span>
-					<span className="flex items-center gap-1.5">
+					</Typography>
+					<Typography tag="span" className="flex items-center gap-1.5">
 						<span className="block h-0 w-4 border-b-[1.5px] border-dotted border-grn" />
 						{t("landing.demo.legendKnown")}
-					</span>
-					<span className="flex items-center gap-1.5">
+					</Typography>
+					<Typography tag="span" className="flex items-center gap-1.5">
 						<span
 							className="block h-[10px] w-[10px] rounded-[3px] bg-amb-bg"
 							style={{ borderColor: "rgba(217,119,6,0.3)", borderWidth: 0.5 }}
 						/>
 						{t("landing.demo.legendUnknown")}
-					</span>
+					</Typography>
 				</div>
 			</div>
 		</section>

@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 
 interface LandingCtaProps {
 	startHref: string;
@@ -28,18 +29,19 @@ export const LandingCta = ({ startHref, loginHref }: LandingCtaProps) => {
 						}}
 					/>
 					<div className="relative z-[1]">
-						<h2
+						<Typography
+							tag="h2"
 							id="cta-title"
 							className="mb-3.5 font-display text-[42px] font-semibold leading-[1.15] tracking-[-0.8px] text-t-1 max-[900px]:text-[34px] max-[640px]:text-[26px] max-[640px]:tracking-[-0.5px]"
 						>
 							{t("landing.cta.titleStart")}{" "}
-							<em className="font-medium text-acc-t italic">
+							<Typography tag="em" className="font-medium text-acc-t italic">
 								{t("landing.cta.titleEm")}
-							</em>
-						</h2>
-						<p className="mx-auto mb-7 max-w-[540px] text-base text-t-2 max-[640px]:text-[14.5px]">
+							</Typography>
+						</Typography>
+						<Typography className="mx-auto mb-7 max-w-[540px] text-base text-t-2 max-[640px]:text-[14.5px]">
 							{t("landing.cta.sub")}
-						</p>
+						</Typography>
 						<div className="flex flex-wrap justify-center gap-2.5 max-[640px]:flex-col">
 							<Link
 								href={startHref}
@@ -55,9 +57,9 @@ export const LandingCta = ({ startHref, loginHref }: LandingCtaProps) => {
 								{t("landing.cta.secondary")}
 							</Link>
 						</div>
-						<p className="mt-[22px] text-[12px] text-t-3">
+						<Typography className="mt-[22px] text-[12px] text-t-3">
 							{t("landing.cta.foot")}
-						</p>
+						</Typography>
 					</div>
 				</div>
 			</div>

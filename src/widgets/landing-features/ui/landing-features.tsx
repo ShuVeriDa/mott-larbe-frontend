@@ -9,6 +9,7 @@ import {
 	ScrollTextIcon,
 } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 import { FeatureCard, type FeatureIconColor } from "./feature-card";
 
 interface FeatureDef {
@@ -61,18 +62,22 @@ export const LandingFeatures = () => {
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
 				<header className="mb-12 max-[640px]:mb-9">
-					<span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-acc-bg px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[1.2px] text-acc-t">
+					<Typography
+						tag="span"
+						className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-acc-bg px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[1.2px] text-acc-t"
+					>
 						{t("landing.features.eyebrow")}
-					</span>
-					<h2
+					</Typography>
+					<Typography
+						tag="h2"
 						id="features-title"
 						className="max-w-[720px] font-display text-[38px] font-semibold leading-[1.15] tracking-[-0.7px] text-t-1 max-[900px]:text-[32px] max-[640px]:text-[26px] max-[640px]:tracking-[-0.5px]"
 					>
 						{t("landing.features.title")}
-					</h2>
-					<p className="mt-3.5 max-w-[620px] text-base leading-[1.55] text-t-2 max-[640px]:text-[14.5px]">
+					</Typography>
+					<Typography className="mt-3.5 max-w-[620px] text-base leading-[1.55] text-t-2 max-[640px]:text-[14.5px]">
 						{t("landing.features.sub")}
-					</p>
+					</Typography>
 				</header>
 
 				<div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-[640px]:grid-cols-1 max-[640px]:gap-3">

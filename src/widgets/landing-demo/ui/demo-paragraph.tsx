@@ -4,6 +4,7 @@ import {
 	DemoToken,
 	type DemoTokenStatus,
 } from "@/features/landing-demo-reader";
+import { Typography } from "@/shared/ui/typography";
 
 export interface DemoTokenSpec {
 	word: string;
@@ -22,9 +23,10 @@ export const DemoParagraph = ({
 	activeWord,
 	onSelect,
 }: DemoParagraphProps) => (
-	<p>
+	<Typography>
 		{tokens.map((part, i) => {
-			if (typeof part === "string") return <span key={`s-${i}`}>{part}</span>;
+			if (typeof part === "string")
+				return <Typography tag="span" key={`s-${i}`}>{part}</Typography>;
 			return (
 				<DemoToken
 					key={`t-${part.word}-${i}`}
@@ -37,5 +39,5 @@ export const DemoParagraph = ({
 				</DemoToken>
 			);
 		})}
-	</p>
+	</Typography>
 );

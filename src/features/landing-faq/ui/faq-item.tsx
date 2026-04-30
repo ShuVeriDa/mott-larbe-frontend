@@ -2,6 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
+import { Typography } from "@/shared/ui/typography";
 
 interface FaqItemProps {
 	question: string;
@@ -32,8 +33,9 @@ export const FaqItem = ({
 			id={`${id}-trigger`}
 			className="flex w-full items-center justify-between border-0 bg-transparent px-5 py-[18px] text-left font-[inherit] text-[15px] font-medium text-t-1 transition-colors"
 		>
-			<span>{question}</span>
-			<span
+			<Typography tag="span">{question}</Typography>
+			<Typography
+				tag="span"
 				className={cn(
 					"flex h-6 w-6 shrink-0 items-center justify-center rounded-md transition-[transform,background-color] duration-300",
 					open ? "rotate-180 bg-acc-bg text-acc-t" : "bg-surf-2 text-t-2",
@@ -41,7 +43,7 @@ export const FaqItem = ({
 				aria-hidden="true"
 			>
 				<ChevronDown size={12} strokeWidth={2} />
-			</span>
+			</Typography>
 		</button>
 		<div
 			id={`${id}-content`}

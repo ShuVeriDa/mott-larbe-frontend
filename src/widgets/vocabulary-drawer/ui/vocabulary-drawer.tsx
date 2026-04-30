@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 import { useDictionaryStats } from "@/entities/dictionary";
 import { FoldersList, StatsList } from "@/widgets/vocabulary-sidebar";
 
@@ -59,22 +60,31 @@ export const VocabularyDrawer = ({
 				)}
 			>
 				<div className="mx-auto mt-2.5 h-1 w-9 rounded-[2px] bg-surf-4" />
-				<h2 className="border-b border-hairline border-bd-1 px-[18px] py-3 pb-3 text-sm font-semibold text-t-1">
+				<Typography
+					tag="h2"
+					className="border-b border-hairline border-bd-1 px-[18px] py-3 pb-3 text-sm font-semibold text-t-1"
+				>
 					{t("vocabulary.filtersAndFolders")}
-				</h2>
+				</Typography>
 				<div className="flex flex-col gap-5 overflow-y-auto px-[18px] py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 					{stats ? (
 						<div>
-							<h3 className="mb-2 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
+							<Typography
+								tag="h3"
+								className="mb-2 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3"
+							>
 								{t("vocabulary.stats")}
-							</h3>
+							</Typography>
 							<StatsList stats={stats} />
 						</div>
 					) : null}
 					<div>
-						<h3 className="mb-2 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
+						<Typography
+							tag="h3"
+							className="mb-2 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3"
+						>
 							{t("vocabulary.folders")}
-						</h3>
+						</Typography>
 						<FoldersList
 							totalAllWords={stats?.total ?? 0}
 							onCreateFolder={onCreateFolder}

@@ -1,6 +1,7 @@
 import { ArrowRight, BookIcon, Check, Sparkles, X, Zap } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
+import { Typography } from "@/shared/ui/typography";
 
 export type PlanKey = "free" | "premium" | "pro";
 
@@ -66,13 +67,17 @@ export const PlanCard = ({
 			)}
 		>
 			{popularBadge ? (
-				<span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-acc px-[11px] py-1 text-[10.5px] font-bold uppercase tracking-[0.8px] text-white shadow-[0_2px_6px_rgba(34,84,211,0.3)]">
+				<Typography
+					tag="span"
+					className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-acc px-[11px] py-1 text-[10.5px] font-bold uppercase tracking-[0.8px] text-white shadow-[0_2px_6px_rgba(34,84,211,0.3)]"
+				>
 					{popularBadge}
-				</span>
+				</Typography>
 			) : null}
 
 			<header className="mb-3.5 flex items-center gap-2.5">
-				<span
+				<Typography
+					tag="span"
 					className={cn(
 						"flex h-7 w-7 items-center justify-center rounded-[7px]",
 						ICON_BG_BY_PLAN[planKey],
@@ -80,10 +85,13 @@ export const PlanCard = ({
 					aria-hidden="true"
 				>
 					{ICON_BY_PLAN[planKey]}
-				</span>
-				<h3 className="font-display text-[19px] font-semibold text-t-1">
+				</Typography>
+				<Typography
+					tag="h3"
+					className="font-display text-[19px] font-semibold text-t-1"
+				>
 					{name}
-				</h3>
+				</Typography>
 			</header>
 
 			<div className="h-4 text-[13px] text-t-3 line-through">
@@ -92,16 +100,22 @@ export const PlanCard = ({
 
 			<div className="mb-1 mt-1 font-display text-[38px] font-semibold leading-none tracking-[-1px] text-t-1 max-[640px]:text-[32px]">
 				{price}{" "}
-				<span className="font-sans text-[14px] font-normal tracking-normal text-t-3">
+				<Typography
+					tag="span"
+					className="font-sans text-[14px] font-normal tracking-normal text-t-3"
+				>
 					{isFree ? foreverLabel : periodSuffix}
-				</span>
+				</Typography>
 			</div>
 
-			<p className="mb-[22px] mt-1 text-[12.5px] text-t-2">{tagline}</p>
+			<Typography className="mb-[22px] mt-1 text-[12.5px] text-t-2">
+				{tagline}
+			</Typography>
 
 			<ul className="mb-[22px] flex flex-col gap-2.5">
 				{features.map((feat) => (
-					<li
+					<Typography
+						tag="li"
 						key={feat}
 						className="flex items-start gap-2.5 text-[13px] leading-[1.45] text-t-2"
 					>
@@ -111,10 +125,11 @@ export const PlanCard = ({
 							className="mt-0.5 shrink-0 text-grn"
 						/>
 						{feat}
-					</li>
+					</Typography>
 				))}
 				{disabledFeatures.map((feat) => (
-					<li
+					<Typography
+						tag="li"
 						key={feat}
 						className="flex items-start gap-2.5 text-[13px] leading-[1.45] text-t-3"
 					>
@@ -124,7 +139,7 @@ export const PlanCard = ({
 							className="mt-0.5 shrink-0 text-t-3"
 						/>
 						{feat}
-					</li>
+					</Typography>
 				))}
 			</ul>
 

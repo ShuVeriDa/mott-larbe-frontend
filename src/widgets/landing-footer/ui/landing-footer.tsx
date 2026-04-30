@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { BrandMark } from "@/shared/ui/brand-mark";
+import { Typography } from "@/shared/ui/typography";
 
 interface FooterColumn {
 	titleKey: string;
@@ -66,34 +67,43 @@ export const LandingFooter = () => {
 					<div>
 						<div className="flex items-center gap-2.5">
 							<BrandMark className="h-[34px] w-[28px]" />
-							<span className="flex flex-col">
-								<span className="font-display text-base font-medium leading-[1.1] tracking-[-0.2px] text-t-1">
+							<Typography tag="span" className="flex flex-col">
+								<Typography
+									tag="span"
+									className="font-display text-base font-medium leading-[1.1] tracking-[-0.2px] text-t-1"
+								>
 									{t("landing.brand.name")}
-								</span>
-								<span className="mt-px text-[9.5px] uppercase tracking-[1px] text-t-3">
+								</Typography>
+								<Typography
+									tag="span"
+									className="mt-px text-[9.5px] uppercase tracking-[1px] text-t-3"
+								>
 									{t("landing.brand.sub")}
-								</span>
-							</span>
+								</Typography>
+							</Typography>
 						</div>
-						<p className="mt-3.5 max-w-[280px] text-[13px] leading-[1.55] text-t-2">
+						<Typography className="mt-3.5 max-w-[280px] text-[13px] leading-[1.55] text-t-2">
 							{t("landing.footer.about")}
-						</p>
+						</Typography>
 					</div>
 					{COLUMNS.map((col) => (
 						<div key={col.titleKey}>
-							<h3 className="mb-3.5 text-[11px] font-bold uppercase tracking-[1px] text-t-3">
+							<Typography
+								tag="h3"
+								className="mb-3.5 text-[11px] font-bold uppercase tracking-[1px] text-t-3"
+							>
 								{t(col.titleKey)}
-							</h3>
+							</Typography>
 							<ul>
 								{col.links.map((link) => (
-									<li key={link.labelKey}>
+									<Typography tag="li" key={link.labelKey}>
 										<Link
 											href={link.href}
 											className="block py-1.5 text-[13.5px] text-t-2 transition-colors hover:text-t-1"
 										>
 											{t(link.labelKey)}
 										</Link>
-									</li>
+									</Typography>
 								))}
 							</ul>
 						</div>
@@ -101,7 +111,7 @@ export const LandingFooter = () => {
 				</div>
 
 				<div className="flex flex-wrap items-center justify-between gap-3 border-hairline border-t border-bd-1 pt-6 text-[12px] text-t-3 max-[640px]:flex-col-reverse max-[640px]:items-start max-[640px]:gap-3.5">
-					<span>{t("landing.footer.copy")}</span>
+					<Typography tag="span">{t("landing.footer.copy")}</Typography>
 					<div className="flex gap-1.5">
 						{SOCIALS.map((s) => (
 							<Link

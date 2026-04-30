@@ -358,7 +358,246 @@
 		"empty": "No words found",
 		"loading": "Loading...",
 		"errorLoading": "Failed to load",
-		"limitReached": "Vocabulary limit reached. Upgrade your plan."
+		"limitReached": "Vocabulary limit reached. Upgrade your plan.",
+		"wordDetail": {
+			"meta": {
+				"title": "{word} — Mott Larbe",
+				"description": "Word «{word}» — {translation}. Personal vocabulary card with meanings, declension, examples and review history."
+			},
+			"breadcrumb": "Vocabulary",
+			"back": "Vocabulary",
+			"prev": "Previous",
+			"next": "Next",
+			"review": "Review",
+			"playAudio": "Play pronunciation",
+			"frequency": "Frequency",
+			"frequencyValue": "{value} of 5",
+			"declensionClass": "{name} class",
+			"sections": {
+				"senses": "Meanings",
+				"morphology": "Declension",
+				"contexts": "Found in texts",
+				"contextsAll": "all →",
+				"related": "Related words",
+				"status": "Learning status",
+				"folder": "Folder",
+				"sm2": "Review (SM-2)",
+				"history": "Review history"
+			},
+			"morphTable": {
+				"case": "Case",
+				"form": "Form",
+				"meaning": "Meaning"
+			},
+			"sm2": {
+				"progress": "Progress",
+				"progressValue": "{current} / {target}",
+				"next": "Next",
+				"interval": "Interval",
+				"intervalDays": "{n} days",
+				"intervalDay": "{n} day",
+				"totalReviews": "Total reviews",
+				"successCount": "Successful",
+				"successValue": "{success} of {total}",
+				"empty": "No reviews yet"
+			},
+			"history": {
+				"empty": "No review history yet",
+				"success": "Successful",
+				"fail": "Failed",
+				"reset": "reset",
+				"deltaDays": "+{n} d",
+				"deltaDaysNeg": "{n} d"
+			},
+			"contexts": {
+				"empty": "Word not yet seen in your texts",
+				"page": "p. {page}"
+			},
+			"related": {
+				"empty": "No related words",
+				"types": {
+					"SYNONYM": "Synonym",
+					"ANTONYM": "Antonym",
+					"DERIVED": "Derived",
+					"RELATED": "Related"
+				}
+			},
+			"senses": {
+				"empty": "No meanings available"
+			},
+			"states": {
+				"loading": "Loading word...",
+				"notFound": "Word not found",
+				"error": "Failed to load word"
+			},
+			"deleteConfirm": "Delete «{word}» from vocabulary?"
+		}
+	},
+	"auth": {
+		"meta": {
+			"login": {
+				"title": "Sign in — Mott Larbe",
+				"description": "Sign in to your Mott Larbe account to keep learning Chechen through real texts with click-to-translate."
+			},
+			"register": {
+				"title": "Sign up — Mott Larbe",
+				"description": "Create a free Mott Larbe account and start learning Chechen through real texts with instant translation."
+			}
+		},
+		"brand": {
+			"name": "Mott Larbe",
+			"tagline": "lang. platform",
+			"eyebrow": "CHECHEN LANGUAGE",
+			"titleStart": "Learn through",
+			"titleEm": "living texts",
+			"subtitle": "A platform for deep Chechen learning — real texts with click-to-translate, morphological analysis, and spaced repetition.",
+			"features": {
+				"click": {
+					"title": "Click-to-translate texts.",
+					"desc": "Tap any word for instant translation and grammar."
+				},
+				"srs": {
+					"title": "Personal vocabulary, SM-2.",
+					"desc": "Spaced repetition algorithm for efficient memorization."
+				},
+				"levels": {
+					"title": "Levels A1 through C2.",
+					"desc": "Texts ranked by CEFR — from beginner to fluency."
+				}
+			},
+			"copyright": "© 2026 Mott Larbe",
+			"terms": "Terms",
+			"privacy": "Privacy"
+		},
+		"headings": {
+			"login": "Welcome back",
+			"loginSub": "Sign in to continue learning",
+			"register": "Create your account",
+			"registerSub": "Start learning Chechen — it is free"
+		},
+		"tabs": {
+			"login": "Sign in",
+			"register": "Sign up",
+			"aria": "Auth method"
+		},
+		"fields": {
+			"name": "Name",
+			"email": "Email",
+			"password": "Password",
+			"passwordConfirm": "Confirm password",
+			"forgot": "Forgot?",
+			"remember": "Remember me"
+		},
+		"placeholders": {
+			"name": "Adam"
+		},
+		"password": {
+			"show": "Show password",
+			"hide": "Hide password",
+			"hint": "At least 8 characters, letters and numbers.",
+			"weak": "Weak",
+			"good": "Good",
+			"strong": "Strong"
+		},
+		"submit": {
+			"login": "Sign in",
+			"register": "Create account"
+		},
+		"terms": {
+			"agree": "By signing up, you agree to our",
+			"terms": "terms",
+			"and": "and",
+			"privacy": "privacy policy"
+		},
+		"crosslink": {
+			"noAccount": "No account?",
+			"haveAccount": "Already have an account?",
+			"signup": "Sign up",
+			"signin": "Sign in"
+		},
+		"errors": {
+			"email": "Enter a valid email",
+			"password": "Password must be at least 8 characters",
+			"passwordMatch": "Passwords do not match",
+			"name": "Enter your name",
+			"loginFailed": "Sign-in failed. Check your email and password.",
+			"registerFailed": "Could not create account. Please try again."
+		},
+		"resetPassword": {
+			"meta": {
+				"title": "Reset password — Mott Larbe",
+				"description": "Reset your account password: get a secure link by email and choose a new password."
+			},
+			"brand": "Mott Larbe",
+			"tagline": "language. platform",
+			"theme": "Toggle theme",
+			"language": "Language",
+			"step1": {
+				"title": "Reset your",
+				"titleEm": "password",
+				"sub": "Enter the email you used when registering. We will send you a link to reset your password.",
+				"emailLabel": "Email",
+				"emailPlaceholder": "you@example.com",
+				"submit": "Send reset link",
+				"submitting": "Sending…",
+				"backToLogin": "Back to sign in",
+				"errors": {
+					"invalidEmail": "Enter a valid email",
+					"generic": "Could not send the link. Please try again later."
+				}
+			},
+			"step2": {
+				"title": "Check your",
+				"titleEm": "email",
+				"sub1": "We sent a password reset link to",
+				"sub2": "Open the email and follow the instructions.",
+				"valid": "Link is valid for 1 hour",
+				"openMail": "Open mail app",
+				"notReceived": "Did not get it?",
+				"resend": "Send again",
+				"resendIn": "Send again ({seconds})",
+				"changeEmail": "Change email"
+			},
+			"step3": {
+				"title": "Set a new",
+				"titleEm": "password",
+				"sub": "Create a strong password. You will need it to sign in to your account.",
+				"newLabel": "New password",
+				"confirmLabel": "Confirm password",
+				"placeholder": "••••••••••",
+				"showPassword": "Show password",
+				"hidePassword": "Hide password",
+				"submit": "Save password",
+				"submitting": "Saving…",
+				"reqLen": "At least 8 characters",
+				"reqNum": "Contains a digit",
+				"reqCase": "Upper and lower case letter",
+				"strength": {
+					"weak": "Weak password",
+					"medium": "Fair password",
+					"good": "Good password",
+					"strong": "Strong password"
+				},
+				"errors": {
+					"mismatch": "Passwords do not match",
+					"weakPassword": "Password is too weak",
+					"tokenInvalid": "The reset link is invalid",
+					"tokenExpired": "The reset link has expired",
+					"tokenUsed": "The reset link has already been used",
+					"accountUnavailable": "Account is unavailable",
+					"generic": "Could not save the password. Please try again later."
+				}
+			},
+			"step4": {
+				"title": "Password",
+				"titleEm": "updated",
+				"sub": "Your password has been changed. You can now sign in using your new password.",
+				"item1": "Password is encrypted and saved",
+				"item2": "All active sessions have ended",
+				"goLogin": "Go to sign in"
+			},
+			"validating": "Validating link…"
+		}
 	},
 	"time": {
 		"now": "just now",

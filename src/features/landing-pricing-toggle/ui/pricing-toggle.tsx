@@ -2,6 +2,7 @@
 
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 import type { BillingPeriod } from "../model";
 
 interface PricingToggleProps {
@@ -37,7 +38,8 @@ export const PricingToggle = ({ value, onChange }: PricingToggleProps) => {
 				)}
 			>
 				{t("landing.pricing.yearly")}
-				<span
+				<Typography
+					tag="span"
 					className={cn(
 						"rounded px-[5px] py-[1.5px] text-[9.5px] font-bold",
 						value === "yearly"
@@ -46,7 +48,7 @@ export const PricingToggle = ({ value, onChange }: PricingToggleProps) => {
 					)}
 				>
 					{t("landing.pricing.save")}
-				</span>
+				</Typography>
 			</button>
 		</div>
 	);

@@ -119,3 +119,118 @@ export interface UpdateDictionaryEntryDto {
 	folderId?: string | null;
 	repetitionCount?: number;
 }
+
+export interface DetailMorphForm {
+	form: string;
+	grammarTag: string | null;
+	translation: string | null;
+	gramCase: string | null;
+	gramNumber: string | null;
+	caseLabel: string | null;
+}
+
+export interface DetailSenseExample {
+	id: string;
+	text: string;
+	translation: string | null;
+	origin: string | null;
+	sourceTextId: string | null;
+}
+
+export interface DetailSense {
+	id: string;
+	definition: string;
+	notes: string | null;
+	examples: DetailSenseExample[];
+}
+
+export interface DetailWordContext {
+	id: string;
+	snippet: string | null;
+	seenAt: string;
+	text: { id: string; title: string; level: CefrLevel | null };
+}
+
+export type RelationType =
+	| "SYNONYM"
+	| "ANTONYM"
+	| "DERIVED"
+	| "RELATED"
+	| string;
+
+export interface DetailRelated {
+	type: RelationType;
+	lemmaId: string;
+	baseForm: string;
+	transliteration: string | null;
+	level: CefrLevel | null;
+	translation?: string | null;
+}
+
+export interface DetailLemma {
+	id: string;
+	baseForm: string;
+	partOfSpeech: string | null;
+	frequency: number | null;
+	transliteration: string | null;
+	audioUrl: string | null;
+	declensionClass: string | null;
+	morphForms: DetailMorphForm[];
+	wordContexts: DetailWordContext[];
+}
+
+export interface DetailSm2Progress {
+	status: LearningLevel;
+	seenCount: number;
+	repetitions: number;
+	lastSeen: string | null;
+	nextReview: string | null;
+	easeFactor: number;
+	interval: number;
+	targetRepetitions: number;
+}
+
+export interface DetailReviewLog {
+	id: string;
+	quality: number | null;
+	correct: boolean;
+	intervalBefore: number | null;
+	intervalAfter: number | null;
+	intervalDelta: number | null;
+	createdAt: string;
+}
+
+export interface DetailReviewHistory {
+	totalReviews: number;
+	successCount: number;
+	logs: DetailReviewLog[];
+}
+
+export interface DictionaryEntryDetail {
+	id: string;
+	word: string;
+	translation: string;
+	normalized: string;
+	learningLevel: LearningLevel;
+	cefrLevel: CefrLevel | null;
+	addedAt: string;
+	folder: { id: string; name: string; color: string | null } | null;
+	lemma: DetailLemma | null;
+	senses: DetailSense[];
+	related: DetailRelated[];
+	sm2: DetailSm2Progress | null;
+	progressPercent: number;
+	reviewHistory: DetailReviewHistory;
+}
+
+export interface DictionaryNeighbor {
+	id: string;
+	word: string;
+}
+
+export interface DictionaryNeighborsResponse {
+	prev: DictionaryNeighbor | null;
+	next: DictionaryNeighbor | null;
+	position: number | null;
+	total: number;
+}

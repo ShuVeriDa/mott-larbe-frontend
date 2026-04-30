@@ -2,6 +2,7 @@
 
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 import {
 	formatNextReview,
 	formatRelativeFromNow,
@@ -83,29 +84,34 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 
 			<div className="flex min-w-0 flex-1 flex-col">
 				<div className="mb-[3px] flex flex-wrap items-baseline gap-2">
-					<span className="font-display text-[16px] tracking-[-0.2px] text-t-1">
+					<Typography
+						tag="span"
+						className="font-display text-[16px] tracking-[-0.2px] text-t-1"
+					>
 						{entry.word}
-					</span>
-					<span className="text-[12.5px] text-t-2">{entry.translation}</span>
+					</Typography>
+					<Typography tag="span" className="text-[12.5px] text-t-2">
+						{entry.translation}
+					</Typography>
 					{entry.lemma?.partOfSpeech ? (
-						<span className="text-[10.5px] italic text-t-3">
+						<Typography tag="span" className="text-[10.5px] italic text-t-3">
 							{entry.lemma.partOfSpeech}
-						</span>
+						</Typography>
 					) : null}
 				</div>
 
 				<div className="flex flex-wrap items-center gap-1.5">
 					{sourceTitle ? (
-						<span className="text-[11px] text-t-3">
+						<Typography tag="span" className="text-[11px] text-t-3">
 							{t("vocabulary.card.from", { title: sourceTitle })}
-						</span>
+						</Typography>
 					) : null}
 					{sourceTitle ? (
 						<span aria-hidden="true" className="size-[2px] rounded-full bg-t-4" />
 					) : null}
-					<span className="text-[11px] text-t-3">
+					<Typography tag="span" className="text-[11px] text-t-3">
 						{getMetaSecondary(entry, t)}
-					</span>
+					</Typography>
 				</div>
 
 				{expanded ? (
@@ -117,12 +123,12 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 										<div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
 											{t("vocabulary.card.example")}
 										</div>
-										<p className="mb-[3px] text-[12.5px] italic leading-[1.55] text-t-1">
+										<Typography className="mb-[3px] text-[12.5px] italic leading-[1.55] text-t-1">
 											«{example.text}»
-										</p>
-										<p className="mb-2.5 text-xs text-t-3">
+										</Typography>
+										<Typography className="mb-2.5 text-xs text-t-3">
 											{example.translation}
-										</p>
+										</Typography>
 									</>
 								) : null}
 								{forms.length > 0 ? (
@@ -132,12 +138,13 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 										</div>
 										<div className="flex flex-wrap gap-1">
 											{forms.map((f, idx) => (
-												<span
+												<Typography
+													tag="span"
 													key={`${f.form}-${idx}`}
 													className="rounded-[5px] border-hairline border-bd-1 bg-surf-2 px-[7px] py-[2px] text-[11px] text-t-2"
 												>
 													{f.form}
-												</span>
+												</Typography>
 											))}
 										</div>
 									</>
@@ -149,14 +156,14 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 									wordId={entry.id}
 									current={entry.learningLevel}
 								/>
-								<p className="mb-1.5 text-[11px] text-t-3">
+								<Typography className="mb-1.5 text-[11px] text-t-3">
 									{t("vocabulary.card.nextReview")}{" "}
-									<strong className="text-t-2">
+									<Typography tag="strong" className="text-t-2">
 										{entry.nextReview
 											? formatNextReview(entry.nextReview, t, lang)
 											: t("vocabulary.review.notScheduled")}
-									</strong>
-								</p>
+									</Typography>
+								</Typography>
 								<div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
 									{t("vocabulary.card.folder")}
 								</div>

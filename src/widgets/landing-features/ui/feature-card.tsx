@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/shared/lib/cn";
+import { Typography } from "@/shared/ui/typography";
 
 export type FeatureIconColor =
 	| "acc"
@@ -40,9 +41,14 @@ export const FeatureCard = ({
 		>
 			{icon}
 		</div>
-		<h3 className="mb-1.5 font-display text-[20px] font-semibold tracking-[-0.3px] text-t-1">
+		<Typography
+			tag="h3"
+			className="mb-1.5 font-display text-[20px] font-semibold tracking-[-0.3px] text-t-1"
+		>
 			{title}
-		</h3>
-		<p className="text-[13.5px] leading-[1.55] text-t-2">{description}</p>
+		</Typography>
+		<Typography className="text-[13.5px] leading-[1.55] text-t-2">
+			{description}
+		</Typography>
 	</article>
 );

@@ -15,8 +15,8 @@ import { LandingStats } from "@/widgets/landing-stats";
 
 export const LandingPage = () => {
 	const { lang, dict } = useI18n();
-	const loginHref = `/${lang}/login`;
-	const startHref = `/${lang}/register`;
+	const loginHref = `/${lang}/auth`;
+	const startHref = `/${lang}/auth?mode=register`;
 
 	const wordsDict =
 		((

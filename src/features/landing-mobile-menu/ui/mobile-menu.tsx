@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { BrandMark } from "@/shared/ui/brand-mark";
+import { Typography } from "@/shared/ui/typography";
 
 export interface MobileMenuLink {
 	href: string;
@@ -50,9 +51,12 @@ export const MobileMenu = ({
 				<div className="flex items-center justify-between border-hairline border-b border-bd-1 px-[18px] py-[14px]">
 					<div className="flex items-center gap-2.5">
 						<BrandMark className="h-[28px] w-[24px]" />
-						<span className="font-display text-base font-medium tracking-[-0.2px] text-t-1">
+						<Typography
+							tag="span"
+							className="font-display text-base font-medium tracking-[-0.2px] text-t-1"
+						>
 							{t("landing.brand.name")}
-						</span>
+						</Typography>
 					</div>
 					<button
 						type="button"

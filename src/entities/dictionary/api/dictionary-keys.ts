@@ -6,4 +6,7 @@ export const dictionaryKeys = {
 		["dictionary", "list", query] as const,
 	stats: () => ["dictionary", "stats"] as const,
 	due: () => ["dictionary", "due"] as const,
+	detail: (id: string) => ["dictionary", "detail", id] as const,
+	neighbors: (id: string, query: DictionaryListQuery) =>
+		["dictionary", "neighbors", id, query] as const,
 };
