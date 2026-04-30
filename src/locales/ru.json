@@ -1,1 +1,113 @@
-{}
+{
+	"nav": {
+		"learning": "Обучение",
+		"home": "Главная",
+		"texts": "Тексты",
+		"vocabulary": "Словарь",
+		"review": "Повторение",
+		"progress": "Прогресс",
+		"language": "Язык",
+		"chechen": "Чеченский",
+		"grammar": "Грамматика",
+		"freePlan": "Free план",
+		"freePlanDesc": "До 200 слов в словаре. Разблокируйте больше возможностей.",
+		"upgrade": "Улучшить план",
+		"darkTheme": "Тёмная тема",
+		"lightTheme": "Светлая тема"
+	},
+	"vocabulary": {
+		"title": "Словарь",
+		"meta": {
+			"title": "Словарь — Мотт Ларбе",
+			"description": "Личный словарь чеченского языка с фильтрами, поиском и интервальным повторением."
+		},
+		"searchPlaceholder": "Поиск...",
+		"addWord": "Добавить слово",
+		"newFolder": "Новая папка",
+		"allWords": "Все слова",
+		"mastery": "Освоение",
+		"studied": "изучено",
+		"masteryLabel": "{known} из {total} слов на уровне «Знаю»",
+		"stats": "Статистика",
+		"folders": "Папки",
+		"filtersAndFolders": "Фильтры и папки",
+		"filterByStatus": "Статус:",
+		"filterByLevel": "Уровень:",
+		"all": "Все",
+		"openFilters": "Фильтры",
+		"status": {
+			"new": "Новые",
+			"learning": "Учу",
+			"known": "Знаю",
+			"total": "Всего"
+		},
+		"statusCard": {
+			"new": "Новое",
+			"learning": "Учу",
+			"known": "Знаю"
+		},
+		"sort": {
+			"added": "По дате",
+			"alpha": "По алфавиту",
+			"review": "По повторению",
+			"status": "По статусу"
+		},
+		"review": {
+			"title": "Слова ждут повторения",
+			"nextIn": "Следующее через {time}",
+			"noNext": "Готово к повторению",
+			"button": "Повторить →",
+			"notScheduled": "не назначено"
+		},
+		"card": {
+			"addedToday": "добавлено сегодня",
+			"addedAgo": "добавлено {time}",
+			"reviewIn": "повторение через {time}",
+			"reviewOn": "повторение {date}",
+			"from": "из «{title}»",
+			"example": "Пример",
+			"forms": "Формы",
+			"folder": "Папка",
+			"noFolder": "Без папки",
+			"nextReview": "Повторение:",
+			"delete": "Удалить",
+			"sourceUnknown": "источник неизвестен"
+		},
+		"addModal": {
+			"title": "Добавить слово",
+			"wordLabel": "Слово (на чеченском)",
+			"wordPlaceholder": "напр. мотт",
+			"translationLabel": "Перевод",
+			"translationPlaceholder": "напр. язык, речь",
+			"folderLabel": "Папка",
+			"levelLabel": "Уровень CEFR",
+			"cancel": "Отмена",
+			"submit": "Добавить"
+		},
+		"folderModal": {
+			"title": "Новая папка",
+			"nameLabel": "Название папки",
+			"namePlaceholder": "напр. Глаголы движения",
+			"cancel": "Отмена",
+			"submit": "Создать"
+		},
+		"wordsCount": "{count} слов",
+		"empty": "Слова не найдены",
+		"loading": "Загрузка...",
+		"errorLoading": "Не удалось загрузить",
+		"limitReached": "Лимит словаря достигнут. Улучшите план."
+	},
+	"time": {
+		"now": "только что",
+		"minutes": "{n} мин",
+		"hours": "{n} ч",
+		"days": "{n} д",
+		"weeks": "{n} нед",
+		"today": "сегодня",
+		"yesterday": "вчера",
+		"tomorrow": "завтра",
+		"daysAgo": "{n} д назад",
+		"todayAt": "сегодня, {time}",
+		"tomorrowAt": "завтра, {time}"
+	}
+}

@@ -1,1 +1,113 @@
-{}
+{
+	"nav": {
+		"learning": "Learning",
+		"home": "Home",
+		"texts": "Texts",
+		"vocabulary": "Vocabulary",
+		"review": "Review",
+		"progress": "Progress",
+		"language": "Language",
+		"chechen": "Chechen",
+		"grammar": "Grammar",
+		"freePlan": "Free plan",
+		"freePlanDesc": "Up to 200 words. Unlock more features.",
+		"upgrade": "Upgrade plan",
+		"darkTheme": "Dark theme",
+		"lightTheme": "Light theme"
+	},
+	"vocabulary": {
+		"title": "Vocabulary",
+		"meta": {
+			"title": "Vocabulary — Mott Larbe",
+			"description": "Personal Chechen vocabulary with filters, search and spaced repetition."
+		},
+		"searchPlaceholder": "Search...",
+		"addWord": "Add word",
+		"newFolder": "New folder",
+		"allWords": "All words",
+		"mastery": "Mastery",
+		"studied": "learned",
+		"masteryLabel": "{known} of {total} words at «Known» level",
+		"stats": "Statistics",
+		"folders": "Folders",
+		"filtersAndFolders": "Filters and folders",
+		"filterByStatus": "Status:",
+		"filterByLevel": "Level:",
+		"all": "All",
+		"openFilters": "Filters",
+		"status": {
+			"new": "New",
+			"learning": "Learning",
+			"known": "Known",
+			"total": "Total"
+		},
+		"statusCard": {
+			"new": "New",
+			"learning": "Learning",
+			"known": "Known"
+		},
+		"sort": {
+			"added": "By date",
+			"alpha": "Alphabetical",
+			"review": "By review",
+			"status": "By status"
+		},
+		"review": {
+			"title": "Words waiting for review",
+			"nextIn": "Next in {time}",
+			"noNext": "Ready to review",
+			"button": "Review →",
+			"notScheduled": "not scheduled"
+		},
+		"card": {
+			"addedToday": "added today",
+			"addedAgo": "added {time}",
+			"reviewIn": "review in {time}",
+			"reviewOn": "review on {date}",
+			"from": "from «{title}»",
+			"example": "Example",
+			"forms": "Forms",
+			"folder": "Folder",
+			"noFolder": "No folder",
+			"nextReview": "Review:",
+			"delete": "Delete",
+			"sourceUnknown": "unknown source"
+		},
+		"addModal": {
+			"title": "Add word",
+			"wordLabel": "Word (in Chechen)",
+			"wordPlaceholder": "e.g. мотт",
+			"translationLabel": "Translation",
+			"translationPlaceholder": "e.g. language, speech",
+			"folderLabel": "Folder",
+			"levelLabel": "CEFR level",
+			"cancel": "Cancel",
+			"submit": "Add"
+		},
+		"folderModal": {
+			"title": "New folder",
+			"nameLabel": "Folder name",
+			"namePlaceholder": "e.g. Motion verbs",
+			"cancel": "Cancel",
+			"submit": "Create"
+		},
+		"wordsCount": "{count} words",
+		"empty": "No words found",
+		"loading": "Loading...",
+		"errorLoading": "Failed to load",
+		"limitReached": "Vocabulary limit reached. Upgrade your plan."
+	},
+	"time": {
+		"now": "just now",
+		"minutes": "{n} min",
+		"hours": "{n} h",
+		"days": "{n} d",
+		"weeks": "{n} w",
+		"today": "today",
+		"yesterday": "yesterday",
+		"tomorrow": "tomorrow",
+		"daysAgo": "{n} d ago",
+		"todayAt": "today, {time}",
+		"tomorrowAt": "tomorrow, {time}"
+	}
+}

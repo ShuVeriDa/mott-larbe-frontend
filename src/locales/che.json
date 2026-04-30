@@ -1,1 +1,113 @@
-{}
+{
+	"nav": {
+		"learning": "Дешар",
+		"home": "Коьрта",
+		"texts": "Йозанаш",
+		"vocabulary": "Дошам",
+		"review": "Карладаккхар",
+		"progress": "Хьалкхиар",
+		"language": "Мотт",
+		"chechen": "Нохчийн",
+		"grammar": "Грамматика",
+		"freePlan": "Free план",
+		"freePlanDesc": "200 дешнал т1аьхьа а дац. Дукхадар лело план хийца.",
+		"upgrade": "План тоьттур",
+		"darkTheme": "1аьржа тема",
+		"lightTheme": "К1айн тема"
+	},
+	"vocabulary": {
+		"title": "Дошам",
+		"meta": {
+			"title": "Дошам — Мотт Ларбе",
+			"description": "Хьайн нохчийн дошам, филтрашца, лехарца, карладаккхарца."
+		},
+		"searchPlaceholder": "Лаха...",
+		"addWord": "Дош т1етоха",
+		"newFolder": "Керла куьцал",
+		"allWords": "Дерриге дешнаш",
+		"mastery": "1емар",
+		"studied": "1емина",
+		"masteryLabel": "{known} {total} дешах «Хаа» т1ехь",
+		"stats": "Статистика",
+		"folders": "Куьцалш",
+		"filtersAndFolders": "Филтрашший куьцалшший",
+		"filterByStatus": "Статус:",
+		"filterByLevel": "Дарж:",
+		"all": "Дерриге",
+		"openFilters": "Филтраш",
+		"status": {
+			"new": "Керланаш",
+			"learning": "1ему",
+			"known": "Хаа",
+			"total": "Берриге"
+		},
+		"statusCard": {
+			"new": "Керла",
+			"learning": "1ему",
+			"known": "Хаа"
+		},
+		"sort": {
+			"added": "Денех хьаьжжина",
+			"alpha": "Алфавитца",
+			"review": "Карладаккхарца",
+			"status": "Статусца"
+		},
+		"review": {
+			"title": "Дешнаш карладаккхар хьоьху",
+			"nextIn": "Т1ейог1ург {time} т1аьхьа",
+			"noNext": "Карладаккха кийча ду",
+			"button": "Карладаккха →",
+			"notScheduled": "хьавоьшна дац"
+		},
+		"card": {
+			"addedToday": "тахна т1етоьхна",
+			"addedAgo": "{time} хьалха т1етоьхна",
+			"reviewIn": "карладаккхар {time} т1аьхьа",
+			"reviewOn": "карладаккхар {date}",
+			"from": "«{title}» т1ера",
+			"example": "Масал",
+			"forms": "Куьпашш",
+			"folder": "Куьцал",
+			"noFolder": "Куьцал доцуш",
+			"nextReview": "Карладаккхар:",
+			"delete": "Дайа",
+			"sourceUnknown": "хаъара ца хаа"
+		},
+		"addModal": {
+			"title": "Дош т1етоха",
+			"wordLabel": "Дош (нохчийн маттахь)",
+			"wordPlaceholder": "масала, мотт",
+			"translationLabel": "Гочдар",
+			"translationPlaceholder": "масала, язык, речь",
+			"folderLabel": "Куьцал",
+			"levelLabel": "CEFR дарж",
+			"cancel": "Дитар",
+			"submit": "Т1етоха"
+		},
+		"folderModal": {
+			"title": "Керла куьцал",
+			"nameLabel": "Куьцалан ц1е",
+			"namePlaceholder": "масала, Лелан хандешнаш",
+			"cancel": "Дитар",
+			"submit": "Кхолла"
+		},
+		"wordsCount": "{count} дош",
+		"empty": "Дешнаш ца карийна",
+		"loading": "Чудолу...",
+		"errorLoading": "Чудалийта хилла дац",
+		"limitReached": "Дошаман гIоппе хилла. План тоттур."
+	},
+	"time": {
+		"now": "х1инцца",
+		"minutes": "{n} мин",
+		"hours": "{n} с",
+		"days": "{n} д",
+		"weeks": "{n} к1ир",
+		"today": "тахна",
+		"yesterday": "селхана",
+		"tomorrow": "кхана",
+		"daysAgo": "{n} д хьалха",
+		"todayAt": "тахна, {time}",
+		"tomorrowAt": "кхана, {time}"
+	}
+}
