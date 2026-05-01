@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ToastViewport } from "@/shared/ui/toast";
 import { BottomNav } from "./bottom-nav";
 import { SideNav } from "./side-nav";
 
@@ -15,5 +16,6 @@ export const AppShell = ({ children }: AppShellProps) => (
 			</main>
 		</div>
 		<BottomNav />
+		<ToastViewport />
 	</>
 );

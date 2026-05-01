@@ -1,4 +1,5 @@
 import { cn } from "@/shared/lib/cn";
+import { Typography } from "@/shared/ui/typography";
 
 export interface FolderItemProps {
 	name: string;
@@ -27,10 +28,20 @@ export const FolderItem = ({
 				: "bg-transparent hover:bg-surf-2",
 		)}
 	>
-		<span className="fi-icon size-[14px] shrink-0 text-t-3">{icon}</span>
-		<span className="fi-name flex-1 truncate text-[12.5px] text-t-2">
+		<Typography tag="span" className="fi-icon size-[14px] shrink-0 text-t-3">
+			{icon}
+		</Typography>
+		<Typography
+			tag="span"
+			className="fi-name flex-1 truncate text-[12.5px] text-t-2"
+		>
 			{name}
-		</span>
-		<span className="fi-count text-[11px] font-medium text-t-3">{count}</span>
+		</Typography>
+		<Typography
+			tag="span"
+			className="fi-count text-[11px] font-medium text-t-3"
+		>
+			{count}
+		</Typography>
 	</button>
 );

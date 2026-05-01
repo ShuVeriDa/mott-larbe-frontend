@@ -2,9 +2,13 @@
 
 import { useState, type FormEvent } from "react";
 import { Button } from "@/shared/ui/button";
-import { Input, InputLabel } from "@/shared/ui/input";
 import { Modal, ModalActions } from "@/shared/ui/modal";
 import { useI18n } from "@/shared/lib/i18n";
+import {
+	FolderForm,
+	buildInitialFolderForm,
+	type FolderFormValue,
+} from "@/entities/folder";
 import { useCreateFolder } from "../../model";
 
 export interface CreateFolderModalProps {
@@ -15,44 +19,77 @@ export interface CreateFolderModalProps {
 export const CreateFolderModal = ({ open, onClose }: CreateFolderModalProps) => {
 	const { t } = useI18n();
 	const { mutateAsync, isPending } = useCreateFolder();
-	const [name, setName] = useState("");
+	const [value, setValue] = useState<FolderFormValue>(() =>
+		buildInitialFolderForm(),
+	);
+	const [error, setError] = useState<string | null>(null);
+
+	const reset = () => {
+		setValue(buildInitialFolderForm());
+		setError(null);
+	};
+
+	const handleClose = () => {
+		reset();
+		onClose();
+	};
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		if (!name.trim()) return;
+		const trimmedName = value.name.trim();
+		if (!trimmedName) {
+			setError(t("vocabulary.folderModal.errors.nameRequired"));
+			return;
+		}
 		try {
-			await mutateAsync({ name: name.trim() });
-			setName("");
+			await mutateAsync({
+				name: trimmedName,
+				description: value.description.trim() || null,
+				color: value.color,
+				icon: value.icon,
+			});
+			reset();
 			onClose();
 		} catch {
-			// noop
+			setError(t("vocabulary.folderModal.errors.createFailed"));
 		}
 	};
 
 	return (
 		<Modal
 			open={open}
-			onClose={onClose}
+			onClose={handleClose}
 			title={t("vocabulary.folderModal.title")}
 		>
-			<form onSubmit={handleSubmit}>
-				<InputLabel htmlFor="folder-name">
-					{t("vocabulary.folderModal.nameLabel")}
-				</InputLabel>
-				<Input
-					id="folder-name"
-					value={name}
-					onChange={(e) => setName(e.target.value)}
-					placeholder={t("vocabulary.folderModal.namePlaceholder")}
-					className="mb-3"
-					required
+			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
+				<FolderForm
+					value={value}
+					onChange={setValue}
+					autoFocusName
+					labels={{
+						nameLabel: t("vocabulary.folderModal.nameLabel"),
+						namePlaceholder: t("vocabulary.folderModal.namePlaceholder"),
+						descriptionLabel: t("vocabulary.folderModal.descriptionLabel"),
+						descriptionPlaceholder: t(
+							"vocabulary.folderModal.descriptionPlaceholder",
+						),
+						colorLabel: t("vocabulary.folderModal.colorLabel"),
+						iconLabel: t("vocabulary.folderModal.iconLabel"),
+					}}
 				/>
+
+				{error ? (
+					<p className="text-[12px] text-red" role="alert">
+						{error}
+					</p>
+				) : null}
+
 				<ModalActions>
 					<Button
 						variant="ghost"
 						size="lg"
 						className="flex-1"
-						onClick={onClose}
+						onClick={handleClose}
 					>
 						{t("vocabulary.folderModal.cancel")}
 					</Button>

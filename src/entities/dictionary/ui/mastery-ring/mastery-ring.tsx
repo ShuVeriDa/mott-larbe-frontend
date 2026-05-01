@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 
 export interface MasteryRingProps {
 	percent: number;
@@ -47,17 +48,23 @@ export const MasteryRing = ({ percent, known, total }: MasteryRingProps) => {
 					/>
 				</svg>
 				<div className="absolute inset-0 flex flex-col items-center justify-center">
-					<span className="font-display text-[20px] leading-none text-t-1">
+					<Typography
+						tag="span"
+						className="font-display text-[20px] leading-none text-t-1"
+					>
 						{clamped}%
-					</span>
-					<span className="mt-px text-[9px] uppercase tracking-[0.5px] text-t-3">
+					</Typography>
+					<Typography
+						tag="span"
+						className="mt-px text-[9px] uppercase tracking-[0.5px] text-t-3"
+					>
 						{t("vocabulary.studied")}
-					</span>
+					</Typography>
 				</div>
 			</div>
-			<p className="text-center text-xs leading-snug text-t-2">
+			<Typography className="text-center text-xs leading-snug text-t-2">
 				{t("vocabulary.masteryLabel", { known, total })}
-			</p>
+			</Typography>
 		</div>
 	);
 };

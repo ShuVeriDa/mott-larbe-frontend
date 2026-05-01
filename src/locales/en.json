@@ -351,8 +351,83 @@
 			"title": "New folder",
 			"nameLabel": "Folder name",
 			"namePlaceholder": "e.g. Motion verbs",
+			"descriptionLabel": "Description",
+			"descriptionPlaceholder": "Short note about the folder (optional)",
+			"colorLabel": "Color",
+			"iconLabel": "Icon",
 			"cancel": "Cancel",
-			"submit": "Create"
+			"submit": "Create",
+			"save": "Save",
+			"editTitle": "Edit folder",
+			"deleteTitle": "Delete folder",
+			"deleteConfirm": "Delete folder «{name}»? Words will stay in your vocabulary but lose the folder link.",
+			"delete": "Delete",
+			"errors": {
+				"nameRequired": "Folder name is required",
+				"saveFailed": "Failed to save folder",
+				"deleteFailed": "Failed to delete folder",
+				"createFailed": "Failed to create folder"
+			}
+		},
+		"foldersPage": {
+			"meta": {
+				"title": "Vocabulary folders — Mott Larbe",
+				"description": "Organize your personal Chechen vocabulary into themed folders: create, rename and assign words."
+			},
+			"breadcrumb": {
+				"vocabulary": "Vocabulary",
+				"folders": "Folders"
+			},
+			"newFolder": "New folder",
+			"summary": {
+				"foldersCount": "Folders created",
+				"wordsInFolders": "Words in folders",
+				"knownWords": "Mastered words",
+				"wordsWithoutFolder": "Without folder"
+			},
+			"section": {
+				"title": "My folders",
+				"limitUsed": "{used} of {max} folders used",
+				"limitUnlimited": "{used} folders · unlimited",
+				"limitDisabled": "Folders are available on Premium"
+			},
+			"card": {
+				"new": "New",
+				"learning": "Learning",
+				"known": "Known",
+				"progress": "Progress",
+				"open": "Open →",
+				"noWords": "Folder is empty",
+				"updatedToday": "updated today",
+				"updatedAgo": "updated {time}",
+				"never": "not updated yet",
+				"menu": "Folder menu",
+				"menuRename": "Rename",
+				"menuRecolor": "Change color",
+				"menuOpen": "Open folder",
+				"menuDelete": "Delete folder"
+			},
+			"empty": {
+				"title": "No folders yet",
+				"description": "Create your first folder to group words by topic.",
+				"cta": "Create folder"
+			},
+			"newCard": {
+				"title": "New folder",
+				"description": "Group words by topic"
+			},
+			"uncategorized": {
+				"title": "Without folder",
+				"count": "{count} words",
+				"distributeAll": "Distribute all",
+				"empty": "All words are assigned to folders",
+				"loadFailed": "Failed to load words",
+				"assignTo": "Assign «{word}» to a folder",
+				"chooseFolder": "Choose a folder",
+				"noFolders": "Create a folder first"
+			},
+			"limitReached": "Folder limit reached ({max}). Upgrade your plan to create more.",
+			"premiumOnly": "Folders are available on the Premium plan."
 		},
 		"wordsCount": "{count} words",
 		"empty": "No words found",
@@ -611,5 +686,610 @@
 		"daysAgo": "{n} d ago",
 		"todayAt": "today, {time}",
 		"tomorrowAt": "tomorrow, {time}"
+	},
+	"statistics": {
+		"meta": {
+			"title": "Statistics — Mott Larbe",
+			"description": "Track your progress: words learned, reading time, streak, review accuracy and activity heatmap."
+		},
+		"pageTitle": "Statistics",
+		"period": {
+			"week": "Week",
+			"month": "Month",
+			"year": "Year",
+			"all": "All time"
+		},
+		"kpi": {
+			"words": "Words learned",
+			"reading": "Reading time",
+			"reviews": "Reviews",
+			"texts": "Texts read",
+			"deltaPositive": "+{n} this period",
+			"deltaNegative": "{n} this period",
+			"deltaZero": "no change",
+			"hoursShort": "{n}h",
+			"minutesShort": "{n}m"
+		},
+		"streak": {
+			"daysInRow": "days in a row",
+			"record": "Record: {n} days",
+			"milestoneDays": "{n} days",
+			"yearActivity": "Activity for the year",
+			"less": "Less",
+			"more": "More"
+		},
+		"words": {
+			"title": "Word progress",
+			"meta": "{current} of {goal} words",
+			"unitShort": "words",
+			"known": "Known",
+			"learning": "Learning",
+			"new": "New",
+			"remaining": "Remaining"
+		},
+		"perDay": {
+			"title": "Words per day",
+			"meta": "Last 30 days",
+			"empty": "No data yet"
+		},
+		"texts": {
+			"title": "Texts progress",
+			"all": "all texts →",
+			"new": "New",
+			"wordsOf": "{known} / {total}",
+			"empty": "No texts started yet"
+		},
+		"accuracy": {
+			"title": "Review accuracy",
+			"meta": "for the period",
+			"score": "overall accuracy",
+			"correct": "Correct",
+			"wrong": "Mistakes",
+			"bestStreak": "Best streak",
+			"bestStreakValue": "{n} in a row",
+			"sessions": "Sessions"
+		},
+		"activity": {
+			"title": "Recent activity",
+			"empty": "No activity yet",
+			"types": {
+				"READ_TEXT": "Read",
+				"ADD_WORDS": "Words added",
+				"REVIEW": "Review session"
+			}
+		},
+		"loading": "Loading statistics…",
+		"error": "Failed to load statistics",
+		"retry": "Try again"
+	},
+	"settings": {
+		"meta": {
+			"title": "Settings — Mott Larbe",
+			"description": "Manage account, theme, learning goals, notifications and data export."
+		},
+		"pageTitle": "Settings",
+		"premium": "Premium",
+		"loading": "Loading settings…",
+		"loadError": "Failed to load settings",
+		"tabs": {
+			"appearance": "Appearance",
+			"learning": "Learning",
+			"reader": "Reader",
+			"notifications": "Notifications",
+			"shortcuts": "Shortcuts",
+			"sessions": "Sessions",
+			"data": "Data"
+		},
+		"appearance": {
+			"title": "Appearance",
+			"sub": "Configure theme and interface display",
+			"theme": "Theme",
+			"themeLight": "Light",
+			"themeDark": "Dark",
+			"themeSystem": "System",
+			"language": "Interface language",
+			"languageHint": "Language of menus, buttons and system messages",
+			"langRu": "Русский",
+			"langEn": "English",
+			"langChe": "Нохчийн"
+		},
+		"learning": {
+			"title": "Learning",
+			"sub": "Target language settings and daily goals",
+			"languageLevel": "Language and level",
+			"learningLang": "Learning language",
+			"learningLangChe": "Chechen (CHE)",
+			"learningLangRu": "Russian (RU)",
+			"level": "Level",
+			"levelA1": "A1 — Beginner",
+			"levelA2": "A2",
+			"levelB1": "B1 — Intermediate",
+			"levelB2": "B2",
+			"levelC1": "C1",
+			"levelC2": "C2 — Advanced",
+			"transLang": "Translation language",
+			"transLangHint": "Which language to translate words into on click",
+			"dailyGoal": "Daily goal",
+			"newWords": "New words per day",
+			"readingMinutes": "Reading minutes per day",
+			"wordsUnit": "words",
+			"minutesUnit": "minutes",
+			"dictBehavior": "Dictionary behavior",
+			"autoAdd": "Auto-add on click",
+			"autoAddDesc": "Word is added to the dictionary on first translation, without confirmation",
+			"showGrammar": "Show grammar",
+			"showGrammarDesc": "Display part of speech, case and other grammatical info in the popup",
+			"showExamples": "Show examples",
+			"showExamplesDesc": "Display usage examples in the word side panel",
+			"srs": "Spaced repetition",
+			"reviewReminder": "Review reminders",
+			"reviewReminderDesc": "Show review word count on the home page",
+			"enableDecks": "Enable learning decks",
+			"enableDecksDesc": "Custom system of structured word repetition by NEW / OLD / RETIRED decks"
+		},
+		"reader": {
+			"title": "Reader",
+			"sub": "Text reading settings",
+			"fontSize": "Font size",
+			"preview": "Preview",
+			"previewText": "Со хаза ду нохчийн мотт. Дика доьшу стаг — дика дуьйцу.",
+			"popupMode": "Translation on click",
+			"popup": "Popup",
+			"popupDesc": "Compact popup above the word with translation and add-to-dictionary button",
+			"sidebar": "Side panel",
+			"sidebarDesc": "Full word information in the right panel: grammar, examples, level controls",
+			"both": "Both modes",
+			"bothDesc": "First the popup, then on click the side panel opens",
+			"display": "Display",
+			"highlightKnown": "Highlight known words",
+			"highlightKnownDesc": "Words marked as «Known» will be slightly highlighted in green",
+			"showProgress": "Show page progress",
+			"showProgressDesc": "Reading progress bar of the current page",
+			"autoNext": "Auto-advance to next page",
+			"autoNextDesc": "Offer to move to the next page when the end is reached"
+		},
+		"notifications": {
+			"title": "Notifications",
+			"sub": "Manage email and push notifications",
+			"email": "Email notifications",
+			"repeatReminder": "Review reminders",
+			"repeatReminderDesc": "Daily email if there are words due for review",
+			"weeklyReport": "Weekly report",
+			"weeklyReportDesc": "Weekly summary: new words, reading time, streak",
+			"newTexts": "New texts",
+			"newTextsDesc": "Notification about texts published for your level",
+			"supportReplies": "Support replies",
+			"supportRepliesDesc": "Notifications about responses to your support tickets",
+			"marketing": "Marketing emails",
+			"marketingDesc": "Promotions, discounts and platform news",
+			"reminderSchedule": "Reminder schedule",
+			"reminderTime": "Reminder time",
+			"timezone": "Timezone"
+		},
+		"shortcuts": {
+			"title": "Keyboard shortcuts",
+			"sub": "Quick actions for working with the platform",
+			"reader": "Reader",
+			"nextPage": "Next page",
+			"prevPage": "Previous page",
+			"closePopup": "Close popup",
+			"addToDict": "Add word to dictionary",
+			"markKnown": "Mark word as «Known»",
+			"openSidebar": "Open side panel",
+			"reviewBlock": "Review",
+			"showTrans": "Show translation",
+			"easy": "Know (easy)",
+			"normal": "Remember (normal)",
+			"hard": "Don't remember (hard)",
+			"global": "Global",
+			"search": "Search",
+			"goLibrary": "Go to library",
+			"goVocab": "Go to vocabulary"
+		},
+		"sessions": {
+			"title": "Active sessions",
+			"sub": "Devices currently signed into your account",
+			"heading": "Sessions",
+			"current": "Current",
+			"terminate": "Terminate",
+			"terminateAll": "Terminate all",
+			"activeNow": "active now"
+		},
+		"data": {
+			"title": "Data and privacy",
+			"sub": "Export, reset and manage your data",
+			"export": "Data export",
+			"exportVocab": "Personal vocabulary",
+			"exportVocabDesc": "All words with translations, levels and folders · CSV or JSON",
+			"exportProgress": "Progress and statistics",
+			"exportProgressDesc": "Read texts, repetitions and streak data",
+			"exportArchive": "Full account archive",
+			"exportArchiveDesc": "All data: profile, vocabulary, progress, settings",
+			"csv": "CSV",
+			"json": "JSON",
+			"downloadJson": "Download JSON",
+			"requestArchive": "Request",
+			"reset": "Data reset",
+			"resetProgress": "Reset reading progress",
+			"resetProgressDesc": "Delete data about read pages and text progress",
+			"resetButton": "Reset",
+			"clearVocab": "Clear personal vocabulary",
+			"clearVocabDesc": "Delete all words and folders from personal vocabulary",
+			"clearButton": "Clear",
+			"dangerZone": "Danger zone",
+			"deleteAccount": "Delete account",
+			"deleteAccountDesc": "Account will be deactivated. Data is kept for 30 days, then permanently deleted.",
+			"deleteButton": "Delete account"
+		},
+		"common": {
+			"save": "Save",
+			"saving": "Saving…",
+			"reset": "Reset",
+			"cancel": "Cancel"
+		},
+		"clearVocabModal": {
+			"title": "Clear vocabulary?",
+			"desc": "All words and folders will be permanently deleted. This action cannot be undone.",
+			"cancel": "Cancel",
+			"confirm": "Clear"
+		},
+		"deleteAccountModal": {
+			"title": "Delete account?",
+			"desc": "This will deactivate the account. Data will be kept for 30 days, then permanently deleted.",
+			"emailLabel": "Type your email to confirm",
+			"emailPlaceholder": "you@example.com",
+			"cancel": "Cancel",
+			"confirm": "Delete account"
+		},
+		"resetProgressModal": {
+			"title": "Reset progress?",
+			"desc": "Reading progress for all texts will be reset. This action cannot be undone.",
+			"cancel": "Cancel",
+			"confirm": "Reset"
+		},
+		"toasts": {
+			"saved": "Changes saved",
+			"themeSaved": "Theme saved",
+			"fontSaved": "Font size saved",
+			"fontReset": "Font size reset",
+			"languageSaved": "Interface language saved",
+			"goalsSaved": "Goals saved",
+			"notificationsSaved": "Notification settings saved",
+			"exportStarted": "Export started",
+			"exportFailed": "Failed to export data",
+			"archiveQueued": "Archive is being prepared, link will be sent by email",
+			"progressReset": "Progress reset",
+			"vocabCleared": "Vocabulary cleared",
+			"sessionTerminated": "Session terminated",
+			"allSessionsTerminated": "All sessions except the current one terminated",
+			"deleteRequested": "Account deletion requested",
+			"genericError": "Operation failed"
+		},
+		"timezones": {
+			"moscow": "UTC+3 (Moscow)",
+			"london": "UTC+0 (London)",
+			"berlin": "UTC+1 (Berlin)",
+			"tashkent": "UTC+5 (Tashkent)"
+		}
+	},
+	"review": {
+		"meta": {
+			"title": "Review — Mott Larbe",
+			"description": "Spaced repetition for Chechen words: SM-2 algorithm and the custom Decks system."
+		},
+		"pageTitle": "Review",
+		"hint": "Spaced repetition",
+		"tabs": {
+			"sm2": "SM-2",
+			"deck": "Decks",
+			"aria": "Review system"
+		},
+		"sm2": {
+			"intro": {
+				"title": "Time to review",
+				"subtitle": "{count} words are due for review. SM-2 will compute the optimal interval for each.",
+				"empty": "Nothing to review today. Come back tomorrow.",
+				"start": "Start session",
+				"loading": "Loading session…",
+				"error": "Failed to load words. Please try again later.",
+				"stats": {
+					"due": "Today",
+					"learning": "Learning",
+					"streak": "Day streak"
+				},
+				"queue": {
+					"title": "Queue",
+					"more": "+ {count} more words"
+				},
+				"dot": {
+					"NEW": "New",
+					"LEARNING": "Learning",
+					"REVIEW": "Review",
+					"RELEARNING": "Relearning"
+				}
+			},
+			"card": {
+				"modeFront": "Word → Translation",
+				"modeBack": "Translation → Word",
+				"modeToggle": "Switch mode",
+				"flipHint": "Tap to reveal",
+				"position": "#{n}",
+				"progress": "{current} / {total}",
+				"contextLabel": "From the text",
+				"fromSource": "from “{title}”",
+				"ratingLabel": "How well did you remember?",
+				"rate": {
+					"again": { "label": "Forgot", "sub": "again today" },
+					"hard": { "label": "Hard", "sub": "in 1 day" },
+					"good": { "label": "Good", "sub": "in 4 days" },
+					"easy": { "label": "Easy", "sub": "in 10 days" }
+				},
+				"kbd": {
+					"again": "Forgot",
+					"hard": "Hard",
+					"good": "Good",
+					"easy": "Easy"
+				},
+				"skip": "Skip"
+			},
+			"done": {
+				"title": "SM-2 session complete!",
+				"subtitle": "All words reviewed. Next dates have been scheduled.",
+				"stats": {
+					"easy": "Easy",
+					"good": "Good",
+					"hard": "Hard"
+				},
+				"toIntro": "Back to list",
+				"tryDeck": "Try Decks →"
+			}
+		},
+		"deck": {
+			"intro": {
+				"title": "Decks — structured repetition",
+				"subtitle": "Words travel through NEW → OLD → RETIRED → numbered decks. Each day a numbered deck is activated automatically.",
+				"start": "Start session (all decks)",
+				"loading": "Loading decks…",
+				"error": "Failed to load decks.",
+				"row": {
+					"new": "NEW — New",
+					"newDesc": "Recently added words",
+					"old": "OLD — Aged",
+					"oldDesc": "Pushed out of NEW when it overflowed",
+					"retired": "RETIRED — Archive",
+					"retiredDesc": "Pushed out of OLD",
+					"numbered": "Deck #{n}",
+					"numberedDesc": "Rotates daily · {total} numbered decks total",
+					"todayBadge": "today",
+					"of": "/ {max}"
+				},
+				"premium": {
+					"title": "Decks — Premium feature",
+					"subtitle": "The custom learning system is available with a subscription. This is a demo interface.",
+					"cta": "Get Premium"
+				}
+			},
+			"card": {
+				"backToDecks": "Back to decks",
+				"currentDeck": "{name} deck",
+				"badge": {
+					"NEW": "NEW",
+					"OLD": "OLD",
+					"RETIRED": "RETIRED",
+					"NUMBERED": "Deck #{n}"
+				},
+				"ratingLabel": "Did you remember the word?",
+				"rate": {
+					"again": { "label": "Again", "sub": "stays in deck" },
+					"know": { "label": "Got it", "sub": "leaves the deck" }
+				},
+				"kbd": {
+					"again": "Again",
+					"know": "Got it",
+					"flip": "Flip"
+				}
+			},
+			"done": {
+				"title": "Decks complete!",
+				"subtitle": "The next numbered deck unlocks tomorrow.",
+				"stats": {
+					"know": "Got it",
+					"again": "Repeat"
+				},
+				"toIntro": "Back to decks",
+				"toSm2": "Go to SM-2 →"
+			}
+		},
+		"sidePanel": {
+			"sm2Title": "SM-2 session",
+			"deckTitle": "Decks",
+			"passed": "Done",
+			"easy": "Easy",
+			"good": "Good",
+			"hard": "Hard",
+			"know": "Got it",
+			"again": "Again",
+			"streakTitle": "Streak",
+			"streakDays": "{n} days"
+		}
+	},
+	"reader": {
+		"meta": {
+			"title": "Reading · page {page} — Mott Larbe",
+			"description": "Page-by-page reader: tap a word for translation, grammar, and dictionary."
+		},
+		"states": {
+			"loading": "Loading the page…",
+			"error": "Could not load the page"
+		},
+		"topbar": {
+			"back": "Library",
+			"prev": "Previous page",
+			"next": "Next page",
+			"togglePanel": "Word panel",
+			"settings": "Reading settings",
+			"bookmark": "Bookmark"
+		},
+		"body": {
+			"progress": "Reading progress",
+			"byline": "{count} words · page {current} of {total}"
+		},
+		"panel": {
+			"label": "Word",
+			"close": "Close",
+			"loading": "Loading the word…",
+			"error": "Could not load the word",
+			"emptyTitle": "Tap any word",
+			"emptyDesc": "Translation, grammar and morphology will appear here",
+			"baseForm": "Base form",
+			"addToDictionary": "Add to dictionary",
+			"inDictionary": "In dictionary",
+			"examplesLoading": "Loading examples…",
+			"sections": {
+				"translation": "Translation",
+				"grammar": "Grammar",
+				"forms": "Word forms",
+				"examples": "Examples",
+				"level": "Knowledge level"
+			}
+		},
+		"popup": {
+			"loading": "Loading…",
+			"addToDictionary": "Add",
+			"inDictionary": "Saved",
+			"openPanel": "Open in panel"
+		},
+		"sheet": {
+			"close": "Close"
+		},
+		"settings": {
+			"title": "Reading settings",
+			"size": "Text size",
+			"legend": "Legend"
+		},
+		"footer": {
+			"size": "Size"
+		},
+		"learnStatus": {
+			"NEW": "New",
+			"LEARNING": "Learning",
+			"KNOWN": "Known"
+		},
+		"toasts": {
+			"addedToDict": "Word added to dictionary",
+			"removedFromDict": "Word removed from dictionary",
+			"dictFailed": "Could not update the dictionary",
+			"bookmarkAdded": "Bookmark saved",
+			"bookmarkRemoved": "Bookmark removed",
+			"bookmarkFailed": "Could not update the bookmark"
+		}
+	},
+	"subscription": {
+		"title": "Subscription",
+		"meta": {
+			"title": "Subscription — Mott Larbe",
+			"description": "Manage your subscription: plans, limits, payment history and promo codes."
+		},
+		"currentPlan": {
+			"title": "Current plan",
+			"freeName": "Free plan",
+			"freeDescription": "50 translations per day · 500 words in dictionary · basic features",
+			"usageToday": "Usage today",
+			"translations": "Translations",
+			"words": "Dictionary words",
+			"loading": "Loading usage…",
+			"statusFree": "Free",
+			"status": {
+				"ACTIVE": "Active",
+				"TRIALING": "Trial",
+				"CANCELED": "Canceled",
+				"EXPIRED": "Expired"
+			}
+		},
+		"planSelector": {
+			"title": "Choose a plan",
+			"billingToggle": "Billing period",
+			"monthly": "Monthly",
+			"yearly": "Yearly",
+			"loading": "Loading plans…",
+			"error": "Could not load plans",
+			"empty": "No plans available"
+		},
+		"planCard": {
+			"popular": "Popular",
+			"choose": "Choose",
+			"current": "Current",
+			"perMonth": "mo",
+			"perYear": "yr",
+			"forever": "forever"
+		},
+		"features": {
+			"translationsPerDay": "{count} translations / day",
+			"translationsUnlimited": "Unlimited translations",
+			"words": "{count} words",
+			"wordsUnlimited": "Unlimited dictionary",
+			"analytics": "Statistics",
+			"spaceRepetition": "Spaced repetition"
+		},
+		"comparison": {
+			"title": "Plan comparison",
+			"feature": "Feature",
+			"translationsPerDay": "Translations / day",
+			"wordsInDictionary": "Words in dictionary",
+			"analytics": "Statistics",
+			"spaceRepetition": "Spaced repetition",
+			"flashcards": "Flashcard decks",
+			"complexTexts": "Complex texts",
+			"advancedAnalytics": "Advanced analytics",
+			"prioritySupport": "Priority support"
+		},
+		"payments": {
+			"title": "Payment history",
+			"loading": "Loading…",
+			"error": "Could not load payments",
+			"emptyTitle": "No payments yet",
+			"emptyDesc": "History will appear after you subscribe",
+			"status": {
+				"SUCCEEDED": "Paid",
+				"REFUNDED": "Refunded",
+				"FAILED": "Failed",
+				"PENDING": "Pending"
+			}
+		},
+		"promo": {
+			"title": "Promo code",
+			"placeholder": "Enter discount code",
+			"submit": "Apply",
+			"submitting": "Applying…",
+			"empty": "Enter a promo code",
+			"success": "Promo saved — discount will apply on the next payment",
+			"error": "Promo code not found or unavailable"
+		},
+		"manage": {
+			"title": "Manage",
+			"cancelTitle": "Cancel subscription",
+			"cancelDesc": "Access remains until the end of the paid period",
+			"cancelAction": "Cancel"
+		},
+		"modal": {
+			"upgrade": {
+				"title": "Switch to {plan}",
+				"subtitle": "Confirm your plan choice. The charge will be processed immediately.",
+				"periodMonthly": "/ month",
+				"periodYearly": "/ year",
+				"noteMonthly": "First charge today · cancel anytime",
+				"noteYearly": "Annual payment in advance · cancel anytime",
+				"cancel": "Cancel",
+				"confirm": "Subscribe",
+				"submitting": "Processing…"
+			},
+			"cancel": {
+				"title": "Cancel subscription?",
+				"subtitle": "Access to features will remain until the end of the current period. After that the account will switch to the free plan.",
+				"keep": "Keep subscription",
+				"confirm": "Yes, cancel",
+				"submitting": "Canceling…"
+			}
+		}
 	}
 }

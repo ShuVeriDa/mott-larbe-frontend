@@ -2,6 +2,7 @@
 
 import { Chip } from "@/shared/ui/chip";
 import { Select } from "@/shared/ui/select";
+import { Typography } from "@/shared/ui/typography";
 import { useI18n } from "@/shared/lib/i18n";
 import { CEFR_LEVELS, LEARNING_LEVELS } from "@/shared/types";
 import type { DictionarySort } from "@/entities/dictionary";
@@ -37,9 +38,12 @@ export const FilterBar = () => {
 			role="toolbar"
 			aria-label={t("vocabulary.openFilters")}
 		>
-			<span className="shrink-0 whitespace-nowrap text-[11px] font-medium text-t-3 max-md:hidden">
+			<Typography
+				tag="span"
+				className="shrink-0 whitespace-nowrap text-[11px] font-medium text-t-3 max-md:hidden"
+			>
 				{t("vocabulary.filterByStatus")}
-			</span>
+			</Typography>
 			<Chip active={status === null} onClick={() => setStatus(null)}>
 				{t("vocabulary.all")}
 			</Chip>
@@ -58,9 +62,12 @@ export const FilterBar = () => {
 				className="h-4 w-px shrink-0 bg-bd-2 max-md:hidden"
 			/>
 
-			<span className="shrink-0 whitespace-nowrap text-[11px] font-medium text-t-3 max-md:hidden">
+			<Typography
+				tag="span"
+				className="shrink-0 whitespace-nowrap text-[11px] font-medium text-t-3 max-md:hidden"
+			>
 				{t("vocabulary.filterByLevel")}
-			</span>
+			</Typography>
 			<Chip
 				active={cefrLevel === null}
 				onClick={() => setCefrLevel(null)}

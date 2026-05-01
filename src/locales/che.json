@@ -351,8 +351,83 @@
 			"title": "Керла куьцал",
 			"nameLabel": "Куьцалан ц1е",
 			"namePlaceholder": "масала, Лелан хандешнаш",
+			"descriptionLabel": "Гойтуш дар",
+			"descriptionPlaceholder": "Куьцалан тема (оьшуш дац)",
+			"colorLabel": "Бос",
+			"iconLabel": "Жайна",
 			"cancel": "Дитар",
-			"submit": "Кхолла"
+			"submit": "Кхолла",
+			"save": "Юьйцур",
+			"editTitle": "Куьцал хийца",
+			"deleteTitle": "Куьцал дIадаха",
+			"deleteConfirm": "«{name}» дIадахийта? Дешнаш дошамехь дуьсур ду, амма куьцалехь хир дац.",
+			"delete": "ДIадаха",
+			"errors": {
+				"nameRequired": "Куьцалан ц1е оьшу",
+				"saveFailed": "Куьцал юьйца хилла дац",
+				"deleteFailed": "Куьцал дIадаха хилла дац",
+				"createFailed": "Куьцал кхолла хилла дац"
+			}
+		},
+		"foldersPage": {
+			"meta": {
+				"title": "Дошаман куьцалш — Мотт Ларбе",
+				"description": "Хьайн нохчийн дошам куьцалша дIанисъе: керла куьцалш кхолла, ц1ераш хийца, дешнаш т1етуьйса."
+			},
+			"breadcrumb": {
+				"vocabulary": "Дошам",
+				"folders": "Куьцалш"
+			},
+			"newFolder": "Керла куьцал",
+			"summary": {
+				"foldersCount": "Куьцалш кхоьллина",
+				"wordsInFolders": "Куьцалшкахь дешнаш",
+				"knownWords": "«Хаьа» дешнаш",
+				"wordsWithoutFolder": "Куьцал доцу"
+			},
+			"section": {
+				"title": "Сан куьцалш",
+				"limitUsed": "{used} куьцал {max} куьцалх",
+				"limitUnlimited": "{used} куьцал · доза доцуш",
+				"limitDisabled": "Куьцалш Premium-планехь ю"
+			},
+			"card": {
+				"new": "Керла",
+				"learning": "Iамош",
+				"known": "Хаьа",
+				"progress": "Хьал",
+				"open": "Делла →",
+				"noWords": "Куьцал даьсса ду",
+				"updatedToday": "тахана хийцина",
+				"updatedAgo": "хийцина {time}",
+				"never": "ц1еххьана хийцина дац",
+				"menu": "Куьцалан меню",
+				"menuRename": "Цlе хийца",
+				"menuRecolor": "Бос хийца",
+				"menuOpen": "Куьцал делла",
+				"menuDelete": "Куьцал дIадаха"
+			},
+			"empty": {
+				"title": "Куьцалш ца Iара",
+				"description": "Хьалхара куьцал кхолла — дешнаш темашца дIанисдеш.",
+				"cta": "Куьцал кхолла"
+			},
+			"newCard": {
+				"title": "Керла куьцал",
+				"description": "Дешнаш темашца дIагулдан"
+			},
+			"uncategorized": {
+				"title": "Куьцал доцу",
+				"count": "{count} дош",
+				"distributeAll": "Дерриг дIанисдан",
+				"empty": "Дерриг дешнаш куьцалшкахь ду",
+				"loadFailed": "Дешнаш чудалийта хилла дац",
+				"assignTo": "«{word}» куьцале т1етоха",
+				"chooseFolder": "Куьцал хаьржа",
+				"noFolders": "Хьалха куьцал кхолла"
+			},
+			"limitReached": "Куьцалш гIоппе кхаьчна ({max}). Цул сов кхолла лиахь, план тотта.",
+			"premiumOnly": "Куьцалш Premium-планехь ю."
 		},
 		"wordsCount": "{count} дош",
 		"empty": "Дешнаш ца карийна",
@@ -611,5 +686,610 @@
 		"daysAgo": "{n} д хьалха",
 		"todayAt": "тахна, {time}",
 		"tomorrowAt": "кхана, {time}"
+	},
+	"statistics": {
+		"meta": {
+			"title": "Статистика — Мотт Ларбе",
+			"description": "Хьан хьадерг хьажа: 1алашйина дешнаш, ешаран хан, серия, кхеташ хилларг а, активность."
+		},
+		"pageTitle": "Статистика",
+		"period": {
+			"week": "К1ира",
+			"month": "Бутт",
+			"year": "Шо",
+			"all": "Массо хан"
+		},
+		"kpi": {
+			"words": "Дешнаш 1амийна",
+			"reading": "Ешаран хан",
+			"reviews": "Кхеташ хилла",
+			"texts": "Йоьшна тексташ",
+			"deltaPositive": "+{n} х1окху ханахь",
+			"deltaNegative": "{n} х1окху ханахь",
+			"deltaZero": "хийцам бац",
+			"hoursShort": "{n}с",
+			"minutesShort": "{n}мин"
+		},
+		"streak": {
+			"daysInRow": "де т1аьхь-т1аьхь",
+			"record": "Рекорд: {n} де",
+			"milestoneDays": "{n} де",
+			"yearActivity": "Шеран активность",
+			"less": "К1еззиг",
+			"more": "Дукха"
+		},
+		"words": {
+			"title": "Дешнийн прогресс",
+			"meta": "{current} / {goal} деш",
+			"unitShort": "деш",
+			"known": "Хаьа",
+			"learning": "1ама",
+			"new": "Керла",
+			"remaining": "Дисна"
+		},
+		"perDay": {
+			"title": "Дешнаш дийнах",
+			"meta": "Т1аьхьара 30 де",
+			"empty": "Х1инцалц хьадерг дац"
+		},
+		"texts": {
+			"title": "Текстийн прогресс",
+			"all": "массо текст →",
+			"new": "Керла",
+			"wordsOf": "{known} / {total}",
+			"empty": "Тексташ х1инцалц йолийна яц"
+		},
+		"accuracy": {
+			"title": "Кхеташ хиларан нийса",
+			"meta": "х1окху ханахь",
+			"score": "массо нийсо",
+			"correct": "Нийса",
+			"wrong": "Гӏалат",
+			"bestStreak": "Дика серия",
+			"bestStreakValue": "{n} т1аьхь-т1аьхь",
+			"sessions": "Сессеш"
+		},
+		"activity": {
+			"title": "Т1ехьара гӏуллакхаш",
+			"empty": "Активность х1инцалц яц",
+			"types": {
+				"READ_TEXT": "Йоьшу",
+				"ADD_WORDS": "Дешнаш т1етоьхна",
+				"REVIEW": "Кхеташ хиларан сесси"
+			}
+		},
+		"loading": "Статистика чуйолу…",
+		"error": "Статистика чуйо ца хуьлу",
+		"retry": "Кхин а гӏерта"
+	},
+	"settings": {
+		"meta": {
+			"title": "Кепош — Мотт Ларбе",
+			"description": "Аккаунтан, теманан, дешаран 1алашонийн, хаамийн а данен экспортан кепош."
+		},
+		"pageTitle": "Кепош",
+		"premium": "Premium",
+		"loading": "Кепош чуйолу…",
+		"loadError": "Кепош чуйо ца хуьлу",
+		"tabs": {
+			"appearance": "Аьрхалла",
+			"learning": "Дешар",
+			"reader": "Ридер",
+			"notifications": "Хаамаш",
+			"shortcuts": "Г1урмаш",
+			"sessions": "Сессеш",
+			"data": "Хаам"
+		},
+		"appearance": {
+			"title": "Аьрхалла",
+			"sub": "Тема а, интерфейсан гайтар а нисде",
+			"theme": "Тема",
+			"themeLight": "К1айн",
+			"themeDark": "1аьржа",
+			"themeSystem": "Системан",
+			"language": "Интерфейсан мотт",
+			"languageHint": "Меню, кнопкаш, системан хаамаш гойту мотт",
+			"langRu": "Русский",
+			"langEn": "English",
+			"langChe": "Нохчийн"
+		},
+		"learning": {
+			"title": "Дешар",
+			"sub": "1емачу меттан а дийнан 1алашонаш",
+			"languageLevel": "Мотт а, дарж а",
+			"learningLang": "1емаш болу мотт",
+			"learningLangChe": "Нохчийн (CHE)",
+			"learningLangRu": "Оьрсийн (RU)",
+			"level": "Дарж",
+			"levelA1": "A1 — Юьхьехь",
+			"levelA2": "A2",
+			"levelB1": "B1 — Юккъе",
+			"levelB2": "B2",
+			"levelC1": "C1",
+			"levelC2": "C2 — Лакхара",
+			"transLang": "Гочдаран мотт",
+			"transLangHint": "Цхьаъ т1еттIехь муьлххачу матте дешнаш гочдан деза",
+			"dailyGoal": "Дийнан 1алашо",
+			"newWords": "Дийнахь керла дешнаш",
+			"readingMinutes": "Дийнахь дешаран минотш",
+			"wordsUnit": "дешнаш",
+			"minutesUnit": "минотш",
+			"dictBehavior": "Дошаман г1улч",
+			"autoAdd": "Тэккахь автоматехь т1етоха",
+			"autoAddDesc": "Дош хьалхарчу гочдарехь дошаме т1етуьйху, тоьшалла оьшуш дац",
+			"showGrammar": "Грамматика гайта",
+			"showGrammarDesc": "Дешан дакъош, падежаш а грамматикан кхин а хаам popup чу гайта",
+			"showExamples": "Масалш гайта",
+			"showExamplesDesc": "Дешан агIонан панелахь масалш гайта",
+			"srs": "Карладаккхар",
+			"reviewReminder": "Карладаккхаран дагаоьцияраш",
+			"reviewReminderDesc": "Коьрта аг1он т1ехь карладаккхаран дешнийн терахь гайта",
+			"enableDecks": "Деки 1амор д1ахаа",
+			"enableDecksDesc": "NEW / OLD / RETIRED дека т1ехула декхар деш дешнаш карладахкаран автораллин система"
+		},
+		"reader": {
+			"title": "Ридер",
+			"sub": "Йозанаш дешаран кепош",
+			"fontSize": "Йозанан барам",
+			"preview": "Хьалха гайтар",
+			"previewText": "Со хаза ду нохчийн мотт. Дика доьшу стаг — дика дуьйцу.",
+			"popupMode": "Тэккахь гочдар",
+			"popup": "Чудолу окно",
+			"popupDesc": "Дешан т1ехула жима окно гочдаршций дошаме т1етоха кнопканций",
+			"sidebar": "Аьрру панел",
+			"sidebarDesc": "Дешан йозанчу панелехь дерриге хаам: грамматика, масалш, даржан 1алашо",
+			"both": "Шиъ а",
+			"bothDesc": "Хьалха popup, тIеттIе цуьна т1ехь — аьрру панел",
+			"display": "Гайтар",
+			"highlightKnown": "Хууш долу дешнаш гойтучу басарх билгалъе",
+			"highlightKnownDesc": "«Хаа» статусаца долу дешнаш баьццарчу басарх жима белгалдер",
+			"showProgress": "Аг1он хьалкхиар гайта",
+			"showProgressDesc": "Х1инцалерчу аг1он дешаран хьалкхиаран буо",
+			"autoNext": "Кхечу аг1оне автомате д1аьхьа",
+			"autoNextDesc": "Чекхйолучу хенахь т1еттIечу аг1оне д1ахьар а лекхий-лохарг"
+		},
+		"notifications": {
+			"title": "Хаамаш",
+			"sub": "Email а push-хаамаш нисдар",
+			"email": "Email-хаамаш",
+			"repeatReminder": "Карладаккхаран дагаоьцияр",
+			"repeatReminderDesc": "Дийнахь email, нагахь карладахка дешнаш делахь",
+			"weeklyReport": "К1ирнан жам1",
+			"weeklyReportDesc": "К1иран жам1: керла дешнаш, дешаран хан, streak",
+			"newTexts": "Керла йозанаш",
+			"newTextsDesc": "Хьан даржехь керла йозанаш кечдина бохуш хаам",
+			"supportReplies": "Г1олин жоп",
+			"supportRepliesDesc": "Хьайн х1отт1амнан жоп т1едогIа",
+			"marketing": "Маркетингаран кехаташ",
+			"marketingDesc": "Акцеш, эшаршший платформин керла хабарш",
+			"reminderSchedule": "Дагаоьцияран хан",
+			"reminderTime": "Дагаоьцияран хан",
+			"timezone": "Хенан зонаш"
+		},
+		"shortcuts": {
+			"title": "Клавиатуран г1урмаш",
+			"sub": "Платформаца сихчура дешран г1урмаш",
+			"reader": "Ридер",
+			"nextPage": "Тӏехьайолучу аг1о",
+			"prevPage": "Хьалхалерчу аг1о",
+			"closePopup": "Чудолу окно д1акъовла",
+			"addToDict": "Дош дошаме т1етоха",
+			"markKnown": "Дош «Хаа» билгалде",
+			"openSidebar": "Аьрру панел д1ахаа",
+			"reviewBlock": "Карладаккхар",
+			"showTrans": "Гочдар гайта",
+			"easy": "Хаа (атта)",
+			"normal": "Дицдеш дац",
+			"hard": "Ца хууш (хала)",
+			"global": "Дерригенан",
+			"search": "Лехар",
+			"goLibrary": "Библиотеке д1ахьа",
+			"goVocab": "Дошаме д1ахьа"
+		},
+		"sessions": {
+			"title": "Жигарваьлла сессеш",
+			"sub": "Аккаунте чувелла гIирсаш",
+			"heading": "Сессеш",
+			"current": "Х1инцалера",
+			"terminate": "Чакхйаккха",
+			"terminateAll": "Берриге чекхйахка",
+			"activeNow": "х1инцца жигара ю"
+		},
+		"data": {
+			"title": "Хаам а къайлалла",
+			"sub": "Хаамаш экспорт, сброс, нисдар",
+			"export": "Хаамаш экспорт",
+			"exportVocab": "Хьайн дошам",
+			"exportVocabDesc": "Дерриге дешнаш гочдаршций, даржашций, куьцалшций · CSV я JSON",
+			"exportProgress": "Хьалкхиар а статистика",
+			"exportProgressDesc": "Дешна йозанаш, карладаккхар, streak хаам",
+			"exportArchive": "Аккаунтан дерриге архив",
+			"exportArchiveDesc": "Дерриге хаам: профил, дошам, хьалкхиар, кепош",
+			"csv": "CSV",
+			"json": "JSON",
+			"downloadJson": "JSON чуоьцу",
+			"requestArchive": "Декхар де",
+			"reset": "Хаам сброс",
+			"resetProgress": "Дешаран хьалкхиар д1аяккха",
+			"resetProgressDesc": "Дешна аг1онех, йозанийн хьалкхиаран хаам д1аяккха",
+			"resetButton": "Д1аяккха",
+			"clearVocab": "Хьайн дошам цIандан",
+			"clearVocabDesc": "Берриге дешнаш а куьцалш а хьайн дошамах д1аяхар",
+			"clearButton": "Ц1ане",
+			"dangerZone": "Кхерамечу зонин",
+			"deleteAccount": "Аккаунт д1аяккха",
+			"deleteAccountDesc": "Аккаунт деактивациера. Хаам 30 дийнахь латтор бу, тIаккха д1абохуьйту цхьаъ а юхадерзо ца лур.",
+			"deleteButton": "Аккаунт д1аяккха"
+		},
+		"common": {
+			"save": "1алашде",
+			"saving": "1алашъеш…",
+			"reset": "Юхайеза",
+			"cancel": "Иммен"
+		},
+		"clearVocabModal": {
+			"title": "Дошам ц1андан?",
+			"desc": "Берриге дешнаш а куьцалш а тӏадеш дIадоху. Х1ара г1уллакх юха а яккха ца лур.",
+			"cancel": "Иммен",
+			"confirm": "Ц1ане"
+		},
+		"deleteAccountModal": {
+			"title": "Аккаунт д1аяккха?",
+			"desc": "Хӏара гIуллакхо аккаунт деактивацира. Хаам 30 дийнахь латтор бу, тIаккха цӏадаха ца лур.",
+			"emailLabel": "Тоьшалле email чуяздо",
+			"emailPlaceholder": "you@example.com",
+			"cancel": "Иммен",
+			"confirm": "Аккаунт д1аяккха"
+		},
+		"resetProgressModal": {
+			"title": "Хьалкхиар юхайеза?",
+			"desc": "Дерриге йозанийн дешаран хьалкхиар юхайеза. Х1ара г1уллакх юха а яккха ца лур.",
+			"cancel": "Иммен",
+			"confirm": "Юхайеза"
+		},
+		"toasts": {
+			"saved": "Хийцамаш 1алашбина",
+			"themeSaved": "Тема 1алашйина",
+			"fontSaved": "Йозанан барам 1алашбина",
+			"fontReset": "Йозанан барам юха а вер",
+			"languageSaved": "Интерфейсан мотт 1алашбина",
+			"goalsSaved": "1алашонаш 1алашйина",
+			"notificationsSaved": "Хаамийн кепош 1алашбина",
+			"exportStarted": "Экспорт болийна",
+			"exportFailed": "Хаам экспортан ца хуьлу",
+			"archiveQueued": "Архив кечйеш ю, г1уллакхан хьесап email-е дог1ур ду",
+			"progressReset": "Хьалкхиар юхадерзийна",
+			"vocabCleared": "Дошам ц1анбина",
+			"sessionTerminated": "Сессе чекхъяьккхина",
+			"allSessionsTerminated": "Х1инцалера сесси санна, дерриге чакх яхана",
+			"deleteRequested": "Дӏадаккхар оьшуш делла",
+			"genericError": "Г1уллакх кхочуш ца дина"
+		},
+		"timezones": {
+			"moscow": "UTC+3 (Москва)",
+			"london": "UTC+0 (Лондон)",
+			"berlin": "UTC+1 (Берлин)",
+			"tashkent": "UTC+5 (Ташкент)"
+		}
+	},
+	"review": {
+		"meta": {
+			"title": "Карладаккхар — Мотт Ларбе",
+			"description": "Нохчийн дешнаш карладаккхар: SM-2 алгоритм а, Деки авторски системасий."
+		},
+		"pageTitle": "Карладаккхар",
+		"hint": "Интервалаца карладаккхар",
+		"tabs": {
+			"sm2": "SM-2",
+			"deck": "Деки",
+			"aria": "Карладаккхаран система"
+		},
+		"sm2": {
+			"intro": {
+				"title": "Дешнаш карладахкаран хан",
+				"subtitle": "{count} дешнаш карладаккхар хьовзу. SM-2 хIоранна а нийсачу интервал хIоттор бу.",
+				"empty": "Тахна карладаккха х1ума дац. Кхана юхаверза.",
+				"start": "Сесси йолае",
+				"loading": "Сесси чуйолу…",
+				"error": "Дешнаш чуйо ца хуьлу. Тӏехьа гӏорта.",
+				"stats": {
+					"due": "Тахна",
+					"learning": "1емаш",
+					"streak": "Юкъ-юкъа дийнаш"
+				},
+				"queue": {
+					"title": "Очередь",
+					"more": "+ кхин а {count} дош"
+				},
+				"dot": {
+					"NEW": "Керла",
+					"LEARNING": "1емаш",
+					"REVIEW": "Карладаккхар",
+					"RELEARNING": "Юха 1амар"
+				}
+			},
+			"card": {
+				"modeFront": "Дош → Гочдар",
+				"modeBack": "Гочдар → Дош",
+				"modeToggle": "Кеп хийца",
+				"flipHint": "Гайтарна тӏеттӏа басхо",
+				"position": "#{n}",
+				"progress": "{current} / {total}",
+				"contextLabel": "Йозанна тӏехь",
+				"fromSource": "«{title}» чу",
+				"ratingLabel": "Дицдинехь дицдина дац?",
+				"rate": {
+					"again": { "label": "Дицдина", "sub": "тахна юха а" },
+					"hard": { "label": "Хала", "sub": "1 дийнахь" },
+					"good": { "label": "Хууш", "sub": "4 дийнахь" },
+					"easy": { "label": "Атта", "sub": "10 дийнахь" }
+				},
+				"kbd": {
+					"again": "Дицдина",
+					"hard": "Хала",
+					"good": "Хууш",
+					"easy": "Атта"
+				},
+				"skip": "Кхайкха"
+			},
+			"done": {
+				"title": "SM-2 сесси кхочушъелла!",
+				"subtitle": "Дерриге дешнаш карладаьхна. Тӏеттӏа тӏедогIур долу терахьаш хӏиттийна.",
+				"stats": {
+					"easy": "Атта",
+					"good": "Хууш",
+					"hard": "Хала"
+				},
+				"toIntro": "Списке юха",
+				"tryDeck": "Деки гӏорта →"
+			}
+		},
+		"deck": {
+			"intro": {
+				"title": "Деки — нийсачу куьцехь карладаккхар",
+				"subtitle": "Дешнаш NEW → OLD → RETIRED → нумерованни деки чу д1аоьху. Хӏора а дийнахь автоматехь цхьа нумерованни дека жигарйолу.",
+				"start": "Сесси йолае (берриге деки)",
+				"loading": "Деки чуйолу…",
+				"error": "Деки чуйо ца хуьлу.",
+				"row": {
+					"new": "NEW — Керла",
+					"newDesc": "Тахарлехь т1етехкина дешнаш",
+					"old": "OLD — Доьха",
+					"oldDesc": "NEW бузуш т1ехдеха",
+					"retired": "RETIRED — Архив",
+					"retiredDesc": "OLD чухула т1ехдеха",
+					"numbered": "Дека #{n}",
+					"numberedDesc": "Дийнахь ротаци · {total} нумерованни",
+					"todayBadge": "тахна",
+					"of": "/ {max}"
+				},
+				"premium": {
+					"title": "Деки — Premium",
+					"subtitle": "Авторалла 1емаран система подписке т1ехь хьаькъала ю. Демо-интерфейс гайтина ю.",
+					"cta": "Premium схьаэца"
+				}
+			},
+			"card": {
+				"backToDecks": "Декашка",
+				"currentDeck": "{name} дека",
+				"badge": {
+					"NEW": "NEW",
+					"OLD": "OLD",
+					"RETIRED": "RETIRED",
+					"NUMBERED": "Дека #{n}"
+				},
+				"ratingLabel": "Дош дагадеара хьуна?",
+				"rate": {
+					"again": { "label": "Юха", "sub": "декехь буьсу" },
+					"know": { "label": "Хууш", "sub": "декех д1абоьду" }
+				},
+				"kbd": {
+					"again": "Юха",
+					"know": "Хууш",
+					"flip": "Гайта"
+				}
+			},
+			"done": {
+				"title": "Деки чекхдаьлла!",
+				"subtitle": "Тӏеттӏадолу нумерованни дека кхана жигарйолур ю.",
+				"stats": {
+					"know": "Хууш",
+					"again": "Юха"
+				},
+				"toIntro": "Декашка",
+				"toSm2": "SM-2 →"
+			}
+		},
+		"sidePanel": {
+			"sm2Title": "SM-2 сесси",
+			"deckTitle": "Деки",
+			"passed": "Чакхдаьлла",
+			"easy": "Атта",
+			"good": "Хууш",
+			"hard": "Хала",
+			"know": "Хууш",
+			"again": "Юха",
+			"streakTitle": "Серия",
+			"streakDays": "{n} дийнаш"
+		}
+	},
+	"reader": {
+		"meta": {
+			"title": "Доьшу · аг1о {page} — Мотт Ларбе",
+			"description": "Аг1онех доьшу ридер: дешан т1е тоь — гочдар, грамматика, словарь."
+		},
+		"states": {
+			"loading": "Аг1о ч1ог1а ю…",
+			"error": "Аг1о йоьш яц"
+		},
+		"topbar": {
+			"back": "Библиотека",
+			"prev": "Хьалхара аг1о",
+			"next": "Кхиаран аг1о",
+			"togglePanel": "Дешан панель",
+			"settings": "Доьшаран нисдарш",
+			"bookmark": "Билгало"
+		},
+		"body": {
+			"progress": "Доьшаран прогресс",
+			"byline": "{count} дош · аг1о {current} / {total}"
+		},
+		"panel": {
+			"label": "Дош",
+			"close": "Д1акъовла",
+			"loading": "Дош ч1ог1а ю…",
+			"error": "Дош йоьш яц",
+			"emptyTitle": "Дешан т1е тоь",
+			"emptyDesc": "Гочдар, грамматика, морфологи д1агучу йолу",
+			"baseForm": "Бух",
+			"addToDictionary": "Словарь чу таса",
+			"inDictionary": "Словаре чохь",
+			"examplesLoading": "Масалш ч1ог1а ду…",
+			"sections": {
+				"translation": "Гочдар",
+				"grammar": "Грамматика",
+				"forms": "Дешан кепаш",
+				"examples": "Масалш",
+				"level": "Хааран дарж"
+			}
+		},
+		"popup": {
+			"loading": "Ч1ог1а ду…",
+			"addToDictionary": "Тохкара",
+			"inDictionary": "Чохь ду",
+			"openPanel": "Панеле схьадилла"
+		},
+		"sheet": {
+			"close": "Д1акъовла"
+		},
+		"settings": {
+			"title": "Доьшаран нисдарш",
+			"size": "Йозанан барам",
+			"legend": "Билгалонаш"
+		},
+		"footer": {
+			"size": "Барам"
+		},
+		"learnStatus": {
+			"NEW": "Керла",
+			"LEARNING": "1амадо",
+			"KNOWN": "Хаьа"
+		},
+		"toasts": {
+			"addedToDict": "Дош словаре тоьхна",
+			"removedFromDict": "Дош словарех д1адаьккхина",
+			"dictFailed": "Словарь хийцалуш яц",
+			"bookmarkAdded": "Билгало йиллина",
+			"bookmarkRemoved": "Билгало д1аяьккхина",
+			"bookmarkFailed": "Билгало хийцалуш яц"
+		}
+	},
+	"subscription": {
+		"title": "Жоп",
+		"meta": {
+			"title": "Жоп — Мотт Ларбе",
+			"description": "Жоп лело: тарифаш, лимиташ, бахар а промокодаш."
+		},
+		"currentPlan": {
+			"title": "Х1инцца долу тариф",
+			"freeName": "Маьрша тариф",
+			"freeDescription": "50 гочдар де / 500 дош дошамехь / коьрта фийнаш",
+			"usageToday": "Тахана лелийнарг",
+			"translations": "Гочдарш",
+			"words": "Дашмехь дешнаш",
+			"loading": "Лоадиш…",
+			"statusFree": "Маьрша",
+			"status": {
+				"ACTIVE": "Лелаш бу",
+				"TRIALING": "Триал",
+				"CANCELED": "Социйна",
+				"EXPIRED": "Чекх белла"
+			}
+		},
+		"planSelector": {
+			"title": "Тариф хаьржа",
+			"billingToggle": "Бахаран хан",
+			"monthly": "Беттан",
+			"yearly": "Шеран",
+			"loading": "Тарифаш лоадиш…",
+			"error": "Тарифаш ца лоадеш",
+			"empty": "Тарифаш яц"
+		},
+		"planCard": {
+			"popular": "Хьалха долу",
+			"choose": "Хаьржа",
+			"current": "Х1инцца",
+			"perMonth": "бутт",
+			"perYear": "шо",
+			"forever": "гуттар"
+		},
+		"features": {
+			"translationsPerDay": "{count} гочдар / де",
+			"translationsUnlimited": "Лимит йоцу гочдарш",
+			"words": "{count} дош",
+			"wordsUnlimited": "Лимит йоцу дошам",
+			"analytics": "Статистика",
+			"spaceRepetition": "Юхадерзор"
+		},
+		"comparison": {
+			"title": "Тарифаш дустар",
+			"feature": "Фийна",
+			"translationsPerDay": "Гочдарш / де",
+			"wordsInDictionary": "Дешнаш дошамехь",
+			"analytics": "Статистика",
+			"spaceRepetition": "Юхадерзоран систем",
+			"flashcards": "Деки",
+			"complexTexts": "Хала йозанаш",
+			"advancedAnalytics": "Шуьйра аналитика",
+			"prioritySupport": "Хьалхара г1о"
+		},
+		"payments": {
+			"title": "Бахаран истори",
+			"loading": "Лоадиш…",
+			"error": "Бахарш ца лоадеш",
+			"emptyTitle": "Бахарш яц",
+			"emptyDesc": "Жоп юкъайаьккхинчул т1аьхьа гур ю",
+			"status": {
+				"SUCCEEDED": "Дина",
+				"REFUNDED": "Юхадирзина",
+				"FAILED": "Г1алат",
+				"PENDING": "Лоруш"
+			}
+		},
+		"promo": {
+			"title": "Промокод",
+			"placeholder": "Хадоран код яздай",
+			"submit": "Лело",
+			"submitting": "Лелош…",
+			"empty": "Промокод яздай",
+			"success": "Промокод лардина — хадор д1аэцча гур ю",
+			"error": "Промокод ца карийна"
+		},
+		"manage": {
+			"title": "Лелор",
+			"cancelTitle": "Жоп сацо",
+			"cancelDesc": "Бирза хан чекх йоллалц д1ахьош ю",
+			"cancelAction": "Сацо"
+		},
+		"modal": {
+			"upgrade": {
+				"title": "{plan} т1е дала",
+				"subtitle": "Хаьржна тариф бакъдай. Ахча сатарира схьалоцур ду.",
+				"periodMonthly": "/ бутт",
+				"periodYearly": "/ шо",
+				"noteMonthly": "Хьалхара бахар тахана · муьлххачу хенахь сацо мега",
+				"noteYearly": "Шерах хьалхе бахар · муьлххачу хенахь сацо мега",
+				"cancel": "Юхайаккха",
+				"confirm": "Жоп юкъайаккха",
+				"submitting": "Юкъайохуш…"
+			},
+			"cancel": {
+				"title": "Жоп соцур ю?",
+				"subtitle": "Х1инццалера хан чекх йоллалц фийнаш д1ахьош ю. Цул т1аьхьа аккаунт маьрша тарифан т1е чекхйолу.",
+				"keep": "Ма соцо",
+				"confirm": "Х1аъ, сацо",
+				"submitting": "Соцуш…"
+			}
+		}
 	}
 }
