@@ -1,0 +1,72 @@
+"use client";
+
+import { useFeedbackThread } from "@/entities/feedback";
+import { useSendFeedbackMessage } from "@/features/send-feedback-message";
+import { useMarkFeedbackRead } from "@/features/mark-feedback-read";
+import { useEffect } from "react";
+import { FeedbackChatHeader } from "./feedback-chat-header";
+import { FeedbackMessages } from "./feedback-messages";
+import { FeedbackChatInput } from "./feedback-chat-input";
+import { FeedbackChatSkeleton } from "./feedback-skeleton";
+
+type Translator = (key: string) => string;
+
+interface FeedbackChatProps {
+	threadId: string;
+	userInitials: string;
+	isMobileVisible: boolean;
+	t: Translator;
+	onBack: () => void;
+}
+
+export const FeedbackChat = ({
+	threadId,
+	userInitials,
+	isMobileVisible,
+	t,
+	onBack,
+}: FeedbackChatProps) => {
+	const { data: thread, isPending } = useFeedbackThread(threadId);
+	const sendMessage = useSendFeedbackMessage(threadId);
+	const markRead = useMarkFeedbackRead();
+
+	useEffect(() => {
+		if (thread && thread.unreadCountUser > 0) {
+			markRead.mutate(threadId);
+		}
+	}, [threadId, thread?.unreadCountUser]);
+
+	const isClosed = thread?.status === "RESOLVED";
+
+	return (
+		<div
+			className={[
+				"flex flex-1 min-w-0 flex-col bg-bg transition-transform duration-[280ms]",
+				// Mobile: absolute, slides in from right
+				"max-sm:absolute max-sm:inset-0 max-sm:z-10",
+				isMobileVisible ? "max-sm:translate-x-0" : "max-sm:translate-x-full",
+			].join(" ")}
+		>
+			{isPending || !thread ? (
+				<FeedbackChatSkeleton />
+			) : (
+				<>
+					<FeedbackChatHeader thread={thread} t={t} onBack={onBack} />
+
+					<FeedbackMessages
+						messages={thread.messages}
+						userInitials={userInitials}
+						t={t}
+					/>
+
+					<FeedbackChatInput
+						isClosed={isClosed}
+						isPending={sendMessage.isPending}
+						t={t}
+						onSend={(text) => sendMessage.mutate(text)}
+					/>
+				</>
+			)}
+		</div>
+	);
+};

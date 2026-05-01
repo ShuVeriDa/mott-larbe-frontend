@@ -1526,5 +1526,210 @@
 			"error": "Схьалаца ца хилира",
 			"retry": "Кхин хIотта"
 		}
+	},
+	"feedback": {
+		"meta": {
+			"title": "ДIахо хиллу хаамаш — Мотт Ларбе",
+			"description": "ХаттарI дIаяздé, гIалат хаийтé я хIоттамаш хаийтé Мотт Ларбе командина."
+		},
+		"pageTitle": "ДIахо хиллу хаамаш",
+		"myThreads": "Сан хаттарш",
+		"newThread": "Керла хаттар",
+		"new": "Керла",
+		"today": "Тахана",
+		"back": "ТIехьа",
+		"selectThread": "Чата уьйр лела чат схьаяха",
+		"threadTypes": {
+			"QUESTION": "ХаттарI",
+			"BUG": "Гlалат",
+			"IDEA": "Ойла",
+			"COMPLAINT": "Дукхабуьйсу"
+		},
+		"threadTypeDesc": {
+			"QUESTION": "ХIун а мел болу балхIо",
+			"BUG": "Хlума балхIо боцу",
+			"IDEA": "Хlоттаме хIетал",
+			"COMPLAINT": "ХIума са тохку"
+		},
+		"statuses": {
+			"NEW": "Керла",
+			"IN_PROGRESS": "Хьаьжча",
+			"ANSWERED": "Жоп лаьцна",
+			"RESOLVED": "Дийна"
+		},
+		"modal": {
+			"title": "Керла хаттар",
+			"typeLabel": "Хаттаран тайп",
+			"messageLabel": "Хаам",
+			"messagePlaceholder": "Хаттар е гIалат подробно ду язде...",
+			"cancel": "ДIадала",
+			"submit": "Дахийта"
+		},
+		"chat": {
+			"placeholder": "Хаам яздé...",
+			"hint": "Enter — дахийта · Shift+Enter — кхин могIа",
+			"closed": "Хаттар дийна ду",
+			"supportInitials": "МЛ"
+		},
+		"empty": {
+			"title": "Хаттарш дац",
+			"description": "Хаттар ду е гIалат карийра — яздé тхуна",
+			"action": "Керла хаттар"
+		}
+	},
+	"dashboard": {
+		"meta": {
+			"title": "Коьрта — Мотт Ларбе",
+			"description": "Хьайн дешаран панель: йозанашца хьалкхиар, дошаман статистика, карладаккхаран хан."
+		},
+		"pageTitle": "Коьрта",
+		"searchPlaceholder": "Йозанаш лаха...",
+		"greeting": {
+			"morning": "Суьйренан дика хилийла",
+			"afternoon": "Дийнахь дика хилийла",
+			"evening": "Суьйре дика хилийла",
+			"level": "дарж",
+			"langChe": "нохчийн",
+			"langRu": "оьрсийн",
+			"dueToday": "{count} дош карладаккха"
+		},
+		"stats": {
+			"textsRead": "йозанаш деша",
+			"words": "дош дошамехь",
+			"streak": "де дуьйна дIадоьлу",
+			"dueToday": "карладаккхар"
+		},
+		"reviewBanner": {
+			"title": "Дешнаш тахана карладаккха деза",
+			"subtitle": "Карладаккха хIинца, интервал ца дерзийта",
+			"newWords": "{count} керланаш",
+			"learning": "{count} 1емаш",
+			"start": "ДIадаха"
+		},
+		"continueReading": {
+			"title": "Йоьшуш дехьадала",
+			"viewAll": "дерриге →",
+			"pageOf": "агIо {current} {total}-чура",
+			"continue": "Дехьадала",
+			"almostDone": "Тайна кхоча"
+		},
+		"library": {
+			"title": "Йозанийн библиотека",
+			"viewAll": "дерриге →",
+			"newText": "Керла",
+			"words": "{count} дош"
+		},
+		"error": "Хаамаш схьалаца хIума хилла",
+		"retry": "Юха хьажа"
+	},
+	"admin": {
+		"meta": {
+			"users": {
+				"title": "Пользователи — Admin | Мотт Ларбе",
+				"description": "Нийсархойн аккаунташ, роллаш а, статусаш а хьалхе хIиттор"
+			}
+		},
+		"brand": "Мотт Ларбе",
+		"chip": "Admin",
+		"nav": {
+			"overview": "ХьалхенгIа",
+			"content": "Чулоарам",
+			"users": "Нийсархой",
+			"billing": "ДохIамаш",
+			"system": "Система",
+			"dashboard": "Дашборд",
+			"analytics": "Аналитика",
+			"texts": "Йозанаш",
+			"dictionary": "Словарь",
+			"unknownWords": "Ца хааш долу дешнаш",
+			"usersList": "Нийсархой",
+			"feedback": "Хаамаш",
+			"plans": "Тарифаш",
+			"payments": "ДохIамийн история",
+			"featureFlags": "Feature Flags",
+			"logs": "Логаш",
+			"lightTheme": "Серлонан тема",
+			"darkTheme": "Iаьржонан тема",
+			"closeMenu": "Меню сецо",
+			"openMenu": "Меню хьала а тохо"
+		},
+		"users": {
+			"title": "Нийсархой",
+			"subtitle": "Все аккаунташ, роллаш, статусаш",
+			"export": "Экспорт",
+			"stats": {
+				"total": "Дерриге а",
+				"active": "Жигарниш",
+				"blocked": "БлокировитIина",
+				"frozen": "ТIемдина",
+				"subscribed": "Подписка долуш",
+				"newThisMonth": "+{count} бутт чохь",
+				"blockedSub": "нарушенеш",
+				"frozenSub": "охьахьажор",
+				"subscribedSub": "PRO / Premium"
+			},
+			"tabs": {
+				"all": "Дерриге а",
+				"active": "Жигарниш",
+				"blocked": "БлокировитIина",
+				"frozen": "ТIемдина",
+				"deleted": "Даьккхина"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Email, цIе я ID...",
+				"allRoles": "Дерриге роллаш",
+				"allPlans": "Дерриге планаш",
+				"sortByDate": "Дийнатехь",
+				"sortByActivity": "Жигаралла бойна",
+				"sortByName": "ЦIарх"
+			},
+			"table": {
+				"user": "Нийсар",
+				"status": "Статус",
+				"roles": "Роллаш",
+				"plan": "План",
+				"activity": "Жигаралла",
+				"registered": "РегистрацитI"
+			},
+			"status": {
+				"active": "Жигарниг",
+				"blocked": "БлокировитIина",
+				"frozen": "ТIемдина",
+				"deleted": "Даьккхина"
+			},
+			"roles": {
+				"learner": "Learner",
+				"support": "Support",
+				"content": "Content",
+				"linguist": "Linguist",
+				"admin": "Admin",
+				"superadmin": "Superadmin"
+			},
+			"plans": {
+				"free": "Free",
+				"basic": "Basic",
+				"pro": "Pro",
+				"premium": "Premium",
+				"lifetime": "Lifetime"
+			},
+			"actions": {
+				"openProfile": "Профиль хьала а тохо",
+				"assignRole": "Ролл тIетоха",
+				"freeze": "ТIемда",
+				"unfreeze": "ТIемдар даккха",
+				"block": "БлокировитI",
+				"unblock": "Блок даккха",
+				"delete": "Даккха"
+			},
+			"bulk": {
+				"selected": "{count} харжина",
+				"freeze": "ТIемда",
+				"resetRoles": "Роллаш сацо",
+				"block": "БлокировитI"
+			},
+			"pagination": {
+				"showing": "ГойтIу {from}–{to} {total} чура"
+			}
+		}
 	}
 }

@@ -35,7 +35,7 @@ const buildSections = (lang: string): NavSection[] => [
 		titleKey: "nav.learning",
 		items: [
 			{
-				href: `/${lang}`,
+				href: `/${lang}/dashboard`,
 				icon: <HomeIcon className="size-[15px] shrink-0" />,
 				labelKey: "nav.home",
 			},

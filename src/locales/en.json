@@ -1526,5 +1526,210 @@
 			"error": "Failed to load",
 			"retry": "Try again"
 		}
+	},
+	"feedback": {
+		"meta": {
+			"title": "Support — Mott Larbe",
+			"description": "Ask questions, report bugs and share ideas with the Mott Larbe team."
+		},
+		"pageTitle": "Support",
+		"myThreads": "My requests",
+		"newThread": "New request",
+		"new": "New",
+		"today": "Today",
+		"back": "Back",
+		"selectThread": "Select a request to open the chat",
+		"threadTypes": {
+			"QUESTION": "Question",
+			"BUG": "Bug",
+			"IDEA": "Idea",
+			"COMPLAINT": "Complaint"
+		},
+		"threadTypeDesc": {
+			"QUESTION": "How something works",
+			"BUG": "Something doesn't work",
+			"IDEA": "Improvement suggestion",
+			"COMPLAINT": "Something is annoying"
+		},
+		"statuses": {
+			"NEW": "New",
+			"IN_PROGRESS": "In progress",
+			"ANSWERED": "Answered",
+			"RESOLVED": "Closed"
+		},
+		"modal": {
+			"title": "New request",
+			"typeLabel": "Request type",
+			"messageLabel": "Message",
+			"messagePlaceholder": "Describe your question or problem in detail...",
+			"cancel": "Cancel",
+			"submit": "Send"
+		},
+		"chat": {
+			"placeholder": "Write a message...",
+			"hint": "Enter — send · Shift+Enter — new line",
+			"closed": "Request closed",
+			"supportInitials": "ML"
+		},
+		"empty": {
+			"title": "No requests yet",
+			"description": "If you have a question or found a bug — write to us",
+			"action": "New request"
+		}
+	},
+	"dashboard": {
+		"meta": {
+			"title": "Home — Mott Larbe",
+			"description": "Your personal learning dashboard: reading progress, vocabulary stats, and review schedule."
+		},
+		"pageTitle": "Home",
+		"searchPlaceholder": "Search texts...",
+		"greeting": {
+			"morning": "Good morning",
+			"afternoon": "Good afternoon",
+			"evening": "Good evening",
+			"level": "level",
+			"langChe": "Chechen",
+			"langRu": "Russian",
+			"dueToday": "{count} words due"
+		},
+		"stats": {
+			"textsRead": "texts read",
+			"words": "words in dictionary",
+			"streak": "day streak",
+			"dueToday": "due for review"
+		},
+		"reviewBanner": {
+			"title": "Words waiting for review today",
+			"subtitle": "Review now to keep your schedule",
+			"newWords": "{count} new",
+			"learning": "{count} learning",
+			"start": "Start"
+		},
+		"continueReading": {
+			"title": "Continue reading",
+			"viewAll": "all →",
+			"pageOf": "p. {current} of {total}",
+			"continue": "Continue",
+			"almostDone": "Almost done"
+		},
+		"library": {
+			"title": "Text library",
+			"viewAll": "all →",
+			"newText": "New",
+			"words": "{count} words"
+		},
+		"error": "Failed to load dashboard",
+		"retry": "Try again"
+	},
+	"admin": {
+		"meta": {
+			"users": {
+				"title": "Users — Admin | Mott Larbe",
+				"description": "Manage user accounts, roles and statuses"
+			}
+		},
+		"brand": "Mott Larbe",
+		"chip": "Admin",
+		"nav": {
+			"overview": "Overview",
+			"content": "Content",
+			"users": "Users",
+			"billing": "Billing",
+			"system": "System",
+			"dashboard": "Dashboard",
+			"analytics": "Analytics",
+			"texts": "Texts",
+			"dictionary": "Dictionary",
+			"unknownWords": "Unknown words",
+			"usersList": "Users",
+			"feedback": "Feedback",
+			"plans": "Pricing plans",
+			"payments": "Payment history",
+			"featureFlags": "Feature Flags",
+			"logs": "Logs",
+			"lightTheme": "Light theme",
+			"darkTheme": "Dark theme",
+			"closeMenu": "Close menu",
+			"openMenu": "Open menu"
+		},
+		"users": {
+			"title": "Users",
+			"subtitle": "All accounts, roles and statuses",
+			"export": "Export",
+			"stats": {
+				"total": "Total",
+				"active": "Active",
+				"blocked": "Blocked",
+				"frozen": "Frozen",
+				"subscribed": "Subscribed",
+				"newThisMonth": "+{count} this month",
+				"blockedSub": "violations",
+				"frozenSub": "temporarily",
+				"subscribedSub": "PRO / Premium"
+			},
+			"tabs": {
+				"all": "All",
+				"active": "Active",
+				"blocked": "Blocked",
+				"frozen": "Frozen",
+				"deleted": "Deleted"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Email, name or ID...",
+				"allRoles": "All roles",
+				"allPlans": "All plans",
+				"sortByDate": "By date",
+				"sortByActivity": "By activity",
+				"sortByName": "By name"
+			},
+			"table": {
+				"user": "User",
+				"status": "Status",
+				"roles": "Roles",
+				"plan": "Plan",
+				"activity": "Activity",
+				"registered": "Registered"
+			},
+			"status": {
+				"active": "Active",
+				"blocked": "Blocked",
+				"frozen": "Frozen",
+				"deleted": "Deleted"
+			},
+			"roles": {
+				"learner": "Learner",
+				"support": "Support",
+				"content": "Content",
+				"linguist": "Linguist",
+				"admin": "Admin",
+				"superadmin": "Superadmin"
+			},
+			"plans": {
+				"free": "Free",
+				"basic": "Basic",
+				"pro": "Pro",
+				"premium": "Premium",
+				"lifetime": "Lifetime"
+			},
+			"actions": {
+				"openProfile": "Open profile",
+				"assignRole": "Assign role",
+				"freeze": "Freeze",
+				"unfreeze": "Unfreeze",
+				"block": "Block",
+				"unblock": "Unblock",
+				"delete": "Delete"
+			},
+			"bulk": {
+				"selected": "{count} selected",
+				"freeze": "Freeze",
+				"resetRoles": "Reset roles",
+				"block": "Block"
+			},
+			"pagination": {
+				"showing": "Showing {from}–{to} of {total}"
+			}
+		}
 	}
 }

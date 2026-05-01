@@ -1526,5 +1526,210 @@
 			"error": "Не удалось загрузить",
 			"retry": "Попробовать снова"
 		}
+	},
+	"feedback": {
+		"meta": {
+			"title": "Поддержка — Мотт Ларбе",
+			"description": "Задайте вопрос, сообщите об ошибке или поделитесь идеей с командой Мотт Ларбе."
+		},
+		"pageTitle": "Поддержка",
+		"myThreads": "Мои обращения",
+		"newThread": "Новое обращение",
+		"new": "Новое",
+		"today": "Сегодня",
+		"back": "Назад",
+		"selectThread": "Выберите обращение, чтобы открыть чат",
+		"threadTypes": {
+			"QUESTION": "Вопрос",
+			"BUG": "Ошибка",
+			"IDEA": "Идея",
+			"COMPLAINT": "Жалоба"
+		},
+		"threadTypeDesc": {
+			"QUESTION": "Как что-то работает",
+			"BUG": "Что-то не работает",
+			"IDEA": "Предложение по улучшению",
+			"COMPLAINT": "Что-то раздражает"
+		},
+		"statuses": {
+			"NEW": "Новое",
+			"IN_PROGRESS": "В обработке",
+			"ANSWERED": "Ответ получен",
+			"RESOLVED": "Закрыто"
+		},
+		"modal": {
+			"title": "Новое обращение",
+			"typeLabel": "Тип обращения",
+			"messageLabel": "Сообщение",
+			"messagePlaceholder": "Опишите вопрос или проблему подробно...",
+			"cancel": "Отмена",
+			"submit": "Отправить"
+		},
+		"chat": {
+			"placeholder": "Напишите сообщение...",
+			"hint": "Enter — отправить · Shift+Enter — перенос строки",
+			"closed": "Обращение закрыто",
+			"supportInitials": "МЛ"
+		},
+		"empty": {
+			"title": "Обращений пока нет",
+			"description": "Если есть вопрос или нашли ошибку — напишите нам",
+			"action": "Новое обращение"
+		}
+	},
+	"dashboard": {
+		"meta": {
+			"title": "Главная — Мотт Ларбе",
+			"description": "Ваша личная панель обучения: прогресс чтения, статистика словаря и расписание повторений."
+		},
+		"pageTitle": "Главная",
+		"searchPlaceholder": "Поиск текстов...",
+		"greeting": {
+			"morning": "Доброе утро",
+			"afternoon": "Добрый день",
+			"evening": "Добрый вечер",
+			"level": "уровень",
+			"langChe": "чеченский",
+			"langRu": "русский",
+			"dueToday": "{count} слов на повторение"
+		},
+		"stats": {
+			"textsRead": "текстов прочитано",
+			"words": "слов в словаре",
+			"streak": "дней подряд",
+			"dueToday": "на повторение"
+		},
+		"reviewBanner": {
+			"title": "Слова ждут повторения сегодня",
+			"subtitle": "Повторите сейчас, чтобы не сдвинуть интервал",
+			"newWords": "{count} новых",
+			"learning": "{count} на закреплении",
+			"start": "Начать"
+		},
+		"continueReading": {
+			"title": "Продолжить чтение",
+			"viewAll": "все →",
+			"pageOf": "стр. {current} из {total}",
+			"continue": "Продолжить",
+			"almostDone": "Почти готово"
+		},
+		"library": {
+			"title": "Библиотека текстов",
+			"viewAll": "все →",
+			"newText": "Новый",
+			"words": "{count} слов"
+		},
+		"error": "Не удалось загрузить данные",
+		"retry": "Попробовать снова"
+	},
+	"admin": {
+		"meta": {
+			"users": {
+				"title": "Пользователи — Admin | Мотт Ларбе",
+				"description": "Управление аккаунтами, ролями и статусами пользователей"
+			}
+		},
+		"brand": "Мотт Ларбе",
+		"chip": "Admin",
+		"nav": {
+			"overview": "Обзор",
+			"content": "Контент",
+			"users": "Пользователи",
+			"billing": "Биллинг",
+			"system": "Система",
+			"dashboard": "Дашборд",
+			"analytics": "Аналитика",
+			"texts": "Тексты",
+			"dictionary": "Словарь",
+			"unknownWords": "Неизвестные слова",
+			"usersList": "Пользователи",
+			"feedback": "Обратная связь",
+			"plans": "Тарифные планы",
+			"payments": "История платежей",
+			"featureFlags": "Feature Flags",
+			"logs": "Логи",
+			"lightTheme": "Светлая тема",
+			"darkTheme": "Тёмная тема",
+			"closeMenu": "Закрыть меню",
+			"openMenu": "Открыть меню"
+		},
+		"users": {
+			"title": "Пользователи",
+			"subtitle": "Все аккаунты, роли и статусы",
+			"export": "Экспорт",
+			"stats": {
+				"total": "Всего",
+				"active": "Активных",
+				"blocked": "Заблокированных",
+				"frozen": "Заморожено",
+				"subscribed": "С подпиской",
+				"newThisMonth": "+{count} за месяц",
+				"blockedSub": "нарушения",
+				"frozenSub": "временно",
+				"subscribedSub": "PRO / Premium"
+			},
+			"tabs": {
+				"all": "Все",
+				"active": "Активные",
+				"blocked": "Заблокированные",
+				"frozen": "Заморожены",
+				"deleted": "Удалённые"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Email, имя или ID...",
+				"allRoles": "Все роли",
+				"allPlans": "Все планы",
+				"sortByDate": "По дате",
+				"sortByActivity": "По активности",
+				"sortByName": "По имени"
+			},
+			"table": {
+				"user": "Пользователь",
+				"status": "Статус",
+				"roles": "Роли",
+				"plan": "План",
+				"activity": "Активность",
+				"registered": "Регистрация"
+			},
+			"status": {
+				"active": "Активен",
+				"blocked": "Заблокирован",
+				"frozen": "Заморожен",
+				"deleted": "Удалён"
+			},
+			"roles": {
+				"learner": "Learner",
+				"support": "Support",
+				"content": "Content",
+				"linguist": "Linguist",
+				"admin": "Admin",
+				"superadmin": "Superadmin"
+			},
+			"plans": {
+				"free": "Free",
+				"basic": "Basic",
+				"pro": "Pro",
+				"premium": "Premium",
+				"lifetime": "Lifetime"
+			},
+			"actions": {
+				"openProfile": "Открыть профиль",
+				"assignRole": "Назначить роль",
+				"freeze": "Заморозить",
+				"unfreeze": "Разморозить",
+				"block": "Заблокировать",
+				"unblock": "Разблокировать",
+				"delete": "Удалить"
+			},
+			"bulk": {
+				"selected": "{count} выбрано",
+				"freeze": "Заморозить",
+				"resetRoles": "Сбросить роли",
+				"block": "Заблокировать"
+			},
+			"pagination": {
+				"showing": "Показано {from}–{to} из {total}"
+			}
+		}
 	}
 }

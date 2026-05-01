@@ -21,7 +21,7 @@ interface BottomNavItem {
 
 const buildItems = (lang: string): BottomNavItem[] => [
 	{
-		href: `/${lang}`,
+		href: `/${lang}/dashboard`,
 		icon: <HomeIcon className="size-5" />,
 		labelKey: "nav.home",
 	},
