@@ -1,11 +1,13 @@
 import { Badge } from "@/shared/ui/badge";
 import type { CefrLevel } from "@/shared/types";
 
-const VARIANT: Record<CefrLevel, "acc" | "grn" | "amb" | "pur"> = {
+const VARIANT: Record<CefrLevel, "acc" | "grn" | "amb" | "pur" | "red"> = {
 	A1: "acc",
 	A2: "grn",
 	B1: "amb",
 	B2: "pur",
+	C1: "red",
+	C2: "red",
 };
 
 export interface CefrBadgeProps {

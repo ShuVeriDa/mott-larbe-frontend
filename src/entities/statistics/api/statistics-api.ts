@@ -1,5 +1,5 @@
 import { http } from "@/shared/api";
-import type { StatisticsQuery, StatisticsResponse } from "./types";
+import type { ProfileSummary, StatisticsQuery, StatisticsResponse } from "./types";
 
 export const statisticsApi = {
 	me: async (query: StatisticsQuery = {}): Promise<StatisticsResponse> => {
@@ -10,6 +10,11 @@ export const statisticsApi = {
 		const { data } = await http.get<StatisticsResponse>("/statistics/me", {
 			params,
 		});
+		return data;
+	},
+
+	profileSummary: async (): Promise<ProfileSummary> => {
+		const { data } = await http.get<ProfileSummary>("/statistics/me/profile-summary");
 		return data;
 	},
 };

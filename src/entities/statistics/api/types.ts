@@ -96,3 +96,10 @@ export interface StatisticsQuery {
 	period?: StatsPeriod;
 	activityLimit?: number;
 }
+
+export interface ProfileSummary {
+	words: WordsBreakdown;
+	textsRead: number;
+	streak: { current: number; record: number };
+	heatmap: HeatmapDay[];
+}

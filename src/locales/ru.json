@@ -1291,5 +1291,171 @@
 				"submitting": "Отменяем…"
 			}
 		}
+	},
+	"profile": {
+		"meta": {
+			"title": "Профиль — Мотт Ларбе",
+			"description": "Управление личными данными, настройками безопасности и планом подписки."
+		},
+		"pageTitle": "Профиль",
+		"loading": "Загрузка профиля…",
+		"loadError": "Не удалось загрузить данные профиля",
+		"common": {
+			"save": "Сохранить",
+			"cancel": "Отмена"
+		},
+		"toasts": {
+			"saved": "Изменения сохранены",
+			"saving": "Сохранение…",
+			"error": "Произошла ошибка"
+		},
+		"header": {
+			"memberSince": "С",
+			"freePlan": "Бесплатный план"
+		},
+		"tabs": {
+			"main": "Основное",
+			"security": "Безопасность",
+			"subscription": "Подписка"
+		},
+		"personalData": {
+			"title": "Личные данные",
+			"firstName": "Имя",
+			"firstNamePlaceholder": "Имя",
+			"lastName": "Фамилия",
+			"lastNamePlaceholder": "Фамилия",
+			"username": "Имя пользователя",
+			"email": "Email",
+			"emailHint": "Изменение email потребует подтверждения",
+			"phone": "Телефон"
+		},
+		"learningSettings": {
+			"title": "Настройки обучения"
+		},
+		"stats": {
+			"title": "Статистика",
+			"more": "подробнее",
+			"wordsInDictionary": "слов в словаре",
+			"textsRead": "текстов прочитано",
+			"streakDays": "дней подряд",
+			"wordDistribution": "Распределение слов",
+			"new": "Новые",
+			"learning": "Учу",
+			"known": "Знаю"
+		},
+		"activity": {
+			"title": "Активность",
+			"label": "Последние 70 дней"
+		},
+		"security": {
+			"title": "Безопасность аккаунта",
+			"password": "Пароль",
+			"passwordMeta": "Последнее изменение: 3 месяца назад",
+			"email": "Email",
+			"verified": "подтверждён",
+			"activeSessions": "Активные сессии",
+			"activeSessionsMeta": "2 активных устройства",
+			"change": "Изменить",
+			"terminateAll": "Завершить все",
+			"changePassword": "Изменить пароль",
+			"changePasswordDesc": "Мы отправим ссылку для сброса пароля на ваш email. Перейдите по ней, чтобы задать новый пароль.",
+			"sendLink": "Отправить ссылку",
+			"passwordEmailSent": "Ссылка для сброса пароля отправлена на email",
+			"emailLetterSent": "Письмо для смены email отправлено",
+			"allSessionsTerminated": "Все сессии завершены"
+		},
+		"subscription": {
+			"currentPlan": "Текущий план",
+			"freeDesc": "50 переводов в день · без повторений",
+			"active": "Активен",
+			"trialing": "Пробный",
+			"canceled": "Отменён",
+			"expired": "Истёк",
+			"translationsToday": "Переводы сегодня",
+			"wordsInDictionary": "Слов в словаре",
+			"upgradePlan": "Обновить план",
+			"paymentHistory": "История платежей",
+			"noPayments": "Нет платежей",
+			"noPaymentsDesc": "История появится после\nоформления подписки",
+			"payment": "Платёж",
+			"promoCode": "Промокод",
+			"status": {
+				"succeeded": "Оплачен",
+				"pending": "Ожидает",
+				"failed": "Ошибка",
+				"refunded": "Возврат"
+			}
+		},
+		"planComparison": {
+			"title": "Сравнение планов",
+			"translationsPerDay": "Переводы в день",
+			"wordsInDictionary": "Слов в словаре",
+			"personalDictionary": "Личный словарь",
+			"statistics": "Статистика",
+			"spaceRepetition": "Система повторений",
+			"flashcards": "Деки заучивания",
+			"complexTexts": "Сложные тексты",
+			"prioritySupport": "Приоритетная поддержка"
+		}
+	},
+	"library": {
+		"meta": {
+			"title": "Библиотека — Мотт Ларбе",
+			"description": "Библиотека чеченских и русских текстов уровней A1–C2 с отслеживанием прогресса и интервальным повторением слов."
+		},
+		"title": "Библиотека",
+		"total": "{count} текстов",
+		"searchPlaceholder": "Поиск…",
+		"searchMobilePlaceholder": "Поиск по названию…",
+		"refresh": "Обновить",
+		"filterLevel": "Уровень",
+		"filterLang": "Язык",
+		"filterProgress": "Прогресс",
+		"all": "Все",
+		"lang": {
+			"CHE": "Чеченский",
+			"RU": "Русский",
+			"EN": "Английский"
+		},
+		"progress": {
+			"new": "Новые",
+			"inprogress": "Читаю",
+			"completed": "Завершённые"
+		},
+		"sort": {
+			"label": "Сортировка",
+			"level": "По уровню",
+			"newest": "Сначала новые",
+			"oldest": "Сначала старые",
+			"alpha": "По алфавиту",
+			"progress": "По прогрессу",
+			"length": "По длине"
+		},
+		"view": {
+			"grid": "Сетка",
+			"list": "Список"
+		},
+		"stats": {
+			"total": "всего",
+			"done": "завершено",
+			"reading": "читаю",
+			"new": "не начаты"
+		},
+		"card": {
+			"wordsUnit": "сл.",
+			"minUnit": "мин",
+			"badgeNew": "NEW",
+			"start": "Начать",
+			"continue": "Продолжить",
+			"done": "Завершён",
+			"progress": "Прочитано",
+			"tokens": "токенов"
+		},
+		"empty": {
+			"title": "Нет текстов",
+			"sub": "По выбранным фильтрам ничего не найдено"
+		},
+		"error": "Не удалось загрузить тексты",
+		"retry": "Попробовать снова"
 	}
 }

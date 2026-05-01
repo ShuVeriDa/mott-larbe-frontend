@@ -1291,5 +1291,171 @@
 				"submitting": "Соцуш…"
 			}
 		}
+	},
+	"profile": {
+		"meta": {
+			"title": "Профиль — Мотт Ларбе",
+			"description": "Шайн ц1е, т1екхачамаш а, жоп а нисдан."
+		},
+		"pageTitle": "Профиль",
+		"loading": "Профиль лоьхуш…",
+		"loadError": "Профилан хаамаш схьаэца ца хилира",
+		"common": {
+			"save": "Д1аяздан",
+			"cancel": "Юхайаккха"
+		},
+		"toasts": {
+			"saved": "Хийцамаш д1аяздина",
+			"saving": "Яздеш…",
+			"error": "Г1алат хилира"
+		},
+		"header": {
+			"memberSince": "Д1айогIуш хилла",
+			"freePlan": "Маьрша тариф"
+		},
+		"tabs": {
+			"main": "Коьрта",
+			"security": "Т1екхачам",
+			"subscription": "Жоп"
+		},
+		"personalData": {
+			"title": "Шайн хаамаш",
+			"firstName": "Ц1е",
+			"firstNamePlaceholder": "Ц1е",
+			"lastName": "Фамили",
+			"lastNamePlaceholder": "Фамили",
+			"username": "Юзернейм",
+			"email": "Email",
+			"emailHint": "Email хийцар бакъдарх лаьа",
+			"phone": "Телефон"
+		},
+		"learningSettings": {
+			"title": "Дешаран нисдарш"
+		},
+		"stats": {
+			"title": "Статистика",
+			"more": "дуьйцур",
+			"wordsInDictionary": "дош словарехь",
+			"textsRead": "текст дешна",
+			"streakDays": "де д1адолу",
+			"wordDistribution": "Дешнийн хувшам",
+			"new": "К1орге",
+			"learning": "Дешаш",
+			"known": "Хаьа"
+		},
+		"activity": {
+			"title": "Декхарш",
+			"label": "Хьалхара 70 де"
+		},
+		"security": {
+			"title": "Аккаунтан т1екхачам",
+			"password": "Пароль",
+			"passwordMeta": "Хьалхарех хийцна: 3 бутт хьалха",
+			"email": "Email",
+			"verified": "бакъдина",
+			"activeSessions": "Ц1ена сессийнаш",
+			"activeSessionsMeta": "2 хьо1у гIирс",
+			"change": "Хийца",
+			"terminateAll": "Дерриге чекхдала",
+			"changePassword": "Пароль хийца",
+			"changePasswordDesc": "Хьан email-на пароль д1аяздаран хьажа д1ахьорур ду. Цунах д1абаьлла керла пароль яздан.",
+			"sendLink": "Хьажа д1ахьора",
+			"passwordEmailSent": "Пароль д1аяздаран хьажа email-на д1ахьийна",
+			"emailLetterSent": "Email хийцаран кехат д1ахьийна",
+			"allSessionsTerminated": "Дерриге сессийнаш чекхдаьлла"
+		},
+		"subscription": {
+			"currentPlan": "Х1инцалера тариф",
+			"freeDesc": "50 таржам де д1ахь · кхин ца дина",
+			"active": "Ц1ена",
+			"trialing": "Таллар",
+			"canceled": "Соьцийна",
+			"expired": "Чекхдаьлла",
+			"translationsToday": "Таржамаш тахана",
+			"wordsInDictionary": "Дешнаш словарехь",
+			"upgradePlan": "Тариф хийца",
+			"paymentHistory": "Бахамийн хаамаш",
+			"noPayments": "Бахамаш яц",
+			"noPaymentsDesc": "Бахамийн хаамаш жоп юкъайаьккхича го",
+			"payment": "Бахам",
+			"promoCode": "Промокод",
+			"status": {
+				"succeeded": "Баьхна",
+				"pending": "Хьожуш",
+				"failed": "Г1алат",
+				"refunded": "Юха даьхна"
+			}
+		},
+		"planComparison": {
+			"title": "Тарифаш юхьарлаккхар",
+			"translationsPerDay": "Таржамаш де д1ахь",
+			"wordsInDictionary": "Дешнаш словарехь",
+			"personalDictionary": "Шайн словарь",
+			"statistics": "Статистика",
+			"spaceRepetition": "Хийцаран система",
+			"flashcards": "Дешаран деккъаш",
+			"complexTexts": "Г1алат тексташ",
+			"prioritySupport": "Хьалха г1о"
+		}
+	},
+	"library": {
+		"meta": {
+			"title": "Библиотека — Мотт Ларбе",
+			"description": "Нохчийн а, оьрсийн а йозанийн библиотека A1–C2 дарж тIехь, прогрессан хьажарца а, дешнийн хийцарца а."
+		},
+		"title": "Библиотека",
+		"total": "{count} йозанаш",
+		"searchPlaceholder": "Лахар…",
+		"searchMobilePlaceholder": "ЦIе тIехь лахар…",
+		"refresh": "Кхин д1а",
+		"filterLevel": "Дарж",
+		"filterLang": "Мотт",
+		"filterProgress": "Прогресс",
+		"all": "Дерригге",
+		"lang": {
+			"CHE": "Нохчийн",
+			"RU": "Оьрсийн",
+			"EN": "Инглийн"
+		},
+		"progress": {
+			"new": "Керла",
+			"inprogress": "Доьшу",
+			"completed": "Чекхдаьккхина"
+		},
+		"sort": {
+			"label": "Сортировка",
+			"level": "Дарж тIехь",
+			"newest": "Хьалха керла",
+			"oldest": "Хьалха хьалха",
+			"alpha": "Алфавит тIехь",
+			"progress": "Прогресс тIехь",
+			"length": "Йовхо тIехь"
+		},
+		"view": {
+			"grid": "Карточкаш",
+			"list": "Список"
+		},
+		"stats": {
+			"total": "дерригге",
+			"done": "чекхдаьккхина",
+			"reading": "доьшу",
+			"new": "болабина яц"
+		},
+		"card": {
+			"wordsUnit": "дош.",
+			"minUnit": "мин",
+			"badgeNew": "КЕРЛА",
+			"start": "Болабе",
+			"continue": "Д1адаха",
+			"done": "Чекхдаьккхина",
+			"progress": "Доьшна",
+			"tokens": "токенаш"
+		},
+		"empty": {
+			"title": "Йозанаш яц",
+			"sub": "Харжина фильтрашца хIума ца карийра"
+		},
+		"error": "Йозанаш схьалаца ца хилира",
+		"retry": "Кхин хIотта"
 	}
 }

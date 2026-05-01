@@ -7,6 +7,7 @@ export type {
 	HeatmapDay,
 	HeatmapLevel,
 	HeatmapMonth,
+	ProfileSummary,
 	StatisticsQuery,
 	StatisticsResponse,
 	StatsDelta,

@@ -1291,5 +1291,171 @@
 				"submitting": "Canceling…"
 			}
 		}
+	},
+	"profile": {
+		"meta": {
+			"title": "Profile — Mott Larbe",
+			"description": "Manage your personal data, security settings, and subscription plan."
+		},
+		"pageTitle": "Profile",
+		"loading": "Loading profile…",
+		"loadError": "Failed to load profile data",
+		"common": {
+			"save": "Save",
+			"cancel": "Cancel"
+		},
+		"toasts": {
+			"saved": "Changes saved",
+			"saving": "Saving…",
+			"error": "Operation failed"
+		},
+		"header": {
+			"memberSince": "Member since",
+			"freePlan": "Free plan"
+		},
+		"tabs": {
+			"main": "General",
+			"security": "Security",
+			"subscription": "Subscription"
+		},
+		"personalData": {
+			"title": "Personal data",
+			"firstName": "First name",
+			"firstNamePlaceholder": "First name",
+			"lastName": "Last name",
+			"lastNamePlaceholder": "Last name",
+			"username": "Username",
+			"email": "Email",
+			"emailHint": "Changing email requires confirmation",
+			"phone": "Phone"
+		},
+		"learningSettings": {
+			"title": "Learning settings"
+		},
+		"stats": {
+			"title": "Statistics",
+			"more": "details",
+			"wordsInDictionary": "words in dictionary",
+			"textsRead": "texts read",
+			"streakDays": "day streak",
+			"wordDistribution": "Word distribution",
+			"new": "New",
+			"learning": "Learning",
+			"known": "Known"
+		},
+		"activity": {
+			"title": "Activity",
+			"label": "Last 70 days"
+		},
+		"security": {
+			"title": "Account security",
+			"password": "Password",
+			"passwordMeta": "Last changed 3 months ago",
+			"email": "Email",
+			"verified": "verified",
+			"activeSessions": "Active sessions",
+			"activeSessionsMeta": "2 active devices",
+			"change": "Change",
+			"terminateAll": "Terminate all",
+			"changePassword": "Change password",
+			"changePasswordDesc": "We will send a password reset link to your email address. Follow the link to set a new password.",
+			"sendLink": "Send link",
+			"passwordEmailSent": "Password reset link sent to your email",
+			"emailLetterSent": "Email change link sent",
+			"allSessionsTerminated": "All sessions terminated"
+		},
+		"subscription": {
+			"currentPlan": "Current plan",
+			"freeDesc": "50 translations per day · no spaced repetition",
+			"active": "Active",
+			"trialing": "Trial",
+			"canceled": "Canceled",
+			"expired": "Expired",
+			"translationsToday": "Translations today",
+			"wordsInDictionary": "Words in dictionary",
+			"upgradePlan": "Upgrade plan",
+			"paymentHistory": "Payment history",
+			"noPayments": "No payments",
+			"noPaymentsDesc": "Payment history will appear\nafter subscribing",
+			"payment": "Payment",
+			"promoCode": "Promo code",
+			"status": {
+				"succeeded": "Paid",
+				"pending": "Pending",
+				"failed": "Failed",
+				"refunded": "Refunded"
+			}
+		},
+		"planComparison": {
+			"title": "Plan comparison",
+			"translationsPerDay": "Translations per day",
+			"wordsInDictionary": "Words in dictionary",
+			"personalDictionary": "Personal dictionary",
+			"statistics": "Statistics",
+			"spaceRepetition": "Spaced repetition",
+			"flashcards": "Learning decks",
+			"complexTexts": "Complex texts",
+			"prioritySupport": "Priority support"
+		}
+	},
+	"library": {
+		"meta": {
+			"title": "Library — Mott Larbe",
+			"description": "Library of Chechen and Russian texts at levels A1–C2 with progress tracking and spaced repetition."
+		},
+		"title": "Library",
+		"total": "{count} texts",
+		"searchPlaceholder": "Search…",
+		"searchMobilePlaceholder": "Search by title…",
+		"refresh": "Refresh",
+		"filterLevel": "Level",
+		"filterLang": "Language",
+		"filterProgress": "Progress",
+		"all": "All",
+		"lang": {
+			"CHE": "Chechen",
+			"RU": "Russian",
+			"EN": "English"
+		},
+		"progress": {
+			"new": "New",
+			"inprogress": "Reading",
+			"completed": "Completed"
+		},
+		"sort": {
+			"label": "Sort",
+			"level": "By level",
+			"newest": "Newest first",
+			"oldest": "Oldest first",
+			"alpha": "Alphabetical",
+			"progress": "By progress",
+			"length": "By length"
+		},
+		"view": {
+			"grid": "Grid",
+			"list": "List"
+		},
+		"stats": {
+			"total": "total",
+			"done": "completed",
+			"reading": "reading",
+			"new": "not started"
+		},
+		"card": {
+			"wordsUnit": "w.",
+			"minUnit": "min",
+			"badgeNew": "NEW",
+			"start": "Start",
+			"continue": "Continue",
+			"done": "Completed",
+			"progress": "Read",
+			"tokens": "tokens"
+		},
+		"empty": {
+			"title": "No texts found",
+			"sub": "No results for the selected filters"
+		},
+		"error": "Failed to load texts",
+		"retry": "Try again"
 	}
 }

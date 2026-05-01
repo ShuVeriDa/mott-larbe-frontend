@@ -6,6 +6,7 @@ export type {
 	HeatmapDay,
 	HeatmapLevel,
 	HeatmapMonth,
+	ProfileSummary,
 	StatisticsQuery,
 	StatisticsResponse,
 	StatsDelta,
@@ -17,4 +18,4 @@ export type {
 	WordsBreakdown,
 	WordsPerDayPoint,
 } from "./api";
-export { useStatistics } from "./model";
+export { useProfileSummary, useStatistics } from "./model";

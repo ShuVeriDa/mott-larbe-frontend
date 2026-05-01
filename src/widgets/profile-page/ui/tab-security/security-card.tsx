@@ -1,0 +1,124 @@
+"use client";
+
+import { useState } from "react";
+import { useI18n } from "@/shared/lib/i18n";
+import { useToast } from "@/shared/lib/toast";
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
+import type { UserProfile } from "@/entities/user";
+import { ProfileCard as SettingCard } from "../profile-card";
+import { ChangePasswordModal } from "./change-password-modal";
+
+const LockIcon = () => (
+	<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" className="size-3.5">
+		<rect x="4" y="7" width="8" height="7" rx="1.5" />
+		<path d="M5.5 7V5.5a2.5 2.5 0 0 1 5 0V7" strokeLinecap="round" />
+	</svg>
+);
+
+const EmailIcon = () => (
+	<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" className="size-3.5">
+		<rect x="2" y="4" width="12" height="9" rx="1.5" />
+		<path d="M2 6l6 4 6-4" strokeLinecap="round" />
+	</svg>
+);
+
+const SessionsIcon = () => (
+	<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" className="size-3.5">
+		<rect x="2.5" y="2.5" width="11" height="11" rx="2" />
+		<path d="M5.5 8l2 2 3-3" strokeLinecap="round" strokeLinejoin="round" />
+	</svg>
+);
+
+export interface SecurityCardProps {
+	profile: UserProfile;
+}
+
+export const SecurityCard = ({ profile }: SecurityCardProps) => {
+	const { t } = useI18n();
+	const { success } = useToast();
+	const [passwordModalOpen, setPasswordModalOpen] = useState(false);
+
+	const rows = [
+		{
+			id: "password",
+			Icon: LockIcon,
+			iconBg: "bg-acc-bg text-acc-t",
+			name: t("profile.security.password"),
+			meta: t("profile.security.passwordMeta"),
+			action: (
+				<Button
+					variant="outline"
+					className="h-7 px-2.5 text-[11.5px] shrink-0"
+					onClick={() => setPasswordModalOpen(true)}
+				>
+					{t("profile.security.change")}
+				</Button>
+			),
+		},
+		{
+			id: "email",
+			Icon: EmailIcon,
+			iconBg: "bg-grn-bg text-grn-t",
+			name: t("profile.security.email"),
+			meta: `${profile.email} · ${t("profile.security.verified")}`,
+			action: (
+				<Button
+					variant="outline"
+					className="h-7 px-2.5 text-[11.5px] shrink-0"
+					onClick={() => success(t("profile.security.emailLetterSent"))}
+				>
+					{t("profile.security.change")}
+				</Button>
+			),
+		},
+		{
+			id: "sessions",
+			Icon: SessionsIcon,
+			iconBg: "bg-surf-2 text-t-2",
+			name: t("profile.security.activeSessions"),
+			meta: t("profile.security.activeSessionsMeta"),
+			action: (
+				<Button
+					variant="outline"
+					className="h-7 px-2.5 text-[11.5px] shrink-0"
+					onClick={() => success(t("profile.security.allSessionsTerminated"))}
+				>
+					{t("profile.security.terminateAll")}
+				</Button>
+			),
+		},
+	];
+
+	return (
+		<>
+			<SettingCard title={t("profile.security.title")} noBody>
+				{rows.map((row) => (
+					<div
+						key={row.id}
+						className="flex items-center gap-3 border-b border-hairline border-bd-1 px-4 py-3 last:border-b-0"
+					>
+						<span className={`flex size-8 shrink-0 items-center justify-center rounded-[8px] ${row.iconBg}`}>
+							<row.Icon />
+						</span>
+						<div className="flex-1 min-w-0">
+							<Typography tag="p" className="text-[12.5px] font-medium text-t-1 mb-0.5">
+								{row.name}
+							</Typography>
+							<Typography tag="p" className="text-[11px] text-t-3 truncate">
+								{row.meta}
+							</Typography>
+						</div>
+						{row.action}
+					</div>
+				))}
+			</SettingCard>
+
+			<ChangePasswordModal
+				open={passwordModalOpen}
+				onClose={() => setPasswordModalOpen(false)}
+				email={profile.email}
+			/>
+		</>
+	);
+};
