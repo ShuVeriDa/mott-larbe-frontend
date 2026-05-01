@@ -5,4 +5,6 @@ export const libraryTextKeys = {
 	list: (query: GetLibraryTextsQuery) =>
 		["library-text", "list", query] as const,
 	tags: () => ["library-text", "tags"] as const,
+	detail: (id: string) => ["library-text", "detail", id] as const,
+	related: (id: string) => ["library-text", "related", id] as const,
 };

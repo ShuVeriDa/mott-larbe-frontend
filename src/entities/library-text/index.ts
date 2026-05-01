@@ -8,5 +8,13 @@ export type {
 	LibraryTextLanguage,
 	LibraryTextListItem,
 	TextTagDto,
+	LibraryTextDetail,
+	LibraryTextPage,
+	LibraryTextWordStats,
+	LibraryRelatedText,
 } from "./api";
-export { useLibraryTexts } from "./model";
+export {
+	useLibraryTexts,
+	useLibraryTextDetail,
+	useLibraryTextRelated,
+} from "./model";

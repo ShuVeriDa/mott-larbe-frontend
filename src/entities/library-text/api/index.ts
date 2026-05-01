@@ -9,4 +9,8 @@ export type {
 	LibraryTextLanguage,
 	LibraryTextListItem,
 	TextTagDto,
+	LibraryTextDetail,
+	LibraryTextPage,
+	LibraryTextWordStats,
+	LibraryRelatedText,
 } from "./types";

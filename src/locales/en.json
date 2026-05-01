@@ -1456,6 +1456,75 @@
 			"sub": "No results for the selected filters"
 		},
 		"error": "Failed to load texts",
-		"retry": "Try again"
+		"retry": "Try again",
+		"textDetail": {
+			"meta": {
+				"title": "Text — Mott Larbe",
+				"description": "Read texts in Chechen and Russian with progress tracking, vocabulary stats and related texts."
+			},
+			"back": "Back",
+			"breadcrumb": "Text card",
+			"share": "Share",
+			"description": "Description",
+			"progress": {
+				"label": "Reading progress",
+				"pagesRead": "Read {done} of {total} pages",
+				"lastRead": "Last read: {time}",
+				"notStarted": "Not started yet"
+			},
+			"vocab": {
+				"label": "Words from text",
+				"unique": "Unique words: {count}",
+				"known": "Known",
+				"learning": "Learning",
+				"new": "New"
+			},
+			"info": {
+				"label": "Info",
+				"level": "Level",
+				"language": "Language",
+				"author": "Author",
+				"source": "Source",
+				"added": "Added",
+				"pages": "Pages",
+				"noAuthor": "—",
+				"noSource": "—"
+			},
+			"pagesCard": {
+				"label": "Pages",
+				"current": "Current",
+				"pageN": "Page {n}"
+			},
+			"related": {
+				"label": "Related texts",
+				"words": "w.",
+				"pages": "p."
+			},
+			"cta": {
+				"start": "Start reading",
+				"continue": "Continue",
+				"page": "Page {cur} / {total}",
+				"completed": "Completed"
+			},
+			"status": {
+				"published": "Published"
+			},
+			"level": {
+				"A1": "A1 — Beginner",
+				"A2": "A2 — Elementary",
+				"B1": "B1 — Intermediate",
+				"B2": "B2 — Upper Intermediate",
+				"C1": "C1 — Advanced",
+				"C2": "C2 — Mastery"
+			},
+			"lang": {
+				"CHE": "Chechen (CHE)",
+				"RU": "Russian (RU)",
+				"EN": "English (EN)"
+			},
+			"notFound": "Text not found",
+			"error": "Failed to load",
+			"retry": "Try again"
+		}
 	}
 }

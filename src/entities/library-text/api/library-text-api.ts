@@ -2,6 +2,8 @@ import { http } from "@/shared/api";
 import type {
 	GetLibraryTextsQuery,
 	GetLibraryTextsResponse,
+	LibraryTextDetail,
+	LibraryRelatedText,
 	TextTagDto,
 } from "./types";
 
@@ -36,6 +38,25 @@ export const libraryTextApi = {
 
 	getTags: async (): Promise<TextTagDto[]> => {
 		const { data } = await http.get<TextTagDto[]>("/texts/tags");
+		return data;
+	},
+
+	getById: async (id: string): Promise<LibraryTextDetail> => {
+		const { data } = await http.get<LibraryTextDetail>(`/texts/${id}`);
+		return data;
+	},
+
+	getRelated: async (id: string): Promise<LibraryRelatedText[]> => {
+		const { data } = await http.get<LibraryRelatedText[]>(
+			`/texts/${id}/related`,
+		);
+		return data;
+	},
+
+	toggleBookmark: async (id: string): Promise<{ bookmarked: boolean }> => {
+		const { data } = await http.post<{ bookmarked: boolean }>(
+			`/texts/${id}/bookmark`,
+		);
 		return data;
 	},
 };

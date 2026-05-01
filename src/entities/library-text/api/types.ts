@@ -56,3 +56,57 @@ export interface GetLibraryTextsQuery {
 	page?: number;
 	limit?: number;
 }
+
+// ── Detail ──────────────────────────────────────────────────────────────────
+
+export interface LibraryTextPage {
+	id: string;
+	pageNumber: number;
+	title: string | null;
+}
+
+export interface LibraryTextWordStats {
+	total: number;
+	known: number;
+	learning: number;
+	new: number;
+}
+
+export interface LibraryTextDetail {
+	id: string;
+	title: string;
+	description: string | null;
+	language: LibraryTextLanguage;
+	level: CefrLevel | null;
+	author: string | null;
+	source: string | null;
+	imageUrl: string | null;
+	publishedAt: string | null;
+	createdAt: string;
+	updatedAt: string;
+	tags: TextTagDto[];
+	wordCount: number;
+	readingTime: number;
+	totalPages: number;
+	pages: LibraryTextPage[];
+	progress: number;
+	progressPercent: number;
+	lastOpened: string | null;
+	currentPage: number;
+	wordStats: LibraryTextWordStats;
+	isFavorite: boolean;
+}
+
+export interface LibraryRelatedText {
+	id: string;
+	title: string;
+	language: LibraryTextLanguage;
+	level: CefrLevel | null;
+	author: string | null;
+	imageUrl: string | null;
+	tags: TextTagDto[];
+	wordCount: number;
+	readingTime: number;
+	totalPages: number;
+	progressPercent: number;
+}
