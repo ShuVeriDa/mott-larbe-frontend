@@ -1627,6 +1627,79 @@
 			"users": {
 				"title": "Пользователи — Admin | Мотт Ларбе",
 				"description": "Управление аккаунтами, ролями и статусами пользователей"
+			},
+			"userDetail": {
+				"title": "Пользователь — Admin | Мотт Ларбе",
+				"description": "Просмотр и управление аккаунтом, ролями и активностью пользователя"
+			},
+			"textsCreate": {
+				"title": "Новый текст — Admin | Мотт Ларбе",
+				"description": "Создание нового текста для библиотеки"
+			},
+			"textsEdit": {
+				"title": "Редактирование текста — Admin | Мотт Ларбе",
+				"description": "Редактирование содержимого и метаданных текста"
+			}
+		},
+		"userDetail": {
+			"account": "Аккаунт",
+			"id": "ID",
+			"username": "Имя пользователя",
+			"phone": "Телефон",
+			"registered": "Регистрация",
+			"lastActive": "Последняя активность",
+			"roles": "Роли",
+			"addRole": "Добавить",
+			"revokeRole": "Снять роль",
+			"actions": {
+				"title": "Действия",
+				"manageSubscription": "Управление подпиской",
+				"resetSessions": "Сбросить все сессии",
+				"applyCoupon": "Применить промокод",
+				"freeze": "Заморозить аккаунт",
+				"delete": "Удалить аккаунт"
+			},
+			"stats": {
+				"textsRead": "Открыто текстов",
+				"allTime": "за всё время",
+				"dictionaryWords": "Слов в словаре",
+				"folders": "{count} папки",
+				"failLookup": "Неизвестных слов",
+				"streak": "Стрик",
+				"days": "дней подряд"
+			},
+			"subscription": {
+				"title": "Подписка",
+				"manage": "управлять →",
+				"active": "Активна",
+				"until": "до {date}",
+				"extend": "Продлить",
+				"cancel": "Отменить",
+				"history": "История платежей",
+				"noSubscription": "Нет активной подписки"
+			},
+			"events": {
+				"title": "События",
+				"feedTab": "Лента",
+				"summaryTab": "Сводка",
+				"sessionsTab": "Сессии",
+				"allTypes": "Все типы",
+				"last7days": "За 7 дней",
+				"last30days": "За 30 дней",
+				"allTime": "За всё время",
+				"loadMore": "Показать ещё {count} событий →",
+				"topUnknown": "Топ неизвестных слов",
+				"device": "Устройство / браузер",
+				"ip": "IP",
+				"lastActivity": "Последняя активность",
+				"status": "Статус",
+				"sessionActive": "Активна",
+				"sessionExpired": "Истекла",
+				"currentSession": "текущая сессия"
+			},
+			"featureFlags": {
+				"title": "Feature flags",
+				"subtitle": "переопределения для пользователя"
 			}
 		},
 		"brand": "Мотт Ларбе",
@@ -1640,7 +1713,9 @@
 			"dashboard": "Дашборд",
 			"analytics": "Аналитика",
 			"texts": "Тексты",
+			"tokenization": "Токенизация",
 			"dictionary": "Словарь",
+			"morphology": "Морфология",
 			"unknownWords": "Неизвестные слова",
 			"usersList": "Пользователи",
 			"feedback": "Обратная связь",
@@ -1729,6 +1804,620 @@
 			},
 			"pagination": {
 				"showing": "Показано {from}–{to} из {total}"
+			}
+		},
+		"unknownWords": {
+			"meta": {
+				"title": "Неизвестные слова — Admin | Мотт Ларбе",
+				"description": "Слова, которые система не смогла распознать при токенизации"
+			},
+			"title": "Неизвестные слова",
+			"subtitle": "Слова, которые система не смогла распознать",
+			"export": "Экспорт",
+			"clearAll": "Очистить все",
+			"stats": {
+				"totalPending": "Всего неизвестных",
+				"totalPendingSub": "ожидают обработки",
+				"addedToDictionary": "Добавлено в словарь",
+				"addedToDictionarySub": "за всё время",
+				"encounteredToday": "Встреч сегодня",
+				"encounteredTodaySub": "из {count} текстов",
+				"deleted": "Удалено",
+				"deletedSub": "нерелевантных"
+			},
+			"tabs": {
+				"all": "Все",
+				"frequent": "Часто встречаются",
+				"rare": "Редко"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Поиск по слову…",
+				"allTexts": "Все тексты",
+				"sortFrequency": "Частотность ↓",
+				"sortNewest": "Новые первые",
+				"sortAlpha": "По алфавиту"
+			},
+			"table": {
+				"word": "Слово",
+				"context": "Контекст",
+				"count": "Встречается",
+				"first": "Первое",
+				"last": "Последнее"
+			},
+			"bulk": {
+				"selected": "{count} выбрано",
+				"addToDictionary": "Добавить в словарь",
+				"delete": "Удалить"
+			},
+			"row": {
+				"addToDictionary": "Добавить в словарь",
+				"linkToLemma": "Связать с леммой",
+				"allContexts": "Все контексты",
+				"delete": "Удалить"
+			},
+			"addModal": {
+				"title": "Добавить в словарь",
+				"subtitleOccurrences": "встречается {count} раз",
+				"subtitleOccurrencesPlural": "встречается {count} раза",
+				"normalizedLabel": "нормализовано",
+				"actionLabel": "Действие",
+				"createNew": "Создать новую статью словаря",
+				"createNewSub": "Лемма с переводом и частью речи",
+				"linkExisting": "Связать с существующей леммой",
+				"linkExistingSub": "Слово станет словоформой записи",
+				"headword": "Заглавное слово (лемма)",
+				"partOfSpeech": "Часть речи",
+				"posNone": "Не указана",
+				"posNoun": "Существительное",
+				"posVerb": "Глагол",
+				"posAdj": "Прилагательное",
+				"posAdv": "Наречие",
+				"posParticle": "Частица",
+				"translation": "Перевод (RU)",
+				"translationPlaceholder": "Введите перевод…",
+				"level": "Уровень",
+				"levelNone": "Не указан",
+				"domain": "Тематика",
+				"domainPlaceholder": "повседневная речь",
+				"findLemma": "Найти лемму",
+				"findLemmaPlaceholder": "Начните вводить слово…",
+				"cancel": "Отмена",
+				"submit": "Добавить в словарь"
+			},
+			"clearModal": {
+				"title": "Очистить все неизвестные слова",
+				"subtitle": "Это действие нельзя отменить",
+				"body": "Будут удалены все {count} неизвестных слов, которые ещё не добавлены в словарь. Словарные записи не затронуты.",
+				"cancel": "Отмена",
+				"confirm": "Очистить все"
+			},
+			"pagination": {
+				"showing": "Показано {from}–{to} из {total}"
+			}
+		},
+		"tokenization": {
+			"meta": {
+				"title": "Токенизация — Админ | Мотт Ларбе",
+				"description": "Управление токенизацией текстов — анализ, статусы, ручная коррекция"
+			},
+			"title": "Токенизация",
+			"subtitle": "Управление токенами текстов — анализ, статусы, ручная коррекция",
+			"runBtn": "Запустить",
+			"batchBtn": "Пакетная",
+			"stats": {
+				"total": "Всего токенов",
+				"totalSub": "по всем текстам",
+				"analyzed": "Распознаны",
+				"ambiguous": "Неоднозначные",
+				"notFound": "Не найдены",
+				"unprocessed": "Без обработки",
+				"unprocessedSub": "текстов"
+			},
+			"tabs": {
+				"all": "Все тексты",
+				"issues": "Проблемные",
+				"notfound": "Не найдены",
+				"pending": "Не обработаны"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Поиск по названию…",
+				"allLevels": "Уровень",
+				"allStatuses": "Статус",
+				"sortErrors": "По ошибкам",
+				"sortDate": "По дате",
+				"sortName": "По названию"
+			},
+			"table": {
+				"textTitle": "Название текста",
+				"level": "Ур.",
+				"tokens": "Токены",
+				"notFound": "Не найдено",
+				"ambiguous": "Неодн.",
+				"version": "Версия",
+				"pages": "стр."
+			},
+			"status": {
+				"IDLE": "Ожидание",
+				"RUNNING": "Обработка",
+				"COMPLETED": "Готово",
+				"ERROR": "Ошибка"
+			},
+			"bulk": {
+				"selected": "{count} выбрано",
+				"run": "Запустить",
+				"reset": "Сбросить"
+			},
+			"row": {
+				"run": "Запустить",
+				"cancel": "Отменить",
+				"reset": "Сбросить токены",
+				"details": "Подробнее"
+			},
+			"sidePanel": {
+				"distribution": "Распределение токенов",
+				"distributionTotal": "всего",
+				"settings": "Настройки",
+				"queue": "Очередь обработки",
+				"queueEmpty": "Очередь пуста",
+				"runBtn": "Запустить токенизацию",
+				"settingsBtn": "Настройки",
+				"sourcesTitle": "Источники",
+				"sources": {
+					"admin": "Вручную",
+					"cache": "Кэш",
+					"morphology": "Морфология",
+					"online": "Онлайн"
+				},
+				"settingsOptions": {
+					"autoTokenize": "Авто-токенизация",
+					"autoTokenizeSub": "Обрабатывать при сохранении",
+					"normalization": "Нормализация",
+					"normalizationSub": "Привести к базовой форме",
+					"morphAnalysis": "Морфологический анализ",
+					"morphAnalysisSub": "Применять правила морфологии",
+					"onlineDictionaries": "Онлайн-словари",
+					"onlineDictionariesSub": "Использовать внешние API"
+				}
+			},
+			"runModal": {
+				"title": "Запустить токенизацию",
+				"subtitle": "Выберите, какие тексты обработать",
+				"pending": "Только необработанные тексты",
+				"pendingSub": "Тексты без версии обработки",
+				"errors": "Тексты с ошибками",
+				"errorsSub": "Тексты с NOT_FOUND или AMBIGUOUS токенами",
+				"all": "Все тексты",
+				"allSub": "Полная переработка всех текстов",
+				"runBtn": "Запустить",
+				"cancelBtn": "Отмена"
+			},
+			"detail": {
+				"title": "Детали текста",
+				"level": "Уровень",
+				"status": "Статус",
+				"version": "Версия",
+				"totalTokens": "Всего токенов",
+				"analyzed": "Распознано",
+				"ambiguous": "Неоднозначных",
+				"notFound": "Не найдено",
+				"processedAt": "Обработано",
+				"tokensTitle": "Проблемные токены",
+				"colOriginal": "Оригинал",
+				"colNormalized": "Нормализованная",
+				"colSource": "Источник",
+				"colPage": "Стр.",
+				"runBtn": "Запустить",
+				"resetBtn": "Сбросить",
+				"closeBtn": "Закрыть",
+				"noTokens": "Проблемных токенов нет"
+			},
+			"pagination": {
+				"showing": "Показано {from}–{to} из {total}"
+			}
+		},
+		"texts": {
+			"meta": {
+				"title": "Тексты — Admin | Мотт Ларбе",
+				"description": "Управление всеми текстами библиотеки, включая черновики и токенизацию"
+			},
+			"title": "Тексты",
+			"subtitle": "Все тексты библиотеки, включая черновики",
+			"import": "Импорт",
+			"create": "Создать текст",
+			"stats": {
+				"total": "Всего текстов",
+				"totalSub": "+{count} за месяц",
+				"published": "Опубликовано",
+				"publishedSub": "{percent}% от всех",
+				"drafts": "Черновики",
+				"draftsSub": "ждут публикации",
+				"processing": "Обрабатываются",
+				"processingSub": "токенизация",
+				"errors": "Ошибок",
+				"errorsSub": "не обработаны"
+			},
+			"tabs": {
+				"all": "Все",
+				"published": "Опубликовано",
+				"draft": "Черновики",
+				"archived": "Архив",
+				"processing": "Обработка",
+				"error": "Ошибки"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Поиск по названию…",
+				"allLevels": "Все уровни",
+				"sortDate": "По дате",
+				"sortTitle": "По названию",
+				"sortLevel": "По уровню",
+				"sortReads": "По прочтениям"
+			},
+			"table": {
+				"title": "Название",
+				"level": "Уровень",
+				"status": "Статус",
+				"processing": "Обработка",
+				"reads": "Прочтений",
+				"date": "Дата",
+				"tokens": "{count} токенов",
+				"notProcessed": "не обработан",
+				"readsMobile": "прочтений",
+				"errorMeta": "Ошибка: неизвестные леммы"
+			},
+			"status": {
+				"published": "Опубликован",
+				"draft": "Черновик",
+				"archived": "Архив"
+			},
+			"processing": {
+				"error": "ошибка"
+			},
+			"bulk": {
+				"selected": "{count} выбрано",
+				"publish": "Опубликовать",
+				"tokenize": "Обработать",
+				"delete": "Удалить"
+			},
+			"actions": {
+				"edit": "Редактировать",
+				"versions": "Версии",
+				"tokenize": "Токенизация",
+				"publish": "Опубликовать",
+				"unpublish": "Снять с публикации",
+				"retry": "Повторить токенизацию",
+				"delete": "Удалить"
+			},
+			"pagination": {
+				"showing": "Показано {from}–{to} из {total}"
+			},
+			"versions": {
+				"meta": {
+					"title": "Версии — Admin | Мотт Ларбе",
+					"description": "История версий токенизации текста"
+				},
+				"pageTitle": "Версии",
+				"backToTexts": "К текстам",
+				"stats": {
+					"total": "Всего",
+					"totalSub": "все запуски",
+					"completed": "Успешно",
+					"completedSub": "завершены",
+					"errors": "Ошибки",
+					"errorsSub": "неуспешные",
+					"running": "Выполняется",
+					"runningSub": "в процессе"
+				},
+				"tabs": {
+					"all": "Все",
+					"COMPLETED": "Завершены",
+					"ERROR": "Ошибки",
+					"RUNNING": "Выполняются"
+				},
+				"timeline": {
+					"empty": "Версий ещё нет",
+					"emptySub": "Запустите токенизацию для создания первой версии",
+					"today": "Сегодня",
+					"yesterday": "Вчера"
+				},
+				"item": {
+					"currentBadge": "текущая",
+					"tokens": "токенов",
+					"unknown": "неизвестных",
+					"pages": "стр.",
+					"by": "от"
+				},
+				"trigger": {
+					"MANUAL": "Вручную",
+					"AUTO_ON_SAVE": "Авто при сохранении",
+					"AUTO_ON_CREATE": "Авто при создании"
+				},
+				"status": {
+					"IDLE": "Ожидание",
+					"RUNNING": "Выполняется",
+					"COMPLETED": "Завершено",
+					"ERROR": "Ошибка"
+				},
+				"actions": {
+					"restore": "Восстановить",
+					"retry": "Повторить",
+					"download": "Скачать"
+				},
+				"modal": {
+					"title": "Версия {n}",
+					"close": "Закрыть",
+					"restore": "Восстановить эту версию",
+					"restoring": "Восстановление…",
+					"retry": "Повторить",
+					"retrying": "Запуск…",
+					"overview": "Обзор",
+					"pages": "Страницы",
+					"log": "Лог",
+					"totalTokens": "Токенов",
+					"totalWords": "Слов",
+					"totalChars": "Символов",
+					"duration": "Длительность",
+					"trigger": "Триггер",
+					"initiator": "Инициатор",
+					"colPage": "Страница",
+					"colTokens": "Токены",
+					"colWords": "Слова",
+					"colChars": "Символы",
+					"colStatus": "Статус",
+					"noLogs": "Нет логов"
+				},
+				"sidebar": {
+					"textInfo": "Данные текста",
+					"status": "Статус",
+					"level": "Уровень",
+					"language": "Язык",
+					"pagesCount": "Страниц",
+					"author": "Автор",
+					"createdAt": "Создан",
+					"noLevel": "—",
+					"noAuthor": "—",
+					"pageBreakdown": "Распределение по страницам",
+					"pageN": "Страница {n}",
+					"settings": "Настройки обработки",
+					"normalization": "Нормализация",
+					"morphAnalysis": "Морфологический анализ",
+					"autoOnSave": "Автотокенизация при сохранении",
+					"on": "Вкл",
+					"off": "Выкл",
+					"runBtn": "Запустить токенизацию",
+					"runBtnRunning": "Обрабатывается…",
+					"langCHE": "Чеченский",
+					"langRU": "Русский",
+					"langAR": "Арабский",
+					"langEN": "Английский"
+				}
+			},
+			"createPage": {
+				"back": "Назад",
+				"newText": "Новый текст",
+				"saving": "Сохранение…",
+				"unsaved": "Есть несохранённые изменения",
+				"draftSaved": "Черновик сохранён",
+				"saveDraft": "Сохранить черновик",
+				"publish": "Опубликовать",
+				"publishing": "Публикация…",
+				"titlePlaceholder": "Заголовок текста",
+				"titleRequired": "Введите заголовок",
+				"textPublished": "Текст опубликован",
+				"savedDraft": "Черновик сохранён",
+				"saveFailed": "Не удалось сохранить. Попробуйте снова.",
+				"formatText": "Абзац",
+				"formatH2": "Заголовок 2",
+				"formatH3": "Заголовок 3",
+				"formatQuote": "Цитата",
+				"bold": "Жирный",
+				"italic": "Курсив",
+				"underline": "Подчёркнутый",
+				"bulletList": "Маркированный список",
+				"orderedList": "Нумерованный список",
+				"undo": "Отменить",
+				"redo": "Повторить",
+				"pageN": "Страница {n}",
+				"addPage": "Добавить страницу",
+				"pages": "{n} стр.",
+				"startTyping": "Начните вводить…",
+				"words": "Слова",
+				"chars": "Символы",
+				"paragraphs": "Абзацы",
+				"wordsSuffix": "сл.",
+				"statusOptions": {
+					"draft": "Черновик",
+					"published": "Опубликован",
+					"archived": "В архиве"
+				},
+				"sections": {
+					"settings": "Настройки",
+					"status": "Статус",
+					"metadata": "Метаданные",
+					"tags": "Теги",
+					"description": "Описание",
+					"cover": "Обложка",
+					"processing": "Обработка",
+					"pageStats": "Статистика страниц"
+				},
+				"langLabel": "Язык",
+				"langChe": "Чеченский",
+				"langRu": "Русский",
+				"levelLabel": "Уровень",
+				"authorLabel": "Автор",
+				"authorPlaceholder": "Имя автора",
+				"sourceLabel": "Источник (URL)",
+				"sourcePlaceholder": "https://…",
+				"tagsAddPlaceholder": "Добавить теги…",
+				"tagsHint": "Нажмите Enter для добавления тега",
+				"descriptionPlaceholder": "Краткое описание текста…",
+				"coverUploadLabel": "Загрузить обложку",
+				"coverUploadSub": "JPEG, PNG или WebP",
+				"tokenizeLabel": "Автотокенизация при сохранении",
+				"tokenizeSub": "Запустить токенизацию после сохранения",
+				"normalizationLabel": "Нормализация",
+				"normalizationSub": "Привести слова к начальной форме",
+				"morphLabel": "Морфологический анализ",
+				"morphSub": "Применить морфологические правила",
+				"processNotice": "После сохранения текст будет автоматически токенизирован."
+			},
+			"editPage": {
+				"back": "Назад",
+				"editing": "Редактирование",
+				"loading": "Загрузка текста…",
+				"loadError": "Не удалось загрузить текст",
+				"saving": "Сохранение…",
+				"saved": "Сохранено",
+				"unsaved": "Есть несохранённые изменения",
+				"saveUpdate": "Сохранить и обновить",
+				"saveDraft": "Сохранить черновик",
+				"titleRequired": "Введите заголовок",
+				"updateSuccess": "Текст обновлён",
+				"updateFailed": "Не удалось сохранить. Попробуйте снова.",
+				"deleteConfirmTitle": "Удалить текст?",
+				"deleteConfirmBody": "Текст «{title}» и все его версии токенизации будут удалены безвозвратно. Это действие нельзя отменить.",
+				"deleteCancel": "Отмена",
+				"deleteConfirm": "Удалить",
+				"deleteSuccess": "Текст удалён",
+				"deleteFailed": "Не удалось удалить текст",
+				"tokenizeStarted": "Токенизация запущена",
+				"tokenizeFailed": "Не удалось запустить токенизацию",
+				"pagesTokens": "{n} стр. · {tokens} токенов",
+				"tokenBar": {
+					"done": "Токенизация завершена — {pages} стр., {tokens} токенов",
+					"versions": "Версии",
+					"running": "Токенизация выполняется…",
+					"error": "Ошибка токенизации"
+				},
+				"retokenizeBar": {
+					"text": "Текст изменён — после сохранения потребуется повторная токенизация"
+				},
+				"sections": {
+					"tokenization": "Токенизация",
+					"versions": "Последние изменения"
+				},
+				"tokenStatus": {
+					"COMPLETED": "Завершена",
+					"RUNNING": "Выполняется",
+					"ERROR": "Ошибка",
+					"IDLE": "Не запускалась"
+				},
+				"tokenStatusLabel": "Статус",
+				"tokenCountSuffix": "токенов",
+				"tokenHistoryLink": "История версий токенизации",
+				"tokenizeNow": "Токенизировать сейчас",
+				"dangerZone": "Опасная зона",
+				"deleteText": "Удалить текст",
+				"versionCurrent": "Текущая версия",
+				"allVersions": "Все версии"
+			}
+		},
+		"morphology": {
+			"meta": {
+				"title": "Морфология — Админ | Мотт Ларбе",
+				"description": "Управление суффиксными правилами для морфологического анализа чеченского языка"
+			},
+			"title": "Морфология",
+			"subtitle": "Правила суффиксов и окончаний для анализа чеченских слов",
+			"add": "Добавить",
+			"import": "Импорт",
+			"stats": {
+				"total": "Всего правил",
+				"totalSub": "в системе",
+				"coverage": "Покрытие токенов",
+				"coverageSub": "хороший результат",
+				"matches": "Всего совпадений",
+				"matchesSub": "по всем текстам",
+				"inactive": "Неактивных",
+				"inactiveSub": "требуют проверки"
+			},
+			"tabs": {
+				"all": "Все",
+				"active": "Активные",
+				"inactive": "Неактивные",
+				"regex": "Regex"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Поиск по паттерну…",
+				"allPos": "Все части речи",
+				"allTypes": "Любой тип"
+			},
+			"table": {
+				"pattern": "Паттерн",
+				"replace": "Замена → Лемма",
+				"pos": "ЧР",
+				"type": "Тип",
+				"priority": "Прио.",
+				"matches": "Совпадений",
+				"status": "Статус"
+			},
+			"status": {
+				"active": "Активно",
+				"inactive": "Неактивно"
+			},
+			"pos": {
+				"noun": "Существительное",
+				"verb": "Глагол",
+				"adj": "Прилагательное",
+				"adv": "Наречие",
+				"pron": "Местоимение"
+			},
+			"ruleType": {
+				"SUFFIX": "суффикс",
+				"ENDING": "окончание",
+				"PREFIX": "префикс",
+				"NOUN_CASE": "падеж сущ.",
+				"PLURAL": "мн. число",
+				"VERB_PAST": "прош. вр.",
+				"REGEX": "regex"
+			},
+			"bulk": {
+				"selected": "Выбрано {count}",
+				"activate": "Активировать",
+				"deactivate": "Деактивировать",
+				"delete": "Удалить"
+			},
+			"row": {
+				"edit": "Изменить",
+				"activate": "Активировать",
+				"deactivate": "Деактивировать",
+				"delete": "Удалить"
+			},
+			"ruleModal": {
+				"addTitle": "Добавить правило",
+				"editTitle": "Изменить правило",
+				"subtitle": "Паттерн для морфологического анализа чеченских слов",
+				"suffixLabel": "Паттерн (суффикс / regex)",
+				"suffixPlaceholder": "напр. нах или ^[а-яё]+чу$",
+				"addLabel": "Замена",
+				"addHint": "добавляется к основе",
+				"posLabel": "Часть речи",
+				"typeLabel": "Тип",
+				"priorityLabel": "Приоритет",
+				"descriptionLabel": "Описание",
+				"descriptionPlaceholder": "напр. Суффикс мн. числа",
+				"activeLabel": "Активно",
+				"cancel": "Отмена",
+				"save": "Сохранить",
+				"create": "Создать"
+			},
+			"importModal": {
+				"title": "Импорт правил",
+				"subtitle": "Загрузите CSV или JSON файл с морфологическими правилами",
+				"dropTitle": "Перетащите файл или нажмите для выбора",
+				"dropSub": "CSV или JSON, колонки: pattern, add, pos, type, priority, description",
+				"overwrite": "Перезаписать существующие правила (тот же суффикс + тип + язык)",
+				"cancel": "Отмена",
+				"submit": "Импортировать",
+				"close": "Готово",
+				"resultTitle": "Результаты импорта",
+				"created": "Создано",
+				"updated": "Обновлено",
+				"skipped": "Пропущено",
+				"total": "Всего строк",
+				"moreErrors": "ещё ошибок"
+			},
+			"pagination": {
+				"showing": "Показано {from}–{to} из {total} правил"
 			}
 		}
 	}

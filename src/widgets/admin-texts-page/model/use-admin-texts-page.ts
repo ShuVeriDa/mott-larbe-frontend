@@ -1,0 +1,100 @@
+"use client";
+
+import { useCallback, useState } from "react";
+import { useAdminTexts, useAdminTextStats, useAdminTextMutations } from "@/entities/admin-text";
+import type { AdminTextsTab, FetchAdminTextsQuery, TextLevel, TextSortBy } from "@/entities/admin-text";
+
+export const useAdminTextsPage = () => {
+	const [tab, setTab] = useState<AdminTextsTab>("all");
+	const [search, setSearch] = useState("");
+	const [level, setLevel] = useState<TextLevel | "">("");
+	const [sortBy, setSortBy] = useState<TextSortBy>("createdAt");
+	const [page, setPage] = useState(1);
+	const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+
+	const query: FetchAdminTextsQuery = {
+		...(search ? { search } : {}),
+		...(level ? { level } : {}),
+		...(tab !== "all" ? { status: tab } : {}),
+		sortBy,
+		sortOrder: "desc",
+		page,
+		limit: 20,
+	};
+
+	const { data, isLoading, isFetching } = useAdminTexts(query);
+	const { data: stats, isLoading: statsLoading } = useAdminTextStats();
+	const mutations = useAdminTextMutations();
+
+	const handleTabChange = useCallback((next: AdminTextsTab) => {
+		setTab(next);
+		setPage(1);
+		setSelectedIds(new Set());
+	}, []);
+
+	const handleSearchChange = useCallback((value: string) => {
+		setSearch(value);
+		setPage(1);
+		setSelectedIds(new Set());
+	}, []);
+
+	const handleLevelChange = useCallback((value: string) => {
+		setLevel(value as TextLevel | "");
+		setPage(1);
+	}, []);
+
+	const handleSortChange = useCallback((value: TextSortBy) => {
+		setSortBy(value);
+		setPage(1);
+	}, []);
+
+	const toggleSelectId = useCallback((id: string) => {
+		setSelectedIds((prev) => {
+			const next = new Set(prev);
+			if (next.has(id)) next.delete(id);
+			else next.add(id);
+			return next;
+		});
+	}, []);
+
+	const toggleSelectAll = useCallback(() => {
+		if (!data?.items) return;
+		setSelectedIds((prev) => {
+			const allIds = data.items.map((t) => t.id);
+			const allSelected = allIds.every((id) => prev.has(id));
+			if (allSelected) return new Set();
+			return new Set(allIds);
+		});
+	}, [data?.items]);
+
+	const clearSelection = useCallback(() => setSelectedIds(new Set()), []);
+
+	const allSelected =
+		!!data?.items?.length && data.items.every((t) => selectedIds.has(t.id));
+	const someSelected = selectedIds.size > 0;
+
+	return {
+		tab,
+		search,
+		level,
+		sortBy,
+		page,
+		selectedIds,
+		allSelected,
+		someSelected,
+		data,
+		stats,
+		isLoading,
+		isFetching,
+		statsLoading,
+		mutations,
+		handleTabChange,
+		handleSearchChange,
+		handleLevelChange,
+		handleSortChange,
+		toggleSelectId,
+		toggleSelectAll,
+		clearSelection,
+		setPage,
+	};
+};

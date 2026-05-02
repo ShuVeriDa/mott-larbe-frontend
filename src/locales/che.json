@@ -1627,6 +1627,79 @@
 			"users": {
 				"title": "Пользователи — Admin | Мотт Ларбе",
 				"description": "Нийсархойн аккаунташ, роллаш а, статусаш а хьалхе хIиттор"
+			},
+			"userDetail": {
+				"title": "Нийсар — Admin | Мотт Ларбе",
+				"description": "Нийсарна аккаунт, роллаш а, жигаралла а хьовсар"
+			},
+			"textsCreate": {
+				"title": "Керла йозанаш — Admin | Мотт Ларбе",
+				"description": "Библиотекина керла йозанаш кхолла"
+			},
+			"textsEdit": {
+				"title": "Йозанаш хийца — Admin | Мотт Ларбе",
+				"description": "Йозанийн чулацам а, метаданнаш а хийца"
+			}
+		},
+		"userDetail": {
+			"account": "Аккаунт",
+			"id": "ID",
+			"username": "ЦIе нийсарна",
+			"phone": "Телефон",
+			"registered": "РегистрацитI",
+			"lastActive": "Хьалхарниг жигаралла",
+			"roles": "Роллаш",
+			"addRole": "ТIетоха",
+			"revokeRole": "Ролл даккха",
+			"actions": {
+				"title": "ДIахIоттамаш",
+				"manageSubscription": "Подписка хьалхе хIиттор",
+				"resetSessions": "Дерриге сессияш сацо",
+				"applyCoupon": "Промокод тIетоха",
+				"freeze": "Аккаунт тIемда",
+				"delete": "Аккаунт даккха"
+			},
+			"stats": {
+				"textsRead": "Хьала а тоьхна йозанаш",
+				"allTime": "схьаэцна хан",
+				"dictionaryWords": "Дешнаш словарехь",
+				"folders": "{count} папкаш",
+				"failLookup": "Ца хааш долу дешнаш",
+				"streak": "Стрик",
+				"days": "де цхьаьна"
+			},
+			"subscription": {
+				"title": "Подписка",
+				"manage": "хьалхе хIитта →",
+				"active": "Жигарниг",
+				"until": "{date} чу",
+				"extend": "Тохийта",
+				"cancel": "Сацо",
+				"history": "ДохIамийн история",
+				"noSubscription": "Жигарниг подписка яц"
+			},
+			"events": {
+				"title": "Хиламаш",
+				"feedTab": "Лента",
+				"summaryTab": "Схьадалор",
+				"sessionsTab": "Сессияш",
+				"allTypes": "Дерриге тайпанаш",
+				"last7days": "7 де чохь",
+				"last30days": "30 де чохь",
+				"allTime": "Дерриге хан чохь",
+				"loadMore": "Гайта кхин {count} хилам →",
+				"topUnknown": "Ца хааш долу дешнийн топ",
+				"device": "ГIирс / браузер",
+				"ip": "IP",
+				"lastActivity": "Хьалхарниг жигаралла",
+				"status": "Статус",
+				"sessionActive": "Жигарниг",
+				"sessionExpired": "КIелхьарйолу",
+				"currentSession": "хIинца долу сессия"
+			},
+			"featureFlags": {
+				"title": "Feature flags",
+				"subtitle": "нийсарна хийцамаш"
 			}
 		},
 		"brand": "Мотт Ларбе",
@@ -1640,7 +1713,9 @@
 			"dashboard": "Дашборд",
 			"analytics": "Аналитика",
 			"texts": "Йозанаш",
+			"tokenization": "Токенизаци",
 			"dictionary": "Словарь",
+			"morphology": "Морфологи",
 			"unknownWords": "Ца хааш долу дешнаш",
 			"usersList": "Нийсархой",
 			"feedback": "Хаамаш",
@@ -1729,6 +1804,620 @@
 			},
 			"pagination": {
 				"showing": "ГойтIу {from}–{to} {total} чура"
+			}
+		},
+		"unknownWords": {
+			"meta": {
+				"title": "Ца хааш долу дешнаш — Admin | Мотт Ларбе",
+				"description": "Система токенизаци хьалхе ца лаьцна дешнаш"
+			},
+			"title": "Ца хааш долу дешнаш",
+			"subtitle": "Система ца лаьцна дешнаш",
+			"export": "Экспорт",
+			"clearAll": "Дерриге а дIаяккха",
+			"stats": {
+				"totalPending": "Дерриге ца хааш",
+				"totalPendingSub": "болх хьалхе хIоттийна",
+				"addedToDictionary": "Словарьга тIетоьхна",
+				"addedToDictionarySub": "схьаийцна хан чохь",
+				"encounteredToday": "Тахана хецна",
+				"encounteredTodaySub": "{count} йозанашкара",
+				"deleted": "ДIаяьккхина",
+				"deletedSub": "ца оьшуш"
+			},
+			"tabs": {
+				"all": "Дерриге а",
+				"frequent": "Дукха хецначу",
+				"rare": "КIезиг"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Дош лах…",
+				"allTexts": "Дерриге йозанаш",
+				"sortFrequency": "Дукхалла ↓",
+				"sortNewest": "Керла хьалха",
+				"sortAlpha": "Алфавитехь"
+			},
+			"table": {
+				"word": "Дош",
+				"context": "Контекст",
+				"count": "Хецнарг",
+				"first": "Хьалхара",
+				"last": "ТIаьххьара"
+			},
+			"bulk": {
+				"selected": "{count} харжина",
+				"addToDictionary": "Словарьга тIетоха",
+				"delete": "ДIаяккха"
+			},
+			"row": {
+				"addToDictionary": "Словарьга тIетоха",
+				"linkToLemma": "Леммаца цхьатоха",
+				"allContexts": "Дерриге контексташ",
+				"delete": "ДIаяккха"
+			},
+			"addModal": {
+				"title": "Словарьга тIетоха",
+				"subtitleOccurrences": "{count} хIора хецна",
+				"subtitleOccurrencesPlural": "{count} хIора хецна",
+				"normalizedLabel": "нормализовано",
+				"actionLabel": "ГIуллакх",
+				"createNew": "Словарийн керла тIедожар хIиттор",
+				"createNewSub": "Лемма гочдарца а, дешан декъаца а",
+				"linkExisting": "Хиллачу леммаца цхьатоха",
+				"linkExistingSub": "Дош тIедожаран словоформа хир ду",
+				"headword": "Коьрта дош (лемма)",
+				"partOfSpeech": "Дешан декъ",
+				"posNone": "ГайтIина яц",
+				"posNoun": "Цlерметдош",
+				"posVerb": "Хандош",
+				"posAdj": "Билгалдош",
+				"posAdv": "Билгалдешан билгалдош",
+				"posParticle": "Частица",
+				"translation": "Гочдар (RU)",
+				"translationPlaceholder": "Гочдар яздан…",
+				"level": "Тlера",
+				"levelNone": "ГайтIина яц",
+				"domain": "Тема",
+				"domainPlaceholder": "дийнан дош",
+				"findLemma": "Лемма лаха",
+				"findLemmaPlaceholder": "Дош яздан йолало…",
+				"cancel": "Сацо",
+				"submit": "Словарьга тIетоха"
+			},
+			"clearModal": {
+				"title": "Дерриге ца хааш долу дешнаш дIаяккха",
+				"subtitle": "Хlара гIуллакх дIаяккха ца мегар ду",
+				"body": "Словарьга тIетоьхна вацара {count} ца хааш долу дешнаш дерриге а дIадоьлу. Словарийн тIедожарш ца эшна.",
+				"cancel": "Сацо",
+				"confirm": "Дерриге а дIаяккха"
+			},
+			"pagination": {
+				"showing": "ГойтIу {from}–{to} {total} чура"
+			}
+		},
+		"tokenization": {
+			"meta": {
+				"title": "Токенизаци — Администратор | Мотт Ларбе",
+				"description": "Текстийн токенизаци кхиам бан — анализ, статусаш, куьйгалла тасар"
+			},
+			"title": "Токенизаци",
+			"subtitle": "Текстийн токенаш кхочушбан — анализ, статусаш, куьйгалла тасар",
+			"runBtn": "Болда",
+			"batchBtn": "Гулдина",
+			"stats": {
+				"total": "Дерриге токенаш",
+				"totalSub": "дерриге текстийн",
+				"analyzed": "Евзинарш",
+				"ambiguous": "Тайп-тайпана",
+				"notFound": "Ца карийнарш",
+				"unprocessed": "Лелийна вацара",
+				"unprocessedSub": "тексташ"
+			},
+			"tabs": {
+				"all": "Дерриге тексташ",
+				"issues": "Проблемийн",
+				"notfound": "Ца карийнарш",
+				"pending": "Лелийна вацара"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Цlе тIехь лаха…",
+				"allLevels": "Хlоттам",
+				"allStatuses": "Статус",
+				"sortErrors": "Гiалатийн",
+				"sortDate": "Дийнан",
+				"sortName": "Цlийн"
+			},
+			"table": {
+				"textTitle": "Текстан цIе",
+				"level": "Хlоттам",
+				"tokens": "Токенаш",
+				"notFound": "Ца карийна",
+				"ambiguous": "Тайп-тайпана",
+				"version": "Версии",
+				"pages": "агIонаш"
+			},
+			"status": {
+				"IDLE": "Хедо",
+				"RUNNING": "Болдина",
+				"COMPLETED": "Кхочушбина",
+				"ERROR": "ГIалат"
+			},
+			"bulk": {
+				"selected": "{count} харжина",
+				"run": "Болда",
+				"reset": "Дагор"
+			},
+			"row": {
+				"run": "Болда",
+				"cancel": "Сацо",
+				"reset": "Токенаш дагор",
+				"details": "ЧIагIонаш"
+			},
+			"sidePanel": {
+				"distribution": "Токенийн декъалар",
+				"distributionTotal": "дерриге",
+				"settings": "Нийсаяккхар",
+				"queue": "Кхоллармийн эрна",
+				"queueEmpty": "Эрна яц",
+				"runBtn": "Токенизаци болда",
+				"settingsBtn": "Нийсаяккхар",
+				"sourcesTitle": "Хlоттанаш",
+				"sources": {
+					"admin": "Куьйгалла",
+					"cache": "Кэш",
+					"morphology": "Морфологи",
+					"online": "Онлайн"
+				},
+				"settingsOptions": {
+					"autoTokenize": "Автоматически токенизаци",
+					"autoTokenizeSub": "Сохранехь кхоллар",
+					"normalization": "Нормализаци",
+					"normalizationSub": "Басе хlотта",
+					"morphAnalysis": "Морфологин анализ",
+					"morphAnalysisSub": "Морфологин бакъонаш",
+					"onlineDictionaries": "Онлайн-словараш",
+					"onlineDictionariesSub": "Арахьара API лело"
+				}
+			},
+			"runModal": {
+				"title": "Токенизаци болда",
+				"subtitle": "Мила тексташ кхоллар бохуш хаьржина",
+				"pending": "Лелийна вацара тексташ",
+				"pendingSub": "Версии йоцу тексташ",
+				"errors": "ГIалатийн тексташ",
+				"errorsSub": "NOT_FOUND е AMBIGUOUS токенаш долу тексташ",
+				"all": "Дерриге тексташ",
+				"allSub": "Дерриге текстийн дагар кхоллар",
+				"runBtn": "Болда",
+				"cancelBtn": "Сацо"
+			},
+			"detail": {
+				"title": "Текстан чIагIонаш",
+				"level": "Хlоттам",
+				"status": "Статус",
+				"version": "Версии",
+				"totalTokens": "Дерриге токенаш",
+				"analyzed": "Евзинарш",
+				"ambiguous": "Тайп-тайпана",
+				"notFound": "Ца карийна",
+				"processedAt": "Кхоллина",
+				"tokensTitle": "Проблемийн токенаш",
+				"colOriginal": "Бакъйолу",
+				"colNormalized": "Нормализованни",
+				"colSource": "Хlотта",
+				"colPage": "АгIо",
+				"runBtn": "Болда",
+				"resetBtn": "Дагор",
+				"closeBtn": "Схьасацо",
+				"noTokens": "Проблемийн токенаш яц"
+			},
+			"pagination": {
+				"showing": "ГойтIу {from}–{to} {total} чура"
+			}
+		},
+		"texts": {
+			"meta": {
+				"title": "Йозанаш — Admin | Мотт Ларбе",
+				"description": "Библиотекан дерриге йозанаш хьалхе хIиттор, черновикаш а, токенизаци а долуш"
+			},
+			"title": "Йозанаш",
+			"subtitle": "Библиотекан дерриге йозанаш, черновикаш а долуш",
+			"import": "Импорт",
+			"create": "Йозан кхоллар",
+			"stats": {
+				"total": "Дерриге йозанаш",
+				"totalSub": "+{count} бутт чохь",
+				"published": "Арадаьккхинарш",
+				"publishedSub": "Дерригенна {percent}%",
+				"drafts": "Черновикаш",
+				"draftsSub": "арадаккха лоьхуш",
+				"processing": "КIелхьарлоьхуш",
+				"processingSub": "токенизаци",
+				"errors": "ГIалаташ",
+				"errorsSub": "ца кIелхьарлоьхна"
+			},
+			"tabs": {
+				"all": "Дерриге а",
+				"published": "АрадаьккхинарШ",
+				"draft": "Черновикаш",
+				"archived": "Архив",
+				"processing": "Кхочушдар",
+				"error": "ГIалаташ"
+			},
+			"toolbar": {
+				"searchPlaceholder": "ЦIе тIехь лаха…",
+				"allLevels": "Дерриге кхаьчамаш",
+				"sortDate": "Деннехь",
+				"sortTitle": "Цlийнехь",
+				"sortLevel": "Кхаьчамехь",
+				"sortReads": "Деший долуш"
+			},
+			"table": {
+				"title": "Цlе",
+				"level": "Кхаьчам",
+				"status": "Статус",
+				"processing": "Кхочушдар",
+				"reads": "Дешина",
+				"date": "Де",
+				"tokens": "{count} токен",
+				"notProcessed": "ца кхочушдина",
+				"readsMobile": "дешина",
+				"errorMeta": "ГIалат: ца хааш долу леммаш"
+			},
+			"status": {
+				"published": "АрадаьккхинарГ",
+				"draft": "Черновик",
+				"archived": "Архив"
+			},
+			"processing": {
+				"error": "гIалат"
+			},
+			"bulk": {
+				"selected": "{count} харжина",
+				"publish": "Арадаккха",
+				"tokenize": "Кхочушдан",
+				"delete": "Даккха"
+			},
+			"actions": {
+				"edit": "Хийца",
+				"versions": "Версияш",
+				"tokenize": "Токенизаци",
+				"publish": "Арадаккха",
+				"unpublish": "Арадаккхар сацо",
+				"retry": "Токенизаци юха дан",
+				"delete": "Даккха"
+			},
+			"pagination": {
+				"showing": "ГойтIу {from}–{to} {total} чура"
+			},
+			"versions": {
+				"meta": {
+					"title": "Версияш — Admin | Мотт Ларбе",
+					"description": "Йозанийн токенизацин версийн тарих"
+				},
+				"pageTitle": "Версияш",
+				"backToTexts": "Йозанашка",
+				"stats": {
+					"total": "Дерриге",
+					"totalSub": "дерриге дIадахарш",
+					"completed": "Кхочушдина",
+					"completedSub": "хиллараш",
+					"errors": "ГIалаташ",
+					"errorsSub": "ца хиллараш",
+					"running": "ДIадоьду",
+					"runningSub": "кхочушдарехь"
+				},
+				"tabs": {
+					"all": "Дерриге а",
+					"COMPLETED": "Кхочушдина",
+					"ERROR": "ГIалаташ",
+					"RUNNING": "ДIадоьду"
+				},
+				"timeline": {
+					"empty": "Версияш яц хIинца",
+					"emptySub": "Токенизаци дIадан хьалха версия кхоллийта",
+					"today": "Тахана",
+					"yesterday": "Хьалхара де"
+				},
+				"item": {
+					"currentBadge": "хIинца долу",
+					"tokens": "токен",
+					"unknown": "ца хааш",
+					"pages": "агIо.",
+					"by": "хьан"
+				},
+				"trigger": {
+					"MANUAL": "КIилехьа",
+					"AUTO_ON_SAVE": "Яздале автоматически",
+					"AUTO_ON_CREATE": "Кхоллале автоматически"
+				},
+				"status": {
+					"IDLE": "Лоьхуш",
+					"RUNNING": "ДIадоьду",
+					"COMPLETED": "Кхочушдина",
+					"ERROR": "ГIалат"
+				},
+				"actions": {
+					"restore": "Юха хIиттор",
+					"retry": "Юха дан",
+					"download": "Схьалаца"
+				},
+				"modal": {
+					"title": "Версия {n}",
+					"close": "Дабар",
+					"restore": "ХIара версия юха хIиттор",
+					"restoring": "Юха хIиттош…",
+					"retry": "Юха дан",
+					"retrying": "ДIадоьлу…",
+					"overview": "Хьажар",
+					"pages": "АгIонаш",
+					"log": "Лог",
+					"totalTokens": "Токенаш",
+					"totalWords": "Дешнаш",
+					"totalChars": "Символаш",
+					"duration": "Хан",
+					"trigger": "Триггер",
+					"initiator": "Волавийнарг",
+					"colPage": "АгIо",
+					"colTokens": "Токенаш",
+					"colWords": "Дешнаш",
+					"colChars": "Символаш",
+					"colStatus": "Статус",
+					"noLogs": "Логаш яц"
+				},
+				"sidebar": {
+					"textInfo": "Йозанийн хаам",
+					"status": "Статус",
+					"level": "Дарж",
+					"language": "Мотт",
+					"pagesCount": "АгIонаш",
+					"author": "Автор",
+					"createdAt": "Кхоллина",
+					"noLevel": "—",
+					"noAuthor": "—",
+					"pageBreakdown": "АгIонашца декъар",
+					"pageN": "АгIо {n}",
+					"settings": "Кхочушдаран настройкаш",
+					"normalization": "Нормализаци",
+					"morphAnalysis": "Морфологин декхар",
+					"autoOnSave": "Яздале автоматически токенизаци",
+					"on": "Тоьхна",
+					"off": "ДIатоьхна",
+					"runBtn": "Токенизаци дIадан",
+					"runBtnRunning": "Кхочушдо…",
+					"langCHE": "Нохчийн",
+					"langRU": "Оьрсийн",
+					"langAR": "Iаьрбийн",
+					"langEN": "Ингалсан"
+				}
+			},
+			"createPage": {
+				"back": "АлаIа",
+				"newText": "Керла йозанаш",
+				"saving": "Лаха яздо…",
+				"unsaved": "Яздина доцу хийцамаш ду",
+				"draftSaved": "Черновик яздина",
+				"saveDraft": "Черновик яздан",
+				"publish": "Арахецна",
+				"publishing": "Арахецар…",
+				"titlePlaceholder": "Йозанийн цIе",
+				"titleRequired": "ЦIе язде",
+				"textPublished": "Йозанаш арахецна",
+				"savedDraft": "Черновик яздина",
+				"saveFailed": "Яздан хилла цахилира. Хьалха 1алаша.",
+				"formatText": "Абзац",
+				"formatH2": "Куйсар 2",
+				"formatH3": "Куйсар 3",
+				"formatQuote": "Цитата",
+				"bold": "Доккха",
+				"italic": "Курсив",
+				"underline": "КIелдаьхна",
+				"bulletList": "Маркерш долу барам",
+				"orderedList": "Нийсаниг долу барам",
+				"undo": "Юхайаккха",
+				"redo": "Хьалха яккха",
+				"pageN": "АгIо {n}",
+				"addPage": "АгIо тIетоха",
+				"pages": "{n} агIо",
+				"startTyping": "Яздан байла…",
+				"words": "Дешнаш",
+				"chars": "Символаш",
+				"paragraphs": "Абзацаш",
+				"wordsSuffix": "д.",
+				"statusOptions": {
+					"draft": "Черновик",
+					"published": "Арахецна",
+					"archived": "Архивехь"
+				},
+				"sections": {
+					"settings": "Настройкаш",
+					"status": "Статус",
+					"metadata": "Метаданнаш",
+					"tags": "Теганаш",
+					"description": "Сурт",
+					"cover": "КIоргехьа сурт",
+					"processing": "Доккхур",
+					"pageStats": "АгIонийн статистика"
+				},
+				"langLabel": "Мотт",
+				"langChe": "Нохчийн",
+				"langRu": "Оьрсийн",
+				"levelLabel": "Дарж",
+				"authorLabel": "Автор",
+				"authorPlaceholder": "Авторан цIе",
+				"sourceLabel": "Хьажа (URL)",
+				"sourcePlaceholder": "https://…",
+				"tagsAddPlaceholder": "Теганаш тIетоха…",
+				"tagsHint": "Enter тохка теганаш тIетоха",
+				"descriptionPlaceholder": "Йозанийн юккъера сурт…",
+				"coverUploadLabel": "КIоргехьа сурт яхка",
+				"coverUploadSub": "JPEG, PNG я WebP",
+				"tokenizeLabel": "Яздале автоматически токенизаци",
+				"tokenizeSub": "Яздале токенизаци дан",
+				"normalizationLabel": "Нормализаци",
+				"normalizationSub": "Дешнаш дIахIотторан хьесап",
+				"morphLabel": "Морфологин декхар",
+				"morphSub": "Морфологин бакъонаш лело",
+				"processNotice": "Яздале йозанаш автоматически токенизаци дийр ду."
+			},
+			"editPage": {
+				"back": "АлаIа",
+				"editing": "Хийцар",
+				"loading": "Йозанаш лоха…",
+				"loadError": "Йозанаш схьалоха хилла цахилира",
+				"saving": "Лаха яздо…",
+				"saved": "Яздина",
+				"unsaved": "Яздина доцу хийцамаш ду",
+				"saveUpdate": "Яздан а, нисдан а",
+				"saveDraft": "Черновик яздан",
+				"titleRequired": "ЦIе язде",
+				"updateSuccess": "Йозанаш хийцина",
+				"updateFailed": "Яздан хилла цахилира. Хьалха 1алаша.",
+				"deleteConfirmTitle": "Йозанаш даккха?",
+				"deleteConfirmBody": "«{title}» йозанаш а, цуьнан бухенан версеш а безовхьана даьккхина дийр ду. ХIара дийр хийца хила мегар дац.",
+				"deleteCancel": "Юхайаккха",
+				"deleteConfirm": "Даккха",
+				"deleteSuccess": "Йозанаш даьккхина",
+				"deleteFailed": "Йозанаш даккха хилла цахилира",
+				"tokenizeStarted": "Токенизаци байла",
+				"tokenizeFailed": "Токенизаци байла хилла цахилира",
+				"pagesTokens": "{n} агIо · {tokens} токен",
+				"tokenBar": {
+					"done": "Токенизаци чекхйаьлла — {pages} агIо, {tokens} токен",
+					"versions": "Версеш",
+					"running": "Токенизаци хIоттош…",
+					"error": "Токенизацин гIалат"
+				},
+				"retokenizeBar": {
+					"text": "Йозанаш хийцина — яздале дIахьалха токенизаци оьшур ду"
+				},
+				"sections": {
+					"tokenization": "Токенизаци",
+					"versions": "ТIаьхьарчу хийцамаш"
+				},
+				"tokenStatus": {
+					"COMPLETED": "Чекхйаьлла",
+					"RUNNING": "ХIоттош",
+					"ERROR": "ГIалат",
+					"IDLE": "Байла цахилла"
+				},
+				"tokenStatusLabel": "Статус",
+				"tokenCountSuffix": "токен",
+				"tokenHistoryLink": "Токенизацин версийн истори",
+				"tokenizeNow": "Токенизаци дан",
+				"dangerZone": "Дерзарна меттиг",
+				"deleteText": "Йозанаш даккха",
+				"versionCurrent": "Хиллачу версин",
+				"allVersions": "Хьалха версеш"
+			}
+		},
+		"morphology": {
+			"meta": {
+				"title": "Морфологи — Админ | Мотт Ларбе",
+				"description": "Нохчийн меттан морфологин декхаран бакъонаш нисдар"
+			},
+			"title": "Морфологи",
+			"subtitle": "Нохчийн дешнийн морфологин декхаран суффикс бакъонаш",
+			"add": "ТIетоха",
+			"import": "Импорт",
+			"stats": {
+				"total": "Карарлуш бакъонаш",
+				"totalSub": "системехь",
+				"coverage": "Токенийн нисдар",
+				"coverageSub": "дика хIума",
+				"matches": "Карийнарш",
+				"matchesSub": "массо йозанашкахь",
+				"inactive": "Нисло доцуш",
+				"inactiveSub": "хьажа деза"
+			},
+			"tabs": {
+				"all": "Массо",
+				"active": "Нислуш",
+				"inactive": "Нисло доцуш",
+				"regex": "Regex"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Паттерн лаха…",
+				"allPos": "Массо ЧР",
+				"allTypes": "Массо тайпа"
+			},
+			"table": {
+				"pattern": "Паттерн",
+				"replace": "Хийцар → Лемма",
+				"pos": "ЧР",
+				"type": "Тайпа",
+				"priority": "Прио.",
+				"matches": "Карийнарш",
+				"status": "Статус"
+			},
+			"status": {
+				"active": "Нислуш",
+				"inactive": "Нисло доцуш"
+			},
+			"pos": {
+				"noun": "ЦIердош",
+				"verb": "Хандош",
+				"adj": "Билгалдош",
+				"adv": "Билгалдашо",
+				"pron": "ЦIерметдош"
+			},
+			"ruleType": {
+				"SUFFIX": "суффикс",
+				"ENDING": "чаккхенг",
+				"PREFIX": "префикс",
+				"NOUN_CASE": "цIердешан дожар",
+				"PLURAL": "дукхалла",
+				"VERB_PAST": "ваьлла хан",
+				"REGEX": "regex"
+			},
+			"bulk": {
+				"selected": "{count} харжина",
+				"activate": "Нисло бан",
+				"deactivate": "Нисло ца бан",
+				"delete": "ДIаяха"
+			},
+			"row": {
+				"edit": "Хийца",
+				"activate": "Нисло бан",
+				"deactivate": "Нисло ца бан",
+				"delete": "Дlаяха"
+			},
+			"ruleModal": {
+				"addTitle": "Бакъо тIетоха",
+				"editTitle": "Бакъо хийца",
+				"subtitle": "Нохчийн дешнийн морфологин декхаран паттерн",
+				"suffixLabel": "Паттерн (суффикс / regex)",
+				"suffixPlaceholder": "масала нах я ^[а-яё]+чу$",
+				"addLabel": "Хийцар",
+				"addHint": "тIеоьзна",
+				"posLabel": "Ч. речи",
+				"typeLabel": "Тайпа",
+				"priorityLabel": "Приоритет",
+				"descriptionLabel": "Сурт",
+				"descriptionPlaceholder": "масала: Дукхалла суффикс",
+				"activeLabel": "Нислуш",
+				"cancel": "Дlадита",
+				"save": "Хьажа",
+				"create": "Кхолла"
+			},
+			"importModal": {
+				"title": "Бакъонаш импорт дан",
+				"subtitle": "CSV я JSON файл кхачо морфологин бакъонашца",
+				"dropTitle": "Файл тlеоьхьа я харжа нокх",
+				"dropSub": "CSV я JSON: pattern, add, pos, type, priority, description",
+				"overwrite": "Хилла бакъонаш дlахийца (цхьана суффикс + тайпа + мотт)",
+				"cancel": "Дlадита",
+				"submit": "Импорт дан",
+				"close": "Кхочушдина",
+				"resultTitle": "Импортан хIусам",
+				"created": "Кхоллина",
+				"updated": "Хийцина",
+				"skipped": "Дlавитина",
+				"total": "Дерриге нийсонаш",
+				"moreErrors": "кхин гlалаташ"
+			},
+			"pagination": {
+				"showing": "{from}–{to} гойту {total} бакъонашкара"
 			}
 		}
 	}

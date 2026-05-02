@@ -1627,6 +1627,79 @@
 			"users": {
 				"title": "Users — Admin | Mott Larbe",
 				"description": "Manage user accounts, roles and statuses"
+			},
+			"userDetail": {
+				"title": "User — Admin | Mott Larbe",
+				"description": "View and manage user account details, roles, and activity"
+			},
+			"textsCreate": {
+				"title": "New text — Admin | Mott Larbe",
+				"description": "Create a new text for the library"
+			},
+			"textsEdit": {
+				"title": "Edit text — Admin | Mott Larbe",
+				"description": "Edit library text content and metadata"
+			}
+		},
+		"userDetail": {
+			"account": "Account",
+			"id": "ID",
+			"username": "Username",
+			"phone": "Phone",
+			"registered": "Registered",
+			"lastActive": "Last activity",
+			"roles": "Roles",
+			"addRole": "Add",
+			"revokeRole": "Revoke role",
+			"actions": {
+				"title": "Actions",
+				"manageSubscription": "Manage subscription",
+				"resetSessions": "Reset all sessions",
+				"applyCoupon": "Apply promo code",
+				"freeze": "Freeze account",
+				"delete": "Delete account"
+			},
+			"stats": {
+				"textsRead": "Texts read",
+				"allTime": "all time",
+				"dictionaryWords": "Dictionary words",
+				"folders": "{count} folders",
+				"failLookup": "Unknown words",
+				"streak": "Streak",
+				"days": "days in a row"
+			},
+			"subscription": {
+				"title": "Subscription",
+				"manage": "manage →",
+				"active": "Active",
+				"until": "until {date}",
+				"extend": "Extend",
+				"cancel": "Cancel",
+				"history": "Payment history",
+				"noSubscription": "No active subscription"
+			},
+			"events": {
+				"title": "Events",
+				"feedTab": "Feed",
+				"summaryTab": "Summary",
+				"sessionsTab": "Sessions",
+				"allTypes": "All types",
+				"last7days": "Last 7 days",
+				"last30days": "Last 30 days",
+				"allTime": "All time",
+				"loadMore": "Show {count} more events →",
+				"topUnknown": "Top unknown words",
+				"device": "Device / Browser",
+				"ip": "IP",
+				"lastActivity": "Last activity",
+				"status": "Status",
+				"sessionActive": "Active",
+				"sessionExpired": "Expired",
+				"currentSession": "current session"
+			},
+			"featureFlags": {
+				"title": "Feature flags",
+				"subtitle": "user overrides"
 			}
 		},
 		"brand": "Mott Larbe",
@@ -1640,7 +1713,9 @@
 			"dashboard": "Dashboard",
 			"analytics": "Analytics",
 			"texts": "Texts",
+			"tokenization": "Tokenization",
 			"dictionary": "Dictionary",
+			"morphology": "Morphology",
 			"unknownWords": "Unknown words",
 			"usersList": "Users",
 			"feedback": "Feedback",
@@ -1729,6 +1804,620 @@
 			},
 			"pagination": {
 				"showing": "Showing {from}–{to} of {total}"
+			}
+		},
+		"unknownWords": {
+			"meta": {
+				"title": "Unknown Words — Admin | Mott Larbe",
+				"description": "Words the system could not recognize during tokenization"
+			},
+			"title": "Unknown Words",
+			"subtitle": "Words the system could not recognize",
+			"export": "Export",
+			"clearAll": "Clear all",
+			"stats": {
+				"totalPending": "Total unknown",
+				"totalPendingSub": "awaiting processing",
+				"addedToDictionary": "Added to dictionary",
+				"addedToDictionarySub": "all time",
+				"encounteredToday": "Encountered today",
+				"encounteredTodaySub": "from {count} texts",
+				"deleted": "Deleted",
+				"deletedSub": "irrelevant"
+			},
+			"tabs": {
+				"all": "All",
+				"frequent": "Frequent",
+				"rare": "Rare"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Search by word…",
+				"allTexts": "All texts",
+				"sortFrequency": "Frequency ↓",
+				"sortNewest": "Newest first",
+				"sortAlpha": "Alphabetical"
+			},
+			"table": {
+				"word": "Word",
+				"context": "Context",
+				"count": "Occurrences",
+				"first": "First seen",
+				"last": "Last seen"
+			},
+			"bulk": {
+				"selected": "{count} selected",
+				"addToDictionary": "Add to dictionary",
+				"delete": "Delete"
+			},
+			"row": {
+				"addToDictionary": "Add to dictionary",
+				"linkToLemma": "Link to lemma",
+				"allContexts": "All contexts",
+				"delete": "Delete"
+			},
+			"addModal": {
+				"title": "Add to dictionary",
+				"subtitleOccurrences": "occurs {count} time",
+				"subtitleOccurrencesPlural": "occurs {count} times",
+				"normalizedLabel": "normalized",
+				"actionLabel": "Action",
+				"createNew": "Create new dictionary entry",
+				"createNewSub": "Lemma with translation and part of speech",
+				"linkExisting": "Link to existing lemma",
+				"linkExistingSub": "Word will become a word form of the entry",
+				"headword": "Headword (lemma)",
+				"partOfSpeech": "Part of speech",
+				"posNone": "Not specified",
+				"posNoun": "Noun",
+				"posVerb": "Verb",
+				"posAdj": "Adjective",
+				"posAdv": "Adverb",
+				"posParticle": "Particle",
+				"translation": "Translation (RU)",
+				"translationPlaceholder": "Enter translation…",
+				"level": "Level",
+				"levelNone": "Not specified",
+				"domain": "Domain",
+				"domainPlaceholder": "everyday speech",
+				"findLemma": "Find lemma",
+				"findLemmaPlaceholder": "Start typing a word…",
+				"cancel": "Cancel",
+				"submit": "Add to dictionary"
+			},
+			"clearModal": {
+				"title": "Clear all unknown words",
+				"subtitle": "This action cannot be undone",
+				"body": "All {count} unknown words that have not yet been added to the dictionary will be deleted. Dictionary entries will not be affected.",
+				"cancel": "Cancel",
+				"confirm": "Clear all"
+			},
+			"pagination": {
+				"showing": "Showing {from}–{to} of {total}"
+			}
+		},
+		"tokenization": {
+			"meta": {
+				"title": "Tokenization — Admin | Mott Larbe",
+				"description": "Manage text tokenization — analysis, statuses, manual correction"
+			},
+			"title": "Tokenization",
+			"subtitle": "Manage text tokenization — analysis, statuses, manual correction",
+			"runBtn": "Run",
+			"batchBtn": "Batch",
+			"stats": {
+				"total": "Total tokens",
+				"totalSub": "across all texts",
+				"analyzed": "Recognized",
+				"ambiguous": "Ambiguous",
+				"notFound": "Not found",
+				"unprocessed": "Unprocessed",
+				"unprocessedSub": "texts"
+			},
+			"tabs": {
+				"all": "All texts",
+				"issues": "Problematic",
+				"notfound": "Not found",
+				"pending": "Unprocessed"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Search by title…",
+				"allLevels": "Level",
+				"allStatuses": "Status",
+				"sortErrors": "By errors",
+				"sortDate": "By date",
+				"sortName": "By name"
+			},
+			"table": {
+				"textTitle": "Text",
+				"level": "Lvl.",
+				"tokens": "Tokens",
+				"notFound": "Not found",
+				"ambiguous": "Ambiguous",
+				"version": "Version",
+				"pages": "pgs."
+			},
+			"status": {
+				"IDLE": "Idle",
+				"RUNNING": "Running",
+				"COMPLETED": "Done",
+				"ERROR": "Error"
+			},
+			"bulk": {
+				"selected": "{count} selected",
+				"run": "Run",
+				"reset": "Reset"
+			},
+			"row": {
+				"run": "Run",
+				"cancel": "Cancel",
+				"reset": "Reset tokens",
+				"details": "Details"
+			},
+			"sidePanel": {
+				"distribution": "Token distribution",
+				"distributionTotal": "total",
+				"settings": "Settings",
+				"queue": "Processing queue",
+				"queueEmpty": "Queue is empty",
+				"runBtn": "Run tokenization",
+				"settingsBtn": "Edit settings",
+				"sourcesTitle": "Sources",
+				"sources": {
+					"admin": "Manual",
+					"cache": "Cache",
+					"morphology": "Morphology",
+					"online": "Online"
+				},
+				"settingsOptions": {
+					"autoTokenize": "Auto-tokenize",
+					"autoTokenizeSub": "Auto-process on text save",
+					"normalization": "Normalization",
+					"normalizationSub": "Reduce to base form",
+					"morphAnalysis": "Morphology analysis",
+					"morphAnalysisSub": "Apply morphological rules",
+					"onlineDictionaries": "Online dictionaries",
+					"onlineDictionariesSub": "Use external API"
+				}
+			},
+			"runModal": {
+				"title": "Run tokenization",
+				"subtitle": "Choose which texts to process",
+				"pending": "Unprocessed texts only",
+				"pendingSub": "Texts without any processed version",
+				"errors": "Texts with errors",
+				"errorsSub": "Texts with NOT_FOUND or AMBIGUOUS tokens",
+				"all": "All texts",
+				"allSub": "Full reprocessing of all texts",
+				"runBtn": "Run",
+				"cancelBtn": "Cancel"
+			},
+			"detail": {
+				"title": "Text details",
+				"level": "Level",
+				"status": "Status",
+				"version": "Version",
+				"totalTokens": "Total tokens",
+				"analyzed": "Recognized",
+				"ambiguous": "Ambiguous",
+				"notFound": "Not found",
+				"processedAt": "Processed",
+				"tokensTitle": "Problematic tokens",
+				"colOriginal": "Original",
+				"colNormalized": "Normalized",
+				"colSource": "Source",
+				"colPage": "Page",
+				"runBtn": "Run",
+				"resetBtn": "Reset",
+				"closeBtn": "Close",
+				"noTokens": "No problematic tokens"
+			},
+			"pagination": {
+				"showing": "Showing {from}–{to} of {total}"
+			}
+		},
+		"texts": {
+			"meta": {
+				"title": "Texts — Admin | Mott Larbe",
+				"description": "Manage all library texts, including drafts and tokenization"
+			},
+			"title": "Texts",
+			"subtitle": "All library texts, including drafts",
+			"import": "Import",
+			"create": "Create text",
+			"stats": {
+				"total": "Total texts",
+				"totalSub": "+{count} this month",
+				"published": "Published",
+				"publishedSub": "{percent}% of all",
+				"drafts": "Drafts",
+				"draftsSub": "awaiting publication",
+				"processing": "Processing",
+				"processingSub": "tokenization",
+				"errors": "Errors",
+				"errorsSub": "not processed"
+			},
+			"tabs": {
+				"all": "All",
+				"published": "Published",
+				"draft": "Drafts",
+				"archived": "Archived",
+				"processing": "Processing",
+				"error": "Errors"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Search by title…",
+				"allLevels": "All levels",
+				"sortDate": "By date",
+				"sortTitle": "By title",
+				"sortLevel": "By level",
+				"sortReads": "By reads"
+			},
+			"table": {
+				"title": "Title",
+				"level": "Level",
+				"status": "Status",
+				"processing": "Processing",
+				"reads": "Reads",
+				"date": "Date",
+				"tokens": "{count} tokens",
+				"notProcessed": "not processed",
+				"readsMobile": "reads",
+				"errorMeta": "Error: unknown lemmas"
+			},
+			"status": {
+				"published": "Published",
+				"draft": "Draft",
+				"archived": "Archived"
+			},
+			"processing": {
+				"error": "error"
+			},
+			"bulk": {
+				"selected": "{count} selected",
+				"publish": "Publish",
+				"tokenize": "Tokenize",
+				"delete": "Delete"
+			},
+			"actions": {
+				"edit": "Edit",
+				"versions": "Versions",
+				"tokenize": "Tokenize",
+				"publish": "Publish",
+				"unpublish": "Unpublish",
+				"retry": "Retry tokenization",
+				"delete": "Delete"
+			},
+			"pagination": {
+				"showing": "Showing {from}–{to} of {total}"
+			},
+			"versions": {
+				"meta": {
+					"title": "Versions — Admin | Mott Larbe",
+					"description": "Text processing version history"
+				},
+				"pageTitle": "Versions",
+				"backToTexts": "Back to Texts",
+				"stats": {
+					"total": "Total",
+					"totalSub": "all runs",
+					"completed": "Completed",
+					"completedSub": "successful",
+					"errors": "Errors",
+					"errorsSub": "failed",
+					"running": "Running",
+					"runningSub": "in progress"
+				},
+				"tabs": {
+					"all": "All",
+					"COMPLETED": "Completed",
+					"ERROR": "Errors",
+					"RUNNING": "Running"
+				},
+				"timeline": {
+					"empty": "No versions yet",
+					"emptySub": "Run tokenization to create the first version",
+					"today": "Today",
+					"yesterday": "Yesterday"
+				},
+				"item": {
+					"currentBadge": "current",
+					"tokens": "tokens",
+					"unknown": "unknown",
+					"pages": "pgs.",
+					"by": "by"
+				},
+				"trigger": {
+					"MANUAL": "Manual",
+					"AUTO_ON_SAVE": "Auto on save",
+					"AUTO_ON_CREATE": "Auto on create"
+				},
+				"status": {
+					"IDLE": "Idle",
+					"RUNNING": "Running",
+					"COMPLETED": "Completed",
+					"ERROR": "Error"
+				},
+				"actions": {
+					"restore": "Restore",
+					"retry": "Retry",
+					"download": "Download"
+				},
+				"modal": {
+					"title": "Version {n}",
+					"close": "Close",
+					"restore": "Restore this version",
+					"restoring": "Restoring…",
+					"retry": "Retry",
+					"retrying": "Retrying…",
+					"overview": "Overview",
+					"pages": "Pages",
+					"log": "Log",
+					"totalTokens": "Total tokens",
+					"totalWords": "Words",
+					"totalChars": "Characters",
+					"duration": "Duration",
+					"trigger": "Trigger",
+					"initiator": "Initiator",
+					"colPage": "Page",
+					"colTokens": "Tokens",
+					"colWords": "Words",
+					"colChars": "Chars",
+					"colStatus": "Status",
+					"noLogs": "No logs"
+				},
+				"sidebar": {
+					"textInfo": "Text info",
+					"status": "Status",
+					"level": "Level",
+					"language": "Language",
+					"pagesCount": "Pages",
+					"author": "Author",
+					"createdAt": "Created",
+					"noLevel": "—",
+					"noAuthor": "—",
+					"pageBreakdown": "Page distribution",
+					"pageN": "Page {n}",
+					"settings": "Processing settings",
+					"normalization": "Normalization",
+					"morphAnalysis": "Morphological analysis",
+					"autoOnSave": "Auto-tokenize on save",
+					"on": "On",
+					"off": "Off",
+					"runBtn": "Run tokenization",
+					"runBtnRunning": "Processing…",
+					"langCHE": "Chechen",
+					"langRU": "Russian",
+					"langAR": "Arabic",
+					"langEN": "English"
+				}
+			},
+			"createPage": {
+				"back": "Back",
+				"newText": "New text",
+				"saving": "Saving…",
+				"unsaved": "Unsaved changes",
+				"draftSaved": "Draft saved",
+				"saveDraft": "Save draft",
+				"publish": "Publish",
+				"publishing": "Publishing…",
+				"titlePlaceholder": "Text title",
+				"titleRequired": "Please enter a title",
+				"textPublished": "Text published",
+				"savedDraft": "Draft saved",
+				"saveFailed": "Failed to save. Please try again.",
+				"formatText": "Paragraph",
+				"formatH2": "Heading 2",
+				"formatH3": "Heading 3",
+				"formatQuote": "Quote",
+				"bold": "Bold",
+				"italic": "Italic",
+				"underline": "Underline",
+				"bulletList": "Bullet list",
+				"orderedList": "Numbered list",
+				"undo": "Undo",
+				"redo": "Redo",
+				"pageN": "Page {n}",
+				"addPage": "Add page",
+				"pages": "{n} pages",
+				"startTyping": "Start typing…",
+				"words": "Words",
+				"chars": "Characters",
+				"paragraphs": "Paragraphs",
+				"wordsSuffix": "w.",
+				"statusOptions": {
+					"draft": "Draft",
+					"published": "Published",
+					"archived": "Archived"
+				},
+				"sections": {
+					"settings": "Settings",
+					"status": "Status",
+					"metadata": "Metadata",
+					"tags": "Tags",
+					"description": "Description",
+					"cover": "Cover image",
+					"processing": "Processing",
+					"pageStats": "Page stats"
+				},
+				"langLabel": "Language",
+				"langChe": "Chechen",
+				"langRu": "Russian",
+				"levelLabel": "Level",
+				"authorLabel": "Author",
+				"authorPlaceholder": "Author name",
+				"sourceLabel": "Source URL",
+				"sourcePlaceholder": "https://…",
+				"tagsAddPlaceholder": "Add tags…",
+				"tagsHint": "Press Enter to add a tag",
+				"descriptionPlaceholder": "Brief description of the text…",
+				"coverUploadLabel": "Upload cover image",
+				"coverUploadSub": "JPEG, PNG or WebP",
+				"tokenizeLabel": "Auto-tokenize on save",
+				"tokenizeSub": "Run tokenization after saving",
+				"normalizationLabel": "Normalization",
+				"normalizationSub": "Reduce words to base form",
+				"morphLabel": "Morphological analysis",
+				"morphSub": "Apply morphological rules",
+				"processNotice": "Text will be automatically tokenized after saving."
+			},
+			"editPage": {
+				"back": "Back",
+				"editing": "Editing",
+				"loading": "Loading text…",
+				"loadError": "Failed to load text",
+				"saving": "Saving…",
+				"saved": "Saved",
+				"unsaved": "Unsaved changes",
+				"saveUpdate": "Save & Update",
+				"saveDraft": "Save draft",
+				"titleRequired": "Please enter a title",
+				"updateSuccess": "Text updated",
+				"updateFailed": "Failed to save. Please try again.",
+				"deleteConfirmTitle": "Delete text?",
+				"deleteConfirmBody": "Text «{title}» and all its tokenization versions will be permanently deleted. This action cannot be undone.",
+				"deleteCancel": "Cancel",
+				"deleteConfirm": "Delete",
+				"deleteSuccess": "Text deleted",
+				"deleteFailed": "Failed to delete text",
+				"tokenizeStarted": "Tokenization started",
+				"tokenizeFailed": "Failed to start tokenization",
+				"pagesTokens": "{n} pages · {tokens} tokens",
+				"tokenBar": {
+					"done": "Tokenization complete — {pages} pages, {tokens} tokens",
+					"versions": "Versions",
+					"running": "Tokenization running…",
+					"error": "Tokenization error"
+				},
+				"retokenizeBar": {
+					"text": "Content changed — re-tokenization will be required after saving"
+				},
+				"sections": {
+					"tokenization": "Tokenization",
+					"versions": "Recent changes"
+				},
+				"tokenStatus": {
+					"COMPLETED": "Done",
+					"RUNNING": "Running",
+					"ERROR": "Error",
+					"IDLE": "Not started"
+				},
+				"tokenStatusLabel": "Status",
+				"tokenCountSuffix": "tokens",
+				"tokenHistoryLink": "Tokenization version history",
+				"tokenizeNow": "Tokenize now",
+				"dangerZone": "Danger zone",
+				"deleteText": "Delete text",
+				"versionCurrent": "Current version",
+				"allVersions": "All versions"
+			}
+		},
+		"morphology": {
+			"meta": {
+				"title": "Morphology — Admin | Mott Larbe",
+				"description": "Manage morphological suffix rules for Chechen language analysis"
+			},
+			"title": "Morphology",
+			"subtitle": "Suffix and ending rules for Chechen word analysis",
+			"add": "Add rule",
+			"import": "Import",
+			"stats": {
+				"total": "Total rules",
+				"totalSub": "in the system",
+				"coverage": "Token coverage",
+				"coverageSub": "good result",
+				"matches": "Total matches",
+				"matchesSub": "across all texts",
+				"inactive": "Inactive",
+				"inactiveSub": "need review"
+			},
+			"tabs": {
+				"all": "All",
+				"active": "Active",
+				"inactive": "Inactive",
+				"regex": "Regex"
+			},
+			"toolbar": {
+				"searchPlaceholder": "Search by pattern…",
+				"allPos": "All POS",
+				"allTypes": "Any type"
+			},
+			"table": {
+				"pattern": "Pattern",
+				"replace": "Replace → Lemma",
+				"pos": "POS",
+				"type": "Type",
+				"priority": "Prio.",
+				"matches": "Matches",
+				"status": "Status"
+			},
+			"status": {
+				"active": "Active",
+				"inactive": "Inactive"
+			},
+			"pos": {
+				"noun": "Noun",
+				"verb": "Verb",
+				"adj": "Adjective",
+				"adv": "Adverb",
+				"pron": "Pronoun"
+			},
+			"ruleType": {
+				"SUFFIX": "suffix",
+				"ENDING": "ending",
+				"PREFIX": "prefix",
+				"NOUN_CASE": "noun case",
+				"PLURAL": "plural",
+				"VERB_PAST": "verb past",
+				"REGEX": "regex"
+			},
+			"bulk": {
+				"selected": "{count} selected",
+				"activate": "Activate",
+				"deactivate": "Deactivate",
+				"delete": "Delete"
+			},
+			"row": {
+				"edit": "Edit",
+				"activate": "Activate",
+				"deactivate": "Deactivate",
+				"delete": "Delete"
+			},
+			"ruleModal": {
+				"addTitle": "Add rule",
+				"editTitle": "Edit rule",
+				"subtitle": "Pattern for morphological analysis of Chechen words",
+				"suffixLabel": "Pattern (suffix / regex)",
+				"suffixPlaceholder": "e.g. нах or ^[а-яё]+чу$",
+				"addLabel": "Replacement",
+				"addHint": "append to stem",
+				"posLabel": "POS",
+				"typeLabel": "Type",
+				"priorityLabel": "Priority",
+				"descriptionLabel": "Description",
+				"descriptionPlaceholder": "e.g. Plural suffix",
+				"activeLabel": "Active",
+				"cancel": "Cancel",
+				"save": "Save",
+				"create": "Create"
+			},
+			"importModal": {
+				"title": "Import rules",
+				"subtitle": "Upload a CSV or JSON file with morphology rules",
+				"dropTitle": "Drop file or click to select",
+				"dropSub": "CSV or JSON, columns: pattern, add, pos, type, priority, description",
+				"overwrite": "Overwrite existing rules (same suffix + type + language)",
+				"cancel": "Cancel",
+				"submit": "Import",
+				"close": "Done",
+				"resultTitle": "Import results",
+				"created": "Created",
+				"updated": "Updated",
+				"skipped": "Skipped",
+				"total": "Total rows",
+				"moreErrors": "more errors"
+			},
+			"pagination": {
+				"showing": "Showing {from}–{to} of {total} rules"
 			}
 		}
 	}

@@ -123,12 +123,32 @@ export const AdminSideNav = () => {
 					}
 				/>
 				<NavItem
+					href={`/${lang}/admin/tokenization`}
+					label={t("admin.nav.tokenization")}
+					active={isActive("/admin/tokenization")}
+					icon={
+						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
+							<path d="M2 4.5h2M5.5 4.5h8M2 7.5h6.5M10 7.5h3M2 10.5h3.5M7 10.5h6" strokeLinecap="round" />
+						</svg>
+					}
+				/>
+				<NavItem
 					href={`/${lang}/admin/dictionary`}
 					label={t("admin.nav.dictionary")}
 					active={isActive("/admin/dictionary")}
 					icon={
 						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
 							<path d="M3 4h9M3 7.5h7M3 11h5" strokeLinecap="round" />
+						</svg>
+					}
+				/>
+				<NavItem
+					href={`/${lang}/admin/morphology`}
+					label={t("admin.nav.morphology")}
+					active={isActive("/admin/morphology")}
+					icon={
+						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
+							<path d="M4 7.5h7M4 4.5c0-1 .9-1.8 2-1.8h3c1.1 0 2 .8 2 1.8M4 10.5c0 1 .9 1.8 2 1.8h3c1.1 0 2-.8 2-1.8" strokeLinecap="round" />
 						</svg>
 					}
 				/>
