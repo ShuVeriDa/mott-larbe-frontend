@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { Button } from "@/shared/ui/button";
-import { Modal, ModalActions } from "@/shared/ui/modal";
-import { useI18n } from "@/shared/lib/i18n";
 import {
 	FolderForm,
 	buildInitialFolderForm,
 	type FolderFormValue,
 } from "@/entities/folder";
+import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import { Modal, ModalActions } from "@/shared/ui/modal";
+import { useState, type SyntheticEvent } from "react";
 import { useCreateFolder } from "../../model";
 
 export interface CreateFolderModalProps {
@@ -16,7 +16,10 @@ export interface CreateFolderModalProps {
 	onClose: () => void;
 }
 
-export const CreateFolderModal = ({ open, onClose }: CreateFolderModalProps) => {
+export const CreateFolderModal = ({
+	open,
+	onClose,
+}: CreateFolderModalProps) => {
 	const { t } = useI18n();
 	const { mutateAsync, isPending } = useCreateFolder();
 	const [value, setValue] = useState<FolderFormValue>(() =>
@@ -34,7 +37,9 @@ export const CreateFolderModal = ({ open, onClose }: CreateFolderModalProps) => 
 		onClose();
 	};
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		const trimmedName = value.name.trim();
 		if (!trimmedName) {

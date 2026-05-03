@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type SyntheticEvent } from "react";
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { Modal, ModalActions } from "@/shared/ui/modal";
@@ -32,7 +32,9 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 		setCefrLevel("");
 	};
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		if (!word.trim() || !translation.trim()) return;
 		try {

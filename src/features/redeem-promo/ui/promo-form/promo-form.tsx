@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type SyntheticEvent } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -18,7 +18,9 @@ export const PromoForm = () => {
 	const [feedback, setFeedback] = useState<FeedbackState | null>(null);
 	const { mutateAsync, isPending } = useRedeemPromo();
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		const value = code.trim();
 		if (!value) {

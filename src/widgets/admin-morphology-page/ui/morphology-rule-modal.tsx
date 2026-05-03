@@ -70,7 +70,9 @@ export const MorphologyRuleModal = ({
 
   const isEdit = !!rule;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (
+    e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+  ) => {
     e.preventDefault();
     onSubmit({
       ...form,

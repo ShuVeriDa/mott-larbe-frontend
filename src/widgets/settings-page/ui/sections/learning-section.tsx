@@ -1,19 +1,12 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import {
-	useUpdateGoals,
-	useUpdatePreferences,
-	type TranslationLanguage,
-	type UserGoals,
-	type UserPreferences,
-} from "@/entities/settings";
+import { type UserGoals, type UserPreferences } from "@/entities/settings";
 import { useI18n } from "@/shared/lib/i18n";
-import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
-import { Select } from "@/shared/ui/select";
 import { InputLabel } from "@/shared/ui/input";
+import { Select } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
+import { useLearningSection } from "../../model/use-learning-section";
 import { SectionHeader } from "../section-header";
 import { SettingCard } from "../setting-card";
 import { ToggleRow } from "../toggle-row";
@@ -28,51 +21,27 @@ export const LearningSection = ({
 	goals,
 }: LearningSectionProps) => {
 	const { t } = useI18n();
-	const { mutateAsync: updatePrefs, isPending: isPrefSaving } =
-		useUpdatePreferences();
-	const { mutateAsync: updateGoals, isPending: isGoalsSaving } =
-		useUpdateGoals();
-	const { success, error } = useToast();
-
-	const [learningLang, setLearningLang] = useState<"CHE" | "RU">("CHE");
-	const [level, setLevel] = useState<string>("B1");
-	const [transLang, setTransLang] = useState<TranslationLanguage>(
-		preferences.translationLanguage,
-	);
-	const [dailyWords, setDailyWords] = useState<number>(goals.dailyWords);
-	const [dailyMinutes, setDailyMinutes] = useState<number>(goals.dailyMinutes);
-
-	const handleLanguageSave = async (e: FormEvent) => {
-		e.preventDefault();
-		try {
-			await updatePrefs({ translationLanguage: transLang });
-			success(t("settings.toasts.languageSaved"));
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
-	};
-
-	const handleGoalsSave = async (e: FormEvent) => {
-		e.preventDefault();
-		try {
-			await updateGoals({ dailyWords, dailyMinutes });
-			success(t("settings.toasts.goalsSaved"));
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
-	};
-
-	const togglePref = async (
-		patch: Partial<UserPreferences>,
-		successKey = "settings.toasts.saved",
-	) => {
-		try {
-			await updatePrefs(patch);
-			success(t(successKey));
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
-	};
+	const {
+		learningLang,
+		level,
+		transLang,
+		dailyWords,
+		dailyMinutes,
+		isPrefSaving,
+		isGoalsSaving,
+		handleLanguageSave,
+		handleGoalsSave,
+		handleLearningLangChange,
+		handleLevelChange,
+		handleTransLangChange,
+		handleDailyWordsChange,
+		handleDailyMinutesChange,
+		handleAutoAddChange,
+		handleShowGrammarChange,
+		handleShowExamplesChange,
+		handleShowReviewReminderChange,
+		handleEnableDecksChange,
+	} = useLearningSection({ preferences, goals });
 
 	return (
 		<div className="flex flex-col gap-3.5">
@@ -91,9 +60,7 @@ export const LearningSection = ({
 							<Select
 								id="learning-lang"
 								value={learningLang}
-								onChange={(e) =>
-									setLearningLang(e.target.value as "CHE" | "RU")
-								}
+								onChange={handleLearningLangChange}
 							>
 								<option value="CHE">
 									{t("settings.learning.learningLangChe")}
@@ -110,7 +77,7 @@ export const LearningSection = ({
 							<Select
 								id="learning-level"
 								value={level}
-								onChange={(e) => setLevel(e.target.value)}
+								onChange={handleLevelChange}
 							>
 								<option value="A1">{t("settings.learning.levelA1")}</option>
 								<option value="A2">{t("settings.learning.levelA2")}</option>
@@ -128,15 +95,16 @@ export const LearningSection = ({
 						<Select
 							id="trans-lang"
 							value={transLang}
-							onChange={(e) =>
-								setTransLang(e.target.value as TranslationLanguage)
-							}
+							onChange={handleTransLangChange}
 							wrapperClassName="max-w-[280px]"
 						>
 							<option value="RU">{t("settings.appearance.langRu")}</option>
 							<option value="EN">{t("settings.appearance.langEn")}</option>
 						</Select>
-						<Typography tag="span" className="mt-1.5 block text-[11px] text-t-3">
+						<Typography
+							tag="span"
+							className="mt-1.5 block text-[11px] text-t-3"
+						>
 							{t("settings.learning.transLangHint")}
 						</Typography>
 					</div>
@@ -159,10 +127,10 @@ export const LearningSection = ({
 						<Select
 							id="daily-words"
 							value={dailyWords}
-							onChange={(e) => setDailyWords(Number(e.target.value))}
+							onChange={handleDailyWordsChange}
 							wrapperClassName="max-w-[200px]"
 						>
-							{[5, 10, 20, 30, 50].map((n) => (
+							{[5, 10, 20, 30, 50].map(n => (
 								<option key={n} value={n}>
 									{n} {t("settings.learning.wordsUnit")}
 								</option>
@@ -176,10 +144,10 @@ export const LearningSection = ({
 						<Select
 							id="daily-minutes"
 							value={dailyMinutes}
-							onChange={(e) => setDailyMinutes(Number(e.target.value))}
+							onChange={handleDailyMinutesChange}
 							wrapperClassName="max-w-[200px]"
 						>
-							{[5, 15, 30, 60].map((n) => (
+							{[5, 15, 30, 60].map(n => (
 								<option key={n} value={n}>
 									{n} {t("settings.learning.minutesUnit")}
 								</option>
@@ -201,19 +169,19 @@ export const LearningSection = ({
 					label={t("settings.learning.autoAdd")}
 					description={t("settings.learning.autoAddDesc")}
 					checked={preferences.autoAddOnClick}
-					onChange={(v) => togglePref({ autoAddOnClick: v })}
+					onChange={handleAutoAddChange}
 				/>
 				<ToggleRow
 					label={t("settings.learning.showGrammar")}
 					description={t("settings.learning.showGrammarDesc")}
 					checked={preferences.showGrammar}
-					onChange={(v) => togglePref({ showGrammar: v })}
+					onChange={handleShowGrammarChange}
 				/>
 				<ToggleRow
 					label={t("settings.learning.showExamples")}
 					description={t("settings.learning.showExamplesDesc")}
 					checked={preferences.showExamples}
-					onChange={(v) => togglePref({ showExamples: v })}
+					onChange={handleShowExamplesChange}
 				/>
 			</SettingCard>
 
@@ -230,13 +198,13 @@ export const LearningSection = ({
 					label={t("settings.learning.reviewReminder")}
 					description={t("settings.learning.reviewReminderDesc")}
 					checked={preferences.showReviewReminder}
-					onChange={(v) => togglePref({ showReviewReminder: v })}
+					onChange={handleShowReviewReminderChange}
 				/>
 				<ToggleRow
 					label={t("settings.learning.enableDecks")}
 					description={t("settings.learning.enableDecksDesc")}
 					checked={preferences.enableDecks}
-					onChange={(v) => togglePref({ enableDecks: v })}
+					onChange={handleEnableDecksChange}
 				/>
 			</SettingCard>
 		</div>

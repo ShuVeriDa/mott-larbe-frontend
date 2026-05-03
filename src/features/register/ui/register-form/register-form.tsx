@@ -3,9 +3,10 @@
 import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useState, type SyntheticEvent } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { CEFR_LEVELS, type CefrLevel } from "@/shared/types/cefr";
 import { Typography } from "@/shared/ui/typography";
 import { useRegister } from "../../model";
 import { PasswordStrengthMeter } from "../password-strength-meter";
@@ -20,30 +21,12 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface RegisterErrors {
 	name?: string;
+	surname?: string;
+	username?: string;
 	email?: string;
 	password?: string;
 	password2?: string;
 }
-
-const deriveCredentials = (rawName: string, email: string) => {
-	const nameValue = rawName.trim().replace(/\s+/g, " ");
-	const [first, ...rest] = nameValue.split(" ");
-	const surnamePart = rest.join(" ").trim();
-
-	const localPart = email.split("@")[0] ?? "";
-	const sanitized = localPart
-		.toLowerCase()
-		.replace(/[^a-z0-9_-]/g, "")
-		.slice(0, 16);
-	const username =
-		sanitized.length >= 2 ? sanitized : `user${Date.now().toString(36).slice(-4)}`;
-
-	return {
-		username,
-		name: first || nameValue,
-		surname: surnamePart.length >= 2 ? surnamePart : first || nameValue,
-	};
-};
 
 export const RegisterForm = ({
 	successHref,
@@ -55,9 +38,12 @@ export const RegisterForm = ({
 	const { mutateAsync, isPending, error, reset } = useRegister();
 
 	const [name, setName] = useState("");
+	const [surname, setSurname] = useState("");
+	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [password2, setPassword2] = useState("");
+	const [level, setLevel] = useState<CefrLevel>("A2");
 	const [showPw, setShowPw] = useState(false);
 	const [errors, setErrors] = useState<RegisterErrors>({});
 
@@ -65,6 +51,10 @@ export const RegisterForm = ({
 		const next: RegisterErrors = {};
 		if (!name.trim() || name.trim().length < 2)
 			next.name = t("auth.errors.name");
+		if (!surname.trim() || surname.trim().length < 2)
+			next.surname = t("auth.errors.surname");
+		if (!username.trim() || username.trim().length < 2 || username.trim().length > 16)
+			next.username = t("auth.errors.username");
 		if (!email || !EMAIL_RE.test(email)) next.email = t("auth.errors.email");
 		if (!password || password.length < 8)
 			next.password = t("auth.errors.password");
@@ -73,21 +63,19 @@ export const RegisterForm = ({
 		return Object.keys(next).length === 0;
 	};
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		reset();
 		if (!validate()) return;
 		try {
-			const { username, name: firstName, surname } = deriveCredentials(
-				name,
-				email,
-			);
 			await mutateAsync({
 				email: email.trim(),
 				password,
-				username,
-				name: firstName,
-				surname,
+				username: username.trim(),
+				name: name.trim(),
+				surname: surname.trim(),
 			});
 			router.push(successHref);
 			router.refresh();
@@ -110,32 +98,93 @@ export const RegisterForm = ({
 				</div>
 			) : null}
 
+			<div className="mb-3.5 grid grid-cols-2 gap-3 max-[640px]:grid-cols-1">
+				<div>
+					<Typography
+						tag="label"
+						htmlFor="register-name"
+						className="mb-1.5 block text-[11.5px] font-medium text-t-2"
+					>
+						{t("auth.fields.name")}
+					</Typography>
+					<input
+						id="register-name"
+						type="text"
+						autoComplete="given-name"
+						required
+						placeholder={t("auth.placeholders.name")}
+						value={name}
+						onChange={(e) => setName(e.target.value)}
+						className={cn(
+							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
+							errors.name && "border-red",
+						)}
+						aria-invalid={Boolean(errors.name)}
+					/>
+					{errors.name ? (
+						<Typography className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
+							<AlertCircle size={12} strokeWidth={2} />
+							<Typography tag="span">{errors.name}</Typography>
+						</Typography>
+					) : null}
+				</div>
+				<div>
+					<Typography
+						tag="label"
+						htmlFor="register-surname"
+						className="mb-1.5 block text-[11.5px] font-medium text-t-2"
+					>
+						{t("auth.fields.surname")}
+					</Typography>
+					<input
+						id="register-surname"
+						type="text"
+						autoComplete="family-name"
+						required
+						placeholder={t("auth.placeholders.surname")}
+						value={surname}
+						onChange={(e) => setSurname(e.target.value)}
+						className={cn(
+							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
+							errors.surname && "border-red",
+						)}
+						aria-invalid={Boolean(errors.surname)}
+					/>
+					{errors.surname ? (
+						<Typography className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
+							<AlertCircle size={12} strokeWidth={2} />
+							<Typography tag="span">{errors.surname}</Typography>
+						</Typography>
+					) : null}
+				</div>
+			</div>
+
 			<div className="mb-3.5">
 				<Typography
 					tag="label"
-					htmlFor="register-name"
+					htmlFor="register-username"
 					className="mb-1.5 block text-[11.5px] font-medium text-t-2"
 				>
-					{t("auth.fields.name")}
+					{t("auth.fields.username")}
 				</Typography>
 				<input
-					id="register-name"
+					id="register-username"
 					type="text"
-					autoComplete="name"
+					autoComplete="username"
 					required
-					placeholder={t("auth.placeholders.name")}
-					value={name}
-					onChange={(e) => setName(e.target.value)}
+					placeholder={t("auth.placeholders.username")}
+					value={username}
+					onChange={(e) => setUsername(e.target.value)}
 					className={cn(
 						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
-						errors.name && "border-red",
+						errors.username && "border-red",
 					)}
-					aria-invalid={Boolean(errors.name)}
+					aria-invalid={Boolean(errors.username)}
 				/>
-				{errors.name ? (
+				{errors.username ? (
 					<Typography className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
 						<AlertCircle size={12} strokeWidth={2} />
-						<Typography tag="span">{errors.name}</Typography>
+						<Typography tag="span">{errors.username}</Typography>
 					</Typography>
 				) : null}
 			</div>
@@ -247,6 +296,30 @@ export const RegisterForm = ({
 						<Typography tag="span">{errors.password2}</Typography>
 					</Typography>
 				) : null}
+			</div>
+
+			<div className="mb-5">
+				<Typography className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+					{t("auth.fields.level")}
+				</Typography>
+				<div className="grid grid-cols-3 gap-2">
+					{CEFR_LEVELS.map((cefrLevel) => (
+						<button
+							key={cefrLevel}
+							type="button"
+							onClick={() => setLevel(cefrLevel)}
+							className={cn(
+								"h-9 rounded-[9px] border-[0.5px] text-[12.5px] font-semibold transition-colors",
+								level === cefrLevel
+									? "border-acc bg-acc text-white"
+									: "border-bd-2 bg-surf text-t-2 hover:border-bd-3 hover:text-t-1",
+							)}
+							aria-pressed={level === cefrLevel}
+						>
+							{cefrLevel}
+						</button>
+					))}
+				</div>
 			</div>
 
 			<button

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type SyntheticEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useDashboard } from "@/entities/dashboard";
 import { useCurrentUser } from "@/entities/user";
@@ -23,7 +23,9 @@ export const DashboardPage = () => {
 	const { data: user } = useCurrentUser();
 	const { data: library } = useLibraryTexts({ orderBy: "newest", limit: 6 });
 
-	const handleSearchSubmit = (e: FormEvent) => {
+	const handleSearchSubmit = (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		const q = searchQuery.trim();
 		if (q) {

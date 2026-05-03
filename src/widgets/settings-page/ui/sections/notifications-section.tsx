@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type SyntheticEvent } from "react";
 import {
 	useUpdateNotifications,
 	type UserNotifications,
@@ -44,7 +44,9 @@ export const NotificationsSection = ({
 		}
 	};
 
-	const handleScheduleSave = async (e: FormEvent) => {
+	const handleScheduleSave = async (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		try {
 			await mutateAsync({ reminderTime, timezone });

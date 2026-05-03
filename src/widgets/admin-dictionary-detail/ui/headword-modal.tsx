@@ -29,7 +29,9 @@ export const HeadwordModal = ({
 		}
 	}, [isOpen]);
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = (
+		e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		if (!word.trim()) return;
 		onSave({ word: word.trim(), isPrimary });

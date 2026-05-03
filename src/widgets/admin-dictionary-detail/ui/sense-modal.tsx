@@ -32,7 +32,9 @@ export const SenseModal = ({
 		}
 	}, [isOpen, editSense]);
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = (
+		e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		if (!definition.trim()) return;
 		onSave({ definition: definition.trim(), notes: notes.trim() });

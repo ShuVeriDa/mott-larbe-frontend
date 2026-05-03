@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type SyntheticEvent } from "react";
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
 import { useI18n } from "@/shared/lib/i18n";
@@ -48,7 +48,9 @@ export const EditFolderModal = ({
 
 	if (!folder) return null;
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		const trimmedName = value.name.trim();
 		if (!trimmedName) {

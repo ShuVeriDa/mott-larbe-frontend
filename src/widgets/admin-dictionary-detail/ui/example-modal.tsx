@@ -32,7 +32,9 @@ export const ExampleModal = ({
 		}
 	}, [isOpen, editExample]);
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = (
+		e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		if (!text.trim()) return;
 		onSave({ text: text.trim(), translation: translation.trim() });

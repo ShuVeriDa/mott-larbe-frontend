@@ -1,1 +1,1 @@
-export { VocabularyPageClient as VocabularyPage } from "./ui/vocabulary-page";
+export { VocabularyPage } from "./ui/vocabulary-page";

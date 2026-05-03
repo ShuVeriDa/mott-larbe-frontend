@@ -2,7 +2,7 @@
 
 import { AlertCircle, ArrowLeft, ArrowRight, Lock } from "lucide-react";
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useState, type SyntheticEvent } from "react";
 import { isValidEmail } from "@/features/reset-password";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -25,7 +25,9 @@ export const ResetStepRequest = ({
 	const [email, setEmail] = useState("");
 	const [localError, setLocalError] = useState<string | null>(null);
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		setLocalError(null);
 		if (!isValidEmail(email)) {

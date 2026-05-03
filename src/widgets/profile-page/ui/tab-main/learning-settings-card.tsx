@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type SyntheticEvent } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
@@ -38,7 +38,9 @@ export const LearningSettingsCard = ({ profile }: LearningSettingsCardProps) => 
 	const [language, setLanguage] = useState<UserLanguage>(profile.language ?? "CHE");
 	const [level, setLevel] = useState<UserLevel>(profile.level ?? "A1");
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		try {
 			await mutateAsync({ language, level });

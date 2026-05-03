@@ -53,7 +53,9 @@ export const MorphFormModal = ({
 		}
 	}, [isOpen, editForm]);
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = (
+		e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		if (!form.trim()) return;
 		onSave({

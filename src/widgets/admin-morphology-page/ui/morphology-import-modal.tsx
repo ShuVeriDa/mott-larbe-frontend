@@ -40,7 +40,9 @@ export const MorphologyImportModal = ({
     if (f) setFile(f);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (
+    e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+  ) => {
     e.preventDefault();
     if (!file) return;
     onSubmit(file, overwrite);

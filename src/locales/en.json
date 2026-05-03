@@ -685,14 +685,21 @@
     },
     "fields": {
       "name": "Name",
+      "surname": "Surname",
+      "username": "Username",
       "email": "Email",
+      "loginIdentifier": "Email or username",
+      "level": "CEFR level",
       "password": "Password",
       "passwordConfirm": "Confirm password",
       "forgot": "Forgot?",
       "remember": "Remember me"
     },
     "placeholders": {
-      "name": "Adam"
+      "name": "Adam",
+      "surname": "Dudaev",
+      "username": "adam_dudaev",
+      "loginIdentifier": "you@example.com or adam_dudaev"
     },
     "password": {
       "show": "Show password",
@@ -720,9 +727,12 @@
     },
     "errors": {
       "email": "Enter a valid email",
+      "loginIdentifier": "Enter a valid email or username",
       "password": "Password must be at least 8 characters",
       "passwordMatch": "Passwords do not match",
       "name": "Enter your name",
+      "surname": "Enter your surname",
+      "username": "Enter a username between 2 and 16 characters",
       "loginFailed": "Sign-in failed. Check your email and password.",
       "registerFailed": "Could not create account. Please try again."
     },

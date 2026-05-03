@@ -11,7 +11,7 @@ import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { Select } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
-import { useState, type FormEvent } from "react";
+import { useState, type SyntheticEvent } from "react";
 import { SectionHeader } from "../section-header";
 import { SettingCard } from "../setting-card";
 
@@ -27,7 +27,9 @@ export const AppearanceSection = ({ preferences }: AppearanceSectionProps) => {
 		preferences.uiLanguage,
 	);
 
-	const handleSave = async (e: FormEvent) => {
+	const handleSave = async (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		try {
 			await mutateAsync({ uiLanguage });

@@ -685,14 +685,21 @@
     },
     "fields": {
       "name": "Цӏе",
+      "surname": "Фамили",
+      "username": "Юзернейм",
       "email": "Email",
+      "loginIdentifier": "Email я юзернейм",
+      "level": "CEFR дарж",
       "password": "Пароль",
       "passwordConfirm": "Пароль юха язъе",
       "forgot": "Дицдина?",
       "remember": "Дагахь латто"
     },
     "placeholders": {
-      "name": "Адам"
+      "name": "Адам",
+      "surname": "Дудаев",
+      "username": "adam_dudaev",
+      "loginIdentifier": "you@example.com я adam_dudaev"
     },
     "password": {
       "show": "Пароль гайта",
@@ -720,9 +727,12 @@
     },
     "errors": {
       "email": "Нийса email язъе",
+      "loginIdentifier": "Нийса email я юзернейм язъе",
       "password": "Пароль 8 элпал кӏеззиг хила йиш яц",
       "passwordMatch": "Паролаш нийса ца хӀиттало",
       "name": "Цӏе язъе",
+      "surname": "Фамили язъе",
+      "username": "Юзернейм 2-16 элпа юккъехь хила деза",
       "loginFailed": "Чувала ца делира. Email а, пароль а тӀелаца.",
       "registerFailed": "Аккаунт кхолла ца делира. Юха гӀортае."
     },

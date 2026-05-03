@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type SyntheticEvent } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
@@ -23,7 +23,9 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 	const [username, setUsername] = useState(profile.username);
 	const [phone, setPhone] = useState(profile.phone ?? "");
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		try {
 			await mutateAsync({

@@ -3,7 +3,7 @@
 import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useState, type SyntheticEvent } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
@@ -31,14 +31,18 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 
 	const validate = () => {
 		const next: { email?: string; password?: string } = {};
-		if (!email || !EMAIL_RE.test(email)) next.email = t("auth.errors.email");
+		const loginValue = email.trim();
+		if (!loginValue || (!EMAIL_RE.test(loginValue) && loginValue.length < 2))
+			next.email = t("auth.errors.loginIdentifier");
 		if (!password || password.length < 8)
 			next.password = t("auth.errors.password");
 		setErrors(next);
 		return Object.keys(next).length === 0;
 	};
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		reset();
 		if (!validate()) return;
@@ -66,16 +70,16 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 			<div className="mb-3.5">
 				<div className="mb-1.5 flex items-center justify-between text-[11.5px] font-medium text-t-2">
 					<Typography tag="label" htmlFor="login-email">
-						{t("auth.fields.email")}
+						{t("auth.fields.loginIdentifier")}
 					</Typography>
 				</div>
 				<input
 					id="login-email"
-					type="email"
+					type="text"
 					inputMode="email"
 					autoComplete="email"
 					required
-					placeholder="you@example.com"
+					placeholder={t("auth.placeholders.loginIdentifier")}
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					className={cn(

@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertCircle, Check, Shield } from "lucide-react";
-import { useMemo, useState, type FormEvent } from "react";
+import { useMemo, useState, type SyntheticEvent } from "react";
 import {
 	allRequirementsMet,
 	checkPasswordRequirements,
@@ -48,7 +48,9 @@ export const ResetStepNewPassword = ({
 	const showMismatch = confirm.length > 0 && password !== confirm;
 	const canSubmit = reqsMet && matches && !isPending;
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
 		e.preventDefault();
 		if (!canSubmit) return;
 		void onSubmit(password);

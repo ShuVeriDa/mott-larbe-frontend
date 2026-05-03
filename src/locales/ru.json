@@ -685,14 +685,21 @@
     },
     "fields": {
       "name": "Имя",
+      "surname": "Фамилия",
+      "username": "Имя пользователя",
       "email": "Email",
+      "loginIdentifier": "Email или username",
+      "level": "Уровень CEFR",
       "password": "Пароль",
       "passwordConfirm": "Повторите пароль",
       "forgot": "Забыли?",
       "remember": "Запомнить меня"
     },
     "placeholders": {
-      "name": "Адам"
+      "name": "Адам",
+      "surname": "Дудаев",
+      "username": "adam_dudaev",
+      "loginIdentifier": "you@example.com или adam_dudaev"
     },
     "password": {
       "show": "Показать пароль",
@@ -720,9 +727,12 @@
     },
     "errors": {
       "email": "Введите корректный email",
+      "loginIdentifier": "Введите корректный email или username",
       "password": "Пароль должен быть не менее 8 символов",
       "passwordMatch": "Пароли не совпадают",
       "name": "Введите имя",
+      "surname": "Введите фамилию",
+      "username": "Введите username от 2 до 16 символов",
       "loginFailed": "Не удалось войти. Проверьте email и пароль.",
       "registerFailed": "Не удалось создать аккаунт. Попробуйте ещё раз."
     },
