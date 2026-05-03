@@ -73,7 +73,7 @@ export const generateMetadata = async ({
 	};
 };
 
-const Page = async ({
+const ReaderTextPageRoutePage = async ({
 	params,
 }: {
 	params: Promise<PageRouteParams>;
@@ -87,4 +87,4 @@ const Page = async ({
 	return <ReaderPage textId={textId} pageNumber={page} />;
 };
 
-export default Page;
+export default ReaderTextPageRoutePage;

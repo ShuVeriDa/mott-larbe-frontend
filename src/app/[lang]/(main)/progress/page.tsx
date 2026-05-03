@@ -58,11 +58,11 @@ interface PageProps {
 	params: Promise<{ lang: string }>;
 }
 
-const Page = async ({ params }: PageProps) => {
+const ProgressRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
 	return <StatisticsPage />;
 };
 
-export default Page;
+export default ProgressRoutePage;

@@ -62,7 +62,7 @@ interface PageProps {
 	searchParams: Promise<{ mode?: string }>;
 }
 
-const Page = async ({ params, searchParams }: PageProps) => {
+const AuthRoutePage = async ({ params, searchParams }: PageProps) => {
 	const { lang } = await params;
 	const { mode } = await searchParams;
 	if (!hasLocale(lang)) notFound();
@@ -71,4 +71,4 @@ const Page = async ({ params, searchParams }: PageProps) => {
 	return <AuthPage initialMode={initialMode} />;
 };
 
-export default Page;
+export default AuthRoutePage;

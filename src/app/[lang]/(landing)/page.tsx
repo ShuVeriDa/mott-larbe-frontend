@@ -58,7 +58,7 @@ interface PageProps {
 	params: Promise<{ lang: string }>;
 }
 
-const Page = async ({ params }: PageProps) => {
+const LandingRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
@@ -92,4 +92,4 @@ const Page = async ({ params }: PageProps) => {
 	);
 };
 
-export default Page;
+export default LandingRoutePage;

@@ -57,11 +57,11 @@ interface PageProps {
 	params: Promise<{ lang: string }>;
 }
 
-const Page = async ({ params }: PageProps) => {
+const SettingsRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
 	return <SettingsPage />;
 };
 
-export default Page;
+export default SettingsRoutePage;

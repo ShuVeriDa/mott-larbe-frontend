@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import {
 	DEFAULT_LOCALE,
 	LOCALES,
@@ -7,9 +5,10 @@ import {
 	hasLocale,
 } from "@/i18n/locales";
 import { VocabularyPage } from "@/widgets/vocabulary-page";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-const SITE_URL =
-	process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
 
 export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
@@ -58,11 +57,11 @@ interface PageProps {
 	params: Promise<{ lang: string }>;
 }
 
-const Page = async ({ params }: PageProps) => {
+const VocabularyRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
 	return <VocabularyPage />;
 };
 
-export default Page;
+export default VocabularyRoutePage;

@@ -62,11 +62,11 @@ interface PageProps {
 	params: Promise<{ lang: string; id: string }>;
 }
 
-const Page = async ({ params }: PageProps) => {
+const VocabularyDetailsRoutePage = async ({ params }: PageProps) => {
 	const { lang, id } = await params;
 	if (!hasLocale(lang)) notFound();
 
 	return <WordDetailPage id={id} />;
 };
 
-export default Page;
+export default VocabularyDetailsRoutePage;

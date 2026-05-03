@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import {
-	DEFAULT_LOCALE,
-	LOCALES,
-	getDictionary,
-	hasLocale,
-} from "@/i18n/locales";
-import { LibraryTextDetailPage } from "@/widgets/library-text-detail-page";
+import { DEFAULT_LOCALE, LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
+import { AdminTextVersionsPage } from "@/widgets/admin-text-versions-page";
 
-const SITE_URL =
-	process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
 
 export const generateMetadata = async (props: {
 	params: Promise<{ lang: string; id: string }>;
@@ -18,8 +12,13 @@ export const generateMetadata = async (props: {
 	if (!hasLocale(lang)) return {};
 
 	const dict = await getDictionary(lang);
-	const meta = dict.library.textDetail.meta;
-	const path = `/texts/${id}`;
+	const meta = (dict as Record<string, unknown> & {
+		admin?: { texts?: { versions?: { meta?: { title?: string; description?: string } } } };
+	})?.admin?.texts?.versions?.meta;
+
+	const title = meta?.title ?? "Versions — Admin | Mott Larbe";
+	const description = meta?.description ?? "Text processing version history";
+	const path = `/admin/texts/${id}/versions`;
 
 	const languages: Record<string, string> = {};
 	for (const locale of LOCALES) {
@@ -28,28 +27,23 @@ export const generateMetadata = async (props: {
 	languages["x-default"] = `${SITE_URL}/${DEFAULT_LOCALE}${path}`;
 
 	return {
-		title: meta.title,
-		description: meta.description,
+		title,
+		description,
 		alternates: {
 			canonical: `${SITE_URL}/${lang}${path}`,
 			languages,
 		},
 		openGraph: {
-			type: "article",
+			type: "website",
 			url: `${SITE_URL}/${lang}${path}`,
-			title: meta.title,
-			description: meta.description,
+			title,
+			description,
 			locale: lang,
 			siteName: "Mott Larbe",
 		},
-		twitter: {
-			card: "summary",
-			title: meta.title,
-			description: meta.description,
-		},
 		robots: {
-			index: true,
-			follow: true,
+			index: false,
+			follow: false,
 		},
 	};
 };
@@ -58,11 +52,11 @@ interface PageProps {
 	params: Promise<{ lang: string; id: string }>;
 }
 
-const TextDetailsRoutePage = async ({ params }: PageProps) => {
+const AdminTextVersionsRoutePage = async ({ params }: PageProps) => {
 	const { lang, id } = await params;
 	if (!hasLocale(lang)) notFound();
 
-	return <LibraryTextDetailPage id={id} />;
+	return <AdminTextVersionsPage textId={id} />;
 };
 
-export default TextDetailsRoutePage;
+export default AdminTextVersionsRoutePage;
