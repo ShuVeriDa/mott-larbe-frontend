@@ -1,0 +1,47 @@
+"use client";
+
+import { useI18n } from "@/shared/lib/i18n";
+import type { AnalyticsInsight } from "@/entities/admin-analytics";
+
+interface AnalyticsInsightStripProps {
+	insight?: AnalyticsInsight;
+	isLoading?: boolean;
+}
+
+export const AnalyticsInsightStrip = ({
+	insight,
+	isLoading,
+}: AnalyticsInsightStripProps) => {
+	const { t } = useI18n();
+
+	if (isLoading) {
+		return (
+			<div className="mb-3.5 h-10 animate-pulse rounded-[9px] bg-surf-2" />
+		);
+	}
+
+	if (!insight) return null;
+
+	return (
+		<div className="mb-3.5 flex items-start gap-2.5 rounded-[9px] border border-acc/15 bg-acc-bg px-3.5 py-2.5">
+			<svg
+				className="mt-0.5 size-[15px] shrink-0 text-acc"
+				viewBox="0 0 16 16"
+				fill="none"
+				aria-hidden="true"
+			>
+				<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
+				<path
+					d="M8 7v4M8 5.5v.5"
+					stroke="currentColor"
+					strokeWidth="1.4"
+					strokeLinecap="round"
+				/>
+			</svg>
+			<p className="text-[12.5px] leading-relaxed text-acc-t">
+				<strong className="font-semibold">{insight.title}: </strong>
+				{insight.message}
+			</p>
+		</div>
+	);
+};

@@ -28,3 +28,38 @@ export type {
 	UpdateDictionaryEntryDto,
 	WordContext,
 } from "./types";
+
+export { adminDictionaryApi } from "./admin-dictionary-api";
+export { adminDictionaryKeys } from "./admin-dictionary-keys";
+export type {
+	AdminDictLanguage,
+	AdminDictGramCase,
+	AdminDictGramNumber,
+	AdminDictTab,
+	AdminDictSort,
+	AdminDictHeadword,
+	AdminDictExample,
+	AdminDictSense,
+	AdminDictMorphForm,
+	AdminDictEntryCard,
+	AdminDictRelatedLemma,
+	AdminDictNavEntry,
+	AdminDictFrequencyStats,
+	AdminDictUserStats,
+	AdminDictContextItem,
+	AdminDictContextsResponse,
+	AdminDictListItem,
+	AdminDictListResponse,
+	AdminDictListQuery,
+	AdminDictStats,
+	CreateAdminEntryDto,
+	PatchAdminEntryDto,
+	CreateAdminSenseDto,
+	UpdateAdminSenseDto,
+	CreateAdminExampleDto,
+	UpdateAdminExampleDto,
+	CreateAdminHeadwordDto,
+	CreateAdminMorphFormDto,
+	UpdateAdminMorphFormDto,
+	AddAdminLemmaDto,
+} from "./admin-dictionary-types";

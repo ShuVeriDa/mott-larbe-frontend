@@ -19,3 +19,28 @@ export {
 	useFeedbackThreads,
 	useFeedbackUnreadCount,
 } from "./model";
+
+export { adminFeedbackApi, adminFeedbackKeys } from "./api";
+export type {
+	AdminFeedbackAssignee,
+	AdminFeedbackMessage,
+	AdminFeedbackStats,
+	AdminFeedbackTab,
+	AdminFeedbackThread,
+	AdminFeedbackUser,
+	AdminReplyDto,
+	AssignFeedbackDto,
+	FeedbackPriority,
+	GetAdminFeedbackDto,
+	PaginatedAdminFeedback,
+	TransferFeedbackDto,
+	UpdateFeedbackPriorityDto,
+	UpdateFeedbackStatusDto,
+} from "./api";
+export {
+	useAdminFeedbackAssignees,
+	useAdminFeedbackMutations,
+	useAdminFeedbackStats,
+	useAdminFeedbackThread,
+	useAdminFeedbackThreads,
+} from "./model";
