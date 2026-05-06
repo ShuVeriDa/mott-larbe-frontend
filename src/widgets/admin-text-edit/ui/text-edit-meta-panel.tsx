@@ -26,6 +26,7 @@ interface TextEditMetaPanelProps {
 	useNormalization: boolean;
 	useMorphAnalysis: boolean;
 	pages: PageContent[];
+	pageTokenCounts: number[];
 	isSaving: boolean;
 	processingStatus: ProcessingStatus;
 	tokenCount: number;
@@ -127,6 +128,7 @@ export const TextEditMetaPanel = ({
 	useNormalization,
 	useMorphAnalysis,
 	pages,
+	pageTokenCounts,
 	isSaving,
 	processingStatus,
 	tokenCount,
@@ -407,22 +409,27 @@ export const TextEditMetaPanel = ({
 
 				{/* ── Page stats ── */}
 				<MetaSection title={t("admin.texts.createPage.sections.pageStats")}>
-					{pages.map((page, i) => (
-						<div key={i} className={i > 0 ? "mt-2" : ""}>
-							<div className="mb-1 flex justify-between text-[11px]">
-								<span className="text-t-3">{t("admin.texts.createPage.pageN", { n: i + 1 })}</span>
-								<span className="font-medium text-t-2">
-									{page.wordCount} {t("admin.texts.createPage.wordsSuffix")}
-								</span>
+					{pages.map((page, i) => {
+						const tc = pageTokenCounts[i] ?? 0;
+						return (
+							<div key={i} className={i > 0 ? "mt-2" : ""}>
+								<div className="mb-1 flex justify-between text-[11px]">
+									<span className="text-t-3">{t("admin.texts.createPage.pageN", { n: i + 1 })}</span>
+									<span className="font-medium text-t-2">
+										{tc > 0
+											? `${tc} ${t("admin.texts.editPage.tokenCountSuffix")} · ${page.wordCount} ${t("admin.texts.createPage.wordsSuffix")}`
+											: `${page.wordCount} ${t("admin.texts.createPage.wordsSuffix")}`}
+									</span>
+								</div>
+								<div className="h-1 overflow-hidden rounded-full bg-surf-3">
+									<div
+										className="h-full rounded-full bg-acc transition-all"
+										style={{ width: `${Math.min(100, Math.round((page.wordCount / maxWordCount) * 100))}%` }}
+									/>
+								</div>
 							</div>
-							<div className="h-1 overflow-hidden rounded-full bg-surf-3">
-								<div
-									className="h-full rounded-full bg-acc transition-all"
-									style={{ width: `${Math.min(100, Math.round((page.wordCount / maxWordCount) * 100))}%` }}
-								/>
-							</div>
-						</div>
-					))}
+						);
+					})}
 				</MetaSection>
 
 				{/* ── Version history ── */}

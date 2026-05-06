@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DEFAULT_LOCALE, LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
@@ -59,7 +60,11 @@ const AdminTokenizationRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
-	return <AdminTokenizationPage />;
+	return (
+		<Suspense>
+			<AdminTokenizationPage />
+		</Suspense>
+	);
 };
 
 export default AdminTokenizationRoutePage;

@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
-import type { RunScope } from "@/entities/token";
+import type { RunScope, TokenizationStats } from "@/entities/token";
 
 interface TokenizationRunModalProps {
 	open: boolean;
 	isLoading: boolean;
+	stats: TokenizationStats | undefined;
 	onClose: () => void;
 	onRun: (scope: RunScope) => void;
 }
@@ -15,6 +16,7 @@ interface TokenizationRunModalProps {
 export const TokenizationRunModal = ({
 	open,
 	isLoading,
+	stats,
 	onClose,
 	onRun,
 }: TokenizationRunModalProps) => {
@@ -23,23 +25,27 @@ export const TokenizationRunModal = ({
 
 	if (!open) return null;
 
-	const options: { value: RunScope; labelKey: string; subKey: string }[] = [
-		{
-			value: "pending",
-			labelKey: "admin.tokenization.runModal.pending",
-			subKey: "admin.tokenization.runModal.pendingSub",
-		},
-		{
-			value: "errors",
-			labelKey: "admin.tokenization.runModal.errors",
-			subKey: "admin.tokenization.runModal.errorsSub",
-		},
-		{
-			value: "all",
-			labelKey: "admin.tokenization.runModal.all",
-			subKey: "admin.tokenization.runModal.allSub",
-		},
-	];
+	const options: { value: RunScope; labelKey: string; subKey: string; count: number | undefined }[] =
+		[
+			{
+				value: "pending",
+				labelKey: "admin.tokenization.runModal.pending",
+				subKey: "admin.tokenization.runModal.pendingSub",
+				count: stats?.tabs.pending,
+			},
+			{
+				value: "errors",
+				labelKey: "admin.tokenization.runModal.errors",
+				subKey: "admin.tokenization.runModal.errorsSub",
+				count: stats?.tabs.issues,
+			},
+			{
+				value: "all",
+				labelKey: "admin.tokenization.runModal.all",
+				subKey: "admin.tokenization.runModal.allSub",
+				count: stats?.tabs.all,
+			},
+		];
 
 	return (
 		<div
@@ -56,10 +62,15 @@ export const TokenizationRunModal = ({
 					</span>
 					<button
 						onClick={onClose}
-						className="flex size-[26px] items-center justify-center rounded-[6px] bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
+						className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
 						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-							<path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+							<path
+								d="M4 4l8 8M12 4l-8 8"
+								stroke="currentColor"
+								strokeWidth="1.5"
+								strokeLinecap="round"
+							/>
 						</svg>
 					</button>
 				</div>
@@ -87,9 +98,16 @@ export const TokenizationRunModal = ({
 									onChange={() => setScope(opt.value)}
 									className="mt-0.5 size-[15px] shrink-0 accent-acc"
 								/>
-								<div>
-									<div className="text-[12.5px] font-medium text-t-1">
-										{t(opt.labelKey)}
+								<div className="min-w-0 flex-1">
+									<div className="flex items-center justify-between gap-2">
+										<span className="text-[12.5px] font-medium text-t-1">
+											{t(opt.labelKey)}
+										</span>
+										{opt.count !== undefined && (
+											<span className="shrink-0 rounded-full bg-surf-3 px-1.5 py-0.5 text-[10.5px] font-semibold tabular-nums text-t-2">
+												{opt.count}
+											</span>
+										)}
 									</div>
 									<div className="mt-0.5 text-[11px] text-t-3">{t(opt.subKey)}</div>
 								</div>
@@ -101,14 +119,14 @@ export const TokenizationRunModal = ({
 				<div className="flex gap-2 border-t border-bd-1 px-4 py-3.5">
 					<button
 						onClick={onClose}
-						className="flex h-[34px] flex-1 items-center justify-center rounded-[7px] border border-bd-2 text-[12.5px] text-t-2 transition-colors hover:bg-surf-2"
+						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-bd-2 text-[12.5px] text-t-2 transition-colors hover:bg-surf-2"
 					>
 						{t("admin.tokenization.runModal.cancelBtn")}
 					</button>
 					<button
 						onClick={() => onRun(scope)}
 						disabled={isLoading}
-						className="flex h-[34px] flex-1 items-center justify-center gap-1.5 rounded-[7px] bg-acc text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+						className="flex h-[34px] flex-1 items-center justify-center gap-1.5 rounded-base bg-acc text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						{isLoading ? (
 							<span className="size-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />

@@ -17,6 +17,7 @@ import type {
 } from "@/entities/dictionary";
 
 export type DictModal =
+	| { type: "editMeta" }
 	| { type: "addSense" }
 	| { type: "editSense"; sense: AdminDictSense }
 	| { type: "addExample"; senseId: string }
@@ -24,6 +25,7 @@ export type DictModal =
 	| { type: "addForm" }
 	| { type: "editForm"; form: AdminDictMorphForm }
 	| { type: "addHeadword" }
+	| { type: "addLemma" }
 	| null;
 
 export const useAdminDictionaryDetailPage = (lemmaId: string) => {

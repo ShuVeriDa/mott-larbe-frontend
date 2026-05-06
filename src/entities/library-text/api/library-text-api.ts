@@ -5,6 +5,8 @@ import type {
 	LibraryTextDetail,
 	LibraryRelatedText,
 	TextTagDto,
+	TextReportBody,
+	TextReportResponse,
 } from "./types";
 
 export const libraryTextApi = {
@@ -57,6 +59,11 @@ export const libraryTextApi = {
 		const { data } = await http.post<{ bookmarked: boolean }>(
 			`/texts/${id}/bookmark`,
 		);
+		return data;
+	},
+
+	reportText: async (id: string, body: TextReportBody): Promise<TextReportResponse> => {
+		const { data } = await http.post<TextReportResponse>(`/texts/${id}/report`, body);
 		return data;
 	},
 };

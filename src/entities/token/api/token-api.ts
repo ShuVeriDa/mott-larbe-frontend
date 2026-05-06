@@ -38,6 +38,7 @@ export const tokenizationApi = {
 		if (query.tab && query.tab !== "all") params.tab = query.tab;
 		if (query.search) params.search = query.search;
 		if (query.level) params.level = query.level;
+		if (query.status) params.status = query.status;
 		if (query.sort) params.sort = query.sort;
 		params.page = query.page ?? 1;
 		params.limit = query.limit ?? 20;

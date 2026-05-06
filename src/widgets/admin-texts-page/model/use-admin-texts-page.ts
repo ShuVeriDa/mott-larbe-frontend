@@ -8,13 +8,16 @@ export const useAdminTextsPage = () => {
 	const [tab, setTab] = useState<AdminTextsTab>("all");
 	const [search, setSearch] = useState("");
 	const [level, setLevel] = useState<TextLevel | "">("");
+	const [tagId, setTagId] = useState("");
 	const [sortBy, setSortBy] = useState<TextSortBy>("createdAt");
 	const [page, setPage] = useState(1);
 	const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+	const [importOpen, setImportOpen] = useState(false);
 
 	const query: FetchAdminTextsQuery = {
 		...(search ? { search } : {}),
 		...(level ? { level } : {}),
+		...(tagId ? { tagId } : {}),
 		...(tab !== "all" ? { status: tab } : {}),
 		sortBy,
 		sortOrder: "desc",
@@ -40,6 +43,11 @@ export const useAdminTextsPage = () => {
 
 	const handleLevelChange = useCallback((value: string) => {
 		setLevel(value as TextLevel | "");
+		setPage(1);
+	}, []);
+
+	const handleTagChange = useCallback((value: string) => {
+		setTagId(value);
 		setPage(1);
 	}, []);
 
@@ -77,11 +85,13 @@ export const useAdminTextsPage = () => {
 		tab,
 		search,
 		level,
+		tagId,
 		sortBy,
 		page,
 		selectedIds,
 		allSelected,
 		someSelected,
+		importOpen,
 		data,
 		stats,
 		isLoading,
@@ -91,10 +101,12 @@ export const useAdminTextsPage = () => {
 		handleTabChange,
 		handleSearchChange,
 		handleLevelChange,
+		handleTagChange,
 		handleSortChange,
 		toggleSelectId,
 		toggleSelectAll,
 		clearSelection,
 		setPage,
+		setImportOpen,
 	};
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { useLibraryFilterStore } from "@/features/library-filters";
+import { useLibraryFilters } from "@/features/library-filters";
 import { useI18n } from "@/shared/lib/i18n";
 
 interface LibraryTopbarProps {
@@ -11,7 +11,7 @@ interface LibraryTopbarProps {
 
 export const LibraryTopbar = ({ totalCount, onRefresh }: LibraryTopbarProps) => {
 	const { t } = useI18n();
-	const { search, setSearch } = useLibraryFilterStore();
+	const { search, setSearch } = useLibraryFilters();
 
 	const handleSearch = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {

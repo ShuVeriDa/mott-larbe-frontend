@@ -62,4 +62,5 @@ export type {
 	CreateAdminMorphFormDto,
 	UpdateAdminMorphFormDto,
 	AddAdminLemmaDto,
+	AdminImportResult,
 } from "./admin-dictionary-types";

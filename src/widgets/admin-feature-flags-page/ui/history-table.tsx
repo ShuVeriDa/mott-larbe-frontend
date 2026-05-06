@@ -27,7 +27,7 @@ const EVENT_DOT: Record<FeatureFlagHistoryEventType, string> = {
 interface HistoryTableProps {
 	items: FeatureFlagHistoryItem[];
 	isLoading: boolean;
-	t: (key: string) => string;
+	t: (key: string, params?: Record<string, string | number>) => string;
 }
 
 const SkeletonRow = () => (
@@ -90,7 +90,7 @@ export const HistoryTable = ({ items, isLoading, t }: HistoryTableProps) => (
 											{item.actor.name} {item.actor.surname}
 										</span>
 									) : (
-										<span className="text-t-3">system</span>
+										<span className="text-t-3">{t("admin.featureFlags.history.system")}</span>
 									)}
 								</td>
 								<td className="py-3 pl-3.5 pr-3.5 text-right text-[11px] text-t-3">

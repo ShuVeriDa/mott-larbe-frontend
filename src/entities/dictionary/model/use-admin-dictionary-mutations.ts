@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { adminDictionaryApi, adminDictionaryKeys } from "../api";
 import type {
+	AddAdminLemmaDto,
 	CreateAdminExampleDto,
 	CreateAdminHeadwordDto,
 	CreateAdminMorphFormDto,
@@ -88,6 +89,15 @@ export const useAdminDictionaryMutations = (lemmaId: string) => {
 		onSuccess: invalidateDetail,
 	});
 
+	const addLemma = useMutation({
+		mutationFn: ({ entryId, body }: { entryId: string; body: AddAdminLemmaDto }) =>
+			adminDictionaryApi.addLemma(entryId, body),
+		onSuccess: () => {
+			invalidateDetail();
+			invalidateRelated();
+		},
+	});
+
 	return {
 		updateEntry,
 		deleteEntry,
@@ -97,6 +107,7 @@ export const useAdminDictionaryMutations = (lemmaId: string) => {
 		addExample,
 		updateExample,
 		deleteExample,
+		addLemma,
 		addHeadword,
 		deleteHeadword,
 		addForm,

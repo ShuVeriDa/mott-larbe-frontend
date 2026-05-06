@@ -23,7 +23,10 @@ export const SubscriptionPage = () => {
 	const [upgradeOpen, setUpgradeOpen] = useState(false);
 	const [cancelOpen, setCancelOpen] = useState(false);
 
-	const hasActivePaid = !!subscription && subscription.plan.type !== "FREE";
+	const hasActivePaid =
+		!!subscription &&
+		subscription.plan.type !== "FREE" &&
+		subscription.status === "ACTIVE";
 
 	const handleChoosePlan = (plan: Plan, cycle: BillingCycle) => {
 		if (plan.type === "FREE") return;

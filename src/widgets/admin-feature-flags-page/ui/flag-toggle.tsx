@@ -17,6 +17,8 @@ export const FlagToggle = ({ enabled, disabled, onChange }: FlagToggleProps) => 
 	>
 		<input
 			type="checkbox"
+			role="switch"
+			aria-checked={enabled}
 			className="absolute h-0 w-0 opacity-0"
 			checked={enabled}
 			disabled={disabled}
@@ -32,7 +34,7 @@ export const FlagToggle = ({ enabled, disabled, onChange }: FlagToggleProps) => 
 		>
 			<span
 				className={cn(
-					"absolute top-[2.5px] h-[13px] w-[13px] rounded-full bg-white shadow-[0_1px_3px_rgba(0,0,0,0.18)] transition-transform duration-[180ms]",
+					"absolute top-[2.5px] h-[13px] w-[13px] rounded-full bg-white shadow-[0_1px_3px_rgba(0,0,0,0.18)] transition-transform duration-180",
 					enabled ? "left-[2.5px] translate-x-[15px]" : "left-[2.5px]",
 				)}
 			/>

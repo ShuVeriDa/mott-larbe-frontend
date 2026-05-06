@@ -2,11 +2,15 @@ import { http } from "@/shared/api";
 import type {
 	AuthLang,
 	AuthResponse,
+	ChangePasswordDto,
 	ConfirmPasswordResetDto,
+	EmailChangeRequestDto,
 	LoginDto,
 	OkResponse,
 	RegisterDto,
 	RequestPasswordResetDto,
+	RevokeSessionsResponse,
+	UserSession,
 	ValidatePasswordResetResponse,
 } from "./types";
 
@@ -59,6 +63,34 @@ export const authApi = {
 			body,
 			{ params: lang ? { lang } : undefined },
 		);
+		return data;
+	},
+
+	getSessions: async (): Promise<UserSession[]> => {
+		const { data } = await http.get<UserSession[]>("/auth/sessions");
+		return data;
+	},
+
+	terminateSession: async (id: string): Promise<RevokeSessionsResponse> => {
+		const { data } = await http.delete<RevokeSessionsResponse>(
+			`/auth/sessions/${id}`,
+		);
+		return data;
+	},
+
+	terminateAllSessions: async (): Promise<RevokeSessionsResponse> => {
+		const { data } =
+			await http.delete<RevokeSessionsResponse>("/auth/sessions");
+		return data;
+	},
+
+	changePassword: async (body: ChangePasswordDto): Promise<OkResponse> => {
+		const { data } = await http.post<OkResponse>("/auth/password/change", body);
+		return data;
+	},
+
+	requestEmailChange: async (body: EmailChangeRequestDto): Promise<OkResponse> => {
+		const { data } = await http.post<OkResponse>("/auth/email-change/request", body);
 		return data;
 	},
 };

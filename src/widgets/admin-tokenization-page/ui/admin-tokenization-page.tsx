@@ -12,12 +12,14 @@ import { TokenizationPagination } from "./tokenization-pagination";
 import { TokenizationSidePanel } from "./tokenization-side-panel";
 import { TokenizationRunModal } from "./tokenization-run-modal";
 import { TokenizationTextDetailModal } from "./tokenization-text-detail-modal";
+import { TokenizationConfirmDialog } from "./tokenization-confirm-dialog";
 
 export const AdminTokenizationPage = () => {
 	const {
 		tab,
-		search,
+		searchInput,
 		level,
+		status,
 		sort,
 		page,
 		selectedIds,
@@ -34,17 +36,20 @@ export const AdminTokenizationPage = () => {
 		setRunModalOpen,
 		detailTextId,
 		setDetailTextId,
+		confirmResetOpen,
+		setConfirmResetOpen,
 		handleTabChange,
 		handleSearchChange,
 		handleLevelChange,
+		handleStatusChange,
 		handleSortChange,
+		handlePageChange,
 		toggleSelectId,
 		toggleSelectAll,
 		handleRun,
 		handleBulkRun,
 		handleBulkReset,
 		handleSettingToggle,
-		setPage,
 	} = useAdminTokenizationPage();
 
 	const items = data?.data ?? [];
@@ -62,17 +67,15 @@ export const AdminTokenizationPage = () => {
 				<div className="grid grid-cols-[1fr_260px] items-start gap-3.5 max-md:grid-cols-1">
 					{/* Left — main table */}
 					<div>
-						<TokenizationTabs
-							activeTab={tab}
-							stats={stats}
-							onChange={handleTabChange}
-						/>
+						<TokenizationTabs activeTab={tab} stats={stats} onChange={handleTabChange} />
 						<TokenizationToolbar
-							search={search}
+							search={searchInput}
 							level={level}
+							status={status}
 							sort={sort}
 							onSearchChange={handleSearchChange}
 							onLevelChange={handleLevelChange}
+							onStatusChange={handleStatusChange}
 							onSortChange={handleSortChange}
 						/>
 
@@ -80,10 +83,8 @@ export const AdminTokenizationPage = () => {
 							<TokenizationBulkBar
 								selectedCount={selectedIds.size}
 								onRun={handleBulkRun}
-								onReset={handleBulkReset}
-								isLoading={
-									mutations.bulkRun.isPending || mutations.bulkReset.isPending
-								}
+								onReset={() => setConfirmResetOpen(true)}
+								isLoading={mutations.bulkRun.isPending || mutations.bulkReset.isPending}
 							/>
 
 							<TokenizationTable
@@ -97,17 +98,14 @@ export const AdminTokenizationPage = () => {
 								mutations={mutations}
 							/>
 
-							<TokenizationMobileList
-								items={items}
-								onRowClick={setDetailTextId}
-							/>
+							<TokenizationMobileList items={items} onRowClick={setDetailTextId} />
 
 							{data && data.total > data.limit && (
 								<TokenizationPagination
 									page={page}
 									total={data.total}
 									limit={data.limit}
-									onPageChange={setPage}
+									onPageChange={handlePageChange}
 								/>
 							)}
 						</div>
@@ -127,8 +125,17 @@ export const AdminTokenizationPage = () => {
 			<TokenizationRunModal
 				open={runModalOpen}
 				isLoading={mutations.run.isPending}
+				stats={stats}
 				onClose={() => setRunModalOpen(false)}
 				onRun={handleRun}
+			/>
+
+			<TokenizationConfirmDialog
+				open={confirmResetOpen}
+				count={selectedIds.size}
+				isLoading={mutations.bulkReset.isPending}
+				onConfirm={handleBulkReset}
+				onClose={() => setConfirmResetOpen(false)}
 			/>
 
 			<TokenizationTextDetailModal

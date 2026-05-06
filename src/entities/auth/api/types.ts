@@ -58,3 +58,33 @@ export type ValidatePasswordResetResponse =
 export interface OkResponse {
 	ok: true;
 }
+
+export interface SessionLocation {
+	country: string;
+	city: string;
+}
+
+export interface UserSession {
+	id: string;
+	ipAddress: string;
+	device: string;
+	location: SessionLocation | null;
+	createdAt: string;
+	isCurrent: boolean;
+}
+
+export interface ChangePasswordDto {
+	currentPassword: string;
+	newPassword: string;
+	lang?: AuthLang;
+}
+
+export interface EmailChangeRequestDto {
+	newEmail: string;
+	currentPassword: string;
+	lang?: AuthLang;
+}
+
+export interface RevokeSessionsResponse {
+	revoked: number;
+}

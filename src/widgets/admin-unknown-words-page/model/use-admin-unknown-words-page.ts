@@ -1,18 +1,21 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
-	useUnknownWords,
-	useUnknownWordStats,
-	useUnknownWordMutations,
-	unknownWordApi,
-} from "@/entities/unknown-word";
+	useAdminUnknownWords,
+	useAdminUnknownWordStats,
+	useAdminUnknownWordMutations,
+	useAdminTextsDropdown,
+	adminUnknownWordApi,
+} from "@/entities/admin-unknown-word";
 import type {
+	AddToDictionaryPayload,
 	FetchUnknownWordsQuery,
+	UnknownWordItem,
 	UnknownWordsSortOrder,
 	UnknownWordsTab,
-	AddToDictionaryPayload,
-} from "@/entities/unknown-word";
+} from "@/entities/admin-unknown-word";
 
 export type AddModalState = {
 	open: boolean;
@@ -21,45 +24,124 @@ export type AddModalState = {
 	normalized: string;
 	seenCount: number;
 	snippet: string | null;
+	initialAction: "new" | "link";
 } | null;
 
+export type ContextsModalState = {
+	wordId: string;
+	word: string;
+} | null;
+
+const DEFAULT_SORT: UnknownWordsSortOrder = "frequency_desc";
+const DEFAULT_TAB: UnknownWordsTab = "all";
+
 export const useAdminUnknownWordsPage = () => {
-	const [tab, setTab] = useState<UnknownWordsTab>("all");
-	const [search, setSearch] = useState("");
-	const [sort, setSort] = useState<UnknownWordsSortOrder>("frequency_desc");
-	const [page, setPage] = useState(1);
+	const router = useRouter();
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
+
+	const urlTab = (searchParams.get("tab") as UnknownWordsTab) ?? DEFAULT_TAB;
+	const urlSearch = searchParams.get("q") ?? "";
+	const urlSort =
+		(searchParams.get("sort") as UnknownWordsSortOrder) ?? DEFAULT_SORT;
+	const urlTextId = searchParams.get("textId") ?? undefined;
+	const urlPage = Math.max(1, Number(searchParams.get("page") ?? "1"));
+
+	const [searchInput, setSearchInput] = useState(urlSearch);
+	const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+	useEffect(() => {
+		setSearchInput(urlSearch);
+	}, [urlSearch]);
+
+	const updateParams = useCallback(
+		(updates: Record<string, string | undefined>) => {
+			const params = new URLSearchParams(searchParams.toString());
+			for (const [key, value] of Object.entries(updates)) {
+				if (!value) {
+					params.delete(key);
+				} else {
+					params.set(key, value);
+				}
+			}
+			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+		},
+		[router, pathname, searchParams],
+	);
+
 	const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 	const [addModal, setAddModal] = useState<AddModalState>(null);
 	const [clearModalOpen, setClearModalOpen] = useState(false);
+	const [contextsModal, setContextsModal] = useState<ContextsModalState>(null);
 
 	const query: FetchUnknownWordsQuery = {
-		...(search ? { q: search } : {}),
-		tab,
-		sort,
-		page,
+		...(urlSearch ? { q: urlSearch } : {}),
+		...(urlTextId ? { textId: urlTextId } : {}),
+		tab: urlTab,
+		sort: urlSort,
+		page: urlPage,
 		limit: 20,
 	};
 
-	const { data, isLoading } = useUnknownWords(query);
-	const { data: stats, isLoading: statsLoading } = useUnknownWordStats();
-	const mutations = useUnknownWordMutations();
+	const { data, isLoading } = useAdminUnknownWords(query);
+	const { data: stats, isLoading: statsLoading } = useAdminUnknownWordStats();
+	const { data: textsData } = useAdminTextsDropdown();
+	const mutations = useAdminUnknownWordMutations();
 
-	const handleTabChange = useCallback((next: UnknownWordsTab) => {
-		setTab(next);
-		setPage(1);
-		setSelectedIds(new Set());
-	}, []);
+	const handleTabChange = useCallback(
+		(next: UnknownWordsTab) => {
+			updateParams({
+				tab: next === DEFAULT_TAB ? undefined : next,
+				page: undefined,
+			});
+			setSelectedIds(new Set());
+		},
+		[updateParams],
+	);
 
-	const handleSearchChange = useCallback((value: string) => {
-		setSearch(value);
-		setPage(1);
-		setSelectedIds(new Set());
-	}, []);
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			setSearchInput(value);
+			clearTimeout(debounceRef.current);
+			debounceRef.current = setTimeout(() => {
+				const params = new URLSearchParams(window.location.search);
+				if (value) {
+					params.set("q", value);
+				} else {
+					params.delete("q");
+				}
+				params.delete("page");
+				router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+			}, 300);
+			setSelectedIds(new Set());
+		},
+		[router, pathname],
+	);
 
-	const handleSortChange = useCallback((value: UnknownWordsSortOrder) => {
-		setSort(value);
-		setPage(1);
-	}, []);
+	const handleSortChange = useCallback(
+		(value: UnknownWordsSortOrder) => {
+			updateParams({
+				sort: value === DEFAULT_SORT ? undefined : value,
+				page: undefined,
+			});
+		},
+		[updateParams],
+	);
+
+	const handleTextChange = useCallback(
+		(value: string | undefined) => {
+			updateParams({ textId: value, page: undefined });
+			setSelectedIds(new Set());
+		},
+		[updateParams],
+	);
+
+	const handlePageChange = useCallback(
+		(next: number) => {
+			updateParams({ page: next === 1 ? undefined : String(next) });
+		},
+		[updateParams],
+	);
 
 	const toggleSelectId = useCallback((id: string) => {
 		setSelectedIds((prev) => {
@@ -75,46 +157,70 @@ export const useAdminUnknownWordsPage = () => {
 		setSelectedIds((prev) => {
 			const allIds = data.items.map((w) => w.id);
 			const allSelected = allIds.every((id) => prev.has(id));
-			if (allSelected) return new Set();
-			return new Set(allIds);
+			return allSelected ? new Set() : new Set(allIds);
 		});
 	}, [data?.items]);
 
 	const clearSelection = useCallback(() => setSelectedIds(new Set()), []);
 
 	const openAddModal = useCallback(
-		(wordId: string, word: string, normalized: string, seenCount: number, snippet: string | null) => {
-			setAddModal({ open: true, wordId, word, normalized, seenCount, snippet });
+		(word: UnknownWordItem, initialAction: "new" | "link" = "new") => {
+			setAddModal({
+				open: true,
+				wordId: word.id,
+				word: word.word,
+				normalized: word.normalized,
+				seenCount: word.seenCount,
+				snippet: word.firstContext?.snippet ?? null,
+				initialAction,
+			});
 		},
 		[],
 	);
 
 	const closeAddModal = useCallback(() => setAddModal(null), []);
 
+	const openContextsModal = useCallback((word: UnknownWordItem) => {
+		setContextsModal({ wordId: word.id, word: word.word });
+	}, []);
+
+	const closeContextsModal = useCallback(() => setContextsModal(null), []);
+
 	const handleAddToDictionary = useCallback(
 		(payload: AddToDictionaryPayload) => {
 			if (!addModal) return;
 			mutations.addToDictionary.mutate(
 				{ id: addModal.wordId, payload },
-				{ onSuccess: () => setAddModal(null) },
+				{ onSuccess: closeAddModal },
 			);
 		},
-		[addModal, mutations.addToDictionary],
+		[addModal, mutations.addToDictionary, closeAddModal],
+	);
+
+	const handleLinkToLemma = useCallback(
+		(lemmaId: string) => {
+			if (!addModal) return;
+			mutations.linkToLemma.mutate(
+				{ id: addModal.wordId, payload: { lemmaId } },
+				{ onSuccess: closeAddModal },
+			);
+		},
+		[addModal, mutations.linkToLemma, closeAddModal],
 	);
 
 	const handleExport = useCallback(async () => {
 		try {
-			const blob = await unknownWordApi.export("csv");
+			const blob = await adminUnknownWordApi.exportCsv(query);
 			const url = URL.createObjectURL(blob);
 			const a = document.createElement("a");
 			a.href = url;
-			a.download = "unknown-words.csv";
+			a.download = `unknown-words-${Date.now()}.csv`;
 			a.click();
 			URL.revokeObjectURL(url);
 		} catch {
 			// silently ignore
 		}
-	}, []);
+	}, [query]);
 
 	const handleClearAll = useCallback(() => {
 		mutations.clearAll.mutate(undefined, {
@@ -126,34 +232,41 @@ export const useAdminUnknownWordsPage = () => {
 	}, [mutations.clearAll, clearSelection]);
 
 	const allSelected =
-		!!data?.items?.length && data.items.every((w) => selectedIds.has(w.id));
-	const someSelected = selectedIds.size > 0;
+		!!data?.items?.length &&
+		data.items.every((w) => selectedIds.has(w.id));
 
 	return {
-		tab,
-		search,
-		sort,
-		page,
+		tab: urlTab,
+		search: searchInput,
+		sort: urlSort,
+		textId: urlTextId,
+		page: urlPage,
 		selectedIds,
 		allSelected,
-		someSelected,
+		someSelected: selectedIds.size > 0,
 		data,
 		stats,
+		textsData,
 		isLoading,
 		statsLoading,
 		mutations,
 		addModal,
 		clearModalOpen,
+		contextsModal,
 		handleTabChange,
 		handleSearchChange,
 		handleSortChange,
+		handleTextChange,
+		handlePageChange,
 		toggleSelectId,
 		toggleSelectAll,
 		clearSelection,
-		setPage,
 		openAddModal,
 		closeAddModal,
+		openContextsModal,
+		closeContextsModal,
 		handleAddToDictionary,
+		handleLinkToLemma,
 		handleExport,
 		handleClearAll,
 		setClearModalOpen,

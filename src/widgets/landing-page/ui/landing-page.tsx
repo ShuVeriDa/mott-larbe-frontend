@@ -9,9 +9,12 @@ import { LandingFeatures } from "@/widgets/landing-features";
 import { LandingFooter } from "@/widgets/landing-footer";
 import { LandingHero } from "@/widgets/landing-hero";
 import { LandingHowItWorks } from "@/widgets/landing-how-it-works";
+import { LandingLanguages } from "@/widgets/landing-languages";
+import { LandingLevels } from "@/widgets/landing-levels";
 import { LandingNav } from "@/widgets/landing-nav";
 import { LandingPricing } from "@/widgets/landing-pricing";
 import { LandingStats } from "@/widgets/landing-stats";
+import { LandingTestimonials } from "@/widgets/landing-testimonials";
 
 export const LandingPage = () => {
 	const { lang, dict } = useI18n();
@@ -31,10 +34,13 @@ export const LandingPage = () => {
 			<main className="flex-1">
 				<LandingHero startHref={startHref} />
 				<LandingStats />
-				<LandingFeatures />
-				<LandingHowItWorks />
 				<LandingDemo wordsDict={wordsDict} />
+				<LandingHowItWorks />
+				<LandingFeatures />
+				<LandingLevels />
+				<LandingTestimonials />
 				<LandingPricing startHref={startHref} />
+				<LandingLanguages />
 				<LandingFaq />
 				<LandingCta startHref={startHref} loginHref={loginHref} />
 			</main>

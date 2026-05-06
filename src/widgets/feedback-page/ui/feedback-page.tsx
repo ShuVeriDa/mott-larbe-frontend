@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useFeedbackThreads } from "@/entities/feedback";
 import type { FeedbackThread } from "@/entities/feedback";
@@ -15,8 +15,9 @@ export const FeedbackPage = () => {
 	const [isChatVisible, setIsChatVisible] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const { data, isPending } = useFeedbackThreads();
-	const threads = data?.items ?? [];
+	const { data, isPending, fetchNextPage, hasNextPage, isFetchingNextPage } =
+		useFeedbackThreads();
+	const threads = data?.pages.flatMap((p) => p.items) ?? [];
 
 	const handleSelectThread = (thread: FeedbackThread) => {
 		setActiveId(thread.id);
@@ -37,7 +38,10 @@ export const FeedbackPage = () => {
 		setIsChatVisible(true);
 	};
 
-	// user initials — placeholder, could come from user entity
+	const handleLoadMore = useCallback(() => {
+		if (hasNextPage && !isFetchingNextPage) fetchNextPage();
+	}, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
 	const userInitials = "У";
 
 	return (
@@ -83,9 +87,12 @@ export const FeedbackPage = () => {
 						threads={threads}
 						activeId={activeId}
 						isMobileVisible={isChatVisible}
+						hasNextPage={!!hasNextPage}
+						isFetchingNextPage={isFetchingNextPage}
 						t={t}
 						onSelect={handleSelectThread}
 						onNewThread={handleNewThread}
+						onLoadMore={handleLoadMore}
 					/>
 				)}
 

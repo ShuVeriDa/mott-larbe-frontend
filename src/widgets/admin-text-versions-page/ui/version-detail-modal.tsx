@@ -46,6 +46,7 @@ interface VersionDetailModalProps {
 	onClose: () => void;
 	onRestore: (id: string) => void;
 	onRetry: (id: string) => void;
+	onDownload: (versionId: string, versionNumber?: number) => void;
 	isRestoring: boolean;
 	isRetrying: boolean;
 }
@@ -56,6 +57,7 @@ export const VersionDetailModal = ({
 	onClose,
 	onRestore,
 	onRetry,
+	onDownload,
 	isRestoring,
 	isRetrying,
 }: VersionDetailModalProps) => {
@@ -242,16 +244,29 @@ export const VersionDetailModal = ({
 						<button
 							type="button"
 							onClick={onClose}
-							className="flex h-[30px] items-center rounded-[7px] border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+							className="flex h-[30px] items-center rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 						>
 							{t("admin.texts.versions.modal.close")}
 						</button>
+						{version && (
+							<button
+								type="button"
+								onClick={() => onDownload(versionId, version.version)}
+								className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+							>
+								<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+									<path d="M8 3v7M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+									<path d="M3 13h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+								</svg>
+								{t("admin.texts.versions.modal.download")}
+							</button>
+						)}
 						{canRetry && (
 							<button
 								type="button"
 								onClick={() => onRetry(versionId)}
 								disabled={isRetrying}
-								className="flex h-[30px] items-center gap-1.5 rounded-[7px] bg-amb px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
+								className="flex h-[30px] items-center gap-1.5 rounded-base bg-amb px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 							>
 								{isRetrying && <span className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
 								{isRetrying ? t("admin.texts.versions.modal.retrying") : t("admin.texts.versions.modal.retry")}
@@ -262,7 +277,7 @@ export const VersionDetailModal = ({
 								type="button"
 								onClick={() => onRestore(versionId)}
 								disabled={isRestoring}
-								className="flex h-[30px] items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
+								className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 							>
 								{isRestoring && <span className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
 								{isRestoring ? t("admin.texts.versions.modal.restoring") : t("admin.texts.versions.modal.restore")}

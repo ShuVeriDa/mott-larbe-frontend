@@ -122,6 +122,63 @@ export interface GetFeatureFlagHistoryQuery {
 	limit?: number;
 }
 
+export interface GetFeatureFlagKeysQuery {
+	search?: string;
+	includeDeleted?: boolean;
+	limit?: number;
+}
+
+export interface FeatureFlagKeyItem {
+	id: string;
+	key: string;
+	category: FeatureFlagCategory;
+	isEnabled: boolean;
+}
+
+export interface FeatureFlagKeysResult {
+	items: FeatureFlagKeyItem[];
+	total: number;
+}
+
+export interface FeatureFlagHistoryActorsResult {
+	items: FeatureFlagActor[];
+}
+
+export interface CreateFeatureFlagOverrideDto {
+	flagId: string;
+	userIdOrEmail: string;
+	isEnabled: boolean;
+	reason?: string;
+}
+
+export type ImportFeatureFlagsMode = 'upsert' | 'create_only';
+
+export interface ImportFeatureFlagItemDto {
+	key: string;
+	description?: string;
+	isEnabled?: boolean;
+	category?: FeatureFlagCategory;
+	environments?: FeatureFlagEnvironment[];
+	rolloutPercent?: number;
+}
+
+export interface ImportFeatureFlagsDto {
+	items: ImportFeatureFlagItemDto[];
+	mode?: ImportFeatureFlagsMode;
+	dryRun?: boolean;
+}
+
+export interface ImportFeatureFlagsResult {
+	dryRun: boolean;
+	mode: ImportFeatureFlagsMode;
+	processed: number;
+	created?: number;
+	updated?: number;
+	skipped?: number;
+	wouldCreate?: number;
+	wouldUpdate?: number;
+}
+
 export interface CreateFeatureFlagDto {
 	key: string;
 	description?: string;

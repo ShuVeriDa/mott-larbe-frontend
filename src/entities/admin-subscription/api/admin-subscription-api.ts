@@ -1,5 +1,6 @@
 import { http } from "@/shared/api";
 import type {
+	AdminSubscriptionDetail,
 	AdminSubscriptionListItem,
 	AdminSubscriptionsResponse,
 	AdminSubscriptionsStats,
@@ -36,8 +37,8 @@ export const adminSubscriptionApi = {
 		return data;
 	},
 
-	getById: async (id: string): Promise<AdminSubscriptionListItem> => {
-		const { data } = await http.get<AdminSubscriptionListItem>(
+	getById: async (id: string): Promise<AdminSubscriptionDetail> => {
+		const { data } = await http.get<AdminSubscriptionDetail>(
 			`/admin/subscriptions/${id}`,
 		);
 		return data;

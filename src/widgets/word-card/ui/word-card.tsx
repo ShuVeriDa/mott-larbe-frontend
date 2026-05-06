@@ -174,6 +174,7 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 								<div className="mt-2">
 									<DeleteWordButton
 										wordId={entry.id}
+										word={entry.word}
 										className="w-full"
 									/>
 								</div>

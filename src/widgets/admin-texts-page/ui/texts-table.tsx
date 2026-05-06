@@ -1,7 +1,8 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
-import type { AdminTextListItem } from "@/entities/admin-text";
+import { useAdminTextSSE } from "@/entities/admin-text";
+import type { AdminTextListItem, ProcessingStatus } from "@/entities/admin-text";
 import type { useAdminTextMutations } from "@/entities/admin-text/model/use-admin-text-mutations";
 import { TextLevelBadge } from "./text-level-badge";
 import { TextStatusBadge } from "./text-status-badge";
@@ -20,6 +21,94 @@ interface TextsTableProps {
 
 const formatDate = (iso: string) =>
 	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" });
+
+interface TextTableRowProps {
+	text: AdminTextListItem;
+	selected: boolean;
+	onToggle: () => void;
+	mutations: ReturnType<typeof useAdminTextMutations>;
+}
+
+const TextTableRow = ({ text, selected, onToggle, mutations }: TextTableRowProps) => {
+	const { t } = useI18n();
+	const sseData = useAdminTextSSE(text.id, text.processingStatus === "RUNNING");
+
+	const processingStatus: ProcessingStatus = (sseData?.status && sseData.status !== "NONE")
+		? (sseData.status as ProcessingStatus)
+		: text.processingStatus;
+	const processingProgress = sseData?.progress ?? text.processingProgress;
+
+	return (
+		<tr className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2">
+			<td className="px-2.5 py-[10px] pl-3.5" onClick={(e) => e.stopPropagation()}>
+				<input
+					type="checkbox"
+					checked={selected}
+					onChange={onToggle}
+					className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
+				/>
+			</td>
+
+			<td className="px-2.5 py-[10px]">
+				<div className="flex flex-col gap-0.5">
+					<span className="line-clamp-1 text-[13px] font-medium leading-[1.3] text-t-1">
+						{text.title}
+					</span>
+					<span className="flex flex-wrap items-center gap-1.5 text-[11px] text-t-3">
+						{text.processingStatus === "ERROR" ? (
+							<span className="flex items-center gap-1 text-red-t">
+								<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+									<circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.3" />
+									<path d="M8 5v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+									<circle cx="8" cy="11.5" r="0.75" fill="currentColor" />
+								</svg>
+								{t("admin.texts.table.errorMeta")}
+							</span>
+						) : (
+							<span className="flex items-center gap-1">
+								<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+									<path d="M2 12l4-4.5 2.5 2.5L12 5l2 2.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+								</svg>
+								{text.tokenCount > 0
+									? t("admin.texts.table.tokens", { count: text.tokenCount })
+									: t("admin.texts.table.notProcessed")}
+							</span>
+						)}
+						{text.tags.length > 0 && (
+							<span>{text.tags.map((tag) => tag.name).join(", ")}</span>
+						)}
+					</span>
+				</div>
+			</td>
+
+			<td className="px-2.5 py-[10px]">
+				<TextLevelBadge level={text.level} />
+			</td>
+
+			<td className="px-2.5 py-[10px]">
+				<TextStatusBadge status={text.status} />
+			</td>
+
+			<td className="px-2.5 py-[10px]">
+				<TextProcessingBar status={processingStatus} progress={processingProgress} />
+			</td>
+
+			<td className="px-2.5 py-[10px] text-[12px] text-t-2">
+				{text.readCount > 0 ? text.readCount.toLocaleString("ru-RU") : (
+					<span className="text-t-3">—</span>
+				)}
+			</td>
+
+			<td className="px-2.5 py-[10px] text-[11.5px] text-t-3 max-md:hidden">
+				{formatDate(text.createdAt)}
+			</td>
+
+			<td className="px-2.5 py-[10px]" onClick={(e) => e.stopPropagation()}>
+				<TextRowActions text={text} mutations={mutations} />
+			</td>
+		</tr>
+	);
+};
 
 export const TextsTable = ({
 	texts,
@@ -99,80 +188,13 @@ export const TextsTable = ({
 				</thead>
 				<tbody>
 					{texts.map((text) => (
-						<tr
+						<TextTableRow
 							key={text.id}
-							className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2"
-						>
-							<td className="px-2.5 py-[10px] pl-3.5" onClick={(e) => e.stopPropagation()}>
-								<input
-									type="checkbox"
-									checked={selectedIds.has(text.id)}
-									onChange={() => onToggleRow(text.id)}
-									className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
-								/>
-							</td>
-
-							<td className="px-2.5 py-[10px]">
-								<div className="flex flex-col gap-0.5">
-									<span className="line-clamp-1 text-[13px] font-medium leading-[1.3] text-t-1">
-										{text.title}
-									</span>
-									<span className="flex flex-wrap items-center gap-1.5 text-[11px] text-t-3">
-										{text.processingStatus === "ERROR" ? (
-											<span className="flex items-center gap-1 text-red-t">
-												<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-													<circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.3" />
-													<path d="M8 5v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-													<circle cx="8" cy="11.5" r="0.75" fill="currentColor" />
-												</svg>
-												{t("admin.texts.table.errorMeta")}
-											</span>
-										) : (
-											<span className="flex items-center gap-1">
-												<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-													<path d="M2 12l4-4.5 2.5 2.5L12 5l2 2.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-												</svg>
-												{text.tokenCount > 0
-													? t("admin.texts.table.tokens", { count: text.tokenCount })
-													: t("admin.texts.table.notProcessed")}
-											</span>
-										)}
-										{text.tags.length > 0 && (
-											<span>{text.tags.map((tag) => tag.name).join(", ")}</span>
-										)}
-									</span>
-								</div>
-							</td>
-
-							<td className="px-2.5 py-[10px]">
-								<TextLevelBadge level={text.level} />
-							</td>
-
-							<td className="px-2.5 py-[10px]">
-								<TextStatusBadge status={text.status} />
-							</td>
-
-							<td className="px-2.5 py-[10px]">
-								<TextProcessingBar
-									status={text.processingStatus}
-									progress={text.processingProgress}
-								/>
-							</td>
-
-							<td className="px-2.5 py-[10px] text-[12px] text-t-2">
-								{text.readCount > 0 ? text.readCount.toLocaleString("ru-RU") : (
-									<span className="text-t-3">—</span>
-								)}
-							</td>
-
-							<td className="px-2.5 py-[10px] text-[11.5px] text-t-3 max-md:hidden">
-								{formatDate(text.createdAt)}
-							</td>
-
-							<td className="px-2.5 py-[10px]" onClick={(e) => e.stopPropagation()}>
-								<TextRowActions text={text} mutations={mutations} />
-							</td>
-						</tr>
+							text={text}
+							selected={selectedIds.has(text.id)}
+							onToggle={() => onToggleRow(text.id)}
+							mutations={mutations}
+						/>
 					))}
 				</tbody>
 			</table>

@@ -1,6 +1,7 @@
 export { adminAnalyticsApi, adminAnalyticsKeys } from "./api";
 export type {
 	AdminAnalyticsResponse,
+	AnalyticsExportResponse,
 	AnalyticsFilters,
 	AnalyticsInsight,
 	AnalyticsRange,

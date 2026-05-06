@@ -129,3 +129,61 @@ export interface ExtendSubscriptionDto {
 	extendDays: number;
 	reason?: string;
 }
+
+export type SubscriptionEventType =
+	| "SUBSCRIBED"
+	| "RENEWED"
+	| "UPGRADED"
+	| "DOWNGRADED"
+	| "CANCELED"
+	| "REFUNDED"
+	| "TRIAL_STARTED"
+	| "TRIAL_ENDED"
+	| "EXTENDED"
+	| "PLAN_CHANGED";
+
+export interface AdminSubscriptionEvent {
+	id: string;
+	type: SubscriptionEventType;
+	metadata: Record<string, unknown> | null;
+	createdAt: string;
+}
+
+export interface AdminSubscriptionDetailPayment {
+	id: string;
+	amountCents: number;
+	refundedCents: number;
+	currency: string;
+	status: PaymentStatus;
+	provider: PaymentProvider;
+	createdAt: string;
+}
+
+export interface AdminSubscriptionDetailUserRole {
+	id: string;
+	role: { name: string };
+}
+
+export interface AdminSubscriptionDetailUser extends AdminSubscriptionUser {
+	roles: AdminSubscriptionDetailUserRole[];
+}
+
+export interface AdminSubscriptionDetailPlan extends AdminSubscriptionPlan {
+	trialDays: number | null;
+}
+
+export interface AdminSubscriptionDetail {
+	id: string;
+	userId: string;
+	planId: string;
+	status: SubscriptionStatus;
+	provider: PaymentProvider;
+	isLifetime: boolean;
+	startDate: string;
+	endDate: string | null;
+	canceledAt: string | null;
+	plan: AdminSubscriptionDetailPlan;
+	user: AdminSubscriptionDetailUser;
+	payments: AdminSubscriptionDetailPayment[];
+	events: AdminSubscriptionEvent[];
+}

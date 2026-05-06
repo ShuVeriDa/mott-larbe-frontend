@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useDebounce } from "@/shared/lib/debounce";
 import {
@@ -14,27 +15,70 @@ import type {
 	AdminDictSort,
 	AdminDictTab,
 	CreateAdminEntryDto,
+	AdminImportResult,
 } from "@/entities/dictionary";
 import type { CefrLevel } from "@/shared/types";
 
 const LIMIT = 20;
 
+const VALID_TABS: AdminDictTab[] = ["all", "no_senses", "no_examples", "no_forms"];
+const VALID_SORTS: AdminDictSort[] = ["alpha", "frequency_desc", "newest", "oldest", "no_senses"];
+
+const asTab = (v: string | null): AdminDictTab =>
+	VALID_TABS.includes(v as AdminDictTab) ? (v as AdminDictTab) : "all";
+const asSort = (v: string | null): AdminDictSort =>
+	VALID_SORTS.includes(v as AdminDictSort) ? (v as AdminDictSort) : "alpha";
+const asPage = (v: string | null): number => {
+	const n = Number(v);
+	return Number.isInteger(n) && n > 0 ? n : 1;
+};
+
 export const useAdminDictionaryPage = () => {
+	const router = useRouter();
+	const searchParams = useSearchParams();
 	const qc = useQueryClient();
 
-	const [tab, setTab] = useState<AdminDictTab>("all");
-	const [page, setPage] = useState(1);
-	const [search, setSearch] = useState("");
-	const [pos, setPos] = useState("");
-	const [level, setLevel] = useState("");
-	const [sort, setSort] = useState<AdminDictSort>("alpha");
-	const [language, setLanguage] = useState("");
+	const tab = asTab(searchParams.get("tab"));
+	const page = asPage(searchParams.get("page"));
+	const sort = asSort(searchParams.get("sort"));
+	const search = searchParams.get("q") ?? "";
+	const pos = searchParams.get("pos") ?? "";
+	const level = searchParams.get("level") ?? "";
+	const language = searchParams.get("language") ?? "";
+
+	const [localSearch, setLocalSearch] = useState(search);
+	const debouncedSearch = useDebounce(localSearch, 350);
 
 	const [createOpen, setCreateOpen] = useState(false);
+	const [importOpen, setImportOpen] = useState(false);
+	const [importResult, setImportResult] = useState<AdminImportResult | null>(null);
 	const [deleteEntry, setDeleteEntry] = useState<AdminDictListItem | null>(null);
+	const [addSenseEntry, setAddSenseEntry] = useState<AdminDictListItem | null>(null);
+	const [addExampleEntry, setAddExampleEntry] = useState<AdminDictListItem | null>(null);
 	const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
-	const debouncedSearch = useDebounce(search, 350);
+	const push = useCallback(
+		(updates: Record<string, string | null>) => {
+			const params = new URLSearchParams(searchParams.toString());
+			for (const [k, v] of Object.entries(updates)) {
+				if (v === null || v === "" || v === "all" && k === "tab" || v === "1" && k === "page") {
+					params.delete(k);
+				} else {
+					params.set(k, v);
+				}
+			}
+			router.replace(`?${params.toString()}`, { scroll: false });
+		},
+		[router, searchParams],
+	);
+
+	const resetPage = useCallback(
+		(updates: Record<string, string | null>) => {
+			push({ ...updates, page: null });
+			setSelectedIds(new Set());
+		},
+		[push],
+	);
 
 	const listQuery = useAdminDictionaryList({
 		q: debouncedSearch || undefined,
@@ -50,7 +94,7 @@ export const useAdminDictionaryPage = () => {
 	const statsQuery = useAdminDictionaryStats();
 
 	const invalidateRoot = useCallback(() => {
-		void qc.invalidateQueries({ queryKey: adminDictionaryKeys.root });
+		void qc.invalidateQueries({ queryKey: adminDictionaryKeys.all });
 	}, [qc]);
 
 	const createMutation = useMutation({
@@ -78,36 +122,48 @@ export const useAdminDictionaryPage = () => {
 		},
 	});
 
-	const handleTabChange = useCallback((next: AdminDictTab) => {
-		setTab(next);
-		setPage(1);
-		setSelectedIds(new Set());
-	}, []);
+	const importMutation = useMutation({
+		mutationFn: (file: File) => adminDictionaryApi.importEntries(file),
+		onSuccess: (result) => {
+			invalidateRoot();
+			setImportResult(result);
+		},
+	});
 
-	const handleSearchChange = useCallback((v: string) => {
-		setSearch(v);
-		setPage(1);
-	}, []);
+	const addSenseMutation = useMutation({
+		mutationFn: ({ lemmaId, definition }: { lemmaId: string; definition: string }) =>
+			adminDictionaryApi.addSense(lemmaId, { definition }),
+		onSuccess: () => invalidateRoot(),
+	});
 
-	const handlePosChange = useCallback((v: string) => {
-		setPos(v);
-		setPage(1);
-	}, []);
+	const addExampleMutation = useMutation({
+		mutationFn: ({ lemmaId, text }: { lemmaId: string; text: string }) =>
+			adminDictionaryApi.addExampleToEntry(lemmaId, { text }),
+		onSuccess: () => invalidateRoot(),
+	});
 
-	const handleLevelChange = useCallback((v: string) => {
-		setLevel(v);
-		setPage(1);
-	}, []);
+	const handleTabChange = useCallback(
+		(next: AdminDictTab) => resetPage({ tab: next }),
+		[resetPage],
+	);
 
-	const handleSortChange = useCallback((v: AdminDictSort) => {
-		setSort(v);
-		setPage(1);
-	}, []);
+	const handleSearchChange = useCallback(
+		(v: string) => {
+			setLocalSearch(v);
+			resetPage({ q: v });
+		},
+		[resetPage],
+	);
 
-	const handleLanguageChange = useCallback((v: string) => {
-		setLanguage(v);
-		setPage(1);
-	}, []);
+	const handlePosChange = useCallback((v: string) => resetPage({ pos: v }), [resetPage]);
+	const handleLevelChange = useCallback((v: string) => resetPage({ level: v }), [resetPage]);
+	const handleSortChange = useCallback((v: AdminDictSort) => push({ sort: v === "alpha" ? null : v }), [push]);
+	const handleLanguageChange = useCallback((v: string) => resetPage({ language: v }), [resetPage]);
+
+	const handleSetPage = useCallback(
+		(p: number) => push({ page: p === 1 ? null : String(p) }),
+		[push],
+	);
 
 	const handleSelectId = useCallback((id: string) => {
 		setSelectedIds((prev) => {
@@ -139,7 +195,7 @@ export const useAdminDictionaryPage = () => {
 			const url = URL.createObjectURL(blob);
 			const a = document.createElement("a");
 			a.href = url;
-			a.download = "dictionary-export.json";
+			a.download = `dictionary-export-${Date.now()}.json`;
 			a.click();
 			URL.revokeObjectURL(url);
 		});
@@ -149,6 +205,16 @@ export const useAdminDictionaryPage = () => {
 		handleExport(selectedIds.size > 0 ? Array.from(selectedIds) : undefined);
 	}, [selectedIds, handleExport]);
 
+	const handleImportOpen = useCallback(() => {
+		setImportResult(null);
+		setImportOpen(true);
+	}, []);
+
+	const handleImportClose = useCallback(() => {
+		setImportOpen(false);
+		setImportResult(null);
+	}, []);
+
 	const total = listQuery.data?.total ?? 0;
 	const totalPages = Math.max(1, Math.ceil(total / LIMIT));
 	const tabCounts = listQuery.data?.tabCounts;
@@ -156,13 +222,17 @@ export const useAdminDictionaryPage = () => {
 	return {
 		tab,
 		page,
-		search,
+		search: localSearch,
 		pos,
 		level,
 		sort,
 		language,
 		createOpen,
+		importOpen,
+		importResult,
 		deleteEntry,
+		addSenseEntry,
+		addExampleEntry,
 		selectedIds,
 		listQuery,
 		statsQuery,
@@ -173,9 +243,14 @@ export const useAdminDictionaryPage = () => {
 		isCreating: createMutation.isPending,
 		isDeleting: deleteMutation.isPending,
 		isBulkDeleting: bulkDeleteMutation.isPending,
+		isImporting: importMutation.isPending,
+		isAddingSense: addSenseMutation.isPending,
+		isAddingExample: addExampleMutation.isPending,
 		setCreateOpen,
 		setDeleteEntry,
-		setPage,
+		setAddSenseEntry,
+		setAddExampleEntry,
+		setPage: handleSetPage,
 		handleTabChange,
 		handleSearchChange,
 		handlePosChange,
@@ -187,7 +262,16 @@ export const useAdminDictionaryPage = () => {
 		handleClearSelection,
 		handleBulkDelete,
 		handleBulkExport,
+		handleImportOpen,
+		handleImportClose,
+		handleImport: importMutation.mutate,
 		handleCreate: createMutation.mutate,
 		handleDeleteConfirm: () => { if (deleteEntry) deleteMutation.mutate(deleteEntry.id); },
+		handleAddSenseConfirm: (definition: string) => {
+			if (addSenseEntry) addSenseMutation.mutate({ lemmaId: addSenseEntry.id, definition });
+		},
+		handleAddExampleConfirm: (text: string) => {
+			if (addExampleEntry) addExampleMutation.mutate({ lemmaId: addExampleEntry.id, text });
+		},
 	};
 };

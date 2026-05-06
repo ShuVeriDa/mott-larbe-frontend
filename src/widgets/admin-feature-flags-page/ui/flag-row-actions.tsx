@@ -9,10 +9,11 @@ interface FlagRowActionsProps {
 	onEdit: (flag: FeatureFlagItem) => void;
 	onDuplicate: (flag: FeatureFlagItem) => void;
 	onDelete: (flag: FeatureFlagItem) => void;
+	onAddOverride: (flagId: string) => void;
 	t: (key: string) => string;
 }
 
-export const FlagRowActions = ({ flag, onEdit, onDuplicate, onDelete, t }: FlagRowActionsProps) => {
+export const FlagRowActions = ({ flag, onEdit, onDuplicate, onDelete, onAddOverride, t }: FlagRowActionsProps) => {
 	const [open, setOpen] = useState(false);
 	const ref = useRef<HTMLDivElement>(null);
 
@@ -52,6 +53,18 @@ export const FlagRowActions = ({ flag, onEdit, onDuplicate, onDelete, t }: FlagR
 
 				{open && (
 					<div className="absolute right-0 top-[calc(100%+4px)] z-50 min-w-[190px] rounded-[9px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08),0_2px_4px_rgba(0,0,0,0.04)]">
+						<button
+							type="button"
+							className="flex w-full items-center gap-2 rounded-[6px] border-none bg-transparent px-2.5 py-[7px] text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+							onClick={() => { onAddOverride(flag.id); setOpen(false); }}
+						>
+							<svg className="size-[13px] shrink-0 text-t-3" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
+								<circle cx="6.5" cy="5" r="2" />
+								<path d="M2 13c0-2.5 2-4 4.5-4" strokeLinecap="round" />
+								<path d="M11 8v4M9 10h4" strokeLinecap="round" />
+							</svg>
+							{t("admin.featureFlags.actions.addOverride")}
+						</button>
 						<button
 							type="button"
 							className="flex w-full items-center gap-2 rounded-[6px] border-none bg-transparent px-2.5 py-[7px] text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"

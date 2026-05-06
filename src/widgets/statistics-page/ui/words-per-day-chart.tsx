@@ -1,17 +1,18 @@
 "use client";
 
 import { useMemo } from "react";
-import type { WordsPerDayPoint } from "@/entities/statistics";
+import type { StatsPeriod, WordsPerDayPoint } from "@/entities/statistics";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 
 interface WordsPerDayChartProps {
 	points: WordsPerDayPoint[];
+	period?: StatsPeriod;
 }
 
 const CHART_HEIGHT = 65;
 
-export const WordsPerDayChart = ({ points }: WordsPerDayChartProps) => {
+export const WordsPerDayChart = ({ points, period }: WordsPerDayChartProps) => {
 	const { t } = useI18n();
 
 	const max = useMemo(
@@ -25,7 +26,11 @@ export const WordsPerDayChart = ({ points }: WordsPerDayChartProps) => {
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.perDay.title")}
 				</Typography>
-				<span className="text-[11px] text-t-3">{t("statistics.perDay.meta")}</span>
+				<span className="text-[11px] text-t-3">
+				{period === "all"
+					? t("statistics.perDay.metaAll")
+					: t("statistics.perDay.meta")}
+			</span>
 			</header>
 
 			{points.length === 0 ? (

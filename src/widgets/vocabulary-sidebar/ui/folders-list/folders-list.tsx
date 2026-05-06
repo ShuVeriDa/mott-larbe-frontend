@@ -1,8 +1,10 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Lock, Plus } from "lucide-react";
+import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { FolderItem, useFolders } from "@/entities/folder";
+import { useUsage } from "@/entities/subscription";
 import { useVocabularyFilters } from "@/features/vocabulary-filters";
 
 const AllWordsIcon = () => (
@@ -43,6 +45,8 @@ export const FoldersList = ({
 }: FoldersListProps) => {
 	const { t } = useI18n();
 	const { data: folders } = useFolders();
+	const { data: usage } = useUsage();
+	const hasFolders = usage?.limits.dictionaryFolders ?? true;
 	const folderId = useVocabularyFilters((s) => s.folderId);
 	const setFolderId = useVocabularyFilters((s) => s.setFolderId);
 
@@ -74,10 +78,23 @@ export const FoldersList = ({
 			</div>
 			<button
 				type="button"
-				onClick={onCreateFolder}
-				className="mt-[3px] flex w-full items-center gap-[5px] rounded-[7px] border border-dashed border-bd-2 bg-transparent px-2 py-[5px] font-[inherit] text-xs text-t-3 transition-colors duration-150 hover:border-acc hover:text-acc"
+				disabled={!hasFolders}
+				onClick={hasFolders ? onCreateFolder : undefined}
+				title={
+					!hasFolders ? t("vocabulary.foldersPage.premiumOnly") : undefined
+				}
+				className={cn(
+					"mt-[3px] flex w-full items-center gap-[5px] rounded-base border border-dashed bg-transparent px-2 py-[5px] font-[inherit] text-xs transition-colors duration-150",
+					hasFolders
+						? "cursor-pointer border-bd-2 text-t-3 hover:border-acc hover:text-acc"
+						: "cursor-not-allowed border-bd-1 text-t-4",
+				)}
 			>
-				<Plus className="size-[11px]" strokeWidth={2} />
+				{hasFolders ? (
+					<Plus className="size-[11px]" strokeWidth={2} />
+				) : (
+					<Lock className="size-[11px]" strokeWidth={2} />
+				)}
 				{t("vocabulary.newFolder")}
 			</button>
 		</div>

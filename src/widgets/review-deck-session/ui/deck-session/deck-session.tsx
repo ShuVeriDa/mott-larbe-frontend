@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useI18n } from "@/shared/lib/i18n";
+import { useSwipe } from "@/shared/lib/swipe";
 import { Typography } from "@/shared/ui/typography";
 import { getPrimaryTranslation } from "@/entities/review";
 import type { DeckDueResponse, DeckRateResult } from "@/entities/deck";
@@ -15,9 +16,10 @@ export interface DeckSessionProps {
 	due: DeckDueResponse;
 	onFinish: (counts: DeckCounts) => void;
 	onBack: () => void;
+	onProgress?: (currentIndex: number, total: number, counts: DeckCounts) => void;
 }
 
-export const DeckSession = ({ due, onFinish, onBack }: DeckSessionProps) => {
+export const DeckSession = ({ due, onFinish, onBack, onProgress }: DeckSessionProps) => {
 	const { t } = useI18n();
 	const session = useDeckSession(due);
 	const {
@@ -30,6 +32,10 @@ export const DeckSession = ({ due, onFinish, onBack }: DeckSessionProps) => {
 		flip,
 		rate,
 	} = session;
+
+	useEffect(() => {
+		onProgress?.(currentIndex, total, counts);
+	}, [counts, currentIndex, onProgress, total]);
 
 	useEffect(() => {
 		if (isFinished) onFinish(counts);
@@ -60,6 +66,12 @@ export const DeckSession = ({ due, onFinish, onBack }: DeckSessionProps) => {
 		return () => window.removeEventListener("keydown", handleKey);
 	}, [flip, flipped, rate]);
 
+	const swipe = useSwipe({
+		enabled: flipped,
+		onSwipeLeft: () => rate("again"),
+		onSwipeRight: () => rate("know"),
+	});
+
 	if (!current) return null;
 
 	const lemma = current.lemma;
@@ -76,7 +88,12 @@ export const DeckSession = ({ due, onFinish, onBack }: DeckSessionProps) => {
 	})();
 
 	return (
-		<div className="flex flex-1 flex-col items-center px-5 pt-5 pb-4 max-md:px-4 max-md:pt-3.5">
+		<div
+			className="flex flex-1 flex-col items-center px-5 pt-5 pb-4 max-md:px-4 max-md:pt-3.5"
+			onPointerDown={swipe.onPointerDown}
+			onPointerUp={swipe.onPointerUp}
+			onPointerCancel={swipe.onPointerCancel}
+		>
 			<div className="mb-4 flex w-full max-w-[520px] items-center gap-2.5">
 				<div className="h-1 flex-1 overflow-hidden rounded-full bg-surf-3">
 					<div

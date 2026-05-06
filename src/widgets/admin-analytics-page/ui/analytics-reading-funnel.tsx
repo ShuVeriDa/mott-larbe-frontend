@@ -68,7 +68,7 @@ export const AnalyticsReadingFunnel = ({
 					<>
 						<FunnelRow
 							label={t("admin.analytics.readingFunnel.opened")}
-							value={funnel.openedCount.toLocaleString()}
+							value={funnel.openedEventsCount.toLocaleString()}
 							widthPct={100}
 						/>
 						<FunnelRow

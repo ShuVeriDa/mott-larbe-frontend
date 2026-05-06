@@ -7,5 +7,5 @@ export const useLibraryTextRelated = (id: string) =>
 	useQuery({
 		queryKey: libraryTextKeys.related(id),
 		queryFn: () => libraryTextApi.getRelated(id),
-		staleTime: 120_000,
+		staleTime: 300_000,
 	});

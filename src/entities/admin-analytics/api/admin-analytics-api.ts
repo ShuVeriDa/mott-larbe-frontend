@@ -1,6 +1,7 @@
 import { http } from "@/shared/api";
 import type {
 	AdminAnalyticsResponse,
+	AnalyticsExportResponse,
 	DifficultTextsResponse,
 	FetchAdminAnalyticsQuery,
 	PopularTextsResponse,
@@ -26,14 +27,21 @@ export const adminAnalyticsApi = {
 			})
 			.then((r) => r.data),
 
-	export: (query?: FetchAdminAnalyticsQuery & { format?: "json" | "csv" }) => {
-		const params = new URLSearchParams();
-		if (query?.range) params.set("range", query.range);
-		if (query?.dateFrom) params.set("dateFrom", query.dateFrom);
-		if (query?.dateTo) params.set("dateTo", query.dateTo);
-		params.set("format", query?.format ?? "csv");
-		const base =
-			process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:9555/api";
-		window.open(`${base}/admin/analytics/export?${params}`, "_blank");
+	export: async (
+		query?: FetchAdminAnalyticsQuery & { format?: "json" | "csv" },
+	): Promise<void> => {
+		const { data } = await http.get<AnalyticsExportResponse>(
+			"/admin/analytics/export",
+			{ params: query },
+		);
+		const mimeType =
+			data.format === "csv" ? "text/csv;charset=utf-8;" : "application/json";
+		const blob = new Blob([data.content], { type: mimeType });
+		const url = URL.createObjectURL(blob);
+		const anchor = document.createElement("a");
+		anchor.href = url;
+		anchor.download = data.fileName;
+		anchor.click();
+		URL.revokeObjectURL(url);
 	},
 };

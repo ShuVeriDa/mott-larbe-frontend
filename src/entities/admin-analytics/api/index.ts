@@ -2,6 +2,7 @@ export { adminAnalyticsApi } from "./admin-analytics-api";
 export { adminAnalyticsKeys } from "./admin-analytics-keys";
 export type {
 	AdminAnalyticsResponse,
+	AnalyticsExportResponse,
 	AnalyticsFilters,
 	AnalyticsInsight,
 	AnalyticsRange,

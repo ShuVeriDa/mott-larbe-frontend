@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { AuthLang } from "@/entities/auth";
 import { useI18n } from "@/shared/lib/i18n";
 import {
@@ -30,6 +30,7 @@ export const useResetFlow = () => {
 	const tokenFromUrl = searchParams.get("token");
 
 	const [step, setStep] = useState<ResetStep>(tokenFromUrl ? 3 : 1);
+	const [isExpired, setIsExpired] = useState(() => !tokenFromUrl);
 	const [email, setEmail] = useState("");
 	const [requestError, setRequestError] = useState<string | null>(null);
 	const [confirmError, setConfirmError] = useState<ResetErrorReason | null>(
@@ -40,6 +41,19 @@ export const useResetFlow = () => {
 	const requestMutation = useRequestReset();
 	const confirmMutation = useConfirmReset();
 	const resendTimer = useResendTimer({ durationSeconds: 60 });
+
+	const goExpired = useCallback(() => setIsExpired(true), []);
+
+	const goRequestReset = useCallback(() => {
+		setIsExpired(false);
+		setStep(1);
+	}, []);
+
+	useEffect(() => {
+		if (tokenValidation.data && !tokenValidation.data.valid) {
+			goExpired();
+		}
+	}, [tokenValidation.data, goExpired]);
 
 	const submitEmail = useCallback(
 		async (rawEmail: string) => {
@@ -86,17 +100,31 @@ export const useResetFlow = () => {
 				});
 				setStep(4);
 			} catch (error) {
-				setConfirmError(extractResetErrorReason(error));
+				const reason = extractResetErrorReason(error);
+				if (
+					reason === "token_expired" ||
+					reason === "token_used" ||
+					reason === "token_invalid"
+				) {
+					goExpired();
+				} else {
+					setConfirmError(reason);
+				}
 			}
 		},
-		[authLang, confirmMutation, tokenFromUrl],
+		[authLang, confirmMutation, goExpired, tokenFromUrl],
 	);
+
+	const expiresAt =
+		tokenValidation.data?.valid ? tokenValidation.data.expiresAt : undefined;
 
 	return {
 		step,
+		isExpired,
 		email,
 		tokenFromUrl,
 		tokenValidation,
+		expiresAt,
 		requestState: {
 			isPending: requestMutation.isPending,
 			error: requestError,
@@ -109,6 +137,8 @@ export const useResetFlow = () => {
 			secondsLeft: resendTimer.secondsLeft,
 			isActive: resendTimer.isActive,
 		},
+		goExpired,
+		goRequestReset,
 		submitEmail,
 		resend,
 		changeEmail,

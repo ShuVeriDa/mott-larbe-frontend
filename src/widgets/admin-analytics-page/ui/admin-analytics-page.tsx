@@ -18,6 +18,9 @@ import { AnalyticsSm2Stats } from "./analytics-sm2-stats";
 export const AdminAnalyticsPage = () => {
 	const {
 		range,
+		dateFrom,
+		dateTo,
+		isCustomRange,
 		difficultBy,
 		popularBy,
 		data,
@@ -25,6 +28,8 @@ export const AdminAnalyticsPage = () => {
 		difficultQuery,
 		popularQuery,
 		handleRangeChange,
+		handleDateRangeChange,
+		handleDateRangeClear,
 		handleDifficultByChange,
 		handlePopularByChange,
 		handleExport,
@@ -37,10 +42,21 @@ export const AdminAnalyticsPage = () => {
 		<div className="flex min-h-screen flex-col bg-bg">
 			<AnalyticsTopbar
 				range={range}
+				dateFrom={dateFrom}
+				dateTo={dateTo}
+				isCustomRange={isCustomRange}
 				onRangeChange={handleRangeChange}
+				onDateRangeChange={handleDateRangeChange}
+				onDateRangeClear={handleDateRangeClear}
 				onExport={handleExport}
 			/>
-			<AnalyticsMobileTopbar range={range} onRangeChange={handleRangeChange} />
+			<AnalyticsMobileTopbar
+				range={range}
+				isCustomRange={isCustomRange}
+				onRangeChange={handleRangeChange}
+				onDateRangeChange={handleDateRangeChange}
+				onDateRangeClear={handleDateRangeClear}
+			/>
 
 			<div className="px-5 py-5 pb-12 max-sm:px-3 max-sm:py-3">
 				<AnalyticsInsightStrip

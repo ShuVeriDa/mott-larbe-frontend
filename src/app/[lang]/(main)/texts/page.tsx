@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
@@ -62,7 +63,11 @@ const TextsRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
-	return <LibraryPage />;
+	return (
+		<Suspense>
+			<LibraryPage />
+		</Suspense>
+	);
 };
 
 export default TextsRoutePage;

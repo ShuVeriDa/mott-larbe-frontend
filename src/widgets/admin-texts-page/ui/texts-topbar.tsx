@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 
-export const TextsTopbar = () => {
+interface TextsTopbarProps {
+	onImportClick: () => void;
+}
+
+export const TextsTopbar = ({ onImportClick }: TextsTopbarProps) => {
 	const { t, lang } = useI18n();
 
 	return (
@@ -20,7 +24,8 @@ export const TextsTopbar = () => {
 			<div className="ml-auto flex items-center gap-2">
 				<button
 					type="button"
-					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 max-sm:px-2"
+					onClick={onImportClick}
+					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 max-sm:px-2"
 				>
 					<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 						<path
@@ -35,7 +40,7 @@ export const TextsTopbar = () => {
 				</button>
 				<Link
 					href={`/${lang}/admin/texts/create`}
-					className="flex h-[30px] items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 max-sm:px-2"
+					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 max-sm:px-2"
 				>
 					<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 						<path

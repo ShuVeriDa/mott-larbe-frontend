@@ -1,5 +1,6 @@
 import type {
 	GetFeatureFlagHistoryQuery,
+	GetFeatureFlagKeysQuery,
 	GetFeatureFlagOverridesQuery,
 	GetFeatureFlagsQuery,
 } from "./types";
@@ -12,4 +13,7 @@ export const featureFlagKeys = {
 		["feature-flags", "overrides", query] as const,
 	history: (query: GetFeatureFlagHistoryQuery = {}) =>
 		["feature-flags", "history", query] as const,
+	keys: (query: GetFeatureFlagKeysQuery = {}) => ["feature-flags", "keys", query] as const,
+	historyActors: () => ["feature-flags", "history-actors"] as const,
+	flagHistory: (id: string) => ["feature-flags", "flag-history", id] as const,
 };

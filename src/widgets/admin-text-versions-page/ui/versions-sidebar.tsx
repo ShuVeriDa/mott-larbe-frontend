@@ -2,7 +2,8 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
-import type { AdminTextDetail } from "@/entities/admin-text";
+import { useAdminTextVersionDetail } from "@/entities/admin-text/model/use-admin-text-versions";
+import type { AdminTextDetail, TextVersionListItem } from "@/entities/admin-text";
 
 const LangLabel: Record<string, string> = {
 	CHE: "admin.texts.versions.sidebar.langCHE",
@@ -24,6 +25,19 @@ const LevelBadgeClass: Record<string, string> = {
 	B2: "bg-acc-bg text-acc-t",
 	C1: "bg-pur-bg text-pur-t",
 	C2: "bg-pur-bg text-pur-t",
+};
+
+const ProcessingStatusClass: Record<string, string> = {
+	COMPLETED: "bg-grn-bg text-grn-t",
+	RUNNING: "bg-amb-bg text-amb-t",
+	ERROR: "bg-red-bg text-red-t",
+	IDLE: "bg-surf-3 text-t-2",
+};
+
+const formatDuration = (ms: number | null): string => {
+	if (ms === null) return "—";
+	if (ms < 1000) return `${ms}ms`;
+	return `${(ms / 1000).toFixed(2)}s`;
 };
 
 interface SectionCardProps {
@@ -73,15 +87,19 @@ const SettingRow = ({ label, value, onLabel, offLabel }: SettingRowProps) => (
 
 interface VersionsSidebarProps {
 	text: AdminTextDetail | undefined;
+	currentVersion: TextVersionListItem | null;
 	isLoading: boolean;
 	onRunTokenization: () => void;
 	isRunning: boolean;
 }
 
-export const VersionsSidebar = ({ text, isLoading, onRunTokenization, isRunning }: VersionsSidebarProps) => {
+export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokenization, isRunning }: VersionsSidebarProps) => {
 	const { t } = useI18n();
 
-	const totalChars = text?.pages.reduce((s, p) => s + (p.contentRaw?.length ?? 0), 0) ?? 0;
+	const { data: currentVersionDetail } = useAdminTextVersionDetail(
+		text?.id ?? "",
+		currentVersion?.id ?? null,
+	);
 
 	if (isLoading) {
 		return (
@@ -93,8 +111,48 @@ export const VersionsSidebar = ({ text, isLoading, onRunTokenization, isRunning 
 		);
 	}
 
+	const maxTokenCount = currentVersionDetail
+		? Math.max(...currentVersionDetail.pages.map((p) => p.tokenCount), 1)
+		: 1;
+
 	return (
 		<div className="flex flex-col gap-3">
+			{/* Current version */}
+			{currentVersion && (
+				<SectionCard title={t("admin.texts.versions.sidebar.currentVersion")}>
+					<div>
+						<InfoRow label={t("admin.texts.versions.sidebar.versionNumber")}>
+							v{currentVersion.version}
+							{currentVersion.label && (
+								<span className="ml-1 text-t-3 font-normal">— {currentVersion.label}</span>
+							)}
+						</InfoRow>
+						<InfoRow label={t("admin.texts.versions.sidebar.processingStatus")}>
+							<span className={cn(
+								"rounded px-1.5 py-px text-[10.5px] font-semibold",
+								ProcessingStatusClass[currentVersion.status] ?? "bg-surf-3 text-t-2",
+							)}>
+								{t(`admin.texts.versions.status.${currentVersion.status}`)}
+							</span>
+						</InfoRow>
+						<InfoRow label={t("admin.texts.versions.sidebar.updatedAt")}>
+							{new Date(currentVersion.updatedAt).toLocaleDateString([], {
+								day: "numeric", month: "short", year: "numeric",
+							})}
+						</InfoRow>
+						<InfoRow label={t("admin.texts.versions.sidebar.initiator")}>
+							{currentVersion.initiator?.name ?? "—"}
+						</InfoRow>
+						<InfoRow label={t("admin.texts.versions.sidebar.tokenCount")}>
+							{currentVersion.tokenCount.toLocaleString()}
+						</InfoRow>
+						<InfoRow label={t("admin.texts.versions.sidebar.duration")}>
+							{formatDuration(currentVersion.durationMs)}
+						</InfoRow>
+					</div>
+				</SectionCard>
+			)}
+
 			{/* Text info */}
 			<SectionCard title={t("admin.texts.versions.sidebar.textInfo")}>
 				<div>
@@ -127,20 +185,21 @@ export const VersionsSidebar = ({ text, isLoading, onRunTokenization, isRunning 
 				</div>
 			</SectionCard>
 
-			{/* Page distribution */}
-			{text && text.pages.length > 0 && (
+			{/* Page distribution — by tokenCount from current version detail */}
+			{currentVersionDetail && currentVersionDetail.pages.length > 0 && (
 				<SectionCard title={t("admin.texts.versions.sidebar.pageBreakdown")}>
 					<div className="flex flex-col gap-1.5 px-3.5 py-2.5">
-						{text.pages.map((page) => {
-							const pct = totalChars > 0 ? Math.round(((page.contentRaw?.length ?? 0) / totalChars) * 100) : 0;
+						{currentVersionDetail.pages.map((page) => {
+							const pct = Math.round((page.tokenCount / maxTokenCount) * 100);
 							return (
-								<div key={page.id}>
+								<div key={page.pageId}>
 									<div className="mb-1 flex items-center justify-between">
 										<span className="text-[11.5px] text-t-2">
 											{t("admin.texts.versions.sidebar.pageN").replace("{n}", String(page.pageNumber))}
-											{page.title && <span className="ml-1 text-t-3">— {page.title}</span>}
 										</span>
-										<span className="text-[11px] text-t-3">{pct}%</span>
+										<span className="text-[11px] tabular-nums text-t-3">
+											{page.tokenCount.toLocaleString()} {t("admin.texts.versions.item.tokens")}
+										</span>
 									</div>
 									<div className="h-1 overflow-hidden rounded-full bg-surf-3">
 										<div className="h-full rounded-full bg-acc transition-all" style={{ width: `${pct}%` }} />

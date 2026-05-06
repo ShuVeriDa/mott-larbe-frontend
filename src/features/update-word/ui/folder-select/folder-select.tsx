@@ -3,6 +3,7 @@
 import { Select } from "@/shared/ui/select";
 import { useI18n } from "@/shared/lib/i18n";
 import { useFolders } from "@/entities/folder";
+import { useUsage } from "@/entities/subscription";
 import { useUpdateWord } from "../../model";
 
 export interface FolderSelectProps {
@@ -13,12 +14,14 @@ export interface FolderSelectProps {
 export const FolderSelect = ({ wordId, currentFolderId }: FolderSelectProps) => {
 	const { t } = useI18n();
 	const { data: folders } = useFolders();
+	const { data: usage } = useUsage();
 	const { mutate, isPending } = useUpdateWord();
+	const hasFolders = usage?.limits.dictionaryFolders ?? true;
 
 	return (
 		<Select
 			value={currentFolderId ?? ""}
-			disabled={isPending}
+			disabled={isPending || !hasFolders}
 			onClick={(e) => e.stopPropagation()}
 			onChange={(e) => {
 				const value = e.target.value;
@@ -30,11 +33,13 @@ export const FolderSelect = ({ wordId, currentFolderId }: FolderSelectProps) => 
 			aria-label={t("vocabulary.card.folder")}
 		>
 			<option value="">{t("vocabulary.card.noFolder")}</option>
-			{folders?.map((f) => (
-				<option key={f.id} value={f.id}>
-					{f.name}
-				</option>
-			))}
+			{hasFolders
+				? folders?.map((f) => (
+						<option key={f.id} value={f.id}>
+							{f.name}
+						</option>
+					))
+				: null}
 		</Select>
 	);
 };

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
-import type { AddToDictionaryPayload } from "@/entities/unknown-word";
+import type { AddToDictionaryPayload } from "@/entities/admin-unknown-word";
 import type { AddModalState } from "../model/use-admin-unknown-words-page";
+import { useLemmaSearch } from "@/entities/admin-unknown-word";
 
 type ActionType = "new" | "link";
 
@@ -13,13 +14,97 @@ interface UnknownWordsAddModalProps {
 	isPending: boolean;
 	onClose: () => void;
 	onSubmit: (payload: AddToDictionaryPayload) => void;
+	onLink: (lemmaId: string) => void;
 }
+
+const inputCls =
+	"h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf transition-colors";
+const selectCls = cn(inputCls, "cursor-pointer appearance-none pr-7");
+const CHEVRON_BG =
+	"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23a5a39a' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")";
+
+const LemmaAutocomplete = ({
+	value,
+	onSelect,
+	placeholder,
+}: {
+	value: { id: string; label: string } | null;
+	onSelect: (id: string, label: string) => void;
+	placeholder: string;
+}) => {
+	const [q, setQ] = useState(value?.label ?? "");
+	const [open, setOpen] = useState(false);
+	const ref = useRef<HTMLDivElement>(null);
+	const { data, isFetching } = useLemmaSearch(q);
+
+	useEffect(() => {
+		if (!value) setQ("");
+	}, [value]);
+
+	useEffect(() => {
+		const handler = (e: MouseEvent) => {
+			if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+		};
+		document.addEventListener("mousedown", handler);
+		return () => document.removeEventListener("mousedown", handler);
+	}, []);
+
+	return (
+		<div ref={ref} className="relative">
+			<input
+				type="text"
+				value={q}
+				onChange={(e) => {
+					setQ(e.target.value);
+					setOpen(true);
+				}}
+				onFocus={() => q && setOpen(true)}
+				placeholder={placeholder}
+				className={inputCls}
+				autoComplete="off"
+			/>
+			{open && q.length >= 1 && (
+				<div className="absolute left-0 top-[calc(100%+4px)] z-30 w-full max-h-[220px] overflow-y-auto [&::-webkit-scrollbar]:w-0 rounded-[9px] border border-bd-2 bg-surf shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
+					{isFetching && !data?.length ? (
+						<div className="px-3 py-2.5 text-[12px] text-t-3">…</div>
+					) : data?.length ? (
+						data.map((item) => (
+							<button
+								key={item.id}
+								type="button"
+								onMouseDown={(e) => {
+									e.preventDefault();
+									onSelect(item.id, item.headword);
+									setQ(
+										item.translation
+											? `${item.headword} — ${item.translation}`
+											: item.headword,
+									);
+									setOpen(false);
+								}}
+								className="flex w-full flex-col gap-0.5 px-3 py-2 text-left transition-colors hover:bg-surf-2"
+							>
+								<span className="text-[13px] font-medium text-t-1">{item.headword}</span>
+								{item.translation && (
+									<span className="text-[11px] text-t-3">{item.translation}</span>
+								)}
+							</button>
+						))
+					) : (
+						<div className="px-3 py-2.5 text-[12px] text-t-3">—</div>
+					)}
+				</div>
+			)}
+		</div>
+	);
+};
 
 export const UnknownWordsAddModal = ({
 	state,
 	isPending,
 	onClose,
 	onSubmit,
+	onLink,
 }: UnknownWordsAddModalProps) => {
 	const { t } = useI18n();
 	const [action, setAction] = useState<ActionType>("new");
@@ -28,17 +113,19 @@ export const UnknownWordsAddModal = ({
 	const [translation, setTranslation] = useState("");
 	const [level, setLevel] = useState("");
 	const [domain, setDomain] = useState("");
-	const [findLemma, setFindLemma] = useState("");
+	const [formsRaw, setFormsRaw] = useState("");
+	const [selectedLemma, setSelectedLemma] = useState<{ id: string; label: string } | null>(null);
 
 	useEffect(() => {
 		if (state?.open) {
-			setAction("new");
+			setAction(state.initialAction ?? "new");
 			setHeadword(state.word);
 			setPartOfSpeech("");
 			setTranslation("");
 			setLevel("");
 			setDomain("");
-			setFindLemma("");
+			setFormsRaw("");
+			setSelectedLemma(null);
 		}
 	}, [state]);
 
@@ -46,15 +133,15 @@ export const UnknownWordsAddModal = ({
 
 	const occurrenceText =
 		state.seenCount === 1
-			? t("admin.unknownWords.addModal.subtitleOccurrences", {
-					count: state.seenCount,
-				})
-			: t("admin.unknownWords.addModal.subtitleOccurrencesPlural", {
-					count: state.seenCount,
-				});
+			? t("admin.unknownWords.addModal.subtitleOccurrences", { count: state.seenCount })
+			: t("admin.unknownWords.addModal.subtitleOccurrencesPlural", { count: state.seenCount });
 
 	const handleSubmit = () => {
 		if (action === "new") {
+			const forms = formsRaw
+				.split(",")
+				.map((s) => s.trim())
+				.filter(Boolean);
 			onSubmit({
 				language: "CHE",
 				translation,
@@ -62,17 +149,20 @@ export const UnknownWordsAddModal = ({
 				partOfSpeech: partOfSpeech || undefined,
 				level: level || undefined,
 				domain: domain || undefined,
+				forms: forms.length ? forms : undefined,
 			});
+		} else {
+			if (!selectedLemma) return;
+			onLink(selectedLemma.id);
 		}
 	};
 
-	const inputCls =
-		"h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf transition-colors";
-	const selectCls = cn(inputCls, "cursor-pointer appearance-none pr-7");
+	const canSubmit =
+		action === "new" ? !!translation && !isPending : !!selectedLemma && !isPending;
 
 	return (
 		<div
-			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 p-4 backdrop-blur-sm max-sm:items-end max-sm:p-0"
+			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 p-4 backdrop-blur-sm max-sm:items-end max-sm:p-0"
 			onClick={(e) => e.target === e.currentTarget && onClose()}
 		>
 			<div className="w-full max-w-[520px] max-h-[calc(100vh-32px)] overflow-y-auto [&::-webkit-scrollbar]:w-0 rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] animate-[modal-in_0.15s_ease] max-sm:max-w-full max-sm:rounded-t-[18px] max-sm:rounded-b-none max-sm:max-h-[94vh]">
@@ -90,30 +180,22 @@ export const UnknownWordsAddModal = ({
 						className="flex size-7 cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 					>
 						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<path
-								d="M4 4l8 8M12 4l-8 8"
-								stroke="currentColor"
-								strokeWidth="1.4"
-								strokeLinecap="round"
-							/>
+							<path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
 						</svg>
 					</button>
 				</div>
 
 				{/* Context snippet */}
 				{state.snippet && (
-					<div
-						className="mb-3.5 rounded-lg border-l-2 border-bd-3 bg-surf-2 px-3 py-2.5 text-[12px] leading-[1.6] text-t-2"
-						dangerouslySetInnerHTML={{ __html: state.snippet }}
-					/>
+					<div className="mb-3.5 rounded-lg border-l-2 border-bd-3 bg-surf-2 px-3 py-2.5 text-[12px] leading-[1.6] text-t-2">
+						{state.snippet}
+					</div>
 				)}
 
 				{/* Word preview */}
 				<div className="mb-3.5 flex items-center gap-2.5 rounded-lg bg-surf-2 px-3 py-2.5">
 					<div>
-						<div className="font-display text-[16px] font-semibold text-t-1">
-							{state.word}
-						</div>
+						<div className="font-display text-[16px] font-semibold text-t-1">{state.word}</div>
 						{state.normalized !== state.word && (
 							<div className="mt-0.5 text-[11.5px] text-t-3">
 								{t("admin.unknownWords.addModal.normalizedLabel")}: {state.normalized}
@@ -192,8 +274,7 @@ export const UnknownWordsAddModal = ({
 									onChange={(e) => setPartOfSpeech(e.target.value)}
 									className={selectCls}
 									style={{
-										backgroundImage:
-											"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23a5a39a' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")",
+										backgroundImage: CHEVRON_BG,
 										backgroundRepeat: "no-repeat",
 										backgroundPosition: "right 8px center",
 									}}
@@ -231,19 +312,15 @@ export const UnknownWordsAddModal = ({
 									onChange={(e) => setLevel(e.target.value)}
 									className={selectCls}
 									style={{
-										backgroundImage:
-											"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23a5a39a' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")",
+										backgroundImage: CHEVRON_BG,
 										backgroundRepeat: "no-repeat",
 										backgroundPosition: "right 8px center",
 									}}
 								>
 									<option value="">{t("admin.unknownWords.addModal.levelNone")}</option>
-									<option value="A1">A1</option>
-									<option value="A2">A2</option>
-									<option value="B1">B1</option>
-									<option value="B2">B2</option>
-									<option value="C1">C1</option>
-									<option value="C2">C2</option>
+									{["A1", "A2", "B1", "B2", "C1", "C2"].map((l) => (
+										<option key={l} value={l}>{l}</option>
+									))}
 								</select>
 							</div>
 							<div className="mb-3">
@@ -259,21 +336,35 @@ export const UnknownWordsAddModal = ({
 								/>
 							</div>
 						</div>
+
+						<div className="mb-3">
+							<label className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+								{t("admin.unknownWords.addModal.forms")}
+							</label>
+							<input
+								type="text"
+								value={formsRaw}
+								onChange={(e) => setFormsRaw(e.target.value)}
+								placeholder={t("admin.unknownWords.addModal.formsPlaceholder")}
+								className={inputCls}
+							/>
+							<p className="mt-1 text-[11px] text-t-3">
+								{t("admin.unknownWords.addModal.formsHint")}
+							</p>
+						</div>
 					</div>
 				)}
 
-				{/* Link lemma fields */}
+				{/* Link lemma */}
 				{action === "link" && (
 					<div className="mb-3">
 						<label className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 							{t("admin.unknownWords.addModal.findLemma")}
 						</label>
-						<input
-							type="text"
-							value={findLemma}
-							onChange={(e) => setFindLemma(e.target.value)}
+						<LemmaAutocomplete
+							value={selectedLemma}
+							onSelect={(id, label) => setSelectedLemma({ id, label })}
 							placeholder={t("admin.unknownWords.addModal.findLemmaPlaceholder")}
-							className={inputCls}
 						/>
 					</div>
 				)}
@@ -283,26 +374,22 @@ export const UnknownWordsAddModal = ({
 					<button
 						type="button"
 						onClick={onClose}
-						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-3 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1 max-sm:h-[42px] max-sm:justify-center max-sm:text-[13.5px]"
+						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1 max-sm:h-[42px] max-sm:justify-center max-sm:text-[13.5px]"
 					>
 						{t("admin.unknownWords.addModal.cancel")}
 					</button>
 					<button
 						type="button"
 						onClick={handleSubmit}
-						disabled={isPending || (action === "new" && !translation)}
-						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-[7px] border-none bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 max-sm:h-[42px] max-sm:justify-center max-sm:text-[13.5px]"
+						disabled={!canSubmit}
+						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-none bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 max-sm:h-[42px] max-sm:justify-center max-sm:text-[13.5px]"
 					>
 						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-							<path
-								d="M3 8.5L6.5 12 13 5"
-								stroke="currentColor"
-								strokeWidth="1.7"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
+							<path d="M3 8.5L6.5 12 13 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
 						</svg>
-						{t("admin.unknownWords.addModal.submit")}
+						{action === "link"
+							? t("admin.unknownWords.addModal.submitLink")
+							: t("admin.unknownWords.addModal.submit")}
 					</button>
 				</div>
 			</div>

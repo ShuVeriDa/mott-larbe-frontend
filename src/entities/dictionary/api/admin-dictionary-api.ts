@@ -23,6 +23,7 @@ import type {
 	AdminDictSense,
 	AdminDictMorphForm,
 	AdminDictHeadword,
+	AdminImportResult,
 } from "./admin-dictionary-types";
 
 const buildListParams = (q: AdminDictListQuery): Record<string, string | number> => {
@@ -132,6 +133,11 @@ export const adminDictionaryApi = {
 		await http.delete(`/admin/dictionary/examples/${exampleId}`);
 	},
 
+	addExampleToEntry: async (lemmaId: string, body: CreateAdminExampleDto): Promise<AdminDictExample> => {
+		const { data } = await http.post<AdminDictExample>(`/admin/dictionary/${lemmaId}/examples`, body);
+		return data;
+	},
+
 	// Headwords
 	addHeadword: async (lemmaId: string, body: CreateAdminHeadwordDto): Promise<AdminDictHeadword> => {
 		const { data } = await http.post<AdminDictHeadword>(`/admin/dictionary/${lemmaId}/headwords`, body);
@@ -160,6 +166,31 @@ export const adminDictionaryApi = {
 	// Add lemma to existing entry
 	addLemma: async (entryId: string, body: AddAdminLemmaDto): Promise<AdminDictEntryCard> => {
 		const { data } = await http.post<AdminDictEntryCard>(`/admin/dictionary/entries/${entryId}/lemmas`, body);
+		return data;
+	},
+
+	export: async (ids?: string[]): Promise<Blob> => {
+		const params = ids && ids.length > 0 ? { ids: ids.join(",") } : undefined;
+		const { data } = await http.get<Blob>("/admin/dictionary/export", {
+			params,
+			responseType: "blob",
+		});
+		return data;
+	},
+
+	bulkDelete: async (ids: string[]): Promise<{ deleted: number }> => {
+		const { data } = await http.delete<{ deleted: number }>("/admin/dictionary", {
+			data: { lemmaIds: ids },
+		});
+		return data;
+	},
+
+	importEntries: async (file: File): Promise<AdminImportResult> => {
+		const form = new FormData();
+		form.append("file", file);
+		const { data } = await http.post<AdminImportResult>("/admin/dictionary/import", form, {
+			headers: { "Content-Type": "multipart/form-data" },
+		});
 		return data;
 	},
 };

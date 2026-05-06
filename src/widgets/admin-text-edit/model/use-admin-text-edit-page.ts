@@ -210,10 +210,7 @@ export const useAdminTextEditPage = (id: string) => {
 	);
 
 	const handleSaveDraft = useCallback(() => handleSave("draft"), [handleSave]);
-	const handleSaveAndUpdate = useCallback(
-		() => handleSave(status === "published" ? "published" : "draft"),
-		[handleSave, status],
-	);
+	const handleSaveAndUpdate = useCallback(() => handleSave(status), [handleSave, status]);
 
 	const handleDelete = useCallback(async () => {
 		try {
@@ -237,12 +234,19 @@ export const useAdminTextEditPage = (id: string) => {
 	const isSaving = update.isPending || uploadCover.isPending;
 	const isDeleting = remove.isPending;
 
+	const pageTokenCounts: number[] = textData?.pages
+		? [...textData.pages]
+			.sort((a, b) => a.pageNumber - b.pageNumber)
+			.map((p) => p.tokenCount ?? 0)
+		: [];
+
 	return {
 		// data
 		textData,
 		isLoading,
 		isError,
 		versionsData,
+		pageTokenCounts,
 		// form state
 		title,
 		pages,

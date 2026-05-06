@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagItem, FeatureFlagCategory } from "@/entities/feature-flag";
+import { useAdminFeatureFlagItemHistory } from "@/entities/feature-flag";
 import { FlagToggle } from "./flag-toggle";
 import { FlagEnvChip } from "./flag-env-chip";
 import { FlagCategoryBadge } from "./flag-category-badge";
@@ -28,6 +29,7 @@ interface FlagsTableProps {
 	onEdit: (flag: FeatureFlagItem) => void;
 	onDuplicate: (flag: FeatureFlagItem) => void;
 	onDelete: (flag: FeatureFlagItem) => void;
+	onAddOverride: (flagId: string) => void;
 	t: (key: string, params?: Record<string, string | number>) => string;
 }
 
@@ -41,6 +43,78 @@ const SkeletonRow = () => (
 	</tr>
 );
 
+const ExpandedRow = ({
+	flag,
+	t,
+}: {
+	flag: FeatureFlagItem;
+	t: (key: string, params?: Record<string, string | number>) => string;
+}) => {
+	const historyQuery = useAdminFeatureFlagItemHistory(flag.id, 5);
+	const items = historyQuery.data ?? [];
+
+	return (
+		<tr className="bg-surf-2">
+			<td colSpan={8} className="px-3.5 pb-3.5 pt-2.5">
+				<div className="flex flex-wrap gap-4 text-[12px] text-t-2 mb-3">
+					<div>
+						<span className="text-t-3">{t("admin.featureFlags.table.category")}: </span>
+						<FlagCategoryBadge category={flag.category} t={t} />
+					</div>
+					{flag.updatedBy && (
+						<div>
+							<span className="text-t-3">{t("admin.featureFlags.table.updatedBy")}: </span>
+							<span className="text-acc-t">{flag.updatedBy.name} {flag.updatedBy.surname}</span>
+						</div>
+					)}
+					{flag.description && (
+						<div>
+							<span className="text-t-3">{t("admin.featureFlags.table.description")}: </span>
+							{flag.description}
+						</div>
+					)}
+				</div>
+
+				<p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.5px] text-t-3">
+					{t("admin.featureFlags.expandDetails")}
+				</p>
+				{historyQuery.isLoading ? (
+					<div className="space-y-1.5">
+						{Array.from({ length: 3 }).map((_, i) => (
+							<div key={i} className="h-3 w-2/3 animate-pulse rounded bg-surf-3" />
+						))}
+					</div>
+				) : items.length === 0 ? (
+					<p className="text-[11.5px] text-t-3">{t("admin.featureFlags.expandNoHistory")}</p>
+				) : (
+					<div className="space-y-1">
+						{items.map((h) => (
+							<div key={h.id} className="flex items-center gap-2 text-[11.5px]">
+								<span className="shrink-0 text-t-3">
+									{new Date(h.createdAt).toLocaleString("ru-RU", {
+										day: "numeric",
+										month: "short",
+										hour: "2-digit",
+										minute: "2-digit",
+									})}
+								</span>
+								<span className="text-t-2">
+									{t(`admin.featureFlags.history.eventType.${h.eventType}`)}
+								</span>
+								{h.actor && (
+									<span className="text-acc-t">
+										{h.actor.name} {h.actor.surname}
+									</span>
+								)}
+							</div>
+						))}
+					</div>
+				)}
+			</td>
+		</tr>
+	);
+};
+
 export const FlagsTable = ({
 	items,
 	isLoading,
@@ -48,6 +122,7 @@ export const FlagsTable = ({
 	onEdit,
 	onDuplicate,
 	onDelete,
+	onAddOverride,
 	t,
 }: FlagsTableProps) => {
 	const [expanded, setExpanded] = useState<Set<string>>(new Set());
@@ -116,6 +191,7 @@ export const FlagsTable = ({
 													<button
 														type="button"
 														onClick={() => toggleExpand(flag.id)}
+														aria-expanded={expanded.has(flag.id)}
 														className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 													>
 														<svg
@@ -192,36 +268,13 @@ export const FlagsTable = ({
 														onEdit={onEdit}
 														onDuplicate={onDuplicate}
 														onDelete={onDelete}
+														onAddOverride={onAddOverride}
 														t={t}
 													/>
 												</td>
 											</tr>
 											{expanded.has(flag.id) && (
-												<tr key={`${flag.id}-exp`} className="bg-surf-2">
-													<td colSpan={8} className="px-3.5 pb-3.5 pt-2.5">
-														<p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.5px] text-t-3">
-															{t("admin.featureFlags.expandDetails")}
-														</p>
-														<div className="flex flex-wrap gap-4 text-[12px] text-t-2">
-															<div>
-																<span className="text-t-3">{t("admin.featureFlags.table.category")}: </span>
-																<FlagCategoryBadge category={flag.category} t={t} />
-															</div>
-															{flag.updatedBy && (
-																<div>
-																	<span className="text-t-3">{t("admin.featureFlags.table.updatedBy")}: </span>
-																	<span className="text-acc-t">{flag.updatedBy.name} {flag.updatedBy.surname}</span>
-																</div>
-															)}
-															{flag.description && (
-																<div>
-																	<span className="text-t-3">{t("admin.featureFlags.table.description")}: </span>
-																	{flag.description}
-																</div>
-															)}
-														</div>
-													</td>
-												</tr>
+												<ExpandedRow key={`${flag.id}-exp`} flag={flag} t={t} />
 											)}
 										</>
 									))}

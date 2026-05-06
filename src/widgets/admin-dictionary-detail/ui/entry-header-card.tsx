@@ -21,9 +21,10 @@ const posStyle = (pos: string | null) =>
 interface EntryHeaderCardProps {
 	data: AdminDictEntryCard | undefined;
 	isLoading: boolean;
+	lemmasCount: number | undefined;
 }
 
-export const EntryHeaderCard = ({ data, isLoading }: EntryHeaderCardProps) => {
+export const EntryHeaderCard = ({ data, isLoading, lemmasCount }: EntryHeaderCardProps) => {
 	const { t } = useI18n();
 
 	if (isLoading) {
@@ -90,7 +91,7 @@ export const EntryHeaderCard = ({ data, isLoading }: EntryHeaderCardProps) => {
 				</div>
 				<div className="flex flex-col gap-0.5 border-r border-bd-1 px-4 py-3">
 					<span className="text-[10.5px] text-t-3">{t("admin.dictionaryDetail.lemmas")}</span>
-					<span className="text-[17px] font-semibold leading-none text-t-1">—</span>
+					<span className="text-[17px] font-semibold leading-none text-t-1">{lemmasCount ?? "—"}</span>
 				</div>
 				<div className="flex flex-col gap-0.5 px-4 py-3">
 					<span className="text-[10.5px] text-t-3">{t("admin.dictionaryDetail.morphForms")}</span>

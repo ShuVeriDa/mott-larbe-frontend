@@ -208,12 +208,33 @@ export const AdminSideNav = () => {
 					}
 				/>
 				<NavItem
+					href={`/${lang}/admin/billing`}
+					label={t("admin.nav.subscriptions")}
+					active={isActive("/admin/billing")}
+					icon={
+						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
+							<circle cx="7.5" cy="7.5" r="5.5" />
+							<path d="M7.5 4.5v3l2 1.5" strokeLinecap="round" strokeLinejoin="round" />
+						</svg>
+					}
+				/>
+				<NavItem
 					href={`/${lang}/admin/payments`}
 					label={t("admin.nav.payments")}
 					active={isActive("/admin/payments")}
 					icon={
 						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
 							<path d="M7.5 1.5v12M4 4.5c0-1.1.9-2 2-2h3c1.1 0 2 .9 2 2s-.9 2-2 2H6c-1.1 0-2 .9-2 2s.9 2 2 2h3c1.1 0 2-.9 2-2" strokeLinecap="round" strokeLinejoin="round" />
+						</svg>
+					}
+				/>
+				<NavItem
+					href={`/${lang}/admin/billing/coupons`}
+					label={t("admin.nav.coupons")}
+					active={isActive("/admin/billing/coupons")}
+					icon={
+						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
+							<path d="M1.5 7.5h12M5.5 4.5l-4 3 4 3M9.5 4.5l4 3-4 3" strokeLinecap="round" strokeLinejoin="round" />
 						</svg>
 					}
 				/>

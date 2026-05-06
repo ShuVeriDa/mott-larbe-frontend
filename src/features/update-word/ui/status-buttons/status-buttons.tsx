@@ -37,7 +37,7 @@ export const StatusButtons = ({ wordId, current }: StatusButtonsProps) => {
 						disabled={isPending || active}
 						onClick={(e) => {
 							e.stopPropagation();
-							mutate({ id: wordId, body: { learningLevel: level } });
+							mutate({ id: wordId, body: { learningLevel: level }, previousLevel: current });
 						}}
 						className={cn(
 							"flex-1 rounded-md px-1.5 py-1 text-[10.5px] font-semibold transition-all duration-100",

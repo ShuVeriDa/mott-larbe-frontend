@@ -1,16 +1,18 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
-import type { UnknownWordListItem } from "@/entities/unknown-word";
-import type { useUnknownWordMutations } from "@/entities/unknown-word/model/use-unknown-word-mutations";
+import type { UnknownWordItem } from "@/entities/admin-unknown-word";
+import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word/model/use-admin-unknown-word-mutations";
 import { CountBadge } from "./unknown-words-count-badge";
 import { formatShortDate } from "../lib/format-date";
 
 interface UnknownWordsMobileListProps {
-	words: UnknownWordListItem[];
-	mutations: ReturnType<typeof useUnknownWordMutations>;
+	words: UnknownWordItem[];
+	mutations: ReturnType<typeof useAdminUnknownWordMutations>;
 	isLoading: boolean;
-	onAddToDictionary: (word: UnknownWordListItem) => void;
+	onAddToDictionary: (word: UnknownWordItem) => void;
+	onLinkToLemma: (word: UnknownWordItem) => void;
+	onViewContexts: (word: UnknownWordItem) => void;
 }
 
 export const UnknownWordsMobileList = ({
@@ -18,6 +20,8 @@ export const UnknownWordsMobileList = ({
 	mutations,
 	isLoading,
 	onAddToDictionary,
+	onLinkToLemma,
+	onViewContexts,
 }: UnknownWordsMobileListProps) => {
 	const { t } = useI18n();
 
@@ -56,17 +60,16 @@ export const UnknownWordsMobileList = ({
 						<CountBadge count={word.seenCount} />
 					</div>
 
-					{word.snippet && (
-						<div
-							className="mb-2 line-clamp-2 text-[12px] leading-[1.5] text-t-2"
-							dangerouslySetInnerHTML={{ __html: word.snippet }}
-						/>
+					{word.firstContext?.snippet && (
+						<div className="mb-2 line-clamp-2 text-[12px] leading-relaxed text-t-2">
+							{word.firstContext.snippet}
+						</div>
 					)}
 
 					<div className="flex items-center justify-between gap-2">
 						<div className="text-[11px] text-t-3">
-							{word.texts?.[0] && (
-								<span>«{word.texts[0].title}»</span>
+							{word.firstContext?.textTitle && (
+								<span>«{word.firstContext.textTitle}»</span>
 							)}
 							{word.lastSeen && (
 								<span className="ml-1">· {formatShortDate(word.lastSeen)}</span>
@@ -80,12 +83,29 @@ export const UnknownWordsMobileList = ({
 								title={t("admin.unknownWords.row.addToDictionary")}
 							>
 								<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-									<path
-										d="M8 3v10M3 8h10"
-										stroke="currentColor"
-										strokeWidth="1.4"
-										strokeLinecap="round"
-									/>
+									<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+								</svg>
+							</button>
+							<button
+								type="button"
+								onClick={() => onLinkToLemma(word)}
+								className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
+								title={t("admin.unknownWords.row.linkToLemma")}
+							>
+								<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+									<circle cx="8" cy="8" r="5" stroke="currentColor" strokeWidth="1.4" />
+									<path d="M9 9.5L8 8V5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+								</svg>
+							</button>
+							<button
+								type="button"
+								onClick={() => onViewContexts(word)}
+								className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
+								title={t("admin.unknownWords.row.allContexts")}
+							>
+								<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+									<rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" strokeWidth="1.4" />
+									<path d="M5 6h6M5 9h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
 								</svg>
 							</button>
 							<button

@@ -18,9 +18,10 @@ export const generateMetadata = async (props: {
 		}
 	)?.admin?.meta?.textsEdit;
 
+	const { id } = await props.params;
 	const title = meta?.title ?? "Edit text — Admin | Mott Larbe";
 	const description = meta?.description ?? "Edit library text content and metadata";
-	const path = "/admin/texts";
+	const path = `/admin/texts/${id}/edit`;
 
 	const languages: Record<string, string> = {};
 	for (const locale of LOCALES) {

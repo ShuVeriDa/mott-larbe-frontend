@@ -68,7 +68,7 @@ interface VersionItemProps {
 	onClick: () => void;
 	onRestore: () => void;
 	onRetry: () => void;
-	onDownload: () => void;
+	onDownload: (versionNumber: number) => void;
 }
 
 export const VersionItem = ({ item, isFirst, isLast, isActive, onClick, onRestore, onRetry, onDownload }: VersionItemProps) => {
@@ -234,7 +234,7 @@ export const VersionItem = ({ item, isFirst, isLast, isActive, onClick, onRestor
 					{item.status === "COMPLETED" && (
 						<button
 							type="button"
-							onClick={(e) => { e.stopPropagation(); onDownload(); }}
+							onClick={(e) => { e.stopPropagation(); onDownload(item.version); }}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.download")}
 						>

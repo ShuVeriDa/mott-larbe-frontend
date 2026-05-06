@@ -20,11 +20,8 @@ interface TextHeroProps {
 	progressPercent: number;
 	currentPage: number;
 	totalPages: number;
-	isFavorite: boolean;
 	imageUrl: string | null;
 	t: Translator;
-	onToggleBookmark: () => void;
-	isBookmarking: boolean;
 }
 
 const CEFR_VARIANT: Record<CefrLevel, "acc" | "grn" | "amb" | "pur" | "red"> = {
@@ -48,16 +45,14 @@ export const TextHero = ({
 	progressPercent,
 	currentPage,
 	totalPages,
-	isFavorite,
 	imageUrl,
 	t,
-	onToggleBookmark,
-	isBookmarking,
 }: TextHeroProps) => {
 	const readPage = currentPage > 0 ? currentPage : 1;
 	const readerHref = `/${lang}/reader/${id}/p/${readPage}`;
 	const isCompleted = progressPercent >= 100;
 	const isStarted = progressPercent > 0;
+	const isNotReady = totalPages === 0;
 
 	return (
 		<div className="flex gap-5 mb-6 animate-[fadeUp_0.3s_ease_both] max-sm:gap-3.5">
@@ -93,7 +88,16 @@ export const TextHero = ({
 				</div>
 
 				<div className="flex items-center gap-2 mt-0.5 flex-wrap max-[380px]:gap-1.5">
-					{isCompleted ? (
+					{isNotReady ? (
+						<span
+							className={cn(
+								buttonVariants({ variant: "ghost", size: "lg" }),
+								"cursor-default opacity-50",
+							)}
+						>
+							{t("library.textDetail.cta.notReady")}
+						</span>
+					) : isCompleted ? (
 						<span
 							className={cn(
 								buttonVariants({ variant: "ghost", size: "lg" }),
@@ -113,7 +117,7 @@ export const TextHero = ({
 						</Link>
 					)}
 
-					{isStarted && !isCompleted && (
+					{isStarted && !isCompleted && !isNotReady && (
 						<Link
 							href={readerHref}
 							className={buttonVariants({ variant: "ghost", size: "lg" })}
@@ -124,37 +128,8 @@ export const TextHero = ({
 							})}
 						</Link>
 					)}
-
-					<button
-						type="button"
-						onClick={onToggleBookmark}
-						disabled={isBookmarking}
-						className={cn(
-							"w-8 h-8 rounded-base border border-bd-2 flex items-center justify-center",
-							"text-t-3 hover:text-t-1 hover:bg-surf-2 transition-colors",
-							"disabled:opacity-40 disabled:cursor-default",
-							isFavorite && "text-amb-t border-amb/30 bg-amb-bg",
-						)}
-					>
-						<BookmarkIcon filled={isFavorite} />
-					</button>
 				</div>
 			</div>
 		</div>
 	);
 };
-
-const BookmarkIcon = ({ filled }: { filled: boolean }) => (
-	<svg
-		width="13"
-		height="13"
-		viewBox="0 0 16 16"
-		fill={filled ? "currentColor" : "none"}
-		stroke="currentColor"
-		strokeWidth="1.5"
-		strokeLinecap="round"
-		strokeLinejoin="round"
-	>
-		<path d="M4 2h8a1 1 0 0 1 1 1v11l-5-3-5 3V3a1 1 0 0 1 1-1z" />
-	</svg>
-);

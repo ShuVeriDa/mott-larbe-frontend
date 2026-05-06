@@ -56,7 +56,7 @@ export const DictionaryCreateModal = ({
 			language,
 			partOfSpeech: pos || undefined,
 			translation: translation.trim(),
-			level: level || undefined,
+			level: (level as import("@/shared/types").CefrLevel) || undefined,
 			notes: notes.trim() || undefined,
 		});
 	};

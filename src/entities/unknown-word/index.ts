@@ -19,3 +19,4 @@ export { unknownWordKeys } from "./api/unknown-word-keys";
 export { useUnknownWords } from "./model/use-unknown-words";
 export { useUnknownWordStats } from "./model/use-unknown-word-stats";
 export { useUnknownWordMutations } from "./model/use-unknown-word-mutations";
+export { useUnknownWordContexts } from "./model/use-unknown-word-contexts";

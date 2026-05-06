@@ -6,7 +6,7 @@ interface DictionaryPaginationProps {
 	total: number;
 	limit: number;
 	onChange: (page: number) => void;
-	t: (key: string, params?: Record<string, unknown>) => string;
+	t: (key: string, vars?: Record<string, string | number>) => string;
 }
 
 export const DictionaryPagination = ({

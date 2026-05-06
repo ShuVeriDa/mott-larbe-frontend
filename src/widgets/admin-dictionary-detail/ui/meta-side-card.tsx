@@ -82,7 +82,7 @@ export const MetaSideCard = ({ data, isLoading, onOpenModal }: MetaSideCardProps
 				</span>
 				<button
 					className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
-					onClick={() => onOpenModal({ type: "editSense" as never })}
+					onClick={() => onOpenModal({ type: "editMeta" })}
 					title={t("admin.dictionaryDetail.edit")}
 				>
 					<IconEdit />

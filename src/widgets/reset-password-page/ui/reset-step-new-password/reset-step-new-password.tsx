@@ -13,18 +13,18 @@ import { Typography } from "@/shared/ui/typography";
 import { PasswordField } from "./password-field";
 import { PasswordRequirementsList } from "./password-requirements-list";
 import { PasswordStrengthBar } from "./password-strength-bar";
+import { TokenValidityBadge } from "./token-validity-badge";
 
 interface ResetStepNewPasswordProps {
 	isPending: boolean;
 	error: ResetErrorReason | null;
+	expiresAt: string | undefined;
+	onExpire: () => void;
 	onSubmit: (password: string) => void | Promise<void>;
 }
 
-const ERROR_KEY_MAP: Record<ResetErrorReason, string> = {
+const ERROR_KEY_MAP: Partial<Record<ResetErrorReason, string>> = {
 	weak_password: "auth.resetPassword.step3.errors.weakPassword",
-	token_invalid: "auth.resetPassword.step3.errors.tokenInvalid",
-	token_expired: "auth.resetPassword.step3.errors.tokenExpired",
-	token_used: "auth.resetPassword.step3.errors.tokenUsed",
 	account_unavailable: "auth.resetPassword.step3.errors.accountUnavailable",
 	generic: "auth.resetPassword.step3.errors.generic",
 };
@@ -32,6 +32,8 @@ const ERROR_KEY_MAP: Record<ResetErrorReason, string> = {
 export const ResetStepNewPassword = ({
 	isPending,
 	error,
+	expiresAt,
+	onExpire,
 	onSubmit,
 }: ResetStepNewPasswordProps) => {
 	const { t } = useI18n();
@@ -48,18 +50,20 @@ export const ResetStepNewPassword = ({
 	const showMismatch = confirm.length > 0 && password !== confirm;
 	const canSubmit = reqsMet && matches && !isPending;
 
-	const handleSubmit = (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
+	const handleSubmit = (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
 		e.preventDefault();
 		if (!canSubmit) return;
 		void onSubmit(password);
 	};
 
-	const apiErrorMessage = error ? t(ERROR_KEY_MAP[error]) : null;
+	const errorKey = error ? ERROR_KEY_MAP[error] : undefined;
+	const apiErrorMessage = errorKey ? t(errorKey) : null;
 
 	return (
 		<section aria-labelledby="reset-step-new-password-title">
+			{expiresAt && (
+				<TokenValidityBadge expiresAt={expiresAt} onExpire={onExpire} />
+			)}
 			<div className="mb-[18px] inline-flex h-[52px] w-[52px] items-center justify-center rounded-[13px] bg-acc-bg text-acc">
 				<Shield size={24} strokeWidth={1.7} />
 			</div>

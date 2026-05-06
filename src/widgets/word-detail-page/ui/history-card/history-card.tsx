@@ -71,9 +71,9 @@ export const HistoryCard = ({ logs }: HistoryCardProps) => {
 							>
 								{!correct
 									? t("vocabulary.wordDetail.history.reset")
-									: delta !== null && delta >= 0
+									: delta != null && delta >= 0
 										? t("vocabulary.wordDetail.history.deltaDays", { n: delta })
-										: delta !== null
+										: delta != null
 											? t("vocabulary.wordDetail.history.deltaDaysNeg", {
 													n: delta,
 												})

@@ -10,6 +10,14 @@ import {
 	useLibraryTextDetail,
 	useLibraryTextRelated,
 } from "@/entities/library-text";
+import type { LibraryTextDetail } from "@/entities/library-text";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/shared/ui/dropdown-menu";
 import { TextHero } from "./text-hero";
 import { TextDescription } from "./text-description";
 import { TextProgressCard } from "./text-progress-card";
@@ -17,6 +25,7 @@ import { TextVocabCard } from "./text-vocab-card";
 import { TextInfoCard } from "./text-info-card";
 import { TextPagesCard } from "./text-pages-card";
 import { TextRelated } from "./text-related";
+import { TextReportDialog } from "./text-report-dialog";
 
 interface LibraryTextDetailPageProps {
 	id: string;
@@ -30,22 +39,41 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 	const related = useLibraryTextRelated(id);
 
 	const [copied, setCopied] = useState(false);
+	const [reportOpen, setReportOpen] = useState(false);
 
 	const bookmarkMutation = useMutation({
 		mutationFn: () => libraryTextApi.toggleBookmark(id),
-		onSuccess: () => {
+		onMutate: async () => {
+			await qc.cancelQueries({ queryKey: libraryTextKeys.detail(id) });
+			const prev = qc.getQueryData<LibraryTextDetail>(libraryTextKeys.detail(id));
+			qc.setQueryData<LibraryTextDetail>(libraryTextKeys.detail(id), (old) =>
+				old ? { ...old, isFavorite: !old.isFavorite } : old,
+			);
+			return { prev };
+		},
+		onError: (_err, _vars, ctx) => {
+			if (ctx?.prev) {
+				qc.setQueryData(libraryTextKeys.detail(id), ctx.prev);
+			}
+		},
+		onSettled: () => {
 			qc.invalidateQueries({ queryKey: libraryTextKeys.detail(id) });
 		},
 	});
 
 	const handleShare = useCallback(() => {
-		navigator.clipboard
-			.writeText(window.location.href)
-			.then(() => {
-				setCopied(true);
-				setTimeout(() => setCopied(false), 1800);
-			})
-			.catch(() => {});
+		const url = window.location.href;
+		if (typeof navigator.share === "function") {
+			navigator.share({ url }).catch(() => {});
+		} else {
+			navigator.clipboard
+				.writeText(url)
+				.then(() => {
+					setCopied(true);
+					setTimeout(() => setCopied(false), 1800);
+				})
+				.catch(() => {});
+		}
 	}, []);
 
 	if (detail.isPending) return <DetailSkeleton />;
@@ -69,7 +97,7 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 
 	return (
 		<div className="flex flex-1 flex-col overflow-hidden">
-			{/* Topbar area */}
+			{/* Topbar */}
 			<div className="h-12 bg-panel border-b border-bd-1 flex items-center gap-2.5 px-5 shrink-0 max-sm:h-11 max-sm:px-3.5">
 				<Link
 					href={`/${lang}/texts`}
@@ -109,11 +137,29 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 						className="w-7 h-7 rounded-base border border-bd-2 flex items-center justify-center text-t-2 hover:bg-surf-2 transition-colors"
 					>
 						{copied ? (
-							<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-								<polyline points="2,8 6,12 14,4" strokeLinecap="round" strokeLinejoin="round" />
+							<svg
+								width="13"
+								height="13"
+								viewBox="0 0 16 16"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="1.5"
+							>
+								<polyline
+									points="2,8 6,12 14,4"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								/>
 							</svg>
 						) : (
-							<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+							<svg
+								width="13"
+								height="13"
+								viewBox="0 0 16 16"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="1.5"
+							>
 								<circle cx="12" cy="4" r="1.5" />
 								<circle cx="4" cy="8" r="1.5" />
 								<circle cx="12" cy="12" r="1.5" />
@@ -121,6 +167,46 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 							</svg>
 						)}
 					</button>
+
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<button
+								type="button"
+								title={t("library.textDetail.more")}
+								className="w-7 h-7 rounded-base border border-bd-2 flex items-center justify-center text-t-2 hover:bg-surf-2 transition-colors data-[state=open]:bg-surf-2"
+							>
+								<svg
+									width="13"
+									height="13"
+									viewBox="0 0 16 16"
+									fill="currentColor"
+								>
+									<circle cx="8" cy="3" r="1.3" />
+									<circle cx="8" cy="8" r="1.3" />
+									<circle cx="8" cy="13" r="1.3" />
+								</svg>
+							</button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end" className="min-w-[168px]">
+							<DropdownMenuItem
+								onSelect={() => bookmarkMutation.mutate()}
+								disabled={bookmarkMutation.isPending}
+							>
+								<BookmarkMenuIcon filled={text.isFavorite} />
+								{text.isFavorite
+									? t("library.textDetail.moreMenu.unbookmark")
+									: t("library.textDetail.moreMenu.bookmark")}
+							</DropdownMenuItem>
+							<DropdownMenuSeparator />
+							<DropdownMenuItem
+								onSelect={() => setReportOpen(true)}
+								variant="destructive"
+							>
+								<FlagIcon />
+								{t("library.textDetail.moreMenu.report")}
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 			</div>
 
@@ -139,11 +225,8 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 						progressPercent={text.progressPercent}
 						currentPage={text.currentPage}
 						totalPages={text.totalPages}
-						isFavorite={text.isFavorite}
 						imageUrl={text.imageUrl}
 						t={t}
-						onToggleBookmark={() => bookmarkMutation.mutate()}
-						isBookmarking={bookmarkMutation.isPending}
 					/>
 
 					<TextDescription description={text.description} t={t} />
@@ -168,12 +251,14 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 							lang={lang}
 							t={t}
 						/>
-						<TextPagesCard
-							pages={text.pages}
-							currentPage={text.currentPage}
-							progressPercent={text.progressPercent}
-							t={t}
-						/>
+						{text.totalPages > 0 && (
+							<TextPagesCard
+								pages={text.pages}
+								currentPage={text.currentPage}
+								progressPercent={text.progressPercent}
+								t={t}
+							/>
+						)}
 					</div>
 
 					{related.isSuccess && related.data.length > 0 && (
@@ -181,9 +266,46 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 					)}
 				</div>
 			</div>
+
+			<TextReportDialog
+				id={id}
+				open={reportOpen}
+				onOpenChange={setReportOpen}
+				t={t}
+			/>
 		</div>
 	);
 };
+
+const BookmarkMenuIcon = ({ filled }: { filled: boolean }) => (
+	<svg
+		width="13"
+		height="13"
+		viewBox="0 0 16 16"
+		fill={filled ? "currentColor" : "none"}
+		stroke="currentColor"
+		strokeWidth="1.5"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+	>
+		<path d="M4 2h8a1 1 0 0 1 1 1v11l-5-3-5 3V3a1 1 0 0 1 1-1z" />
+	</svg>
+);
+
+const FlagIcon = () => (
+	<svg
+		width="13"
+		height="13"
+		viewBox="0 0 16 16"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="1.5"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+	>
+		<path d="M3 2v12M3 2h8l-2 3.5L11 9H3" />
+	</svg>
+);
 
 const DetailSkeleton = () => (
 	<div className="flex flex-1 flex-col overflow-hidden">

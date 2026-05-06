@@ -6,6 +6,7 @@ import { useI18n } from "@/shared/lib/i18n";
 interface TextEditTopbarProps {
 	textId: string;
 	textTitle: string;
+	textStatus: string;
 	isUnsaved: boolean;
 	isSaving: boolean;
 	onSaveDraft: () => void;
@@ -15,6 +16,7 @@ interface TextEditTopbarProps {
 export const TextEditTopbar = ({
 	textId,
 	textTitle,
+	textStatus,
 	isUnsaved,
 	isSaving,
 	onSaveDraft,
@@ -58,6 +60,22 @@ export const TextEditTopbar = ({
 
 			{/* Right side */}
 			<div className="flex shrink-0 items-center gap-1.5">
+				{/* Preview button — only for published texts */}
+				{textStatus === "published" && (
+					<a
+						href={`/${lang}/texts/${textId}`}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-3 text-xs text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 max-[600px]:hidden"
+						aria-label={t("admin.texts.editPage.preview")}
+					>
+						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+							<path d="M8 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1V9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+							<path d="M10 2h4v4M14 2L9 7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+						</svg>
+						{t("admin.texts.editPage.preview")}
+					</a>
+				)}
 				{/* Unsaved indicator */}
 				<div className="flex items-center gap-1.5 max-[600px]:hidden">
 					{isUnsaved && (

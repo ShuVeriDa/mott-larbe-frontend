@@ -56,6 +56,8 @@ export const WordDetailPage = ({ id }: WordDetailPageProps) => {
 						<ContextsSection
 							contexts={data.lemma?.wordContexts ?? []}
 							word={data.word}
+							morphForms={data.lemma?.morphForms.map((f) => f.form) ?? []}
+							lemmaId={data.lemma?.id}
 							lang={lang}
 						/>
 						<RelatedSection related={data.related} lang={lang} />

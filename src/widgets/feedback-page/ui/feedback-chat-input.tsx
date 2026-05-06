@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Translator = (key: string) => string;
 
@@ -18,7 +18,12 @@ export const FeedbackChatInput = ({
 	onSend,
 }: FeedbackChatInputProps) => {
 	const [value, setValue] = useState("");
+	const [isReopening, setIsReopening] = useState(false);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+	useEffect(() => {
+		if (!isClosed) setIsReopening(false);
+	}, [isClosed]);
 
 	const autoResize = () => {
 		const el = textareaRef.current;
@@ -44,18 +49,23 @@ export const FeedbackChatInput = ({
 		}
 	};
 
-	if (isClosed) {
+	if (isClosed && !isReopening) {
 		return (
-			<div className="border-t border-bd-1 px-4 pb-3 pt-3.5">
-				<p className="text-center text-[12px] text-t-3">
-					{t("feedback.chat.closed")}
-				</p>
+			<div className="flex flex-col items-center gap-2 border-t border-bd-1 px-4 pb-3.5 pt-3">
+				<p className="text-[12px] text-t-3">{t("feedback.chat.closed")}</p>
+				<button
+					type="button"
+					onClick={() => setIsReopening(true)}
+					className="flex h-[28px] items-center rounded-[8px] border border-acc px-3 text-[12px] font-medium text-acc transition-colors hover:bg-acc-bg"
+				>
+					{t("feedback.chat.reopen")}
+				</button>
 			</div>
 		);
 	}
 
 	return (
-		<div className="shrink-0 border-t border-bd-1 bg-surf px-4 pb-[13px] pt-2.5 transition-colors max-sm:pb-[calc(12px+env(safe-area-inset-bottom,0px))]">
+		<div className="shrink-0 border-t border-bd-1 bg-surf px-4 pb-[13px] pt-2.5 transition-colors max-sm:pb-[calc(12px+env(safe-area-inset-bottom,0))]">
 			<div className="flex items-end gap-2 rounded-xl border border-bd-2 bg-surf-2 px-2.5 py-2 focus-within:border-acc">
 				<textarea
 					ref={textareaRef}

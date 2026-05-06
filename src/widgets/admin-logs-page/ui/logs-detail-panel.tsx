@@ -146,19 +146,22 @@ export const LogsDetailPanel = ({
 								</>
 							)}
 
-							<Divider />
-
-							<Section label={t("admin.logs.detail.context")}>
-								{Object.entries(detail.context).map(([k, v]) => (
-									<Row key={k} label={k}>
-										<span className="break-all font-mono text-[11.5px]">
-											{typeof v === "object"
-												? JSON.stringify(v)
-												: String(v ?? "—")}
-										</span>
-									</Row>
-								))}
-							</Section>
+							{Object.keys(detail.context).length > 0 && (
+								<>
+									<Divider />
+									<Section label={t("admin.logs.detail.context")}>
+										{Object.entries(detail.context).map(([k, v]) => (
+											<Row key={k} label={k}>
+												<span className="break-all font-mono text-[11.5px]">
+													{typeof v === "object"
+														? JSON.stringify(v)
+														: String(v ?? "—")}
+												</span>
+											</Row>
+										))}
+									</Section>
+								</>
+							)}
 
 							<Divider />
 

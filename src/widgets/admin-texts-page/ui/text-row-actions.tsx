@@ -28,9 +28,13 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 	const isRunning = text.processingStatus === "RUNNING";
 	const isError = text.processingStatus === "ERROR";
 	const notProcessed = text.processingStatus === "IDLE" && text.tokenCount === 0;
+	const hasVersions = !notProcessed;
 
 	const btnClass =
 		"flex size-7 cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1 [&_svg]:size-[14px]";
+
+	const dropItemClass =
+		"flex w-full cursor-pointer items-center gap-2 rounded-[6px] px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2";
 
 	return (
 		<div className="flex items-center gap-1">
@@ -51,8 +55,8 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 				</svg>
 			</Link>
 
-			{/* Tokenize — shown if not yet processed or has error */}
-			{(notProcessed || isError) && !isRunning && (
+			{/* Tokenize — shown if not yet processed */}
+			{notProcessed && !isRunning && (
 				<button
 					type="button"
 					onClick={() => mutations.tokenize.mutate(text.id)}
@@ -73,7 +77,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 			)}
 
 			{/* Retry — shown for errors */}
-			{isError && (
+			{isError && !isRunning && (
 				<button
 					type="button"
 					onClick={() => mutations.tokenize.mutate(text.id)}
@@ -100,7 +104,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 			)}
 
 			{/* Versions link — shown for processed texts */}
-			{!notProcessed && !isError && (
+			{hasVersions && !isError && (
 				<Link
 					href={`/${lang}/admin/texts/${text.id}/versions`}
 					className={btnClass}
@@ -128,10 +132,10 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 				</button>
 
 				{open && (
-					<div className="absolute right-0 top-[calc(100%+4px)] z-50 min-w-[180px] rounded-[10px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08),0_2px_4px_rgba(0,0,0,0.04)]">
+					<div className="absolute right-0 top-[calc(100%+4px)] z-50 min-w-[190px] rounded-[10px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08),0_2px_4px_rgba(0,0,0,0.04)]">
 						<Link
 							href={`/${lang}/admin/texts/${text.id}/versions`}
-							className="flex w-full items-center gap-2 rounded-[6px] px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
+							className={dropItemClass}
 							onClick={() => setOpen(false)}
 						>
 							{t("admin.texts.actions.versions")}
@@ -140,7 +144,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 						<button
 							type="button"
 							onClick={() => { mutations.tokenize.mutate(text.id); setOpen(false); }}
-							className="flex w-full cursor-pointer items-center gap-2 rounded-[6px] px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
+							className={dropItemClass}
 						>
 							{t("admin.texts.actions.tokenize")}
 						</button>
@@ -151,7 +155,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 							<button
 								type="button"
 								onClick={() => { mutations.unpublish.mutate(text.id); setOpen(false); }}
-								className="flex w-full cursor-pointer items-center gap-2 rounded-[6px] px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
+								className={dropItemClass}
 							>
 								{t("admin.texts.actions.unpublish")}
 							</button>
@@ -159,11 +163,19 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 							<button
 								type="button"
 								onClick={() => { mutations.publish.mutate(text.id); setOpen(false); }}
-								className="flex w-full cursor-pointer items-center gap-2 rounded-[6px] px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
+								className={dropItemClass}
 							>
 								{t("admin.texts.actions.publish")}
 							</button>
 						)}
+
+						<Link
+							href={`/${lang}/admin/texts/${text.id}/unknown-words`}
+							className={dropItemClass}
+							onClick={() => setOpen(false)}
+						>
+							{t("admin.texts.actions.unknownWords")}
+						</Link>
 
 						<div className="my-[3px] h-px bg-bd-1" />
 

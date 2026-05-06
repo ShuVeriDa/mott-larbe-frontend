@@ -140,6 +140,7 @@ export interface FetchTokenizationTextsQuery {
 	tab?: TokenizationTab;
 	search?: string;
 	level?: CefrLevel | "";
+	status?: TokenStatus | "";
 	sort?: TokenSort;
 	page?: number;
 	limit?: number;

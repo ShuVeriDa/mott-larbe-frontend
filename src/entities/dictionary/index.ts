@@ -61,12 +61,14 @@ export type {
 	CreateAdminMorphFormDto,
 	UpdateAdminMorphFormDto,
 	AddAdminLemmaDto,
+	AdminImportResult,
 } from "./api";
 export {
 	useDictionaryDetail,
 	useDictionaryList,
 	useDictionaryNeighbors,
 	useDictionaryStats,
+	useDictionaryWordContexts,
 	useDueWords,
 	useAdminDictionaryDetail,
 	useAdminDictionaryNavigation,

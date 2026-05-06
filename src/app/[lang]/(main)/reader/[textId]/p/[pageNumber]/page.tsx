@@ -6,6 +6,7 @@ import {
 	getDictionary,
 	hasLocale,
 } from "@/i18n/locales";
+import { textApi } from "@/entities/text";
 import { ReaderPage } from "@/widgets/reader-page";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
@@ -37,8 +38,21 @@ export const generateMetadata = async ({
 	const meta = dict.reader.meta;
 	const path = `/reader/${textId}/p/${page}`;
 
-	const title = meta.title.replace("{page}", String(page));
-	const description = meta.description.replace("{page}", String(page));
+	let textTitle: string | null = null;
+	let imageUrl: string | null = null;
+	try {
+		const textData = await textApi.getPage(textId, page);
+		textTitle = textData.title;
+		imageUrl = textData.imageUrl;
+	} catch {
+		// text not found or network error — fall back to generic title
+	}
+
+	const rawTitle = meta.title.replace("{page}", String(page));
+	const title = textTitle
+		? rawTitle.replace("{textTitle}", textTitle)
+		: rawTitle.replace("{textTitle} · ", "");
+	const description = meta.description;
 
 	const languages: Record<string, string> = {};
 	for (const locale of LOCALES) {
@@ -60,6 +74,7 @@ export const generateMetadata = async ({
 			description,
 			locale: lang,
 			siteName: "Mott Larbe",
+			...(imageUrl && { images: [{ url: imageUrl }] }),
 		},
 		twitter: {
 			card: "summary",

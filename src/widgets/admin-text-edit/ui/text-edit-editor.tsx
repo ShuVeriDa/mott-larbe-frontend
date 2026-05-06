@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
+
+const CHECHEN_CHARS = ["Ӏ", "гӀ", "ГӀ", "кх", "КХ", "нх", "НХ", "хь", "Хь", "цх", "ЦХ", "чх", "ЧХ"];
 import {
 	countCharsInHtml,
 	countParagraphsInHtml,
@@ -17,13 +19,17 @@ interface EditorBodyProps {
 	onContentChange: (html: string) => void;
 	onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
 	placeholder: string;
+	bodyRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-const EditorBody = ({ initialHtml, onContentChange, onKeyDown, placeholder }: EditorBodyProps) => {
+const EditorBody = ({ initialHtml, onContentChange, onKeyDown, placeholder, bodyRef }: EditorBodyProps) => {
 	const ref = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (ref.current) ref.current.innerHTML = initialHtml || "";
+		if (ref.current) {
+			ref.current.innerHTML = initialHtml || "";
+			if (bodyRef) bodyRef.current = ref.current;
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -89,6 +95,49 @@ interface TextEditEditorProps {
 	onDismissRetokenize: () => void;
 }
 
+// ─── Chechen special chars popup ────────────────────────────────────────────
+
+const CharsPopup = ({ onInsert }: { onInsert: (char: string) => void }) => {
+	const [open, setOpen] = useState(false);
+	const ref = useRef<HTMLDivElement>(null);
+	const { t } = useI18n();
+
+	useEffect(() => {
+		if (!open) return;
+		const handleClick = (e: MouseEvent) => {
+			if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+		};
+		document.addEventListener("mousedown", handleClick);
+		return () => document.removeEventListener("mousedown", handleClick);
+	}, [open]);
+
+	return (
+		<div ref={ref} className="relative">
+			<TbBtn title={t("admin.texts.editPage.specialChars")} onExec={() => setOpen((v) => !v)}>
+				<span className="text-[11px] font-semibold leading-none">Ӏ</span>
+			</TbBtn>
+			{open && (
+				<div className="absolute left-0 top-full z-30 mt-1 flex flex-wrap gap-1 rounded-[8px] border border-bd-2 bg-bg p-2 shadow-md" style={{ width: "192px" }}>
+					{CHECHEN_CHARS.map((ch) => (
+						<button
+							key={ch}
+							type="button"
+							onMouseDown={(e) => {
+								e.preventDefault();
+								onInsert(ch);
+								setOpen(false);
+							}}
+							className="flex h-7 min-w-[40px] items-center justify-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[12px] font-medium text-t-1 transition-colors hover:border-acc hover:bg-acc-muted hover:text-acc-strong"
+						>
+							{ch}
+						</button>
+					))}
+				</div>
+			)}
+		</div>
+	);
+};
+
 export const TextEditEditor = ({
 	title,
 	pages,
@@ -108,7 +157,15 @@ export const TextEditEditor = ({
 }: TextEditEditorProps) => {
 	const { t, lang } = useI18n();
 	const titleRef = useRef<HTMLTextAreaElement>(null);
+	const editorBodyRef = useRef<HTMLDivElement | null>(null);
 	const [stats, setStats] = useState({ words: 0, chars: 0, paragraphs: 0 });
+
+	const insertChar = useCallback((char: string) => {
+		const el = editorBodyRef.current;
+		if (!el) return;
+		el.focus();
+		document.execCommand("insertText", false, char);
+	}, []);
 
 	const handleContentChange = useCallback(
 		(html: string) => {
@@ -326,6 +383,10 @@ export const TextEditEditor = ({
 					</TbBtn>
 				</div>
 
+				<div className="mx-1 h-4 w-px shrink-0 bg-bd-2" />
+
+				<CharsPopup onInsert={insertChar} />
+
 				<div className="ml-auto flex shrink-0 items-center gap-1.5 pl-2 text-[10px] text-t-4 max-md:hidden">
 					<span className="rounded-[3px] bg-surf-3 px-1 py-px text-t-3">Ctrl+S</span>
 					<span>—</span>
@@ -386,6 +447,7 @@ export const TextEditEditor = ({
 					onContentChange={handleContentChange}
 					onKeyDown={handleEditorKeyDown}
 					placeholder={t("admin.texts.createPage.startTyping")}
+					bodyRef={editorBodyRef}
 				/>
 			</div>
 

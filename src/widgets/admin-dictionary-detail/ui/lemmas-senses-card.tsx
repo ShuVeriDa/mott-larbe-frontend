@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AdminDictEntryCard, AdminDictRelatedLemma, AdminDictSense, AdminDictExample } from "@/entities/dictionary";
@@ -136,6 +136,7 @@ interface LemmasSensesCardProps {
 	data: AdminDictEntryCard | undefined;
 	relatedLemmas: AdminDictRelatedLemma[] | undefined;
 	currentLemmaId: string;
+	lang: string;
 	isLoading: boolean;
 	onOpenModal: (m: DictModal) => void;
 	onDeleteSense: (senseId: string) => void;
@@ -146,13 +147,14 @@ export const LemmasSensesCard = ({
 	data,
 	relatedLemmas,
 	currentLemmaId,
+	lang,
 	isLoading,
 	onOpenModal,
 	onDeleteSense,
 	onDeleteExample,
 }: LemmasSensesCardProps) => {
 	const { t } = useI18n();
-	const [activeTab, setActiveTab] = useState(0);
+	const router = useRouter();
 
 	if (isLoading) {
 		return (
@@ -198,16 +200,18 @@ export const LemmasSensesCard = ({
 			{tabs && (
 				<div className="mx-4 mb-0 mt-0">
 					<div className="flex w-fit gap-0 rounded-[9px] bg-surf-2 p-0.5">
-						{tabs.map((lemma, i) => (
+						{tabs.map((lemma) => (
 							<button
 								key={lemma.id}
 								className={cn(
 									"rounded-[6px] px-3.5 py-1 font-display text-[12.5px] font-medium transition-colors",
-									activeTab === i
+									lemma.isCurrent
 										? "bg-surf text-t-1 shadow-[0_1px_3px_rgba(0,0,0,0.07)]"
 										: "bg-transparent text-t-3 hover:text-t-2",
 								)}
-								onClick={() => setActiveTab(i)}
+								onClick={() => {
+									if (!lemma.isCurrent) router.push(`/${lang}/admin/dictionary/${lemma.id}`);
+								}}
 							>
 								{lemma.baseForm}{" "}
 								{lemma.partOfSpeech && (

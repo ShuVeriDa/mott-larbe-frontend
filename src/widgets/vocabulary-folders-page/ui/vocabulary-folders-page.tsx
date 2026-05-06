@@ -1,22 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
-import { useFoldersSummary, type Folder } from "@/entities/folder";
+import { useFolders, useFoldersSummary, type Folder } from "@/entities/folder";
 import { CreateFolderModal } from "@/features/create-folder";
 import { DeleteFolderModal } from "@/features/delete-folder";
 import { EditFolderModal } from "@/features/update-folder";
+import { PremiumUpsellModal } from "@/shared/ui/premium-upsell-modal";
 import { FoldersGrid } from "./folders-grid";
 import { FoldersSummary } from "./folders-summary";
 import { FoldersTopbar } from "./folders-topbar";
 import { UncategorizedSection } from "./uncategorized-section";
 
+const is403 = (error: unknown): boolean => {
+	if (!error || typeof error !== "object") return false;
+	const e = error as { response?: { status?: number } };
+	return e.response?.status === 403;
+};
+
 export const VocabularyFoldersPage = () => {
 	const { t } = useI18n();
 	const { data: summary } = useFoldersSummary();
+	const { error: foldersError } = useFolders();
+
 	const [createOpen, setCreateOpen] = useState(false);
 	const [editFolder, setEditFolder] = useState<Folder | null>(null);
 	const [deleteFolder, setDeleteFolder] = useState<Folder | null>(null);
+	const [upsellOpen, setUpsellOpen] = useState(false);
+
+	useEffect(() => {
+		if (is403(foldersError)) setUpsellOpen(true);
+	}, [foldersError]);
+
+	const showUpsell = () => setUpsellOpen(true);
 
 	const max = summary?.maxFolders ?? -1;
 	const used = summary?.foldersCount ?? 0;
@@ -76,6 +92,7 @@ export const VocabularyFoldersPage = () => {
 						onEdit={(f) => setEditFolder(f)}
 						onDelete={(f) => setDeleteFolder(f)}
 						createDisabled={folderCreationDisabled || limitReached}
+						onForbidden={showUpsell}
 					/>
 				</section>
 
@@ -92,6 +109,7 @@ export const VocabularyFoldersPage = () => {
 			<CreateFolderModal
 				open={createOpen}
 				onClose={() => setCreateOpen(false)}
+				onForbidden={showUpsell}
 			/>
 			<EditFolderModal
 				open={!!editFolder}
@@ -102,6 +120,10 @@ export const VocabularyFoldersPage = () => {
 				open={!!deleteFolder}
 				folder={deleteFolder}
 				onClose={() => setDeleteFolder(null)}
+			/>
+			<PremiumUpsellModal
+				open={upsellOpen}
+				onClose={() => setUpsellOpen(false)}
 			/>
 		</>
 	);

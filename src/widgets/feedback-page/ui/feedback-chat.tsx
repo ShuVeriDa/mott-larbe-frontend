@@ -54,7 +54,9 @@ export const FeedbackChat = ({
 					<FeedbackChatHeader thread={thread} t={t} onBack={onBack} />
 
 					<FeedbackMessages
-						messages={thread.messages}
+						messages={thread.messages.filter(
+							(m) => m.messageType === "PUBLIC_REPLY",
+						)}
 						userInitials={userInitials}
 						t={t}
 					/>

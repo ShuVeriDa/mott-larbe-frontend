@@ -67,6 +67,11 @@ export interface PublishResult {
 	published: boolean;
 }
 
+export interface ProcessTextDto {
+	useNormalization?: boolean;
+	useMorphAnalysis?: boolean;
+}
+
 export interface ProcessResult {
 	textId: string;
 	started: boolean;
@@ -119,6 +124,8 @@ export interface TextPageDetail {
 	title: string | null;
 	contentRich: { type: string; content?: unknown[] };
 	contentRaw: string;
+	tokenCount: number;
+	wordCount: number;
 }
 
 export interface AdminTextDetail {
@@ -228,4 +235,42 @@ export interface RestoreVersionResult {
 export interface RetryVersionResult {
 	textId: string;
 	started: boolean;
+}
+
+export interface BulkImportResultItem {
+	index: number;
+	status: "ok" | "error";
+	textId?: string;
+	title?: string;
+	error?: string;
+}
+
+export interface BulkImportResult {
+	total: number;
+	created: number;
+	failed: number;
+	items: BulkImportResultItem[];
+}
+
+export interface UnknownWordItem {
+	word: string;
+	count: number;
+}
+
+export interface AdminTextUnknownWords {
+	versionId: string;
+	version: number;
+	items: UnknownWordItem[];
+	total: number;
+}
+
+export interface SseProgressEvent {
+	id: string;
+	version: number;
+	status: ProcessingStatus | "NONE";
+	progress: number;
+	errorMessage: string | null;
+	durationMs: number | null;
+	isCurrent: boolean;
+	updatedAt: string;
 }

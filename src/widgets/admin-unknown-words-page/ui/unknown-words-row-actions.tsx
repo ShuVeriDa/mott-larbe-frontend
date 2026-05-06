@@ -2,19 +2,23 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useI18n } from "@/shared/lib/i18n";
-import type { UnknownWordListItem } from "@/entities/unknown-word";
-import type { useUnknownWordMutations } from "@/entities/unknown-word/model/use-unknown-word-mutations";
+import type { UnknownWordItem } from "@/entities/admin-unknown-word";
+import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word/model/use-admin-unknown-word-mutations";
 
 interface RowActionsProps {
-	word: UnknownWordListItem;
-	mutations: ReturnType<typeof useUnknownWordMutations>;
+	word: UnknownWordItem;
+	mutations: ReturnType<typeof useAdminUnknownWordMutations>;
 	onAddToDictionary: () => void;
+	onLinkToLemma: () => void;
+	onViewContexts: () => void;
 }
 
 export const UnknownWordRowActions = ({
 	word,
 	mutations,
 	onAddToDictionary,
+	onLinkToLemma,
+	onViewContexts,
 }: RowActionsProps) => {
 	const { t } = useI18n();
 	const [open, setOpen] = useState(false);
@@ -22,9 +26,7 @@ export const UnknownWordRowActions = ({
 
 	useEffect(() => {
 		const handler = (e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) {
-				setOpen(false);
-			}
+			if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
 		};
 		document.addEventListener("mousedown", handler);
 		return () => document.removeEventListener("mousedown", handler);
@@ -45,12 +47,7 @@ export const UnknownWordRowActions = ({
 				title={t("admin.unknownWords.row.addToDictionary")}
 			>
 				<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-					<path
-						d="M8 3v10M3 8h10"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-					/>
+					<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
 				</svg>
 			</button>
 
@@ -75,10 +72,7 @@ export const UnknownWordRowActions = ({
 					<div className="absolute right-0 top-[calc(100%+4px)] z-20 min-w-[190px] rounded-[9px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
 						<button
 							type="button"
-							onClick={() => {
-								setOpen(false);
-								onAddToDictionary();
-							}}
+							onClick={() => { setOpen(false); onAddToDictionary(); }}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
 							<svg className="size-3.5 shrink-0 text-t-3" viewBox="0 0 16 16" fill="none">
@@ -88,7 +82,7 @@ export const UnknownWordRowActions = ({
 						</button>
 						<button
 							type="button"
-							onClick={() => setOpen(false)}
+							onClick={() => { setOpen(false); onLinkToLemma(); }}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
 							<svg className="size-3.5 shrink-0 text-t-3" viewBox="0 0 16 16" fill="none">
@@ -99,7 +93,7 @@ export const UnknownWordRowActions = ({
 						</button>
 						<button
 							type="button"
-							onClick={() => setOpen(false)}
+							onClick={() => { setOpen(false); onViewContexts(); }}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
 							<svg className="size-3.5 shrink-0 text-t-3" viewBox="0 0 16 16" fill="none">

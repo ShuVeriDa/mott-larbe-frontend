@@ -12,10 +12,17 @@ const groupByDate = (versions: TextVersionListItem[], locale: string) => {
 	const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
 	const yesterday = today - 86400000;
 
-	const groups: { label: string; items: TextVersionListItem[] }[] = [];
+	if (versions.length === 0) return [];
+
+	// The earliest version (lowest version number) gets the special "creation" group
+	const earliestVersion = versions.reduce((a, b) => a.version < b.version ? a : b);
+
+	const groups: { label: string; items: TextVersionListItem[]; isCreation?: boolean }[] = [];
 	const seen = new Map<string, number>();
 
 	for (const v of versions) {
+		if (v.id === earliestVersion.id) continue; // handled separately at the end
+
 		const d = new Date(v.createdAt);
 		const dayTs = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
 
@@ -30,6 +37,10 @@ const groupByDate = (versions: TextVersionListItem[], locale: string) => {
 		}
 		groups[seen.get(label)!].items.push(v);
 	}
+
+	// Append creation group last
+	groups.push({ label: "__creation__", items: [earliestVersion], isCreation: true });
+
 	return groups;
 };
 
@@ -40,7 +51,7 @@ interface VersionsTimelineProps {
 	onVersionClick: (id: string) => void;
 	onRestore: (id: string) => void;
 	onRetry: (id: string) => void;
-	onDownload: (id: string) => void;
+	onDownload: (id: string, versionNumber: number) => void;
 	selectedVersionId: string | null;
 	isLoading: boolean;
 }
@@ -70,6 +81,7 @@ export const VersionsTimeline = ({
 	const resolveLabel = (raw: string) => {
 		if (raw === "__today__") return t("admin.texts.versions.timeline.today");
 		if (raw === "__yesterday__") return t("admin.texts.versions.timeline.yesterday");
+		if (raw === "__creation__") return t("admin.texts.versions.timeline.creation");
 		return raw;
 	};
 
@@ -149,7 +161,7 @@ export const VersionsTimeline = ({
 								onClick={() => onVersionClick(item.id)}
 								onRestore={() => onRestore(item.id)}
 								onRetry={() => onRetry(item.id)}
-								onDownload={() => onDownload(item.id)}
+								onDownload={() => onDownload(item.id, item.version)}
 							/>
 						))}
 					</div>

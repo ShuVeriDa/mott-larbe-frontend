@@ -7,9 +7,12 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useDictionaryList, type DictionaryEntry } from "@/entities/dictionary";
 import { useFolders, type Folder } from "@/entities/folder";
 import {
+	DistributeAllModal,
 	FolderPickerPopover,
 	useAssignEntriesToFolder,
 } from "@/features/assign-folder";
+
+const PAGE_SIZE = 50;
 
 export interface UncategorizedSectionProps {
 	count: number;
@@ -74,9 +77,10 @@ const UncategorizedChips = ({
 	onAssign: (entryId: string, folderId: string) => void;
 }) => {
 	const { t } = useI18n();
+	const [limit, setLimit] = useState(PAGE_SIZE);
 	const { data, isLoading, isError } = useDictionaryList({
 		noFolder: true,
-		limit: 100,
+		limit,
 	});
 
 	if (isLoading) {
@@ -101,6 +105,8 @@ const UncategorizedChips = ({
 	}
 
 	const items = data?.items ?? [];
+	const total = data?.total ?? 0;
+	const hasMore = items.length < total;
 
 	if (items.length === 0) {
 		return (
@@ -111,18 +117,31 @@ const UncategorizedChips = ({
 	}
 
 	return (
-		<div className="flex flex-wrap gap-1.5">
-			{items.map((entry) => (
-				<Chip
-					key={entry.id}
-					entry={entry}
-					folders={folders}
-					onAssign={onAssign}
-					assignLabel={t("vocabulary.foldersPage.uncategorized.assignTo", {
-						word: entry.word,
+		<div className="flex flex-col gap-2.5">
+			<div className="flex flex-wrap gap-1.5">
+				{items.map((entry) => (
+					<Chip
+						key={entry.id}
+						entry={entry}
+						folders={folders}
+						onAssign={onAssign}
+						assignLabel={t("vocabulary.foldersPage.uncategorized.assignTo", {
+							word: entry.word,
+						})}
+					/>
+				))}
+			</div>
+			{hasMore && (
+				<button
+					type="button"
+					onClick={() => setLimit((l) => l + PAGE_SIZE)}
+					className="self-start text-[12px] text-acc transition-colors hover:text-acc/70"
+				>
+					{t("vocabulary.foldersPage.uncategorized.showMore", {
+						count: total - items.length,
 					})}
-				/>
-			))}
+				</button>
+			)}
 		</div>
 	);
 };
@@ -130,6 +149,7 @@ const UncategorizedChips = ({
 export const UncategorizedSection = ({ count }: UncategorizedSectionProps) => {
 	const { t } = useI18n();
 	const [open, setOpen] = useState(false);
+	const [distributeOpen, setDistributeOpen] = useState(false);
 	const { data: folders } = useFolders();
 	const { mutate: assign, isPending } = useAssignEntriesToFolder();
 
@@ -139,40 +159,63 @@ export const UncategorizedSection = ({ count }: UncategorizedSectionProps) => {
 		assign({ assignments: [{ id: entryId, folderId }] });
 
 	return (
-		<div className="overflow-hidden rounded-card border-hairline border-bd-1 bg-surf">
-			<button
-				type="button"
-				onClick={() => setOpen((v) => !v)}
-				disabled={isPending}
-				className={cn(
-					"flex w-full items-center gap-2.5 border-hairline border-b border-bd-1 px-[18px] py-3.5",
-					"text-left transition-colors hover:bg-surf-2",
-					isPending && "opacity-60",
-				)}
-			>
-				<ChevronRight
+		<>
+			<div className="overflow-hidden rounded-card border-hairline border-bd-1 bg-surf">
+				<div
 					className={cn(
-						"size-3 text-t-4 transition-transform duration-200",
-						open && "rotate-90",
+						"flex w-full items-center gap-2.5 border-hairline border-b border-bd-1 px-[18px] py-3.5",
+						isPending && "opacity-60",
 					)}
-					strokeWidth={1.6}
-				/>
-				<span className="flex-1 text-[13px] font-semibold text-t-2">
-					{t("vocabulary.foldersPage.uncategorized.title")}
-				</span>
-				<span className="text-[12px] text-t-3">
-					{t("vocabulary.foldersPage.uncategorized.count", { count })}
-				</span>
-			</button>
+				>
+					<button
+						type="button"
+						onClick={() => setOpen((v) => !v)}
+						disabled={isPending}
+						className="flex flex-1 items-center gap-2.5 text-left transition-colors hover:opacity-75"
+					>
+						<ChevronRight
+							className={cn(
+								"size-3 text-t-4 transition-transform duration-200",
+								open && "rotate-90",
+							)}
+							strokeWidth={1.6}
+						/>
+						<span className="flex-1 text-[13px] font-semibold text-t-2">
+							{t("vocabulary.foldersPage.uncategorized.title")}
+						</span>
+						<span className="text-[12px] text-t-3">
+							{t("vocabulary.foldersPage.uncategorized.count", { count })}
+						</span>
+					</button>
 
-			{open ? (
-				<div className="px-[18px] py-3">
-					<UncategorizedChips
-						folders={folders ?? []}
-						onAssign={handleAssign}
-					/>
+					{(folders?.length ?? 0) > 0 && (
+						<button
+							type="button"
+							onClick={() => setDistributeOpen(true)}
+							disabled={isPending}
+							className="shrink-0 text-[12px] text-acc transition-colors hover:text-acc/70"
+						>
+							{t("vocabulary.foldersPage.uncategorized.distributeAll")} →
+						</button>
+					)}
 				</div>
-			) : null}
-		</div>
+
+				{open ? (
+					<div className="px-[18px] py-3">
+						<UncategorizedChips
+							folders={folders ?? []}
+							onAssign={handleAssign}
+						/>
+					</div>
+				) : null}
+			</div>
+
+			<DistributeAllModal
+				open={distributeOpen}
+				onClose={() => setDistributeOpen(false)}
+				folders={folders ?? []}
+				uncatCount={count}
+			/>
+		</>
 	);
 };

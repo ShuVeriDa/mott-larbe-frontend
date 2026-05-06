@@ -1,6 +1,7 @@
 import { http } from "@/shared/api";
 import type {
 	CreateDictionaryEntryDto,
+	DetailWordContext,
 	DictionaryEntry,
 	DictionaryEntryDetail,
 	DictionaryListQuery,
@@ -80,5 +81,12 @@ export const dictionaryApi = {
 
 	remove: async (id: string): Promise<void> => {
 		await http.delete(`/dictionary/${id}`);
+	},
+
+	wordContexts: async (lemmaId: string): Promise<DetailWordContext[]> => {
+		const { data } = await http.get<DetailWordContext[]>(
+			`/progress/words/${lemmaId}/contexts`,
+		);
+		return data;
 	},
 };

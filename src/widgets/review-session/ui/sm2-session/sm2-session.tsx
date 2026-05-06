@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useI18n } from "@/shared/lib/i18n";
+import { useSwipe } from "@/shared/lib/swipe";
 import { Typography } from "@/shared/ui/typography";
 import {
 	type ReviewDueWord,
@@ -81,6 +82,12 @@ export const Sm2Session = ({
 		return () => window.removeEventListener("keydown", handleKey);
 	}, [flip, flipped, rate]);
 
+	const swipe = useSwipe({
+		enabled: flipped,
+		onSwipeLeft: () => rate(0),
+		onSwipeRight: () => rate(5),
+	});
+
 	if (!current) return null;
 
 	const lemma = current.lemma;
@@ -95,7 +102,12 @@ export const Sm2Session = ({
 	const backTranslation = mode === "wordToTrans" ? translation : word;
 
 	return (
-		<div className="flex flex-1 flex-col items-center px-5 pt-5 pb-4 max-md:px-4 max-md:pt-3.5">
+		<div
+			className="flex flex-1 flex-col items-center px-5 pt-5 pb-4 max-md:px-4 max-md:pt-3.5"
+			onPointerDown={swipe.onPointerDown}
+			onPointerUp={swipe.onPointerUp}
+			onPointerCancel={swipe.onPointerCancel}
+		>
 			<div className="mb-4 flex w-full max-w-[520px] items-center gap-2.5">
 				<div className="h-1 flex-1 overflow-hidden rounded-full bg-surf-3">
 					<div

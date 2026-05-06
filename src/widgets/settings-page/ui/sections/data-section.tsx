@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useResetProgress } from "@/entities/settings";
 import { ClearVocabModal } from "@/features/clear-vocabulary";
 import { DeleteAccountModal } from "@/features/delete-account";
 import { ExportButtons, ExportRow } from "@/features/export-data";
-import { ResetProgressModal } from "@/features/reset-progress";
 import { useI18n } from "@/shared/lib/i18n";
+import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { SectionHeader } from "../section-header";
@@ -13,9 +14,20 @@ import { SettingCard } from "../setting-card";
 
 export const DataSection = () => {
 	const { t } = useI18n();
-	const [resetOpen, setResetOpen] = useState(false);
+	const { success, error } = useToast();
+	const { mutateAsync: resetProgress, isPending: isResetting } =
+		useResetProgress();
 	const [clearOpen, setClearOpen] = useState(false);
 	const [deleteOpen, setDeleteOpen] = useState(false);
+
+	const handleResetProgress = async () => {
+		try {
+			await resetProgress();
+			success(t("settings.toasts.progressReset"));
+		} catch {
+			error(t("settings.toasts.genericError"));
+		}
+	};
 
 	return (
 		<div className="flex flex-col gap-3.5">
@@ -33,7 +45,11 @@ export const DataSection = () => {
 					label={t("settings.data.resetProgress")}
 					description={t("settings.data.resetProgressDesc")}
 					actions={
-						<Button variant="danger" onClick={() => setResetOpen(true)}>
+						<Button
+							variant="danger"
+							onClick={handleResetProgress}
+							disabled={isResetting}
+						>
 							{t("settings.data.resetButton")}
 						</Button>
 					}
@@ -49,7 +65,7 @@ export const DataSection = () => {
 				/>
 			</SettingCard>
 
-			<section className="overflow-hidden rounded-[11px] border-hairline border-red/20 bg-surf">
+			<section className="overflow-hidden rounded-card border-hairline border-red/20 bg-surf">
 				<header className="border-hairline border-b border-red/10 bg-red-bg px-4 pb-2.5 pt-3">
 					<Typography
 						tag="h3"
@@ -69,10 +85,6 @@ export const DataSection = () => {
 				/>
 			</section>
 
-			<ResetProgressModal
-				open={resetOpen}
-				onClose={() => setResetOpen(false)}
-			/>
 			<ClearVocabModal open={clearOpen} onClose={() => setClearOpen(false)} />
 			<DeleteAccountModal
 				open={deleteOpen}

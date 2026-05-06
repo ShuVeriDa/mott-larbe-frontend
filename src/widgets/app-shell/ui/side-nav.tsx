@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { useDashboard } from "@/entities/dashboard";
+import { useCurrentUser } from "@/entities/user";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Avatar } from "@/shared/ui/avatar";
@@ -17,6 +19,8 @@ import {
 	TextsIcon,
 	VocabularyIcon,
 } from "./nav-icons";
+import { NavStreak } from "./nav-streak";
+import { NavVocab } from "./nav-vocab";
 import { ThemeToggle } from "./theme-toggle";
 
 interface NavItem {
@@ -83,6 +87,25 @@ export const SideNav = () => {
 	const pathname = usePathname();
 	const sections = buildSections(lang);
 
+	const { data: dashData } = useDashboard();
+	const { data: user } = useCurrentUser();
+
+	const plan = dashData?.plan;
+	const stats = dashData?.stats;
+
+	const initials = [user?.name, user?.surname]
+		.filter(Boolean)
+		.map((s) => s![0].toUpperCase())
+		.join("")
+		.slice(0, 2) || "–";
+	const displayName =
+		[user?.name, user?.surname].filter(Boolean).join(" ") || "…";
+	const planLabel = plan
+		? plan.isPremium
+			? t("nav.premiumPlan")
+			: plan.name
+		: "Free";
+
 	return (
 		<nav
 			className="flex w-[230px] shrink-0 flex-col overflow-hidden border-hairline border-r border-bd-1 bg-surf transition-colors duration-200 max-lg:w-[190px] max-md:hidden"
@@ -140,34 +163,72 @@ export const SideNav = () => {
 						})}
 					</div>
 				))}
+
+				{stats?.streakDays?.length ? (
+					<>
+						<div className="mx-3.5 my-1.5 h-px bg-bd-1" />
+						<NavStreak stats={stats} />
+					</>
+				) : null}
+
+				<NavVocab />
 			</div>
 
 			<div className="px-3.5 pb-3.5 pt-2">
-				<div className="rounded-[9px] border-hairline border-bd-1 bg-surf-2 p-3">
-					<div className="mb-1 text-xs font-semibold text-t-1">
-						{t("nav.freePlan")}
+				{plan ? (
+					<div className="rounded-[9px] border-hairline border-bd-1 bg-surf-2 p-3">
+						<div className="mb-1 text-xs font-semibold text-t-1">
+							{plan.name}
+						</div>
+						{plan.isPremium ? (
+							<Typography className="text-[11px] leading-[1.55] text-t-3">
+								{t("nav.premiumPlan")}
+							</Typography>
+						) : (
+							<>
+								<Typography className="mb-[5px] text-[11px] leading-[1.55] text-t-3">
+									{plan.translationsLimit != null
+										? t("nav.planTranslations", {
+												used: plan.translationsToday,
+												limit: plan.translationsLimit,
+											})
+										: plan.translationsToday}
+								</Typography>
+								{plan.translationsLimit != null ? (
+									<div className="mb-2.5 h-[3px] overflow-hidden rounded-full bg-surf-3">
+										<div
+											className="h-full rounded-full bg-acc transition-[width]"
+											style={{
+												width: `${Math.min(100, Math.round((plan.translationsToday / plan.translationsLimit) * 100))}%`,
+											}}
+										/>
+									</div>
+								) : (
+									<div className="mb-2.5" />
+								)}
+								<Link
+									href={`/${lang}/subscription`}
+									className="block h-7 w-full rounded-md bg-acc text-center text-[11.5px] font-semibold leading-7 text-white transition-opacity hover:opacity-[0.88]"
+								>
+									{t("nav.upgrade")}
+								</Link>
+							</>
+						)}
 					</div>
-					<Typography className="mb-2.5 text-[11px] leading-[1.55] text-t-3">
-						{t("nav.freePlanDesc")}
-					</Typography>
-					<Link
-						href={`/${lang}/subscription`}
-						className="block h-7 w-full rounded-md bg-acc text-center text-[11.5px] font-semibold leading-7 text-white transition-opacity hover:opacity-[0.88]"
-					>
-						{t("nav.upgrade")}
-					</Link>
-				</div>
+				) : (
+					<div className="h-[88px] animate-pulse rounded-[9px] bg-surf-2" />
+				)}
 			</div>
 
 			<div className="border-hairline border-t border-bd-1">
 				<ThemeToggle />
 				<div className="flex items-center gap-2.5 px-3.5 py-1.5 pb-3 hover:bg-surf-2">
-					<Avatar size="default">АМ</Avatar>
+					<Avatar size="default">{initials}</Avatar>
 					<div className="min-w-0">
 						<div className="truncate text-[12.5px] font-medium text-t-1">
-							Амир М.
+							{displayName}
 						</div>
-						<div className="text-[11px] text-t-3">Free</div>
+						<div className="text-[11px] text-t-3">{planLabel}</div>
 					</div>
 				</div>
 			</div>

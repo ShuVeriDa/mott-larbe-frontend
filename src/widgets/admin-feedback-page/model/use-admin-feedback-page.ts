@@ -36,8 +36,10 @@ export const useAdminFeedbackPage = () => {
 	const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
 	const [inputMode, setInputMode] = useState<"reply" | "note">("reply");
 	const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
+	const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
 	const [isInfoDrawerOpen, setIsInfoDrawerOpen] = useState(false);
 	const [isMobileChat, setIsMobileChat] = useState(false);
+	const [isExporting, setIsExporting] = useState(false);
 
 	const listQuery = useAdminFeedbackThreads({
 		tab,
@@ -48,10 +50,10 @@ export const useAdminFeedbackPage = () => {
 
 	const detailQuery = useAdminFeedbackThread(activeThreadId);
 	const statsQuery = useAdminFeedbackStats();
-	const assigneesQuery = useAdminFeedbackAssignees(isAssignModalOpen);
+	const assigneesQuery = useAdminFeedbackAssignees(isAssignModalOpen || isTransferModalOpen);
 	const mutations = useAdminFeedbackMutations(activeThreadId);
 
-	const threads = listQuery.data?.items ?? [];
+	const threads = listQuery.data?.pages.flatMap((p) => p.items) ?? [];
 	const thread = detailQuery.data ?? null;
 	const stats = statsQuery.data ?? null;
 
@@ -82,7 +84,7 @@ export const useAdminFeedbackPage = () => {
 			if (!activeThreadId) return;
 			mutations.reply.mutate(
 				{ body, isInternal },
-				{ onSuccess: () => showToast(t("admin.feedback.toast.statusUpdated")) },
+				{ onSuccess: () => showToast(t("admin.feedback.toast.sent")) },
 			);
 		},
 		[activeThreadId, mutations.reply, t],
@@ -115,7 +117,7 @@ export const useAdminFeedbackPage = () => {
 						setIsAssignModalOpen(false);
 						showToast(
 							adminId
-								? t("admin.feedback.toast.assigned").replace("{name}", "")
+								? t("admin.feedback.toast.assigned")
 								: t("admin.feedback.toast.unassigned"),
 						);
 					},
@@ -123,6 +125,21 @@ export const useAdminFeedbackPage = () => {
 			);
 		},
 		[mutations.assign, t],
+	);
+
+	const handleTransfer = useCallback(
+		(targetAdminId: string, note?: string) => {
+			mutations.transferThread.mutate(
+				{ targetAdminId, note },
+				{
+					onSuccess: () => {
+						setIsTransferModalOpen(false);
+						showToast(t("admin.feedback.toast.transferred"));
+					},
+				},
+			);
+		},
+		[mutations.transferThread, t],
 	);
 
 	const handleClose = useCallback(() => {
@@ -150,6 +167,30 @@ export const useAdminFeedbackPage = () => {
 		navigator.clipboard?.writeText(url).catch(() => {});
 		showToast(t("admin.feedback.toast.linkCopied"));
 	}, [thread, t]);
+
+	const handleExport = useCallback(async () => {
+		if (isExporting) return;
+		setIsExporting(true);
+		try {
+			const { adminFeedbackApi } = await import("@/entities/feedback");
+			const blob = await adminFeedbackApi.export({
+				tab,
+				...(typeFilter !== "all" ? { type: typeFilter } : {}),
+				...(search ? { search } : {}),
+				format: "csv",
+			});
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = "feedback.csv";
+			a.click();
+			URL.revokeObjectURL(url);
+		} catch {
+			showToast(t("admin.feedback.toast.exportError"));
+		} finally {
+			setIsExporting(false);
+		}
+	}, [isExporting, tab, typeFilter, search, t]);
 
 	const handleMoreMenu = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -212,14 +253,18 @@ export const useAdminFeedbackPage = () => {
 		activeThreadId,
 		inputMode,
 		isAssignModalOpen,
+		isTransferModalOpen,
 		isInfoDrawerOpen,
 		isMobileChat,
+		isExporting,
 		threads,
 		thread,
 		stats,
 		assignees: assigneesQuery.data ?? [],
 		isAssigneesLoading: assigneesQuery.isLoading,
 		isListLoading: listQuery.isLoading,
+		isFetchingNextPage: listQuery.isFetchingNextPage,
+		hasNextPage: listQuery.hasNextPage,
 		isDetailLoading: detailQuery.isLoading,
 		isReplying: mutations.reply.isPending,
 		openCount: stats?.openTotal ?? 0,
@@ -232,13 +277,17 @@ export const useAdminFeedbackPage = () => {
 		handleStatusChange,
 		handlePriorityChange,
 		handleAssign,
+		handleTransfer,
 		handleClose,
 		handleReopen,
 		handleDelete,
 		handleCopyLink,
+		handleExport,
 		handleMoreMenu,
+		fetchNextPage: listQuery.fetchNextPage,
 		setInputMode,
 		setIsAssignModalOpen,
+		setIsTransferModalOpen,
 		setIsInfoDrawerOpen,
 	};
 };

@@ -16,6 +16,8 @@ import { SenseModal } from "./sense-modal";
 import { ExampleModal } from "./example-modal";
 import { MorphFormModal } from "./morph-form-modal";
 import { HeadwordModal } from "./headword-modal";
+import { MetaModal } from "./meta-modal";
+import { AddLemmaModal } from "./add-lemma-modal";
 
 interface AdminDictionaryDetailPageProps {
 	lemmaId: string;
@@ -38,12 +40,23 @@ export const AdminDictionaryDetailPage = ({ lemmaId }: AdminDictionaryDetailPage
 		closeModal,
 		showAllForms,
 		toggleForms,
+		entryId,
 	} = useAdminDictionaryDetailPage(lemmaId);
 
 	const handleDeleteEntry = async () => {
 		if (!confirm("Удалить эту словарную статью?")) return;
 		await mutations.deleteEntry.mutateAsync();
 		router.push(`/${lang}/admin/dictionary`);
+	};
+
+	// Add lemma handler
+	const handleAddLemma = (eid: string, body: import("@/entities/dictionary").AddAdminLemmaDto) => {
+		mutations.addLemma.mutate({ entryId: eid, body }, { onSuccess: closeModal });
+	};
+
+	// Meta modal handler
+	const handleSaveMeta = (body: import("@/entities/dictionary").PatchAdminEntryDto) => {
+		mutations.updateEntry.mutate(body, { onSuccess: closeModal });
 	};
 
 	// Sense modal handlers
@@ -105,6 +118,7 @@ export const AdminDictionaryDetailPage = ({ lemmaId }: AdminDictionaryDetailPage
 			<DictionaryEntryTopbar
 				lang={lang}
 				baseForm={detail.data?.baseForm ?? ""}
+				lemmaId={lemmaId}
 				next={nav.next}
 				prev={nav.prev}
 				onOpenModal={openModal}
@@ -115,12 +129,13 @@ export const AdminDictionaryDetailPage = ({ lemmaId }: AdminDictionaryDetailPage
 			<div className="flex gap-[18px] px-[22px] py-[22px] pb-16 max-md:flex-col max-sm:px-3 max-sm:py-3">
 				{/* Main column */}
 				<div className="flex min-w-0 flex-1 flex-col gap-3.5">
-					<EntryHeaderCard data={detail.data} isLoading={detail.isLoading} />
+					<EntryHeaderCard data={detail.data} isLoading={detail.isLoading} lemmasCount={relatedLemmas.data?.length} />
 
 					<LemmasSensesCard
 						data={detail.data}
 						relatedLemmas={relatedLemmas.data}
 						currentLemmaId={lemmaId}
+						lang={lang}
 						isLoading={detail.isLoading}
 						onOpenModal={openModal}
 						onDeleteSense={(senseId) => mutations.deleteSense.mutate(senseId)}
@@ -172,6 +187,22 @@ export const AdminDictionaryDetailPage = ({ lemmaId }: AdminDictionaryDetailPage
 			</div>
 
 			{/* Modals */}
+			<MetaModal
+				isOpen={modal?.type === "editMeta"}
+				data={detail.data}
+				isPending={mutations.updateEntry.isPending}
+				onClose={closeModal}
+				onSave={handleSaveMeta}
+			/>
+
+			<AddLemmaModal
+				isOpen={modal?.type === "addLemma"}
+				entryId={entryId}
+				isPending={mutations.addLemma.isPending}
+				onClose={closeModal}
+				onSave={handleAddLemma}
+			/>
+
 			<SenseModal
 				isOpen={modal?.type === "addSense" || modal?.type === "editSense"}
 				editSense={modal?.type === "editSense" ? modal.sense : null}

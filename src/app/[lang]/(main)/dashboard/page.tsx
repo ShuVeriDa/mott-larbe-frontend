@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import {
 	DEFAULT_LOCALE,
 	LOCALES,
@@ -7,9 +5,10 @@ import {
 	hasLocale,
 } from "@/i18n/locales";
 import { DashboardPage } from "@/widgets/dashboard-page";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-const SITE_URL =
-	process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
 
 export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;

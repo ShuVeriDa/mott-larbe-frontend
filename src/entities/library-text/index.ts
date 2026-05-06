@@ -15,6 +15,7 @@ export type {
 } from "./api";
 export {
 	useLibraryTexts,
+	useInfiniteLibraryTexts,
 	useLibraryTextDetail,
 	useLibraryTextRelated,
 } from "./model";

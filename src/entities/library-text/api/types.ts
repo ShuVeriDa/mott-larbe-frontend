@@ -110,3 +110,25 @@ export interface LibraryRelatedText {
 	totalPages: number;
 	progressPercent: number;
 }
+
+// ── Report ───────────────────────────────────────────────────────────────────
+
+export type TextReportReason =
+	| "SPAM"
+	| "INAPPROPRIATE"
+	| "COPYRIGHT"
+	| "INCORRECT_CONTENT"
+	| "BROKEN"
+	| "OTHER";
+
+export interface TextReportBody {
+	reason: TextReportReason;
+	comment?: string;
+}
+
+export interface TextReportResponse {
+	id: string;
+	ticketNumber: string;
+	status: string;
+	createdAt: string;
+}

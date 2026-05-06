@@ -1,5 +1,11 @@
 export { adminSubscriptionApi, adminSubscriptionKeys } from "./api";
 export type {
+	AdminSubscriptionDetail,
+	AdminSubscriptionDetailPayment,
+	AdminSubscriptionDetailPlan,
+	AdminSubscriptionDetailUser,
+	AdminSubscriptionDetailUserRole,
+	AdminSubscriptionEvent,
 	AdminSubscriptionListItem,
 	AdminSubscriptionPayment,
 	AdminSubscriptionPlan,
@@ -14,11 +20,13 @@ export type {
 	PaymentProvider,
 	PaymentStatus,
 	PlanType,
+	SubscriptionEventType,
 	SubscriptionStatus,
 	SubscriptionsSort,
 	SubscriptionsTab,
 } from "./api";
 export {
+	useAdminSubscriptionDetail,
 	useAdminSubscriptionMutations,
 	useAdminSubscriptionStats,
 	useAdminSubscriptions,

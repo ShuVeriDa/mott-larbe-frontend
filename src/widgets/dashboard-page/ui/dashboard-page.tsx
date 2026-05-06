@@ -4,7 +4,6 @@ import { useState, type SyntheticEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useDashboard } from "@/entities/dashboard";
 import { useCurrentUser } from "@/entities/user";
-import { useLibraryTexts } from "@/entities/library-text";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { ContinueReading } from "./continue-reading";
@@ -21,7 +20,6 @@ export const DashboardPage = () => {
 
 	const { data, isLoading, isError, refetch } = useDashboard();
 	const { data: user } = useCurrentUser();
-	const { data: library } = useLibraryTexts({ orderBy: "newest", limit: 6 });
 
 	const handleSearchSubmit = (
 		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
@@ -38,7 +36,10 @@ export const DashboardPage = () => {
 	return (
 		<>
 			<header className="flex shrink-0 items-center gap-3 border-hairline border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-md:px-4 max-sm:px-3.5 max-sm:py-2.5">
-				<Typography tag="h2" className="text-[13.5px] font-semibold text-t-1 max-sm:hidden">
+				<Typography
+					tag="h2"
+					className="text-[13.5px] font-semibold text-t-1 max-sm:hidden"
+				>
 					{t("dashboard.pageTitle")}
 				</Typography>
 
@@ -84,11 +85,7 @@ export const DashboardPage = () => {
 				</div>
 			) : (
 				<div className="flex flex-1 flex-col gap-3.5 overflow-y-auto px-[22px] pb-7 pt-4 max-md:px-4 max-sm:px-3.5 max-sm:pb-5 max-sm:pt-3.5">
-					<GreetingSection
-						user={user}
-						stats={data.stats}
-						lang={lang}
-					/>
+					<GreetingSection user={user} stats={data.stats} lang={lang} />
 
 					<StatsGrid stats={data.stats} />
 
@@ -98,9 +95,7 @@ export const DashboardPage = () => {
 						<ContinueReading items={data.continueReading} lang={lang} />
 					) : null}
 
-					{library?.items && library.items.length > 0 ? (
-						<LibraryPreview items={library.items} lang={lang} />
-					) : null}
+					<LibraryPreview lang={lang} />
 				</div>
 			)}
 		</>

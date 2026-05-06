@@ -32,22 +32,24 @@ export const generateMetadata = async (props: {
 	const description =
 		meta?.description ?? "View and edit dictionary entry details, senses, examples and morphological forms";
 
+	const { id } = await props.params;
+
 	const languages: Record<string, string> = {};
 	for (const locale of LOCALES) {
-		languages[locale] = `${SITE_URL}/${locale}/admin/dictionary`;
+		languages[locale] = `${SITE_URL}/${locale}/admin/dictionary/${id}`;
 	}
-	languages["x-default"] = `${SITE_URL}/${DEFAULT_LOCALE}/admin/dictionary`;
+	languages["x-default"] = `${SITE_URL}/${DEFAULT_LOCALE}/admin/dictionary/${id}`;
 
 	return {
 		title,
 		description,
 		alternates: {
-			canonical: `${SITE_URL}/${lang}/admin/dictionary`,
+			canonical: `${SITE_URL}/${lang}/admin/dictionary/${id}`,
 			languages,
 		},
 		openGraph: {
 			type: "website",
-			url: `${SITE_URL}/${lang}/admin/dictionary`,
+			url: `${SITE_URL}/${lang}/admin/dictionary/${id}`,
 			title,
 			description,
 			locale: lang,

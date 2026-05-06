@@ -215,3 +215,9 @@ export interface AddAdminLemmaDto {
 	frequency?: number;
 	isPrimary?: boolean;
 }
+
+export interface AdminImportResult {
+	created: number;
+	skipped: number;
+	total: number;
+}

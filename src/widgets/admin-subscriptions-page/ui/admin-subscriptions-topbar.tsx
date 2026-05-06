@@ -1,0 +1,45 @@
+import { useI18n } from "@/shared/lib/i18n";
+
+interface Props {
+	onAdd: () => void;
+	onExport: () => void;
+}
+
+export const AdminSubscriptionsTopbar = ({ onAdd, onExport }: Props) => {
+	const { t } = useI18n();
+
+	return (
+		<div className="sticky top-0 z-10 flex items-center gap-3 border-b border-bd-1 bg-bg px-[22px] py-3.5 transition-colors max-sm:px-3.5 max-sm:py-2.5">
+			<div>
+				<div className="font-display text-[16px] text-t-1">
+					{t("admin.subscriptions.title")}
+				</div>
+				<div className="mt-px text-[12px] text-t-3 max-sm:hidden">
+					{t("admin.subscriptions.subtitle")}
+				</div>
+			</div>
+			<div className="ml-auto flex items-center gap-2">
+				<button
+					type="button"
+					onClick={onAdd}
+					className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
+				>
+					<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
+						<path d="M1 6h10M6 1v10" strokeLinecap="round" />
+					</svg>
+					{t("admin.subscriptions.topbar.add")}
+				</button>
+				<button
+					type="button"
+					onClick={onExport}
+					className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
+				>
+					<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
+						<path d="M6 1v7M3 5l3 3 3-3M1 9v1.5A.5.5 0 001.5 11h9a.5.5 0 00.5-.5V9" strokeLinecap="round" strokeLinejoin="round" />
+					</svg>
+					{t("admin.subscriptions.topbar.export")}
+				</button>
+			</div>
+		</div>
+	);
+};

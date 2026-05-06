@@ -20,6 +20,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 		isLoading,
 		isError,
 		versionsData,
+		pageTokenCounts,
 		title,
 		pages,
 		activePage,
@@ -108,6 +109,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 			<TextEditTopbar
 				textId={textId}
 				textTitle={textData.title}
+				textStatus={status}
 				isUnsaved={isUnsaved}
 				isSaving={isSaving}
 				onSaveDraft={handleSaveDraft}
@@ -148,6 +150,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					useNormalization={useNormalization}
 					useMorphAnalysis={useMorphAnalysis}
 					pages={pages}
+					pageTokenCounts={pageTokenCounts}
 					isSaving={isSaving}
 					processingStatus={textData.processingStatus}
 					tokenCount={textData.tokenCount}

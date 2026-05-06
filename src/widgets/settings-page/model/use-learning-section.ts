@@ -5,9 +5,15 @@ import {
 	type UserGoals,
 	type UserPreferences,
 } from "@/entities/settings";
+import {
+	useCurrentUser,
+	useUpdateUser,
+	type UserLanguage,
+	type UserLevel,
+} from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
-import { useState, type ChangeEvent, type SyntheticEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type SyntheticEvent } from "react";
 
 export interface UseLearningSectionParams {
 	preferences: UserPreferences;
@@ -19,26 +25,38 @@ export const useLearningSection = ({
 	goals,
 }: UseLearningSectionParams) => {
 	const { t } = useI18n();
+	const { data: user } = useCurrentUser();
 	const { mutateAsync: updatePrefs, isPending: isPrefSaving } =
 		useUpdatePreferences();
 	const { mutateAsync: updateGoals, isPending: isGoalsSaving } =
 		useUpdateGoals();
+	const { mutateAsync: updateUser, isPending: isUserSaving } = useUpdateUser();
 	const { success, error } = useToast();
 
-	const [learningLang, setLearningLang] = useState<"CHE" | "RU">("CHE");
-	const [level, setLevel] = useState<string>("B1");
+	const [learningLang, setLearningLang] = useState<UserLanguage>(
+		user?.language ?? "CHE",
+	);
+	const [level, setLevel] = useState<UserLevel>(user?.level ?? "B1");
 	const [transLang, setTransLang] = useState<TranslationLanguage>(
 		preferences.translationLanguage,
 	);
 	const [dailyWords, setDailyWords] = useState<number>(goals.dailyWords);
 	const [dailyMinutes, setDailyMinutes] = useState<number>(goals.dailyMinutes);
 
+	useEffect(() => {
+		if (user?.language) setLearningLang(user.language);
+		if (user?.level) setLevel(user.level);
+	}, [user?.language, user?.level]);
+
 	const handleLanguageSave = async (
 		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
 	) => {
 		e.preventDefault();
 		try {
-			await updatePrefs({ translationLanguage: transLang });
+			await Promise.all([
+				updatePrefs({ translationLanguage: transLang }),
+				updateUser({ language: learningLang, level }),
+			]);
 			success(t("settings.toasts.languageSaved"));
 		} catch {
 			error(t("settings.toasts.genericError"));
@@ -110,7 +128,7 @@ export const useLearningSection = ({
 		transLang,
 		dailyWords,
 		dailyMinutes,
-		isPrefSaving,
+		isPrefSaving: isPrefSaving || isUserSaving,
 		isGoalsSaving,
 		handleLanguageSave,
 		handleGoalsSave,

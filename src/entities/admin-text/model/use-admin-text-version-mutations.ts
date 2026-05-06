@@ -3,6 +3,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { adminTextApi } from "../api/admin-text-api";
 import { adminTextKeys } from "../api/admin-text-keys";
+import type { ProcessTextDto } from "../api/types";
 
 export const useAdminTextVersionMutations = (textId: string) => {
 	const qc = useQueryClient();
@@ -18,14 +19,20 @@ export const useAdminTextVersionMutations = (textId: string) => {
 		onSuccess: invalidate,
 	});
 
+	const runProcess = useMutation({
+		mutationFn: (dto: ProcessTextDto) => adminTextApi.process(textId, dto),
+		onSuccess: invalidate,
+	});
+
 	const runTokenization = useMutation({
 		mutationFn: () => adminTextApi.tokenize(textId),
 		onSuccess: invalidate,
 	});
 
 	const download = useMutation({
-		mutationFn: (versionId: string) => adminTextApi.downloadVersion(textId, versionId),
+		mutationFn: ({ versionId, versionNumber }: { versionId: string; versionNumber?: number }) =>
+			adminTextApi.downloadVersion(textId, versionId, versionNumber),
 	});
 
-	return { restore, retry, runTokenization, download };
+	return { restore, retry, runProcess, runTokenization, download };
 };

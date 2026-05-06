@@ -14,11 +14,13 @@ interface VersionsTopbarProps {
 export const VersionsTopbar = ({ textId, text, onRunTokenization, isRunning }: VersionsTopbarProps) => {
 	const { t, lang } = useI18n();
 
+	const shortId = textId.length > 8 ? `#${textId.slice(0, 8)}` : `#${textId}`;
+
 	return (
 		<div className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-bd-1 bg-bg px-[22px] py-3 transition-colors max-sm:px-3.5">
 			<Link
 				href={`/${lang}/admin/texts`}
-				className="flex size-7 shrink-0 items-center justify-center rounded-[7px] border border-bd-2 bg-surf text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
+				className="flex size-7 shrink-0 items-center justify-center rounded-base border border-bd-2 bg-surf text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 				aria-label={t("admin.texts.versions.backToTexts")}
 			>
 				<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
@@ -38,10 +40,14 @@ export const VersionsTopbar = ({ textId, text, onRunTokenization, isRunning }: V
 				<span className="font-medium text-t-1">{t("admin.texts.versions.pageTitle")}</span>
 			</div>
 
+			<span className="shrink-0 rounded-[5px] bg-surf-2 px-1.5 py-0.5 font-mono text-[10.5px] text-t-3 max-sm:hidden">
+				{shortId}
+			</span>
+
 			<div className="ml-auto flex shrink-0 items-center gap-2">
 				<Link
 					href={`/${lang}/admin/texts/${textId}/edit`}
-					className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 max-sm:px-2"
+					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 max-sm:px-2"
 				>
 					<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 						<path d="M10.5 3.5l2 2L5 13H3v-2l7.5-7.5z" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
@@ -52,7 +58,7 @@ export const VersionsTopbar = ({ textId, text, onRunTokenization, isRunning }: V
 					type="button"
 					onClick={onRunTokenization}
 					disabled={isRunning}
-					className="flex h-[30px] items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60 max-sm:px-2"
+					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60 max-sm:px-2"
 				>
 					{isRunning ? (
 						<span className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />

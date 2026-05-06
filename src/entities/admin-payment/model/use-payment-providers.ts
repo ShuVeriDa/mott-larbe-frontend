@@ -1,0 +1,12 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import { adminPaymentApi } from "../api/admin-payment-api";
+import { adminPaymentKeys } from "../api/admin-payment-keys";
+
+export const usePaymentProviders = () =>
+	useQuery({
+		queryKey: adminPaymentKeys.providers(),
+		queryFn: () => adminPaymentApi.getByProvider(),
+		staleTime: 5 * 60 * 1000,
+	});

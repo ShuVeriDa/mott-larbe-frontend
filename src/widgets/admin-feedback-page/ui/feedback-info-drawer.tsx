@@ -14,6 +14,7 @@ interface FeedbackInfoDrawerProps {
 	onStatusChange: (s: FeedbackStatus) => void;
 	onPriorityChange: (p: FeedbackPriority) => void;
 	onAssignOpen: () => void;
+	onTransferOpen: () => void;
 	onClose2: () => void;
 	onReopen: () => void;
 	onDelete: () => void;
@@ -27,6 +28,7 @@ export const FeedbackInfoDrawer = ({
 	onStatusChange,
 	onPriorityChange,
 	onAssignOpen,
+	onTransferOpen,
 	onClose2,
 	onReopen,
 	onDelete,
@@ -75,6 +77,7 @@ export const FeedbackInfoDrawer = ({
 					onStatusChange={onStatusChange}
 					onPriorityChange={onPriorityChange}
 					onAssignOpen={onAssignOpen}
+					onTransferOpen={onTransferOpen}
 					onClose={onClose2}
 					onReopen={onReopen}
 					onDelete={onDelete}

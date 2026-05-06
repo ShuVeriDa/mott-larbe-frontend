@@ -151,3 +151,9 @@ export interface PopularTextsResponse {
 	tab: PopularBy;
 	items: PopularTextItem[];
 }
+
+export interface AnalyticsExportResponse {
+	format: "json" | "csv";
+	fileName: string;
+	content: string;
+}

@@ -47,9 +47,10 @@ export const ContextsCard = ({ items, total, lang, isLoading }: ContextsCardProp
 							key={ctx.id}
 							className="cursor-pointer border-b border-bd-1 px-4 py-[11px] transition-colors hover:bg-surf-2 last:border-b-0"
 						>
-							<div className="mb-1 text-[12.5px] leading-[1.55] text-t-2">
-								{ctx.snippet}
-							</div>
+							<div
+								className="mb-1 text-[12.5px] leading-[1.55] text-t-2 [&_b]:font-semibold [&_b]:text-t-1"
+								dangerouslySetInnerHTML={{ __html: ctx.snippet }}
+							/>
 							<div className="flex items-center gap-1.5 text-[11px] text-t-3">
 								<svg width="10" height="10" viewBox="0 0 16 16" fill="none">
 									<path d="M3 4h10M3 8h7M3 12h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />

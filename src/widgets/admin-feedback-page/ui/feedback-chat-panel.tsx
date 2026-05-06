@@ -23,6 +23,7 @@ interface FeedbackChatPanelProps {
 	onStatusChange: (s: FeedbackStatus) => void;
 	onPriorityChange: (p: FeedbackPriority) => void;
 	onAssignOpen: () => void;
+	onTransferOpen: () => void;
 	onClose: () => void;
 	onDelete: () => void;
 }
@@ -43,6 +44,7 @@ export const FeedbackChatPanel = ({
 	onStatusChange,
 	onPriorityChange,
 	onAssignOpen,
+	onTransferOpen,
 	onClose,
 	onDelete,
 }: FeedbackChatPanelProps) => (
@@ -86,6 +88,7 @@ export const FeedbackChatPanel = ({
 				onStatusChange={onStatusChange}
 				onPriorityChange={onPriorityChange}
 				onAssignOpen={onAssignOpen}
+				onTransferOpen={onTransferOpen}
 				onClose={onClose}
 				onReopen={onReopen}
 				onDelete={onDelete}

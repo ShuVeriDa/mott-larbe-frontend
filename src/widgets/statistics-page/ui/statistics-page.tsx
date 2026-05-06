@@ -14,11 +14,17 @@ import { TextsProgress } from "./texts-progress";
 import { WordProgressCard } from "./word-progress-card";
 import { WordsPerDayChart } from "./words-per-day-chart";
 
+const is403 = (err: unknown): boolean => {
+	if (!err || typeof err !== "object") return false;
+	const e = err as { response?: { status?: number } };
+	return e.response?.status === 403;
+};
+
 export const StatisticsPage = () => {
 	const { t, lang } = useI18n();
 	const [period, setPeriod] = useState<StatsPeriod>("month");
 
-	const { data, isLoading, isError, refetch } = useStatistics({
+	const { data, isLoading, isError, error, refetch } = useStatistics({
 		period,
 		activityLimit: 15,
 	});
@@ -39,6 +45,34 @@ export const StatisticsPage = () => {
 
 			{isLoading ? (
 				<PageSkeleton />
+			) : is403(error) ? (
+				<div className="flex flex-1 flex-col items-center justify-center gap-3 px-5 py-20 text-center">
+					<div className="flex size-12 items-center justify-center rounded-full bg-acc-bg">
+						<svg
+							viewBox="0 0 20 20"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="1.5"
+							className="size-5 text-acc"
+							aria-hidden="true"
+						>
+							<rect x="4" y="9" width="12" height="9" rx="2" />
+							<path d="M7 9V6a3 3 0 1 1 6 0v3" strokeLinecap="round" />
+						</svg>
+					</div>
+					<Typography tag="p" className="text-sm font-semibold text-t-1">
+						{t("statistics.premium.title")}
+					</Typography>
+					<Typography tag="p" className="max-w-[260px] text-xs leading-relaxed text-t-3">
+						{t("statistics.premium.description")}
+					</Typography>
+					<a
+						href={`/${lang}/plans`}
+						className="mt-1 rounded-md bg-acc px-5 py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90"
+					>
+						{t("statistics.premium.upgrade")}
+					</a>
+				</div>
 			) : isError || !data ? (
 				<div className="flex flex-col items-center gap-3 px-5 py-16 text-center">
 					<Typography tag="p" className="text-sm text-red">
@@ -60,7 +94,7 @@ export const StatisticsPage = () => {
 
 					<div className="grid grid-cols-2 gap-2 max-md:grid-cols-1">
 						<WordProgressCard words={data.words} />
-						<WordsPerDayChart points={data.wordsPerDay} />
+						<WordsPerDayChart points={data.wordsPerDay} period={period} />
 					</div>
 
 					<TextsProgress items={data.texts} lang={lang} />

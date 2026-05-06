@@ -1,6 +1,6 @@
 "use client";
 
-import { type LibraryView, useLibraryFilterStore } from "@/features/library-filters";
+import { type LibraryView, useLibraryFilters } from "@/features/library-filters";
 import type { CefrLevel } from "@/shared/types";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -34,7 +34,7 @@ export const LibraryFilterBar = () => {
 		setStatus,
 		setSort,
 		setView,
-	} = useLibraryFilterStore();
+	} = useLibraryFilters();
 
 	return (
 		<div className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-b border-bd-1 bg-panel px-5 py-2 [scrollbar-width:none] max-sm:px-3 max-sm:gap-1 [&::-webkit-scrollbar]:hidden">

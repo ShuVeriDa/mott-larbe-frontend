@@ -121,6 +121,7 @@ export const MorphFormModal = ({
 								value={gramNumber}
 								onChange={(e) => setGramNumber(e.target.value as AdminDictGramNumber | "")}
 							>
+								<option value="">— {t("admin.dictionaryDetail.selectNumber")} —</option>
 								{GRAM_NUMBERS.map((n) => (
 									<option key={n.value} value={n.value}>{n.label}</option>
 								))}

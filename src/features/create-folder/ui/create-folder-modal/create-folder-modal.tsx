@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import {
 	FolderForm,
 	buildInitialFolderForm,
@@ -14,11 +15,13 @@ import { useCreateFolder } from "../../model";
 export interface CreateFolderModalProps {
 	open: boolean;
 	onClose: () => void;
+	onForbidden?: () => void;
 }
 
 export const CreateFolderModal = ({
 	open,
 	onClose,
+	onForbidden,
 }: CreateFolderModalProps) => {
 	const { t } = useI18n();
 	const { mutateAsync, isPending } = useCreateFolder();
@@ -55,8 +58,13 @@ export const CreateFolderModal = ({
 			});
 			reset();
 			onClose();
-		} catch {
-			setError(t("vocabulary.folderModal.errors.createFailed"));
+		} catch (err) {
+			if (axios.isAxiosError(err) && err.response?.status === 403) {
+				handleClose();
+				onForbidden?.();
+			} else {
+				setError(t("vocabulary.folderModal.errors.createFailed"));
+			}
 		}
 	};
 

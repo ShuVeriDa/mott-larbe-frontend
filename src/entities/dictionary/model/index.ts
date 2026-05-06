@@ -3,6 +3,7 @@ export { useDictionaryStats } from "./use-dictionary-stats";
 export { useDueWords } from "./use-due-words";
 export { useDictionaryDetail } from "./use-dictionary-detail";
 export { useDictionaryNeighbors } from "./use-dictionary-neighbors";
+export { useDictionaryWordContexts } from "./use-dictionary-word-contexts";
 export { useAdminDictionaryDetail } from "./use-admin-dictionary-detail";
 export { useAdminDictionaryNavigation } from "./use-admin-dictionary-navigation";
 export { useAdminDictionaryRelatedLemmas } from "./use-admin-dictionary-related-lemmas";

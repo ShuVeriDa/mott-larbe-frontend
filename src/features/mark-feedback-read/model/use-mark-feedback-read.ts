@@ -8,7 +8,7 @@ export const useMarkFeedbackRead = () => {
 	return useMutation({
 		mutationFn: (threadId: string) => feedbackApi.markRead(threadId),
 		onSuccess: (_, threadId) => {
-			qc.invalidateQueries({ queryKey: feedbackKeys.detail(threadId) });
+			qc.invalidateQueries({ queryKey: feedbackKeys.thread(threadId) });
 			qc.invalidateQueries({ queryKey: feedbackKeys.root });
 			qc.invalidateQueries({ queryKey: feedbackKeys.unreadCount() });
 		},

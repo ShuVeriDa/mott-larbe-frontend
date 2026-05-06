@@ -17,12 +17,12 @@ interface OverridesTableProps {
 	items: FeatureFlagOverrideItem[];
 	isLoading: boolean;
 	onDelete: (overrideId: string) => void;
-	t: (key: string) => string;
+	t: (key: string, params?: Record<string, string | number>) => string;
 }
 
 const SkeletonRow = () => (
 	<tr>
-		{Array.from({ length: 5 }).map((_, i) => (
+		{Array.from({ length: 6 }).map((_, i) => (
 			<td key={i} className="px-3.5 py-3">
 				<div className="h-3 animate-pulse rounded bg-surf-3" />
 			</td>
@@ -43,6 +43,9 @@ export const OverridesTable = ({ items, isLoading, onDelete, t }: OverridesTable
 					</th>
 					<th className="w-[80px] border-b border-bd-1 pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 						{t("admin.featureFlags.overrides.value")}
+					</th>
+					<th className="w-[150px] border-b border-bd-1 pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+						{t("admin.featureFlags.overrides.global")}
 					</th>
 					<th className="w-[140px] border-b border-bd-1 pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 						{t("admin.featureFlags.overrides.setBy")}
@@ -96,6 +99,21 @@ export const OverridesTable = ({ items, isLoading, onDelete, t }: OverridesTable
 										) : (
 											<span className="rounded px-1.5 py-[2px] text-[11px] font-semibold bg-red-bg text-red-t">
 												{t("admin.featureFlags.overrides.off")}
+											</span>
+										)}
+									</td>
+									<td className="py-3 pl-3.5">
+										{item.featureFlag.isEnabled === false ? (
+											<span className="rounded px-1.5 py-[2px] text-[10.5px] font-medium bg-red-bg text-red-t">
+												{t("admin.featureFlags.overrides.globalOff")}
+											</span>
+										) : item.featureFlag.rolloutPercent === 100 ? (
+											<span className="rounded px-1.5 py-[2px] text-[10.5px] font-medium bg-grn-bg text-grn-t">
+												{t("admin.featureFlags.overrides.globalOn", { pct: item.featureFlag.rolloutPercent })}
+											</span>
+										) : (
+											<span className="rounded px-1.5 py-[2px] text-[10.5px] font-medium bg-amb-bg text-amb-t">
+												{t("admin.featureFlags.overrides.globalOn", { pct: item.featureFlag.rolloutPercent })}
 											</span>
 										)}
 									</td>

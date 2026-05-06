@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
 	adminLogApi,
 	adminLogKeys,
@@ -17,35 +18,74 @@ import type {
 	AdminLogTab,
 	FetchAdminLogsQuery,
 } from "@/entities/admin-log";
+import { API_URL } from "@/shared/config";
 
 const LIMIT = 25;
 const LIVE_INTERVAL_MS = 5_000;
+const SEARCH_DEBOUNCE_MS = 300;
 
 export const useAdminLogsPage = () => {
 	const queryClient = useQueryClient();
+	const router = useRouter();
+	const searchParams = useSearchParams();
 
 	const [tab, setTab] = useState<AdminLogTab>("all");
 	const [search, setSearch] = useState("");
+	const [debouncedSearch, setDebouncedSearch] = useState("");
 	const [service, setService] = useState("all");
 	const [range, setRange] = useState<AdminLogRange>("24h");
 	const [page, setPage] = useState(1);
 	const [isLive, setIsLive] = useState(true);
-	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const [liveItems, setLiveItems] = useState<AdminLogItem[]>([]);
+
+	const selectedId = searchParams.get("detail");
+
+	const setSelectedId = useCallback(
+		(id: string | null) => {
+			const params = new URLSearchParams(searchParams.toString());
+			if (id) {
+				params.set("detail", id);
+			} else {
+				params.delete("detail");
+			}
+			router.replace(`?${params.toString()}`, { scroll: false });
+		},
+		[router, searchParams],
+	);
+
 	const liveCursorRef = useRef<string | null>(null);
 	const liveTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+	// Always-fresh ref so the live interval closure can read current filter state
+	const liveFilterRef = useRef({ tab, service, range, debouncedSearch });
+	liveFilterRef.current = { tab, service, range, debouncedSearch };
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedSearch(search);
+			setPage(1);
+			setLiveItems([]);
+		}, SEARCH_DEBOUNCE_MS);
+		return () => clearTimeout(timer);
+	}, [search]);
 
 	const query: FetchAdminLogsQuery = {
 		tab,
-		q: search || undefined,
+		q: debouncedSearch || undefined,
 		service: service !== "all" ? service : undefined,
 		range,
 		page,
 		limit: LIMIT,
 	};
 
+	const statsFilter = {
+		range,
+		tab: tab !== "all" ? tab : undefined,
+		q: debouncedSearch || undefined,
+		service: service !== "all" ? service : undefined,
+	} as const;
+
 	const logsQuery = useAdminLogs(query);
-	const statsQuery = useAdminLogStats({ range });
+	const statsQuery = useAdminLogStats(statsFilter);
 	const servicesQuery = useAdminLogServices();
 	const detailQuery = useAdminLogDetail(selectedId);
 
@@ -59,11 +99,12 @@ export const useAdminLogsPage = () => {
 	const startLive = useCallback(() => {
 		stopLive();
 		liveTimerRef.current = setInterval(async () => {
+			const { tab: t, service: s, range: r, debouncedSearch: q } = liveFilterRef.current;
 			try {
 				const result = await adminLogApi.live({
 					since: liveCursorRef.current ?? undefined,
-					tab: tab !== "all" ? tab : undefined,
-					service: service !== "all" ? service : undefined,
+					tab: t !== "all" ? t : undefined,
+					service: s !== "all" ? s : undefined,
 				});
 				if (result.items.length > 0) {
 					setLiveItems((prev) => {
@@ -74,13 +115,20 @@ export const useAdminLogsPage = () => {
 					if (result.nextCursor) {
 						liveCursorRef.current = result.nextCursor;
 					}
-					void queryClient.invalidateQueries({ queryKey: adminLogKeys.stats(range) });
+					void queryClient.invalidateQueries({
+						queryKey: adminLogKeys.stats({
+							range: r,
+							tab: t !== "all" ? t : undefined,
+							q: q || undefined,
+							service: s !== "all" ? s : undefined,
+						}),
+					});
 				}
 			} catch {
 				// silently ignore live poll errors
 			}
 		}, LIVE_INTERVAL_MS);
-	}, [stopLive, tab, service, range, queryClient]);
+	}, [stopLive, queryClient]);
 
 	useEffect(() => {
 		if (isLive && page === 1) {
@@ -100,8 +148,6 @@ export const useAdminLogsPage = () => {
 
 	const handleSearchChange = useCallback((v: string) => {
 		setSearch(v);
-		setPage(1);
-		setLiveItems([]);
 	}, []);
 
 	const handleServiceChange = useCallback((v: string) => {
@@ -119,16 +165,17 @@ export const useAdminLogsPage = () => {
 	}, []);
 
 	const toggleLive = useCallback(() => {
-		setIsLive((v) => !v);
+		setIsLive((v) => {
+			if (v) {
+				// pausing: discard accumulated live items; cursor kept to resume from same position
+				setLiveItems([]);
+			}
+			return !v;
+		});
 	}, []);
 
-	const openDetail = useCallback((id: string) => {
-		setSelectedId(id);
-	}, []);
-
-	const closeDetail = useCallback(() => {
-		setSelectedId(null);
-	}, []);
+	const openDetail = useCallback((id: string) => setSelectedId(id), [setSelectedId]);
+	const closeDetail = useCallback(() => setSelectedId(null), [setSelectedId]);
 
 	const handleExport = useCallback(() => {
 		const params = new URLSearchParams();
@@ -137,7 +184,7 @@ export const useAdminLogsPage = () => {
 		if (query.service) params.set("service", query.service);
 		params.set("range", range);
 		params.set("format", "csv");
-		const url = `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:9555/api"}/admin/logs/export?${params}`;
+		const url = `${API_URL}/admin/logs/export?${params}`;
 		window.open(url, "_blank");
 	}, [query, range]);
 
@@ -151,9 +198,7 @@ export const useAdminLogsPage = () => {
 							(!liveLevel || i.level === liveLevel) &&
 							(service === "all" || i.service === service),
 					),
-					...items.filter(
-						(i) => !liveItems.some((li) => li.id === i.id),
-					),
+					...items.filter((i) => !liveItems.some((li) => li.id === i.id)),
 				].slice(0, LIMIT)
 			: items;
 

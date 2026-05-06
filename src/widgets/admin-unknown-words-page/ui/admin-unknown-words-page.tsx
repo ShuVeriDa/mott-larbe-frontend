@@ -11,15 +11,15 @@ import { UnknownWordsMobileList } from "./unknown-words-mobile-list";
 import { UnknownWordsPagination } from "./unknown-words-pagination";
 import { UnknownWordsAddModal } from "./unknown-words-add-modal";
 import { UnknownWordsClearModal } from "./unknown-words-clear-modal";
-import type { UnknownWordListItem } from "@/entities/unknown-word";
+import { UnknownWordsContextsModal } from "./unknown-words-contexts-modal";
+import type { UnknownWordListItem } from "@/entities/admin-unknown-word";
 
 export const AdminUnknownWordsPage = () => {
-	const state = useAdminUnknownWordsPage();
-
 	const {
 		tab,
 		search,
 		sort,
+		textId,
 		page,
 		selectedIds,
 		allSelected,
@@ -27,29 +27,34 @@ export const AdminUnknownWordsPage = () => {
 		stats,
 		isLoading,
 		statsLoading,
+		textsData,
 		mutations,
 		addModal,
 		clearModalOpen,
+		contextsModal,
 		handleTabChange,
 		handleSearchChange,
 		handleSortChange,
+		handleTextChange,
+		handlePageChange,
 		toggleSelectId,
 		toggleSelectAll,
 		clearSelection,
-		setPage,
 		openAddModal,
 		closeAddModal,
+		openContextsModal,
+		closeContextsModal,
 		handleAddToDictionary,
+		handleLinkToLemma,
 		handleExport,
 		handleClearAll,
 		setClearModalOpen,
-	} = state;
+	} = useAdminUnknownWordsPage();
 
 	const selectedArray = Array.from(selectedIds);
 
-	const handleOpenAddModal = (word: UnknownWordListItem) => {
-		openAddModal(word.id, word.word, word.normalized, word.seenCount, word.snippet ?? null);
-	};
+	const handleOpenAdd = (word: UnknownWordListItem) => openAddModal(word, "new");
+	const handleOpenLink = (word: UnknownWordListItem) => openAddModal(word, "link");
 
 	return (
 		<>
@@ -71,18 +76,21 @@ export const AdminUnknownWordsPage = () => {
 					<UnknownWordsToolbar
 						search={search}
 						sort={sort}
+						textId={textId}
+						texts={textsData ?? []}
 						onSearchChange={handleSearchChange}
 						onSortChange={handleSortChange}
+						onTextChange={handleTextChange}
 					/>
 
 					{/* Table card */}
-					<div className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf">
+					<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 						<UnknownWordsBulkBar
 							selectedCount={selectedIds.size}
 							onAddToDictionary={() => {
 								if (selectedArray.length === 1 && data?.items) {
 									const word = data.items.find((w) => w.id === selectedArray[0]);
-									if (word) handleOpenAddModal(word);
+									if (word) handleOpenAdd(word);
 								}
 							}}
 							onDelete={() =>
@@ -101,14 +109,18 @@ export const AdminUnknownWordsPage = () => {
 							onToggleRow={toggleSelectId}
 							mutations={mutations}
 							isLoading={isLoading}
-							onAddToDictionary={handleOpenAddModal}
+							onAddToDictionary={handleOpenAdd}
+							onLinkToLemma={handleOpenLink}
+							onViewContexts={openContextsModal}
 						/>
 
 						<UnknownWordsMobileList
 							words={data?.items ?? []}
 							mutations={mutations}
 							isLoading={isLoading}
-							onAddToDictionary={handleOpenAddModal}
+							onAddToDictionary={handleOpenAdd}
+							onLinkToLemma={handleOpenLink}
+							onViewContexts={openContextsModal}
 						/>
 
 						{!isLoading && data && (
@@ -116,7 +128,7 @@ export const AdminUnknownWordsPage = () => {
 								page={page}
 								limit={data.limit}
 								total={data.total}
-								onPageChange={setPage}
+								onPageChange={handlePageChange}
 							/>
 						)}
 					</div>
@@ -125,9 +137,12 @@ export const AdminUnknownWordsPage = () => {
 
 			<UnknownWordsAddModal
 				state={addModal}
-				isPending={mutations.addToDictionary.isPending}
+				isPending={
+					mutations.addToDictionary.isPending || mutations.linkToLemma.isPending
+				}
 				onClose={closeAddModal}
 				onSubmit={handleAddToDictionary}
+				onLink={handleLinkToLemma}
 			/>
 
 			<UnknownWordsClearModal
@@ -136,6 +151,11 @@ export const AdminUnknownWordsPage = () => {
 				isPending={mutations.clearAll.isPending}
 				onClose={() => setClearModalOpen(false)}
 				onConfirm={handleClearAll}
+			/>
+
+			<UnknownWordsContextsModal
+				state={contextsModal}
+				onClose={closeContextsModal}
 			/>
 		</>
 	);

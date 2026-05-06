@@ -1,7 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
-import type { UnknownWordsStats } from "@/entities/unknown-word";
+import type { UnknownWordStats } from "@/entities/admin-unknown-word";
 
 interface StatCardProps {
 	label: string;
@@ -23,7 +23,7 @@ const StatCard = ({ label, value, sub, valueColor }: StatCardProps) => (
 );
 
 interface UnknownWordsStatsRowProps {
-	stats: UnknownWordsStats | undefined;
+	stats: UnknownWordStats | undefined;
 	isLoading: boolean;
 }
 

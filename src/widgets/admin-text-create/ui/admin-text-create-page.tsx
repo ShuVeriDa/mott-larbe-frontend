@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
+import { useAdminTags } from "@/entities/admin-tag";
 import { useAdminTextCreatePage } from "../model/use-admin-text-create-page";
 import { TextCreateTopbar } from "./text-create-topbar";
 import { TextCreateEditor } from "./text-create-editor";
@@ -8,6 +9,8 @@ import { TextCreateMetaPanel } from "./text-create-meta-panel";
 
 export const AdminTextCreatePage = () => {
 	const { t } = useI18n();
+	const { data: allTags = [] } = useAdminTags();
+
 	const {
 		title,
 		pages,
@@ -23,7 +26,7 @@ export const AdminTextCreatePage = () => {
 		autoTokenizeOnSave,
 		useNormalization,
 		useMorphAnalysis,
-		isUnsaved,
+		saveState,
 		isSaving,
 		handleTitleChange,
 		handlePageContentChange,
@@ -48,7 +51,7 @@ export const AdminTextCreatePage = () => {
 	return (
 		<div className="flex min-h-screen flex-col bg-bg text-t-1 transition-colors">
 			<TextCreateTopbar
-				isUnsaved={isUnsaved}
+				saveState={saveState}
 				isSaving={isSaving}
 				onSaveDraft={handleSaveDraft}
 				onPublish={handlePublish}
@@ -75,6 +78,7 @@ export const AdminTextCreatePage = () => {
 					author={author}
 					source={source}
 					tags={tags}
+					allTags={allTags}
 					description={description}
 					coverPreviewUrl={coverPreviewUrl}
 					autoTokenizeOnSave={autoTokenizeOnSave}

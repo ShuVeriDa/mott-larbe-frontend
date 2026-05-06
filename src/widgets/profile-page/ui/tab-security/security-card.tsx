@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
+import { useTerminateAllSessions } from "@/entities/auth";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import type { UserProfile } from "@/entities/user";
 import { ProfileCard as SettingCard } from "../profile-card";
 import { ChangePasswordModal } from "./change-password-modal";
+import { ChangeEmailModal } from "./change-email-modal";
 
 const LockIcon = () => (
 	<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" className="size-3.5">
@@ -36,8 +38,17 @@ export interface SecurityCardProps {
 
 export const SecurityCard = ({ profile }: SecurityCardProps) => {
 	const { t } = useI18n();
-	const { success } = useToast();
+	const { success, error } = useToast();
 	const [passwordModalOpen, setPasswordModalOpen] = useState(false);
+	const [emailModalOpen, setEmailModalOpen] = useState(false);
+	const { mutate: terminateAll, isPending: terminatingAll } = useTerminateAllSessions();
+
+	const handleTerminateAll = () => {
+		terminateAll(undefined, {
+			onSuccess: () => success(t("settings.toasts.allSessionsTerminated")),
+			onError: () => error(t("profile.toasts.error")),
+		});
+	};
 
 	const rows = [
 		{
@@ -66,7 +77,7 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 				<Button
 					variant="outline"
 					className="h-7 px-2.5 text-[11.5px] shrink-0"
-					onClick={() => success(t("profile.security.emailLetterSent"))}
+					onClick={() => setEmailModalOpen(true)}
 				>
 					{t("profile.security.change")}
 				</Button>
@@ -82,7 +93,8 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 				<Button
 					variant="outline"
 					className="h-7 px-2.5 text-[11.5px] shrink-0"
-					onClick={() => success(t("profile.security.allSessionsTerminated"))}
+					disabled={terminatingAll}
+					onClick={handleTerminateAll}
 				>
 					{t("profile.security.terminateAll")}
 				</Button>
@@ -117,7 +129,10 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 			<ChangePasswordModal
 				open={passwordModalOpen}
 				onClose={() => setPasswordModalOpen(false)}
-				email={profile.email}
+			/>
+			<ChangeEmailModal
+				open={emailModalOpen}
+				onClose={() => setEmailModalOpen(false)}
 			/>
 		</>
 	);

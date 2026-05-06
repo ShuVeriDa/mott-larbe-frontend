@@ -17,6 +17,7 @@ interface FeedbackInfoPanelProps {
 	onStatusChange: (status: FeedbackStatus) => void;
 	onPriorityChange: (priority: FeedbackPriority) => void;
 	onAssignOpen: () => void;
+	onTransferOpen: () => void;
 	onClose: () => void;
 	onReopen: () => void;
 	onDelete: () => void;
@@ -45,6 +46,7 @@ export const FeedbackInfoPanel = ({
 	onStatusChange,
 	onPriorityChange,
 	onAssignOpen,
+	onTransferOpen,
 	onClose,
 	onReopen,
 	onDelete,
@@ -167,7 +169,7 @@ export const FeedbackInfoPanel = ({
 						</ActionBtn>
 					)}
 					<ActionBtn
-						onClick={onAssignOpen}
+						onClick={onTransferOpen}
 						className="border-bd-2 bg-surf-2 text-t-2 hover:bg-surf-3 hover:text-t-1"
 						icon={
 							<svg viewBox="0 0 16 16" fill="none" className="size-3">

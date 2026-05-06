@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import {
 	DEFAULT_LOCALE,
 	LOCALES,
+	getDictionary,
 	hasLocale,
-} from "@/i18n/locale-list";
-import { getDictionary } from "@/i18n/locales";
+} from "@/i18n/locales";
 import { AuthPage, type AuthMode } from "@/widgets/auth-page";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
@@ -21,8 +21,8 @@ export const generateMetadata = async (props: {
 	if (!hasLocale(lang)) return {};
 
 	const dict = await getDictionary(lang);
-	const isRegister = mode === "register";
-	const meta = isRegister ? dict.auth.meta.register : dict.auth.meta.login;
+	const meta =
+		mode === "register" ? dict.auth.meta.register : dict.auth.meta.login;
 
 	const languages: Record<string, string> = {};
 	for (const locale of LOCALES) {
@@ -67,8 +67,38 @@ const AuthRoutePage = async ({ params, searchParams }: PageProps) => {
 	const { mode } = await searchParams;
 	if (!hasLocale(lang)) notFound();
 
+	const dict = await getDictionary(lang);
 	const initialMode: AuthMode = mode === "register" ? "register" : "login";
-	return <AuthPage initialMode={initialMode} />;
+	const meta =
+		initialMode === "register"
+			? dict.auth.meta.register
+			: dict.auth.meta.login;
+	const url = `${SITE_URL}/${lang}${PATH}`;
+
+	const jsonLd = {
+		"@context": "https://schema.org",
+		"@type": "WebPage",
+		name: meta.title,
+		description: meta.description,
+		url,
+		inLanguage: lang,
+		isPartOf: {
+			"@type": "WebSite",
+			name: "Mott Larbe",
+			url: `${SITE_URL}/${lang}`,
+		},
+	};
+
+	return (
+		<>
+			<script
+				type="application/ld+json"
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: structured data
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+			/>
+			<AuthPage initialMode={initialMode} />
+		</>
+	);
 };
 
 export default AuthRoutePage;

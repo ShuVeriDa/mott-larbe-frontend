@@ -4,6 +4,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useAdminDictionaryPage } from "../model/use-admin-dictionary-page";
 import { DictionaryTopbar } from "./dictionary-topbar";
 import { DictionaryStatsRow } from "./dictionary-stats-row";
+import { DictionaryUnknownWordsNotice } from "./dictionary-unknown-words-notice";
 import { DictionaryTabs } from "./dictionary-tabs";
 import { DictionaryToolbar } from "./dictionary-toolbar";
 import { DictionaryTable } from "./dictionary-table";
@@ -12,6 +13,9 @@ import { DictionaryPagination } from "./dictionary-pagination";
 import { DictionaryBulkBar } from "./dictionary-bulk-bar";
 import { DictionaryCreateModal } from "./dictionary-create-modal";
 import { DictionaryDeleteModal } from "./dictionary-delete-modal";
+import { DictionaryImportModal } from "./dictionary-import-modal";
+import { DictionaryAddSenseModal } from "./dictionary-add-sense-modal";
+import { DictionaryAddExampleModal } from "./dictionary-add-example-modal";
 
 export const AdminDictionaryPage = () => {
 	const { t, lang } = useI18n();
@@ -25,7 +29,11 @@ export const AdminDictionaryPage = () => {
 		sort,
 		language,
 		createOpen,
+		importOpen,
+		importResult,
 		deleteEntry,
+		addSenseEntry,
+		addExampleEntry,
 		selectedIds,
 		listQuery,
 		statsQuery,
@@ -36,8 +44,13 @@ export const AdminDictionaryPage = () => {
 		isCreating,
 		isDeleting,
 		isBulkDeleting,
+		isImporting,
+		isAddingSense,
+		isAddingExample,
 		setCreateOpen,
 		setDeleteEntry,
+		setAddSenseEntry,
+		setAddExampleEntry,
 		setPage,
 		handleTabChange,
 		handleSearchChange,
@@ -50,13 +63,19 @@ export const AdminDictionaryPage = () => {
 		handleClearSelection,
 		handleBulkDelete,
 		handleBulkExport,
+		handleImportOpen,
+		handleImportClose,
+		handleImport,
 		handleCreate,
 		handleDeleteConfirm,
+		handleAddSenseConfirm,
+		handleAddExampleConfirm,
 	} = useAdminDictionaryPage();
 
 	const items = listQuery.data?.items ?? [];
 	const isEmpty = items.length === 0 && !listQuery.isLoading;
 	const hasSelection = selectedIds.size > 0;
+	const unknownWordsCount = statsQuery.data?.unknownWordsCount ?? 0;
 
 	return (
 		<div className="flex min-h-screen flex-col bg-bg">
@@ -67,8 +86,19 @@ export const AdminDictionaryPage = () => {
 					<>
 						<button
 							type="button"
+							onClick={handleImportOpen}
+							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
+						>
+							<svg className="size-[11px]" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.4">
+								<path d="M7.5 10V1M4 4l3.5-3.5L11 4" strokeLinecap="round" strokeLinejoin="round" />
+								<path d="M2 12h11" strokeLinecap="round" />
+							</svg>
+							{t("admin.dictionary.import")}
+						</button>
+						<button
+							type="button"
 							onClick={() => handleBulkExport()}
-							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-[7px] border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
+							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
 							<svg className="size-[11px]" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.4">
 								<path d="M7.5 1v9M4 7l3.5 3.5L11 7" strokeLinecap="round" strokeLinejoin="round" />
@@ -79,7 +109,7 @@ export const AdminDictionaryPage = () => {
 						<button
 							type="button"
 							onClick={() => setCreateOpen(true)}
-							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
+							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 						>
 							<svg className="size-[11px]" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
 								<path d="M7.5 2v11M2 7.5h11" />
@@ -94,6 +124,12 @@ export const AdminDictionaryPage = () => {
 				<DictionaryStatsRow
 					stats={statsQuery.data}
 					isLoading={statsQuery.isLoading}
+					t={t}
+				/>
+
+				<DictionaryUnknownWordsNotice
+					count={unknownWordsCount}
+					lang={lang}
 					t={t}
 				/>
 
@@ -129,7 +165,7 @@ export const AdminDictionaryPage = () => {
 					/>
 				)}
 
-				<div className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf transition-colors">
+				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
 					{isEmpty ? (
 						<div className="py-16 text-center text-[13px] text-t-3">
 							{t("admin.dictionary.empty")}
@@ -140,10 +176,14 @@ export const AdminDictionaryPage = () => {
 								items={items}
 								isLoading={listQuery.isLoading}
 								lang={lang}
+								sort={sort}
 								selectedIds={selectedIds}
 								onSelectId={handleSelectId}
 								onSelectAll={handleSelectAll}
+								onSortChange={handleSortChange}
 								onDelete={setDeleteEntry}
+								onAddSense={setAddSenseEntry}
+								onAddExample={setAddExampleEntry}
 								t={t}
 							/>
 							<DictionaryMobileList
@@ -177,11 +217,36 @@ export const AdminDictionaryPage = () => {
 				t={t}
 			/>
 
+			<DictionaryImportModal
+				open={importOpen}
+				isSubmitting={isImporting}
+				result={importResult}
+				onSubmit={handleImport}
+				onClose={handleImportClose}
+				t={t}
+			/>
+
 			<DictionaryDeleteModal
 				entry={deleteEntry}
 				isDeleting={isDeleting}
 				onConfirm={handleDeleteConfirm}
 				onClose={() => setDeleteEntry(null)}
+				t={t}
+			/>
+
+			<DictionaryAddSenseModal
+				entry={addSenseEntry}
+				isSubmitting={isAddingSense}
+				onConfirm={(def) => { handleAddSenseConfirm(def); setAddSenseEntry(null); }}
+				onClose={() => setAddSenseEntry(null)}
+				t={t}
+			/>
+
+			<DictionaryAddExampleModal
+				entry={addExampleEntry}
+				isSubmitting={isAddingExample}
+				onConfirm={(text) => { handleAddExampleConfirm(text); setAddExampleEntry(null); }}
+				onClose={() => setAddExampleEntry(null)}
 				t={t}
 			/>
 		</div>

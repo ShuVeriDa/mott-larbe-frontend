@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { useState, type SyntheticEvent } from "react";
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
@@ -24,12 +25,14 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 	const [translation, setTranslation] = useState("");
 	const [folderId, setFolderId] = useState<string>("");
 	const [cefrLevel, setCefrLevel] = useState<string>("");
+	const [error, setError] = useState<string | null>(null);
 
 	const reset = () => {
 		setWord("");
 		setTranslation("");
 		setFolderId("");
 		setCefrLevel("");
+		setError(null);
 	};
 
 	const handleSubmit = async (
@@ -37,6 +40,7 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 	) => {
 		e.preventDefault();
 		if (!word.trim() || !translation.trim()) return;
+		setError(null);
 		try {
 			await mutateAsync({
 				word: word.trim(),
@@ -46,8 +50,10 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 			});
 			reset();
 			onClose();
-		} catch {
-			// surfaced via mutation state; toast handled at app level if needed
+		} catch (err) {
+			if (axios.isAxiosError(err) && err.response?.status === 403) {
+				setError(t("vocabulary.limitReached"));
+			}
 		}
 	};
 
@@ -115,6 +121,12 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 						</option>
 					))}
 				</Select>
+
+				{error ? (
+					<p className="mb-2 text-[12px] text-red" role="alert">
+						{error}
+					</p>
+				) : null}
 
 				<ModalActions>
 					<Button

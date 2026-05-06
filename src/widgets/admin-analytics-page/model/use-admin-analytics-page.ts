@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
 	adminAnalyticsApi,
 	useAdminAnalytics,
@@ -13,27 +13,58 @@ import type {
 	PopularBy,
 } from "@/entities/admin-analytics";
 
+const getBrowserTz = () =>
+	Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 export const useAdminAnalyticsPage = () => {
 	const [range, setRange] = useState<AnalyticsRange>("30d");
+	const [dateFrom, setDateFrom] = useState<string | undefined>(undefined);
+	const [dateTo, setDateTo] = useState<string | undefined>(undefined);
 	const [difficultBy, setDifficultBy] = useState<DifficultBy>("fail");
 	const [popularBy, setPopularBy] = useState<PopularBy>("opens");
 
-	const overviewQuery = useAdminAnalytics({ range });
+	const tz = useMemo(() => getBrowserTz(), []);
+
+	// dateFrom+dateTo override range on the backend per API contract
+	const query = useMemo(
+		() =>
+			dateFrom && dateTo
+				? { dateFrom, dateTo, tz }
+				: { range, tz },
+		[range, dateFrom, dateTo, tz],
+	);
+
+	const overviewQuery = useAdminAnalytics(query);
 
 	const difficultQuery = useAdminDifficultTexts({
-		range,
+		...query,
 		difficultBy,
 		difficultLimit: 6,
 	});
 
 	const popularQuery = useAdminPopularTexts({
-		range,
+		...query,
 		popularBy,
 		popularLimit: 7,
 	});
 
 	const handleRangeChange = useCallback((next: AnalyticsRange) => {
 		setRange(next);
+		setDateFrom(undefined);
+		setDateTo(undefined);
+	}, []);
+
+	const handleDateRangeChange = useCallback(
+		(from: string, to: string) => {
+			setDateFrom(from);
+			setDateTo(to);
+		},
+		[],
+	);
+
+	const handleDateRangeClear = useCallback(() => {
+		setDateFrom(undefined);
+		setDateTo(undefined);
 	}, []);
 
 	const handleDifficultByChange = useCallback((next: DifficultBy) => {
@@ -44,15 +75,22 @@ export const useAdminAnalyticsPage = () => {
 		setPopularBy(next);
 	}, []);
 
-	const handleExport = useCallback(() => {
-		adminAnalyticsApi.export({ range, format: "csv" });
-	}, [range]);
+	const handleExport = useCallback(
+		(format: "json" | "csv" = "csv") => {
+			adminAnalyticsApi.export({ ...query, format });
+		},
+		[query],
+	);
 
 	const data = overviewQuery.data;
 	const isLoading = overviewQuery.isLoading;
+	const isCustomRange = Boolean(dateFrom && dateTo);
 
 	return {
 		range,
+		dateFrom,
+		dateTo,
+		isCustomRange,
 		difficultBy,
 		popularBy,
 		data,
@@ -61,6 +99,8 @@ export const useAdminAnalyticsPage = () => {
 		difficultQuery,
 		popularQuery,
 		handleRangeChange,
+		handleDateRangeChange,
+		handleDateRangeClear,
 		handleDifficultByChange,
 		handlePopularByChange,
 		handleExport,

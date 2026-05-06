@@ -2,13 +2,13 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
-import type { UnknownWordsTab, UnknownWordsTabCounts } from "@/entities/unknown-word";
+import type { UnknownWordsTab, UnknownWordTabCounts } from "@/entities/admin-unknown-word";
 
 const TABS: UnknownWordsTab[] = ["all", "frequent", "rare"];
 
 interface UnknownWordsTabsProps {
 	active: UnknownWordsTab;
-	counts: UnknownWordsTabCounts | undefined;
+	counts: UnknownWordTabCounts | undefined;
 	onChange: (tab: UnknownWordsTab) => void;
 }
 

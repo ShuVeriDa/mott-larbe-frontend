@@ -9,6 +9,7 @@ import { TextsBulkBar } from "./texts-bulk-bar";
 import { TextsTable } from "./texts-table";
 import { TextsMobileList } from "./texts-mobile-list";
 import { TextsPagination } from "./texts-pagination";
+import { ImportTextsModal } from "./import-texts-modal";
 
 export const AdminTextsPage = () => {
 	const state = useAdminTextsPage();
@@ -17,11 +18,13 @@ export const AdminTextsPage = () => {
 		tab,
 		search,
 		level,
+		tagId,
 		sortBy,
 		page,
 		selectedIds,
 		allSelected,
 		someSelected,
+		importOpen,
 		data,
 		stats,
 		isLoading,
@@ -30,11 +33,13 @@ export const AdminTextsPage = () => {
 		handleTabChange,
 		handleSearchChange,
 		handleLevelChange,
+		handleTagChange,
 		handleSortChange,
 		toggleSelectId,
 		toggleSelectAll,
 		clearSelection,
 		setPage,
+		setImportOpen,
 	} = state;
 
 	const selectedArray = Array.from(selectedIds);
@@ -45,7 +50,7 @@ export const AdminTextsPage = () => {
 
 	return (
 		<div className="flex min-h-0 flex-1 flex-col overflow-y-auto [&::-webkit-scrollbar]:w-0">
-			<TextsTopbar />
+			<TextsTopbar onImportClick={() => setImportOpen(true)} />
 
 			<div className="px-[22px] py-4 pb-8 max-sm:px-3.5 max-sm:pb-6">
 				<TextsStatsRow stats={stats} isLoading={statsLoading} />
@@ -59,14 +64,16 @@ export const AdminTextsPage = () => {
 				<TextsToolbar
 					search={search}
 					level={level}
+					tagId={tagId}
 					sortBy={sortBy}
 					onSearchChange={handleSearchChange}
 					onLevelChange={handleLevelChange}
+					onTagChange={handleTagChange}
 					onSortChange={handleSortChange}
 				/>
 
 				{/* Table card */}
-				<div className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf">
+				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 					<TextsBulkBar
 						selectedCount={selectedIds.size}
 						onPublish={() => mutations.bulkPublish.mutate(selectedArray, { onSuccess: clearSelection })}
@@ -101,6 +108,10 @@ export const AdminTextsPage = () => {
 					)}
 				</div>
 			</div>
+
+			{importOpen && (
+				<ImportTextsModal onClose={() => setImportOpen(false)} />
+			)}
 		</div>
 	);
 };

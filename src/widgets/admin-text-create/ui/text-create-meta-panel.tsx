@@ -2,8 +2,9 @@
 
 import { useRef, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
+import type { AdminTag } from "@/entities/admin-tag";
 import type { TextLanguage, TextLevel, TextStatus } from "@/entities/admin-text";
-import type { PageContent } from "../model/use-admin-text-create-page";
+import type { PageContent, TagEntry } from "../model/use-admin-text-create-page";
 
 interface TextCreateMetaPanelProps {
 	status: TextStatus;
@@ -11,7 +12,8 @@ interface TextCreateMetaPanelProps {
 	level: TextLevel | null;
 	author: string;
 	source: string;
-	tags: string[];
+	tags: TagEntry[];
+	allTags: AdminTag[];
 	description: string;
 	coverPreviewUrl: string | null;
 	autoTokenizeOnSave: boolean;
@@ -24,8 +26,8 @@ interface TextCreateMetaPanelProps {
 	onLevelChange: (v: TextLevel | null) => void;
 	onAuthorChange: (v: string) => void;
 	onSourceChange: (v: string) => void;
-	onTagAdd: (tag: string) => void;
-	onTagRemove: (tag: string) => void;
+	onTagAdd: (name: string, id?: string) => void;
+	onTagRemove: (index: number) => void;
 	onDescriptionChange: (v: string) => void;
 	onCoverSelect: (file: File) => void;
 	onAutoTokenizeChange: (v: boolean) => void;
@@ -104,6 +106,7 @@ export const TextCreateMetaPanel = ({
 	author,
 	source,
 	tags,
+	allTags,
 	description,
 	coverPreviewUrl,
 	autoTokenizeOnSave,
@@ -134,23 +137,39 @@ export const TextCreateMetaPanel = ({
 
 	const maxWordCount = Math.max(...pages.map((p) => p.wordCount), 1);
 
+	// ── Tag autocomplete ──────────────────────────────────────────────────────
+
+	const filteredSuggestions = tagInputValue
+		? allTags.filter(
+				(tag) =>
+					tag.name.toLowerCase().includes(tagInputValue.toLowerCase()) &&
+					!tags.some((s) => s.id === tag.id || s.name.toLowerCase() === tag.name.toLowerCase()),
+			)
+		: [];
+
+	const hasExactMatch = allTags.some(
+		(tag) => tag.name.toLowerCase() === tagInputValue.toLowerCase(),
+	);
+	const canCreateNew =
+		tagInputValue.trim().length > 0 &&
+		!hasExactMatch &&
+		!tags.some((s) => s.name.toLowerCase() === tagInputValue.trim().toLowerCase());
+
+	const commitTag = (name: string, id?: string) => {
+		onTagAdd(name, id);
+		setTagInputValue("");
+	};
+
 	const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
 			e.preventDefault();
-			if (tagInputValue.trim()) {
-				onTagAdd(tagInputValue.trim());
-				setTagInputValue("");
-			}
+			const trimmed = tagInputValue.trim();
+			if (!trimmed) return;
+			const exact = allTags.find((tag) => tag.name.toLowerCase() === trimmed.toLowerCase());
+			commitTag(exact ? exact.name : trimmed, exact?.id);
+		} else if (e.key === "Escape") {
+			setTagInputValue("");
 		}
-	};
-
-	const handleCoverClick = () => {
-		fileInputRef.current?.click();
-	};
-
-	const handleCoverChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0];
-		if (file) onCoverSelect(file);
 	};
 
 	return (
@@ -208,7 +227,7 @@ export const TextCreateMetaPanel = ({
 
 					<div className="mb-[11px]">
 						<FieldLabel>{t("admin.texts.createPage.levelLabel")}</FieldLabel>
-						<div className="grid grid-cols-6 gap-1.5 max-[600px]:grid-cols-6">
+						<div className="grid grid-cols-6 gap-1.5">
 							{LEVELS.map((lvl) => (
 								<button
 									key={lvl}
@@ -231,6 +250,7 @@ export const TextCreateMetaPanel = ({
 						<FieldInput
 							type="text"
 							value={author}
+							maxLength={50}
 							onChange={(e) => onAuthorChange(e.target.value)}
 							placeholder={t("admin.texts.createPage.authorPlaceholder")}
 						/>
@@ -249,33 +269,77 @@ export const TextCreateMetaPanel = ({
 
 				{/* ── Tags ── */}
 				<MetaSection title={t("admin.texts.createPage.sections.tags")}>
+					{/*
+						onBlur on the wrapper closes the dropdown when focus leaves the whole block.
+						onMouseDown on dropdown items prevents blur from firing before onClick.
+					*/}
 					<div
-						className="flex min-h-[38px] cursor-text flex-wrap gap-1.5 rounded-[7px] border border-bd-2 bg-surf px-2 py-1.5 transition-colors focus-within:border-acc"
-						onClick={() => tagInputRef.current?.focus()}
+						onBlur={(e) => {
+							if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+								setTagInputValue("");
+							}
+						}}
+						className="relative"
 					>
-						{tags.map((tag) => (
-							<span
-								key={tag}
-								className="inline-flex items-center gap-1 rounded-[4px] bg-acc-muted px-2 py-[3px] text-[11.5px] font-medium text-acc-strong"
-							>
-								{tag}
-								<button
-									type="button"
-									onClick={(e) => { e.stopPropagation(); onTagRemove(tag); }}
-									className="flex items-center text-[13px] leading-none opacity-60 hover:opacity-100"
+						<div
+							className="flex min-h-[38px] cursor-text flex-wrap gap-1.5 rounded-base border border-bd-2 bg-surf px-2 py-1.5 transition-colors focus-within:border-acc"
+							onClick={() => tagInputRef.current?.focus()}
+						>
+							{tags.map((tag, index) => (
+								<span
+									key={index}
+									className="inline-flex items-center gap-1 rounded-[4px] bg-acc-muted px-2 py-[3px] text-[11.5px] font-medium text-acc-strong"
 								>
-									×
-								</button>
-							</span>
-						))}
-						<input
-							ref={tagInputRef}
-							value={tagInputValue}
-							onChange={(e) => setTagInputValue(e.target.value)}
-							onKeyDown={handleTagKeyDown}
-							placeholder={tags.length === 0 ? t("admin.texts.createPage.tagsAddPlaceholder") : ""}
-							className="min-w-[70px] flex-1 border-none bg-transparent text-[12.5px] text-t-1 outline-none placeholder:text-t-3"
-						/>
+									{tag.name}
+									<button
+										type="button"
+										onClick={(e) => { e.stopPropagation(); onTagRemove(index); }}
+										className="flex items-center text-[13px] leading-none opacity-60 hover:opacity-100"
+									>
+										×
+									</button>
+								</span>
+							))}
+							<input
+								ref={tagInputRef}
+								value={tagInputValue}
+								onChange={(e) => setTagInputValue(e.target.value)}
+								onKeyDown={handleTagKeyDown}
+								placeholder={tags.length === 0 ? t("admin.texts.createPage.tagsAddPlaceholder") : ""}
+								className="min-w-[70px] flex-1 border-none bg-transparent text-[12.5px] text-t-1 outline-none placeholder:text-t-3"
+							/>
+						</div>
+
+						{/* Autocomplete dropdown */}
+						{tagInputValue && (filteredSuggestions.length > 0 || canCreateNew) && (
+							<div className="absolute left-0 right-0 top-full z-30 mt-1 overflow-hidden rounded-[8px] border border-bd-2 bg-bg shadow-lg">
+								{filteredSuggestions.map((tag) => (
+									<button
+										key={tag.id}
+										type="button"
+										onMouseDown={(e) => e.preventDefault()}
+										onClick={() => commitTag(tag.name, tag.id)}
+										className="flex w-full items-center gap-2 px-3 py-[9px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
+									>
+										<span className="flex-1">{tag.name}</span>
+										<span className="text-[10.5px] text-t-4">{tag._count.texts}</span>
+									</button>
+								))}
+								{canCreateNew && (
+									<button
+										type="button"
+										onMouseDown={(e) => e.preventDefault()}
+										onClick={() => commitTag(tagInputValue.trim())}
+										className={`flex w-full items-center gap-2 px-3 py-[9px] text-left text-[12.5px] transition-colors hover:bg-acc-muted ${filteredSuggestions.length > 0 ? "border-t border-bd-1" : ""}`}
+									>
+										<span className="text-[10px] font-semibold uppercase tracking-wide text-t-3">
+											{t("admin.texts.createPage.tagsCreate")}
+										</span>
+										<span className="text-acc-strong">{tagInputValue.trim()}</span>
+									</button>
+								)}
+							</div>
+						)}
 					</div>
 					<p className="mt-1.5 text-[10.5px] text-t-3">
 						{t("admin.texts.createPage.tagsHint")}
@@ -289,7 +353,8 @@ export const TextCreateMetaPanel = ({
 						onChange={(e) => onDescriptionChange(e.target.value)}
 						placeholder={t("admin.texts.createPage.descriptionPlaceholder")}
 						rows={3}
-						className="w-full resize-y rounded-[7px] border border-bd-2 bg-surf px-2.5 py-2 text-[13px] leading-relaxed text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
+						maxLength={1000}
+						className="w-full resize-y rounded-base border border-bd-2 bg-surf px-2.5 py-2 text-[13px] leading-relaxed text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 						style={{ minHeight: "68px" }}
 					/>
 				</MetaSection>
@@ -301,14 +366,18 @@ export const TextCreateMetaPanel = ({
 						type="file"
 						accept="image/jpeg,image/png,image/webp"
 						className="hidden"
-						onChange={handleCoverChange}
+						onChange={(e) => {
+							const file = e.target.files?.[0];
+							if (file) onCoverSelect(file);
+						}}
 					/>
 					<button
 						type="button"
-						onClick={handleCoverClick}
+						onClick={() => fileInputRef.current?.click()}
 						className="flex h-[82px] w-full flex-col items-center justify-center gap-1.5 rounded-[8px] border border-dashed border-bd-2 bg-surf transition-colors hover:border-acc hover:bg-acc-muted"
 					>
 						{coverPreviewUrl ? (
+							// blob: URL from URL.createObjectURL — next/image cannot handle it
 							// eslint-disable-next-line @next/next/no-img-element
 							<img
 								src={coverPreviewUrl}

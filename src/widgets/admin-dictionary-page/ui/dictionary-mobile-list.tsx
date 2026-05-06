@@ -22,7 +22,7 @@ interface DictionaryMobileListProps {
 	isLoading: boolean;
 	lang: string;
 	onDelete: (entry: AdminDictListItem) => void;
-	t: (key: string, params?: Record<string, unknown>) => string;
+	t: (key: string, vars?: Record<string, string | number>) => string;
 }
 
 export const DictionaryMobileList = ({
@@ -72,7 +72,7 @@ export const DictionaryMobileList = ({
 					<button
 						type="button"
 						onClick={() => onDelete(item)}
-						className="shrink-0 mt-0.5 flex size-[30px] cursor-pointer items-center justify-center rounded-[7px] border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
+						className="shrink-0 mt-0.5 flex size-[30px] cursor-pointer items-center justify-center rounded-base border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 					>
 						<svg className="size-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3">
 							<path d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4" strokeLinecap="round" />

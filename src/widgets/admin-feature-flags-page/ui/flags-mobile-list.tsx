@@ -17,6 +17,7 @@ interface FlagsMobileListProps {
 	onEdit: (flag: FeatureFlagItem) => void;
 	onDuplicate: (flag: FeatureFlagItem) => void;
 	onDelete: (flag: FeatureFlagItem) => void;
+	onAddOverride: (flagId: string) => void;
 	t: (key: string, params?: Record<string, string | number>) => string;
 }
 
@@ -27,6 +28,7 @@ export const FlagsMobileList = ({
 	onEdit,
 	onDuplicate,
 	onDelete,
+	onAddOverride,
 	t,
 }: FlagsMobileListProps) => {
 	if (isLoading) {
@@ -35,7 +37,7 @@ export const FlagsMobileList = ({
 				{Array.from({ length: 4 }).map((_, i) => (
 					<div
 						key={i}
-						className="mb-2 overflow-hidden rounded-[11px] border border-bd-1 bg-surf p-3"
+						className="mb-2 overflow-hidden rounded-card border border-bd-1 bg-surf p-3"
 					>
 						<div className="mb-2 h-4 w-40 animate-pulse rounded bg-surf-3" />
 						<div className="h-3 w-24 animate-pulse rounded bg-surf-3" />
@@ -50,7 +52,7 @@ export const FlagsMobileList = ({
 			{items.map((flag) => (
 				<div
 					key={flag.id}
-					className="mb-2 overflow-hidden rounded-[11px] border border-bd-1 bg-surf transition-colors"
+					className="mb-2 overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors"
 				>
 					<div className="flex items-start gap-2.5 p-3">
 						<div className="min-w-0 flex-1">
@@ -79,6 +81,7 @@ export const FlagsMobileList = ({
 								onEdit={onEdit}
 								onDuplicate={onDuplicate}
 								onDelete={onDelete}
+								onAddOverride={onAddOverride}
 								t={t}
 							/>
 						</div>

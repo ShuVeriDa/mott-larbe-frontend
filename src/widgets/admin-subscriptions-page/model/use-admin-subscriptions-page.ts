@@ -1,7 +1,9 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
+	useAdminSubscriptionDetail,
 	useAdminSubscriptionMutations,
 	useAdminSubscriptions,
 	useAdminSubscriptionStats,
@@ -18,75 +20,150 @@ import type {
 
 export type ModalType = "add" | "cancel" | "extend" | null;
 
+const DEFAULT_TAB: SubscriptionsTab = "all";
+const DEFAULT_SORT: SubscriptionsSort = "nextBilling_asc";
+
 export const useAdminSubscriptionsPage = () => {
-	const [tab, setTab] = useState<SubscriptionsTab>("all");
-	const [search, setSearch] = useState("");
-	const [planType, setPlanType] = useState<PlanType | "">("");
-	const [provider, setProvider] = useState<PaymentProvider | "">("");
-	const [sort, setSort] = useState<SubscriptionsSort>("nextBilling_asc");
-	const [page, setPage] = useState(1);
-	const [selectedId, setSelectedId] = useState<string | null>(null);
+	const router = useRouter();
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
+
+	const urlTab = (searchParams.get("tab") as SubscriptionsTab) ?? DEFAULT_TAB;
+	const urlSearch = searchParams.get("q") ?? "";
+	const urlPlanType = (searchParams.get("plan") as PlanType | "") ?? "";
+	const urlProvider = (searchParams.get("provider") as PaymentProvider) ?? "";
+	const urlSort = (searchParams.get("sort") as SubscriptionsSort) ?? DEFAULT_SORT;
+	const urlPage = Math.max(1, Number(searchParams.get("page") ?? "1"));
+	const urlSelectedId = searchParams.get("selected") ?? null;
+
+	const [searchInput, setSearchInput] = useState(urlSearch);
 	const [modal, setModal] = useState<ModalType>(null);
+	const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
+	const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+	useEffect(() => {
+		setSearchInput(urlSearch);
+	}, [urlSearch]);
+
+	const updateParams = useCallback(
+		(updates: Record<string, string | undefined>) => {
+			const params = new URLSearchParams(searchParams.toString());
+			for (const [key, value] of Object.entries(updates)) {
+				if (!value) {
+					params.delete(key);
+				} else {
+					params.set(key, value);
+				}
+			}
+			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+		},
+		[router, pathname, searchParams],
+	);
 
 	const statusFromTab: SubscriptionStatus | undefined =
-		tab === "all" ? undefined : (tab.toUpperCase() as SubscriptionStatus);
+		urlTab === "all" ? undefined : (urlTab.toUpperCase() as SubscriptionStatus);
+
+	const activeSearch = urlSearch.length >= 2 ? urlSearch : "";
 
 	const query: FetchSubscriptionsQuery = {
-		...(search ? { search } : {}),
-		...(planType ? { planType: planType as PlanType } : {}),
-		...(provider ? { provider: provider as PaymentProvider } : {}),
+		...(activeSearch ? { search: activeSearch } : {}),
+		...(urlPlanType ? { planType: urlPlanType as PlanType } : {}),
+		...(urlProvider ? { provider: urlProvider as PaymentProvider } : {}),
 		...(statusFromTab ? { status: statusFromTab } : {}),
-		sort,
-		page,
+		sort: urlSort,
+		page: urlPage,
 		limit: 25,
 	};
 
 	const { data, isLoading, isFetching } = useAdminSubscriptions(query);
 	const { data: stats, isLoading: statsLoading } = useAdminSubscriptionStats();
+	const { data: selectedSub, isLoading: detailLoading } = useAdminSubscriptionDetail(urlSelectedId);
 	const mutations = useAdminSubscriptionMutations();
 
-	const selectedSub =
-		data?.items.find((s) => s.id === selectedId) ?? null;
+	const tabCounts = {
+		all: data?.total ?? 0,
+		active: stats?.activeCount ?? 0,
+		trialing: stats?.trialingCount ?? 0,
+		canceled: stats?.canceledCount ?? 0,
+		expired: stats?.expiredCount ?? 0,
+	};
 
-	const handleTabChange = useCallback((next: SubscriptionsTab) => {
-		setTab(next);
-		setPage(1);
-		setSelectedId(null);
-	}, []);
+	const handleTabChange = useCallback(
+		(next: SubscriptionsTab) => {
+			updateParams({ tab: next === DEFAULT_TAB ? undefined : next, page: undefined, selected: undefined });
+			setMobileSheetOpen(false);
+		},
+		[updateParams],
+	);
 
-	const handleSearchChange = useCallback((value: string) => {
-		setSearch(value);
-		setPage(1);
-	}, []);
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			setSearchInput(value);
+			clearTimeout(debounceRef.current);
+			debounceRef.current = setTimeout(() => {
+				const params = new URLSearchParams(window.location.search);
+				if (value.length >= 2) {
+					params.set("q", value);
+				} else {
+					params.delete("q");
+				}
+				params.delete("page");
+				router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+			}, 300);
+		},
+		[router, pathname],
+	);
 
-	const handlePlanChange = useCallback((value: string) => {
-		setPlanType(value as PlanType | "");
-		setPage(1);
-	}, []);
+	const handlePlanChange = useCallback(
+		(value: string) => {
+			updateParams({ plan: value || undefined, page: undefined });
+		},
+		[updateParams],
+	);
 
-	const handleProviderChange = useCallback((value: string) => {
-		setProvider(value as PaymentProvider | "");
-		setPage(1);
-	}, []);
+	const handleProviderChange = useCallback(
+		(value: string) => {
+			updateParams({ provider: value || undefined, page: undefined });
+		},
+		[updateParams],
+	);
 
-	const handleSortChange = useCallback((value: SubscriptionsSort) => {
-		setSort(value);
-		setPage(1);
-	}, []);
+	const handleSortChange = useCallback(
+		(value: SubscriptionsSort) => {
+			updateParams({ sort: value === DEFAULT_SORT ? undefined : value, page: undefined });
+		},
+		[updateParams],
+	);
 
-	const handleSelectRow = useCallback((id: string) => {
-		setSelectedId((prev) => (prev === id ? null : id));
+	const handleSelectRow = useCallback(
+		(id: string) => {
+			const next = urlSelectedId === id ? undefined : id;
+			updateParams({ selected: next });
+			setMobileSheetOpen(!!next);
+		},
+		[urlSelectedId, updateParams],
+	);
+
+	const closeMobileSheet = useCallback(() => {
+		setMobileSheetOpen(false);
 	}, []);
 
 	const openModal = useCallback(
 		(type: ModalType, id?: string) => {
-			if (id) setSelectedId(id);
+			if (id) updateParams({ selected: id });
 			setModal(type);
 		},
-		[],
+		[updateParams],
 	);
 
 	const closeModal = useCallback(() => setModal(null), []);
+
+	const handlePageChange = useCallback(
+		(next: number) => {
+			updateParams({ page: next === 1 ? undefined : String(next) });
+		},
+		[updateParams],
+	);
 
 	const handleExport = useCallback(async () => {
 		try {
@@ -102,28 +179,22 @@ export const useAdminSubscriptionsPage = () => {
 		}
 	}, [query]);
 
-	const tabCounts = {
-		all: data?.total ?? 0,
-		active: stats?.activeCount ?? 0,
-		trialing: stats?.trialingCount ?? 0,
-		canceled: stats?.canceledCount ?? 0,
-		expired: stats?.expiredCount ?? 0,
-	};
-
 	return {
-		tab,
-		search,
-		planType,
-		provider,
-		sort,
-		page,
-		selectedId,
-		selectedSub,
+		tab: urlTab,
+		search: searchInput,
+		planType: urlPlanType,
+		provider: urlProvider,
+		sort: urlSort,
+		page: urlPage,
+		selectedId: urlSelectedId,
+		selectedSub: selectedSub ?? null,
 		modal,
+		mobileSheetOpen,
 		data,
 		stats,
 		isLoading,
 		isFetching,
+		detailLoading,
 		statsLoading,
 		mutations,
 		tabCounts,
@@ -133,9 +204,10 @@ export const useAdminSubscriptionsPage = () => {
 		handleProviderChange,
 		handleSortChange,
 		handleSelectRow,
+		closeMobileSheet,
 		openModal,
 		closeModal,
-		setPage,
+		setPage: handlePageChange,
 		handleExport,
 	};
 };

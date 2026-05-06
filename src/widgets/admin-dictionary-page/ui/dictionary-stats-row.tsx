@@ -29,7 +29,7 @@ const SkeletonCard = () => (
 interface DictionaryStatsRowProps {
 	stats: AdminDictStats | undefined;
 	isLoading: boolean;
-	t: (key: string, params?: Record<string, unknown>) => string;
+	t: (key: string, vars?: Record<string, string | number>) => string;
 }
 
 export const DictionaryStatsRow = ({ stats, isLoading, t }: DictionaryStatsRowProps) => {

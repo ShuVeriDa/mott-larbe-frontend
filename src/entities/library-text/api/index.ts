@@ -13,4 +13,7 @@ export type {
 	LibraryTextPage,
 	LibraryTextWordStats,
 	LibraryRelatedText,
+	TextReportReason,
+	TextReportBody,
+	TextReportResponse,
 } from "./types";

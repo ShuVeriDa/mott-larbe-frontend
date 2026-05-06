@@ -6,6 +6,7 @@ import type {
 	AdminReplyDto,
 	AssignFeedbackDto,
 	FeedbackPriority,
+	TransferFeedbackDto,
 	UpdateFeedbackStatusDto,
 } from "../api";
 import type { FeedbackStatus } from "../api";
@@ -45,6 +46,12 @@ export const useAdminFeedbackMutations = (threadId: string | null) => {
 		onSuccess: invalidate,
 	});
 
+	const transferThread = useMutation({
+		mutationFn: (dto: TransferFeedbackDto) =>
+			adminFeedbackApi.transfer(threadId!, dto),
+		onSuccess: invalidate,
+	});
+
 	const deleteThread = useMutation({
 		mutationFn: () => adminFeedbackApi.deleteThread(threadId!),
 		onSuccess: () => {
@@ -53,5 +60,5 @@ export const useAdminFeedbackMutations = (threadId: string | null) => {
 		},
 	});
 
-	return { reply, updateStatus, updatePriority, assign, deleteThread };
+	return { reply, updateStatus, updatePriority, assign, transferThread, deleteThread };
 };

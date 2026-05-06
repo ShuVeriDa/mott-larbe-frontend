@@ -1,11 +1,18 @@
 import { http } from "@/shared/api";
 import type {
 	CreateFeatureFlagDto,
+	CreateFeatureFlagOverrideDto,
+	FeatureFlagHistoryActorsResult,
+	FeatureFlagHistoryItem,
 	FeatureFlagItem,
+	FeatureFlagKeysResult,
 	FeatureFlagStats,
 	GetFeatureFlagHistoryQuery,
+	GetFeatureFlagKeysQuery,
 	GetFeatureFlagOverridesQuery,
 	GetFeatureFlagsQuery,
+	ImportFeatureFlagsDto,
+	ImportFeatureFlagsResult,
 	PaginatedFeatureFlagHistory,
 	PaginatedFeatureFlagOverrides,
 	PaginatedFeatureFlags,
@@ -69,4 +76,28 @@ export const featureFlagApi = {
 			.get<PaginatedFeatureFlagHistory>("/admin/feature-flags/history", { params })
 			.then((r) => r.data);
 	},
+
+	getFlagHistory: (id: string, limit = 20): Promise<FeatureFlagHistoryItem[]> =>
+		http
+			.get<FeatureFlagHistoryItem[]>(`/admin/feature-flags/${id}/history`, { params: { limit } })
+			.then((r) => r.data),
+
+	getKeys: (query: GetFeatureFlagKeysQuery = {}): Promise<FeatureFlagKeysResult> => {
+		const params: Record<string, unknown> = {};
+		if (query.search) params.search = query.search;
+		if (query.includeDeleted) params.includeDeleted = query.includeDeleted;
+		if (query.limit) params.limit = query.limit;
+		return http.get<FeatureFlagKeysResult>("/admin/feature-flags/keys", { params }).then((r) => r.data);
+	},
+
+	getHistoryActors: (): Promise<FeatureFlagHistoryActorsResult> =>
+		http
+			.get<FeatureFlagHistoryActorsResult>("/admin/feature-flags/history/actors")
+			.then((r) => r.data),
+
+	createOverride: (dto: CreateFeatureFlagOverrideDto): Promise<unknown> =>
+		http.post("/admin/feature-flags/overrides", dto).then((r) => r.data),
+
+	importFlags: (dto: ImportFeatureFlagsDto): Promise<ImportFeatureFlagsResult> =>
+		http.post<ImportFeatureFlagsResult>("/admin/feature-flags/import", dto).then((r) => r.data),
 };

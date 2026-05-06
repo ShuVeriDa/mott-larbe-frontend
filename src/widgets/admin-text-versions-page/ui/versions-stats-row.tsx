@@ -2,11 +2,12 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import type { TextVersionListItem } from "@/entities/admin-text";
 
 interface StatCardProps {
 	label: string;
 	sub: string;
-	value: number;
+	value: number | string;
 	valueClass?: string;
 	isLoading: boolean;
 }
@@ -31,11 +32,11 @@ interface VersionsStatsRowProps {
 	total: number;
 	successCount: number;
 	errorCount: number;
-	runningCount: number;
+	currentVersion: TextVersionListItem | null;
 	isLoading: boolean;
 }
 
-export const VersionsStatsRow = ({ total, successCount, errorCount, runningCount, isLoading }: VersionsStatsRowProps) => {
+export const VersionsStatsRow = ({ total, successCount, errorCount, currentVersion, isLoading }: VersionsStatsRowProps) => {
 	const { t } = useI18n();
 
 	return (
@@ -61,10 +62,11 @@ export const VersionsStatsRow = ({ total, successCount, errorCount, runningCount
 				isLoading={isLoading}
 			/>
 			<StatCard
-				label={t("admin.texts.versions.stats.running")}
-				sub={t("admin.texts.versions.stats.runningSub")}
-				value={runningCount}
-				valueClass={runningCount > 0 ? "text-amb" : undefined}
+				label={t("admin.texts.versions.stats.currentTokens")}
+				sub={t("admin.texts.versions.stats.currentTokensSub", {
+					pages: String(currentVersion?.pageCount ?? "—"),
+				})}
+				value={currentVersion ? currentVersion.tokenCount.toLocaleString() : "—"}
 				isLoading={isLoading}
 			/>
 		</div>

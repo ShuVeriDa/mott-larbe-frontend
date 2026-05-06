@@ -1,12 +1,15 @@
 import { http } from "@/shared/api";
 import type {
 	AdminTextDetail,
+	AdminTextUnknownWords,
 	AdminTextsListResponse,
 	AdminTextsStats,
+	BulkImportResult,
 	BulkTextsResult,
 	CreateTextDto,
 	FetchAdminTextsQuery,
 	ProcessResult,
+	ProcessTextDto,
 	ProcessingStatus,
 	PublishResult,
 	RestoreVersionResult,
@@ -44,6 +47,11 @@ export const adminTextApi = {
 
 	unpublish: async (id: string): Promise<PublishResult> => {
 		const { data } = await http.post<PublishResult>(`/admin/texts/${id}/unpublish`);
+		return data;
+	},
+
+	process: async (id: string, dto: ProcessTextDto): Promise<ProcessResult> => {
+		const { data } = await http.post<ProcessResult>(`/admin/texts/${id}/process`, dto);
 		return data;
 	},
 
@@ -124,17 +132,32 @@ export const adminTextApi = {
 		return data;
 	},
 
-	downloadVersion: async (textId: string, versionId: string): Promise<void> => {
-		const { data } = await http.get<Blob>(`/admin/texts/${textId}/versions/${versionId}/download`, {
+	downloadVersion: async (textId: string, versionId: string, versionNumber?: number): Promise<void> => {
+		const response = await http.get<Blob>(`/admin/texts/${textId}/versions/${versionId}/download`, {
 			responseType: "blob",
 		});
-		const url = URL.createObjectURL(data);
+		const contentDisposition = (response.headers as Record<string, string>)["content-disposition"] ?? "";
+		const serverFilename = contentDisposition.match(/filename="?([^";\n]+)"?/)?.[1];
+		const fallbackFilename = versionNumber !== undefined
+			? `text-${textId}-v${versionNumber}.json`
+			: `text-${textId}-${versionId}.json`;
+		const url = URL.createObjectURL(response.data);
 		const a = document.createElement("a");
 		a.href = url;
-		a.download = `text-${textId}-v${versionId}.json`;
+		a.download = serverFilename ?? fallbackFilename;
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);
 		URL.revokeObjectURL(url);
+	},
+
+	bulkImport: async (items: CreateTextDto[]): Promise<BulkImportResult> => {
+		const { data } = await http.post<BulkImportResult>("/admin/texts/bulk-import", { items });
+		return data;
+	},
+
+	getUnknownWords: async (textId: string): Promise<AdminTextUnknownWords> => {
+		const { data } = await http.get<AdminTextUnknownWords>(`/admin/texts/${textId}/unknown-words`);
+		return data;
 	},
 };

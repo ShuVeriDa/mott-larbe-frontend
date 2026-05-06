@@ -13,7 +13,12 @@ export const adminLogApi = {
 			.get<AdminLogsListResponse>("/admin/logs", { params: query })
 			.then((r) => r.data),
 
-	stats: (query?: Pick<FetchAdminLogsQuery, "range" | "dateFrom" | "dateTo">) =>
+	stats: (
+		query?: Pick<
+			FetchAdminLogsQuery,
+			"range" | "dateFrom" | "dateTo" | "tab" | "q" | "service"
+		>,
+	) =>
 		http
 			.get<AdminLogsStats>("/admin/logs/stats", { params: query })
 			.then((r) => r.data),

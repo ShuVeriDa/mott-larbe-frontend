@@ -4,7 +4,7 @@ interface DictionaryBulkBarProps {
 	onDelete: () => void;
 	onExport: () => void;
 	onClear: () => void;
-	t: (key: string, params?: Record<string, unknown>) => string;
+	t: (key: string, vars?: Record<string, string | number>) => string;
 }
 
 export const DictionaryBulkBar = ({

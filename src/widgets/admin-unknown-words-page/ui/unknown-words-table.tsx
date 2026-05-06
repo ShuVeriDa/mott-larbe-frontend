@@ -1,21 +1,23 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
-import type { UnknownWordListItem } from "@/entities/unknown-word";
-import type { useUnknownWordMutations } from "@/entities/unknown-word/model/use-unknown-word-mutations";
+import type { UnknownWordItem } from "@/entities/admin-unknown-word";
+import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word/model/use-admin-unknown-word-mutations";
 import { CountBadge } from "./unknown-words-count-badge";
 import { UnknownWordRowActions } from "./unknown-words-row-actions";
 import { formatShortDate } from "../lib/format-date";
 
 interface UnknownWordsTableProps {
-	words: UnknownWordListItem[];
+	words: UnknownWordItem[];
 	selectedIds: Set<string>;
 	allSelected: boolean;
 	onToggleAll: () => void;
 	onToggleRow: (id: string) => void;
-	mutations: ReturnType<typeof useUnknownWordMutations>;
+	mutations: ReturnType<typeof useAdminUnknownWordMutations>;
 	isLoading: boolean;
-	onAddToDictionary: (word: UnknownWordListItem) => void;
+	onAddToDictionary: (word: UnknownWordItem) => void;
+	onLinkToLemma: (word: UnknownWordItem) => void;
+	onViewContexts: (word: UnknownWordItem) => void;
 }
 
 export const UnknownWordsTable = ({
@@ -27,6 +29,8 @@ export const UnknownWordsTable = ({
 	mutations,
 	isLoading,
 	onAddToDictionary,
+	onLinkToLemma,
+	onViewContexts,
 }: UnknownWordsTableProps) => {
 	const { t } = useI18n();
 
@@ -139,17 +143,16 @@ export const UnknownWordsTable = ({
 
 							{/* Context */}
 							<td className="max-w-[260px] px-2.5 py-[10px]">
-								{word.snippet ? (
-									<div
-										className="line-clamp-2 text-[12px] leading-[1.5] text-t-2"
-										dangerouslySetInnerHTML={{ __html: word.snippet }}
-									/>
+								{word.firstContext?.snippet ? (
+									<div className="line-clamp-2 text-[12px] leading-normal text-t-2">
+										{word.firstContext.snippet}
+									</div>
 								) : (
 									<span className="text-[11px] text-t-4">—</span>
 								)}
-								{word.texts?.[0] && (
+								{word.firstContext?.textTitle && (
 									<div className="mt-0.5 text-[11px] text-t-3">
-										«{word.texts[0].title}»
+										«{word.firstContext.textTitle}»{word.firstContext.pageNumber ? `, с. ${word.firstContext.pageNumber}` : ""}
 									</div>
 								)}
 							</td>
@@ -175,6 +178,8 @@ export const UnknownWordsTable = ({
 									word={word}
 									mutations={mutations}
 									onAddToDictionary={() => onAddToDictionary(word)}
+									onLinkToLemma={() => onLinkToLemma(word)}
+									onViewContexts={() => onViewContexts(word)}
 								/>
 							</td>
 						</tr>

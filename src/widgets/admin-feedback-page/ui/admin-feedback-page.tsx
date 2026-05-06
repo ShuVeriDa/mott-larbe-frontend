@@ -5,6 +5,7 @@ import { FeedbackListPanel } from "./feedback-list-panel";
 import { FeedbackChatPanel } from "./feedback-chat-panel";
 import { FeedbackEmptyState } from "./feedback-empty-state";
 import { FeedbackAssignModal } from "./feedback-assign-modal";
+import { FeedbackTransferModal } from "./feedback-transfer-modal";
 import { FeedbackInfoDrawer } from "./feedback-info-drawer";
 
 export const AdminFeedbackPage = () => {
@@ -15,14 +16,18 @@ export const AdminFeedbackPage = () => {
 		search,
 		inputMode,
 		isAssignModalOpen,
+		isTransferModalOpen,
 		isInfoDrawerOpen,
 		isMobileChat,
+		isExporting,
 		threads,
 		thread,
 		stats,
 		assignees,
 		isAssigneesLoading,
 		isListLoading,
+		isFetchingNextPage,
+		hasNextPage,
 		isReplying,
 		openCount,
 		handleTabChange,
@@ -34,13 +39,17 @@ export const AdminFeedbackPage = () => {
 		handleStatusChange,
 		handlePriorityChange,
 		handleAssign,
+		handleTransfer,
 		handleClose,
 		handleReopen,
 		handleDelete,
 		handleCopyLink,
+		handleExport,
 		handleMoreMenu,
+		fetchNextPage,
 		setInputMode,
 		setIsAssignModalOpen,
+		setIsTransferModalOpen,
 		setIsInfoDrawerOpen,
 	} = useAdminFeedbackPage();
 
@@ -68,7 +77,9 @@ export const AdminFeedbackPage = () => {
 					)}
 					<button
 						type="button"
-						className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-surf px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+						disabled={isExporting}
+						onClick={handleExport}
+						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-50"
 					>
 						<svg viewBox="0 0 16 16" fill="none" className="size-[13px]">
 							<path d="M8 2v9M4 8l4 4 4-4M3 14h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
@@ -88,12 +99,15 @@ export const AdminFeedbackPage = () => {
 					search={search}
 					openCount={openCount}
 					isLoading={isListLoading}
+					isFetchingNextPage={isFetchingNextPage}
+					hasNextPage={hasNextPage}
 					isMobileVisible={isMobileChat}
 					t={t}
 					onTabChange={handleTabChange}
 					onTypeChange={handleTypeChange}
 					onSearchChange={handleSearchChange}
 					onSelect={handleSelect}
+					onLoadMore={fetchNextPage}
 				/>
 
 				{thread ? (
@@ -113,6 +127,7 @@ export const AdminFeedbackPage = () => {
 						onStatusChange={handleStatusChange}
 						onPriorityChange={handlePriorityChange}
 						onAssignOpen={() => setIsAssignModalOpen(true)}
+						onTransferOpen={() => setIsTransferModalOpen(true)}
 						onClose={handleClose}
 						onDelete={handleDelete}
 					/>
@@ -130,6 +145,7 @@ export const AdminFeedbackPage = () => {
 				onStatusChange={handleStatusChange}
 				onPriorityChange={handlePriorityChange}
 				onAssignOpen={() => { setIsInfoDrawerOpen(false); setIsAssignModalOpen(true); }}
+				onTransferOpen={() => { setIsInfoDrawerOpen(false); setIsTransferModalOpen(true); }}
 				onClose2={handleClose}
 				onReopen={handleReopen}
 				onDelete={handleDelete}
@@ -144,6 +160,17 @@ export const AdminFeedbackPage = () => {
 				t={t}
 				onAssign={handleAssign}
 				onClose={() => setIsAssignModalOpen(false)}
+			/>
+
+			{/* Transfer modal */}
+			<FeedbackTransferModal
+				isOpen={isTransferModalOpen}
+				assignees={assignees}
+				currentAssigneeId={thread?.assigneeAdminId ?? null}
+				isLoading={isAssigneesLoading}
+				t={t}
+				onTransfer={handleTransfer}
+				onClose={() => setIsTransferModalOpen(false)}
 			/>
 		</>
 	);

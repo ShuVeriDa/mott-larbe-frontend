@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
@@ -68,7 +69,11 @@ const AdminUnknownWordsRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
-	return <AdminUnknownWordsPage />;
+	return (
+		<Suspense fallback={null}>
+			<AdminUnknownWordsPage />
+		</Suspense>
+	);
 };
 
 export default AdminUnknownWordsRoutePage;

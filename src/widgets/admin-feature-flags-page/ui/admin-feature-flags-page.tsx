@@ -7,6 +7,7 @@ import { FeatureFlagsStatsRow } from "./feature-flags-stats-row";
 import { FeatureFlagsTabs } from "./feature-flags-tabs";
 import { FeatureFlagsToolbar } from "./feature-flags-toolbar";
 import { OverridesToolbar } from "./overrides-toolbar";
+import { HistoryToolbar } from "./history-toolbar";
 import { FlagsTable } from "./flags-table";
 import { FlagsMobileList } from "./flags-mobile-list";
 import { OverridesTable } from "./overrides-table";
@@ -14,6 +15,9 @@ import { HistoryTable } from "./history-table";
 import { FeatureFlagsPagination } from "./feature-flags-pagination";
 import { FeatureFlagModal } from "./feature-flag-modal";
 import { FeatureFlagDeleteModal } from "./feature-flag-delete-modal";
+import { FeatureFlagDuplicateModal } from "./feature-flag-duplicate-modal";
+import { FeatureFlagOverrideModal } from "./feature-flag-override-modal";
+import { FeatureFlagImportModal } from "./feature-flag-import-modal";
 
 export const AdminFeatureFlagsPage = () => {
 	const { t } = useI18n();
@@ -24,39 +28,64 @@ export const AdminFeatureFlagsPage = () => {
 		category,
 		environment,
 		status,
+		overrideFlagId,
+		overrideIsEnabled,
+		historyEventType,
+		historyActorId,
 		modalOpen,
 		editFlag,
 		deleteFlag,
+		duplicateFlag,
+		overrideModalOpen,
+		overridePreselectedFlagId,
+		importModalOpen,
 		flagsQuery,
 		overridesQuery,
 		historyQuery,
 		statsQuery,
+		keysQuery,
+		historyActorsQuery,
 		total,
 		totalPages,
 		LIMIT,
 		isModalSubmitting,
 		isDeleting,
+		isDuplicating,
+		isOverrideSubmitting,
 		handleTabChange,
 		handleSearchChange,
 		handleCategoryChange,
 		handleEnvironmentChange,
 		handleStatusChange,
+		handleOverrideFlagIdChange,
+		handleOverrideIsEnabledChange,
+		handleHistoryEventTypeChange,
+		handleHistoryActorIdChange,
 		handleToggle,
 		openCreate,
 		openEdit,
 		handleModalSubmit,
 		openDelete,
 		handleDeleteConfirm,
-		handleDuplicate,
+		openDuplicate,
+		handleDuplicateConfirm,
+		openOverrideModal,
+		handleOverrideSubmit,
 		handleDeleteOverride,
+		handleImportSubmit,
 		setModalOpen,
 		setDeleteFlag,
+		setDuplicateFlag,
+		setOverrideModalOpen,
+		setImportModalOpen,
 		setPage,
 	} = useAdminFeatureFlagsPage();
 
 	const flagItems = flagsQuery.data?.items ?? [];
 	const overrideItems = overridesQuery.data?.items ?? [];
 	const historyItems = historyQuery.data?.items ?? [];
+	const flagKeys = keysQuery.data?.items ?? [];
+	const historyActors = historyActorsQuery.data?.items ?? [];
 
 	const isFlagsLoading = flagsQuery.isLoading;
 	const isOverridesLoading = overridesQuery.isLoading;
@@ -78,8 +107,19 @@ export const AdminFeatureFlagsPage = () => {
 					<>
 						<button
 							type="button"
+							onClick={() => setImportModalOpen(true)}
+							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
+						>
+							<svg className="size-[11px]" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+								<path d="M7.5 10V2M4 6.5l3.5 4 3.5-4" />
+								<path d="M2 12h11" />
+							</svg>
+							{t("admin.featureFlags.importJson")}
+						</button>
+						<button
+							type="button"
 							onClick={openCreate}
-							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
+							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 						>
 							<svg className="size-[11px]" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
 								<path d="M7.5 2v11M2 7.5h11" />
@@ -116,20 +156,31 @@ export const AdminFeatureFlagsPage = () => {
 				{tab === "overrides" && (
 					<OverridesToolbar
 						search={search}
+						flagId={overrideFlagId}
+						isEnabled={overrideIsEnabled}
+						flagKeys={flagKeys}
 						onSearchChange={handleSearchChange}
+						onFlagIdChange={handleOverrideFlagIdChange}
+						onIsEnabledChange={handleOverrideIsEnabledChange}
+						onAddOverride={() => openOverrideModal()}
 						t={t}
 					/>
 				)}
 
 				{tab === "history" && (
-					<OverridesToolbar
+					<HistoryToolbar
 						search={search}
+						eventType={historyEventType}
+						actorId={historyActorId}
+						actors={historyActors}
 						onSearchChange={handleSearchChange}
+						onEventTypeChange={handleHistoryEventTypeChange}
+						onActorIdChange={handleHistoryActorIdChange}
 						t={t}
 					/>
 				)}
 
-				<div className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf transition-colors">
+				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
 					{isEmpty ? (
 						<div className="py-16 text-center text-[13px] text-t-3">
 							{t("admin.featureFlags.empty")}
@@ -143,8 +194,9 @@ export const AdminFeatureFlagsPage = () => {
 										isLoading={isFlagsLoading}
 										onToggle={handleToggle}
 										onEdit={openEdit}
-										onDuplicate={handleDuplicate}
+										onDuplicate={openDuplicate}
 										onDelete={openDelete}
+										onAddOverride={openOverrideModal}
 										t={t}
 									/>
 									<FlagsMobileList
@@ -152,8 +204,9 @@ export const AdminFeatureFlagsPage = () => {
 										isLoading={isFlagsLoading}
 										onToggle={handleToggle}
 										onEdit={openEdit}
-										onDuplicate={handleDuplicate}
+										onDuplicate={openDuplicate}
 										onDelete={openDelete}
+										onAddOverride={openOverrideModal}
 										t={t}
 									/>
 								</>
@@ -205,6 +258,30 @@ export const AdminFeatureFlagsPage = () => {
 				isDeleting={isDeleting}
 				onConfirm={handleDeleteConfirm}
 				onClose={() => setDeleteFlag(null)}
+				t={t}
+			/>
+
+			<FeatureFlagDuplicateModal
+				flag={duplicateFlag}
+				isDuplicating={isDuplicating}
+				onConfirm={handleDuplicateConfirm}
+				onClose={() => setDuplicateFlag(null)}
+				t={t}
+			/>
+
+			<FeatureFlagOverrideModal
+				open={overrideModalOpen}
+				preselectedFlagId={overridePreselectedFlagId}
+				isSubmitting={isOverrideSubmitting}
+				onSubmit={handleOverrideSubmit}
+				onClose={() => setOverrideModalOpen(false)}
+				t={t}
+			/>
+
+			<FeatureFlagImportModal
+				open={importModalOpen}
+				onSubmit={handleImportSubmit}
+				onClose={() => setImportModalOpen(false)}
 				t={t}
 			/>
 		</div>

@@ -6,6 +6,7 @@ import { VersionsStatsRow } from "./ui/versions-stats-row";
 import { VersionsTimeline } from "./ui/versions-timeline";
 import { VersionsSidebar } from "./ui/versions-sidebar";
 import { VersionDetailModal } from "./ui/version-detail-modal";
+import { RunProcessModal } from "./ui/run-process-modal";
 
 interface AdminTextVersionsPageProps {
 	textId: string;
@@ -14,14 +15,14 @@ interface AdminTextVersionsPageProps {
 export const AdminTextVersionsPage = ({ textId }: AdminTextVersionsPageProps) => {
 	const page = useAdminTextVersionsPage(textId);
 
-	const isRunning = page.runningCount > 0 || page.isRunTokenizationPending;
+	const isRunning = page.runningCount > 0 || page.isRunProcessPending;
 
 	return (
 		<div>
 			<VersionsTopbar
 				textId={textId}
 				text={page.text}
-				onRunTokenization={page.runTokenization}
+				onRunTokenization={page.openRunModal}
 				isRunning={isRunning}
 			/>
 
@@ -30,7 +31,7 @@ export const AdminTextVersionsPage = ({ textId }: AdminTextVersionsPageProps) =>
 					total={page.versionsData?.total ?? 0}
 					successCount={page.versionsData?.successCount ?? 0}
 					errorCount={page.versionsData?.errorCount ?? 0}
-					runningCount={page.runningCount}
+					currentVersion={page.currentVersion}
 					isLoading={page.versionsLoading}
 				/>
 
@@ -48,8 +49,9 @@ export const AdminTextVersionsPage = ({ textId }: AdminTextVersionsPageProps) =>
 					/>
 					<VersionsSidebar
 						text={page.text}
-						isLoading={page.textLoading}
-						onRunTokenization={page.runTokenization}
+						currentVersion={page.currentVersion}
+						isLoading={page.textLoading || page.versionsLoading}
+						onRunTokenization={page.openRunModal}
 						isRunning={isRunning}
 					/>
 				</div>
@@ -62,8 +64,19 @@ export const AdminTextVersionsPage = ({ textId }: AdminTextVersionsPageProps) =>
 					onClose={page.closeVersionDetail}
 					onRestore={page.restoreVersion}
 					onRetry={page.retryVersion}
+					onDownload={page.downloadVersion}
 					isRestoring={page.isRestoring}
 					isRetrying={page.isRetrying}
+				/>
+			)}
+
+			{page.runModalOpen && (
+				<RunProcessModal
+					defaultNormalization={page.text?.useNormalization ?? true}
+					defaultMorphAnalysis={page.text?.useMorphAnalysis ?? false}
+					isPending={page.isRunProcessPending}
+					onConfirm={page.confirmRunProcess}
+					onClose={page.closeRunModal}
 				/>
 			)}
 		</div>

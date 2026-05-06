@@ -1,9 +1,10 @@
 "use client";
 
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
 import { CefrBadge } from "@/entities/dictionary";
-import type { AdminDictListItem } from "@/entities/dictionary";
+import type { AdminDictListItem, AdminDictSort } from "@/entities/dictionary";
 import { PosBadge } from "./pos-badge";
 
 const formatDate = (iso: string) =>
@@ -11,7 +12,7 @@ const formatDate = (iso: string) =>
 
 const SkeletonRow = () => (
 	<tr>
-		{Array.from({ length: 7 }).map((_, i) => (
+		{Array.from({ length: 9 }).map((_, i) => (
 			<td key={i} className="px-3.5 py-3">
 				<div className="h-3 animate-pulse rounded bg-surf-3" />
 			</td>
@@ -33,32 +34,160 @@ const IconTrash = () => (
 	</svg>
 );
 
+const IconChevronDown = () => (
+	<svg className="size-[11px]" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+		<path d="M2 4l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+	</svg>
+);
+
+const IconSortable = ({ active, dir }: { active: boolean; dir?: "asc" | "desc" }) => (
+	<svg className={cn("ml-1 size-[10px]", active ? "text-acc" : "text-t-4")} viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.4">
+		{(!active || dir === "asc") && <path d="M5 1v8M2 4l3-3 3 3" strokeLinecap="round" strokeLinejoin="round" opacity={active && dir === "asc" ? 1 : 0.5} />}
+		{(!active || dir === "desc") && <path d="M5 9V1M2 6l3 3 3-3" strokeLinecap="round" strokeLinejoin="round" opacity={active && dir === "desc" ? 1 : 0.5} />}
+	</svg>
+);
+
+interface RowDropdownProps {
+	item: AdminDictListItem;
+	lang: string;
+	onDelete: (entry: AdminDictListItem) => void;
+	onAddSense: (entry: AdminDictListItem) => void;
+	onAddExample: (entry: AdminDictListItem) => void;
+	t: (key: string) => string;
+}
+
+const RowDropdown = ({ item, lang, onDelete, onAddSense, onAddExample, t }: RowDropdownProps) => {
+	const [open, setOpen] = useState(false);
+	const ref = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (!open) return;
+		const handler = (e: MouseEvent) => {
+			if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+		};
+		document.addEventListener("mousedown", handler);
+		return () => document.removeEventListener("mousedown", handler);
+	}, [open]);
+
+	return (
+		<div ref={ref} className="relative">
+			<button
+				type="button"
+				onClick={() => setOpen((p) => !p)}
+				className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
+				title={t("admin.dictionary.row.more")}
+			>
+				<IconChevronDown />
+			</button>
+			{open && (
+				<div className="absolute right-0 top-full z-50 mt-1 w-[160px] rounded-[9px] border border-bd-2 bg-surf py-1 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+					<Link
+						href={`/${lang}/admin/dictionary/${item.id}`}
+						className="flex items-center gap-2 px-3 py-1.5 text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+						onClick={() => setOpen(false)}
+					>
+						{t("admin.dictionary.row.openEntry")}
+					</Link>
+					<button
+						type="button"
+						onClick={() => { setOpen(false); onAddSense(item); }}
+						className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+					>
+						{t("admin.dictionary.row.addSense")}
+					</button>
+					<button
+						type="button"
+						onClick={() => { setOpen(false); onAddExample(item); }}
+						className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+					>
+						{t("admin.dictionary.row.addExample")}
+					</button>
+					<div className="my-1 h-px bg-bd-1" />
+					<button
+						type="button"
+						onClick={() => { setOpen(false); onDelete(item); }}
+						className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg"
+					>
+						{t("admin.dictionary.row.delete")}
+					</button>
+				</div>
+			)}
+		</div>
+	);
+};
+
 interface DictionaryTableProps {
 	items: AdminDictListItem[];
 	isLoading: boolean;
 	lang: string;
+	sort: AdminDictSort;
 	selectedIds: Set<string>;
 	onSelectId: (id: string) => void;
 	onSelectAll: () => void;
+	onSortChange: (sort: AdminDictSort) => void;
 	onDelete: (entry: AdminDictListItem) => void;
-	t: (key: string, params?: Record<string, unknown>) => string;
+	onAddSense: (entry: AdminDictListItem) => void;
+	onAddExample: (entry: AdminDictListItem) => void;
+	t: (key: string, vars?: Record<string, string | number>) => string;
 }
 
 export const DictionaryTable = ({
 	items,
 	isLoading,
 	lang,
+	sort,
 	selectedIds,
 	onSelectId,
 	onSelectAll,
+	onSortChange,
 	onDelete,
+	onAddSense,
+	onAddExample,
 	t,
 }: DictionaryTableProps) => {
 	const allSelected = items.length > 0 && items.every((it) => selectedIds.has(it.id));
 	const someSelected = items.some((it) => selectedIds.has(it.id));
 
+	const maxFrequency = Math.max(...items.map((it) => it.frequency ?? 0), 1);
+
 	const thCls =
 		"pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1";
+
+	const SortableTh = ({
+		label,
+		sortAsc,
+		sortDesc,
+		className,
+	}: {
+		label: string;
+		sortAsc?: AdminDictSort;
+		sortDesc?: AdminDictSort;
+		className?: string;
+	}) => {
+		const isActive = sort === sortAsc || sort === sortDesc;
+		const dir = sort === sortAsc ? "asc" : sort === sortDesc ? "desc" : undefined;
+
+		const handleClick = () => {
+			if (!sortAsc && !sortDesc) return;
+			if (sortAsc && sortDesc) {
+				onSortChange(sort === sortAsc ? sortDesc : sortAsc);
+			} else {
+				onSortChange((sortAsc ?? sortDesc)!);
+			}
+		};
+
+		return (
+			<th
+				className={cn(thCls, "cursor-pointer select-none hover:text-t-2", className)}
+				onClick={handleClick}
+			>
+				<span className="inline-flex items-center">
+					{label}
+					<IconSortable active={isActive} dir={dir} />
+				</span>
+			</th>
+		);
+	};
 
 	return (
 		<div className="overflow-x-auto max-sm:hidden">
@@ -74,14 +203,26 @@ export const DictionaryTable = ({
 								className="size-[13px] cursor-pointer accent-acc"
 							/>
 						</th>
-						<th className={thCls}>{t("admin.dictionary.table.headword")}</th>
+						<SortableTh
+							label={t("admin.dictionary.table.headword")}
+							sortAsc="alpha"
+						/>
 						<th className={cn(thCls, "w-[80px]")}>{t("admin.dictionary.table.pos")}</th>
 						<th className={cn(thCls, "w-[80px]")}>{t("admin.dictionary.table.meanings")}</th>
 						<th className={cn(thCls, "w-[72px]")}>{t("admin.dictionary.table.level")}</th>
-						<th className={cn(thCls, "w-[70px]")}>{t("admin.dictionary.table.frequency")}</th>
+						<SortableTh
+							label={t("admin.dictionary.table.frequency")}
+							sortDesc="frequency_desc"
+							className="w-[100px]"
+						/>
 						<th className={cn(thCls, "w-[68px]")}>{t("admin.dictionary.table.forms")}</th>
-						<th className={cn(thCls, "w-[88px]")}>{t("admin.dictionary.table.added")}</th>
-						<th className="w-[72px] pb-2 pr-3.5 border-b border-bd-1" />
+						<SortableTh
+							label={t("admin.dictionary.table.added")}
+							sortDesc="newest"
+							sortAsc="oldest"
+							className="w-[88px]"
+						/>
+						<th className="w-[60px] pb-2 pr-3.5 border-b border-bd-1" />
 					</tr>
 				</thead>
 				<tbody>
@@ -138,15 +279,27 @@ export const DictionaryTable = ({
 										<span className="text-[11px] text-t-4">—</span>
 									)}
 								</td>
-								<td className="py-3 pl-3.5 text-[12px] text-t-3">
-									{item.frequency != null ? item.frequency.toLocaleString() : <span className="text-t-4">—</span>}
+								<td className="py-3 pl-3.5">
+									{item.frequency != null ? (
+										<div className="flex flex-col gap-0.5">
+											<span className="text-[12px] text-t-2">{item.frequency.toLocaleString()}</span>
+											<div className="h-[3px] w-full rounded-full bg-surf-3">
+												<div
+													className="h-full rounded-full bg-acc/60"
+													style={{ width: `${Math.round((item.frequency / maxFrequency) * 100)}%` }}
+												/>
+											</div>
+										</div>
+									) : (
+										<span className="text-t-4">—</span>
+									)}
 								</td>
 								<td className="py-3 pl-3.5 text-[12px] text-t-2">{item.formsCount}</td>
 								<td className="py-3 pl-3.5 text-[11.5px] text-t-3">
 									{formatDate(item.createdAt ?? "")}
 								</td>
 								<td className="py-3 pr-3.5">
-									<div className="flex items-center justify-end gap-1">
+									<div className="flex items-center justify-end gap-0.5">
 										<Link
 											href={`/${lang}/admin/dictionary/${item.id}`}
 											className="flex size-[26px] items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
@@ -154,14 +307,14 @@ export const DictionaryTable = ({
 										>
 											<IconEye />
 										</Link>
-										<button
-											type="button"
-											onClick={() => onDelete(item)}
-											className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
-											title={t("admin.dictionary.row.delete")}
-										>
-											<IconTrash />
-										</button>
+										<RowDropdown
+											item={item}
+											lang={lang}
+											onDelete={onDelete}
+											onAddSense={onAddSense}
+											onAddExample={onAddExample}
+											t={t}
+										/>
 									</div>
 								</td>
 							</tr>
