@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type { AnalyticsRange } from "@/entities/admin-analytics";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import { useRef, useState } from "react";
 
 const RANGES: AnalyticsRange[] = ["7d", "30d", "90d", "all"];
 
@@ -54,7 +54,7 @@ export const AnalyticsTopbar = ({
 	};
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-3 border-b border-bd-1 bg-bg px-5 py-3.5 transition-colors max-md:hidden">
+		<div className="sticky top-0 z-10 flex items-center gap-3 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors max-md:hidden">
 			<div>
 				<h1 className="font-display text-base font-medium text-t-1">
 					{t("admin.analytics.title")}
@@ -67,7 +67,7 @@ export const AnalyticsTopbar = ({
 			<div className="ml-auto flex items-center gap-2">
 				{/* Preset range segment */}
 				<div className="flex items-center gap-0.5 rounded-lg border border-bd-2 bg-surf-2 p-0.5">
-					{RANGES.map((r) => (
+					{RANGES.map(r => (
 						<button
 							key={r}
 							type="button"
@@ -88,7 +88,7 @@ export const AnalyticsTopbar = ({
 				<div className="relative">
 					<button
 						type="button"
-						onClick={() => setShowDatePicker((v) => !v)}
+						onClick={() => setShowDatePicker(v => !v)}
 						className={cn(
 							"flex h-[30px] items-center gap-1.5 rounded-base border px-2.5 text-[12px] font-medium transition-colors",
 							isCustomRange
@@ -96,9 +96,28 @@ export const AnalyticsTopbar = ({
 								: "border-bd-2 bg-transparent text-t-2 hover:border-bd-3 hover:text-t-1",
 						)}
 					>
-						<svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-							<rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" strokeWidth="1.3" />
-							<path d="M5 1v3M11 1v3M2 7h12" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+						<svg
+							width="11"
+							height="11"
+							viewBox="0 0 16 16"
+							fill="none"
+							aria-hidden="true"
+						>
+							<rect
+								x="2"
+								y="3"
+								width="12"
+								height="11"
+								rx="2"
+								stroke="currentColor"
+								strokeWidth="1.3"
+							/>
+							<path
+								d="M5 1v3M11 1v3M2 7h12"
+								stroke="currentColor"
+								strokeWidth="1.3"
+								strokeLinecap="round"
+							/>
 						</svg>
 						{isCustomRange && dateFrom && dateTo
 							? `${dateFrom.slice(0, 10)} — ${dateTo.slice(0, 10)}`
@@ -109,22 +128,26 @@ export const AnalyticsTopbar = ({
 						<div className="absolute top-full right-0 z-20 mt-1.5 flex flex-col gap-2 rounded-xl border border-bd-2 bg-surf p-3 shadow-lg">
 							<div className="flex gap-2">
 								<div className="flex flex-col gap-1">
-									<label className="text-[10px] text-t-3">{t("admin.analytics.dateFrom")}</label>
+									<label className="text-[10px] text-t-3">
+										{t("admin.analytics.dateFrom")}
+									</label>
 									<input
 										type="date"
 										value={localFrom}
 										max={localTo || undefined}
-										onChange={(e) => setLocalFrom(e.target.value)}
+										onChange={e => setLocalFrom(e.target.value)}
 										className="h-[28px] rounded-md border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1"
 									/>
 								</div>
 								<div className="flex flex-col gap-1">
-									<label className="text-[10px] text-t-3">{t("admin.analytics.dateTo")}</label>
+									<label className="text-[10px] text-t-3">
+										{t("admin.analytics.dateTo")}
+									</label>
 									<input
 										type="date"
 										value={localTo}
 										min={localFrom || undefined}
-										onChange={(e) => setLocalTo(e.target.value)}
+										onChange={e => setLocalTo(e.target.value)}
 										className="h-[28px] rounded-md border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1"
 									/>
 								</div>
@@ -154,18 +177,30 @@ export const AnalyticsTopbar = ({
 				<div className="relative" ref={exportRef}>
 					<button
 						type="button"
-						onClick={() => setShowExportMenu((v) => !v)}
+						onClick={() => setShowExportMenu(v => !v)}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 					>
-						<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-							<path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+						<svg
+							width="12"
+							height="12"
+							viewBox="0 0 16 16"
+							fill="none"
+							aria-hidden="true"
+						>
+							<path
+								d="M8 2v8M5 7l3 3 3-3M3 12h10"
+								stroke="currentColor"
+								strokeWidth="1.3"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							/>
 						</svg>
 						{t("admin.analytics.export")}
 					</button>
 
 					{showExportMenu && (
 						<div className="absolute top-full right-0 z-20 mt-1.5 flex flex-col overflow-hidden rounded-xl border border-bd-2 bg-surf shadow-lg">
-							{(["csv", "json"] as const).map((fmt) => (
+							{(["csv", "json"] as const).map(fmt => (
 								<button
 									key={fmt}
 									type="button"

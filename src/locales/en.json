@@ -500,10 +500,10 @@
 	"nav": {
 		"learning": "Learning",
 		"home": "Home",
-		"texts": "Texts",
+		"texts": "Library",
 		"vocabulary": "Vocabulary",
 		"review": "Review",
-		"progress": "Progress",
+		"progress": "Statistics",
 		"language": "Language",
 		"chechen": "Chechen",
 		"grammar": "Grammar",
@@ -522,7 +522,16 @@
 			"KNOWN": "known"
 		},
 		"planTranslations": "{used} / {limit} trans.",
-		"premiumPlan": "Premium"
+		"premiumPlan": "Premium",
+		"userMenu": {
+			"profile": "Profile",
+			"settings": "Settings",
+			"adminPanel": "Admin panel",
+			"support": "Support",
+			"subscription": "Subscription",
+			"language": "Language",
+			"logout": "Sign out"
+		}
 	},
 	"vocabulary": {
 		"title": "Vocabulary",
@@ -2455,7 +2464,7 @@
 			"system": "System",
 			"dashboard": "Dashboard",
 			"analytics": "Analytics",
-			"texts": "Texts",
+			"texts": "Library",
 			"tokenization": "Tokenization",
 			"dictionary": "Dictionary",
 			"morphology": "Morphology",
@@ -3469,6 +3478,7 @@
 			"importModal": {
 				"title": "Import flags from JSON",
 				"subtitle": "Paste a flags array or an object with items field",
+				"placeholder": "[{\"key\":\"category.feature_name\",\"isEnabled\":true}]",
 				"parseError": "Invalid JSON",
 				"preview": "Preview",
 				"previewing": "Checking...",

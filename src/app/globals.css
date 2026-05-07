@@ -340,4 +340,9 @@
 	* {
 		@apply border-border outline-ring/50;
 	}
+	button:not(:disabled),
+	a,
+	[role="button"]:not([aria-disabled="true"]) {
+		cursor: pointer;
+	}
 }

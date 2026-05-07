@@ -1,6 +1,18 @@
 export type UserLanguage = "CHE" | "RU";
 export type UserLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 
+export type PermissionCode =
+	| "CAN_EDIT_TEXTS"
+	| "CAN_EDIT_DICTIONARY"
+	| "CAN_EDIT_MORPHOLOGY"
+	| "CAN_MANAGE_USERS"
+	| "CAN_MANAGE_BILLING"
+	| "CAN_VIEW_ANALYTICS"
+	| "CAN_VIEW_LOGS"
+	| "CAN_MANAGE_FEATURE_FLAGS"
+	| "CAN_MANAGE_FEEDBACK"
+	| "CAN_MANAGE_LEGAL";
+
 export interface UserProfile {
 	id: string;
 	email: string;
@@ -12,6 +24,7 @@ export interface UserProfile {
 	language: UserLanguage | null;
 	level: UserLevel | null;
 	createdAt: string;
+	permissions: PermissionCode[];
 }
 
 export interface UpdateUserDto {

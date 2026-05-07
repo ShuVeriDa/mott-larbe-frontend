@@ -10,7 +10,7 @@ export const PaymentsTopbar = ({ onExportCsv }: Props) => {
 	const { t } = useI18n();
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-3 border-b border-bd-1 bg-bg px-[22px] py-3.5 transition-colors max-sm:px-3.5">
+		<div className="sticky top-0 z-10 flex items-center gap-3 border-b border-bd-1 bg-surf px-[22px] py-3.5 transition-colors max-sm:px-3.5">
 			<div className="min-w-0 flex-1">
 				<div className="font-display text-[16px] text-t-1">
 					{t("admin.payments.title")}
@@ -38,7 +38,9 @@ export const PaymentsTopbar = ({ onExportCsv }: Props) => {
 					>
 						<path d="M6 1v7M3 5l3 3 3-3M1 9v1.5A.5.5 0 001.5 11h9a.5.5 0 00.5-.5V9" />
 					</svg>
-					<span className="max-sm:hidden">{t("admin.payments.topbar.exportCsv")}</span>
+					<span className="max-sm:hidden">
+						{t("admin.payments.topbar.exportCsv")}
+					</span>
 				</button>
 
 				<button
@@ -58,7 +60,9 @@ export const PaymentsTopbar = ({ onExportCsv }: Props) => {
 						<rect x="1.5" y="1.5" width="9" height="9" rx="1.5" />
 						<path d="M4 5h4M4 7.5h2.5" strokeLinecap="round" />
 					</svg>
-					<span className="max-sm:hidden">{t("admin.payments.topbar.report")}</span>
+					<span className="max-sm:hidden">
+						{t("admin.payments.topbar.report")}
+					</span>
 				</button>
 			</div>
 		</div>

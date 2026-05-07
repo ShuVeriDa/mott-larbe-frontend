@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
+import Link from "next/link";
 
 interface TextsTopbarProps {
 	onImportClick: () => void;
@@ -11,7 +11,7 @@ export const TextsTopbar = ({ onImportClick }: TextsTopbarProps) => {
 	const { t, lang } = useI18n();
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-3 border-b border-bd-1 bg-bg px-[22px] py-[14px] transition-colors max-sm:px-3.5 max-sm:py-[11px]">
+		<div className="sticky top-0 z-10 flex items-center gap-3 border-b border-bd-1 bg-surf px-[22px] py-[14px] transition-colors max-sm:px-3.5 max-sm:py-[11px]">
 			<div className="min-w-0">
 				<h1 className="font-display text-[16px] text-t-1 max-sm:text-[15px]">
 					{t("admin.texts.title")}

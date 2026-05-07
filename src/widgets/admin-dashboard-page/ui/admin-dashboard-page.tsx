@@ -1,40 +1,40 @@
 "use client";
 
 import { useAdminDashboard } from "../model/use-admin-dashboard";
-import { DashboardTopbar } from "./dashboard-topbar";
-import { DashboardAlertStrip } from "./dashboard-alert-strip";
-import {
-	DashboardKpiGrid,
-	DashboardKpiGridSkeleton,
-} from "./dashboard-kpi-grid";
-import {
-	DashboardRegistrationsCard,
-	DashboardRegistrationsCardSkeleton,
-} from "./dashboard-registrations-card";
-import {
-	DashboardContentCard,
-	DashboardContentCardSkeleton,
-} from "./dashboard-content-card";
-import {
-	DashboardRecentUsersCard,
-	DashboardRecentUsersCardSkeleton,
-} from "./dashboard-recent-users-card";
 import {
 	DashboardActivityCard,
 	DashboardActivityCardSkeleton,
 } from "./dashboard-activity-card";
-import {
-	DashboardFeatureFlagsCard,
-	DashboardFeatureFlagsCardSkeleton,
-} from "./dashboard-feature-flags-card";
+import { DashboardAlertStrip } from "./dashboard-alert-strip";
 import {
 	DashboardBillingCard,
 	DashboardBillingCardSkeleton,
 } from "./dashboard-billing-card";
 import {
+	DashboardContentCard,
+	DashboardContentCardSkeleton,
+} from "./dashboard-content-card";
+import {
+	DashboardFeatureFlagsCard,
+	DashboardFeatureFlagsCardSkeleton,
+} from "./dashboard-feature-flags-card";
+import {
+	DashboardKpiGrid,
+	DashboardKpiGridSkeleton,
+} from "./dashboard-kpi-grid";
+import {
+	DashboardRecentUsersCard,
+	DashboardRecentUsersCardSkeleton,
+} from "./dashboard-recent-users-card";
+import {
+	DashboardRegistrationsCard,
+	DashboardRegistrationsCardSkeleton,
+} from "./dashboard-registrations-card";
+import {
 	DashboardSupportTable,
 	DashboardSupportTableSkeleton,
 } from "./dashboard-support-table";
+import { DashboardTopbar } from "./dashboard-topbar";
 
 export const AdminDashboardPage = () => {
 	const { period, setPeriod, dashboardQuery, handleToggleFlag, handleExport } =
@@ -44,7 +44,7 @@ export const AdminDashboardPage = () => {
 	const isLoading = dashboardQuery.isLoading;
 
 	return (
-		<div className="flex min-h-screen flex-col bg-bg">
+		<div className="flex min-h-screen flex-col">
 			<DashboardTopbar
 				period={period}
 				onPeriodChange={setPeriod}

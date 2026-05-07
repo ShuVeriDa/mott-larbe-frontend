@@ -1,7 +1,7 @@
 type Translator = (key: string) => string;
 
 export const FeedbackEmptyState = ({ t }: { t: Translator }) => (
-	<div className="flex flex-1 flex-col items-center justify-center gap-2 bg-bg max-sm:hidden">
+	<div className="flex flex-1 flex-col items-center justify-center gap-2 max-sm:hidden">
 		<div className="flex size-12 items-center justify-center rounded-xl bg-surf-2">
 			<svg
 				viewBox="0 0 20 20"

@@ -16,7 +16,7 @@ export const AuthPage = ({ initialMode = "login" }: AuthPageProps) => {
 
 	const homeHref = `/${lang}`;
 	const forgotHref = `/${lang}/reset-password`;
-	const successHref = `/${lang}/vocabulary`;
+	const successHref = `/${lang}/dashboard`;
 	const termsHref = `/${lang}/terms`;
 	const privacyHref = `/${lang}/privacy`;
 

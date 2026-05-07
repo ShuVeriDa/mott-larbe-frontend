@@ -1,13 +1,13 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import { useI18n } from "@/shared/lib/i18n";
-import { useFeedbackThreads } from "@/entities/feedback";
 import type { FeedbackThread } from "@/entities/feedback";
-import { FeedbackThreadList } from "./feedback-thread-list";
+import { useFeedbackThreads } from "@/entities/feedback";
+import { useI18n } from "@/shared/lib/i18n";
+import { useCallback, useState } from "react";
 import { FeedbackChat } from "./feedback-chat";
 import { FeedbackNewThreadModal } from "./feedback-new-thread-modal";
 import { FeedbackListSkeleton } from "./feedback-skeleton";
+import { FeedbackThreadList } from "./feedback-thread-list";
 
 export const FeedbackPage = () => {
 	const { t } = useI18n();
@@ -17,7 +17,7 @@ export const FeedbackPage = () => {
 
 	const { data, isPending, fetchNextPage, hasNextPage, isFetchingNextPage } =
 		useFeedbackThreads();
-	const threads = data?.pages.flatMap((p) => p.items) ?? [];
+	const threads = data?.pages.flatMap(p => p.items) ?? [];
 
 	const handleSelectThread = (thread: FeedbackThread) => {
 		setActiveId(thread.id);
@@ -107,7 +107,7 @@ export const FeedbackPage = () => {
 						onBack={handleBack}
 					/>
 				) : (
-					<div className="flex flex-1 flex-col items-center justify-center gap-2 bg-bg max-sm:hidden">
+					<div className="flex flex-1 flex-col items-center justify-center gap-2 max-sm:hidden">
 						<div className="flex size-12 items-center justify-center rounded-xl bg-surf-2">
 							<svg
 								viewBox="0 0 20 20"
@@ -119,9 +119,7 @@ export const FeedbackPage = () => {
 								<path d="M16 14H11l-4 3V14H4a1.5 1.5 0 0 1-1.5-1.5V4A1.5 1.5 0 0 1 4 2.5h12A1.5 1.5 0 0 1 17.5 4v8.5A1.5 1.5 0 0 1 16 14z" />
 							</svg>
 						</div>
-						<p className="text-[13px] text-t-3">
-							{t("feedback.selectThread")}
-						</p>
+						<p className="text-[13px] text-t-3">{t("feedback.selectThread")}</p>
 					</div>
 				)}
 			</div>

@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
+import Link from "next/link";
 import { useAdminTextEditPage } from "../model/use-admin-text-edit-page";
-import { TextEditTopbar } from "./text-edit-topbar";
+import { TextEditDeleteModal } from "./text-edit-delete-modal";
 import { TextEditEditor } from "./text-edit-editor";
 import { TextEditMetaPanel } from "./text-edit-meta-panel";
-import { TextEditDeleteModal } from "./text-edit-delete-modal";
+import { TextEditTopbar } from "./text-edit-topbar";
 
 interface AdminTextEditPageProps {
 	textId: string;
@@ -67,14 +67,28 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 	// ── Loading skeleton ──
 	if (isLoading) {
 		return (
-			<div className="flex min-h-screen flex-col bg-bg">
-				<div className="sticky top-0 z-20 flex h-[52px] items-center border-b border-bd-1 bg-bg px-5">
+			<div className="flex min-h-screen flex-col">
+				<div className="sticky top-0 z-20 flex h-[52px] items-center border-b border-bd-1 bg-surf px-5">
 					<div className="h-4 w-48 animate-pulse rounded-md bg-surf-3" />
 				</div>
 				<div className="flex flex-1 items-center justify-center">
 					<div className="flex flex-col items-center gap-3 text-t-3">
-						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="animate-spin text-acc">
-							<circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" strokeDasharray="31.4" strokeDashoffset="10" />
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							className="animate-spin text-acc"
+						>
+							<circle
+								cx="12"
+								cy="12"
+								r="10"
+								stroke="currentColor"
+								strokeWidth="2"
+								strokeDasharray="31.4"
+								strokeDashoffset="10"
+							/>
 						</svg>
 						<span className="text-sm">{t("admin.texts.editPage.loading")}</span>
 					</div>
@@ -87,9 +101,26 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 	if (isError || !textData) {
 		return (
 			<div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-bg text-t-2">
-				<svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-t-3">
-					<circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-					<path d="M12 8v4M12 16h.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+				<svg
+					width="40"
+					height="40"
+					viewBox="0 0 24 24"
+					fill="none"
+					className="text-t-3"
+				>
+					<circle
+						cx="12"
+						cy="12"
+						r="10"
+						stroke="currentColor"
+						strokeWidth="1.5"
+					/>
+					<path
+						d="M12 8v4M12 16h.01"
+						stroke="currentColor"
+						strokeWidth="1.5"
+						strokeLinecap="round"
+					/>
 				</svg>
 				<p className="text-sm">{t("admin.texts.editPage.loadError")}</p>
 				<Link
@@ -105,7 +136,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 	const recentVersions = versionsData?.data ?? [];
 
 	return (
-		<div className="flex min-h-screen flex-col bg-bg text-t-1 transition-colors">
+		<div className="flex min-h-screen flex-col text-t-1 transition-colors">
 			<TextEditTopbar
 				textId={textId}
 				textTitle={textData.title}
@@ -183,9 +214,23 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					className="flex h-[38px] flex-1 items-center justify-center gap-1.5 rounded-[8px] border border-bd-2 bg-transparent text-sm text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-						<path d="M3 4a1 1 0 011-1h6l3 3v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4z" stroke="currentColor" strokeWidth="1.3" />
-						<path d="M10 3v3H6V3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-						<path d="M5 10h6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+						<path
+							d="M3 4a1 1 0 011-1h6l3 3v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"
+							stroke="currentColor"
+							strokeWidth="1.3"
+						/>
+						<path
+							d="M10 3v3H6V3"
+							stroke="currentColor"
+							strokeWidth="1.3"
+							strokeLinecap="round"
+						/>
+						<path
+							d="M5 10h6"
+							stroke="currentColor"
+							strokeWidth="1.3"
+							strokeLinecap="round"
+						/>
 					</svg>
 					{t("admin.texts.editPage.saveDraft")}
 				</button>
@@ -196,7 +241,13 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					className="flex h-[38px] flex-1 items-center justify-center gap-1.5 rounded-[8px] bg-acc text-sm font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-						<path d="M2.5 8.5L6 12l7.5-8" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+						<path
+							d="M2.5 8.5L6 12l7.5-8"
+							stroke="#fff"
+							strokeWidth="1.6"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						/>
 					</svg>
 					{t("admin.texts.editPage.saveUpdate")}
 				</button>

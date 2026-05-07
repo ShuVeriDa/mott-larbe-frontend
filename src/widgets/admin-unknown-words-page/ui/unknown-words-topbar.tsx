@@ -14,7 +14,7 @@ export const UnknownWordsTopbar = ({
 	const { t } = useI18n();
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-bd-1 bg-panel px-[18px] py-3 transition-colors">
+		<div className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-bd-1 bg-surf px-[18px] py-3 transition-colors">
 			<div>
 				<div className="font-display text-[16px] text-t-1">
 					{t("admin.unknownWords.title")}
@@ -38,7 +38,9 @@ export const UnknownWordsTopbar = ({
 							strokeLinejoin="round"
 						/>
 					</svg>
-					<span className="max-sm:hidden">{t("admin.unknownWords.export")}</span>
+					<span className="max-sm:hidden">
+						{t("admin.unknownWords.export")}
+					</span>
 				</button>
 				<button
 					type="button"
@@ -59,7 +61,9 @@ export const UnknownWordsTopbar = ({
 							strokeLinecap="round"
 						/>
 					</svg>
-					<span className="max-sm:hidden">{t("admin.unknownWords.clearAll")}</span>
+					<span className="max-sm:hidden">
+						{t("admin.unknownWords.clearAll")}
+					</span>
 				</button>
 			</div>
 		</div>

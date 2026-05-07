@@ -2,14 +2,14 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminLogsPage } from "../model/use-admin-logs-page";
-import { LogsTopbar } from "./logs-topbar";
-import { LogsStatsRow } from "./logs-stats-row";
-import { LogsTabs } from "./logs-tabs";
-import { LogsToolbar } from "./logs-toolbar";
-import { LogsTable } from "./logs-table";
+import { LogsDetailPanel } from "./logs-detail-panel";
 import { LogsMobileList } from "./logs-mobile-list";
 import { LogsPagination } from "./logs-pagination";
-import { LogsDetailPanel } from "./logs-detail-panel";
+import { LogsStatsRow } from "./logs-stats-row";
+import { LogsTable } from "./logs-table";
+import { LogsTabs } from "./logs-tabs";
+import { LogsToolbar } from "./logs-toolbar";
+import { LogsTopbar } from "./logs-topbar";
 
 export const AdminLogsPage = () => {
 	const { t } = useI18n();
@@ -45,7 +45,7 @@ export const AdminLogsPage = () => {
 	const isLoading = logsQuery.isLoading;
 
 	return (
-		<div className="flex min-h-screen flex-col bg-bg">
+		<div className="flex min-h-screen flex-col">
 			<LogsTopbar
 				isLive={isLive}
 				onToggleLive={toggleLive}
@@ -58,11 +58,7 @@ export const AdminLogsPage = () => {
 					isLoading={statsQuery.isLoading}
 				/>
 
-				<LogsTabs
-					active={tab}
-					counts={tabs}
-					onChange={handleTabChange}
-				/>
+				<LogsTabs active={tab} counts={tabs} onChange={handleTabChange} />
 
 				<LogsToolbar
 					search={search}

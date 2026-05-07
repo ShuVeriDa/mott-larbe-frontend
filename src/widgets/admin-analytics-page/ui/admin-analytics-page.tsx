@@ -1,19 +1,19 @@
 "use client";
 
 import { useAdminAnalyticsPage } from "../model/use-admin-analytics-page";
-import { AnalyticsTopbar } from "./analytics-topbar";
-import { AnalyticsMobileTopbar } from "./analytics-mobile-topbar";
+import { AnalyticsDifficultTexts } from "./analytics-difficult-texts";
+import { AnalyticsEventsChart } from "./analytics-events-chart";
+import { AnalyticsHeatmap } from "./analytics-heatmap";
 import { AnalyticsInsightStrip } from "./analytics-insight-strip";
 import { AnalyticsKpiGrid } from "./analytics-kpi-grid";
 import { AnalyticsLevelDist } from "./analytics-level-dist";
-import { AnalyticsHeatmap } from "./analytics-heatmap";
-import { AnalyticsEventsChart } from "./analytics-events-chart";
-import { AnalyticsTopUsers } from "./analytics-top-users";
-import { AnalyticsDifficultTexts } from "./analytics-difficult-texts";
+import { AnalyticsMobileTopbar } from "./analytics-mobile-topbar";
 import { AnalyticsPopularTexts } from "./analytics-popular-texts";
-import { AnalyticsTopWords } from "./analytics-top-words";
 import { AnalyticsReadingFunnel } from "./analytics-reading-funnel";
 import { AnalyticsSm2Stats } from "./analytics-sm2-stats";
+import { AnalyticsTopUsers } from "./analytics-top-users";
+import { AnalyticsTopWords } from "./analytics-top-words";
+import { AnalyticsTopbar } from "./analytics-topbar";
 
 export const AdminAnalyticsPage = () => {
 	const {
@@ -39,7 +39,7 @@ export const AdminAnalyticsPage = () => {
 	const eventsChart = data?.eventsChart;
 
 	return (
-		<div className="flex min-h-screen flex-col bg-bg">
+		<div className="flex min-h-screen flex-col">
 			<AnalyticsTopbar
 				range={range}
 				dateFrom={dateFrom}
@@ -59,15 +59,9 @@ export const AdminAnalyticsPage = () => {
 			/>
 
 			<div className="px-5 py-5 pb-12 max-sm:px-3 max-sm:py-3">
-				<AnalyticsInsightStrip
-					insight={data?.insight}
-					isLoading={isLoading}
-				/>
+				<AnalyticsInsightStrip insight={data?.insight} isLoading={isLoading} />
 
-				<AnalyticsKpiGrid
-					items={data?.kpis.items}
-					isLoading={isLoading}
-				/>
+				<AnalyticsKpiGrid items={data?.kpis.items} isLoading={isLoading} />
 
 				{/* Level dist + Heatmap */}
 				<div className="mb-3.5 grid grid-cols-[1fr_2fr] gap-3.5 max-lg:grid-cols-1">
@@ -122,10 +116,7 @@ export const AdminAnalyticsPage = () => {
 							funnel={data?.readingFunnel}
 							isLoading={isLoading}
 						/>
-						<AnalyticsSm2Stats
-							stats={data?.sm2Stats}
-							isLoading={isLoading}
-						/>
+						<AnalyticsSm2Stats stats={data?.sm2Stats} isLoading={isLoading} />
 					</div>
 				</div>
 			</div>

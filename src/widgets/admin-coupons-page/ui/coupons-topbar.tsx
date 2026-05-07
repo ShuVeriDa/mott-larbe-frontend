@@ -9,7 +9,7 @@ export const CouponsTopbar = ({ onExport, onCreate }: Props) => {
 	const { t } = useI18n();
 
 	return (
-		<div className="sticky top-0 z-20 flex items-center gap-3 border-b border-bd-1 bg-bg px-[22px] py-3.5 transition-colors max-sm:px-3.5">
+		<div className="sticky top-0 z-20 flex items-center gap-3 border-b border-bd-1 bg-surf px-[22px] py-3.5 transition-colors max-sm:px-3.5">
 			<div>
 				<div className="font-display text-[16px] text-t-1">
 					{t("admin.coupons.title")}
@@ -25,8 +25,19 @@ export const CouponsTopbar = ({ onExport, onCreate }: Props) => {
 					onClick={onExport}
 					className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
-					<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
-						<path d="M6 1v7M3 5l3 3 3-3M1 9v1.5A.5.5 0 001.5 11h9a.5.5 0 00.5-.5V9" strokeLinecap="round" strokeLinejoin="round" />
+					<svg
+						width="12"
+						height="12"
+						viewBox="0 0 12 12"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="1.3"
+					>
+						<path
+							d="M6 1v7M3 5l3 3 3-3M1 9v1.5A.5.5 0 001.5 11h9a.5.5 0 00.5-.5V9"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						/>
 					</svg>
 					{t("admin.coupons.export")}
 				</button>
@@ -36,7 +47,14 @@ export const CouponsTopbar = ({ onExport, onCreate }: Props) => {
 					onClick={onCreate}
 					className="flex h-[30px] items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
-					<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
+					<svg
+						width="12"
+						height="12"
+						viewBox="0 0 12 12"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="1.3"
+					>
 						<path d="M6 1v10M1 6h10" strokeLinecap="round" />
 					</svg>
 					{t("admin.coupons.create")}

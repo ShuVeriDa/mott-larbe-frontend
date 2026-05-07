@@ -500,10 +500,10 @@
 	"nav": {
 		"learning": "Дешар",
 		"home": "Коьрта",
-		"texts": "Йозанаш",
+		"texts": "Библиотека",
 		"vocabulary": "Дошам",
 		"review": "Карладаккхар",
-		"progress": "Хьалкхиар",
+		"progress": "Статистика",
 		"language": "Мотт",
 		"chechen": "Нохчийн",
 		"grammar": "Грамматика",
@@ -522,7 +522,16 @@
 			"KNOWN": "хаьа"
 		},
 		"planTranslations": "{used} / {limit} тарг.",
-		"premiumPlan": "Premium"
+		"premiumPlan": "Premium",
+		"userMenu": {
+			"profile": "Профиль",
+			"settings": "Туаймаш",
+			"adminPanel": "Администраторан панель",
+			"support": "Гӏо дар",
+			"subscription": "Подписка",
+			"language": "Мотт",
+			"logout": "Арахьара"
+		}
 	},
 	"vocabulary": {
 		"title": "Дошам",
@@ -2455,7 +2464,7 @@
 			"system": "Система",
 			"dashboard": "Дашборд",
 			"analytics": "Аналитика",
-			"texts": "Йозанаш",
+			"texts": "Библиотека",
 			"tokenization": "Токенизаци",
 			"dictionary": "Словарь",
 			"morphology": "Морфологи",
@@ -3469,6 +3478,7 @@
 			"importModal": {
 				"title": "JSON-х флагаш импорт де",
 				"subtitle": "Флагийн массив я items поле долу объект пастайе",
+				"placeholder": "[{\"key\":\"category.feature_name\",\"isEnabled\":true}]",
 				"parseError": "Невалидни JSON",
 				"preview": "Хьажар",
 				"previewing": "Таллу...",

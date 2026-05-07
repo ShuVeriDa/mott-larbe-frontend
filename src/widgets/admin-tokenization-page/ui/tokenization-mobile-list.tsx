@@ -12,6 +12,8 @@ interface TokenizationMobileListProps {
 
 export const TokenizationMobileList = ({ items, onRowClick }: TokenizationMobileListProps) => {
 	const { t } = useI18n();
+	const formatCount = (value: number | null | undefined) =>
+		typeof value === "number" && Number.isFinite(value) ? value.toLocaleString() : "0";
 
 	const statusLabels: Record<ProcessingStatus, string> = {
 		IDLE: t("admin.tokenization.status.IDLE"),
@@ -50,7 +52,8 @@ export const TokenizationMobileList = ({ items, onRowClick }: TokenizationMobile
 					</div>
 					<div className="flex items-center gap-3 text-[11px] text-t-3">
 						<span>
-							{t("admin.tokenization.table.tokens")}: <strong className="text-t-2">{item.totalTokens.toLocaleString()}</strong>
+							{t("admin.tokenization.table.tokens")}:{" "}
+							<strong className="text-t-2">{formatCount(item.totalTokens)}</strong>
 						</span>
 						{item.notFoundCount > 0 && (
 							<span className="text-red-t font-semibold">

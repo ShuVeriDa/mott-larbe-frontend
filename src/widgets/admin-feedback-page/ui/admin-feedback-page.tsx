@@ -1,12 +1,12 @@
 "use client";
 
 import { useAdminFeedbackPage } from "../model/use-admin-feedback-page";
-import { FeedbackListPanel } from "./feedback-list-panel";
+import { FeedbackAssignModal } from "./feedback-assign-modal";
 import { FeedbackChatPanel } from "./feedback-chat-panel";
 import { FeedbackEmptyState } from "./feedback-empty-state";
-import { FeedbackAssignModal } from "./feedback-assign-modal";
-import { FeedbackTransferModal } from "./feedback-transfer-modal";
 import { FeedbackInfoDrawer } from "./feedback-info-drawer";
+import { FeedbackListPanel } from "./feedback-list-panel";
+import { FeedbackTransferModal } from "./feedback-transfer-modal";
 
 export const AdminFeedbackPage = () => {
 	const {
@@ -56,9 +56,11 @@ export const AdminFeedbackPage = () => {
 	return (
 		<>
 			{/* Topbar */}
-			<div className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-bg px-[22px] py-[14px] max-sm:px-3.5">
+			<div className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-[14px] max-sm:px-3.5">
 				<div>
-					<p className="font-display text-[16px] text-t-1">{t("admin.feedback.title")}</p>
+					<p className="font-display text-[16px] text-t-1">
+						{t("admin.feedback.title")}
+					</p>
 					<p className="text-[12px] text-t-3">{t("admin.feedback.subtitle")}</p>
 				</div>
 				<div className="ml-auto flex items-center gap-2">
@@ -82,7 +84,13 @@ export const AdminFeedbackPage = () => {
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-50"
 					>
 						<svg viewBox="0 0 16 16" fill="none" className="size-[13px]">
-							<path d="M8 2v9M4 8l4 4 4-4M3 14h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+							<path
+								d="M8 2v9M4 8l4 4 4-4M3 14h10"
+								stroke="currentColor"
+								strokeWidth="1.3"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							/>
 						</svg>
 						{t("admin.feedback.export")}
 					</button>
@@ -144,8 +152,14 @@ export const AdminFeedbackPage = () => {
 				onClose={() => setIsInfoDrawerOpen(false)}
 				onStatusChange={handleStatusChange}
 				onPriorityChange={handlePriorityChange}
-				onAssignOpen={() => { setIsInfoDrawerOpen(false); setIsAssignModalOpen(true); }}
-				onTransferOpen={() => { setIsInfoDrawerOpen(false); setIsTransferModalOpen(true); }}
+				onAssignOpen={() => {
+					setIsInfoDrawerOpen(false);
+					setIsAssignModalOpen(true);
+				}}
+				onTransferOpen={() => {
+					setIsInfoDrawerOpen(false);
+					setIsTransferModalOpen(true);
+				}}
 				onClose2={handleClose}
 				onReopen={handleReopen}
 				onDelete={handleDelete}

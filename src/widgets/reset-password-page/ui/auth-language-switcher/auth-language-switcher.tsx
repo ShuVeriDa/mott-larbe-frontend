@@ -1,14 +1,14 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import { useTransition } from "react";
 import { LOCALES, type Locale } from "@/i18n/locale-list";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { usePathname, useRouter } from "next/navigation";
+import { useTransition } from "react";
 
 const LABELS: Record<Locale, string> = {
 	ru: "РУ",
-	che: "ЧЕ",
+	che: "НАХ",
 	en: "EN",
 };
 
@@ -32,7 +32,7 @@ export const AuthLanguageSwitcher = () => {
 			role="group"
 			aria-label={t("auth.resetPassword.language")}
 		>
-			{LOCALES.map((code) => {
+			{LOCALES.map(code => {
 				const active = code === lang;
 				return (
 					<button
@@ -43,9 +43,7 @@ export const AuthLanguageSwitcher = () => {
 						disabled={isPending}
 						className={cn(
 							"h-[26px] rounded-[6px] px-[10px] text-[11.5px] font-semibold uppercase tracking-[0.3px] transition-colors",
-							active
-								? "bg-surf-3 text-t-1"
-								: "text-t-3 hover:text-t-1",
+							active ? "bg-surf-3 text-t-1" : "text-t-3 hover:text-t-1",
 							isPending && "cursor-wait opacity-70",
 						)}
 					>

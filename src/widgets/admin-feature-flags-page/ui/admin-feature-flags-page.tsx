@@ -2,22 +2,22 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminFeatureFlagsPage } from "../model/use-admin-feature-flags-page";
-import { FeatureFlagsTopbar } from "./feature-flags-topbar";
+import { FeatureFlagDeleteModal } from "./feature-flag-delete-modal";
+import { FeatureFlagDuplicateModal } from "./feature-flag-duplicate-modal";
+import { FeatureFlagImportModal } from "./feature-flag-import-modal";
+import { FeatureFlagModal } from "./feature-flag-modal";
+import { FeatureFlagOverrideModal } from "./feature-flag-override-modal";
+import { FeatureFlagsPagination } from "./feature-flags-pagination";
 import { FeatureFlagsStatsRow } from "./feature-flags-stats-row";
 import { FeatureFlagsTabs } from "./feature-flags-tabs";
 import { FeatureFlagsToolbar } from "./feature-flags-toolbar";
-import { OverridesToolbar } from "./overrides-toolbar";
-import { HistoryToolbar } from "./history-toolbar";
-import { FlagsTable } from "./flags-table";
+import { FeatureFlagsTopbar } from "./feature-flags-topbar";
 import { FlagsMobileList } from "./flags-mobile-list";
-import { OverridesTable } from "./overrides-table";
+import { FlagsTable } from "./flags-table";
 import { HistoryTable } from "./history-table";
-import { FeatureFlagsPagination } from "./feature-flags-pagination";
-import { FeatureFlagModal } from "./feature-flag-modal";
-import { FeatureFlagDeleteModal } from "./feature-flag-delete-modal";
-import { FeatureFlagDuplicateModal } from "./feature-flag-duplicate-modal";
-import { FeatureFlagOverrideModal } from "./feature-flag-override-modal";
-import { FeatureFlagImportModal } from "./feature-flag-import-modal";
+import { HistoryToolbar } from "./history-toolbar";
+import { OverridesTable } from "./overrides-table";
+import { OverridesToolbar } from "./overrides-toolbar";
 
 export const AdminFeatureFlagsPage = () => {
 	const { t } = useI18n();
@@ -99,7 +99,7 @@ export const AdminFeatureFlagsPage = () => {
 				: historyItems.length === 0 && !isHistoryLoading;
 
 	return (
-		<div className="flex min-h-screen flex-col bg-bg">
+		<div className="flex min-h-screen flex-col">
 			<FeatureFlagsTopbar
 				title={t("admin.featureFlags.title")}
 				subtitle={t("admin.featureFlags.subtitle")}
@@ -110,7 +110,15 @@ export const AdminFeatureFlagsPage = () => {
 							onClick={() => setImportModalOpen(true)}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
-							<svg className="size-[11px]" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+							<svg
+								className="size-[11px]"
+								viewBox="0 0 15 15"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="1.6"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							>
 								<path d="M7.5 10V2M4 6.5l3.5 4 3.5-4" />
 								<path d="M2 12h11" />
 							</svg>
@@ -121,7 +129,14 @@ export const AdminFeatureFlagsPage = () => {
 							onClick={openCreate}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 						>
-							<svg className="size-[11px]" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+							<svg
+								className="size-[11px]"
+								viewBox="0 0 15 15"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="1.8"
+								strokeLinecap="round"
+							>
 								<path d="M7.5 2v11M2 7.5h11" />
 							</svg>
 							{t("admin.featureFlags.newFlag")}

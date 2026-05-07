@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { Menu } from "lucide-react";
 import {
 	MobileMenu,
 	useMobileMenu,
@@ -11,6 +9,8 @@ import { LandingThemeToggle } from "@/features/landing-theme-toggle";
 import { useI18n } from "@/shared/lib/i18n";
 import { BrandMark } from "@/shared/ui/brand-mark";
 import { Typography } from "@/shared/ui/typography";
+import { Menu } from "lucide-react";
+import Link from "next/link";
 
 interface LandingNavProps {
 	loginHref: string;
@@ -29,7 +29,7 @@ export const LandingNav = ({ loginHref, startHref }: LandingNavProps) => {
 	const { open, openMenu, closeMenu } = useMobileMenu();
 
 	return (
-		<header className="sticky top-0 z-[100] border-hairline border-b border-bd-1 bg-bg/80 backdrop-blur-xl backdrop-saturate-[160%] transition-colors">
+		<header className="sticky top-0 z-[100] border-hairline border-b border-bd-1 bg-surf/80 backdrop-blur-xl backdrop-saturate-[160%] transition-colors">
 			<div className="mx-auto w-full max-w-[1120px] px-7 max-[900px]:px-[22px] max-[640px]:px-[18px]">
 				<div className="flex h-[60px] items-center justify-between max-[640px]:h-14">
 					<Link
@@ -55,7 +55,7 @@ export const LandingNav = ({ loginHref, startHref }: LandingNavProps) => {
 					</Link>
 
 					<nav className="flex items-center gap-1 max-[900px]:hidden">
-						{NAV_LINKS.map((link) => (
+						{NAV_LINKS.map(link => (
 							<Link
 								key={link.href}
 								href={link.href}

@@ -2,20 +2,20 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminDictionaryPage } from "../model/use-admin-dictionary-page";
-import { DictionaryTopbar } from "./dictionary-topbar";
-import { DictionaryStatsRow } from "./dictionary-stats-row";
-import { DictionaryUnknownWordsNotice } from "./dictionary-unknown-words-notice";
-import { DictionaryTabs } from "./dictionary-tabs";
-import { DictionaryToolbar } from "./dictionary-toolbar";
-import { DictionaryTable } from "./dictionary-table";
-import { DictionaryMobileList } from "./dictionary-mobile-list";
-import { DictionaryPagination } from "./dictionary-pagination";
+import { DictionaryAddExampleModal } from "./dictionary-add-example-modal";
+import { DictionaryAddSenseModal } from "./dictionary-add-sense-modal";
 import { DictionaryBulkBar } from "./dictionary-bulk-bar";
 import { DictionaryCreateModal } from "./dictionary-create-modal";
 import { DictionaryDeleteModal } from "./dictionary-delete-modal";
 import { DictionaryImportModal } from "./dictionary-import-modal";
-import { DictionaryAddSenseModal } from "./dictionary-add-sense-modal";
-import { DictionaryAddExampleModal } from "./dictionary-add-example-modal";
+import { DictionaryMobileList } from "./dictionary-mobile-list";
+import { DictionaryPagination } from "./dictionary-pagination";
+import { DictionaryStatsRow } from "./dictionary-stats-row";
+import { DictionaryTable } from "./dictionary-table";
+import { DictionaryTabs } from "./dictionary-tabs";
+import { DictionaryToolbar } from "./dictionary-toolbar";
+import { DictionaryTopbar } from "./dictionary-topbar";
+import { DictionaryUnknownWordsNotice } from "./dictionary-unknown-words-notice";
 
 export const AdminDictionaryPage = () => {
 	const { t, lang } = useI18n();
@@ -78,7 +78,7 @@ export const AdminDictionaryPage = () => {
 	const unknownWordsCount = statsQuery.data?.unknownWordsCount ?? 0;
 
 	return (
-		<div className="flex min-h-screen flex-col bg-bg">
+		<div className="flex min-h-screen flex-col">
 			<DictionaryTopbar
 				title={t("admin.dictionary.title")}
 				subtitle={t("admin.dictionary.subtitle")}
@@ -89,8 +89,18 @@ export const AdminDictionaryPage = () => {
 							onClick={handleImportOpen}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
-							<svg className="size-[11px]" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.4">
-								<path d="M7.5 10V1M4 4l3.5-3.5L11 4" strokeLinecap="round" strokeLinejoin="round" />
+							<svg
+								className="size-[11px]"
+								viewBox="0 0 15 15"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="1.4"
+							>
+								<path
+									d="M7.5 10V1M4 4l3.5-3.5L11 4"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								/>
 								<path d="M2 12h11" strokeLinecap="round" />
 							</svg>
 							{t("admin.dictionary.import")}
@@ -100,8 +110,18 @@ export const AdminDictionaryPage = () => {
 							onClick={() => handleBulkExport()}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
-							<svg className="size-[11px]" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.4">
-								<path d="M7.5 1v9M4 7l3.5 3.5L11 7" strokeLinecap="round" strokeLinejoin="round" />
+							<svg
+								className="size-[11px]"
+								viewBox="0 0 15 15"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="1.4"
+							>
+								<path
+									d="M7.5 1v9M4 7l3.5 3.5L11 7"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								/>
 								<path d="M2 12h11" strokeLinecap="round" />
 							</svg>
 							{t("admin.dictionary.export")}
@@ -111,7 +131,14 @@ export const AdminDictionaryPage = () => {
 							onClick={() => setCreateOpen(true)}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 						>
-							<svg className="size-[11px]" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+							<svg
+								className="size-[11px]"
+								viewBox="0 0 15 15"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="1.8"
+								strokeLinecap="round"
+							>
 								<path d="M7.5 2v11M2 7.5h11" />
 							</svg>
 							{t("admin.dictionary.create")}
@@ -237,7 +264,10 @@ export const AdminDictionaryPage = () => {
 			<DictionaryAddSenseModal
 				entry={addSenseEntry}
 				isSubmitting={isAddingSense}
-				onConfirm={(def) => { handleAddSenseConfirm(def); setAddSenseEntry(null); }}
+				onConfirm={def => {
+					handleAddSenseConfirm(def);
+					setAddSenseEntry(null);
+				}}
 				onClose={() => setAddSenseEntry(null)}
 				t={t}
 			/>
@@ -245,7 +275,10 @@ export const AdminDictionaryPage = () => {
 			<DictionaryAddExampleModal
 				entry={addExampleEntry}
 				isSubmitting={isAddingExample}
-				onConfirm={(text) => { handleAddExampleConfirm(text); setAddExampleEntry(null); }}
+				onConfirm={text => {
+					handleAddExampleConfirm(text);
+					setAddExampleEntry(null);
+				}}
 				onClose={() => setAddExampleEntry(null)}
 				t={t}
 			/>

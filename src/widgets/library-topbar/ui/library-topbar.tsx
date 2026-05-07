@@ -1,15 +1,18 @@
 "use client";
 
-import { useCallback } from "react";
 import { useLibraryFilters } from "@/features/library-filters";
 import { useI18n } from "@/shared/lib/i18n";
+import { useCallback } from "react";
 
 interface LibraryTopbarProps {
 	totalCount: number;
 	onRefresh: () => void;
 }
 
-export const LibraryTopbar = ({ totalCount, onRefresh }: LibraryTopbarProps) => {
+export const LibraryTopbar = ({
+	totalCount,
+	onRefresh,
+}: LibraryTopbarProps) => {
 	const { t } = useI18n();
 	const { search, setSearch } = useLibraryFilters();
 
@@ -22,7 +25,7 @@ export const LibraryTopbar = ({ totalCount, onRefresh }: LibraryTopbarProps) => 
 
 	return (
 		<>
-			<div className="flex h-12 shrink-0 items-center gap-2.5 border-b border-bd-1 bg-panel px-5 max-sm:px-3">
+			<div className="flex h-12 shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-5 max-sm:px-3">
 				<span className="font-display text-sm font-medium tracking-[-0.1px] text-t-1">
 					{t("library.title")}
 				</span>
@@ -56,7 +59,7 @@ export const LibraryTopbar = ({ totalCount, onRefresh }: LibraryTopbarProps) => 
 				</button>
 			</div>
 
-			<div className="flex shrink-0 border-b border-bd-1 bg-panel px-3 py-2 sm:hidden">
+			<div className="flex shrink-0 border-b border-bd-1 bg-surf px-3 py-2 sm:hidden">
 				<div className="relative w-full">
 					<span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-t-3">
 						<SearchIcon />
@@ -99,10 +102,6 @@ const RefreshIcon = () => (
 		strokeWidth="1.4"
 	>
 		<path d="M11 6.5A4.5 4.5 0 106.5 11" strokeLinecap="round" />
-		<path
-			d="M9 9l2.5 2-.5-2.5"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-		/>
+		<path d="M9 9l2.5 2-.5-2.5" strokeLinecap="round" strokeLinejoin="round" />
 	</svg>
 );

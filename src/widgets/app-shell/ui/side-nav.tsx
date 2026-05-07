@@ -1,24 +1,21 @@
 "use client";
 
+import { useDashboard } from "@/entities/dashboard";
+import { UserMenu } from "@/features/user-menu";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
+import {
+	ChartNoAxesCombined,
+	House,
+	LibraryBig,
+	RefreshCw,
+	WholeWord,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { useDashboard } from "@/entities/dashboard";
-import { useCurrentUser } from "@/entities/user";
-import { cn } from "@/shared/lib/cn";
-import { useI18n } from "@/shared/lib/i18n";
-import { Avatar } from "@/shared/ui/avatar";
-import { Typography } from "@/shared/ui/typography";
-import {
-	ChechenIcon,
-	GrammarIcon,
-	HomeIcon,
-	LogoIcon,
-	ProgressIcon,
-	ReviewIcon,
-	TextsIcon,
-	VocabularyIcon,
-} from "./nav-icons";
+import { ChechenIcon, GrammarIcon, LogoIcon } from "./nav-icons";
 import { NavStreak } from "./nav-streak";
 import { NavVocab } from "./nav-vocab";
 import { ThemeToggle } from "./theme-toggle";
@@ -40,27 +37,27 @@ const buildSections = (lang: string): NavSection[] => [
 		items: [
 			{
 				href: `/${lang}/dashboard`,
-				icon: <HomeIcon className="size-[15px] shrink-0" />,
+				icon: <House className="size-[15px] shrink-0" />,
 				labelKey: "nav.home",
 			},
 			{
 				href: `/${lang}/texts`,
-				icon: <TextsIcon className="size-[15px] shrink-0" />,
+				icon: <LibraryBig className="size-[15px] shrink-0" />,
 				labelKey: "nav.texts",
 			},
 			{
 				href: `/${lang}/vocabulary`,
-				icon: <VocabularyIcon className="size-[15px] shrink-0" />,
+				icon: <WholeWord className="size-[15px] shrink-0" />,
 				labelKey: "nav.vocabulary",
 			},
 			{
 				href: `/${lang}/review`,
-				icon: <ReviewIcon className="size-[15px] shrink-0" />,
+				icon: <RefreshCw className="size-[15px] shrink-0" />,
 				labelKey: "nav.review",
 			},
 			{
 				href: `/${lang}/progress`,
-				icon: <ProgressIcon className="size-[15px] shrink-0" />,
+				icon: <ChartNoAxesCombined className="size-[15px] shrink-0" />,
 				labelKey: "nav.progress",
 			},
 		],
@@ -88,23 +85,9 @@ export const SideNav = () => {
 	const sections = buildSections(lang);
 
 	const { data: dashData } = useDashboard();
-	const { data: user } = useCurrentUser();
 
 	const plan = dashData?.plan;
 	const stats = dashData?.stats;
-
-	const initials = [user?.name, user?.surname]
-		.filter(Boolean)
-		.map((s) => s![0].toUpperCase())
-		.join("")
-		.slice(0, 2) || "–";
-	const displayName =
-		[user?.name, user?.surname].filter(Boolean).join(" ") || "…";
-	const planLabel = plan
-		? plan.isPremium
-			? t("nav.premiumPlan")
-			: plan.name
-		: "Free";
 
 	return (
 		<nav
@@ -124,13 +107,11 @@ export const SideNav = () => {
 
 				{sections.map((section, secIdx) => (
 					<div key={section.titleKey}>
-						{secIdx > 0 ? (
-							<div className="mx-3.5 my-1.5 h-px bg-bd-1" />
-						) : null}
+						{secIdx > 0 ? <div className="mx-3.5 my-1.5 h-px bg-bd-1" /> : null}
 						<div className="px-3.5 pb-0.5 pt-3 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
 							{t(section.titleKey)}
 						</div>
-						{section.items.map((item) => {
+						{section.items.map(item => {
 							const active = pathname === item.href;
 							return (
 								<Link
@@ -222,15 +203,7 @@ export const SideNav = () => {
 
 			<div className="border-hairline border-t border-bd-1">
 				<ThemeToggle />
-				<div className="flex items-center gap-2.5 px-3.5 py-1.5 pb-3 hover:bg-surf-2">
-					<Avatar size="default">{initials}</Avatar>
-					<div className="min-w-0">
-						<div className="truncate text-[12.5px] font-medium text-t-1">
-							{displayName}
-						</div>
-						<div className="text-[11px] text-t-3">{planLabel}</div>
-					</div>
-				</div>
+				<UserMenu />
 			</div>
 		</nav>
 	);

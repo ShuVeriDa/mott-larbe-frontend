@@ -1,15 +1,15 @@
 "use client";
 
 import { useAdminTextsPage } from "../model/use-admin-texts-page";
-import { TextsTopbar } from "./texts-topbar";
-import { TextsStatsRow } from "./texts-stats-row";
-import { TextsTabs } from "./texts-tabs";
-import { TextsToolbar } from "./texts-toolbar";
+import { ImportTextsModal } from "./import-texts-modal";
 import { TextsBulkBar } from "./texts-bulk-bar";
-import { TextsTable } from "./texts-table";
 import { TextsMobileList } from "./texts-mobile-list";
 import { TextsPagination } from "./texts-pagination";
-import { ImportTextsModal } from "./import-texts-modal";
+import { TextsStatsRow } from "./texts-stats-row";
+import { TextsTable } from "./texts-table";
+import { TextsTabs } from "./texts-tabs";
+import { TextsToolbar } from "./texts-toolbar";
+import { TextsTopbar } from "./texts-topbar";
 
 export const AdminTextsPage = () => {
 	const state = useAdminTextsPage();
@@ -55,11 +55,7 @@ export const AdminTextsPage = () => {
 			<div className="px-[22px] py-4 pb-8 max-sm:px-3.5 max-sm:pb-6">
 				<TextsStatsRow stats={stats} isLoading={statsLoading} />
 
-				<TextsTabs
-					active={tab}
-					stats={stats}
-					onChange={handleTabChange}
-				/>
+				<TextsTabs active={tab} stats={stats} onChange={handleTabChange} />
 
 				<TextsToolbar
 					search={search}
@@ -76,9 +72,21 @@ export const AdminTextsPage = () => {
 				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 					<TextsBulkBar
 						selectedCount={selectedIds.size}
-						onPublish={() => mutations.bulkPublish.mutate(selectedArray, { onSuccess: clearSelection })}
-						onTokenize={() => mutations.bulkTokenize.mutate(selectedArray, { onSuccess: clearSelection })}
-						onDelete={() => mutations.bulkDelete.mutate(selectedArray, { onSuccess: clearSelection })}
+						onPublish={() =>
+							mutations.bulkPublish.mutate(selectedArray, {
+								onSuccess: clearSelection,
+							})
+						}
+						onTokenize={() =>
+							mutations.bulkTokenize.mutate(selectedArray, {
+								onSuccess: clearSelection,
+							})
+						}
+						onDelete={() =>
+							mutations.bulkDelete.mutate(selectedArray, {
+								onSuccess: clearSelection,
+							})
+						}
 						isPending={bulkPending}
 					/>
 
@@ -109,9 +117,7 @@ export const AdminTextsPage = () => {
 				</div>
 			</div>
 
-			{importOpen && (
-				<ImportTextsModal onClose={() => setImportOpen(false)} />
-			)}
+			{importOpen && <ImportTextsModal onClose={() => setImportOpen(false)} />}
 		</div>
 	);
 };

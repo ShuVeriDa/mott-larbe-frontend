@@ -10,7 +10,7 @@ export const AdminUsersTopbar = ({ onExport }: AdminUsersTopbarProps) => {
 	const { t } = useI18n();
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-bd-1 bg-panel px-[18px] py-3 transition-colors">
+		<div className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-bd-1 bg-surf px-[18px] py-3 transition-colors">
 			<div>
 				<div className="font-display text-[16px] text-t-1">
 					{t("admin.users.title")}

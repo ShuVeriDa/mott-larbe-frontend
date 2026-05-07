@@ -1,7 +1,7 @@
 "use client";
 
-import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
 
 interface LogsTopbarProps {
 	isLive: boolean;
@@ -9,11 +9,15 @@ interface LogsTopbarProps {
 	onExport: () => void;
 }
 
-export const LogsTopbar = ({ isLive, onToggleLive, onExport }: LogsTopbarProps) => {
+export const LogsTopbar = ({
+	isLive,
+	onToggleLive,
+	onExport,
+}: LogsTopbarProps) => {
 	const { t } = useI18n();
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-bd-1 bg-bg px-5 py-3.5 transition-colors">
+		<div className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors">
 			<div className="min-w-0 flex-1">
 				<div className="font-display text-base font-medium text-t-1">
 					{t("admin.logs.title")}
@@ -52,14 +56,25 @@ export const LogsTopbar = ({ isLive, onToggleLive, onExport }: LogsTopbarProps) 
 					>
 						{isLive ? (
 							<>
-								<rect x="4" y="3" width="3" height="10" rx="1" fill="currentColor" />
-								<rect x="9" y="3" width="3" height="10" rx="1" fill="currentColor" />
+								<rect
+									x="4"
+									y="3"
+									width="3"
+									height="10"
+									rx="1"
+									fill="currentColor"
+								/>
+								<rect
+									x="9"
+									y="3"
+									width="3"
+									height="10"
+									rx="1"
+									fill="currentColor"
+								/>
 							</>
 						) : (
-							<path
-								d="M5 3.5l8 4.5-8 4.5V3.5z"
-								fill="currentColor"
-							/>
+							<path d="M5 3.5l8 4.5-8 4.5V3.5z" fill="currentColor" />
 						)}
 					</svg>
 					{isLive ? t("admin.logs.pause") : t("admin.logs.resume")}

@@ -1,14 +1,22 @@
 "use client";
 
-import { type LibraryView, useLibraryFilters } from "@/features/library-filters";
-import type { CefrLevel } from "@/shared/types";
+import type {
+	LibraryProgressStatus,
+	LibrarySortOption,
+	LibraryTextLanguage,
+} from "@/entities/library-text";
+import { useLibraryFilters } from "@/features/library-filters";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import type { LibraryProgressStatus, LibrarySortOption, LibraryTextLanguage } from "@/entities/library-text";
+import type { CefrLevel } from "@/shared/types";
 
 const CEFR_LEVELS: CefrLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 const LANGUAGES: LibraryTextLanguage[] = ["CHE", "RU"];
-const PROGRESS_STATUSES: LibraryProgressStatus[] = ["NEW", "IN_PROGRESS", "COMPLETED"];
+const PROGRESS_STATUSES: LibraryProgressStatus[] = [
+	"NEW",
+	"IN_PROGRESS",
+	"COMPLETED",
+];
 
 const levelPillClass = (level: CefrLevel, active: boolean) => {
 	if (active) {
@@ -37,7 +45,7 @@ export const LibraryFilterBar = () => {
 	} = useLibraryFilters();
 
 	return (
-		<div className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-b border-bd-1 bg-panel px-5 py-2 [scrollbar-width:none] max-sm:px-3 max-sm:gap-1 [&::-webkit-scrollbar]:hidden">
+		<div className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-b border-bd-1 bg-surf px-5 py-2 [scrollbar-width:none] max-sm:px-3 max-sm:gap-1 [&::-webkit-scrollbar]:hidden">
 			<span className="shrink-0 text-[11px] font-medium text-t-3 max-sm:hidden">
 				{t("library.filterLevel")}
 			</span>
@@ -54,7 +62,7 @@ export const LibraryFilterBar = () => {
 				{t("library.all")}
 			</Pill>
 
-			{CEFR_LEVELS.map((l) => (
+			{CEFR_LEVELS.map(l => (
 				<Pill
 					key={l}
 					active={level === l}
@@ -83,7 +91,7 @@ export const LibraryFilterBar = () => {
 				{t("library.all")}
 			</Pill>
 
-			{LANGUAGES.map((l) => (
+			{LANGUAGES.map(l => (
 				<Pill
 					key={l}
 					active={lang === l}
@@ -116,7 +124,7 @@ export const LibraryFilterBar = () => {
 				{t("library.all")}
 			</Pill>
 
-			{PROGRESS_STATUSES.map((s) => (
+			{PROGRESS_STATUSES.map(s => (
 				<Pill
 					key={s}
 					active={status === s}
@@ -135,7 +143,7 @@ export const LibraryFilterBar = () => {
 
 			<select
 				value={sort}
-				onChange={(e) => setSort(e.target.value as LibrarySortOption)}
+				onChange={e => setSort(e.target.value as LibrarySortOption)}
 				aria-label={t("library.sort.label")}
 				className="h-[26px] shrink-0 cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[11px] text-t-2 outline-none"
 			>
@@ -150,10 +158,18 @@ export const LibraryFilterBar = () => {
 			<Divider />
 
 			<div className="flex shrink-0 overflow-hidden rounded-base border border-bd-2 max-sm:hidden">
-				<ViewBtn active={view === "grid"} onClick={() => setView("grid")} aria-label={t("library.view.grid")}>
+				<ViewBtn
+					active={view === "grid"}
+					onClick={() => setView("grid")}
+					aria-label={t("library.view.grid")}
+				>
 					<GridIcon />
 				</ViewBtn>
-				<ViewBtn active={view === "list"} onClick={() => setView("list")} aria-label={t("library.view.list")}>
+				<ViewBtn
+					active={view === "list"}
+					onClick={() => setView("list")}
+					aria-label={t("library.view.list")}
+				>
 					<ListIcon />
 				</ViewBtn>
 			</div>
@@ -215,7 +231,14 @@ const ViewBtn = ({
 );
 
 const GridIcon = () => (
-	<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
+	<svg
+		width="12"
+		height="12"
+		viewBox="0 0 12 12"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="1.4"
+	>
 		<rect x="1" y="1" width="4" height="4" rx=".8" />
 		<rect x="7" y="1" width="4" height="4" rx=".8" />
 		<rect x="1" y="7" width="4" height="4" rx=".8" />
@@ -224,7 +247,17 @@ const GridIcon = () => (
 );
 
 const ListIcon = () => (
-	<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
-		<path d="M3.5 3h7M3.5 6h7M3.5 9h7M1.5 3h.1M1.5 6h.1M1.5 9h.1" strokeLinecap="round" />
+	<svg
+		width="12"
+		height="12"
+		viewBox="0 0 12 12"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="1.4"
+	>
+		<path
+			d="M3.5 3h7M3.5 6h7M3.5 9h7M1.5 3h.1M1.5 6h.1M1.5 9h.1"
+			strokeLinecap="round"
+		/>
 	</svg>
 );

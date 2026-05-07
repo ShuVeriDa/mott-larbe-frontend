@@ -1,14 +1,14 @@
 "use client";
 
+import { LOCALES, type Locale } from "@/i18n/locale-list";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
 import { usePathname, useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { LOCALES, type Locale } from "@/i18n/locale-list";
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 
 const LABELS: Record<Locale, string> = {
 	ru: "РУ",
-	che: "ЧЕ",
+	che: "НАХ",
 	en: "EN",
 };
 
@@ -42,7 +42,7 @@ export const AuthLanguageSwitcher = () => {
 			role="tablist"
 			aria-label="Language"
 		>
-			{LOCALES.map((locale) => {
+			{LOCALES.map(locale => {
 				const isActive = locale === lang;
 				return (
 					<button
@@ -53,9 +53,7 @@ export const AuthLanguageSwitcher = () => {
 						onClick={() => handleSelect(locale)}
 						className={cn(
 							"h-[26px] rounded-[6px] px-2.5 text-[11.5px] font-semibold tracking-[0.3px] transition-colors",
-							isActive
-								? "bg-surf-3 text-t-1"
-								: "text-t-3 hover:text-t-1",
+							isActive ? "bg-surf-3 text-t-1" : "text-t-3 hover:text-t-1",
 						)}
 					>
 						{LABELS[locale]}

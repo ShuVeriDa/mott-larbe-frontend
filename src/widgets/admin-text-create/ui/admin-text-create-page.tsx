@@ -1,11 +1,11 @@
 "use client";
 
-import { useI18n } from "@/shared/lib/i18n";
 import { useAdminTags } from "@/entities/admin-tag";
+import { useI18n } from "@/shared/lib/i18n";
 import { useAdminTextCreatePage } from "../model/use-admin-text-create-page";
-import { TextCreateTopbar } from "./text-create-topbar";
 import { TextCreateEditor } from "./text-create-editor";
 import { TextCreateMetaPanel } from "./text-create-meta-panel";
+import { TextCreateTopbar } from "./text-create-topbar";
 
 export const AdminTextCreatePage = () => {
 	const { t } = useI18n();
@@ -49,7 +49,7 @@ export const AdminTextCreatePage = () => {
 	} = useAdminTextCreatePage();
 
 	return (
-		<div className="flex min-h-screen flex-col bg-bg text-t-1 transition-colors">
+		<div className="flex min-h-screen flex-col text-t-1 transition-colors">
 			<TextCreateTopbar
 				saveState={saveState}
 				isSaving={isSaving}
@@ -112,9 +112,23 @@ export const AdminTextCreatePage = () => {
 					className="flex h-[38px] flex-1 items-center justify-center gap-1.5 rounded-[8px] border border-bd-2 bg-transparent text-sm text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-						<path d="M3 4a1 1 0 011-1h6l3 3v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4z" stroke="currentColor" strokeWidth="1.3" />
-						<path d="M10 3v3H6V3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-						<path d="M5 10h6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+						<path
+							d="M3 4a1 1 0 011-1h6l3 3v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"
+							stroke="currentColor"
+							strokeWidth="1.3"
+						/>
+						<path
+							d="M10 3v3H6V3"
+							stroke="currentColor"
+							strokeWidth="1.3"
+							strokeLinecap="round"
+						/>
+						<path
+							d="M5 10h6"
+							stroke="currentColor"
+							strokeWidth="1.3"
+							strokeLinecap="round"
+						/>
 					</svg>
 					{t("admin.texts.createPage.saveDraft")}
 				</button>
@@ -126,7 +140,13 @@ export const AdminTextCreatePage = () => {
 					className="flex h-[38px] flex-1 items-center justify-center gap-1.5 rounded-[8px] bg-acc text-sm font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-						<path d="M8 2v10M3 7l5-5 5 5" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+						<path
+							d="M8 2v10M3 7l5-5 5 5"
+							stroke="#fff"
+							strokeWidth="1.6"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						/>
 					</svg>
 					{t("admin.texts.createPage.publish")}
 				</button>

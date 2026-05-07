@@ -17,11 +17,23 @@ interface TokenizationTableProps {
 	mutations: ReturnType<typeof useTokenizationMutations>;
 }
 
-const TokenBar = ({ value, max, color }: { value: number; max: number; color: string }) => {
-	const pct = max > 0 ? Math.round((value / max) * 100) : 0;
+const TokenBar = ({
+	value,
+	max,
+	color,
+}: {
+	value: number | null | undefined;
+	max: number | null | undefined;
+	color: string;
+}) => {
+	const normalizedValue = typeof value === "number" && Number.isFinite(value) ? value : 0;
+	const normalizedMax = typeof max === "number" && Number.isFinite(max) ? max : 0;
+	const pct = normalizedMax > 0 ? Math.round((normalizedValue / normalizedMax) * 100) : 0;
 	return (
 		<div className="flex items-center gap-1.5">
-			<span className="tabular-nums text-[12.5px] text-t-1">{value.toLocaleString()}</span>
+			<span className="tabular-nums text-[12.5px] text-t-1">
+				{normalizedValue.toLocaleString()}
+			</span>
 			<div className="h-1.5 w-14 overflow-hidden rounded-full bg-surf-3">
 				<div className={`h-full rounded-full ${color}`} style={{ width: `${pct}%` }} />
 			</div>

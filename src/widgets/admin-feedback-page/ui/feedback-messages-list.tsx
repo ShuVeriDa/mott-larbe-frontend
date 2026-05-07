@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import type { AdminFeedbackMessage } from "@/entities/feedback";
+import { useEffect, useRef } from "react";
 import { FeedbackMessageBubble } from "./feedback-message-bubble";
 
 const formatDateDivider = (iso: string): string =>
@@ -26,7 +26,10 @@ interface FeedbackMessagesListProps {
 	noteLabel: string;
 }
 
-export const FeedbackMessagesList = ({ messages, noteLabel }: FeedbackMessagesListProps) => {
+export const FeedbackMessagesList = ({
+	messages,
+	noteLabel,
+}: FeedbackMessagesListProps) => {
 	const bottomRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -36,7 +39,8 @@ export const FeedbackMessagesList = ({ messages, noteLabel }: FeedbackMessagesLi
 	return (
 		<div className="flex flex-1 flex-col gap-3.5 overflow-y-auto px-5 py-[18px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-sm [&::-webkit-scrollbar-thumb]:bg-bd-2">
 			{messages.map((msg, i) => {
-				const showDivider = i === 0 || !isSameDay(messages[i - 1].createdAt, msg.createdAt);
+				const showDivider =
+					i === 0 || !isSameDay(messages[i - 1].createdAt, msg.createdAt);
 				return (
 					<>
 						{showDivider && (
