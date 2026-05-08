@@ -24,7 +24,7 @@ export const PaymentsTopbar = ({ onExportCsv }: Props) => {
 				<button
 					type="button"
 					onClick={onExportCsv}
-					className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1 max-sm:px-2"
+					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1 max-sm:px-2"
 				>
 					<svg
 						width="12"

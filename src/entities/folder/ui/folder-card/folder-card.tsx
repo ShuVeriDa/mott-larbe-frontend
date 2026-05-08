@@ -1,10 +1,10 @@
 "use client";
 
-import { type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 import { cn } from "@/shared/lib/cn";
+import { type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
+import type { Folder } from "../../api/types";
 import { DEFAULT_FOLDER_COLOR } from "../../lib/folder-presets";
 import { FolderIcon } from "../folder-icon";
-import type { Folder } from "../../api/types";
 
 export interface FolderCardLabels {
 	new: string;
@@ -60,7 +60,7 @@ const CountChip = ({
 	label: string;
 	tone: "neutral" | "amber" | "green";
 }) => (
-	<div className="flex flex-1 flex-col items-center gap-0.5 rounded-[7px] bg-surf-2 px-1 py-[5px]">
+	<div className="flex flex-1 flex-col items-center gap-0.5 rounded-base bg-surf-2 px-1 py-[5px]">
 		<span
 			className={cn("font-display text-[16px] leading-none", {
 				"text-t-3": tone === "neutral",

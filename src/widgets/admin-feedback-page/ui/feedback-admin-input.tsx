@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
 import { cn } from "@/shared/lib/cn";
+import { useRef, useState } from "react";
 
 type Translator = (key: string) => string;
 
@@ -125,7 +125,7 @@ export const FeedbackAdminInput = ({
 				<textarea
 					ref={textareaRef}
 					value={value}
-					onChange={(e) => {
+					onChange={e => {
 						setValue(e.target.value);
 						autoResize();
 					}}
@@ -147,7 +147,7 @@ export const FeedbackAdminInput = ({
 					disabled={!value.trim() || isPending}
 					onClick={handleSend}
 					className={cn(
-						"flex size-7 shrink-0 items-center justify-center rounded-[7px] text-white transition-opacity hover:opacity-[0.88] disabled:opacity-40",
+						"flex size-7 shrink-0 items-center justify-center rounded-base text-white transition-opacity hover:opacity-[0.88] disabled:opacity-40",
 						isNote
 							? "bg-amb shadow-[0_1px_4px_rgba(217,119,6,0.3)]"
 							: "bg-acc shadow-[0_1px_4px_rgba(34,84,211,0.3)]",

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagItem } from "@/entities/feature-flag";
+import { cn } from "@/shared/lib/cn";
+import { useEffect, useState } from "react";
 
 interface FeatureFlagDuplicateModalProps {
 	flag: FeatureFlagItem | null;
@@ -42,7 +42,9 @@ export const FeatureFlagDuplicateModal = ({
 	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px]"
-			onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+			onClick={e => {
+				if (e.target === e.currentTarget) onClose();
+			}}
 		>
 			<div className="w-[400px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -61,12 +63,17 @@ export const FeatureFlagDuplicateModal = ({
 							keyError && "border-red-400",
 						)}
 						value={key}
-						onChange={(e) => { setKey(e.target.value); setKeyError(""); }}
+						onChange={e => {
+							setKey(e.target.value);
+							setKeyError("");
+						}}
 					/>
 					{keyError ? (
 						<p className="mt-1 text-[11px] text-red-t">{keyError}</p>
 					) : (
-						<p className="mt-1 text-[11px] text-t-3">{t("admin.featureFlags.modal.keyHint")}</p>
+						<p className="mt-1 text-[11px] text-t-3">
+							{t("admin.featureFlags.modal.keyHint")}
+						</p>
 					)}
 				</div>
 				<div className="mt-5 flex justify-end gap-2">
@@ -74,7 +81,7 @@ export const FeatureFlagDuplicateModal = ({
 						type="button"
 						onClick={onClose}
 						disabled={isDuplicating}
-						className="h-8 cursor-pointer rounded-[7px] border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50"
+						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50"
 					>
 						{t("admin.featureFlags.modal.cancel")}
 					</button>
@@ -82,7 +89,7 @@ export const FeatureFlagDuplicateModal = ({
 						type="button"
 						onClick={handleSubmit}
 						disabled={isDuplicating || !key}
-						className="h-8 cursor-pointer rounded-[7px] bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50"
+						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50"
 					>
 						{isDuplicating
 							? t("admin.featureFlags.duplicateModal.duplicating")

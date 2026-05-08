@@ -24,7 +24,7 @@ export const MorphologyTopbar = ({ onAdd, onImport }: Props) => {
 			<div className="ml-auto flex items-center gap-2">
 				<button
 					onClick={onImport}
-					className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
+					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 				>
 					<svg
 						width="13"
@@ -52,7 +52,7 @@ export const MorphologyTopbar = ({ onAdd, onImport }: Props) => {
 
 				<button
 					onClick={onAdd}
-					className="flex h-[30px] items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
+					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
 					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
 						<path

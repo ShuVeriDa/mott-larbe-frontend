@@ -1,10 +1,15 @@
 "use client";
 
-import { useState, type SyntheticEvent } from "react";
-import { useI18n } from "@/shared/lib/i18n";
+import type {
+	AdminCouponDetail,
+	CouponType,
+	CreateCouponDto,
+	UpdateCouponDto,
+	useCouponMutations,
+} from "@/entities/admin-coupon";
 import { cn } from "@/shared/lib/cn";
-import type { AdminCouponDetail, CouponType, CreateCouponDto, UpdateCouponDto } from "@/entities/admin-coupon";
-import type { useCouponMutations } from "@/entities/admin-coupon";
+import { useI18n } from "@/shared/lib/i18n";
+import { useState, type SyntheticEvent } from "react";
 
 const PLANS = ["BASIC", "PRO", "PREMIUM", "LIFETIME"] as const;
 const PLAN_STYLES: Record<string, string> = {
@@ -16,7 +21,10 @@ const PLAN_STYLES: Record<string, string> = {
 
 const generateCode = () => {
 	const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-	return Array.from({ length: 8 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+	return Array.from(
+		{ length: 8 },
+		() => chars[Math.floor(Math.random() * chars.length)],
+	).join("");
 };
 
 interface FormState {
@@ -69,20 +77,24 @@ interface Props {
 
 export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 	const { t } = useI18n();
-	const [form, setForm] = useState<FormState>(editing ? fromCoupon(editing) : defaultForm);
-	const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+	const [form, setForm] = useState<FormState>(
+		editing ? fromCoupon(editing) : defaultForm,
+	);
+	const [errors, setErrors] = useState<
+		Partial<Record<keyof FormState, string>>
+	>({});
 
 	const isEdit = !!editing;
 	const isPending = mutations.create.isPending || mutations.update.isPending;
 
 	const set = <K extends keyof FormState>(key: K, value: FormState[K]) =>
-		setForm((prev) => ({ ...prev, [key]: value }));
+		setForm(prev => ({ ...prev, [key]: value }));
 
 	const togglePlan = (plan: string) =>
 		set(
 			"applicablePlans",
 			form.applicablePlans.includes(plan)
-				? form.applicablePlans.filter((p) => p !== plan)
+				? form.applicablePlans.filter(p => p !== plan)
 				: [...form.applicablePlans, plan],
 		);
 
@@ -108,11 +120,17 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 			...(form.name.trim() ? { name: form.name.trim() } : {}),
 			type: form.type,
 			amount: Number(form.amount),
-			...(form.maxRedemptions ? { maxRedemptions: Number(form.maxRedemptions) } : {}),
+			...(form.maxRedemptions
+				? { maxRedemptions: Number(form.maxRedemptions) }
+				: {}),
 			...(form.maxPerUser ? { maxPerUser: Number(form.maxPerUser) } : {}),
 			applicablePlans: form.applicablePlans,
-			...(form.validFrom ? { validFrom: new Date(form.validFrom).toISOString() } : {}),
-			...(form.validUntil ? { validUntil: new Date(form.validUntil + "T23:59:59").toISOString() } : {}),
+			...(form.validFrom
+				? { validFrom: new Date(form.validFrom).toISOString() }
+				: {}),
+			...(form.validUntil
+				? { validUntil: new Date(form.validUntil + "T23:59:59").toISOString() }
+				: {}),
 			newUsersOnly: form.newUsersOnly,
 			isStackable: form.isStackable,
 			isActive: true,
@@ -132,10 +150,23 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
 				<h2 className="font-display text-[14px] font-semibold text-t-1">
-					{isEdit ? t("admin.coupons.modal.titleEdit") : t("admin.coupons.modal.titleNew")}
+					{isEdit
+						? t("admin.coupons.modal.titleEdit")
+						: t("admin.coupons.modal.titleNew")}
 				</h2>
-				<button type="button" onClick={onClose} className="flex size-[26px] items-center justify-center rounded-[7px] bg-surf-2 text-t-2 transition-colors hover:bg-surf-3">
-					<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+				<button
+					type="button"
+					onClick={onClose}
+					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
+				>
+					<svg
+						width="12"
+						height="12"
+						viewBox="0 0 12 12"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="1.5"
+					>
 						<path d="M2 2l8 8M10 2l-8 8" strokeLinecap="round" />
 					</svg>
 				</button>
@@ -152,7 +183,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 					<div className="flex gap-1.5">
 						<input
 							value={form.code}
-							onChange={(e) => set("code", e.target.value.toUpperCase())}
+							onChange={e => set("code", e.target.value.toUpperCase())}
 							placeholder={t("admin.coupons.modal.codePlaceholder")}
 							className={cn(
 								"h-[34px] flex-1 rounded-[8px] border bg-surf-2 px-2.5 font-mono text-[14px] font-bold uppercase tracking-[1px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf",
@@ -167,15 +198,19 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 							{t("admin.coupons.modal.random")}
 						</button>
 					</div>
-					{errors.code && <p className="mt-1 text-[11px] text-red-t">{errors.code}</p>}
+					{errors.code && (
+						<p className="mt-1 text-[11px] text-red-t">{errors.code}</p>
+					)}
 				</div>
 
 				{/* Name */}
 				<div className="mb-3">
-					<label className="mb-1 block text-[11.5px] font-medium text-t-2">{t("admin.coupons.modal.name")}</label>
+					<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+						{t("admin.coupons.modal.name")}
+					</label>
 					<input
 						value={form.name}
-						onChange={(e) => set("name", e.target.value)}
+						onChange={e => set("name", e.target.value)}
 						placeholder={t("admin.coupons.modal.namePlaceholder")}
 						className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 					/>
@@ -184,9 +219,11 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 				{/* Type toggle + amount */}
 				<div className="mb-3 grid grid-cols-2 gap-2.5">
 					<div>
-						<label className="mb-1 block text-[11.5px] font-medium text-t-2">{t("admin.coupons.modal.type")}</label>
+						<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+							{t("admin.coupons.modal.type")}
+						</label>
 						<div className="flex gap-1">
-							{(["PERCENT", "FIXED"] as CouponType[]).map((tp) => (
+							{(["PERCENT", "FIXED"] as CouponType[]).map(tp => (
 								<button
 									key={tp}
 									type="button"
@@ -198,7 +235,9 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 											: "border-bd-2 bg-surf-2 text-t-2 hover:bg-surf-3",
 									)}
 								>
-									{tp === "PERCENT" ? t("admin.coupons.modal.typePercent") : t("admin.coupons.modal.typeFixed")}
+									{tp === "PERCENT"
+										? t("admin.coupons.modal.typePercent")
+										: t("admin.coupons.modal.typeFixed")}
 								</button>
 							))}
 						</div>
@@ -214,13 +253,15 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 							max={form.type === "PERCENT" ? 100 : undefined}
 							step="1"
 							value={form.amount}
-							onChange={(e) => set("amount", e.target.value)}
+							onChange={e => set("amount", e.target.value)}
 							className={cn(
 								"h-[34px] w-full rounded-[8px] border bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf",
 								errors.amount ? "border-red" : "border-bd-2",
 							)}
 						/>
-						{errors.amount && <p className="mt-1 text-[11px] text-red-t">{errors.amount}</p>}
+						{errors.amount && (
+							<p className="mt-1 text-[11px] text-red-t">{errors.amount}</p>
+						)}
 					</div>
 				</div>
 
@@ -229,24 +270,28 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 					<div>
 						<label className="mb-1 block text-[11.5px] font-medium text-t-2">
 							{t("admin.coupons.modal.maxRedemptions")}
-							<span className="ml-1 text-[10.5px] font-normal text-t-3">{t("admin.coupons.modal.optional")}</span>
+							<span className="ml-1 text-[10.5px] font-normal text-t-3">
+								{t("admin.coupons.modal.optional")}
+							</span>
 						</label>
 						<input
 							type="number"
 							min="1"
 							value={form.maxRedemptions}
-							onChange={(e) => set("maxRedemptions", e.target.value)}
+							onChange={e => set("maxRedemptions", e.target.value)}
 							placeholder="∞"
 							className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 						/>
 					</div>
 					<div>
-						<label className="mb-1 block text-[11.5px] font-medium text-t-2">{t("admin.coupons.modal.maxPerUser")}</label>
+						<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+							{t("admin.coupons.modal.maxPerUser")}
+						</label>
 						<input
 							type="number"
 							min="1"
 							value={form.maxPerUser}
-							onChange={(e) => set("maxPerUser", e.target.value)}
+							onChange={e => set("maxPerUser", e.target.value)}
 							className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 						/>
 					</div>
@@ -254,7 +299,9 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 
 				{/* Applicable plans */}
 				<div className="mb-3">
-					<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">{t("admin.coupons.modal.plans")}</label>
+					<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+						{t("admin.coupons.modal.plans")}
+					</label>
 					<div className="flex flex-wrap gap-1.5">
 						<button
 							type="button"
@@ -268,7 +315,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 						>
 							{t("admin.coupons.modal.plansAll")}
 						</button>
-						{PLANS.map((p) => (
+						{PLANS.map(p => (
 							<button
 								key={p}
 								type="button"
@@ -289,26 +336,32 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 				{/* Dates */}
 				<div className="mb-3 grid grid-cols-2 gap-2.5">
 					<div>
-						<label className="mb-1 block text-[11.5px] font-medium text-t-2">{t("admin.coupons.modal.validFrom")}</label>
+						<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+							{t("admin.coupons.modal.validFrom")}
+						</label>
 						<input
 							type="date"
 							value={form.validFrom}
-							onChange={(e) => set("validFrom", e.target.value)}
+							onChange={e => set("validFrom", e.target.value)}
 							className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 						/>
 					</div>
 					<div>
-						<label className="mb-1 block text-[11.5px] font-medium text-t-2">{t("admin.coupons.modal.validUntil")}</label>
+						<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+							{t("admin.coupons.modal.validUntil")}
+						</label>
 						<input
 							type="date"
 							value={form.validUntil}
-							onChange={(e) => set("validUntil", e.target.value)}
+							onChange={e => set("validUntil", e.target.value)}
 							className={cn(
 								"h-[34px] w-full rounded-[8px] border bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf",
 								errors.validUntil ? "border-red" : "border-bd-2",
 							)}
 						/>
-						{errors.validUntil && <p className="mt-1 text-[11px] text-red-t">{errors.validUntil}</p>}
+						{errors.validUntil && (
+							<p className="mt-1 text-[11px] text-red-t">{errors.validUntil}</p>
+						)}
 					</div>
 				</div>
 
@@ -318,19 +371,23 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 						<input
 							type="checkbox"
 							checked={form.newUsersOnly}
-							onChange={(e) => set("newUsersOnly", e.target.checked)}
+							onChange={e => set("newUsersOnly", e.target.checked)}
 							className="h-3.5 w-3.5 cursor-pointer accent-acc"
 						/>
-						<span className="text-[12.5px] text-t-2">{t("admin.coupons.modal.newUsersOnly")}</span>
+						<span className="text-[12.5px] text-t-2">
+							{t("admin.coupons.modal.newUsersOnly")}
+						</span>
 					</label>
 					<label className="flex cursor-pointer items-center gap-2">
 						<input
 							type="checkbox"
 							checked={form.isStackable}
-							onChange={(e) => set("isStackable", e.target.checked)}
+							onChange={e => set("isStackable", e.target.checked)}
 							className="h-3.5 w-3.5 cursor-pointer accent-acc"
 						/>
-						<span className="text-[12.5px] text-t-2">{t("admin.coupons.modal.isStackable")}</span>
+						<span className="text-[12.5px] text-t-2">
+							{t("admin.coupons.modal.isStackable")}
+						</span>
 					</label>
 				</div>
 			</div>
@@ -349,7 +406,9 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 					disabled={isPending}
 					className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 				>
-					{isEdit ? t("admin.coupons.modal.save") : t("admin.coupons.modal.create")}
+					{isEdit
+						? t("admin.coupons.modal.save")
+						: t("admin.coupons.modal.create")}
 				</button>
 			</div>
 		</form>

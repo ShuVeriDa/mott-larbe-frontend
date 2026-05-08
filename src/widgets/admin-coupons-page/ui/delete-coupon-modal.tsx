@@ -1,5 +1,5 @@
-import { useI18n } from "@/shared/lib/i18n";
 import type { useCouponMutations } from "@/entities/admin-coupon";
+import { useI18n } from "@/shared/lib/i18n";
 
 interface Props {
 	couponId: string | null;
@@ -19,7 +19,8 @@ export const DeleteCouponModal = ({
 	onClose,
 }: Props) => {
 	const { t } = useI18n();
-	const isPending = mutations.remove.isPending || mutations.deactivate.isPending;
+	const isPending =
+		mutations.remove.isPending || mutations.deactivate.isPending;
 
 	if (!couponId) return null;
 
@@ -28,14 +29,23 @@ export const DeleteCouponModal = ({
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
 				<h2 className="font-display text-[14px] font-semibold text-t-1">
-					{hasError ? t("admin.coupons.deleteModal.errorTitle") : t("admin.coupons.deleteModal.title")}
+					{hasError
+						? t("admin.coupons.deleteModal.errorTitle")
+						: t("admin.coupons.deleteModal.title")}
 				</h2>
 				<button
 					type="button"
 					onClick={onClose}
-					className="flex size-[26px] items-center justify-center rounded-[7px] bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
+					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
-					<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+					<svg
+						width="12"
+						height="12"
+						viewBox="0 0 12 12"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="1.5"
+					>
 						<path d="M2 2l8 8M10 2l-8 8" strokeLinecap="round" />
 					</svg>
 				</button>
@@ -44,7 +54,9 @@ export const DeleteCouponModal = ({
 			{/* Body */}
 			<div className="px-4 py-4">
 				<p className="text-[13px] leading-relaxed text-t-2">
-					{hasError ? t("admin.coupons.deleteModal.errorText") : t("admin.coupons.deleteModal.text")}
+					{hasError
+						? t("admin.coupons.deleteModal.errorText")
+						: t("admin.coupons.deleteModal.text")}
 				</p>
 			</div>
 

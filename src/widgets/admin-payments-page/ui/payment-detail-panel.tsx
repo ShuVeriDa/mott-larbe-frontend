@@ -1,14 +1,14 @@
 ﻿"use client";
 
-import Link from "next/link";
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type {
 	AdminPaymentDetail,
 	AdminPaymentListItem,
 	PaymentBackendStatus,
 	PaymentProvider,
 } from "@/entities/admin-payment";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import Link from "next/link";
 
 const PROVIDER_COLORS: Record<PaymentProvider, string> = {
 	STRIPE: "#635bff",
@@ -139,7 +139,8 @@ export const PaymentDetailPanel = ({
 		? (SUB_STATUS_CFG[userSub.status] ?? SUB_STATUS_CFG.EXPIRED)
 		: null;
 	const userSubPlanCode = userSub?.plan.type ?? "";
-	const userSubPlanChipCls = PLAN_CHIP_CFG[userSubPlanCode] ?? "bg-surf-3 text-t-2";
+	const userSubPlanChipCls =
+		PLAN_CHIP_CFG[userSubPlanCode] ?? "bg-surf-3 text-t-2";
 	const userInitials = initials(payment.user.name, payment.user.surname);
 
 	const otherPayments = (payment.user.payments ?? []).slice(0, 3);
@@ -245,7 +246,7 @@ export const PaymentDetailPanel = ({
 						{t("admin.payments.detail.roles")}
 					</div>
 					<div className="flex flex-wrap gap-1">
-						{payment.user.roles.map((r) => (
+						{payment.user.roles.map(r => (
 							<span
 								key={r.role.name}
 								className={cn(
@@ -347,9 +348,7 @@ export const PaymentDetailPanel = ({
 									sc.cls,
 								)}
 							>
-								<span
-									className={cn("size-[5px] rounded-full", sc.dotCls)}
-								/>
+								<span className={cn("size-[5px] rounded-full", sc.dotCls)} />
 								{t(sc.i18nKey)}
 							</span>
 						</div>
@@ -363,7 +362,7 @@ export const PaymentDetailPanel = ({
 							{t("admin.payments.detail.otherPayments")}
 						</div>
 						<div className="space-y-0">
-							{otherPayments.map((p) => {
+							{otherPayments.map(p => {
 								const pSc = STATUS_CFG[p.status] ?? STATUS_CFG.PENDING;
 								const pAmtColor =
 									p.status === "SUCCEEDED"
@@ -413,7 +412,7 @@ export const PaymentDetailPanel = ({
 				<button
 					type="button"
 					onClick={() => onReceipt(payment.id)}
-					className="flex h-[30px] w-full items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+					className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
 					<svg
 						className="size-3 shrink-0 text-t-3"
@@ -430,7 +429,7 @@ export const PaymentDetailPanel = ({
 				<button
 					type="button"
 					onClick={() => onSendReceipt(payment.id)}
-					className="flex h-[30px] w-full items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+					className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
 					<svg
 						className="size-3 shrink-0 text-t-3"
@@ -445,7 +444,7 @@ export const PaymentDetailPanel = ({
 				</button>
 				<Link
 					href={`/${lang}/admin/users/${payment.user.id}`}
-					className="flex h-[30px] w-full items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+					className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
 					<svg
 						className="size-3 shrink-0 text-t-3"
@@ -466,7 +465,7 @@ export const PaymentDetailPanel = ({
 					<button
 						type="button"
 						onClick={() => onRefund(payment.id)}
-						className="flex h-[30px] w-full items-center gap-1.5 rounded-[7px] border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[12px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
+						className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[12px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 					>
 						<svg
 							className="size-3 shrink-0 text-red-t"

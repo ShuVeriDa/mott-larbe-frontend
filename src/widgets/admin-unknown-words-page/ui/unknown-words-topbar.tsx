@@ -27,7 +27,7 @@ export const UnknownWordsTopbar = ({
 				<button
 					type="button"
 					onClick={onExport}
-					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
+					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
 					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
 						<path
@@ -45,7 +45,7 @@ export const UnknownWordsTopbar = ({
 				<button
 					type="button"
 					onClick={onClearAll}
-					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-red-t transition-colors hover:border-red/30 hover:bg-red-bg"
+					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-red-t transition-colors hover:border-red/30 hover:bg-red-bg"
 				>
 					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
 						<path

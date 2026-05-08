@@ -1,7 +1,7 @@
 "use client";
 
-import { useI18n } from "@/shared/lib/i18n";
 import type { ProcessingStatus, TokenizationTextItem } from "@/entities/token";
+import { useI18n } from "@/shared/lib/i18n";
 import { TokenizationLevelBadge } from "./tokenization-level-badge";
 import { TokenizationStatusBadge } from "./tokenization-status-badge";
 
@@ -10,10 +10,15 @@ interface TokenizationMobileListProps {
 	onRowClick: (id: string) => void;
 }
 
-export const TokenizationMobileList = ({ items, onRowClick }: TokenizationMobileListProps) => {
+export const TokenizationMobileList = ({
+	items,
+	onRowClick,
+}: TokenizationMobileListProps) => {
 	const { t } = useI18n();
 	const formatCount = (value: number | null | undefined) =>
-		typeof value === "number" && Number.isFinite(value) ? value.toLocaleString() : "0";
+		typeof value === "number" && Number.isFinite(value)
+			? value.toLocaleString()
+			: "0";
 
 	const statusLabels: Record<ProcessingStatus, string> = {
 		IDLE: t("admin.tokenization.status.IDLE"),
@@ -24,7 +29,7 @@ export const TokenizationMobileList = ({ items, onRowClick }: TokenizationMobile
 
 	return (
 		<div className="hidden max-sm:block">
-			{items.map((item) => (
+			{items.map(item => (
 				<div
 					key={item.id}
 					onClick={() => onRowClick(item.id)}
@@ -44,16 +49,24 @@ export const TokenizationMobileList = ({ items, onRowClick }: TokenizationMobile
 								/>
 							</div>
 						</div>
-						<button className="flex size-8 shrink-0 items-center justify-center rounded-[7px] bg-surf-2 text-t-2">
+						<button className="flex size-8 shrink-0 items-center justify-center rounded-base bg-surf-2 text-t-2">
 							<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-								<path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+								<path
+									d="M6 4l4 4-4 4"
+									stroke="currentColor"
+									strokeWidth="1.4"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								/>
 							</svg>
 						</button>
 					</div>
 					<div className="flex items-center gap-3 text-[11px] text-t-3">
 						<span>
 							{t("admin.tokenization.table.tokens")}:{" "}
-							<strong className="text-t-2">{formatCount(item.totalTokens)}</strong>
+							<strong className="text-t-2">
+								{formatCount(item.totalTokens)}
+							</strong>
 						</span>
 						{item.notFoundCount > 0 && (
 							<span className="text-red-t font-semibold">

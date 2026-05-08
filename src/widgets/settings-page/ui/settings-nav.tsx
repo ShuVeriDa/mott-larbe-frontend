@@ -22,7 +22,7 @@ export const SettingsNav = ({ active, onChange }: SettingsNavProps) => {
 				"max-sm:h-[42px]",
 			)}
 		>
-			{SECTIONS.map((section) => {
+			{SECTIONS.map(section => {
 				const isActive = section.id === active;
 				return (
 					<button
@@ -31,7 +31,7 @@ export const SettingsNav = ({ active, onChange }: SettingsNavProps) => {
 						onClick={() => onChange(section.id)}
 						aria-current={isActive ? "page" : undefined}
 						className={cn(
-							"flex items-center gap-2.5 rounded-[7px] px-2.5 py-1.5 text-left font-[inherit] transition-colors duration-100",
+							"flex items-center gap-2.5 rounded-base px-2.5 py-1.5 text-left font-[inherit] transition-colors duration-100",
 							"max-md:h-11 max-md:flex-shrink-0 max-md:rounded-none max-md:border-b-2 max-md:border-transparent max-md:px-4 max-md:font-normal",
 							"max-sm:h-[42px] max-sm:px-[13px] max-sm:text-[12px]",
 							isActive

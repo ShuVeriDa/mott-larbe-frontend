@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
+import { useEffect, useRef, useState } from "react";
 
 interface HeadwordModalProps {
 	isOpen: boolean;
@@ -42,7 +42,7 @@ export const HeadwordModal = ({
 	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
-			onClick={(e) => e.target === e.currentTarget && onClose()}
+			onClick={e => e.target === e.currentTarget && onClose()}
 		>
 			<div className="w-[440px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
 				<div className="mb-1 font-display text-[15px] text-t-1">
@@ -62,7 +62,7 @@ export const HeadwordModal = ({
 							type="text"
 							placeholder={t("admin.dictionaryDetail.headwordPlaceholder")}
 							value={word}
-							onChange={(e) => setWord(e.target.value)}
+							onChange={e => setWord(e.target.value)}
 						/>
 					</div>
 					<label className="flex cursor-pointer items-center gap-2.5">
@@ -70,7 +70,7 @@ export const HeadwordModal = ({
 							type="checkbox"
 							className="size-4 cursor-pointer rounded"
 							checked={isPrimary}
-							onChange={(e) => setIsPrimary(e.target.checked)}
+							onChange={e => setIsPrimary(e.target.checked)}
 						/>
 						<span className="text-[13px] text-t-2">
 							{t("admin.dictionaryDetail.markAsPrimary")}
@@ -79,7 +79,7 @@ export const HeadwordModal = ({
 					<div className="mt-5 flex justify-end gap-2">
 						<button
 							type="button"
-							className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
+							className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
 							onClick={onClose}
 						>
 							{t("admin.dictionaryDetail.cancel")}
@@ -87,7 +87,7 @@ export const HeadwordModal = ({
 						<button
 							type="submit"
 							disabled={isPending || !word.trim()}
-							className="flex h-[30px] items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
+							className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
 						>
 							{t("admin.dictionaryDetail.add")}
 						</button>

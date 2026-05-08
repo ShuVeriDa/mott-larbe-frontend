@@ -1,8 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import type {
+	ImportFeatureFlagsDto,
+	ImportFeatureFlagsResult,
+} from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
-import type { ImportFeatureFlagsDto, ImportFeatureFlagsResult } from "@/entities/feature-flag";
+import { useState } from "react";
 
 interface FeatureFlagImportModalProps {
 	open: boolean;
@@ -28,7 +31,8 @@ export const FeatureFlagImportModal = ({
 	const parseDto = (): ImportFeatureFlagsDto | null => {
 		try {
 			const parsed: unknown = JSON.parse(raw);
-			if (Array.isArray(parsed)) return { items: parsed, mode: "upsert", dryRun: false };
+			if (Array.isArray(parsed))
+				return { items: parsed, mode: "upsert", dryRun: false };
 			return parsed as ImportFeatureFlagsDto;
 		} catch {
 			setParseError(t("admin.featureFlags.importModal.parseError"));
@@ -73,7 +77,9 @@ export const FeatureFlagImportModal = ({
 	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
+			onClick={e => {
+				if (e.target === e.currentTarget) handleClose();
+			}}
 		>
 			<div className="w-[520px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:max-h-[92vh] max-sm:overflow-y-auto max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -90,7 +96,11 @@ export const FeatureFlagImportModal = ({
 					)}
 					placeholder={t("admin.featureFlags.importModal.placeholder")}
 					value={raw}
-					onChange={(e) => { setRaw(e.target.value); setParseError(""); setPreview(null); }}
+					onChange={e => {
+						setRaw(e.target.value);
+						setParseError("");
+						setPreview(null);
+					}}
 				/>
 				{parseError && (
 					<p className="mt-1 text-[11px] text-red-t">{parseError}</p>
@@ -98,11 +108,25 @@ export const FeatureFlagImportModal = ({
 
 				{preview && (
 					<div className="mt-3 rounded-[8px] border border-bd-1 bg-surf-2 px-3 py-2.5 text-[12px]">
-						<p className="mb-1 font-semibold text-t-2">{t("admin.featureFlags.importModal.previewTitle")}</p>
+						<p className="mb-1 font-semibold text-t-2">
+							{t("admin.featureFlags.importModal.previewTitle")}
+						</p>
 						<div className="flex flex-wrap gap-3 text-t-3">
-							<span>{t("admin.featureFlags.importModal.wouldCreate", { n: preview.wouldCreate ?? 0 })}</span>
-							<span>{t("admin.featureFlags.importModal.wouldUpdate", { n: preview.wouldUpdate ?? 0 })}</span>
-							<span>{t("admin.featureFlags.importModal.processed", { n: preview.processed })}</span>
+							<span>
+								{t("admin.featureFlags.importModal.wouldCreate", {
+									n: preview.wouldCreate ?? 0,
+								})}
+							</span>
+							<span>
+								{t("admin.featureFlags.importModal.wouldUpdate", {
+									n: preview.wouldUpdate ?? 0,
+								})}
+							</span>
+							<span>
+								{t("admin.featureFlags.importModal.processed", {
+									n: preview.processed,
+								})}
+							</span>
 						</div>
 					</div>
 				)}
@@ -112,7 +136,7 @@ export const FeatureFlagImportModal = ({
 						type="button"
 						onClick={handleClose}
 						disabled={isPreviewLoading || isApplying}
-						className="h-8 cursor-pointer rounded-[7px] border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:w-full"
+						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:w-full"
 					>
 						{t("admin.featureFlags.modal.cancel")}
 					</button>
@@ -120,7 +144,7 @@ export const FeatureFlagImportModal = ({
 						type="button"
 						onClick={handlePreview}
 						disabled={!raw.trim() || isPreviewLoading || isApplying}
-						className="h-8 cursor-pointer rounded-[7px] border border-bd-2 bg-surf px-3.5 text-[12.5px] text-t-1 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:w-full"
+						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-surf px-3.5 text-[12.5px] text-t-1 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:w-full"
 					>
 						{isPreviewLoading
 							? t("admin.featureFlags.importModal.previewing")
@@ -130,7 +154,7 @@ export const FeatureFlagImportModal = ({
 						type="button"
 						onClick={handleApply}
 						disabled={!raw.trim() || isPreviewLoading || isApplying}
-						className="h-8 cursor-pointer rounded-[7px] bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:w-full"
+						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:w-full"
 					>
 						{isApplying
 							? t("admin.featureFlags.importModal.applying")

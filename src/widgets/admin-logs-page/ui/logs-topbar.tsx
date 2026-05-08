@@ -45,7 +45,7 @@ export const LogsTopbar = ({
 				<button
 					type="button"
 					onClick={onToggleLive}
-					className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
+					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
 					<svg
 						width="13"
@@ -83,7 +83,7 @@ export const LogsTopbar = ({
 				<button
 					type="button"
 					onClick={onExport}
-					className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
+					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
 					<svg
 						width="13"

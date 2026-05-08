@@ -1,6 +1,6 @@
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type { SubscriptionsTab } from "@/entities/admin-subscription";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
 
 interface TabCounts {
 	all: number;
@@ -36,7 +36,7 @@ export const SubscriptionsTabs = ({ active, counts, onChange }: Props) => {
 						type="button"
 						onClick={() => onChange(key)}
 						className={cn(
-							"flex h-[26px] shrink-0 items-center gap-1 rounded-[7px] px-3 text-[12px] transition-colors",
+							"flex h-[26px] shrink-0 items-center gap-1 rounded-base px-3 text-[12px] transition-colors",
 							active === key
 								? "bg-surf font-medium text-t-1 shadow-[0_1px_3px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.04)]"
 								: "text-t-2 hover:bg-surf-3 hover:text-t-1",

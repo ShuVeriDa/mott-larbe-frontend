@@ -1,4 +1,8 @@
-import type { FeatureFlagCategory, FeatureFlagEnvironment, FeatureFlagStatusFilter } from "@/entities/feature-flag";
+import type {
+	FeatureFlagCategory,
+	FeatureFlagEnvironment,
+	FeatureFlagStatusFilter,
+} from "@/entities/feature-flag";
 
 interface FeatureFlagsToolbarProps {
 	search: string;
@@ -12,7 +16,12 @@ interface FeatureFlagsToolbarProps {
 	t: (key: string) => string;
 }
 
-const CATEGORIES: FeatureFlagCategory[] = ["FUNCTIONAL", "EXPERIMENTS", "TECHNICAL", "MONETIZATION"];
+const CATEGORIES: FeatureFlagCategory[] = [
+	"FUNCTIONAL",
+	"EXPERIMENTS",
+	"TECHNICAL",
+	"MONETIZATION",
+];
 const ENVIRONMENTS: FeatureFlagEnvironment[] = ["PROD", "STAGE", "DEV"];
 const STATUSES: FeatureFlagStatusFilter[] = ["enabled", "disabled"];
 
@@ -42,19 +51,19 @@ export const FeatureFlagsToolbar = ({
 			<input
 				type="text"
 				value={search}
-				onChange={(e) => onSearchChange(e.target.value)}
+				onChange={e => onSearchChange(e.target.value)}
 				placeholder={t("admin.featureFlags.toolbar.searchPlaceholder")}
-				className="h-[30px] w-full rounded-[7px] border border-bd-2 bg-surf pl-[30px] pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
+				className="h-[30px] w-full rounded-base border border-bd-2 bg-surf pl-[30px] pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 			/>
 		</div>
 
 		<select
 			value={category}
-			onChange={(e) => onCategoryChange(e.target.value)}
-			className="h-[30px] cursor-pointer rounded-[7px] border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
+			onChange={e => onCategoryChange(e.target.value)}
+			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
 		>
 			<option value="">{t("admin.featureFlags.toolbar.allCategories")}</option>
-			{CATEGORIES.map((c) => (
+			{CATEGORIES.map(c => (
 				<option key={c} value={c}>
 					{t(`admin.featureFlags.category.${c}`)}
 				</option>
@@ -63,11 +72,11 @@ export const FeatureFlagsToolbar = ({
 
 		<select
 			value={environment}
-			onChange={(e) => onEnvironmentChange(e.target.value)}
-			className="h-[30px] cursor-pointer rounded-[7px] border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
+			onChange={e => onEnvironmentChange(e.target.value)}
+			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
 		>
 			<option value="">{t("admin.featureFlags.toolbar.allEnvs")}</option>
-			{ENVIRONMENTS.map((e) => (
+			{ENVIRONMENTS.map(e => (
 				<option key={e} value={e}>
 					{t(`admin.featureFlags.env.${e}`)}
 				</option>
@@ -76,11 +85,11 @@ export const FeatureFlagsToolbar = ({
 
 		<select
 			value={status}
-			onChange={(e) => onStatusChange(e.target.value)}
-			className="h-[30px] cursor-pointer rounded-[7px] border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
+			onChange={e => onStatusChange(e.target.value)}
+			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
 		>
 			<option value="">{t("admin.featureFlags.toolbar.allStatuses")}</option>
-			{STATUSES.map((s) => (
+			{STATUSES.map(s => (
 				<option key={s} value={s}>
 					{t(`admin.featureFlags.status.${s}`)}
 				</option>

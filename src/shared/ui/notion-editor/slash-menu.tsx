@@ -1,7 +1,7 @@
 "use client";
 
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import type { Editor } from "@tiptap/react";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 
 export interface SlashMenuItem {
 	title: string;
@@ -28,11 +28,11 @@ export const SlashMenu = forwardRef<SlashMenuHandle, SlashMenuProps>(
 		useImperativeHandle(ref, () => ({
 			onKeyDown({ event }) {
 				if (event.key === "ArrowUp") {
-					setSelectedIndex((i) => (i - 1 + items.length) % items.length);
+					setSelectedIndex(i => (i - 1 + items.length) % items.length);
 					return true;
 				}
 				if (event.key === "ArrowDown") {
-					setSelectedIndex((i) => (i + 1) % items.length);
+					setSelectedIndex(i => (i + 1) % items.length);
 					return true;
 				}
 				if (event.key === "Enter") {
@@ -51,11 +51,11 @@ export const SlashMenu = forwardRef<SlashMenuHandle, SlashMenuProps>(
 					<button
 						key={i}
 						type="button"
-						onMouseDown={(e) => {
+						onMouseDown={e => {
 							e.preventDefault();
 							command(item);
 						}}
-						className={`flex w-full items-center gap-3 rounded-[7px] px-2.5 py-2 text-left transition-colors ${
+						className={`flex w-full items-center gap-3 rounded-base px-2.5 py-2 text-left transition-colors ${
 							i === selectedIndex ? "bg-surf-2" : "hover:bg-surf-2"
 						}`}
 					>
@@ -63,8 +63,12 @@ export const SlashMenu = forwardRef<SlashMenuHandle, SlashMenuProps>(
 							{item.icon}
 						</div>
 						<div className="min-w-0">
-							<div className="text-[13px] font-medium text-t-1">{item.title}</div>
-							<div className="truncate text-[11px] text-t-3">{item.description}</div>
+							<div className="text-[13px] font-medium text-t-1">
+								{item.title}
+							</div>
+							<div className="truncate text-[11px] text-t-3">
+								{item.description}
+							</div>
 						</div>
 					</button>
 				))}

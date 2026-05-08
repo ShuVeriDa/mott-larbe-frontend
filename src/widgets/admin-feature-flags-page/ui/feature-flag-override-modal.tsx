@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { cn } from "@/shared/lib/cn";
-import { useDebounce } from "@/shared/lib/debounce";
+import type {
+	CreateFeatureFlagOverrideDto,
+	FeatureFlagKeyItem,
+} from "@/entities/feature-flag";
 import { useAdminFeatureFlagKeys } from "@/entities/feature-flag";
-import type { CreateFeatureFlagOverrideDto, FeatureFlagKeyItem } from "@/entities/feature-flag";
 import { http } from "@/shared/api";
+import { useDebounce } from "@/shared/lib/debounce";
+import { useEffect, useRef, useState } from "react";
 import { FlagToggle } from "./flag-toggle";
 
 interface UserSuggestion {
@@ -65,7 +67,7 @@ export const FeatureFlagOverrideModal = ({
 			setSuggestions([]);
 			return;
 		}
-		searchUsers(debouncedUser).then((items) => {
+		searchUsers(debouncedUser).then(items => {
 			setSuggestions(items);
 			setShowSuggestions(true);
 		});
@@ -74,7 +76,10 @@ export const FeatureFlagOverrideModal = ({
 	useEffect(() => {
 		if (!showSuggestions) return;
 		const handler = (e: MouseEvent) => {
-			if (suggestRef.current && !suggestRef.current.contains(e.target as Node)) {
+			if (
+				suggestRef.current &&
+				!suggestRef.current.contains(e.target as Node)
+			) {
 				setShowSuggestions(false);
 			}
 		};
@@ -86,7 +91,12 @@ export const FeatureFlagOverrideModal = ({
 
 	const handleSubmit = () => {
 		if (!flagId || !userInput) return;
-		onSubmit({ flagId, userIdOrEmail: userInput, isEnabled, reason: reason.trim() || undefined });
+		onSubmit({
+			flagId,
+			userIdOrEmail: userInput,
+			isEnabled,
+			reason: reason.trim() || undefined,
+		});
 	};
 
 	const inputCls =
@@ -95,7 +105,9 @@ export const FeatureFlagOverrideModal = ({
 	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+			onClick={e => {
+				if (e.target === e.currentTarget) onClose();
+			}}
 		>
 			<div className="w-[440px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -113,11 +125,15 @@ export const FeatureFlagOverrideModal = ({
 					<select
 						className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 						value={flagId}
-						onChange={(e) => setFlagId(e.target.value)}
+						onChange={e => setFlagId(e.target.value)}
 					>
-						<option value="">{t("admin.featureFlags.overrideModal.selectFlag")}</option>
-						{flagKeys.map((f) => (
-							<option key={f.id} value={f.id}>{f.key}</option>
+						<option value="">
+							{t("admin.featureFlags.overrideModal.selectFlag")}
+						</option>
+						{flagKeys.map(f => (
+							<option key={f.id} value={f.id}>
+								{f.key}
+							</option>
 						))}
 					</select>
 				</div>
@@ -130,14 +146,19 @@ export const FeatureFlagOverrideModal = ({
 					<div className="relative">
 						<input
 							className={inputCls}
-							placeholder={t("admin.featureFlags.overrideModal.userPlaceholder")}
+							placeholder={t(
+								"admin.featureFlags.overrideModal.userPlaceholder",
+							)}
 							value={userInput}
-							onChange={(e) => { setUserInput(e.target.value); setShowSuggestions(true); }}
+							onChange={e => {
+								setUserInput(e.target.value);
+								setShowSuggestions(true);
+							}}
 							onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
 						/>
 						{showSuggestions && suggestions.length > 0 && (
 							<div className="absolute left-0 top-[calc(100%+4px)] z-50 w-full rounded-[9px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
-								{suggestions.map((u) => (
+								{suggestions.map(u => (
 									<button
 										key={u.id}
 										type="button"
@@ -147,7 +168,9 @@ export const FeatureFlagOverrideModal = ({
 											setShowSuggestions(false);
 										}}
 									>
-										<span className="text-[12.5px] text-t-1">{u.name} {u.surname}</span>
+										<span className="text-[12.5px] text-t-1">
+											{u.name} {u.surname}
+										</span>
 										<span className="text-[11px] text-t-3">{u.email}</span>
 									</button>
 								))}
@@ -158,7 +181,9 @@ export const FeatureFlagOverrideModal = ({
 
 				{/* isEnabled toggle */}
 				<div className="mb-3.5 flex items-center justify-between rounded-[8px] border border-bd-1 bg-bg px-3 py-2.5">
-					<span className="text-[12.5px] text-t-2">{t("admin.featureFlags.overrideModal.valueLabel")}</span>
+					<span className="text-[12.5px] text-t-2">
+						{t("admin.featureFlags.overrideModal.valueLabel")}
+					</span>
 					<FlagToggle enabled={isEnabled} onChange={setIsEnabled} />
 				</div>
 
@@ -169,9 +194,11 @@ export const FeatureFlagOverrideModal = ({
 					</label>
 					<input
 						className={inputCls}
-						placeholder={t("admin.featureFlags.overrideModal.reasonPlaceholder")}
+						placeholder={t(
+							"admin.featureFlags.overrideModal.reasonPlaceholder",
+						)}
 						value={reason}
-						onChange={(e) => setReason(e.target.value)}
+						onChange={e => setReason(e.target.value)}
 					/>
 				</div>
 
@@ -180,7 +207,7 @@ export const FeatureFlagOverrideModal = ({
 						type="button"
 						onClick={onClose}
 						disabled={isSubmitting}
-						className="h-8 cursor-pointer rounded-[7px] border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10"
+						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10"
 					>
 						{t("admin.featureFlags.modal.cancel")}
 					</button>
@@ -188,7 +215,7 @@ export const FeatureFlagOverrideModal = ({
 						type="button"
 						onClick={handleSubmit}
 						disabled={isSubmitting || !flagId || !userInput}
-						className="h-8 cursor-pointer rounded-[7px] bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10"
+						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10"
 					>
 						{isSubmitting
 							? t("admin.featureFlags.overrideModal.saving")

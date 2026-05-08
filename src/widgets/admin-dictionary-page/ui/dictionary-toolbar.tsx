@@ -1,11 +1,23 @@
-import type { AdminDictSort, AdminDictLanguage } from "@/entities/dictionary";
+import type { AdminDictLanguage, AdminDictSort } from "@/entities/dictionary";
 import type { CefrLevel } from "@/shared/types";
 import { CEFR_LEVELS } from "@/shared/types";
 
-const POS_OPTIONS = ["noun", "verb", "adj", "adv", "particle", "pron", "num", "conj"];
+const POS_OPTIONS = [
+	"noun",
+	"verb",
+	"adj",
+	"adv",
+	"particle",
+	"pron",
+	"num",
+	"conj",
+];
 const SORT_OPTIONS: { value: AdminDictSort; key: string }[] = [
 	{ value: "alpha", key: "admin.dictionary.toolbar.sortAlpha" },
-	{ value: "frequency_desc", key: "admin.dictionary.toolbar.sortFrequencyDesc" },
+	{
+		value: "frequency_desc",
+		key: "admin.dictionary.toolbar.sortFrequencyDesc",
+	},
 	{ value: "newest", key: "admin.dictionary.toolbar.sortNewest" },
 	{ value: "oldest", key: "admin.dictionary.toolbar.sortOldest" },
 	{ value: "no_senses", key: "admin.dictionary.toolbar.sortNoSenses" },
@@ -40,7 +52,7 @@ export const DictionaryToolbar = ({
 	t,
 }: DictionaryToolbarProps) => {
 	const selectCls =
-		"h-[30px] cursor-pointer rounded-[7px] border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3";
+		"h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3";
 
 	return (
 		<div className="mb-3.5 flex flex-wrap items-center gap-2">
@@ -58,19 +70,19 @@ export const DictionaryToolbar = ({
 				<input
 					type="text"
 					value={search}
-					onChange={(e) => onSearchChange(e.target.value)}
+					onChange={e => onSearchChange(e.target.value)}
 					placeholder={t("admin.dictionary.toolbar.searchPlaceholder")}
-					className="h-[30px] w-full rounded-[7px] border border-bd-2 bg-surf pl-[30px] pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
+					className="h-[30px] w-full rounded-base border border-bd-2 bg-surf pl-[30px] pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 				/>
 			</div>
 
 			<select
 				value={language}
-				onChange={(e) => onLanguageChange(e.target.value)}
+				onChange={e => onLanguageChange(e.target.value)}
 				className={selectCls}
 			>
 				<option value="">{t("admin.dictionary.toolbar.allLanguages")}</option>
-				{LANG_OPTIONS.map((l) => (
+				{LANG_OPTIONS.map(l => (
 					<option key={l} value={l}>
 						{t(`admin.dictionary.toolbar.lang${l}`)}
 					</option>
@@ -79,11 +91,11 @@ export const DictionaryToolbar = ({
 
 			<select
 				value={pos}
-				onChange={(e) => onPosChange(e.target.value)}
+				onChange={e => onPosChange(e.target.value)}
 				className={selectCls}
 			>
 				<option value="">{t("admin.dictionary.toolbar.allPos")}</option>
-				{POS_OPTIONS.map((p) => (
+				{POS_OPTIONS.map(p => (
 					<option key={p} value={p}>
 						{t(`admin.dictionary.pos.${p}`)}
 					</option>
@@ -92,7 +104,7 @@ export const DictionaryToolbar = ({
 
 			<select
 				value={level}
-				onChange={(e) => onLevelChange(e.target.value)}
+				onChange={e => onLevelChange(e.target.value)}
 				className={selectCls}
 			>
 				<option value="">{t("admin.dictionary.toolbar.allLevels")}</option>
@@ -105,7 +117,7 @@ export const DictionaryToolbar = ({
 
 			<select
 				value={sort}
-				onChange={(e) => onSortChange(e.target.value as AdminDictSort)}
+				onChange={e => onSortChange(e.target.value as AdminDictSort)}
 				className={selectCls}
 			>
 				{SORT_OPTIONS.map(({ value, key }) => (

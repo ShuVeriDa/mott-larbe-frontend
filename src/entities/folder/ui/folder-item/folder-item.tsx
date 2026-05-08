@@ -21,7 +21,7 @@ export const FolderItem = ({
 		aria-pressed={active}
 		onClick={onClick}
 		className={cn(
-			"flex w-full items-center gap-[7px] rounded-[7px] px-2 py-[6px]",
+			"flex w-full items-center gap-[7px] rounded-base px-2 py-[6px]",
 			"text-left font-[inherit] transition-colors duration-100",
 			active
 				? "bg-acc-bg [&_.fi-name]:text-acc-t [&_.fi-count]:text-acc [&_.fi-icon]:text-acc"

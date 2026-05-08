@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { useI18n } from "@/shared/lib/i18n";
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
+import { useI18n } from "@/shared/lib/i18n";
+import { useState } from "react";
 
 interface Props {
 	subscriptionId: string | null;
@@ -47,9 +47,16 @@ export const ExtendSubscriptionModal = ({
 				<button
 					type="button"
 					onClick={onClose}
-					className="flex size-[26px] items-center justify-center rounded-[7px] bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
+					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
-					<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+					<svg
+						width="12"
+						height="12"
+						viewBox="0 0 12 12"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="1.5"
+					>
 						<path d="M1 1l10 10M11 1 1 11" strokeLinecap="round" />
 					</svg>
 				</button>
@@ -62,7 +69,7 @@ export const ExtendSubscriptionModal = ({
 					</label>
 					<select
 						value={extendDays}
-						onChange={(e) => setExtendDays(Number(e.target.value))}
+						onChange={e => setExtendDays(Number(e.target.value))}
 						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf"
 					>
 						{DURATION_OPTIONS.map(({ value, labelKey }) => (
@@ -79,7 +86,7 @@ export const ExtendSubscriptionModal = ({
 					</label>
 					<input
 						value={reason}
-						onChange={(e) => setReason(e.target.value)}
+						onChange={e => setReason(e.target.value)}
 						placeholder={t("admin.subscriptions.modal.extendReasonPlaceholder")}
 						className="h-[34px] w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc focus:bg-surf"
 					/>

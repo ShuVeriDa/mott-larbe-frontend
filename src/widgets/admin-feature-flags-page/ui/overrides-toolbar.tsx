@@ -38,19 +38,19 @@ export const OverridesToolbar = ({
 			<input
 				type="text"
 				value={search}
-				onChange={(e) => onSearchChange(e.target.value)}
+				onChange={e => onSearchChange(e.target.value)}
 				placeholder={t("admin.featureFlags.overrides.searchPlaceholder")}
-				className="h-[30px] w-full rounded-[7px] border border-bd-2 bg-surf pl-[30px] pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
+				className="h-[30px] w-full rounded-base border border-bd-2 bg-surf pl-[30px] pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 			/>
 		</div>
 
 		<select
 			value={flagId}
-			onChange={(e) => onFlagIdChange(e.target.value)}
-			className="h-[30px] cursor-pointer rounded-[7px] border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
+			onChange={e => onFlagIdChange(e.target.value)}
+			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
 		>
 			<option value="">{t("admin.featureFlags.overrides.allFlags")}</option>
-			{flagKeys.map((f) => (
+			{flagKeys.map(f => (
 				<option key={f.id} value={f.id}>
 					{f.key}
 				</option>
@@ -59,8 +59,8 @@ export const OverridesToolbar = ({
 
 		<select
 			value={isEnabled}
-			onChange={(e) => onIsEnabledChange(e.target.value)}
-			className="h-[30px] cursor-pointer rounded-[7px] border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
+			onChange={e => onIsEnabledChange(e.target.value)}
+			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
 		>
 			<option value="">{t("admin.featureFlags.overrides.anyValue")}</option>
 			<option value="true">{t("admin.featureFlags.overrides.on")}</option>
@@ -70,9 +70,16 @@ export const OverridesToolbar = ({
 		<button
 			type="button"
 			onClick={onAddOverride}
-			className="ml-auto flex h-[30px] cursor-pointer items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
+			className="ml-auto flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 		>
-			<svg className="size-[11px]" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+			<svg
+				className="size-[11px]"
+				viewBox="0 0 15 15"
+				fill="none"
+				stroke="currentColor"
+				strokeWidth="1.8"
+				strokeLinecap="round"
+			>
 				<path d="M7.5 2v11M2 7.5h11" />
 			</svg>
 			{t("admin.featureFlags.overrides.addOverride")}

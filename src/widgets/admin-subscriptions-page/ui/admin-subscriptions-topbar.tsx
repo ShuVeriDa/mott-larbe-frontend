@@ -22,7 +22,7 @@ export const AdminSubscriptionsTopbar = ({ onAdd, onExport }: Props) => {
 				<button
 					type="button"
 					onClick={onAdd}
-					className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
+					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
 					<svg
 						width="12"
@@ -39,7 +39,7 @@ export const AdminSubscriptionsTopbar = ({ onAdd, onExport }: Props) => {
 				<button
 					type="button"
 					onClick={onExport}
-					className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
+					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
 					<svg
 						width="12"

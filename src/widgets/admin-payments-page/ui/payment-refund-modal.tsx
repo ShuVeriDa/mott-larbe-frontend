@@ -1,11 +1,11 @@
 "use client";
 
-import { type SyntheticEvent, useState } from "react";
-import { useI18n } from "@/shared/lib/i18n";
 import type {
 	AdminPaymentListItem,
 	RefundReason,
 } from "@/entities/admin-payment";
+import { useI18n } from "@/shared/lib/i18n";
+import { type SyntheticEvent, useState } from "react";
 
 const REASONS: RefundReason[] = [
 	"USER_REQUEST",
@@ -58,7 +58,7 @@ export const PaymentRefundModal = ({
 				<button
 					type="button"
 					onClick={onClose}
-					className="flex size-[26px] items-center justify-center rounded-[7px] bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
+					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
 					<svg
 						width="12"
@@ -97,7 +97,7 @@ export const PaymentRefundModal = ({
 							min="0.01"
 							max={maxRub}
 							value={amount}
-							onChange={(e) => setAmount(e.target.value)}
+							onChange={e => setAmount(e.target.value)}
 							required
 							className="h-[34px] w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf"
 						/>
@@ -110,10 +110,10 @@ export const PaymentRefundModal = ({
 						</label>
 						<select
 							value={reason}
-							onChange={(e) => setReason(e.target.value as RefundReason)}
+							onChange={e => setReason(e.target.value as RefundReason)}
 							className="h-[34px] w-full appearance-none rounded-lg border border-bd-2 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%226%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M1%201l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_10px_center] pl-2.5 pr-7 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 						>
-							{REASONS.map((r) => (
+							{REASONS.map(r => (
 								<option key={r} value={r}>
 									{t(`admin.payments.refundModal.reasons.${r}`)}
 								</option>

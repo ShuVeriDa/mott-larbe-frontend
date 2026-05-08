@@ -1,23 +1,29 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import { useI18n } from "@/shared/lib/i18n";
+import type {
+	AdminFeedbackTab,
+	AdminFeedbackThread,
+	FeedbackPriority,
+	FeedbackStatus,
+	FeedbackType,
+} from "@/entities/feedback";
 import {
-	useAdminFeedbackThreads,
-	useAdminFeedbackThread,
-	useAdminFeedbackStats,
 	useAdminFeedbackAssignees,
 	useAdminFeedbackMutations,
+	useAdminFeedbackStats,
+	useAdminFeedbackThread,
+	useAdminFeedbackThreads,
 } from "@/entities/feedback";
-import type { AdminFeedbackTab, AdminFeedbackThread, FeedbackType, FeedbackStatus, FeedbackPriority } from "@/entities/feedback";
+import { useI18n } from "@/shared/lib/i18n";
+import { useCallback, useState } from "react";
 
 const showToast = (msg: string) => {
 	const existing = document.querySelectorAll("[data-feedback-toast]");
-	existing.forEach((el) => el.remove());
+	existing.forEach(el => el.remove());
 	const el = document.createElement("div");
 	el.dataset.feedbackToast = "1";
 	el.style.cssText =
-		"position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--t-1,#18180f);color:var(--bg,#f5f4f0);padding:8px 16px;border-radius:8px;font-size:12.5px;font-weight:500;z-index:500;box-shadow:0 4px 12px rgba(0,0,0,.12);white-space:nowrap;pointer-events:none;animation:fadeUp .2s ease";
+		"position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--t-1,#18180f);color:var(--bg,#F9F8F7);padding:8px 16px;border-radius:8px;font-size:12.5px;font-weight:500;z-index:500;box-shadow:0 4px 12px rgba(0,0,0,.12);white-space:nowrap;pointer-events:none;animation:fadeUp .2s ease";
 	el.textContent = msg;
 	document.body.appendChild(el);
 	setTimeout(() => {
@@ -50,10 +56,12 @@ export const useAdminFeedbackPage = () => {
 
 	const detailQuery = useAdminFeedbackThread(activeThreadId);
 	const statsQuery = useAdminFeedbackStats();
-	const assigneesQuery = useAdminFeedbackAssignees(isAssignModalOpen || isTransferModalOpen);
+	const assigneesQuery = useAdminFeedbackAssignees(
+		isAssignModalOpen || isTransferModalOpen,
+	);
 	const mutations = useAdminFeedbackMutations(activeThreadId);
 
-	const threads = listQuery.data?.pages.flatMap((p) => p.items) ?? [];
+	const threads = listQuery.data?.pages.flatMap(p => p.items) ?? [];
 	const thread = detailQuery.data ?? null;
 	const stats = statsQuery.data ?? null;
 
@@ -197,7 +205,10 @@ export const useAdminFeedbackPage = () => {
 			if (!thread) return;
 			const btn = e.currentTarget;
 			const existing = document.getElementById("feedback-more-menu");
-			if (existing) { existing.remove(); return; }
+			if (existing) {
+				existing.remove();
+				return;
+			}
 
 			const menu = document.createElement("div");
 			menu.id = "feedback-more-menu";
@@ -205,19 +216,28 @@ export const useAdminFeedbackPage = () => {
 				"position:fixed;background:var(--surf);border:.5px solid var(--bd-2);border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.08);z-index:300;min-width:190px;padding:4px;animation:fadeUp .15s ease";
 
 			const items = [
-				{ label: t("admin.feedback.actions.copyLink"), action: () => handleCopyLink() },
 				{
-					label: thread.status === "RESOLVED"
-						? t("admin.feedback.actions.reopen")
-						: t("admin.feedback.actions.close"),
-					action: () => thread.status === "RESOLVED" ? handleReopen() : handleClose(),
+					label: t("admin.feedback.actions.copyLink"),
+					action: () => handleCopyLink(),
 				},
-				{ label: t("admin.feedback.actions.delete"), action: () => handleDelete(), red: true },
+				{
+					label:
+						thread.status === "RESOLVED"
+							? t("admin.feedback.actions.reopen")
+							: t("admin.feedback.actions.close"),
+					action: () =>
+						thread.status === "RESOLVED" ? handleReopen() : handleClose(),
+				},
+				{
+					label: t("admin.feedback.actions.delete"),
+					action: () => handleDelete(),
+					red: true,
+				},
 			];
 
 			menu.innerHTML = items
 				.map(
-					(item) =>
+					item =>
 						`<button style="display:flex;align-items:center;gap:9px;padding:7px 10px;width:100%;background:none;border:none;border-radius:6px;font-family:inherit;font-size:12.5px;color:${(item as { red?: boolean }).red ? "var(--red-t)" : "var(--t-1)"};cursor:pointer;text-align:left" onmouseover="this.style.background='var(--surf-2)'" onmouseout="this.style.background='none'">${item.label}</button>`,
 				)
 				.join("");
@@ -238,9 +258,15 @@ export const useAdminFeedbackPage = () => {
 			menu.style.left = `${left}px`;
 
 			const closeMenu = (ev: MouseEvent) => {
-				if (!menu.contains(ev.target as Node)) { menu.remove(); document.removeEventListener("click", closeMenu); }
+				if (!menu.contains(ev.target as Node)) {
+					menu.remove();
+					document.removeEventListener("click", closeMenu);
+				}
 			};
-			setTimeout(() => document.addEventListener("click", closeMenu, { once: true }), 10);
+			setTimeout(
+				() => document.addEventListener("click", closeMenu, { once: true }),
+				10,
+			);
 		},
 		[thread, handleCopyLink, handleClose, handleReopen, handleDelete, t],
 	);

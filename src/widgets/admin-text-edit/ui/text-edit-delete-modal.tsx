@@ -24,7 +24,7 @@ export const TextEditDeleteModal = ({
 		>
 			<div
 				className="w-full max-w-[360px] rounded-xl bg-surf p-6 shadow-lg"
-				onClick={(e) => e.stopPropagation()}
+				onClick={e => e.stopPropagation()}
 			>
 				<h2 className="mb-2 text-[15px] font-semibold text-t-1">
 					{t("admin.texts.editPage.deleteConfirmTitle")}
@@ -37,7 +37,7 @@ export const TextEditDeleteModal = ({
 						type="button"
 						onClick={onCancel}
 						disabled={isDeleting}
-						className="h-8 rounded-[7px] border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] text-t-2 transition-colors hover:bg-surf-3 disabled:cursor-not-allowed disabled:opacity-50"
+						className="h-8 rounded-base border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] text-t-2 transition-colors hover:bg-surf-3 disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						{t("admin.texts.editPage.deleteCancel")}
 					</button>
@@ -45,7 +45,7 @@ export const TextEditDeleteModal = ({
 						type="button"
 						onClick={onConfirm}
 						disabled={isDeleting}
-						className="h-8 rounded-[7px] bg-red px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
+						className="h-8 rounded-base bg-red px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						{isDeleting ? "…" : t("admin.texts.editPage.deleteConfirm")}
 					</button>

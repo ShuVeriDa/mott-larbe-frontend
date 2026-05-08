@@ -24,7 +24,7 @@ export const UnknownWordsClearModal = ({
 	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 p-4 backdrop-blur-sm max-sm:items-end max-sm:p-0"
-			onClick={(e) => e.target === e.currentTarget && onClose()}
+			onClick={e => e.target === e.currentTarget && onClose()}
 		>
 			<div className="w-full max-w-[420px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] animate-[modal-in_0.15s_ease] max-sm:max-w-full max-sm:rounded-t-[18px] max-sm:rounded-b-none">
 				{/* Header */}
@@ -61,7 +61,7 @@ export const UnknownWordsClearModal = ({
 					<button
 						type="button"
 						onClick={onClose}
-						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-3 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1 max-sm:h-[42px] max-sm:justify-center max-sm:text-[13.5px]"
+						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1 max-sm:h-[42px] max-sm:justify-center max-sm:text-[13.5px]"
 					>
 						{t("admin.unknownWords.clearModal.cancel")}
 					</button>
@@ -69,7 +69,7 @@ export const UnknownWordsClearModal = ({
 						type="button"
 						onClick={onConfirm}
 						disabled={isPending}
-						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-[7px] border-none bg-red px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 max-sm:h-[42px] max-sm:justify-center max-sm:text-[13.5px]"
+						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-none bg-red px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 max-sm:h-[42px] max-sm:justify-center max-sm:text-[13.5px]"
 					>
 						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
 							<path

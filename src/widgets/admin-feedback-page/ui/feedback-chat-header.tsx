@@ -1,12 +1,16 @@
-import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackThread } from "@/entities/feedback";
-import { FeedbackTypeBadge } from "./feedback-type-badge";
+import { cn } from "@/shared/lib/cn";
 import { FeedbackStatusBadge } from "./feedback-status-badge";
+import { FeedbackTypeBadge } from "./feedback-type-badge";
 
 type Translator = (key: string) => string;
 
 const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
+	new Date(iso).toLocaleDateString("ru-RU", {
+		day: "numeric",
+		month: "long",
+		year: "numeric",
+	});
 
 interface FeedbackChatHeaderProps {
 	thread: AdminFeedbackThread;
@@ -30,7 +34,7 @@ export const FeedbackChatHeader = ({
 		<button
 			type="button"
 			onClick={onBack}
-			className="hidden h-[30px] items-center gap-1.5 rounded-[7px] border border-acc bg-acc-bg px-2.5 text-[12px] font-semibold text-acc-t max-sm:flex"
+			className="hidden h-[30px] items-center gap-1.5 rounded-base border border-acc bg-acc-bg px-2.5 text-[12px] font-semibold text-acc-t max-sm:flex"
 		>
 			<svg viewBox="0 0 16 16" fill="none" className="size-3.5">
 				<path
@@ -61,7 +65,9 @@ export const FeedbackChatHeader = ({
 					{thread.user.name} {thread.user.surname}
 				</span>
 				<span className="text-[10px] text-t-4">·</span>
-				<span className="text-[11px] text-t-3">{formatDate(thread.createdAt)}</span>
+				<span className="text-[11px] text-t-3">
+					{formatDate(thread.createdAt)}
+				</span>
 			</div>
 		</div>
 
@@ -71,11 +77,22 @@ export const FeedbackChatHeader = ({
 			<button
 				type="button"
 				onClick={onInfoOpen}
-				className="hidden h-[30px] items-center gap-1.5 rounded-[7px] border border-acc bg-acc-bg px-2.5 text-[11.5px] font-semibold text-acc-t max-[960px]:flex"
+				className="hidden h-[30px] items-center gap-1.5 rounded-base border border-acc bg-acc-bg px-2.5 text-[11.5px] font-semibold text-acc-t max-[960px]:flex"
 			>
 				<svg viewBox="0 0 16 16" fill="none" className="size-[13px]">
-					<circle cx="8" cy="5.5" r="2.5" stroke="currentColor" strokeWidth="1.3" />
-					<path d="M2.5 13.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+					<circle
+						cx="8"
+						cy="5.5"
+						r="2.5"
+						stroke="currentColor"
+						strokeWidth="1.3"
+					/>
+					<path
+						d="M2.5 13.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"
+						stroke="currentColor"
+						strokeWidth="1.3"
+						strokeLinecap="round"
+					/>
 				</svg>
 				Info
 			</button>
@@ -85,7 +102,7 @@ export const FeedbackChatHeader = ({
 				type="button"
 				onClick={onCopyLink}
 				title={t("admin.feedback.actions.copyLink")}
-				className="flex size-[30px] items-center justify-center rounded-[7px] border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
+				className="flex size-[30px] items-center justify-center rounded-base border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 			>
 				<svg viewBox="0 0 16 16" fill="none" className="size-[13px]">
 					<path
@@ -101,7 +118,7 @@ export const FeedbackChatHeader = ({
 			<button
 				type="button"
 				onClick={onMoreMenu}
-				className="flex size-[30px] items-center justify-center rounded-[7px] border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
+				className="flex size-[30px] items-center justify-center rounded-base border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 			>
 				<svg viewBox="0 0 16 16" fill="none" className="size-[13px]">
 					<circle cx="8" cy="4" r="1" fill="currentColor" />

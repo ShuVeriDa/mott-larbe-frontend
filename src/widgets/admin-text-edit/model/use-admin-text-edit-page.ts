@@ -178,7 +178,7 @@ export const useAdminTextEditPage = (id: string) => {
 						level: level ?? null,
 						description: description.trim() || undefined,
 						author: author.trim() || undefined,
-						source: source.trim() || undefined,
+						source: source.trim() || null,
 						tagNames: tags.length ? tags : undefined,
 						status: targetStatus,
 						autoTokenizeOnSave,

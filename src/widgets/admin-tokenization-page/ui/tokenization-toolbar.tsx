@@ -1,7 +1,7 @@
 "use client";
 
-import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel, TokenSort, TokenStatus } from "@/entities/token";
+import { useI18n } from "@/shared/lib/i18n";
 
 interface TokenizationToolbarProps {
 	search: string;
@@ -53,7 +53,13 @@ export const TokenizationToolbar = ({
 					viewBox="0 0 16 16"
 					fill="none"
 				>
-					<circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.3" />
+					<circle
+						cx="7"
+						cy="7"
+						r="4.5"
+						stroke="currentColor"
+						strokeWidth="1.3"
+					/>
 					<path
 						d="M10.5 10.5l2.5 2.5"
 						stroke="currentColor"
@@ -64,20 +70,20 @@ export const TokenizationToolbar = ({
 				<input
 					type="text"
 					value={search}
-					onChange={(e) => onSearchChange(e.target.value)}
+					onChange={e => onSearchChange(e.target.value)}
 					placeholder={t("admin.tokenization.toolbar.searchPlaceholder")}
-					className="h-8 w-full rounded-[7px] border border-bd-2 bg-surf pl-8 pr-3 text-[12.5px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc"
+					className="h-8 w-full rounded-base border border-bd-2 bg-surf pl-8 pr-3 text-[12.5px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc"
 				/>
 			</div>
 
 			<div className="relative">
 				<select
 					value={level}
-					onChange={(e) => onLevelChange(e.target.value)}
+					onChange={e => onLevelChange(e.target.value)}
 					className={selectCls}
 				>
 					<option value="">{t("admin.tokenization.toolbar.allLevels")}</option>
-					{(["A1", "A2", "B1", "B2", "C1", "C2"] as CefrLevel[]).map((l) => (
+					{(["A1", "A2", "B1", "B2", "C1", "C2"] as CefrLevel[]).map(l => (
 						<option key={l} value={l}>
 							{l}
 						</option>
@@ -89,10 +95,12 @@ export const TokenizationToolbar = ({
 			<div className="relative">
 				<select
 					value={status}
-					onChange={(e) => onStatusChange(e.target.value)}
+					onChange={e => onStatusChange(e.target.value)}
 					className={selectCls}
 				>
-					<option value="">{t("admin.tokenization.toolbar.allStatuses")}</option>
+					<option value="">
+						{t("admin.tokenization.toolbar.allStatuses")}
+					</option>
 					<option value="ANALYZED">Analyzed</option>
 					<option value="AMBIGUOUS">Ambiguous</option>
 					<option value="NOT_FOUND">Not found</option>
@@ -103,12 +111,18 @@ export const TokenizationToolbar = ({
 			<div className="relative">
 				<select
 					value={sort}
-					onChange={(e) => onSortChange(e.target.value)}
+					onChange={e => onSortChange(e.target.value)}
 					className={selectCls}
 				>
-					<option value="errors">{t("admin.tokenization.toolbar.sortErrors")}</option>
-					<option value="date">{t("admin.tokenization.toolbar.sortDate")}</option>
-					<option value="name">{t("admin.tokenization.toolbar.sortName")}</option>
+					<option value="errors">
+						{t("admin.tokenization.toolbar.sortErrors")}
+					</option>
+					<option value="date">
+						{t("admin.tokenization.toolbar.sortDate")}
+					</option>
+					<option value="name">
+						{t("admin.tokenization.toolbar.sortName")}
+					</option>
 				</select>
 				<ChevronIcon />
 			</div>

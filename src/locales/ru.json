@@ -3033,7 +3033,12 @@
 				"processNotice": "После сохранения текст будет автоматически токенизирован.",
 				"authorLengthError": "Имя автора должно содержать от 2 до 50 символов.",
 				"descriptionTooLong": "Описание не должно превышать 1000 символов.",
-				"tagsCreate": "Создать:"
+				"tagsCreate": "Создать:",
+				"deletePage": "Закрыть страницу",
+				"deletePageTitle": "Удалить страницу?",
+				"deletePageBody": "Страница {n} содержит текст. Удалить её безвозвратно?",
+				"deletePageCancel": "Отмена",
+				"deletePageConfirm": "Удалить"
 			},
 			"editPage": {
 				"back": "Назад",

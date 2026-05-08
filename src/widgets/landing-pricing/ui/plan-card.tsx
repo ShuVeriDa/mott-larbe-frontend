@@ -1,7 +1,7 @@
-import { ArrowRight, BookIcon, Check, Sparkles, X, Zap } from "lucide-react";
-import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
+import { ArrowRight, BookIcon, Check, Sparkles, X, Zap } from "lucide-react";
+import Link from "next/link";
 
 export type PlanKey = "free" | "premium" | "pro";
 
@@ -33,8 +33,7 @@ const ICON_BG_BY_PLAN: Record<PlanKey, string> = {
 };
 
 const CTA_BY_PLAN: Record<PlanKey, string> = {
-	free:
-		"bg-surf-2 border-hairline border-bd-2 text-t-1 hover:bg-surf-3",
+	free: "bg-surf-2 border-hairline border-bd-2 text-t-1 hover:bg-surf-3",
 	premium:
 		"bg-acc text-white shadow-[0_2px_6px_rgba(34,84,211,0.25)] hover:opacity-[0.92]",
 	pro: "bg-pur text-white shadow-[0_2px_6px_rgba(109,78,212,0.3)] hover:opacity-[0.92]",
@@ -79,7 +78,7 @@ export const PlanCard = ({
 				<Typography
 					tag="span"
 					className={cn(
-						"flex h-7 w-7 items-center justify-center rounded-[7px]",
+						"flex h-7 w-7 items-center justify-center rounded-base",
 						ICON_BG_BY_PLAN[planKey],
 					)}
 					aria-hidden="true"
@@ -113,7 +112,7 @@ export const PlanCard = ({
 			</Typography>
 
 			<ul className="mb-[22px] flex flex-col gap-2.5">
-				{features.map((feat) => (
+				{features.map(feat => (
 					<Typography
 						tag="li"
 						key={feat}
@@ -127,17 +126,13 @@ export const PlanCard = ({
 						{feat}
 					</Typography>
 				))}
-				{disabledFeatures.map((feat) => (
+				{disabledFeatures.map(feat => (
 					<Typography
 						tag="li"
 						key={feat}
 						className="flex items-start gap-2.5 text-[13px] leading-[1.45] text-t-3"
 					>
-						<X
-							size={14}
-							strokeWidth={2}
-							className="mt-0.5 shrink-0 text-t-3"
-						/>
+						<X size={14} strokeWidth={2} className="mt-0.5 shrink-0 text-t-3" />
 						{feat}
 					</Typography>
 				))}

@@ -1,3 +1,4 @@
+import { ToastViewport } from "@/shared/ui/toast";
 import type { ReactNode } from "react";
 import { AdminGuard } from "./admin-guard";
 import { AdminSideNav } from "./admin-side-nav";
@@ -14,5 +15,6 @@ export const AdminShell = ({ children }: AdminShellProps) => (
 				{children}
 			</main>
 		</div>
+		<ToastViewport />
 	</AdminGuard>
 );

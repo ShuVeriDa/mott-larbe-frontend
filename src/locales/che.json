@@ -3071,7 +3071,12 @@
 				"processNotice": "Яздале йозанаш автоматически токенизаци дийр ду.",
 				"authorLengthError": "Авторан цIе 2-50 символ хила деза.",
 				"descriptionTooLong": "Сурт 1000 символ тIехь хила ца деза.",
-				"tagsCreate": "Кхоллан:"
+				"tagsCreate": "Кхоллан:",
+				"deletePage": "АгIо дабо",
+				"deletePageTitle": "АгIо дайта?",
+				"deletePageBody": "{n}-гIа агIо юкъара ю. Цуьнан чулацам даьккхина дайта?",
+				"deletePageCancel": "Дита",
+				"deletePageConfirm": "Дайта"
 			},
 			"editPage": {
 				"back": "АлаIа",

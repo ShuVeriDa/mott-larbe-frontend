@@ -1,8 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { useRef, useState } from "react";
-import { useI18n } from "@/shared/lib/i18n";
 import type {
 	ProcessingStatus,
 	TextLanguage,
@@ -10,6 +7,9 @@ import type {
 	TextStatus,
 	TextVersionListItem,
 } from "@/entities/admin-text";
+import { useI18n } from "@/shared/lib/i18n";
+import Link from "next/link";
+import { useRef, useState } from "react";
 import type { PageContent } from "../model/use-admin-text-edit-page";
 
 interface TextEditMetaPanelProps {
@@ -60,7 +60,13 @@ const levelColorMap: Record<TextLevel, string> = {
 	C2: "bg-red-muted border-red/20 text-red-strong",
 };
 
-const MetaSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
+const MetaSection = ({
+	title,
+	children,
+}: {
+	title: string;
+	children: React.ReactNode;
+}) => (
 	<div className="border-b border-bd-1 px-4 py-[14px]">
 		<div className="mb-3 text-[10.5px] font-semibold uppercase tracking-[0.6px] text-t-3">
 			{title}
@@ -70,24 +76,32 @@ const MetaSection = ({ title, children }: { title: string; children: React.React
 );
 
 const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-	<label className="mb-1.5 block text-[11px] font-medium text-t-3">{children}</label>
+	<label className="mb-1.5 block text-[11px] font-medium text-t-3">
+		{children}
+	</label>
 );
 
 const FieldInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
 	<input
 		{...props}
-		className="h-[34px] w-full rounded-[7px] border border-bd-2 bg-surf px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
+		className="h-[34px] w-full rounded-base border border-bd-2 bg-surf px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 	/>
 );
 
 const FieldSelect = (props: React.SelectHTMLAttributes<HTMLSelectElement>) => (
 	<select
 		{...props}
-		className="h-[34px] w-full cursor-pointer appearance-none rounded-[7px] border border-bd-2 bg-surf px-2.5 pr-7 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
+		className="h-[34px] w-full cursor-pointer appearance-none rounded-base border border-bd-2 bg-surf px-2.5 pr-7 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 	/>
 );
 
-const Toggle = ({ checked, onChange }: { checked: boolean; onChange: (v: boolean) => void }) => (
+const Toggle = ({
+	checked,
+	onChange,
+}: {
+	checked: boolean;
+	onChange: (v: boolean) => void;
+}) => (
 	<button
 		type="button"
 		role="switch"
@@ -156,7 +170,7 @@ export const TextEditMetaPanel = ({
 	const [tagInputValue, setTagInputValue] = useState("");
 	const [metaOpen, setMetaOpen] = useState(false);
 
-	const maxWordCount = Math.max(...pages.map((p) => p.wordCount), 1);
+	const maxWordCount = Math.max(...pages.map(p => p.wordCount), 1);
 
 	const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
@@ -173,44 +187,71 @@ export const TextEditMetaPanel = ({
 
 	const tokenStatusClass = (): string => {
 		switch (processingStatus) {
-			case "COMPLETED": return "bg-grn-muted text-grn-strong";
-			case "RUNNING":   return "bg-amb-muted text-amb-strong";
-			case "ERROR":     return "bg-red-muted text-red-strong";
-			default:          return "bg-surf-3 text-t-3";
+			case "COMPLETED":
+				return "bg-grn-muted text-grn-strong";
+			case "RUNNING":
+				return "bg-amb-muted text-amb-strong";
+			case "ERROR":
+				return "bg-red-muted text-red-strong";
+			default:
+				return "bg-surf-3 text-t-3";
 		}
 	};
 
 	return (
 		<div className="flex flex-col overflow-y-auto [&::-webkit-scrollbar]:w-0">
-
 			{/* Mobile toggle header */}
 			<button
 				type="button"
-				onClick={() => setMetaOpen((v) => !v)}
+				onClick={() => setMetaOpen(v => !v)}
 				className="hidden items-center justify-between border-t border-bd-1 bg-surf-2 px-4 py-[13px] transition-colors hover:bg-surf-3 max-[900px]:flex"
 			>
 				<span className="flex items-center gap-2 text-[13px] font-medium text-t-1">
 					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-						<path d="M2 4.5h12M2 8.5h8M2 12.5h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+						<path
+							d="M2 4.5h12M2 8.5h8M2 12.5h5"
+							stroke="currentColor"
+							strokeWidth="1.3"
+							strokeLinecap="round"
+						/>
 					</svg>
 					{t("admin.texts.createPage.sections.settings")}
 				</span>
 				<svg
-					width="14" height="14" viewBox="0 0 16 16" fill="none"
+					width="14"
+					height="14"
+					viewBox="0 0 16 16"
+					fill="none"
 					className={`text-t-3 transition-transform ${metaOpen ? "rotate-180" : ""}`}
 				>
-					<path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+					<path
+						d="M4 6l4 4 4-4"
+						stroke="currentColor"
+						strokeWidth="1.4"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					/>
 				</svg>
 			</button>
 
-			<div className={`flex flex-col max-[900px]:${metaOpen ? "flex" : "hidden"}`}>
-
+			<div
+				className={`flex flex-col max-[900px]:${metaOpen ? "flex" : "hidden"}`}
+			>
 				{/* ── Status ── */}
 				<MetaSection title={t("admin.texts.createPage.sections.status")}>
-					<FieldSelect value={status} onChange={(e) => onStatusChange(e.target.value as TextStatus)}>
-						<option value="draft">{t("admin.texts.createPage.statusOptions.draft")}</option>
-						<option value="published">{t("admin.texts.createPage.statusOptions.published")}</option>
-						<option value="archived">{t("admin.texts.createPage.statusOptions.archived")}</option>
+					<FieldSelect
+						value={status}
+						onChange={e => onStatusChange(e.target.value as TextStatus)}
+					>
+						<option value="draft">
+							{t("admin.texts.createPage.statusOptions.draft")}
+						</option>
+						<option value="published">
+							{t("admin.texts.createPage.statusOptions.published")}
+						</option>
+						<option value="archived">
+							{t("admin.texts.createPage.statusOptions.archived")}
+						</option>
 					</FieldSelect>
 				</MetaSection>
 
@@ -218,7 +259,10 @@ export const TextEditMetaPanel = ({
 				<MetaSection title={t("admin.texts.createPage.sections.metadata")}>
 					<div className="mb-[11px]">
 						<FieldLabel>{t("admin.texts.createPage.langLabel")}</FieldLabel>
-						<FieldSelect value={language} onChange={(e) => onLanguageChange(e.target.value as TextLanguage)}>
+						<FieldSelect
+							value={language}
+							onChange={e => onLanguageChange(e.target.value as TextLanguage)}
+						>
 							<option value="CHE">{t("admin.texts.createPage.langChe")}</option>
 							<option value="RU">{t("admin.texts.createPage.langRu")}</option>
 						</FieldSelect>
@@ -227,7 +271,7 @@ export const TextEditMetaPanel = ({
 					<div className="mb-[11px]">
 						<FieldLabel>{t("admin.texts.createPage.levelLabel")}</FieldLabel>
 						<div className="grid grid-cols-6 gap-1.5">
-							{LEVELS.map((lvl) => (
+							{LEVELS.map(lvl => (
 								<button
 									key={lvl}
 									type="button"
@@ -249,7 +293,7 @@ export const TextEditMetaPanel = ({
 						<FieldInput
 							type="text"
 							value={author}
-							onChange={(e) => onAuthorChange(e.target.value)}
+							onChange={e => onAuthorChange(e.target.value)}
 							placeholder={t("admin.texts.createPage.authorPlaceholder")}
 						/>
 					</div>
@@ -259,7 +303,7 @@ export const TextEditMetaPanel = ({
 						<FieldInput
 							type="url"
 							value={source}
-							onChange={(e) => onSourceChange(e.target.value)}
+							onChange={e => onSourceChange(e.target.value)}
 							placeholder={t("admin.texts.createPage.sourcePlaceholder")}
 						/>
 					</div>
@@ -268,10 +312,10 @@ export const TextEditMetaPanel = ({
 				{/* ── Tags ── */}
 				<MetaSection title={t("admin.texts.createPage.sections.tags")}>
 					<div
-						className="flex min-h-[38px] cursor-text flex-wrap gap-1.5 rounded-[7px] border border-bd-2 bg-surf px-2 py-1.5 transition-colors focus-within:border-acc"
+						className="flex min-h-[38px] cursor-text flex-wrap gap-1.5 rounded-base border border-bd-2 bg-surf px-2 py-1.5 transition-colors focus-within:border-acc"
 						onClick={() => tagInputRef.current?.focus()}
 					>
-						{tags.map((tag) => (
+						{tags.map(tag => (
 							<span
 								key={tag}
 								className="inline-flex items-center gap-1 rounded-[4px] bg-acc-muted px-2 py-[3px] text-[11.5px] font-medium text-acc-strong"
@@ -279,7 +323,10 @@ export const TextEditMetaPanel = ({
 								{tag}
 								<button
 									type="button"
-									onClick={(e) => { e.stopPropagation(); onTagRemove(tag); }}
+									onClick={e => {
+										e.stopPropagation();
+										onTagRemove(tag);
+									}}
 									className="flex items-center text-[13px] leading-none opacity-60 hover:opacity-100"
 								>
 									×
@@ -289,9 +336,13 @@ export const TextEditMetaPanel = ({
 						<input
 							ref={tagInputRef}
 							value={tagInputValue}
-							onChange={(e) => setTagInputValue(e.target.value)}
+							onChange={e => setTagInputValue(e.target.value)}
 							onKeyDown={handleTagKeyDown}
-							placeholder={tags.length === 0 ? t("admin.texts.createPage.tagsAddPlaceholder") : ""}
+							placeholder={
+								tags.length === 0
+									? t("admin.texts.createPage.tagsAddPlaceholder")
+									: ""
+							}
 							className="min-w-[70px] flex-1 border-none bg-transparent text-[12.5px] text-t-1 outline-none placeholder:text-t-3"
 						/>
 					</div>
@@ -304,10 +355,10 @@ export const TextEditMetaPanel = ({
 				<MetaSection title={t("admin.texts.createPage.sections.description")}>
 					<textarea
 						value={description}
-						onChange={(e) => onDescriptionChange(e.target.value)}
+						onChange={e => onDescriptionChange(e.target.value)}
 						placeholder={t("admin.texts.createPage.descriptionPlaceholder")}
 						rows={3}
-						className="w-full resize-y rounded-[7px] border border-bd-2 bg-surf px-2.5 py-2 text-[13px] leading-relaxed text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
+						className="w-full resize-y rounded-base border border-bd-2 bg-surf px-2.5 py-2 text-[13px] leading-relaxed text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 						style={{ minHeight: "68px" }}
 					/>
 				</MetaSection>
@@ -319,7 +370,10 @@ export const TextEditMetaPanel = ({
 						type="file"
 						accept="image/jpeg,image/png,image/webp"
 						className="hidden"
-						onChange={(e) => { const f = e.target.files?.[0]; if (f) onCoverSelect(f); }}
+						onChange={e => {
+							const f = e.target.files?.[0];
+							if (f) onCoverSelect(f);
+						}}
 					/>
 					<button
 						type="button"
@@ -328,16 +382,50 @@ export const TextEditMetaPanel = ({
 					>
 						{coverPreviewUrl ? (
 							// eslint-disable-next-line @next/next/no-img-element
-							<img src={coverPreviewUrl} alt="cover preview" className="h-full w-full object-cover" />
+							<img
+								src={coverPreviewUrl}
+								alt="cover preview"
+								className="h-full w-full object-cover"
+							/>
 						) : (
 							<>
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-t-3">
-									<rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="1.4" />
-									<circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" strokeWidth="1.3" />
-									<path d="M3 16l4.5-4 3 3 3-3 4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+								<svg
+									width="20"
+									height="20"
+									viewBox="0 0 24 24"
+									fill="none"
+									className="text-t-3"
+								>
+									<rect
+										x="3"
+										y="3"
+										width="18"
+										height="18"
+										rx="3"
+										stroke="currentColor"
+										strokeWidth="1.4"
+									/>
+									<circle
+										cx="8.5"
+										cy="8.5"
+										r="1.5"
+										stroke="currentColor"
+										strokeWidth="1.3"
+									/>
+									<path
+										d="M3 16l4.5-4 3 3 3-3 4 4"
+										stroke="currentColor"
+										strokeWidth="1.3"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									/>
 								</svg>
-								<span className="text-[11px] text-t-3">{t("admin.texts.createPage.coverUploadLabel")}</span>
-								<span className="text-[10px] text-t-4">{t("admin.texts.createPage.coverUploadSub")}</span>
+								<span className="text-[11px] text-t-3">
+									{t("admin.texts.createPage.coverUploadLabel")}
+								</span>
+								<span className="text-[10px] text-t-4">
+									{t("admin.texts.createPage.coverUploadSub")}
+								</span>
 							</>
 						)}
 					</button>
@@ -346,8 +434,12 @@ export const TextEditMetaPanel = ({
 				{/* ── Tokenization ── */}
 				<MetaSection title={t("admin.texts.editPage.sections.tokenization")}>
 					<div className="mb-2 flex items-center justify-between">
-						<span className="text-xs text-t-2">{t("admin.texts.editPage.tokenStatusLabel")}</span>
-						<span className={`rounded-[4px] px-2 py-0.5 text-[10.5px] font-semibold ${tokenStatusClass()}`}>
+						<span className="text-xs text-t-2">
+							{t("admin.texts.editPage.tokenStatusLabel")}
+						</span>
+						<span
+							className={`rounded-[4px] px-2 py-0.5 text-[10.5px] font-semibold ${tokenStatusClass()}`}
+						>
 							{tokenStatusLabel()}
 						</span>
 					</div>
@@ -363,11 +455,22 @@ export const TextEditMetaPanel = ({
 						<button
 							type="button"
 							onClick={onTokenize}
-							className="mb-3 flex w-full items-center justify-center gap-1.5 rounded-[7px] border border-acc/25 bg-acc-muted px-3 py-[7px] text-[11.5px] font-medium text-acc transition-opacity hover:opacity-80"
+							className="mb-3 flex w-full items-center justify-center gap-1.5 rounded-base border border-acc/25 bg-acc-muted px-3 py-[7px] text-[11.5px] font-medium text-acc transition-opacity hover:opacity-80"
 						>
 							<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-								<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-								<path d="M8 5v3.5l2 1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+								<circle
+									cx="8"
+									cy="8"
+									r="6"
+									stroke="currentColor"
+									strokeWidth="1.3"
+								/>
+								<path
+									d="M8 5v3.5l2 1"
+									stroke="currentColor"
+									strokeWidth="1.3"
+									strokeLinecap="round"
+								/>
 							</svg>
 							{t("admin.texts.editPage.tokenizeNow")}
 						</button>
@@ -375,35 +478,67 @@ export const TextEditMetaPanel = ({
 
 					<Link
 						href={`/${lang}/admin/texts/${textId}/versions`}
-						className="mb-3 flex items-center gap-1.5 rounded-[7px] border border-acc/15 bg-acc-muted px-3 py-[7px] text-[11.5px] font-medium text-acc transition-opacity hover:opacity-80"
+						className="mb-3 flex items-center gap-1.5 rounded-base border border-acc/15 bg-acc-muted px-3 py-[7px] text-[11.5px] font-medium text-acc transition-opacity hover:opacity-80"
 					>
 						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-							<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-							<path d="M8 5v3l2 1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+							<circle
+								cx="8"
+								cy="8"
+								r="6"
+								stroke="currentColor"
+								strokeWidth="1.3"
+							/>
+							<path
+								d="M8 5v3l2 1"
+								stroke="currentColor"
+								strokeWidth="1.3"
+								strokeLinecap="round"
+							/>
 						</svg>
 						{t("admin.texts.editPage.tokenHistoryLink")}
 					</Link>
 
 					<div className="mb-2.5 flex items-center justify-between gap-2">
 						<div>
-							<div className="text-xs text-t-1">{t("admin.texts.createPage.tokenizeLabel")}</div>
-							<div className="text-[10.5px] text-t-3">{t("admin.texts.createPage.tokenizeSub")}</div>
+							<div className="text-xs text-t-1">
+								{t("admin.texts.createPage.tokenizeLabel")}
+							</div>
+							<div className="text-[10.5px] text-t-3">
+								{t("admin.texts.createPage.tokenizeSub")}
+							</div>
 						</div>
-						<Toggle checked={autoTokenizeOnSave} onChange={onAutoTokenizeChange} />
+						<Toggle
+							checked={autoTokenizeOnSave}
+							onChange={onAutoTokenizeChange}
+						/>
 					</div>
 					<div className="mb-2.5 flex items-center justify-between gap-2">
 						<div>
-							<div className="text-xs text-t-1">{t("admin.texts.createPage.normalizationLabel")}</div>
-							<div className="text-[10.5px] text-t-3">{t("admin.texts.createPage.normalizationSub")}</div>
+							<div className="text-xs text-t-1">
+								{t("admin.texts.createPage.normalizationLabel")}
+							</div>
+							<div className="text-[10.5px] text-t-3">
+								{t("admin.texts.createPage.normalizationSub")}
+							</div>
 						</div>
-						<Toggle checked={useNormalization} onChange={onNormalizationChange} />
+						<Toggle
+							checked={useNormalization}
+							onChange={onNormalizationChange}
+						/>
 					</div>
 					<div className="flex items-center justify-between gap-2">
 						<div>
-							<div className="text-xs text-t-1">{t("admin.texts.createPage.morphLabel")}</div>
-							<div className="text-[10.5px] text-t-3">{t("admin.texts.createPage.morphSub")}</div>
+							<div className="text-xs text-t-1">
+								{t("admin.texts.createPage.morphLabel")}
+							</div>
+							<div className="text-[10.5px] text-t-3">
+								{t("admin.texts.createPage.morphSub")}
+							</div>
 						</div>
-						<Toggle checked={useMorphAnalysis} onChange={onMorphAnalysisChange} />
+						<Toggle
+							checked={useMorphAnalysis}
+							onChange={onMorphAnalysisChange}
+						/>
 					</div>
 				</MetaSection>
 
@@ -414,7 +549,9 @@ export const TextEditMetaPanel = ({
 						return (
 							<div key={i} className={i > 0 ? "mt-2" : ""}>
 								<div className="mb-1 flex justify-between text-[11px]">
-									<span className="text-t-3">{t("admin.texts.createPage.pageN", { n: i + 1 })}</span>
+									<span className="text-t-3">
+										{t("admin.texts.createPage.pageN", { n: i + 1 })}
+									</span>
 									<span className="font-medium text-t-2">
 										{tc > 0
 											? `${tc} ${t("admin.texts.editPage.tokenCountSuffix")} · ${page.wordCount} ${t("admin.texts.createPage.wordsSuffix")}`
@@ -424,7 +561,9 @@ export const TextEditMetaPanel = ({
 								<div className="h-1 overflow-hidden rounded-full bg-surf-3">
 									<div
 										className="h-full rounded-full bg-acc transition-all"
-										style={{ width: `${Math.min(100, Math.round((page.wordCount / maxWordCount) * 100))}%` }}
+										style={{
+											width: `${Math.min(100, Math.round((page.wordCount / maxWordCount) * 100))}%`,
+										}}
 									/>
 								</div>
 							</div>
@@ -452,14 +591,17 @@ export const TextEditMetaPanel = ({
 											}`}
 										/>
 										{i < recentVersions.slice(0, 4).length - 1 && (
-											<div className="mt-1 w-px flex-1 bg-bd-2" style={{ minHeight: "14px" }} />
+											<div
+												className="mt-1 w-px flex-1 bg-bd-2"
+												style={{ minHeight: "14px" }}
+											/>
 										)}
 									</div>
 									<div className="min-w-0 flex-1">
 										<div className="text-xs font-medium text-t-1">
 											{v.isCurrent
 												? t("admin.texts.editPage.versionCurrent")
-												: v.label ?? `v${v.version}`}
+												: (v.label ?? `v${v.version}`)}
 										</div>
 										<div className="mt-0.5 text-[10.5px] text-t-3">
 											{formatVersionDate(v.createdAt)}
@@ -474,8 +616,19 @@ export const TextEditMetaPanel = ({
 							className="mt-2.5 flex items-center justify-center gap-1.5 rounded-[6px] py-1.5 text-[11.5px] font-medium text-acc transition-colors hover:bg-acc-muted"
 						>
 							<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-								<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-								<path d="M8 5v3l2 1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+								<circle
+									cx="8"
+									cy="8"
+									r="6"
+									stroke="currentColor"
+									strokeWidth="1.3"
+								/>
+								<path
+									d="M8 5v3l2 1"
+									stroke="currentColor"
+									strokeWidth="1.3"
+									strokeLinecap="round"
+								/>
 							</svg>
 							{t("admin.texts.editPage.allVersions")}
 						</Link>
@@ -491,9 +644,17 @@ export const TextEditMetaPanel = ({
 						className="flex h-9 w-full items-center justify-center gap-1.5 rounded-[8px] bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-							<path d="M2.5 8.5L6 12l7.5-8" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+							<path
+								d="M2.5 8.5L6 12l7.5-8"
+								stroke="#fff"
+								strokeWidth="1.6"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							/>
 						</svg>
-						{isSaving ? t("admin.texts.editPage.saving") : t("admin.texts.editPage.saveUpdate")}
+						{isSaving
+							? t("admin.texts.editPage.saving")
+							: t("admin.texts.editPage.saveUpdate")}
 					</button>
 					<button
 						type="button"
@@ -502,11 +663,27 @@ export const TextEditMetaPanel = ({
 						className="relative flex h-[34px] w-full items-center justify-center gap-1.5 rounded-[8px] border border-bd-2 bg-transparent text-[12.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-3 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-							<path d="M3 4a1 1 0 011-1h6l3 3v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4z" stroke="currentColor" strokeWidth="1.3" />
-							<path d="M10 3v3H6V3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-							<path d="M5 10h6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+							<path
+								d="M3 4a1 1 0 011-1h6l3 3v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"
+								stroke="currentColor"
+								strokeWidth="1.3"
+							/>
+							<path
+								d="M10 3v3H6V3"
+								stroke="currentColor"
+								strokeWidth="1.3"
+								strokeLinecap="round"
+							/>
+							<path
+								d="M5 10h6"
+								stroke="currentColor"
+								strokeWidth="1.3"
+								strokeLinecap="round"
+							/>
 						</svg>
-						{isSaving ? t("admin.texts.editPage.saving") : t("admin.texts.editPage.saveDraft")}
+						{isSaving
+							? t("admin.texts.editPage.saving")
+							: t("admin.texts.editPage.saveDraft")}
 					</button>
 				</div>
 
@@ -521,12 +698,17 @@ export const TextEditMetaPanel = ({
 						className="flex w-full items-center justify-center gap-1.5 rounded-[6px] border border-red/25 bg-transparent py-[7px] text-[11.5px] text-red transition-colors hover:border-red/40 hover:bg-red-muted"
 					>
 						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-							<path d="M3 4h10M6 4V3a1 1 0 011-1h2a1 1 0 011 1v1M5 4v8a1 1 0 001 1h4a1 1 0 001-1V4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+							<path
+								d="M3 4h10M6 4V3a1 1 0 011-1h2a1 1 0 011 1v1M5 4v8a1 1 0 001 1h4a1 1 0 001-1V4"
+								stroke="currentColor"
+								strokeWidth="1.3"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							/>
 						</svg>
 						{t("admin.texts.editPage.deleteText")}
 					</button>
 				</div>
-
 			</div>
 		</div>
 	);

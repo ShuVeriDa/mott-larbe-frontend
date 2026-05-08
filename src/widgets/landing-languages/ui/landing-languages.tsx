@@ -53,7 +53,7 @@ export const LandingLanguages = () => {
 				</header>
 
 				<div className="grid grid-cols-2 gap-6 max-[640px]:grid-cols-1">
-					{items.map((item) => (
+					{items.map(item => (
 						<article
 							key={item.tag}
 							className="rounded-[16px] border-hairline border-bd-2 bg-surf p-7"
@@ -70,7 +70,7 @@ export const LandingLanguages = () => {
 										{item.native}
 									</Typography>
 								</div>
-								<span className="rounded-[7px] border-hairline border-bd-2 bg-surf-2 px-2.5 py-1 font-mono text-[12px] font-semibold text-t-2">
+								<span className="rounded-base border-hairline border-bd-2 bg-surf-2 px-2.5 py-1 font-mono text-[12px] font-semibold text-t-2">
 									{item.tag}
 								</span>
 							</div>

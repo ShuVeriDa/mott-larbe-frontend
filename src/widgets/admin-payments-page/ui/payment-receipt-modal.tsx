@@ -1,12 +1,12 @@
 "use client";
 
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type {
 	AdminPaymentListItem,
 	PaymentBackendStatus,
 	PaymentProvider,
 } from "@/entities/admin-payment";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
 
 const PROVIDER_COLORS: Record<PaymentProvider, string> = {
 	STRIPE: "#635bff",
@@ -131,7 +131,6 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 		},
 	];
 
-
 	return (
 		<div className="overflow-hidden rounded-t-[14px] bg-surf sm:rounded-[14px]">
 			{/* Header */}
@@ -142,7 +141,7 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 				<button
 					type="button"
 					onClick={onClose}
-					className="flex size-[26px] items-center justify-center rounded-[7px] bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
+					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
 					<svg
 						width="12"

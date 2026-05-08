@@ -1,8 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import type {
+	AdminDictGramCase,
+	AdminDictGramNumber,
+	AdminDictMorphForm,
+} from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
-import type { AdminDictGramCase, AdminDictGramNumber, AdminDictMorphForm } from "@/entities/dictionary";
+import { useEffect, useRef, useState } from "react";
 
 interface MorphFormModalProps {
 	isOpen: boolean;
@@ -67,17 +71,21 @@ export const MorphFormModal = ({
 
 	if (!isOpen) return null;
 
-	const inputCls = "w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[13px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
-	const selectCls = "w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[12.5px] text-t-2 outline-none transition-colors focus:border-acc appearance-none cursor-pointer";
+	const inputCls =
+		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[13px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
+	const selectCls =
+		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[12.5px] text-t-2 outline-none transition-colors focus:border-acc appearance-none cursor-pointer";
 
 	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
-			onClick={(e) => e.target === e.currentTarget && onClose()}
+			onClick={e => e.target === e.currentTarget && onClose()}
 		>
 			<div className="w-[440px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
 				<div className="mb-1 font-display text-[15px] text-t-1">
-					{editForm ? t("admin.dictionaryDetail.editForm") : t("admin.dictionaryDetail.addFormTitle")}
+					{editForm
+						? t("admin.dictionaryDetail.editForm")
+						: t("admin.dictionaryDetail.addFormTitle")}
 				</div>
 				<div className="mb-4.5 text-[12px] text-t-3">
 					{t("admin.dictionaryDetail.formModalSub")}
@@ -93,7 +101,7 @@ export const MorphFormModal = ({
 							type="text"
 							placeholder={t("admin.dictionaryDetail.wordFormPlaceholder")}
 							value={form}
-							onChange={(e) => setForm(e.target.value)}
+							onChange={e => setForm(e.target.value)}
 						/>
 					</div>
 					<div className="mb-0 flex gap-2.5 max-sm:flex-col">
@@ -104,11 +112,17 @@ export const MorphFormModal = ({
 							<select
 								className={selectCls}
 								value={gramCase}
-								onChange={(e) => setGramCase(e.target.value as AdminDictGramCase | "")}
+								onChange={e =>
+									setGramCase(e.target.value as AdminDictGramCase | "")
+								}
 							>
-								<option value="">— {t("admin.dictionaryDetail.selectCase")} —</option>
-								{GRAM_CASES.map((c) => (
-									<option key={c.value} value={c.value}>{c.label}</option>
+								<option value="">
+									— {t("admin.dictionaryDetail.selectCase")} —
+								</option>
+								{GRAM_CASES.map(c => (
+									<option key={c.value} value={c.value}>
+										{c.label}
+									</option>
 								))}
 							</select>
 						</div>
@@ -119,11 +133,17 @@ export const MorphFormModal = ({
 							<select
 								className={selectCls}
 								value={gramNumber}
-								onChange={(e) => setGramNumber(e.target.value as AdminDictGramNumber | "")}
+								onChange={e =>
+									setGramNumber(e.target.value as AdminDictGramNumber | "")
+								}
 							>
-								<option value="">— {t("admin.dictionaryDetail.selectNumber")} —</option>
-								{GRAM_NUMBERS.map((n) => (
-									<option key={n.value} value={n.value}>{n.label}</option>
+								<option value="">
+									— {t("admin.dictionaryDetail.selectNumber")} —
+								</option>
+								{GRAM_NUMBERS.map(n => (
+									<option key={n.value} value={n.value}>
+										{n.label}
+									</option>
 								))}
 							</select>
 						</div>
@@ -131,7 +151,7 @@ export const MorphFormModal = ({
 					<div className="mt-5 flex justify-end gap-2">
 						<button
 							type="button"
-							className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
+							className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
 							onClick={onClose}
 						>
 							{t("admin.dictionaryDetail.cancel")}
@@ -139,7 +159,7 @@ export const MorphFormModal = ({
 						<button
 							type="submit"
 							disabled={isPending || !form.trim()}
-							className="flex h-[30px] items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
+							className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
 						>
 							{t("admin.dictionaryDetail.add")}
 						</button>

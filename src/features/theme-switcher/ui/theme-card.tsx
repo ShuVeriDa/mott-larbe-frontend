@@ -1,7 +1,7 @@
 "use client";
 
-import { Check } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
+import { Check } from "lucide-react";
 
 export interface ThemeCardProps {
 	id: "light" | "dark" | "system";
@@ -15,7 +15,7 @@ const previews: Record<
 	{ bg: string; bar: string; line1: string; line2: string; dot: string }
 > = {
 	light: {
-		bg: "#f5f4f0",
+		bg: "#F9F8F7",
 		bar: "#ffffff",
 		line1: "#d2d0c7",
 		line2: "#e8e6df",
@@ -29,7 +29,7 @@ const previews: Record<
 		dot: "#4a78f5",
 	},
 	system: {
-		bg: "linear-gradient(135deg,#f5f4f0 50%,#121210 50%)",
+		bg: "linear-gradient(135deg,#F9F8F7 50%,#121210 50%)",
 		bar: "linear-gradient(135deg,#ffffff 50%,#1c1c1a 50%)",
 		line1: "rgba(0,0,0,0.1)",
 		line2: "rgba(0,0,0,0.07)",
@@ -60,10 +60,7 @@ export const ThemeCard = ({ id, name, selected, onSelect }: ThemeCardProps) => {
 						borderBottom: "0.5px solid rgba(0,0,0,0.07)",
 					}}
 				>
-					<div
-						className="size-1 rounded-full"
-						style={{ background: p.dot }}
-					/>
+					<div className="size-1 rounded-full" style={{ background: p.dot }} />
 					<div
 						className="h-[3px] w-10 rounded-[2px]"
 						style={{ background: p.line2 }}

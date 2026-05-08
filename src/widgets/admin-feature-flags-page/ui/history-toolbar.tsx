@@ -1,4 +1,7 @@
-import type { FeatureFlagHistoryEventType, FeatureFlagActor } from "@/entities/feature-flag";
+import type {
+	FeatureFlagActor,
+	FeatureFlagHistoryEventType,
+} from "@/entities/feature-flag";
 
 const EVENT_TYPES: FeatureFlagHistoryEventType[] = [
 	"FLAG_CREATED",
@@ -51,19 +54,19 @@ export const HistoryToolbar = ({
 			<input
 				type="text"
 				value={search}
-				onChange={(e) => onSearchChange(e.target.value)}
+				onChange={e => onSearchChange(e.target.value)}
 				placeholder={t("admin.featureFlags.history.searchPlaceholder")}
-				className="h-[30px] w-full rounded-[7px] border border-bd-2 bg-surf pl-[30px] pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
+				className="h-[30px] w-full rounded-base border border-bd-2 bg-surf pl-[30px] pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 			/>
 		</div>
 
 		<select
 			value={eventType}
-			onChange={(e) => onEventTypeChange(e.target.value)}
-			className="h-[30px] cursor-pointer rounded-[7px] border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
+			onChange={e => onEventTypeChange(e.target.value)}
+			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
 		>
 			<option value="">{t("admin.featureFlags.history.allTypes")}</option>
-			{EVENT_TYPES.map((et) => (
+			{EVENT_TYPES.map(et => (
 				<option key={et} value={et}>
 					{t(`admin.featureFlags.history.eventType.${et}`)}
 				</option>
@@ -72,11 +75,11 @@ export const HistoryToolbar = ({
 
 		<select
 			value={actorId}
-			onChange={(e) => onActorIdChange(e.target.value)}
-			className="h-[30px] cursor-pointer rounded-[7px] border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
+			onChange={e => onActorIdChange(e.target.value)}
+			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
 		>
 			<option value="">{t("admin.featureFlags.history.allActors")}</option>
-			{actors.map((a) => (
+			{actors.map(a => (
 				<option key={a.id} value={a.id}>
 					{a.name} {a.surname}
 				</option>

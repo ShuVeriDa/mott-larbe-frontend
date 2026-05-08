@@ -79,14 +79,14 @@ const FieldLabel = ({ children }: { children: React.ReactNode }) => (
 const FieldInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
 	<input
 		{...props}
-		className="h-[34px] w-full rounded-[7px] border border-bd-2 bg-surf px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
+		className="h-[34px] w-full rounded-base border border-bd-2 bg-surf px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 	/>
 );
 
 const FieldSelect = (props: React.SelectHTMLAttributes<HTMLSelectElement>) => (
 	<select
 		{...props}
-		className="h-[34px] w-full cursor-pointer appearance-none rounded-[7px] border border-bd-2 bg-surf px-2.5 pr-7 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
+		className="h-[34px] w-full cursor-pointer appearance-none rounded-base border border-bd-2 bg-surf px-2.5 pr-7 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 	/>
 );
 
@@ -434,7 +434,7 @@ export const TextCreateMetaPanel = ({
 							<img
 								src={coverPreviewUrl}
 								alt="cover preview"
-								className="h-full w-full rounded-[7px] object-cover"
+								className="h-full w-full rounded-base object-cover"
 							/>
 						) : (
 							<>

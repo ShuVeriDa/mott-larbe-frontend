@@ -1,254 +1,252 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useI18n } from "@/shared/lib/i18n";
 import type {
-  CreateMorphRuleDto,
-  MorphRule,
-  MorphRuleType,
+	CreateMorphRuleDto,
+	MorphRule,
+	MorphRuleType,
 } from "@/entities/morph-rule";
+import { useI18n } from "@/shared/lib/i18n";
+import { useEffect, useState } from "react";
 
 const TYPE_OPTIONS: MorphRuleType[] = [
-  "SUFFIX",
-  "ENDING",
-  "PREFIX",
-  "NOUN_CASE",
-  "PLURAL",
-  "VERB_PAST",
-  "REGEX",
+	"SUFFIX",
+	"ENDING",
+	"PREFIX",
+	"NOUN_CASE",
+	"PLURAL",
+	"VERB_PAST",
+	"REGEX",
 ];
 
 interface Props {
-  open: boolean;
-  rule?: MorphRule | null;
-  isLoading?: boolean;
-  onSubmit: (dto: CreateMorphRuleDto) => void;
-  onClose: () => void;
+	open: boolean;
+	rule?: MorphRule | null;
+	isLoading?: boolean;
+	onSubmit: (dto: CreateMorphRuleDto) => void;
+	onClose: () => void;
 }
 
 const EMPTY: CreateMorphRuleDto = {
-  suffix: "",
-  add: "",
-  pos: "",
-  description: "",
-  isRegex: false,
-  type: "SUFFIX",
-  language: "CHE",
-  priority: 1,
-  isActive: true,
+	suffix: "",
+	add: "",
+	pos: "",
+	description: "",
+	isRegex: false,
+	type: "SUFFIX",
+	language: "CHE",
+	priority: 1,
+	isActive: true,
 };
 
 export const MorphologyRuleModal = ({
-  open,
-  rule,
-  isLoading,
-  onSubmit,
-  onClose,
+	open,
+	rule,
+	isLoading,
+	onSubmit,
+	onClose,
 }: Props) => {
-  const { t } = useI18n();
-  const [form, setForm] = useState<CreateMorphRuleDto>(EMPTY);
+	const { t } = useI18n();
+	const [form, setForm] = useState<CreateMorphRuleDto>(EMPTY);
 
-  useEffect(() => {
-    if (rule) {
-      setForm({
-        suffix: rule.suffix,
-        add: rule.add ?? "",
-        pos: rule.pos ?? "",
-        description: rule.description ?? "",
-        isRegex: rule.isRegex,
-        type: rule.type,
-        language: rule.language,
-        priority: rule.priority,
-        isActive: rule.isActive,
-      });
-    } else {
-      setForm(EMPTY);
-    }
-  }, [rule, open]);
+	useEffect(() => {
+		if (rule) {
+			setForm({
+				suffix: rule.suffix,
+				add: rule.add ?? "",
+				pos: rule.pos ?? "",
+				description: rule.description ?? "",
+				isRegex: rule.isRegex,
+				type: rule.type,
+				language: rule.language,
+				priority: rule.priority,
+				isActive: rule.isActive,
+			});
+		} else {
+			setForm(EMPTY);
+		}
+	}, [rule, open]);
 
-  if (!open) return null;
+	if (!open) return null;
 
-  const isEdit = !!rule;
+	const isEdit = !!rule;
 
-  const handleSubmit = (
-    e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
-  ) => {
-    e.preventDefault();
-    onSubmit({
-      ...form,
-      add: form.add || undefined,
-      pos: form.pos || undefined,
-      description: form.description || undefined,
-    });
-  };
+	const handleSubmit = (
+		e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+	) => {
+		e.preventDefault();
+		onSubmit({
+			...form,
+			add: form.add || undefined,
+			pos: form.pos || undefined,
+			description: form.description || undefined,
+		});
+	};
 
-  return (
-    <div
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] sm:p-4 max-sm:items-end max-sm:p-0"
-      onClick={(e) => e.target === e.currentTarget && onClose()}
-    >
-      <div className="w-full max-w-[480px] overflow-y-auto rounded-[14px] border border-bd-2 bg-surf p-5 shadow-md max-sm:max-w-full max-sm:rounded-b-none max-sm:rounded-t-[16px] max-sm:pb-7">
-        <h2 className="font-display text-[15px] text-t-1 mb-1">
-          {isEdit
-            ? t("admin.morphology.ruleModal.editTitle")
-            : t("admin.morphology.ruleModal.addTitle")}
-        </h2>
-        <p className="mb-4 text-[12px] text-t-3">
-          {t("admin.morphology.ruleModal.subtitle")}
-        </p>
+	return (
+		<div
+			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] sm:p-4 max-sm:items-end max-sm:p-0"
+			onClick={e => e.target === e.currentTarget && onClose()}
+		>
+			<div className="w-full max-w-[480px] overflow-y-auto rounded-[14px] border border-bd-2 bg-surf p-5 shadow-md max-sm:max-w-full max-sm:rounded-b-none max-sm:rounded-t-[16px] max-sm:pb-7">
+				<h2 className="font-display text-[15px] text-t-1 mb-1">
+					{isEdit
+						? t("admin.morphology.ruleModal.editTitle")
+						: t("admin.morphology.ruleModal.addTitle")}
+				</h2>
+				<p className="mb-4 text-[12px] text-t-3">
+					{t("admin.morphology.ruleModal.subtitle")}
+				</p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
-          {/* Pattern */}
-          <div>
-            <label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
-              {t("admin.morphology.ruleModal.suffixLabel")}
-            </label>
-            <input
-              required
-              type="text"
-              value={form.suffix}
-              onChange={(e) => setForm((p) => ({ ...p, suffix: e.target.value }))}
-              placeholder={t("admin.morphology.ruleModal.suffixPlaceholder")}
-              className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] text-t-1 placeholder:font-sans placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
-            />
-          </div>
+				<form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+					{/* Pattern */}
+					<div>
+						<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+							{t("admin.morphology.ruleModal.suffixLabel")}
+						</label>
+						<input
+							required
+							type="text"
+							value={form.suffix}
+							onChange={e => setForm(p => ({ ...p, suffix: e.target.value }))}
+							placeholder={t("admin.morphology.ruleModal.suffixPlaceholder")}
+							className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] text-t-1 placeholder:font-sans placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
+						/>
+					</div>
 
-          <div className="flex gap-2.5">
-            {/* Replacement */}
-            <div className="flex-1">
-              <label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
-                {t("admin.morphology.ruleModal.addLabel")}
-                <span className="ml-1.5 font-normal tracking-normal text-t-3">
-                  {t("admin.morphology.ruleModal.addHint")}
-                </span>
-              </label>
-              <input
-                type="text"
-                value={form.add ?? ""}
-                onChange={(e) =>
-                  setForm((p) => ({ ...p, add: e.target.value }))
-                }
-                placeholder="∅"
-                className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] text-t-1 placeholder:font-sans placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
-              />
-            </div>
+					<div className="flex gap-2.5">
+						{/* Replacement */}
+						<div className="flex-1">
+							<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+								{t("admin.morphology.ruleModal.addLabel")}
+								<span className="ml-1.5 font-normal tracking-normal text-t-3">
+									{t("admin.morphology.ruleModal.addHint")}
+								</span>
+							</label>
+							<input
+								type="text"
+								value={form.add ?? ""}
+								onChange={e => setForm(p => ({ ...p, add: e.target.value }))}
+								placeholder="∅"
+								className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] text-t-1 placeholder:font-sans placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
+							/>
+						</div>
 
-            {/* POS */}
-            <div className="w-28">
-              <label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
-                {t("admin.morphology.ruleModal.posLabel")}
-              </label>
-              <input
-                type="text"
-                value={form.pos ?? ""}
-                onChange={(e) =>
-                  setForm((p) => ({ ...p, pos: e.target.value }))
-                }
-                placeholder="NOUN"
-                className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[12.5px] text-t-1 placeholder:text-t-3 focus:border-acc focus:outline-none"
-              />
-            </div>
-          </div>
+						{/* POS */}
+						<div className="w-28">
+							<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+								{t("admin.morphology.ruleModal.posLabel")}
+							</label>
+							<input
+								type="text"
+								value={form.pos ?? ""}
+								onChange={e => setForm(p => ({ ...p, pos: e.target.value }))}
+								placeholder="NOUN"
+								className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[12.5px] text-t-1 placeholder:text-t-3 focus:border-acc focus:outline-none"
+							/>
+						</div>
+					</div>
 
-          <div className="flex gap-2.5">
-            {/* Type */}
-            <div className="flex-1">
-              <label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
-                {t("admin.morphology.ruleModal.typeLabel")}
-              </label>
-              <select
-                value={form.type}
-                onChange={(e) =>
-                  setForm((p) => ({
-                    ...p,
-                    type: e.target.value as MorphRuleType,
-                    isRegex: e.target.value === "REGEX",
-                  }))
-                }
-                className="h-9 w-full appearance-none rounded-lg border border-bd-2 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2211%22%20height%3D%2211%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M4%206l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[right_8px_center] bg-no-repeat px-2.5 pr-7 text-[12.5px] text-t-2 focus:border-acc focus:outline-none"
-              >
-                {TYPE_OPTIONS.map((tp) => (
-                  <option key={tp} value={tp}>
-                    {t(`admin.morphology.ruleType.${tp}` as never) || tp}
-                  </option>
-                ))}
-              </select>
-            </div>
+					<div className="flex gap-2.5">
+						{/* Type */}
+						<div className="flex-1">
+							<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+								{t("admin.morphology.ruleModal.typeLabel")}
+							</label>
+							<select
+								value={form.type}
+								onChange={e =>
+									setForm(p => ({
+										...p,
+										type: e.target.value as MorphRuleType,
+										isRegex: e.target.value === "REGEX",
+									}))
+								}
+								className="h-9 w-full appearance-none rounded-lg border border-bd-2 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2211%22%20height%3D%2211%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M4%206l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[right_8px_center] bg-no-repeat px-2.5 pr-7 text-[12.5px] text-t-2 focus:border-acc focus:outline-none"
+							>
+								{TYPE_OPTIONS.map(tp => (
+									<option key={tp} value={tp}>
+										{t(`admin.morphology.ruleType.${tp}` as never) || tp}
+									</option>
+								))}
+							</select>
+						</div>
 
-            {/* Priority */}
-            <div className="w-24">
-              <label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
-                {t("admin.morphology.ruleModal.priorityLabel")}
-              </label>
-              <input
-                type="number"
-                min={0}
-                max={99}
-                value={form.priority ?? 1}
-                onChange={(e) =>
-                  setForm((p) => ({
-                    ...p,
-                    priority: parseInt(e.target.value, 10) || 0,
-                  }))
-                }
-                className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[12.5px] text-t-1 focus:border-acc focus:outline-none"
-              />
-            </div>
-          </div>
+						{/* Priority */}
+						<div className="w-24">
+							<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+								{t("admin.morphology.ruleModal.priorityLabel")}
+							</label>
+							<input
+								type="number"
+								min={0}
+								max={99}
+								value={form.priority ?? 1}
+								onChange={e =>
+									setForm(p => ({
+										...p,
+										priority: parseInt(e.target.value, 10) || 0,
+									}))
+								}
+								className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[12.5px] text-t-1 focus:border-acc focus:outline-none"
+							/>
+						</div>
+					</div>
 
-          {/* Description */}
-          <div>
-            <label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
-              {t("admin.morphology.ruleModal.descriptionLabel")}
-            </label>
-            <input
-              type="text"
-              value={form.description ?? ""}
-              onChange={(e) =>
-                setForm((p) => ({ ...p, description: e.target.value }))
-              }
-              placeholder={t("admin.morphology.ruleModal.descriptionPlaceholder")}
-              className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
-            />
-          </div>
+					{/* Description */}
+					<div>
+						<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+							{t("admin.morphology.ruleModal.descriptionLabel")}
+						</label>
+						<input
+							type="text"
+							value={form.description ?? ""}
+							onChange={e =>
+								setForm(p => ({ ...p, description: e.target.value }))
+							}
+							placeholder={t(
+								"admin.morphology.ruleModal.descriptionPlaceholder",
+							)}
+							className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
+						/>
+					</div>
 
-          {/* Active toggle */}
-          <label className="flex cursor-pointer items-center gap-2.5">
-            <input
-              type="checkbox"
-              checked={form.isActive ?? true}
-              onChange={(e) =>
-                setForm((p) => ({ ...p, isActive: e.target.checked }))
-              }
-              className="accent-acc"
-            />
-            <span className="text-[12.5px] text-t-2">
-              {t("admin.morphology.ruleModal.activeLabel")}
-            </span>
-          </label>
+					{/* Active toggle */}
+					<label className="flex cursor-pointer items-center gap-2.5">
+						<input
+							type="checkbox"
+							checked={form.isActive ?? true}
+							onChange={e =>
+								setForm(p => ({ ...p, isActive: e.target.checked }))
+							}
+							className="accent-acc"
+						/>
+						<span className="text-[12.5px] text-t-2">
+							{t("admin.morphology.ruleModal.activeLabel")}
+						</span>
+					</label>
 
-          <div className="mt-1.5 flex justify-end gap-2 max-sm:flex-col-reverse">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex h-[30px] items-center justify-center rounded-[7px] border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
-            >
-              {t("admin.morphology.ruleModal.cancel")}
-            </button>
-            <button
-              type="submit"
-              disabled={isLoading || !form.suffix || !form.type}
-              className="flex h-[30px] items-center justify-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
-            >
-              {isLoading
-                ? "…"
-                : isEdit
-                  ? t("admin.morphology.ruleModal.save")
-                  : t("admin.morphology.ruleModal.create")}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+					<div className="mt-1.5 flex justify-end gap-2 max-sm:flex-col-reverse">
+						<button
+							type="button"
+							onClick={onClose}
+							className="flex h-[30px] items-center justify-center rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
+						>
+							{t("admin.morphology.ruleModal.cancel")}
+						</button>
+						<button
+							type="submit"
+							disabled={isLoading || !form.suffix || !form.type}
+							className="flex h-[30px] items-center justify-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
+						>
+							{isLoading
+								? "…"
+								: isEdit
+									? t("admin.morphology.ruleModal.save")
+									: t("admin.morphology.ruleModal.create")}
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	);
 };

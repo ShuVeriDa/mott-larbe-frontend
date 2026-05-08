@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import type { AdminDictListItem } from "@/entities/dictionary";
+import { useEffect, useState } from "react";
 
 interface DictionaryAddExampleModalProps {
 	entry: AdminDictListItem | null;
@@ -22,11 +22,17 @@ export const DictionaryAddExampleModal = ({
 	const [error, setError] = useState("");
 
 	useEffect(() => {
-		if (entry) { setText(""); setError(""); }
+		if (entry) {
+			setText("");
+			setError("");
+		}
 	}, [entry]);
 
 	const handleSubmit = () => {
-		if (!text.trim()) { setError(t("admin.dictionary.addExampleModal.required")); return; }
+		if (!text.trim()) {
+			setError(t("admin.dictionary.addExampleModal.required"));
+			return;
+		}
 		onConfirm(text.trim());
 	};
 
@@ -38,7 +44,9 @@ export const DictionaryAddExampleModal = ({
 	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+			onClick={e => {
+				if (e.target === e.currentTarget) onClose();
+			}}
 		>
 			<div className="w-[440px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -61,7 +69,10 @@ export const DictionaryAddExampleModal = ({
 						className={inputCls}
 						placeholder={t("admin.dictionary.addExampleModal.textPlaceholder")}
 						value={text}
-						onChange={(e) => { setText(e.target.value); setError(""); }}
+						onChange={e => {
+							setText(e.target.value);
+							setError("");
+						}}
 						autoFocus
 					/>
 					{error && <p className="mt-1 text-[11px] text-red-t">{error}</p>}
@@ -71,7 +82,7 @@ export const DictionaryAddExampleModal = ({
 						type="button"
 						onClick={onClose}
 						disabled={isSubmitting}
-						className="h-8 cursor-pointer rounded-[7px] border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10"
+						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10"
 					>
 						{t("admin.dictionary.addExampleModal.cancel")}
 					</button>
@@ -79,7 +90,7 @@ export const DictionaryAddExampleModal = ({
 						type="button"
 						onClick={handleSubmit}
 						disabled={isSubmitting || entry.sensesCount === 0}
-						className="h-8 cursor-pointer rounded-[7px] bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10"
+						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10"
 					>
 						{isSubmitting
 							? t("admin.dictionary.addExampleModal.adding")

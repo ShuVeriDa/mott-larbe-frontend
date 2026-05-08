@@ -27,7 +27,7 @@ export const ProfileTabs = ({ active, onChange }: ProfileTabsProps) => {
 					type="button"
 					onClick={() => onChange(id)}
 					className={cn(
-						"h-7 px-3.5 rounded-[7px] text-[12.5px] font-medium font-[inherit] cursor-pointer transition-all duration-100 whitespace-nowrap",
+						"h-7 px-3.5 rounded-base text-[12.5px] font-medium font-[inherit] cursor-pointer transition-all duration-100 whitespace-nowrap",
 						"max-sm:flex-1 max-sm:h-[34px] max-sm:text-[12px] max-sm:px-1.5",
 						active === id
 							? "bg-surf text-t-1 shadow-sm"

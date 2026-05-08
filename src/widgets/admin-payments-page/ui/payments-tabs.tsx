@@ -1,8 +1,8 @@
 "use client";
 
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type { PaymentUiTab } from "@/entities/admin-payment";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
 
 interface Props {
 	active: PaymentUiTab;
@@ -29,7 +29,7 @@ export const PaymentsTabs = ({ active, counts, onChange }: Props) => {
 						type="button"
 						onClick={() => onChange(key)}
 						className={cn(
-							"flex h-[26px] items-center gap-1 whitespace-nowrap rounded-[7px] px-2.5 text-[12px] transition-colors",
+							"flex h-[26px] items-center gap-1 whitespace-nowrap rounded-base px-2.5 text-[12px] transition-colors",
 							active === key
 								? "bg-surf font-medium text-t-1 shadow-[0_1px_3px_rgba(0,0,0,0.07)]"
 								: "text-t-2 hover:bg-surf-3 hover:text-t-1",

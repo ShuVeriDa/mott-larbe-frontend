@@ -3071,7 +3071,12 @@
 				"processNotice": "Text will be automatically tokenized after saving.",
 				"authorLengthError": "Author must be between 2 and 50 characters.",
 				"descriptionTooLong": "Description must be at most 1000 characters.",
-				"tagsCreate": "Create:"
+				"tagsCreate": "Create:",
+				"deletePage": "Close page",
+				"deletePageTitle": "Delete page?",
+				"deletePageBody": "Page {n} has content. Delete it permanently?",
+				"deletePageCancel": "Cancel",
+				"deletePageConfirm": "Delete"
 			},
 			"editPage": {
 				"back": "Back",

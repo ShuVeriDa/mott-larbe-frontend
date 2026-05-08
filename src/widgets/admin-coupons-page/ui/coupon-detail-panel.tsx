@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type { AdminCouponDetail, CouponStatus } from "@/entities/admin-coupon";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import { useState } from "react";
 
 interface Props {
 	coupon: AdminCouponDetail;
@@ -30,7 +30,11 @@ const STATUS_STYLES: Record<CouponStatus, string> = {
 
 const formatDate = (date: string | null | undefined) => {
 	if (!date) return "—";
-	return new Date(date).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
+	return new Date(date).toLocaleDateString("ru-RU", {
+		day: "numeric",
+		month: "long",
+		year: "numeric",
+	});
 };
 
 const usageBarColor = (pct: number) => {
@@ -66,7 +70,11 @@ export const CouponDetailPanel = ({
 			<div className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf">
 				<div className="space-y-3 p-4">
 					{Array.from({ length: 5 }).map((_, i) => (
-						<div key={i} className="h-4 animate-pulse rounded bg-surf-3" style={{ width: `${[90, 60, 75, 50, 80][i]}%` }} />
+						<div
+							key={i}
+							className="h-4 animate-pulse rounded bg-surf-3"
+							style={{ width: `${[90, 60, 75, 50, 80][i]}%` }}
+						/>
 					))}
 				</div>
 			</div>
@@ -98,7 +106,6 @@ export const CouponDetailPanel = ({
 
 	return (
 		<div className="flex flex-col gap-0 overflow-hidden rounded-[11px] border border-bd-1 bg-surf">
-
 			{/* Hero */}
 			<div className="border-b border-bd-1 px-[15px] py-4">
 				{/* Code display */}
@@ -106,25 +113,53 @@ export const CouponDetailPanel = ({
 					onClick={handleCopy}
 					className={cn(
 						"mb-3 flex cursor-pointer items-center justify-between rounded-[9px] border px-3.5 py-2 transition-colors",
-						copied ? "border-grn bg-grn-bg" : "border-bd-2 bg-surf-2 hover:border-acc",
+						copied
+							? "border-grn bg-grn-bg"
+							: "border-bd-2 bg-surf-2 hover:border-acc",
 					)}
 				>
-					<span className={cn("font-mono text-[17px] font-extrabold tracking-[1.5px]", copied ? "text-grn-t" : "text-t-1")}>
+					<span
+						className={cn(
+							"font-mono text-[17px] font-extrabold tracking-[1.5px]",
+							copied ? "text-grn-t" : "text-t-1",
+						)}
+					>
 						{coupon.code}
 					</span>
-					<span className={cn("flex items-center gap-1 text-[11px] font-medium", copied ? "text-grn-t" : "text-t-3")}>
-						<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
+					<span
+						className={cn(
+							"flex items-center gap-1 text-[11px] font-medium",
+							copied ? "text-grn-t" : "text-t-3",
+						)}
+					>
+						<svg
+							width="12"
+							height="12"
+							viewBox="0 0 12 12"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="1.3"
+						>
 							<rect x="4" y="1" width="7" height="7" rx="1.2" />
 							<path d="M1 4v6a1 1 0 001 1h6" strokeLinecap="round" />
 						</svg>
-						{copied ? t("admin.coupons.detail.copied") : t("admin.coupons.detail.copy")}
+						{copied
+							? t("admin.coupons.detail.copied")
+							: t("admin.coupons.detail.copy")}
 					</span>
 				</div>
 
 				{/* Badges */}
 				<div className="mb-2.5 flex flex-wrap gap-1.5">
-					<span className={cn("inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold", STATUS_STYLES[coupon.computedStatus])}>
-						{coupon.computedStatus === "active" && <span className="size-[5px] rounded-full bg-grn" />}
+					<span
+						className={cn(
+							"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold",
+							STATUS_STYLES[coupon.computedStatus],
+						)}
+					>
+						{coupon.computedStatus === "active" && (
+							<span className="size-[5px] rounded-full bg-grn" />
+						)}
 						{t(`admin.coupons.status.${coupon.computedStatus}`)}
 					</span>
 					{coupon.newUsersOnly && (
@@ -141,12 +176,19 @@ export const CouponDetailPanel = ({
 
 				{/* Value */}
 				<div className="text-[26px] font-bold leading-none text-t-1">
-					{coupon.amount}{coupon.type === "PERCENT" ? "%" : " ₽"}
+					{coupon.amount}
+					{coupon.type === "PERCENT" ? "%" : " ₽"}
 				</div>
 				<div className="mt-1 text-[11.5px] text-t-3">
 					{coupon.type === "PERCENT"
-						? t("admin.coupons.detail.discount").replace("{amount}", String(coupon.amount))
-						: t("admin.coupons.detail.discountFixed").replace("{amount}", String(coupon.amount))}
+						? t("admin.coupons.detail.discount").replace(
+								"{amount}",
+								String(coupon.amount),
+							)
+						: t("admin.coupons.detail.discountFixed").replace(
+								"{amount}",
+								String(coupon.amount),
+							)}
 				</div>
 			</div>
 
@@ -158,17 +200,25 @@ export const CouponDetailPanel = ({
 
 				<div className="mb-2.5">
 					<div className="mb-1.5 flex items-baseline justify-between">
-						<span className="text-[18px] font-bold text-t-1">{coupon.redeemedCount}</span>
+						<span className="text-[18px] font-bold text-t-1">
+							{coupon.redeemedCount}
+						</span>
 						<span className="text-[12px] text-t-3">
 							{maxR
-								? t("admin.coupons.detail.usageOf").replace("{max}", String(maxR))
+								? t("admin.coupons.detail.usageOf").replace(
+										"{max}",
+										String(maxR),
+									)
 								: t("admin.coupons.detail.usageUnlimited")}
 						</span>
 					</div>
 					{maxR && (
 						<div className="h-[7px] overflow-hidden rounded-full bg-surf-3">
 							<div
-								className={cn("h-full rounded-full transition-all", usageBarColor(pct))}
+								className={cn(
+									"h-full rounded-full transition-all",
+									usageBarColor(pct),
+								)}
 								style={{ width: `${pct * 100}%` }}
 							/>
 						</div>
@@ -177,21 +227,31 @@ export const CouponDetailPanel = ({
 
 				<div className="space-y-1.5">
 					<div className="flex items-baseline justify-between gap-2">
-						<span className="text-[11.5px] text-t-3">{t("admin.coupons.detail.perUser")}</span>
+						<span className="text-[11.5px] text-t-3">
+							{t("admin.coupons.detail.perUser")}
+						</span>
 						<span className="text-[12px] font-medium text-t-1">
 							{coupon.maxPerUser ?? t("admin.coupons.detail.usageUnlimited")}
 						</span>
 					</div>
 					<div className="flex items-baseline justify-between gap-2">
-						<span className="text-[11.5px] text-t-3">{t("admin.coupons.detail.plans")}</span>
+						<span className="text-[11.5px] text-t-3">
+							{t("admin.coupons.detail.plans")}
+						</span>
 						<div className="flex flex-wrap justify-end gap-1">
 							{coupon.applicablePlans.length === 0 ? (
 								<span className="rounded bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
 									{t("admin.coupons.table.planAll")}
 								</span>
 							) : (
-								coupon.applicablePlans.map((p) => (
-									<span key={p} className={cn("rounded px-1.5 py-0.5 text-[10px] font-semibold", PLAN_STYLES[p] ?? "bg-surf-3 text-t-2")}>
+								coupon.applicablePlans.map(p => (
+									<span
+										key={p}
+										className={cn(
+											"rounded px-1.5 py-0.5 text-[10px] font-semibold",
+											PLAN_STYLES[p] ?? "bg-surf-3 text-t-2",
+										)}
+									>
 										{p.charAt(0) + p.slice(1).toLowerCase()}
 									</span>
 								))
@@ -200,13 +260,21 @@ export const CouponDetailPanel = ({
 					</div>
 					{coupon.validFrom && (
 						<div className="flex items-baseline justify-between gap-2">
-							<span className="text-[11.5px] text-t-3">{t("admin.coupons.detail.validFrom")}</span>
-							<span className="text-[12px] font-medium text-t-1">{formatDate(coupon.validFrom)}</span>
+							<span className="text-[11.5px] text-t-3">
+								{t("admin.coupons.detail.validFrom")}
+							</span>
+							<span className="text-[12px] font-medium text-t-1">
+								{formatDate(coupon.validFrom)}
+							</span>
 						</div>
 					)}
 					<div className="flex items-baseline justify-between gap-2">
-						<span className="text-[11.5px] text-t-3">{t("admin.coupons.detail.validUntil")}</span>
-						<span className="text-[12px] font-medium text-t-1">{formatDate(coupon.validUntil)}</span>
+						<span className="text-[11.5px] text-t-3">
+							{t("admin.coupons.detail.validUntil")}
+						</span>
+						<span className="text-[12px] font-medium text-t-1">
+							{formatDate(coupon.validUntil)}
+						</span>
 					</div>
 				</div>
 			</div>
@@ -223,18 +291,33 @@ export const CouponDetailPanel = ({
 						const plan = r.user.subscriptions?.[0]?.plan;
 
 						return (
-							<div key={r.id} className="flex items-center gap-2 border-b border-bd-1 px-[15px] py-1.5 text-[12px] last:border-b-0 hover:bg-surf-2">
-								<div className={cn("flex size-6 shrink-0 items-center justify-center rounded-full text-[9px] font-bold", colorClass)}>
+							<div
+								key={r.id}
+								className="flex items-center gap-2 border-b border-bd-1 px-[15px] py-1.5 text-[12px] last:border-b-0 hover:bg-surf-2"
+							>
+								<div
+									className={cn(
+										"flex size-6 shrink-0 items-center justify-center rounded-full text-[9px] font-bold",
+										colorClass,
+									)}
+								>
 									{initials}
 								</div>
 								<div className="min-w-0 flex-1">
-									<div className="truncate font-medium text-t-1">{r.user.name} {r.user.surname}</div>
+									<div className="truncate font-medium text-t-1">
+										{r.user.name} {r.user.surname}
+									</div>
 									{plan && (
-										<div className="text-[10.5px] text-t-3">{plan.charAt(0) + plan.slice(1).toLowerCase()}</div>
+										<div className="text-[10.5px] text-t-3">
+											{plan.charAt(0) + plan.slice(1).toLowerCase()}
+										</div>
 									)}
 								</div>
 								<div className="shrink-0 text-[10.5px] text-t-3">
-									{new Date(r.createdAt).toLocaleDateString("ru-RU", { day: "numeric", month: "short" })}
+									{new Date(r.createdAt).toLocaleDateString("ru-RU", {
+										day: "numeric",
+										month: "short",
+									})}
 								</div>
 								{r.discountCents != null && (
 									<div className="shrink-0 text-[11.5px] font-semibold text-grn-t">
@@ -252,10 +335,20 @@ export const CouponDetailPanel = ({
 				<button
 					type="button"
 					onClick={() => onEdit(coupon.id)}
-					className="flex h-[29px] w-full items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+					className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
-					<svg className="size-3 shrink-0 text-t-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
-						<path d="M8.5 1.5l2 2-6 6H2.5v-2l6-6z" strokeLinecap="round" strokeLinejoin="round" />
+					<svg
+						className="size-3 shrink-0 text-t-3"
+						viewBox="0 0 12 12"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="1.3"
+					>
+						<path
+							d="M8.5 1.5l2 2-6 6H2.5v-2l6-6z"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						/>
 					</svg>
 					{t("admin.coupons.detail.edit")}
 				</button>
@@ -263,23 +356,36 @@ export const CouponDetailPanel = ({
 				<button
 					type="button"
 					onClick={handleCopy}
-					className="flex h-[29px] w-full items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+					className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
-					<svg className="size-3 shrink-0 text-t-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
+					<svg
+						className="size-3 shrink-0 text-t-3"
+						viewBox="0 0 12 12"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="1.3"
+					>
 						<rect x="4" y="1" width="7" height="7" rx="1.2" />
 						<path d="M1 4v6a1 1 0 001 1h6" strokeLinecap="round" />
 					</svg>
 					{t("admin.coupons.detail.copyCode")}
 				</button>
 
-				{(coupon.computedStatus === "active" || coupon.computedStatus === "disabled") && (
+				{(coupon.computedStatus === "active" ||
+					coupon.computedStatus === "disabled") && (
 					<button
 						type="button"
 						disabled={toggling}
 						onClick={handleToggle}
-						className="flex h-[29px] w-full items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-50"
+						className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-50"
 					>
-						<svg className="size-3 shrink-0 text-t-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
+						<svg
+							className="size-3 shrink-0 text-t-3"
+							viewBox="0 0 12 12"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="1.3"
+						>
 							<circle cx="6" cy="6" r="5" />
 							<path d="M4 6h4M6 4v4" strokeLinecap="round" />
 						</svg>
@@ -292,10 +398,20 @@ export const CouponDetailPanel = ({
 				<button
 					type="button"
 					onClick={() => onDelete(coupon.id)}
-					className="flex h-[29px] w-full items-center gap-1.5 rounded-[7px] border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[11.5px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
+					className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[11.5px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 				>
-					<svg className="size-3 shrink-0 text-red-t" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
-						<path d="M2 3h8M4 3V2h4v1M5 5.5v3M7 5.5v3M3 3l.6 7h4.8L9 3" strokeLinecap="round" strokeLinejoin="round" />
+					<svg
+						className="size-3 shrink-0 text-red-t"
+						viewBox="0 0 12 12"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="1.3"
+					>
+						<path
+							d="M2 3h8M4 3V2h4v1M5 5.5v3M7 5.5v3M3 3l.6 7h4.8L9 3"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						/>
 					</svg>
 					{t("admin.coupons.detail.delete")}
 				</button>

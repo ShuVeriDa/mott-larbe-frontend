@@ -26,7 +26,7 @@ export const BillingTopbar = ({
 			<div className="flex shrink-0 items-center gap-2">
 				<button
 					onClick={onNewCoupon}
-					className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
+					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
 					<svg
 						width="11"
@@ -43,7 +43,7 @@ export const BillingTopbar = ({
 				</button>
 				<button
 					onClick={onNewPlan}
-					className="flex h-[30px] items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
+					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
 					<svg
 						width="11"

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useI18n } from "@/shared/lib/i18n";
+import type { PaymentProvider } from "@/entities/admin-subscription";
 import { adminSubscriptionApi } from "@/entities/admin-subscription";
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
-import type { PaymentProvider } from "@/entities/admin-subscription";
+import { useI18n } from "@/shared/lib/i18n";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 interface Props {
 	mutations: ReturnType<typeof useAdminSubscriptionMutations>;
@@ -13,7 +13,11 @@ interface Props {
 	initialEmail?: string;
 }
 
-export const AddSubscriptionModal = ({ mutations, onClose, initialEmail }: Props) => {
+export const AddSubscriptionModal = ({
+	mutations,
+	onClose,
+	initialEmail,
+}: Props) => {
 	const { t } = useI18n();
 	const [email, setEmail] = useState(initialEmail ?? "");
 	const [planId, setPlanId] = useState("");
@@ -51,9 +55,16 @@ export const AddSubscriptionModal = ({ mutations, onClose, initialEmail }: Props
 				<button
 					type="button"
 					onClick={onClose}
-					className="flex size-[26px] items-center justify-center rounded-[7px] bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
+					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
-					<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+					<svg
+						width="12"
+						height="12"
+						viewBox="0 0 12 12"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="1.5"
+					>
 						<path d="M1 1l10 10M11 1 1 11" strokeLinecap="round" />
 					</svg>
 				</button>
@@ -66,7 +77,7 @@ export const AddSubscriptionModal = ({ mutations, onClose, initialEmail }: Props
 					</label>
 					<input
 						value={email}
-						onChange={(e) => setEmail(e.target.value)}
+						onChange={e => setEmail(e.target.value)}
 						placeholder="zargan.d@gmail.com"
 						className="h-[34px] w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc focus:bg-surf"
 					/>
@@ -78,12 +89,12 @@ export const AddSubscriptionModal = ({ mutations, onClose, initialEmail }: Props
 					</label>
 					<select
 						value={planId}
-						onChange={(e) => setPlanId(e.target.value)}
+						onChange={e => setPlanId(e.target.value)}
 						disabled={plansQuery.isLoading}
 						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf disabled:opacity-60"
 					>
 						<option value="">— выбрать план —</option>
-						{plans.map((plan) => (
+						{plans.map(plan => (
 							<option key={plan.id} value={plan.id}>
 								{plan.name} ({plan.code})
 							</option>
@@ -97,13 +108,21 @@ export const AddSubscriptionModal = ({ mutations, onClose, initialEmail }: Props
 					</label>
 					<select
 						value={durationDays}
-						onChange={(e) => setDurationDays(e.target.value)}
+						onChange={e => setDurationDays(e.target.value)}
 						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf"
 					>
-						<option value="30">{t("admin.subscriptions.modal.duration1m")}</option>
-						<option value="90">{t("admin.subscriptions.modal.duration3m")}</option>
-						<option value="180">{t("admin.subscriptions.modal.duration6m")}</option>
-						<option value="365">{t("admin.subscriptions.modal.duration1y")}</option>
+						<option value="30">
+							{t("admin.subscriptions.modal.duration1m")}
+						</option>
+						<option value="90">
+							{t("admin.subscriptions.modal.duration3m")}
+						</option>
+						<option value="180">
+							{t("admin.subscriptions.modal.duration6m")}
+						</option>
+						<option value="365">
+							{t("admin.subscriptions.modal.duration1y")}
+						</option>
 					</select>
 				</div>
 
@@ -113,7 +132,7 @@ export const AddSubscriptionModal = ({ mutations, onClose, initialEmail }: Props
 					</label>
 					<select
 						value={provider}
-						onChange={(e) => setProvider(e.target.value as PaymentProvider)}
+						onChange={e => setProvider(e.target.value as PaymentProvider)}
 						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf"
 					>
 						<option value="MANUAL">Manual</option>
@@ -130,7 +149,7 @@ export const AddSubscriptionModal = ({ mutations, onClose, initialEmail }: Props
 					</label>
 					<input
 						value={reason}
-						onChange={(e) => setReason(e.target.value)}
+						onChange={e => setReason(e.target.value)}
 						placeholder={t("admin.subscriptions.modal.reasonPlaceholder")}
 						className="h-[34px] w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc focus:bg-surf"
 					/>

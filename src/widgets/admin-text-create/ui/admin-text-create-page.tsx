@@ -32,6 +32,7 @@ export const AdminTextCreatePage = () => {
 		handlePageContentChange,
 		handleAddPage,
 		handleSelectPage,
+		handleDeletePage,
 		handleCoverSelect,
 		handleAddTag,
 		handleRemoveTag,
@@ -67,6 +68,7 @@ export const AdminTextCreatePage = () => {
 					onPageContentChange={handlePageContentChange}
 					onAddPage={handleAddPage}
 					onSelectPage={handleSelectPage}
+					onDeletePage={handleDeletePage}
 					onSaveDraft={handleSaveDraft}
 					onPublish={handlePublish}
 				/>

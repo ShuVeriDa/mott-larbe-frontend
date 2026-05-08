@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useI18n } from "@/shared/lib/i18n";
 import type { AdminDictSense } from "@/entities/dictionary";
+import { useI18n } from "@/shared/lib/i18n";
+import { useEffect, useRef, useState } from "react";
 
 interface SenseModalProps {
 	isOpen: boolean;
@@ -42,16 +42,19 @@ export const SenseModal = ({
 
 	if (!isOpen) return null;
 
-	const inputCls = "w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 py-0 h-[34px] text-[13px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
+	const inputCls =
+		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 py-0 h-[34px] text-[13px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
 
 	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
-			onClick={(e) => e.target === e.currentTarget && onClose()}
+			onClick={e => e.target === e.currentTarget && onClose()}
 		>
 			<div className="w-[440px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
 				<div className="mb-1 font-display text-[15px] text-t-1">
-					{editSense ? t("admin.dictionaryDetail.editSense") : t("admin.dictionaryDetail.addSenseTitle")}
+					{editSense
+						? t("admin.dictionaryDetail.editSense")
+						: t("admin.dictionaryDetail.addSenseTitle")}
 				</div>
 				<div className="mb-4.5 text-[12px] text-t-3">
 					{t("admin.dictionaryDetail.senseModalSub")}
@@ -67,7 +70,7 @@ export const SenseModal = ({
 							type="text"
 							placeholder={t("admin.dictionaryDetail.translationPlaceholder")}
 							value={definition}
-							onChange={(e) => setDefinition(e.target.value)}
+							onChange={e => setDefinition(e.target.value)}
 						/>
 					</div>
 					<div className="mb-0">
@@ -79,13 +82,13 @@ export const SenseModal = ({
 							type="text"
 							placeholder={t("admin.dictionaryDetail.glossPlaceholder")}
 							value={notes}
-							onChange={(e) => setNotes(e.target.value)}
+							onChange={e => setNotes(e.target.value)}
 						/>
 					</div>
 					<div className="mt-5 flex justify-end gap-2">
 						<button
 							type="button"
-							className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
+							className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
 							onClick={onClose}
 						>
 							{t("admin.dictionaryDetail.cancel")}
@@ -93,7 +96,7 @@ export const SenseModal = ({
 						<button
 							type="submit"
 							disabled={isPending || !definition.trim()}
-							className="flex h-[30px] items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
+							className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
 						>
 							{t("admin.dictionaryDetail.save")}
 						</button>

@@ -1,12 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import type {
+	AdminDictLanguage,
+	CreateAdminEntryDto,
+} from "@/entities/dictionary";
 import { cn } from "@/shared/lib/cn";
 import { CEFR_LEVELS } from "@/shared/types";
-import type { AdminDictLanguage } from "@/entities/dictionary";
-import type { CreateAdminEntryDto } from "@/entities/dictionary";
+import { useEffect, useState } from "react";
 
-const POS_OPTIONS = ["noun", "verb", "adj", "adv", "particle", "pron", "num", "conj"];
+const POS_OPTIONS = [
+	"noun",
+	"verb",
+	"adj",
+	"adv",
+	"particle",
+	"pron",
+	"num",
+	"conj",
+];
 
 interface DictionaryCreateModalProps {
 	open: boolean;
@@ -46,9 +57,14 @@ export const DictionaryCreateModal = ({
 
 	const handleSubmit = () => {
 		const errs: Record<string, string> = {};
-		if (!word.trim()) errs.word = t("admin.dictionary.createModal.wordRequired");
-		if (!translation.trim()) errs.translation = t("admin.dictionary.createModal.translationRequired");
-		if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+		if (!word.trim())
+			errs.word = t("admin.dictionary.createModal.wordRequired");
+		if (!translation.trim())
+			errs.translation = t("admin.dictionary.createModal.translationRequired");
+		if (Object.keys(errs).length > 0) {
+			setErrors(errs);
+			return;
+		}
 
 		onSubmit({
 			word: word.trim(),
@@ -71,7 +87,9 @@ export const DictionaryCreateModal = ({
 	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+			onClick={e => {
+				if (e.target === e.currentTarget) onClose();
+			}}
 		>
 			<div className="w-[500px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-h-[90vh] overflow-y-auto max-sm:w-full max-sm:max-h-[92vh] max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -83,9 +101,11 @@ export const DictionaryCreateModal = ({
 
 				{/* Language */}
 				<div className="mb-3.5">
-					<label className={labelCls}>{t("admin.dictionary.createModal.languageLabel")}</label>
+					<label className={labelCls}>
+						{t("admin.dictionary.createModal.languageLabel")}
+					</label>
 					<div className="flex gap-2">
-						{(["CHE", "RU"] as AdminDictLanguage[]).map((l) => (
+						{(["CHE", "RU"] as AdminDictLanguage[]).map(l => (
 							<button
 								key={l}
 								type="button"
@@ -97,7 +117,9 @@ export const DictionaryCreateModal = ({
 										: "border-bd-2 bg-bg text-t-2 hover:border-bd-3",
 								)}
 							>
-								{l === "CHE" ? t("admin.dictionary.createModal.langChe") : t("admin.dictionary.createModal.langRu")}
+								{l === "CHE"
+									? t("admin.dictionary.createModal.langChe")
+									: t("admin.dictionary.createModal.langRu")}
 							</button>
 						))}
 					</div>
@@ -106,34 +128,53 @@ export const DictionaryCreateModal = ({
 				{/* Word + Normalized */}
 				<div className="mb-3.5 grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
 					<div>
-						<label className={labelCls}>{t("admin.dictionary.createModal.wordLabel")} *</label>
+						<label className={labelCls}>
+							{t("admin.dictionary.createModal.wordLabel")} *
+						</label>
 						<input
 							className={cn(inputCls, errors.word && "border-red-400")}
 							placeholder={t("admin.dictionary.createModal.wordPlaceholder")}
 							value={word}
-							onChange={(e) => { setWord(e.target.value); setErrors((p) => ({ ...p, word: "" })); }}
+							onChange={e => {
+								setWord(e.target.value);
+								setErrors(p => ({ ...p, word: "" }));
+							}}
 						/>
-						{errors.word && <p className="mt-1 text-[11px] text-red-t">{errors.word}</p>}
+						{errors.word && (
+							<p className="mt-1 text-[11px] text-red-t">{errors.word}</p>
+						)}
 					</div>
 					<div>
-						<label className={labelCls}>{t("admin.dictionary.createModal.normalizedLabel")}</label>
+						<label className={labelCls}>
+							{t("admin.dictionary.createModal.normalizedLabel")}
+						</label>
 						<input
 							className={inputCls}
-							placeholder={word.toLowerCase() || t("admin.dictionary.createModal.normalizedPlaceholder")}
+							placeholder={
+								word.toLowerCase() ||
+								t("admin.dictionary.createModal.normalizedPlaceholder")
+							}
 							value={normalized}
-							onChange={(e) => setNormalized(e.target.value)}
+							onChange={e => setNormalized(e.target.value)}
 						/>
 					</div>
 				</div>
 
 				{/* Translation */}
 				<div className="mb-3.5">
-					<label className={labelCls}>{t("admin.dictionary.createModal.translationLabel")} *</label>
+					<label className={labelCls}>
+						{t("admin.dictionary.createModal.translationLabel")} *
+					</label>
 					<input
 						className={cn(inputCls, errors.translation && "border-red-400")}
-						placeholder={t("admin.dictionary.createModal.translationPlaceholder")}
+						placeholder={t(
+							"admin.dictionary.createModal.translationPlaceholder",
+						)}
 						value={translation}
-						onChange={(e) => { setTranslation(e.target.value); setErrors((p) => ({ ...p, translation: "" })); }}
+						onChange={e => {
+							setTranslation(e.target.value);
+							setErrors(p => ({ ...p, translation: "" }));
+						}}
 					/>
 					{errors.translation && (
 						<p className="mt-1 text-[11px] text-red-t">{errors.translation}</p>
@@ -143,28 +184,40 @@ export const DictionaryCreateModal = ({
 				{/* POS + Level */}
 				<div className="mb-3.5 grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
 					<div>
-						<label className={labelCls}>{t("admin.dictionary.createModal.posLabel")}</label>
+						<label className={labelCls}>
+							{t("admin.dictionary.createModal.posLabel")}
+						</label>
 						<select
 							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 							value={pos}
-							onChange={(e) => setPos(e.target.value)}
+							onChange={e => setPos(e.target.value)}
 						>
-							<option value="">{t("admin.dictionary.createModal.posNone")}</option>
-							{POS_OPTIONS.map((p) => (
-								<option key={p} value={p}>{t(`admin.dictionary.pos.${p}`)}</option>
+							<option value="">
+								{t("admin.dictionary.createModal.posNone")}
+							</option>
+							{POS_OPTIONS.map(p => (
+								<option key={p} value={p}>
+									{t(`admin.dictionary.pos.${p}`)}
+								</option>
 							))}
 						</select>
 					</div>
 					<div>
-						<label className={labelCls}>{t("admin.dictionary.createModal.levelLabel")}</label>
+						<label className={labelCls}>
+							{t("admin.dictionary.createModal.levelLabel")}
+						</label>
 						<select
 							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 							value={level}
-							onChange={(e) => setLevel(e.target.value)}
+							onChange={e => setLevel(e.target.value)}
 						>
-							<option value="">{t("admin.dictionary.createModal.levelNone")}</option>
-							{CEFR_LEVELS.map((l) => (
-								<option key={l} value={l}>{l}</option>
+							<option value="">
+								{t("admin.dictionary.createModal.levelNone")}
+							</option>
+							{CEFR_LEVELS.map(l => (
+								<option key={l} value={l}>
+									{l}
+								</option>
 							))}
 						</select>
 					</div>
@@ -172,12 +225,14 @@ export const DictionaryCreateModal = ({
 
 				{/* Notes */}
 				<div className="mb-4">
-					<label className={labelCls}>{t("admin.dictionary.createModal.notesLabel")}</label>
+					<label className={labelCls}>
+						{t("admin.dictionary.createModal.notesLabel")}
+					</label>
 					<textarea
 						className="w-full min-h-[56px] resize-y rounded-[8px] border border-bd-2 bg-bg px-2.5 py-2 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 						placeholder={t("admin.dictionary.createModal.notesPlaceholder")}
 						value={notes}
-						onChange={(e) => setNotes(e.target.value)}
+						onChange={e => setNotes(e.target.value)}
 					/>
 				</div>
 
@@ -186,7 +241,7 @@ export const DictionaryCreateModal = ({
 						type="button"
 						onClick={onClose}
 						disabled={isSubmitting}
-						className="h-8 cursor-pointer rounded-[7px] border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
+						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
 					>
 						{t("admin.dictionary.createModal.cancel")}
 					</button>
@@ -194,7 +249,7 @@ export const DictionaryCreateModal = ({
 						type="button"
 						onClick={handleSubmit}
 						disabled={isSubmitting}
-						className="h-8 cursor-pointer rounded-[7px] bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
+						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
 					>
 						{isSubmitting
 							? t("admin.dictionary.createModal.creating")

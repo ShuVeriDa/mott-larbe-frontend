@@ -20,7 +20,9 @@ export const DictionaryDeleteModal = ({
 	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+			onClick={e => {
+				if (e.target === e.currentTarget) onClose();
+			}}
 		>
 			<div className="w-[440px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -31,7 +33,9 @@ export const DictionaryDeleteModal = ({
 				</p>
 
 				<div className="mb-4 rounded-[8px] border border-bd-1 bg-bg px-3 py-2.5">
-					<p className="font-display text-[15px] font-medium text-t-1">{entry.baseForm}</p>
+					<p className="font-display text-[15px] font-medium text-t-1">
+						{entry.baseForm}
+					</p>
 					{entry.translation && (
 						<p className="mt-0.5 text-[12px] text-t-3">{entry.translation}</p>
 					)}
@@ -42,7 +46,7 @@ export const DictionaryDeleteModal = ({
 						type="button"
 						onClick={onClose}
 						disabled={isDeleting}
-						className="h-8 cursor-pointer rounded-[7px] border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
+						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
 					>
 						{t("admin.dictionary.deleteModal.cancel")}
 					</button>
@@ -50,7 +54,7 @@ export const DictionaryDeleteModal = ({
 						type="button"
 						onClick={onConfirm}
 						disabled={isDeleting}
-						className="h-8 cursor-pointer rounded-[7px] bg-red-500 px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
+						className="h-8 cursor-pointer rounded-base bg-red-500 px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
 					>
 						{isDeleting
 							? t("admin.dictionary.deleteModal.deleting")

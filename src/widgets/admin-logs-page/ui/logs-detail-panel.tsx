@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type { AdminLogDetail } from "@/entities/admin-log";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import { useEffect } from "react";
 import { LevelBadge } from "./level-badge";
 
 interface LogsDetailPanelProps {
@@ -68,7 +68,7 @@ export const LogsDetailPanel = ({
 					<button
 						type="button"
 						onClick={onClose}
-						className="flex size-7 items-center justify-center rounded-[7px] bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
+						className="flex size-7 items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
 						<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 							<path
@@ -80,7 +80,9 @@ export const LogsDetailPanel = ({
 						</svg>
 					</button>
 					<span className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-[13.5px] font-semibold text-t-1">
-						{detail ? `${detail.service}: ${detail.levelLabel}` : t("admin.logs.detail.title")}
+						{detail
+							? `${detail.service}: ${detail.levelLabel}`
+							: t("admin.logs.detail.title")}
 					</span>
 					{detail && (
 						<div className="shrink-0">
@@ -199,7 +201,9 @@ const Row = ({
 	children: React.ReactNode;
 }) => (
 	<div className="mb-2 flex items-start gap-2.5">
-		<span className="w-[110px] shrink-0 pt-px text-[12px] text-t-3">{label}</span>
+		<span className="w-[110px] shrink-0 pt-px text-[12px] text-t-3">
+			{label}
+		</span>
 		<span className="flex-1 text-[12.5px] text-t-1">{children}</span>
 	</div>
 );

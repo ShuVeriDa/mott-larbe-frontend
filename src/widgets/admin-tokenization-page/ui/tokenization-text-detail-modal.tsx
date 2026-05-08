@@ -1,10 +1,14 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { useI18n } from "@/shared/lib/i18n";
+import type {
+	ProcessingStatus,
+	TokenSource,
+	TokenStatus,
+	useTokenizationMutations,
+} from "@/entities/token";
 import { tokenizationApi, tokenizationKeys } from "@/entities/token";
-import type { ProcessingStatus, TokenSource, TokenStatus } from "@/entities/token";
-import type { useTokenizationMutations } from "@/entities/token";
+import { useI18n } from "@/shared/lib/i18n";
+import { useQuery } from "@tanstack/react-query";
 import { TokenizationLevelBadge } from "./tokenization-level-badge";
 import { TokenizationStatusBadge } from "./tokenization-status-badge";
 
@@ -62,7 +66,7 @@ export const TokenizationTextDetailModal = ({
 		>
 			<div
 				className="flex max-h-[90vh] w-full max-w-[580px] flex-col overflow-hidden rounded-[14px] border border-bd-2 bg-surf shadow-md max-sm:max-h-[92vh] max-sm:rounded-b-none"
-				onClick={(e) => e.stopPropagation()}
+				onClick={e => e.stopPropagation()}
 			>
 				{/* Header */}
 				<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-4 py-3.5">
@@ -74,7 +78,12 @@ export const TokenizationTextDetailModal = ({
 						className="flex size-[26px] items-center justify-center rounded-[6px] bg-surf-2 text-t-2 hover:bg-surf-3"
 					>
 						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-							<path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+							<path
+								d="M4 4l8 8M12 4l-8 8"
+								stroke="currentColor"
+								strokeWidth="1.5"
+								strokeLinecap="round"
+							/>
 						</svg>
 					</button>
 				</div>
@@ -84,7 +93,10 @@ export const TokenizationTextDetailModal = ({
 					{!detail ? (
 						<div className="space-y-3">
 							{Array.from({ length: 4 }).map((_, i) => (
-								<div key={i} className="h-10 animate-pulse rounded-[8px] bg-surf-3" />
+								<div
+									key={i}
+									className="h-10 animate-pulse rounded-[8px] bg-surf-3"
+								/>
 							))}
 						</div>
 					) : (
@@ -108,46 +120,80 @@ export const TokenizationTextDetailModal = ({
 									},
 									{
 										label: t("admin.tokenization.detail.version"),
-										value: detail.version
-											? <span className="font-mono text-[12px] text-t-2">v{detail.version.version}</span>
-											: <span className="text-t-4">—</span>,
+										value: detail.version ? (
+											<span className="font-mono text-[12px] text-t-2">
+												v{detail.version.version}
+											</span>
+										) : (
+											<span className="text-t-4">—</span>
+										),
 									},
 									{
 										label: t("admin.tokenization.detail.totalTokens"),
-										value: <span className="font-medium text-t-1">{detail.tokenStats.total.toLocaleString()}</span>,
+										value: (
+											<span className="font-medium text-t-1">
+												{detail.tokenStats.total.toLocaleString()}
+											</span>
+										),
 									},
 									{
 										label: t("admin.tokenization.detail.analyzed"),
-										value: <span className="font-medium text-grn-t">{detail.tokenStats.analyzed.toLocaleString()} ({detail.tokenStats.analyzePercent}%)</span>,
+										value: (
+											<span className="font-medium text-grn-t">
+												{detail.tokenStats.analyzed.toLocaleString()} (
+												{detail.tokenStats.analyzePercent}%)
+											</span>
+										),
 									},
 									{
 										label: t("admin.tokenization.detail.notFound"),
 										value: (
-											<span className={detail.tokenStats.notFound > 0 ? "font-medium text-red-t" : "text-t-4"}>
-												{detail.tokenStats.notFound > 0 ? detail.tokenStats.notFound.toLocaleString() : "—"}
+											<span
+												className={
+													detail.tokenStats.notFound > 0
+														? "font-medium text-red-t"
+														: "text-t-4"
+												}
+											>
+												{detail.tokenStats.notFound > 0
+													? detail.tokenStats.notFound.toLocaleString()
+													: "—"}
 											</span>
 										),
 									},
 									{
 										label: t("admin.tokenization.detail.ambiguous"),
 										value: (
-											<span className={detail.tokenStats.ambiguous > 0 ? "font-medium text-amb-t" : "text-t-4"}>
-												{detail.tokenStats.ambiguous > 0 ? detail.tokenStats.ambiguous.toLocaleString() : "—"}
+											<span
+												className={
+													detail.tokenStats.ambiguous > 0
+														? "font-medium text-amb-t"
+														: "text-t-4"
+												}
+											>
+												{detail.tokenStats.ambiguous > 0
+													? detail.tokenStats.ambiguous.toLocaleString()
+													: "—"}
 											</span>
 										),
 									},
 									{
 										label: t("admin.tokenization.detail.processedAt"),
-										value: detail.version?.processedAt
-											? (
-												<span className="text-[11.5px] text-t-3">
-													{new Date(detail.version.processedAt).toLocaleDateString()}
-												</span>
-											)
-											: <span className="text-t-4">—</span>,
+										value: detail.version?.processedAt ? (
+											<span className="text-[11.5px] text-t-3">
+												{new Date(
+													detail.version.processedAt,
+												).toLocaleDateString()}
+											</span>
+										) : (
+											<span className="text-t-4">—</span>
+										),
 									},
 								].map(({ label, value }) => (
-									<div key={label} className="rounded-[8px] bg-surf-2 px-3 py-2">
+									<div
+										key={label}
+										className="rounded-[8px] bg-surf-2 px-3 py-2"
+									>
 										<div className="mb-1 text-[10.5px] text-t-3">{label}</div>
 										<div className="text-[13px]">{value}</div>
 									</div>
@@ -182,10 +228,15 @@ export const TokenizationTextDetailModal = ({
 											</tr>
 										</thead>
 										<tbody>
-											{tokens.data.map((token) => (
-												<tr key={token.id} className="border-b border-bd-1 last:border-b-0 hover:bg-surf-2">
+											{tokens.data.map(token => (
+												<tr
+													key={token.id}
+													className="border-b border-bd-1 last:border-b-0 hover:bg-surf-2"
+												>
 													<td className="px-2.5 py-2">
-														<span className={`inline-flex items-center rounded-[4px] px-1.5 py-0.5 font-mono text-[11.5px] font-semibold ${TOKEN_STATUS_STYLES[token.status]}`}>
+														<span
+															className={`inline-flex items-center rounded-[4px] px-1.5 py-0.5 font-mono text-[11.5px] font-semibold ${TOKEN_STATUS_STYLES[token.status]}`}
+														>
 															{token.original}
 														</span>
 													</td>
@@ -193,7 +244,9 @@ export const TokenizationTextDetailModal = ({
 														{token.normalized}
 													</td>
 													<td className="px-2.5 py-2">
-														<span className={`inline-flex items-center rounded-[4px] px-1.5 py-0.5 text-[10px] font-semibold ${SOURCE_STYLES[token.source]}`}>
+														<span
+															className={`inline-flex items-center rounded-[4px] px-1.5 py-0.5 text-[10px] font-semibold ${SOURCE_STYLES[token.source]}`}
+														>
 															{token.source}
 														</span>
 													</td>
@@ -214,8 +267,11 @@ export const TokenizationTextDetailModal = ({
 				<div className="flex shrink-0 gap-2 border-t border-bd-1 px-4 py-3.5">
 					<button
 						onClick={() => textId && mutations.runText.mutate(textId)}
-						disabled={mutations.runText.isPending || detail?.processingStatus === "RUNNING"}
-						className="flex h-[30px] items-center gap-1.5 rounded-[7px] bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+						disabled={
+							mutations.runText.isPending ||
+							detail?.processingStatus === "RUNNING"
+						}
+						className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
 							<path d="M5 3l8 5-8 5V3z" fill="currentColor" />
@@ -225,7 +281,7 @@ export const TokenizationTextDetailModal = ({
 					<button
 						onClick={() => textId && mutations.resetText.mutate(textId)}
 						disabled={mutations.resetText.isPending}
-						className="flex h-[30px] items-center gap-1.5 rounded-[7px] border border-bd-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 disabled:opacity-50"
+						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 disabled:opacity-50"
 					>
 						{t("admin.tokenization.detail.resetBtn")}
 					</button>

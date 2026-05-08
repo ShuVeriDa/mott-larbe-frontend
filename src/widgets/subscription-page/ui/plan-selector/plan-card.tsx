@@ -1,16 +1,16 @@
 "use client";
 
-import { Check, Sparkles, TrendingUp, X } from "lucide-react";
 import {
 	formatPrice,
 	type Plan,
 	type PlanLimits,
 	type PlanType,
 } from "@/entities/subscription";
-import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { Check, Sparkles, TrendingUp, X } from "lucide-react";
 
 export interface PlanCardProps {
 	plan: Plan;
@@ -38,17 +38,15 @@ const buildFeatureItems = (
 ): FeatureItem[] => {
 	const limits: PlanLimits | null = plan.limits;
 	if (plan.highlightFeatures && plan.highlightFeatures.length > 0) {
-		return plan.highlightFeatures.map((label) => ({
+		return plan.highlightFeatures.map(label => ({
 			enabled: true,
 			label,
 		}));
 	}
 	if (!limits) return [];
 
-	const tFeat = (
-		key: string,
-		vars?: Record<string, string | number>,
-	): string => t(`subscription.features.${key}`, vars);
+	const tFeat = (key: string, vars?: Record<string, string | number>): string =>
+		t(`subscription.features.${key}`, vars);
 
 	const translations = limits.translationsPerDay;
 	const words = limits.wordsInDictionary;
@@ -126,7 +124,10 @@ export const PlanCard = ({
 				<Button
 					variant="action"
 					size="default"
-					className={cn(baseClass, "bg-pur shadow-[0_1px_4px_rgba(109,78,212,0.3)]")}
+					className={cn(
+						baseClass,
+						"bg-pur shadow-[0_1px_4px_rgba(109,78,212,0.3)]",
+					)}
 					onClick={() => onChoose?.(plan)}
 				>
 					{t("subscription.planCard.choose")}
@@ -151,8 +152,7 @@ export const PlanCard = ({
 				"group/plan-card relative flex flex-col gap-3 overflow-hidden rounded-[10px] border-hairline border-bd-2 bg-surf-2 p-3.5 transition-[border-color,box-shadow] duration-150 max-md:min-w-[155px] max-md:flex-none max-md:snap-start max-md:p-3",
 				popular && "border-acc bg-acc-bg dark:bg-acc/10",
 				current && "bg-surf",
-				!current &&
-					"hover:border-bd-3 hover:shadow-sm cursor-pointer",
+				!current && "hover:border-bd-3 hover:shadow-sm cursor-pointer",
 			)}
 			onClick={() => {
 				if (!current) onChoose?.(plan);
@@ -167,7 +167,7 @@ export const PlanCard = ({
 			<div className="flex items-center gap-2">
 				<div
 					className={cn(
-						"flex size-7 shrink-0 items-center justify-center rounded-[7px]",
+						"flex size-7 shrink-0 items-center justify-center rounded-base",
 						colorScheme.iconBg,
 					)}
 					aria-hidden="true"
@@ -177,10 +177,7 @@ export const PlanCard = ({
 						strokeWidth={1.5}
 					/>
 				</div>
-				<Typography
-					tag="span"
-					className="text-[12px] font-semibold text-t-1"
-				>
+				<Typography tag="span" className="text-[12px] font-semibold text-t-1">
 					{plan.name}
 				</Typography>
 			</div>
@@ -194,10 +191,7 @@ export const PlanCard = ({
 						? formatPrice(0, plan.currency, lang)
 						: formatPrice(plan.priceCents, plan.currency, lang)}
 					{plan.interval ? (
-						<Typography
-							tag="span"
-							className="text-[11px] font-normal text-t-3"
-						>
+						<Typography tag="span" className="text-[11px] font-normal text-t-3">
 							{" "}
 							/{" "}
 							{plan.interval === "month"
@@ -224,7 +218,10 @@ export const PlanCard = ({
 					>
 						{feat.enabled ? (
 							<Check
-								className={cn("mt-0.5 size-[11px] shrink-0", colorScheme.iconColor)}
+								className={cn(
+									"mt-0.5 size-[11px] shrink-0",
+									colorScheme.iconColor,
+								)}
 								strokeWidth={2}
 								aria-hidden="true"
 							/>

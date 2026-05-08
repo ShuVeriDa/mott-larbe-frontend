@@ -1,10 +1,10 @@
 "use client";
 
-import { CheckCircle2, Clock, FolderOpen, ListOrdered } from "lucide-react";
-import type { ComponentType, SVGProps } from "react";
+import { useFoldersSummary } from "@/entities/folder";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { useFoldersSummary } from "@/entities/folder";
+import { CheckCircle2, Clock, FolderOpen, ListOrdered } from "lucide-react";
+import type { ComponentType, SVGProps } from "react";
 
 interface SummaryItemProps {
 	tone: "acc" | "neutral" | "grn" | "amb";
@@ -24,7 +24,7 @@ const SummaryItem = ({ tone, icon: Icon, value, label }: SummaryItemProps) => (
 	<div className="rounded-card border-hairline border-bd-1 bg-surf px-[15px] py-[13px] transition-[border-color,box-shadow] hover:border-bd-2 hover:shadow-sm">
 		<div
 			className={cn(
-				"mb-[9px] flex size-7 items-center justify-center rounded-[7px]",
+				"mb-[9px] flex size-7 items-center justify-center rounded-base",
 				TONE_CLASSES[tone],
 			)}
 		>
@@ -39,7 +39,7 @@ const SummaryItem = ({ tone, icon: Icon, value, label }: SummaryItemProps) => (
 
 const SkeletonItem = () => (
 	<div className="rounded-card border-hairline border-bd-1 bg-surf px-[15px] py-[13px]">
-		<div className="mb-[9px] size-7 animate-pulse rounded-[7px] bg-surf-2" />
+		<div className="mb-[9px] size-7 animate-pulse rounded-base bg-surf-2" />
 		<div className="h-6 w-12 animate-pulse rounded bg-surf-2" />
 		<div className="mt-[5px] h-3 w-20 animate-pulse rounded bg-surf-2" />
 	</div>

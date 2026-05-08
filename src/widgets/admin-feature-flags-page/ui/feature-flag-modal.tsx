@@ -1,17 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { cn } from "@/shared/lib/cn";
 import type {
+	CreateFeatureFlagDto,
 	FeatureFlagCategory,
 	FeatureFlagEnvironment,
 	FeatureFlagItem,
-	CreateFeatureFlagDto,
 	UpdateFeatureFlagDto,
 } from "@/entities/feature-flag";
+import { cn } from "@/shared/lib/cn";
+import { useEffect, useState } from "react";
 import { FlagToggle } from "./flag-toggle";
 
-const CATEGORIES: FeatureFlagCategory[] = ["FUNCTIONAL", "EXPERIMENTS", "TECHNICAL", "MONETIZATION"];
+const CATEGORIES: FeatureFlagCategory[] = [
+	"FUNCTIONAL",
+	"EXPERIMENTS",
+	"TECHNICAL",
+	"MONETIZATION",
+];
 const ENVIRONMENTS: FeatureFlagEnvironment[] = ["PROD", "STAGE", "DEV"];
 
 const ENV_SELECTED_STYLES: Record<FeatureFlagEnvironment, string> = {
@@ -49,7 +54,8 @@ export const FeatureFlagModal = ({
 	const [key, setKey] = useState("");
 	const [description, setDescription] = useState("");
 	const [category, setCategory] = useState<FeatureFlagCategory>("FUNCTIONAL");
-	const [environments, setEnvironments] = useState<FeatureFlagEnvironment[]>(DEFAULT_ENVS);
+	const [environments, setEnvironments] =
+		useState<FeatureFlagEnvironment[]>(DEFAULT_ENVS);
 	const [rolloutPercent, setRolloutPercent] = useState(100);
 	const [isEnabled, setIsEnabled] = useState(false);
 	const [keyError, setKeyError] = useState("");
@@ -75,8 +81,8 @@ export const FeatureFlagModal = ({
 	}, [open, editFlag]);
 
 	const toggleEnv = (env: FeatureFlagEnvironment) => {
-		setEnvironments((prev) =>
-			prev.includes(env) ? prev.filter((e) => e !== env) : [...prev, env],
+		setEnvironments(prev =>
+			prev.includes(env) ? prev.filter(e => e !== env) : [...prev, env],
 		);
 	};
 
@@ -107,14 +113,20 @@ export const FeatureFlagModal = ({
 	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+			onClick={e => {
+				if (e.target === e.currentTarget) onClose();
+			}}
 		>
 			<div className="w-[480px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08),0_2px_4px_rgba(0,0,0,0.04)] max-sm:w-full max-sm:max-h-[92vh] max-sm:overflow-y-auto max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
-					{isEdit ? t("admin.featureFlags.modal.editTitle") : t("admin.featureFlags.modal.createTitle")}
+					{isEdit
+						? t("admin.featureFlags.modal.editTitle")
+						: t("admin.featureFlags.modal.createTitle")}
 				</h2>
 				<p className="mb-4 text-[12.5px] text-t-3">
-					{isEdit ? t("admin.featureFlags.modal.editSubtitle") : t("admin.featureFlags.modal.createSubtitle")}
+					{isEdit
+						? t("admin.featureFlags.modal.editSubtitle")
+						: t("admin.featureFlags.modal.createSubtitle")}
 				</p>
 
 				{/* Key */}
@@ -126,13 +138,18 @@ export const FeatureFlagModal = ({
 						className={cn(inputCls, keyError && "border-red-400")}
 						placeholder="category.feature_name"
 						value={key}
-						onChange={(e) => { setKey(e.target.value); setKeyError(""); }}
+						onChange={e => {
+							setKey(e.target.value);
+							setKeyError("");
+						}}
 						disabled={isEdit}
 					/>
 					{keyError ? (
 						<p className="mt-1 text-[11px] text-red-t">{keyError}</p>
 					) : (
-						<p className="mt-1 text-[11px] text-t-3">{t("admin.featureFlags.modal.keyHint")}</p>
+						<p className="mt-1 text-[11px] text-t-3">
+							{t("admin.featureFlags.modal.keyHint")}
+						</p>
 					)}
 				</div>
 
@@ -145,7 +162,7 @@ export const FeatureFlagModal = ({
 						className="w-full min-h-[64px] resize-y rounded-[8px] border border-bd-2 bg-bg px-2.5 py-2 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 						placeholder={t("admin.featureFlags.modal.descPlaceholder")}
 						value={description}
-						onChange={(e) => setDescription(e.target.value)}
+						onChange={e => setDescription(e.target.value)}
 					/>
 				</div>
 
@@ -158,10 +175,12 @@ export const FeatureFlagModal = ({
 						<select
 							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 							value={category}
-							onChange={(e) => setCategory(e.target.value as FeatureFlagCategory)}
+							onChange={e => setCategory(e.target.value as FeatureFlagCategory)}
 						>
-							{CATEGORIES.map((c) => (
-								<option key={c} value={c}>{t(`admin.featureFlags.category.${c}`)}</option>
+							{CATEGORIES.map(c => (
+								<option key={c} value={c}>
+									{t(`admin.featureFlags.category.${c}`)}
+								</option>
 							))}
 						</select>
 					</div>
@@ -175,7 +194,11 @@ export const FeatureFlagModal = ({
 							max={100}
 							className={inputCls}
 							value={rolloutPercent}
-							onChange={(e) => setRolloutPercent(Math.max(0, Math.min(100, Number(e.target.value))))}
+							onChange={e =>
+								setRolloutPercent(
+									Math.max(0, Math.min(100, Number(e.target.value))),
+								)
+							}
 						/>
 					</div>
 				</div>
@@ -186,7 +209,7 @@ export const FeatureFlagModal = ({
 						{t("admin.featureFlags.modal.envsLabel")}
 					</label>
 					<div className="flex flex-wrap gap-1.5">
-						{ENVIRONMENTS.map((env) => {
+						{ENVIRONMENTS.map(env => {
 							const selected = environments.includes(env);
 							return (
 								<button
@@ -215,7 +238,9 @@ export const FeatureFlagModal = ({
 
 				{/* Enabled toggle */}
 				<div className="mb-3.5 flex items-center justify-between rounded-[8px] border border-bd-1 bg-bg px-3 py-2.5">
-					<span className="text-[12.5px] text-t-2">{t("admin.featureFlags.modal.enabledLabel")}</span>
+					<span className="text-[12.5px] text-t-2">
+						{t("admin.featureFlags.modal.enabledLabel")}
+					</span>
 					<FlagToggle enabled={isEnabled} onChange={setIsEnabled} />
 				</div>
 
@@ -225,7 +250,7 @@ export const FeatureFlagModal = ({
 						type="button"
 						onClick={onClose}
 						disabled={isSubmitting}
-						className="h-8 cursor-pointer rounded-[7px] border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
+						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
 					>
 						{t("admin.featureFlags.modal.cancel")}
 					</button>
@@ -233,7 +258,7 @@ export const FeatureFlagModal = ({
 						type="button"
 						onClick={handleSubmit}
 						disabled={isSubmitting || !key || environments.length === 0}
-						className="h-8 cursor-pointer rounded-[7px] bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
+						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
 					>
 						{isSubmitting
 							? t("admin.featureFlags.modal.saving")

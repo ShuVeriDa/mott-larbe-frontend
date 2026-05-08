@@ -197,6 +197,19 @@ export const useAdminTextCreatePage = () => {
 		setActivePage(index);
 	}, []);
 
+	const handleDeletePage = useCallback((index: number) => {
+		setPages(prev => {
+			if (prev.length <= 1) return prev;
+			return prev.filter((_, i) => i !== index);
+		});
+		setActivePage(prev => {
+			if (index < prev) return prev - 1;
+			if (index === prev) return Math.max(0, prev - 1);
+			return prev;
+		});
+		markUnsaved();
+	}, [markUnsaved]);
+
 	const handleCoverSelect = useCallback((file: File) => {
 		setPendingCoverFile(file);
 		setCoverPreviewUrl(URL.createObjectURL(file));
@@ -256,6 +269,7 @@ export const useAdminTextCreatePage = () => {
 		setAutoTokenizeOnSave: (v: boolean) => { setAutoTokenizeOnSave(v); markUnsaved(); },
 		setUseNormalization: (v: boolean) => { setUseNormalization(v); markUnsaved(); },
 		setUseMorphAnalysis: (v: boolean) => { setUseMorphAnalysis(v); markUnsaved(); },
+		handleDeletePage,
 		handleSaveDraft,
 		handlePublish,
 	};

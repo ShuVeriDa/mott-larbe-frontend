@@ -32,10 +32,10 @@ export const SensesSection = ({ senses }: SensesSectionProps) => {
 							</div>
 							{sense.examples.length > 0 ? (
 								<div className="flex flex-col gap-1.5">
-									{sense.examples.map((ex) => (
+									{sense.examples.map(ex => (
 										<div
 											key={ex.id}
-											className="rounded-[7px] border-l-2 border-bd-2 bg-surf-2 px-2.5 py-2"
+											className="rounded-base border-l-2 border-bd-2 bg-surf-2 px-2.5 py-2"
 										>
 											<p className="mb-0.5 text-[13px] italic leading-[1.55] text-t-1 max-md:text-[12.5px]">
 												«{ex.text}»
