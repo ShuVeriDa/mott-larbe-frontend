@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import { BookOpen, CheckCircle2, GraduationCap } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
 import { BrandMark } from "@/shared/ui/brand-mark";
 import { Typography } from "@/shared/ui/typography";
+import { BookOpen, CheckCircle2, GraduationCap } from "lucide-react";
+import Link from "next/link";
 import { FeatureItem } from "./feature-item";
 
 interface BrandPanelProps {
@@ -21,7 +21,7 @@ export const BrandPanel = ({
 	const { t } = useI18n();
 
 	return (
-		<aside className="relative flex flex-col overflow-hidden border-r-[0.5px] border-bd-2 bg-surf px-12 py-10 max-[900px]:border-b-[0.5px] max-[900px]:border-r-0 max-[900px]:px-8 max-[900px]:pb-9 max-[900px]:pt-7 max-[640px]:px-5 max-[640px]:pb-7 max-[640px]:pt-[22px]">
+		<aside className="relative flex flex-col  overflow-hidden border-r-[0.5px] border-bd-2 bg-surf px-12 py-10 max-[900px]:border-b-[0.5px] max-[900px]:border-r-0 max-[900px]:px-8 max-[900px]:pb-9 max-[900px]:pt-7 max-[640px]:px-5 max-[640px]:pb-7 max-[640px]:pt-[22px]">
 			<div
 				aria-hidden="true"
 				className="pointer-events-none absolute inset-0 opacity-85"

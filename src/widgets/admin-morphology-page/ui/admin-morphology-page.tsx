@@ -76,13 +76,13 @@ export const AdminMorphologyPage = () => {
 	};
 
 	return (
-		<div className="flex min-h-screen flex-col">
+		<div className="flex min-h-0 flex-1 flex-col">
 			<MorphologyTopbar
 				onAdd={openAddModal}
 				onImport={() => setImportModalOpen(true)}
 			/>
 
-			<div className="px-5 py-5 pb-10">
+			<div className="overflow-y-auto px-5 py-5 pb-10">
 				<MorphologyStatsRow
 					stats={statsQuery.data}
 					isLoading={statsQuery.isLoading}

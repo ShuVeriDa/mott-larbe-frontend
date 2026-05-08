@@ -56,7 +56,7 @@ export const AdminFeedbackPage = () => {
 	return (
 		<>
 			{/* Topbar */}
-			<div className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-[14px] max-sm:px-3.5">
+			<header className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-[14px] max-sm:px-3.5">
 				<div>
 					<p className="font-display text-[16px] text-t-1">
 						{t("admin.feedback.title")}
@@ -95,7 +95,7 @@ export const AdminFeedbackPage = () => {
 						{t("admin.feedback.export")}
 					</button>
 				</div>
-			</div>
+			</header>
 
 			{/* Body */}
 			<div className="flex min-h-0 flex-1 overflow-hidden">

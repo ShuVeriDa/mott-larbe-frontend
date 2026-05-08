@@ -14,7 +14,7 @@ export const BillingTopbar = ({
 	const { t } = useI18n();
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-3 border-b border-bd-1 bg-surf px-[22px] py-3.5 transition-colors max-sm:px-3.5">
+		<header className=" flex items-center gap-3 border-b border-bd-1 bg-surf px-[22px] py-3.5 transition-colors max-sm:px-3.5">
 			<div className="min-w-0 flex-1">
 				<div className="font-display text-[16px] text-t-1">
 					{t("admin.plans.title")}
@@ -59,6 +59,6 @@ export const BillingTopbar = ({
 					{t("admin.plans.newPlan")}
 				</button>
 			</div>
-		</div>
+		</header>
 	);
 };

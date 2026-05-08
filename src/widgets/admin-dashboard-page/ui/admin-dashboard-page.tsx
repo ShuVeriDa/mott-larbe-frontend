@@ -44,14 +44,14 @@ export const AdminDashboardPage = () => {
 	const isLoading = dashboardQuery.isLoading;
 
 	return (
-		<div className="flex min-h-screen flex-col">
+		<div className="flex min-h-0 flex-1 flex-col">
 			<DashboardTopbar
 				period={period}
 				onPeriodChange={setPeriod}
 				onExport={handleExport}
 			/>
 
-			<div className="px-5 py-5 pb-10 max-sm:px-3 max-sm:py-3 max-sm:pb-24">
+			<div className="overflow-y-auto px-5 py-5 pb-10 max-sm:px-3 max-sm:py-3 max-sm:pb-24">
 				{data && data.unknownWords.total > 0 && (
 					<DashboardAlertStrip unknownWordsCount={data.unknownWords.total} />
 				)}

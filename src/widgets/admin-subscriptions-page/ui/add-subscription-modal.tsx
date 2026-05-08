@@ -1,29 +1,39 @@
 "use client";
 
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useI18n } from "@/shared/lib/i18n";
+import { adminSubscriptionApi } from "@/entities/admin-subscription";
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
 import type { PaymentProvider } from "@/entities/admin-subscription";
 
 interface Props {
 	mutations: ReturnType<typeof useAdminSubscriptionMutations>;
 	onClose: () => void;
+	initialEmail?: string;
 }
 
-export const AddSubscriptionModal = ({ mutations, onClose }: Props) => {
+export const AddSubscriptionModal = ({ mutations, onClose, initialEmail }: Props) => {
 	const { t } = useI18n();
-	const [email, setEmail] = useState("");
-	const [planCode, setPlanCode] = useState("PRO");
+	const [email, setEmail] = useState(initialEmail ?? "");
+	const [planId, setPlanId] = useState("");
 	const [durationDays, setDurationDays] = useState("30");
 	const [provider, setProvider] = useState<PaymentProvider>("MANUAL");
 	const [reason, setReason] = useState("");
+
+	const plansQuery = useQuery({
+		queryKey: ["admin", "plans"],
+		queryFn: adminSubscriptionApi.listPlans,
+	});
+
+	const plans = plansQuery.data ?? [];
 
 	const handleSubmit = (e: React.SyntheticEvent) => {
 		e.preventDefault();
 		mutations.create.mutate(
 			{
 				email: email.trim() || undefined,
-				planCode,
+				planId: planId || undefined,
 				durationDays: durationDays ? Number(durationDays) : undefined,
 				provider,
 				reason: reason.trim() || undefined,
@@ -67,14 +77,17 @@ export const AddSubscriptionModal = ({ mutations, onClose }: Props) => {
 						{t("admin.subscriptions.modal.plan")}
 					</label>
 					<select
-						value={planCode}
-						onChange={(e) => setPlanCode(e.target.value)}
-						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf"
+						value={planId}
+						onChange={(e) => setPlanId(e.target.value)}
+						disabled={plansQuery.isLoading}
+						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf disabled:opacity-60"
 					>
-						<option value="BASIC">Basic</option>
-						<option value="PRO">Pro</option>
-						<option value="PREMIUM">Premium</option>
-						<option value="LIFETIME">Lifetime</option>
+						<option value="">— выбрать план —</option>
+						{plans.map((plan) => (
+							<option key={plan.id} value={plan.id}>
+								{plan.name} ({plan.code})
+							</option>
+						))}
 					</select>
 				</div>
 
@@ -135,7 +148,7 @@ export const AddSubscriptionModal = ({ mutations, onClose }: Props) => {
 				<button
 					type="button"
 					onClick={handleSubmit}
-					disabled={mutations.create.isPending}
+					disabled={mutations.create.isPending || !planId || !email.trim()}
 					className="h-8 rounded-lg bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 				>
 					{mutations.create.isPending

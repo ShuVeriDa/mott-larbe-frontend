@@ -17,7 +17,7 @@ export const LogsTopbar = ({
 	const { t } = useI18n();
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors">
+		<header className=" flex items-center gap-2.5 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors">
 			<div className="min-w-0 flex-1">
 				<div className="font-display text-base font-medium text-t-1">
 					{t("admin.logs.title")}
@@ -103,6 +103,6 @@ export const LogsTopbar = ({
 					{t("admin.logs.export")}
 				</button>
 			</div>
-		</div>
+		</header>
 	);
 };

@@ -5,11 +5,23 @@ import { useRouter } from "next/navigation";
 import { useAdminTextCreate } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
-import { htmlToTipTap } from "../lib/html-to-tiptap";
 import type { TextLanguage, TextLevel, TextStatus } from "@/entities/admin-text";
 
+export interface TipTapNode {
+	type: string;
+	text?: string;
+	marks?: { type: string }[];
+	attrs?: Record<string, unknown>;
+	content?: TipTapNode[];
+}
+
+export interface TipTapDoc {
+	type: "doc";
+	content: TipTapNode[];
+}
+
 export interface PageContent {
-	html: string;
+	doc: TipTapDoc;
 	wordCount: number;
 }
 
@@ -20,6 +32,8 @@ export interface TagEntry {
 
 export type SaveState = "initial" | "unsaved" | "saving" | "saved";
 
+const EMPTY_DOC: TipTapDoc = { type: "doc", content: [{ type: "paragraph" }] };
+
 export const useAdminTextCreatePage = () => {
 	const { t, lang } = useI18n();
 	const router = useRouter();
@@ -27,7 +41,7 @@ export const useAdminTextCreatePage = () => {
 	const { create, update, uploadCover } = useAdminTextCreate();
 
 	const [title, setTitle] = useState("");
-	const [pages, setPages] = useState<PageContent[]>([{ html: "", wordCount: 0 }]);
+	const [pages, setPages] = useState<PageContent[]>([{ doc: EMPTY_DOC, wordCount: 0 }]);
 	const [activePage, setActivePage] = useState(0);
 	const [status, setStatus] = useState<TextStatus>("draft");
 	const [language, setLanguage] = useState<TextLanguage>("CHE");
@@ -43,11 +57,8 @@ export const useAdminTextCreatePage = () => {
 	const [useMorphAnalysis, setUseMorphAnalysis] = useState(false);
 	const [saveState, setSaveState] = useState<SaveState>("initial");
 
-	// Stable ref tracking the saved text id — null until first POST succeeds
 	const savedIdRef = useRef<string | null>(null);
 	const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-	// Pattern: updated every render so the auto-save timer always calls the latest closure
 	const saveNowRef = useRef<((targetStatus: TextStatus, silent: boolean) => Promise<void>) | undefined>(undefined);
 
 	const doSave = useCallback(async (targetStatus: TextStatus, silent: boolean) => {
@@ -68,7 +79,7 @@ export const useAdminTextCreatePage = () => {
 
 		const pagesDto = pages.map((page, i) => ({
 			pageNumber: i + 1,
-			contentRich: htmlToTipTap(page.html),
+			contentRich: page.doc,
 		}));
 
 		const commonFields = {
@@ -90,7 +101,6 @@ export const useAdminTextCreatePage = () => {
 			let resultId: string;
 
 			if (!savedIdRef.current) {
-				// First save → POST with autoTokenize to trigger immediate processing
 				const result = await create.mutateAsync({
 					...commonFields,
 					source: source.trim() || undefined,
@@ -99,7 +109,6 @@ export const useAdminTextCreatePage = () => {
 				savedIdRef.current = result.id;
 				resultId = result.id;
 			} else {
-				// Subsequent saves → PATCH; send null for source to allow clearing
 				const result = await update.mutateAsync({
 					id: savedIdRef.current,
 					dto: { ...commonFields, source: source.trim() || null },
@@ -133,10 +142,8 @@ export const useAdminTextCreatePage = () => {
 		t, toastError, success, lang, router,
 	]);
 
-	// Always point to the latest doSave — the auto-save timer reads this ref
 	saveNowRef.current = doSave;
 
-	// Debounced auto-save: fires 2 s after the last change, only once first save is done
 	const scheduleAutoSave = useCallback(() => {
 		if (!savedIdRef.current) return;
 		if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
@@ -150,7 +157,6 @@ export const useAdminTextCreatePage = () => {
 		scheduleAutoSave();
 	}, [scheduleAutoSave]);
 
-	// Warn the user before navigating away with unsaved changes
 	useEffect(() => {
 		if (saveState !== "unsaved") return;
 		const handler = (e: BeforeUnloadEvent) => {
@@ -161,7 +167,6 @@ export const useAdminTextCreatePage = () => {
 		return () => window.removeEventListener("beforeunload", handler);
 	}, [saveState]);
 
-	// Cancel pending auto-save on unmount
 	useEffect(() => {
 		return () => {
 			if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
@@ -173,17 +178,17 @@ export const useAdminTextCreatePage = () => {
 		markUnsaved();
 	}, [markUnsaved]);
 
-	const handlePageContentChange = useCallback((html: string, wordCount: number) => {
+	const handlePageContentChange = useCallback((doc: TipTapDoc, wordCount: number) => {
 		setPages((prev) => {
 			const next = [...prev];
-			next[activePage] = { html, wordCount };
+			next[activePage] = { doc, wordCount };
 			return next;
 		});
 		markUnsaved();
 	}, [activePage, markUnsaved]);
 
 	const handleAddPage = useCallback(() => {
-		setPages((prev) => [...prev, { html: "", wordCount: 0 }]);
+		setPages((prev) => [...prev, { doc: EMPTY_DOC, wordCount: 0 }]);
 		setActivePage((prev) => prev + 1);
 		markUnsaved();
 	}, [markUnsaved]);

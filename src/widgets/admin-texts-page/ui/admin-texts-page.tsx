@@ -49,10 +49,10 @@ export const AdminTextsPage = () => {
 		mutations.bulkDelete.isPending;
 
 	return (
-		<div className="flex min-h-0 flex-1 flex-col overflow-y-auto [&::-webkit-scrollbar]:w-0">
+		<div className="flex min-h-0 flex-1 flex-col">
 			<TextsTopbar onImportClick={() => setImportOpen(true)} />
 
-			<div className="px-[22px] py-4 pb-8 max-sm:px-3.5 max-sm:pb-6">
+			<div className="overflow-y-auto px-[22px] py-4 pb-8 max-sm:px-3.5 max-sm:pb-6">
 				<TextsStatsRow stats={stats} isLoading={statsLoading} />
 
 				<TextsTabs active={tab} stats={stats} onChange={handleTabChange} />

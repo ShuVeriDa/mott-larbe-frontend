@@ -29,7 +29,7 @@ export const TextCreateTopbar = ({
 					: null;
 
 	return (
-		<div className="sticky top-0 z-20 flex h-[52px] items-center gap-2 border-b border-bd-1 bg-surf px-5 transition-colors max-sm:gap-1.5 max-sm:px-3.5">
+		<header className=" flex min-h-[52px] items-center gap-2 border-b border-bd-1 bg-surf px-5 transition-colors max-sm:gap-1.5 max-sm:px-3.5 ">
 			<div className="flex min-w-0 flex-1 items-center gap-2">
 				{/* Back button */}
 				<Link
@@ -146,6 +146,6 @@ export const TextCreateTopbar = ({
 					</span>
 				</button>
 			</div>
-		</div>
+		</header>
 	);
 };

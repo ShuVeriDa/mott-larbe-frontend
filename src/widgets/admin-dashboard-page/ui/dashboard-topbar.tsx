@@ -20,7 +20,7 @@ export const DashboardTopbar = ({
 	const { t } = useI18n();
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors max-sm:px-3 max-sm:py-2.5">
+		<header className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors max-sm:px-3 max-sm:py-2.5">
 			<div className="min-w-0 flex-1">
 				<div className="font-display text-base font-medium text-t-1">
 					{t("admin.dashboard.title")}
@@ -84,6 +84,6 @@ export const DashboardTopbar = ({
 					<span className="max-sm:hidden">{t("admin.dashboard.export")}</span>
 				</button>
 			</div>
-		</div>
+		</header>
 	);
 };

@@ -14,7 +14,7 @@ export const TokenizationTopbar = ({
 	const { t } = useI18n();
 
 	return (
-		<div className="flex items-center gap-3 border-b border-bd-1 bg-surf px-5 py-3.5 sticky top-0 z-10">
+		<header className="flex items-center gap-3 border-b border-bd-1 bg-surf px-5 py-3.5 ">
 			<div className="min-w-0">
 				<h1 className="font-display text-base text-t-1">
 					{t("admin.tokenization.title")}
@@ -58,6 +58,6 @@ export const TokenizationTopbar = ({
 					{t("admin.tokenization.runBtn")}
 				</button>
 			</div>
-		</div>
+		</header>
 	);
 };

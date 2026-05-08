@@ -54,7 +54,7 @@ export const AnalyticsTopbar = ({
 	};
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-3 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors max-md:hidden">
+		<header className=" flex items-center gap-3 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors max-md:hidden">
 			<div>
 				<h1 className="font-display text-base font-medium text-t-1">
 					{t("admin.analytics.title")}
@@ -217,6 +217,6 @@ export const AnalyticsTopbar = ({
 					)}
 				</div>
 			</div>
-		</div>
+		</header>
 	);
 };

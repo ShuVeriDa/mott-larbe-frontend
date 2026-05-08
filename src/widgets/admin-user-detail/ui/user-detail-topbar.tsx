@@ -23,7 +23,7 @@ export const UserDetailTopbar = ({
 	const isBlocked = user?.status === "BLOCKED";
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-sm:px-3.5 max-sm:py-2.5">
+		<header className=" flex items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-sm:px-3.5 max-sm:py-2.5">
 			<nav className="flex items-center gap-1.5 text-[13px] text-t-3 max-sm:text-[12px]">
 				<Link
 					href={`/${lang}/admin/users`}
@@ -85,6 +85,6 @@ export const UserDetailTopbar = ({
 					</button>
 				)}
 			</div>
-		</div>
+		</header>
 	);
 };

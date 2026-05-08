@@ -39,7 +39,7 @@ export const AdminAnalyticsPage = () => {
 	const eventsChart = data?.eventsChart;
 
 	return (
-		<div className="flex min-h-screen flex-col">
+		<div className="flex min-h-0 flex-1 flex-col">
 			<AnalyticsTopbar
 				range={range}
 				dateFrom={dateFrom}
@@ -58,7 +58,7 @@ export const AdminAnalyticsPage = () => {
 				onDateRangeClear={handleDateRangeClear}
 			/>
 
-			<div className="px-5 py-5 pb-12 max-sm:px-3 max-sm:py-3">
+			<div className="overflow-y-auto px-5 py-5 pb-12 max-sm:px-3 max-sm:py-3">
 				<AnalyticsInsightStrip insight={data?.insight} isLoading={isLoading} />
 
 				<AnalyticsKpiGrid items={data?.kpis.items} isLoading={isLoading} />

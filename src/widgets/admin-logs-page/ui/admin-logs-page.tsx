@@ -45,14 +45,14 @@ export const AdminLogsPage = () => {
 	const isLoading = logsQuery.isLoading;
 
 	return (
-		<div className="flex min-h-screen flex-col">
+		<div className="flex min-h-0 flex-1 flex-col">
 			<LogsTopbar
 				isLive={isLive}
 				onToggleLive={toggleLive}
 				onExport={handleExport}
 			/>
 
-			<div className="px-5 py-5 pb-10 max-sm:px-3">
+			<div className="overflow-y-auto px-5 py-5 pb-10 max-sm:px-3">
 				<LogsStatsRow
 					stats={statsQuery.data}
 					isLoading={statsQuery.isLoading}

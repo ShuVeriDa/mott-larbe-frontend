@@ -114,7 +114,7 @@ export const AdminDictionaryDetailPage = ({ lemmaId }: AdminDictionaryDetailPage
 	};
 
 	return (
-		<div className="flex min-h-0 flex-1 flex-col overflow-y-auto [&::-webkit-scrollbar]:w-0">
+		<div className="flex min-h-0 flex-1 flex-col">
 			<DictionaryEntryTopbar
 				lang={lang}
 				baseForm={detail.data?.baseForm ?? ""}
@@ -126,7 +126,7 @@ export const AdminDictionaryDetailPage = ({ lemmaId }: AdminDictionaryDetailPage
 				isDeleting={mutations.deleteEntry.isPending}
 			/>
 
-			<div className="flex gap-[18px] px-[22px] py-[22px] pb-16 max-md:flex-col max-sm:px-3 max-sm:py-3">
+			<div className="overflow-y-auto flex gap-[18px] px-[22px] py-[22px] pb-16 max-md:flex-col max-sm:px-3 max-sm:py-3">
 				{/* Main column */}
 				<div className="flex min-w-0 flex-1 flex-col gap-3.5">
 					<EntryHeaderCard data={detail.data} isLoading={detail.isLoading} lemmasCount={relatedLemmas.data?.length} />

@@ -47,6 +47,7 @@ interface UserHeroCardProps {
 	mutations: ReturnType<typeof useAdminUserMutations>;
 	roleMutations: ReturnType<typeof useAdminUserRoles>;
 	sessions: ReturnType<typeof useAdminUserSessions>;
+	onManageSubscription: () => void;
 }
 
 export const UserHeroCard = ({
@@ -55,6 +56,7 @@ export const UserHeroCard = ({
 	mutations,
 	roleMutations,
 	sessions,
+	onManageSubscription,
 }: UserHeroCardProps) => {
 	const { t } = useI18n();
 
@@ -113,7 +115,7 @@ export const UserHeroCard = ({
 
 			<UserInfoSection user={user} />
 			<UserRolesSection roles={user.roles} roleMutations={roleMutations} />
-			<UserActionsSection user={user} mutations={mutations} sessions={sessions} />
+			<UserActionsSection user={user} mutations={mutations} sessions={sessions} onManageSubscription={onManageSubscription} />
 		</div>
 	);
 };

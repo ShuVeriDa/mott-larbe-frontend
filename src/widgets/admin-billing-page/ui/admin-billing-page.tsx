@@ -42,10 +42,10 @@ export const AdminBillingPage = () => {
 	} = useAdminBillingPage();
 
 	return (
-		<div className="flex min-h-0 flex-1 flex-col overflow-y-auto [&::-webkit-scrollbar]:w-0">
+		<div className="flex min-h-0 flex-1 flex-col">
 			<BillingTopbar onNewPlan={openCreatePlanModal} onNewCoupon={openCreateCouponModal} />
 
-			<div className="px-[22px] py-5 pb-10 max-sm:px-3 max-sm:pb-8">
+			<div className="overflow-y-auto px-[22px] py-5 pb-10 max-sm:px-3 max-sm:pb-8">
 				{/* KPI */}
 				<BillingKpiRow stats={stats} isLoading={statsLoading} />
 

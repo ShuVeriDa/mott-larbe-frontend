@@ -11,9 +11,10 @@ interface UserActionsSectionProps {
 	user: AdminUserDetail;
 	mutations: ReturnType<typeof useAdminUserMutations>;
 	sessions: ReturnType<typeof useAdminUserSessions>;
+	onManageSubscription: () => void;
 }
 
-export const UserActionsSection = ({ user, mutations, sessions }: UserActionsSectionProps) => {
+export const UserActionsSection = ({ user, mutations, sessions, onManageSubscription }: UserActionsSectionProps) => {
 	const { t } = useI18n();
 	const [couponInput, setCouponInput] = useState("");
 	const [showCoupon, setShowCoupon] = useState(false);
@@ -41,7 +42,7 @@ export const UserActionsSection = ({ user, mutations, sessions }: UserActionsSec
 				{t("admin.userDetail.actions.title")}
 			</div>
 
-			<ActionButton icon={<BillingIcon />} label={t("admin.userDetail.actions.manageSubscription")} />
+			<ActionButton icon={<BillingIcon />} label={t("admin.userDetail.actions.manageSubscription")} onClick={onManageSubscription} />
 
 			<ActionButton
 				icon={<SessionsIcon />}

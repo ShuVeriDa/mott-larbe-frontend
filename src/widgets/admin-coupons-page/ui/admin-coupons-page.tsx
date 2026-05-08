@@ -64,10 +64,10 @@ export const AdminCouponsPage = () => {
 	}, [closeModal, closeMobileSheet]);
 
 	return (
-		<div className="flex min-h-0 flex-1 flex-col overflow-y-auto [&::-webkit-scrollbar]:w-0">
+		<div className="flex min-h-0 flex-1 flex-col">
 			<CouponsTopbar onExport={handleExport} onCreate={() => openModal("create")} />
 
-			<div className="px-[22px] py-4 pb-10 max-sm:px-3 max-sm:pb-20">
+			<div className="overflow-y-auto px-[22px] py-4 pb-10 max-sm:px-3 max-sm:pb-20">
 				<CouponsKpiRow stats={stats} isLoading={statsLoading} />
 
 				{/* Split layout: table + detail panel */}

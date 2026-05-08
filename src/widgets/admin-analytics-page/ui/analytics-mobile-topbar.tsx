@@ -45,7 +45,7 @@ export const AnalyticsMobileTopbar = ({
 	};
 
 	return (
-		<div className="sticky top-0 z-40 border-b border-bd-1 bg-surf transition-colors md:hidden">
+		<header className=" border-b border-bd-1 bg-surf transition-colors md:hidden">
 			<div className="flex items-center justify-between px-4 py-2.5">
 				<span className="font-display text-[13px] font-medium text-t-1">
 					{t("admin.analytics.title")}
@@ -125,6 +125,6 @@ export const AnalyticsMobileTopbar = ({
 					</div>
 				</div>
 			)}
-		</div>
+		</header>
 	);
 };

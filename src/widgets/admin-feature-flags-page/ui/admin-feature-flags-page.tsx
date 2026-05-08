@@ -99,7 +99,7 @@ export const AdminFeatureFlagsPage = () => {
 				: historyItems.length === 0 && !isHistoryLoading;
 
 	return (
-		<div className="flex min-h-screen flex-col">
+		<div className="flex min-h-0 flex-1 flex-col">
 			<FeatureFlagsTopbar
 				title={t("admin.featureFlags.title")}
 				subtitle={t("admin.featureFlags.subtitle")}
@@ -145,7 +145,7 @@ export const AdminFeatureFlagsPage = () => {
 				}
 			/>
 
-			<div className="px-5 py-5 pb-10 max-sm:px-3">
+			<div className="overflow-y-auto px-5 py-5 pb-10 max-sm:px-3">
 				<FeatureFlagsStatsRow
 					stats={statsQuery.data}
 					isLoading={statsQuery.isLoading}

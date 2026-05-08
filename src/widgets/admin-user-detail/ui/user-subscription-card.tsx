@@ -1,12 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import type { useAdminUserSubscription } from "@/entities/admin-user/model/use-admin-user-subscription";
 import type { PaymentStatus } from "@/entities/admin-user";
 import { cn } from "@/shared/lib/cn";
 
+const EXTEND_OPTIONS = [
+	{ days: 30, label: "1 месяц" },
+	{ days: 90, label: "3 месяца" },
+	{ days: 180, label: "6 месяцев" },
+	{ days: 365, label: "1 год" },
+] as const;
+
 interface UserSubscriptionCardProps {
 	subscription: ReturnType<typeof useAdminUserSubscription>;
+	onManage: () => void;
 }
 
 const formatAmount = (cents: number, currency: string) => {
@@ -22,10 +31,12 @@ const paymentStatusStyle: Record<PaymentStatus, string> = {
 	REFUNDED: "bg-surf-3 text-t-2",
 };
 
-export const UserSubscriptionCard = ({ subscription }: UserSubscriptionCardProps) => {
+export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptionCardProps) => {
 	const { t } = useI18n();
-	const { query, cancel } = subscription;
+	const { query, cancel, extend } = subscription;
 	const data = query.data;
+	const [extendDays, setExtendDays] = useState(30);
+	const [showExtend, setShowExtend] = useState(false);
 
 	return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
@@ -33,7 +44,7 @@ export const UserSubscriptionCard = ({ subscription }: UserSubscriptionCardProps
 				<span className="text-[13px] font-semibold text-t-1">
 					{t("admin.userDetail.subscription.title")}
 				</span>
-				<button className="border-none bg-transparent p-0 text-[11.5px] text-acc-t transition-opacity hover:opacity-70">
+				<button onClick={onManage} className="border-none bg-transparent p-0 text-[11.5px] text-acc-t transition-opacity hover:opacity-70">
 					{t("admin.userDetail.subscription.manage")}
 				</button>
 			</div>
@@ -83,17 +94,47 @@ export const UserSubscriptionCard = ({ subscription }: UserSubscriptionCardProps
 										{data.current.interval === "year" ? "/год" : data.current.interval === "month" ? "/мес" : ""}
 									</div>
 								</div>
-								<div className="flex gap-1">
-									<button className="flex h-[26px] items-center rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1">
-										{t("admin.userDetail.subscription.extend")}
-									</button>
-									<button
-										onClick={() => cancel.mutate(data.current!.id)}
-										disabled={cancel.isPending}
-										className="flex h-[26px] items-center rounded-base border border-red/25 bg-transparent px-2.5 text-[11.5px] font-medium text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
-									>
-										{t("admin.userDetail.subscription.cancel")}
-									</button>
+								<div className="flex flex-col gap-1">
+									<div className="flex gap-1">
+										<button
+											onClick={() => setShowExtend((v) => !v)}
+											className="flex h-[26px] items-center rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
+										>
+											{t("admin.userDetail.subscription.extend")}
+										</button>
+										<button
+											onClick={() => cancel.mutate(data.current!.id)}
+											disabled={cancel.isPending}
+											className="flex h-[26px] items-center rounded-base border border-red/25 bg-transparent px-2.5 text-[11.5px] font-medium text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
+										>
+											{t("admin.userDetail.subscription.cancel")}
+										</button>
+									</div>
+									{showExtend && (
+										<div className="flex items-center gap-1">
+											<select
+												value={extendDays}
+												onChange={(e) => setExtendDays(Number(e.target.value))}
+												className="h-[26px] flex-1 cursor-pointer appearance-none rounded-base border border-bd-2 bg-surf-2 px-2 text-[11.5px] text-t-1 outline-none focus:border-acc"
+											>
+												{EXTEND_OPTIONS.map(({ days, label }) => (
+													<option key={days} value={days}>{label}</option>
+												))}
+											</select>
+											<button
+												onClick={() => {
+													extend.mutate(
+														{ subId: data.current!.id, days: extendDays },
+														{ onSuccess: () => setShowExtend(false) },
+													);
+												}}
+												disabled={extend.isPending}
+												className="flex h-[26px] items-center rounded-base bg-acc px-2.5 text-[11.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+											>
+												OK
+											</button>
+										</div>
+									)}
 								</div>
 							</div>
 						) : (

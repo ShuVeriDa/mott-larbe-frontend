@@ -11,13 +11,28 @@ import {
 } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
-import { htmlToTipTap, tiptapToHtml, countWordsInRaw } from "../lib/html-utils";
+import { countWordsInRaw } from "../lib/tiptap-utils";
 import type { TextLanguage, TextLevel, TextStatus } from "@/entities/admin-text";
 
+export interface TipTapNode {
+	type: string;
+	text?: string;
+	marks?: { type: string }[];
+	attrs?: Record<string, unknown>;
+	content?: TipTapNode[];
+}
+
+export interface TipTapDoc {
+	type: "doc";
+	content: TipTapNode[];
+}
+
 export interface PageContent {
-	html: string;
+	doc: TipTapDoc;
 	wordCount: number;
 }
+
+const EMPTY_DOC: TipTapDoc = { type: "doc", content: [{ type: "paragraph" }] };
 
 export const useAdminTextEditPage = (id: string) => {
 	const { t, lang } = useI18n();
@@ -31,9 +46,8 @@ export const useAdminTextEditPage = (id: string) => {
 	const { data: textData, isLoading, isError } = useAdminTextDetail(id);
 	const { data: versionsData } = useAdminTextVersions(id);
 
-	// ── Form state ──
 	const [title, setTitle] = useState("");
-	const [pages, setPages] = useState<PageContent[]>([{ html: "", wordCount: 0 }]);
+	const [pages, setPages] = useState<PageContent[]>([{ doc: EMPTY_DOC, wordCount: 0 }]);
 	const [activePage, setActivePage] = useState(0);
 	const [status, setStatus] = useState<TextStatus>("draft");
 	const [language, setLanguage] = useState<TextLanguage>("CHE");
@@ -51,7 +65,6 @@ export const useAdminTextEditPage = (id: string) => {
 	const [showRetokenizeBar, setShowRetokenizeBar] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-	// Initialize from server data only once
 	const initialized = useRef(false);
 
 	useEffect(() => {
@@ -73,7 +86,7 @@ export const useAdminTextEditPage = (id: string) => {
 				[...textData.pages]
 					.sort((a, b) => a.pageNumber - b.pageNumber)
 					.map((p) => ({
-						html: tiptapToHtml(p.contentRich as { type: string; content?: unknown[] }),
+						doc: (p.contentRich as TipTapDoc) ?? EMPTY_DOC,
 						wordCount: countWordsInRaw(p.contentRaw),
 					})),
 			);
@@ -96,10 +109,10 @@ export const useAdminTextEditPage = (id: string) => {
 	);
 
 	const handlePageContentChange = useCallback(
-		(html: string, wordCount: number) => {
+		(doc: TipTapDoc, wordCount: number) => {
 			setPages((prev) => {
 				const next = [...prev];
-				next[activePage] = { html, wordCount };
+				next[activePage] = { doc, wordCount };
 				return next;
 			});
 			markUnsaved();
@@ -108,7 +121,7 @@ export const useAdminTextEditPage = (id: string) => {
 	);
 
 	const handleAddPage = useCallback(() => {
-		setPages((prev) => [...prev, { html: "", wordCount: 0 }]);
+		setPages((prev) => [...prev, { doc: EMPTY_DOC, wordCount: 0 }]);
 		setActivePage((prev) => prev + 1);
 		markUnsaved();
 	}, [markUnsaved]);
@@ -153,7 +166,7 @@ export const useAdminTextEditPage = (id: string) => {
 
 			const pagesDto = pages.map((page, i) => ({
 				pageNumber: i + 1,
-				contentRich: htmlToTipTap(page.html),
+				contentRich: page.doc,
 			}));
 
 			try {
@@ -188,24 +201,9 @@ export const useAdminTextEditPage = (id: string) => {
 			}
 		},
 		[
-			title,
-			pages,
-			language,
-			level,
-			description,
-			author,
-			source,
-			tags,
-			autoTokenizeOnSave,
-			useNormalization,
-			useMorphAnalysis,
-			pendingCoverFile,
-			id,
-			update,
-			uploadCover,
-			t,
-			success,
-			toastError,
+			title, pages, language, level, description, author, source, tags,
+			autoTokenizeOnSave, useNormalization, useMorphAnalysis, pendingCoverFile,
+			id, update, uploadCover, t, success, toastError,
 		],
 	);
 
@@ -241,13 +239,11 @@ export const useAdminTextEditPage = (id: string) => {
 		: [];
 
 	return {
-		// data
 		textData,
 		isLoading,
 		isError,
 		versionsData,
 		pageTokenCounts,
-		// form state
 		title,
 		pages,
 		activePage,
@@ -267,7 +263,6 @@ export const useAdminTextEditPage = (id: string) => {
 		isDeleting,
 		showRetokenizeBar,
 		showDeleteModal,
-		// handlers
 		handleTitleChange,
 		handlePageContentChange,
 		handleAddPage,

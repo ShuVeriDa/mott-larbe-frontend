@@ -11,7 +11,7 @@ export const MorphologyTopbar = ({ onAdd, onImport }: Props) => {
 	const { t } = useI18n();
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-3 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors">
+		<header className=" flex items-center gap-3 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors">
 			<div>
 				<h1 className="font-display text-[16px] text-t-1">
 					{t("admin.morphology.title")}
@@ -65,6 +65,6 @@ export const MorphologyTopbar = ({ onAdd, onImport }: Props) => {
 					{t("admin.morphology.add")}
 				</button>
 			</div>
-		</div>
+		</header>
 	);
 };

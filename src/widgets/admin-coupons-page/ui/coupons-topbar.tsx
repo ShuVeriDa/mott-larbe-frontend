@@ -9,7 +9,7 @@ export const CouponsTopbar = ({ onExport, onCreate }: Props) => {
 	const { t } = useI18n();
 
 	return (
-		<div className="sticky top-0 z-20 flex items-center gap-3 border-b border-bd-1 bg-surf px-[22px] py-3.5 transition-colors max-sm:px-3.5">
+		<header className=" flex items-center gap-3 border-b border-bd-1 bg-surf px-[22px] py-3.5 transition-colors max-sm:px-3.5">
 			<div>
 				<div className="font-display text-[16px] text-t-1">
 					{t("admin.coupons.title")}
@@ -60,6 +60,6 @@ export const CouponsTopbar = ({ onExport, onCreate }: Props) => {
 					{t("admin.coupons.create")}
 				</button>
 			</div>
-		</div>
+		</header>
 	);
 };

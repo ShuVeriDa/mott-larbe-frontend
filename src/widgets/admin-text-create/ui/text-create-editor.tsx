@@ -1,83 +1,271 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
-import { countCharsInHtml, countParagraphsInHtml, countWordsInHtml } from "../lib/html-to-tiptap";
+import { NotionEditor } from "@/shared/ui/notion-editor";
+import type { TipTapDoc, TipTapNode, SlashMenuItem, Editor } from "@/shared/ui/notion-editor";
 import type { PageContent } from "../model/use-admin-text-create-page";
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Internal: contenteditable body — remounts on activePage change via key prop
-// ─────────────────────────────────────────────────────────────────────────────
+export type { TipTapDoc, TipTapNode };
 
-interface EditorBodyProps {
-	initialHtml: string;
-	onContentChange: (html: string) => void;
-	onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
-	placeholder: string;
-}
+// ── Stats helpers ─────────────────────────────────────────────────────────────
 
-const EditorBody = ({ initialHtml, onContentChange, onKeyDown, placeholder }: EditorBodyProps) => {
-	const ref = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		if (ref.current) {
-			ref.current.innerHTML = initialHtml || "";
-		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []); // Only on mount — key prop handles page switches
-
-	const handleInput = useCallback(() => {
-		onContentChange(ref.current?.innerHTML ?? "");
-	}, [onContentChange]);
-
-	return (
-		<div
-			ref={ref}
-			contentEditable
-			suppressContentEditableWarning
-			spellCheck={false}
-			data-placeholder={placeholder}
-			onInput={handleInput}
-			onKeyDown={onKeyDown}
-			className="min-h-[360px] cursor-text text-[14.5px] leading-[1.75] text-t-1 outline-none caret-acc empty:before:pointer-events-none empty:before:text-t-4 empty:before:content-[attr(data-placeholder)] [&_blockquote]:my-4 [&_blockquote]:border-l-[3px] [&_blockquote]:border-acc-muted [&_blockquote]:pl-3.5 [&_blockquote]:text-t-2 [&_h2]:mb-2 [&_h2]:mt-5 [&_h2]:font-display [&_h2]:text-[18px] [&_h2]:font-medium [&_h3]:mb-2 [&_h3]:mt-4 [&_h3]:text-[15px] [&_h3]:font-semibold [&_li]:mb-1 [&_ol]:mb-3 [&_ol]:pl-5 [&_p:last-child]:mb-0 [&_p]:mb-3 [&_ul]:mb-3 [&_ul]:pl-5"
-		/>
-	);
+const extractText = (doc: TipTapDoc): string => {
+	const walk = (nodes: TipTapNode[]): string =>
+		nodes.map((n) => (n.text ? n.text : walk(n.content ?? []))).join(" ");
+	return walk(doc.content);
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Toolbar button helper
-// ─────────────────────────────────────────────────────────────────────────────
+const countWords = (doc: TipTapDoc) => {
+	const text = extractText(doc).trim();
+	return text ? text.split(/\s+/).filter(Boolean).length : 0;
+};
+const countChars = (doc: TipTapDoc) => extractText(doc).replace(/\s/g, "").length;
+const countParagraphs = (doc: TipTapDoc) => {
+	const blockTypes = new Set(["paragraph", "heading", "listItem"]);
+	const walk = (nodes: TipTapNode[]): number =>
+		nodes.reduce((acc, n) => acc + (blockTypes.has(n.type) ? 1 : 0) + walk(n.content ?? []), 0);
+	return Math.max(walk(doc.content), 1);
+};
 
-interface TbBtnProps {
+// ── Toolbar helpers ───────────────────────────────────────────────────────────
+
+const TbBtn = ({
+	title,
+	active,
+	onExec,
+	children,
+}: {
 	title: string;
+	active?: boolean;
 	onExec: () => void;
 	children: React.ReactNode;
-}
-
-const TbBtn = ({ title, onExec, children }: TbBtnProps) => (
+}) => (
 	<button
 		type="button"
 		title={title}
 		onMouseDown={(e) => {
-			e.preventDefault(); // Don't steal focus from editor
+			e.preventDefault();
 			onExec();
 		}}
-		className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-[5px] border-none bg-transparent text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+		className={`flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-[5px] transition-colors ${
+			active ? "bg-acc-muted text-acc-strong" : "text-t-2 hover:bg-surf-2 hover:text-t-1"
+		}`}
 	>
 		{children}
 	</button>
 );
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Main editor column component
-// ─────────────────────────────────────────────────────────────────────────────
+const TbDivider = () => <div className="mx-0.5 h-4 w-px shrink-0 bg-bd-2" />;
+
+// ── Slash items ───────────────────────────────────────────────────────────────
+
+const useSlashItems = (t: ReturnType<typeof useI18n>["t"]): SlashMenuItem[] =>
+	useMemo(() => [
+		{
+			title: t("admin.texts.createPage.formatText"),
+			description: "Обычный абзац",
+			icon: <span className="text-[11px] font-medium text-t-2">¶</span>,
+			command: (editor) => editor.chain().focus().setParagraph().run(),
+		},
+		{
+			title: t("admin.texts.createPage.formatH2"),
+			description: "Крупный заголовок",
+			icon: <span className="text-[11px] font-bold text-t-2">H2</span>,
+			command: (editor) => editor.chain().focus().setHeading({ level: 2 }).run(),
+		},
+		{
+			title: t("admin.texts.createPage.formatH3"),
+			description: "Средний заголовок",
+			icon: <span className="text-[10px] font-bold text-t-2">H3</span>,
+			command: (editor) => editor.chain().focus().setHeading({ level: 3 }).run(),
+		},
+		{
+			title: t("admin.texts.createPage.formatQuote"),
+			description: "Цитата",
+			icon: <span className="text-[13px] text-t-2">"</span>,
+			command: (editor) => editor.chain().focus().setBlockquote().run(),
+		},
+		{
+			title: t("admin.texts.createPage.bulletList"),
+			description: "Маркированный список",
+			icon: (
+				<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+					<circle cx="3" cy="5" r="1.3" fill="currentColor" />
+					<circle cx="3" cy="9" r="1.3" fill="currentColor" />
+					<circle cx="3" cy="13" r="1.3" fill="currentColor" />
+					<path d="M7 5h7M7 9h7M7 13h7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+				</svg>
+			),
+			command: (editor) => editor.chain().focus().toggleBulletList().run(),
+		},
+		{
+			title: t("admin.texts.createPage.orderedList"),
+			description: "Нумерованный список",
+			icon: (
+				<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+					<path d="M2 3.5h1.5M2 3.5v2.5h1.5M2 9h1.5a.5.5 0 010 1H2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+					<path d="M6.5 4.5h7M6.5 9h7M6.5 13h7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+				</svg>
+			),
+			command: (editor) => editor.chain().focus().toggleOrderedList().run(),
+		},
+	], [t]);
+
+// ── Toolbar ───────────────────────────────────────────────────────────────────
+
+const EditorToolbar = ({ editor, t }: { editor: Editor | null; t: ReturnType<typeof useI18n>["t"] }) => {
+	// Re-render on selection change so active states update
+	const [, forceUpdate] = useState(0);
+	useMemo(() => {
+		if (!editor) return;
+		const handler = () => forceUpdate((n) => n + 1);
+		editor.on("selectionUpdate", handler);
+		editor.on("transaction", handler);
+		return () => {
+			editor.off("selectionUpdate", handler);
+			editor.off("transaction", handler);
+		};
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [editor]);
+
+	const e = editor;
+
+	return (
+		<div className="sticky top-[52px] z-10 flex items-center gap-px overflow-x-auto border-b border-bd-1 bg-surf px-2 py-[5px] transition-colors [scrollbar-width:none]">
+
+			{/* Block type select */}
+			<div className="shrink-0">
+				<select
+					className="h-[28px] cursor-pointer appearance-none rounded-[5px] border-none bg-transparent px-2 pr-5 text-xs text-t-2 outline-none transition-colors hover:bg-surf-2 hover:text-t-1"
+					value={
+						e?.isActive("heading", { level: 2 }) ? "h2" :
+						e?.isActive("heading", { level: 3 }) ? "h3" :
+						e?.isActive("blockquote") ? "blockquote" : "p"
+					}
+					onChange={(ev) => {
+						if (!e) return;
+						const v = ev.target.value;
+						if (v === "p") e.chain().focus().setParagraph().run();
+						else if (v === "h2") e.chain().focus().setHeading({ level: 2 }).run();
+						else if (v === "h3") e.chain().focus().setHeading({ level: 3 }).run();
+						else if (v === "blockquote") e.chain().focus().setBlockquote().run();
+					}}
+				>
+					<option value="p">{t("admin.texts.createPage.formatText")}</option>
+					<option value="h2">{t("admin.texts.createPage.formatH2")}</option>
+					<option value="h3">{t("admin.texts.createPage.formatH3")}</option>
+					<option value="blockquote">{t("admin.texts.createPage.formatQuote")}</option>
+				</select>
+			</div>
+
+			<TbDivider />
+
+			{/* Inline formatting */}
+			<TbBtn title={t("admin.texts.createPage.bold")} active={e?.isActive("bold")} onExec={() => e?.chain().focus().toggleBold().run()}>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+					<path d="M4 8h5.5a2.5 2.5 0 000-5H4v5zM4 8h6a2.5 2.5 0 010 5H4V8z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+				</svg>
+			</TbBtn>
+			<TbBtn title={t("admin.texts.createPage.italic")} active={e?.isActive("italic")} onExec={() => e?.chain().focus().toggleItalic().run()}>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+					<path d="M10 3H7M9 13H6M9 3L7 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+				</svg>
+			</TbBtn>
+			<TbBtn title={t("admin.texts.createPage.underline")} active={e?.isActive("underline")} onExec={() => e?.chain().focus().toggleUnderline().run()}>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+					<path d="M5 3v5a3 3 0 006 0V3M3 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+				</svg>
+			</TbBtn>
+			<TbBtn title="Strike" active={e?.isActive("strike")} onExec={() => e?.chain().focus().toggleStrike().run()}>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+					<path d="M3 8h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+					<path d="M5.5 5.5C5.5 4.12 6.62 3 8 3s2.5 1.12 2.5 2.5M5.5 10.5C5.5 11.88 6.62 13 8 13s2.5-1.12 2.5-2.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+				</svg>
+			</TbBtn>
+
+			<TbDivider />
+
+			{/* Lists */}
+			<TbBtn title={t("admin.texts.createPage.bulletList")} active={e?.isActive("bulletList")} onExec={() => e?.chain().focus().toggleBulletList().run()}>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+					<circle cx="3" cy="5" r="1.2" fill="currentColor" />
+					<circle cx="3" cy="9" r="1.2" fill="currentColor" />
+					<circle cx="3" cy="13" r="1.2" fill="currentColor" />
+					<path d="M6.5 5h7M6.5 9h7M6.5 13h7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+				</svg>
+			</TbBtn>
+			<TbBtn title={t("admin.texts.createPage.orderedList")} active={e?.isActive("orderedList")} onExec={() => e?.chain().focus().toggleOrderedList().run()}>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+					<path d="M2 3.5h1.5M2 3.5v2.5h1.5M2 9h1.5a.5.5 0 010 1H2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+					<path d="M6.5 4.5h7M6.5 9h7M6.5 13h7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+				</svg>
+			</TbBtn>
+
+			<TbDivider />
+
+			{/* Alignment */}
+			<TbBtn title="По левому краю" active={e?.isActive({ textAlign: "left" })} onExec={() => e?.chain().focus().setTextAlign("left").run()}>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+					<path d="M2 4h12M2 7.5h8M2 11h10M2 14.5h6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+				</svg>
+			</TbBtn>
+			<TbBtn title="По центру" active={e?.isActive({ textAlign: "center" })} onExec={() => e?.chain().focus().setTextAlign("center").run()}>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+					<path d="M2 4h12M4 7.5h8M3 11h10M5 14.5h6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+				</svg>
+			</TbBtn>
+			<TbBtn title="По правому краю" active={e?.isActive({ textAlign: "right" })} onExec={() => e?.chain().focus().setTextAlign("right").run()}>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+					<path d="M2 4h12M6 7.5h8M4 11h10M8 14.5h6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+				</svg>
+			</TbBtn>
+			<TbBtn title="По ширине" active={e?.isActive({ textAlign: "justify" })} onExec={() => e?.chain().focus().setTextAlign("justify").run()}>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+					<path d="M2 4h12M2 7.5h12M2 11h12M2 14.5h8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+				</svg>
+			</TbBtn>
+
+			<TbDivider />
+
+			{/* Undo / Redo */}
+			<TbBtn title={t("admin.texts.createPage.undo")} onExec={() => e?.chain().focus().undo().run()}>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+					<path d="M3 7.5A5.5 5.5 0 1114 12" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+					<path d="M3 3.5v4h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+				</svg>
+			</TbBtn>
+			<TbBtn title={t("admin.texts.createPage.redo")} onExec={() => e?.chain().focus().redo().run()}>
+				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+					<path d="M13 7.5A5.5 5.5 0 102 12" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+					<path d="M13 3.5v4H9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+				</svg>
+			</TbBtn>
+
+			{/* Keyboard hints */}
+			<div className="ml-auto flex shrink-0 items-center gap-1.5 pl-2 text-[10px] text-t-4 max-lg:hidden">
+				<span className="rounded-[3px] bg-surf-3 px-1 py-px text-t-3">Ctrl+S</span>
+				<span>—</span>
+				<span>{t("admin.texts.createPage.saveDraft")}</span>
+				<span className="ml-1 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">Ctrl+↵</span>
+				<span>—</span>
+				<span>{t("admin.texts.createPage.publish")}</span>
+				<span className="ml-2 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">/</span>
+				<span>—</span>
+				<span>блоки</span>
+			</div>
+		</div>
+	);
+};
+
+// ── Main component ────────────────────────────────────────────────────────────
 
 interface TextCreateEditorProps {
 	title: string;
 	pages: PageContent[];
 	activePage: number;
 	onTitleChange: (value: string) => void;
-	onPageContentChange: (html: string, wordCount: number) => void;
+	onPageContentChange: (doc: TipTapDoc, wordCount: number) => void;
 	onAddPage: () => void;
 	onSelectPage: (index: number) => void;
 	onSaveDraft: () => void;
@@ -98,29 +286,9 @@ export const TextCreateEditor = ({
 	const { t } = useI18n();
 	const titleRef = useRef<HTMLTextAreaElement>(null);
 	const [stats, setStats] = useState({ words: 0, chars: 0, paragraphs: 0 });
+	const [editor, setEditor] = useState<Editor | null>(null);
+	const slashItems = useSlashItems(t);
 
-	const handleContentChange = useCallback((html: string) => {
-		const wc = countWordsInHtml(html);
-		onPageContentChange(html, wc);
-		setStats({
-			words: wc,
-			chars: countCharsInHtml(html),
-			paragraphs: countParagraphsInHtml(html),
-		});
-	}, [onPageContentChange]);
-
-	const handleEditorKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
-		if ((e.ctrlKey || e.metaKey) && e.key === "s") {
-			e.preventDefault();
-			onSaveDraft();
-		}
-		if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
-			e.preventDefault();
-			onPublish();
-		}
-	}, [onSaveDraft, onPublish]);
-
-	// Auto-grow title textarea
 	const adjustTitleHeight = useCallback(() => {
 		if (titleRef.current) {
 			titleRef.current.style.height = "auto";
@@ -128,18 +296,39 @@ export const TextCreateEditor = ({
 		}
 	}, []);
 
-	const handleTitleInput = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		onTitleChange(e.target.value);
-		adjustTitleHeight();
-	}, [onTitleChange, adjustTitleHeight]);
+	const handleTitleInput = useCallback(
+		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+			onTitleChange(e.target.value);
+			adjustTitleHeight();
+		},
+		[onTitleChange, adjustTitleHeight],
+	);
 
-	const exec = (command: string, value?: string) => {
-		document.execCommand(command, false, value ?? undefined);
-	};
+	const handleUpdate = useCallback(
+		(doc: TipTapDoc) => {
+			const wc = countWords(doc);
+			onPageContentChange(doc, wc);
+			setStats({ words: wc, chars: countChars(doc), paragraphs: countParagraphs(doc) });
+		},
+		[onPageContentChange],
+	);
 
-	const formatBlock = (tag: string) => {
-		exec("formatBlock", tag);
-	};
+	const handleKeyDown = useCallback(
+		(event: KeyboardEvent) => {
+			if ((event.ctrlKey || event.metaKey) && event.key === "s") {
+				event.preventDefault();
+				onSaveDraft();
+				return true;
+			}
+			if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+				event.preventDefault();
+				onPublish();
+				return true;
+			}
+			return false;
+		},
+		[onSaveDraft, onPublish],
+	);
 
 	const titleLen = title.length;
 	const titleWarn = titleLen > 160;
@@ -163,92 +352,8 @@ export const TextCreateEditor = ({
 				</div>
 			</div>
 
-			{/* ── Formatting toolbar ── */}
-			<div className="sticky top-[52px] z-10 flex items-center gap-px overflow-x-auto border-b border-bd-1 bg-surf px-2 py-[5px] transition-colors [scrollbar-width:none] max-sm:top-[52px]">
-				{/* Block format select */}
-				<div className="shrink-0">
-					<select
-						className="h-7 cursor-pointer appearance-none rounded-[5px] border-none bg-transparent px-2 pr-5 text-xs text-t-2 outline-none transition-colors hover:bg-surf-2 hover:text-t-1"
-						defaultValue="p"
-						onChange={(e) => {
-							const v = e.target.value;
-							formatBlock(v);
-							e.target.value = "p";
-						}}
-					>
-						<option value="p">{t("admin.texts.createPage.formatText")}</option>
-						<option value="h2">{t("admin.texts.createPage.formatH2")}</option>
-						<option value="h3">{t("admin.texts.createPage.formatH3")}</option>
-						<option value="blockquote">{t("admin.texts.createPage.formatQuote")}</option>
-					</select>
-				</div>
-
-				<div className="mx-1 h-4 w-px shrink-0 bg-bd-2" />
-
-				<div className="flex shrink-0 items-center gap-px">
-					<TbBtn title={t("admin.texts.createPage.bold")} onExec={() => exec("bold")}>
-						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<path d="M4 8h5.5a2.5 2.5 0 000-5H4v5zM4 8h6a2.5 2.5 0 010 5H4V8z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
-					</TbBtn>
-					<TbBtn title={t("admin.texts.createPage.italic")} onExec={() => exec("italic")}>
-						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<path d="M10 3H7M9 13H6M9 3L7 13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-						</svg>
-					</TbBtn>
-					<TbBtn title={t("admin.texts.createPage.underline")} onExec={() => exec("underline")}>
-						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<path d="M5 3v5a3 3 0 006 0V3M3 13h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-						</svg>
-					</TbBtn>
-				</div>
-
-				<div className="mx-1 h-4 w-px shrink-0 bg-bd-2" />
-
-				<div className="flex shrink-0 items-center gap-px">
-					<TbBtn title={t("admin.texts.createPage.bulletList")} onExec={() => exec("insertUnorderedList")}>
-						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<circle cx="3.5" cy="5" r="1.2" fill="currentColor" />
-							<circle cx="3.5" cy="9" r="1.2" fill="currentColor" />
-							<circle cx="3.5" cy="13" r="1.2" fill="currentColor" />
-							<path d="M7 5h6M7 9h6M7 13h6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-						</svg>
-					</TbBtn>
-					<TbBtn title={t("admin.texts.createPage.orderedList")} onExec={() => exec("insertOrderedList")}>
-						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<path d="M2 4h1.5M2 4v2.5h1.5M2 9.5h1.5a.5.5 0 010 1H2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-							<path d="M7 4.5h7M7 9h7M7 13h7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-						</svg>
-					</TbBtn>
-				</div>
-
-				<div className="mx-1 h-4 w-px shrink-0 bg-bd-2" />
-
-				<div className="flex shrink-0 items-center gap-px">
-					<TbBtn title={t("admin.texts.createPage.undo")} onExec={() => exec("undo")}>
-						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<path d="M3 7.5A5.5 5.5 0 1114 12" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-							<path d="M3 3.5v4h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
-					</TbBtn>
-					<TbBtn title={t("admin.texts.createPage.redo")} onExec={() => exec("redo")}>
-						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<path d="M13 7.5A5.5 5.5 0 102 12" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-							<path d="M13 3.5v4H9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
-					</TbBtn>
-				</div>
-
-				{/* Keyboard hint */}
-				<div className="ml-auto flex shrink-0 items-center gap-1.5 pl-2 text-[10px] text-t-4 max-md:hidden">
-					<span className="rounded-[3px] bg-surf-3 px-1 py-px text-t-3">Ctrl+S</span>
-					<span>—</span>
-					<span>{t("admin.texts.createPage.saveDraft")}</span>
-					<span className="ml-1 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">Ctrl+↵</span>
-					<span>—</span>
-					<span>{t("admin.texts.createPage.publish")}</span>
-				</div>
-			</div>
+			{/* ── Toolbar ── */}
+			<EditorToolbar editor={editor} t={t} />
 
 			{/* ── Pages bar ── */}
 			<div className="sticky top-[93px] z-10 flex items-center overflow-x-auto border-b border-bd-1 bg-surf-2 px-3.5 transition-colors [scrollbar-width:none]">
@@ -278,7 +383,7 @@ export const TextCreateEditor = ({
 					type="button"
 					title={t("admin.texts.createPage.addPage")}
 					onClick={onAddPage}
-					className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[5px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2 ml-0.5"
+					className="ml-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-[5px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2"
 				>
 					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
 						<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -291,13 +396,15 @@ export const TextCreateEditor = ({
 			</div>
 
 			{/* ── Editor body ── */}
-			<div className="flex-1 px-[22px] py-[22px] pb-10 max-sm:px-4">
-				<EditorBody
+			<div className="group relative flex-1 px-[22px] py-[22px] pb-10 max-sm:px-4">
+				<NotionEditor
 					key={activePage}
-					initialHtml={pages[activePage]?.html ?? ""}
-					onContentChange={handleContentChange}
-					onKeyDown={handleEditorKeyDown}
+					content={pages[activePage]?.doc ?? { type: "doc", content: [{ type: "paragraph" }] }}
 					placeholder={t("admin.texts.createPage.startTyping")}
+					slashMenuItems={slashItems}
+					onUpdate={handleUpdate}
+					onKeyDown={handleKeyDown}
+					onEditorReady={setEditor}
 				/>
 			</div>
 

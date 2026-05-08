@@ -9,7 +9,7 @@ export const AdminSubscriptionsTopbar = ({ onAdd, onExport }: Props) => {
 	const { t } = useI18n();
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-3 border-b border-bd-1 bg-surf px-[22px] py-3.5 transition-colors max-sm:px-3.5 max-sm:py-2.5">
+		<header className=" flex items-center gap-3 border-b border-bd-1 bg-surf px-[22px] py-3.5 transition-colors max-sm:px-3.5 max-sm:py-2.5">
 			<div>
 				<div className="font-display text-[16px] text-t-1">
 					{t("admin.subscriptions.title")}
@@ -58,6 +58,6 @@ export const AdminSubscriptionsTopbar = ({ onAdd, onExport }: Props) => {
 					{t("admin.subscriptions.topbar.export")}
 				</button>
 			</div>
-		</div>
+		</header>
 	);
 };

@@ -22,7 +22,7 @@ export const VersionsTopbar = ({
 	const shortId = textId.length > 8 ? `#${textId.slice(0, 8)}` : `#${textId}`;
 
 	return (
-		<div className="sticky top-0 z-10 flex items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-sm:px-3.5">
+		<header className=" flex items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-sm:px-3.5">
 			<Link
 				href={`/${lang}/admin/texts`}
 				className="flex size-7 shrink-0 items-center justify-center rounded-base border border-bd-2 bg-surf text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
@@ -102,6 +102,6 @@ export const VersionsTopbar = ({
 					</span>
 				</button>
 			</div>
-		</div>
+		</header>
 	);
 };
