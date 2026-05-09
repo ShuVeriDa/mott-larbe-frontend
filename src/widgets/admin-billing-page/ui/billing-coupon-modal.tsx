@@ -1,5 +1,5 @@
 "use client";
-import { ComponentProps, SyntheticEvent, useEffect, useState } from 'react';
+import { ComponentProps, useEffect, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import type { CreateCouponDto, CouponType } from "@/entities/admin-billing";
 
@@ -35,8 +35,7 @@ export const BillingCouponModal = ({
 	const set = <K extends keyof typeof empty>(key: K, value: string) =>
 		setForm((prev) => ({ ...prev, [key]: value }));
 
-	const handleSubmit = (e: SyntheticEvent) => {
-		e.preventDefault();
+	const handleSubmit = () => {
 		if (!form.code.trim()) return;
 
 		const amount =
@@ -91,7 +90,7 @@ return (
 				</div>
 
 				{/* Body */}
-				<form onSubmit={handleSubmit} id="coupon-form">
+				<form action={handleSubmit} id="coupon-form">
 					<div className="space-y-3.5 px-[18px] py-4">
 						<div>
 							<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">

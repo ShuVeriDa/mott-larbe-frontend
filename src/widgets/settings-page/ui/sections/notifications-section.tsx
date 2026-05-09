@@ -1,5 +1,5 @@
 "use client";
-import { ComponentProps, type SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 import {
 	useUpdateNotifications,
 	type UserNotifications,
@@ -43,10 +43,7 @@ export const NotificationsSection = ({
 		}
 	};
 
-	const handleScheduleSave = async (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleScheduleSave = async () => {
 		try {
 			await mutateAsync({ reminderTime, timezone });
 			success(t("settings.toasts.notificationsSaved"));
@@ -103,7 +100,7 @@ return (
 			</SettingCard>
 
 			<SettingCard title={t("settings.notifications.reminderSchedule")}>
-				<form onSubmit={handleScheduleSave} className="flex flex-col gap-3">
+				<form action={handleScheduleSave} className="flex flex-col gap-3">
 					<div className="flex gap-2.5 max-sm:flex-col">
 						<div className="flex-1">
 							<InputLabel htmlFor="reminder-time">

@@ -14,7 +14,6 @@ import {
 	MouseEvent,
 	ReactNode,
 	useEffect,
-	useMemo,
 	useRef,
 	useState,
 } from "react";
@@ -84,9 +83,7 @@ const TbDivider = () => <div className="mx-0.5 h-4 w-px shrink-0 bg-bd-2" />;
 
 // ── Slash items ───────────────────────────────────────────────────────────────
 
-const useSlashItems = (t: ReturnType<typeof useI18n>["t"]): SlashMenuItem[] =>
-	useMemo(
-		() => [
+const getSlashItems = (t: ReturnType<typeof useI18n>["t"]): SlashMenuItem[] => [
 			{
 				title: t("admin.texts.createPage.formatText"),
 				description: "Обычный абзац",
@@ -152,9 +149,7 @@ const useSlashItems = (t: ReturnType<typeof useI18n>["t"]): SlashMenuItem[] =>
 				),
 				command: editor => editor.chain().focus().toggleOrderedList().run(),
 			},
-		],
-		[t],
-	);
+		];
 
 // ── Toolbar ───────────────────────────────────────────────────────────────────
 
@@ -496,7 +491,7 @@ export const TextCreateEditor = ({
 	const titleRef = useRef<HTMLTextAreaElement>(null);
 	const [stats, setStats] = useState({ words: 0, chars: 0, paragraphs: 0 });
 	const [editor, setEditor] = useState<Editor | null>(null);
-	const slashItems = useSlashItems(t);
+	const slashItems = getSlashItems(t);
 	const [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(null);
 
 	const handlePageCloseClick = (e: MouseEvent, index: number) => {

@@ -1,5 +1,5 @@
 "use client";
-import { ComponentProps, type SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 import { useDeleteAccount } from "@/entities/settings";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
@@ -22,10 +22,7 @@ export const DeleteAccountModal = ({
 	const { success, error } = useToast();
 	const [email, setEmail] = useState("");
 
-	const handleSubmit = async (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
 		if (!email.trim()) return;
 		try {
 			await mutateAsync(email.trim());
@@ -43,7 +40,7 @@ return (
 			<Typography tag="p" className="mb-4 text-[12px] text-t-3 leading-[1.55]">
 				{t("settings.deleteAccountModal.desc")}
 			</Typography>
-			<form onSubmit={handleSubmit}>
+			<form action={handleSubmit}>
 				<InputLabel htmlFor="delete-account-email">
 					{t("settings.deleteAccountModal.emailLabel")}
 				</InputLabel>
@@ -69,7 +66,7 @@ return (
 						type="submit"
 						variant="action"
 						size="lg"
-						className="flex-1 !bg-red"
+						className="flex-1 bg-red!"
 						disabled={isPending || !email.trim()}
 					>
 						{t("settings.deleteAccountModal.confirm")}

@@ -3,7 +3,7 @@
 import type { ImportMorphRulesResult } from "@/entities/morph-rule";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { ChangeEvent, ComponentProps, DragEvent, SyntheticEvent, useRef, useState } from 'react';
+import { ChangeEvent, ComponentProps, DragEvent, useRef, useState } from "react";
 interface Props {
 	open: boolean;
 	isLoading?: boolean;
@@ -39,10 +39,7 @@ export const MorphologyImportModal = ({
 		if (f) setFile(f);
 	};
 
-	const handleSubmit = (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleSubmit = () => {
 		if (!file) return;
 		onSubmit(file, overwrite);
 	};
@@ -57,7 +54,7 @@ export const MorphologyImportModal = ({
 	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setOverwrite(e.currentTarget.checked);
 return (
 		<div
-			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"
+			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"
 			onClick={handleClick}
 		>
 			<div className="w-full max-w-[480px] overflow-y-auto rounded-[14px] border border-bd-2 bg-surf p-5 shadow-md max-sm:max-w-full max-sm:rounded-b-none max-sm:rounded-t-[16px] max-sm:pb-7">
@@ -118,7 +115,7 @@ return (
 						)}
 					</div>
 				) : (
-					<form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+					<form action={handleSubmit} className="flex flex-col gap-3.5">
 						<div
 							className={cn(
 								"cursor-pointer rounded-[9px] border-[1.5px] border-dashed border-bd-2 p-6 text-center transition-colors",

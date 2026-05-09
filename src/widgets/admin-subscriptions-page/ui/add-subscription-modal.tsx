@@ -5,7 +5,7 @@ import { adminSubscriptionApi } from "@/entities/admin-subscription";
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
 import { useI18n } from "@/shared/lib/i18n";
 import { useQuery } from "@tanstack/react-query";
-import { ComponentProps, SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 interface Props {
 	mutations: ReturnType<typeof useAdminSubscriptionMutations>;
 	onClose: () => void;
@@ -31,8 +31,7 @@ export const AddSubscriptionModal = ({
 
 	const plans = plansQuery.data ?? [];
 
-	const handleSubmit = (e: SyntheticEvent) => {
-		e.preventDefault();
+	const handleSubmit = () => {
 		mutations.create.mutate(
 			{
 				email: email.trim() || undefined,
@@ -74,7 +73,7 @@ return (
 				</button>
 			</div>
 
-			<form onSubmit={handleSubmit} className="px-4 py-3.5">
+			<form action={handleSubmit} className="px-4 py-3.5">
 				<div className="mb-3">
 					<label className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.subscriptions.modal.emailOrId")}

@@ -11,7 +11,7 @@ import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { Select } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
-import { ComponentProps, type SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 import { SectionHeader } from "../section-header";
 import { SettingCard } from "../setting-card";
 
@@ -27,10 +27,7 @@ export const AppearanceSection = ({ preferences }: AppearanceSectionProps) => {
 		preferences.uiLanguage,
 	);
 
-	const handleSave = async (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleSave = async () => {
 		try {
 			await mutateAsync({ uiLanguage });
 			success(t("settings.toasts.languageSaved"));
@@ -52,7 +49,7 @@ return (
 			</SettingCard>
 
 			<SettingCard title={t("settings.appearance.language")}>
-				<form onSubmit={handleSave} className="flex flex-col gap-2.5">
+				<form action={handleSave} className="flex flex-col gap-2.5">
 					<Select
 						aria-label={t("settings.appearance.language")}
 						value={uiLanguage}

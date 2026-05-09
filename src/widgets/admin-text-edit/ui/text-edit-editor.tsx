@@ -13,7 +13,6 @@ import {
 	ComponentProps,
 	ReactNode,
 	useEffect,
-	useMemo,
 	useRef,
 	useState,
 } from "react";
@@ -374,9 +373,7 @@ const CHECHEN_CHARS = [
 
 // ── Slash items ───────────────────────────────────────────────────────────────
 
-const useSlashItems = (t: ReturnType<typeof useI18n>["t"]): SlashMenuItem[] =>
-	useMemo(
-		() => [
+const getSlashItems = (t: ReturnType<typeof useI18n>["t"]): SlashMenuItem[] => [
 			{
 				title: t("admin.texts.createPage.formatText"),
 				description: "Обычный абзац",
@@ -442,9 +439,7 @@ const useSlashItems = (t: ReturnType<typeof useI18n>["t"]): SlashMenuItem[] =>
 				),
 				command: editor => editor.chain().focus().toggleOrderedList().run(),
 			},
-		],
-		[t],
-	);
+		];
 
 // ── Chechen chars popup (appears in BubbleMenu as extra item) ─────────────────
 
@@ -537,7 +532,7 @@ export const TextEditEditor = ({
 	const [stats, setStats] = useState({ words: 0, chars: 0, paragraphs: 0 });
 	const [editor, setEditor] = useState<Editor | null>(null);
 	const editorRef = useRef<Editor | null>(null);
-	const slashItems = useSlashItems(t);
+	const slashItems = getSlashItems(t);
 
 	const adjustTitleHeight = () => {
 		if (titleRef.current) {
@@ -575,19 +570,12 @@ export const TextEditEditor = ({
 		return false;
 	};
 
-	const extraToolbarItems = useMemo(
-		() => {
-		  const handleInsert: NonNullable<ComponentProps<typeof CharsPopup>["onInsert"]> = char =>
-					editorRef.current?.chain().focus().insertContent(char).run();
-		  return (
-			<CharsPopup
-				onInsert={handleInsert
-				}
-			/>
-		);
-		},
-		[],
-	);
+	const handleInsert: NonNullable<ComponentProps<typeof CharsPopup>["onInsert"]> =
+		char => {
+			editorRef.current?.chain().focus().insertContent(char).run();
+		};
+
+	const extraToolbarItems = <CharsPopup onInsert={handleInsert} />;
 
 	const titleLen = title.length;
 	const titleWarn = titleLen > 160;

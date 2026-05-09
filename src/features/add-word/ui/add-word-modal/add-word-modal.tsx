@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { ComponentProps, type SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { Modal, ModalActions } from "@/shared/ui/modal";
@@ -35,10 +35,7 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 		setError(null);
 	};
 
-	const handleSubmit = async (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
 		if (!word.trim() || !translation.trim()) return;
 		setError(null);
 		try {
@@ -67,7 +64,7 @@ return (
 			onClose={onClose}
 			title={t("vocabulary.addModal.title")}
 		>
-			<form onSubmit={handleSubmit}>
+			<form action={handleSubmit}>
 				<InputLabel htmlFor="add-word-input">
 					{t("vocabulary.addModal.wordLabel")}
 				</InputLabel>

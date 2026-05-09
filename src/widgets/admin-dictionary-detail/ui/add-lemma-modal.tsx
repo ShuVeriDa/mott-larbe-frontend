@@ -6,7 +6,7 @@ import type {
 } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
-import { ComponentProps, SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { ComponentProps, useEffect, useRef, useState } from "react";
 const CEFR_LEVELS: readonly CefrLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 const POS_OPTIONS = [
 	"noun",
@@ -58,10 +58,7 @@ export const AddLemmaModal = ({
 		}
 	}, [isOpen]);
 
-	const handleSubmit = (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleSubmit = () => {
 		if (!baseForm.trim()) return;
 		const body: AddAdminLemmaDto = {
 			baseForm: baseForm.trim(),
@@ -91,7 +88,7 @@ export const AddLemmaModal = ({
 	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = e => setIsPrimary(e.currentTarget.checked);
 return (
 		<div
-			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
+			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
 			onClick={handleClick}
 		>
 			<div className="w-[480px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
@@ -101,7 +98,7 @@ return (
 				<div className="mb-4.5 text-[12px] text-t-3">
 					{t("admin.dictionaryDetail.addLemmaModalSub")}
 				</div>
-				<form onSubmit={handleSubmit}>
+				<form action={handleSubmit}>
 					<div className="mb-3.5">
 						<div className={labelCls}>
 							{t("admin.dictionaryDetail.baseForm")}

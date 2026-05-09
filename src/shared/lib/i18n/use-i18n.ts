@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from 'react';
+import { use } from "react";
 import { I18nContext } from "./i18n-context";
 
 const resolvePath = (obj: unknown, path: string): unknown => {
@@ -26,7 +26,7 @@ const interpolate = (
 };
 
 export const useI18n = () => {
-	const ctx = useContext(I18nContext);
+	const ctx = use(I18nContext);
 	if (!ctx) {
 		throw new Error("useI18n must be used within an I18nProvider");
 	}

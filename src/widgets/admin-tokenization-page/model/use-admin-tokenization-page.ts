@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
 	useTokenizationDistribution,
@@ -44,33 +44,38 @@ export const useAdminTokenizationPage = () => {
 	const [detailTextId, setDetailTextId] = useState<string | null>(null);
 	const [confirmResetOpen, setConfirmResetOpen] = useState(false);
 
-	const setParams = useCallback(
-		(updates: Record<string, string>) => {
-			const params = new URLSearchParams(searchParams.toString());
-			for (const [key, value] of Object.entries(updates)) {
-				if (
-					!value ||
-					(key === "tab" && value === "all") ||
-					(key === "sort" && value === "errors") ||
-					(key === "page" && value === "1")
-				) {
-					params.delete(key);
-				} else {
-					params.set(key, value);
-				}
+	const setParams = (updates: Record<string, string>) => {
+		const params = new URLSearchParams(searchParams.toString());
+		for (const [key, value] of Object.entries(updates)) {
+			if (
+				!value ||
+				(key === "tab" && value === "all") ||
+				(key === "sort" && value === "errors") ||
+				(key === "page" && value === "1")
+			) {
+				params.delete(key);
+			} else {
+				params.set(key, value);
 			}
-			const qs = params.toString();
-			router.replace(qs ? `${pathname}?${qs}` : pathname);
-		},
-		[searchParams, router, pathname],
-	);
+		}
+		const qs = params.toString();
+		router.replace(qs ? `${pathname}?${qs}` : pathname);
+	};
 
 	// Write debounced search to URL; skip if value hasn't changed vs what we last wrote
 	useEffect(() => {
 		if (debouncedSearch === lastWrittenSearch.current) return;
 		lastWrittenSearch.current = debouncedSearch;
-		setParams({ search: debouncedSearch, page: "1" });
-	}, [debouncedSearch, setParams]);
+		const params = new URLSearchParams(searchParams.toString());
+		if (!debouncedSearch) {
+			params.delete("search");
+		} else {
+			params.set("search", debouncedSearch);
+		}
+		params.delete("page");
+		const qs = params.toString();
+		router.replace(qs ? `${pathname}?${qs}` : pathname);
+	}, [debouncedSearch, searchParams, router, pathname]);
 
 	// Sync input when URL search changes externally (browser back/forward)
 	useEffect(() => {
@@ -81,18 +86,15 @@ export const useAdminTokenizationPage = () => {
 		}
 	}, [searchParams]);
 
-	const query: FetchTokenizationTextsQuery = useMemo(
-		() => ({
-			tab,
-			...(searchParams.get("search") ? { search: searchParams.get("search")! } : {}),
-			...(level ? { level } : {}),
-			...(status ? { status } : {}),
-			sort,
-			page,
-			limit: 20,
-		}),
-		[tab, searchParams, level, status, sort, page],
-	);
+	const query: FetchTokenizationTextsQuery = {
+		tab,
+		...(searchParams.get("search") ? { search: searchParams.get("search")! } : {}),
+		...(level ? { level } : {}),
+		...(status ? { status } : {}),
+		sort,
+		page,
+		limit: 20,
+	};
 
 	const { data, isLoading, isFetching } = useTokenizationTexts(query);
 	const { data: stats } = useTokenizationStats();

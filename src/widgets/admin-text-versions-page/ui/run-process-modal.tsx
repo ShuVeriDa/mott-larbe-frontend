@@ -3,7 +3,7 @@
 import type { ProcessTextDto } from "@/entities/admin-text";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { ComponentProps, FormEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 interface RunProcessModalProps {
 	defaultNormalization: boolean;
 	defaultMorphAnalysis: boolean;
@@ -25,8 +25,7 @@ export const RunProcessModal = ({
 	const [useMorphAnalysis, setUseMorphAnalysis] =
 		useState(defaultMorphAnalysis);
 
-	const handleSubmit = (e: FormEvent) => {
-		e.preventDefault();
+	const handleSubmit = () => {
 		onConfirm({ useNormalization, useMorphAnalysis });
 	};
 
@@ -63,7 +62,7 @@ export const RunProcessModal = ({
 						</button>
 					</div>
 
-					<form onSubmit={handleSubmit}>
+					<form action={handleSubmit}>
 						<div className="flex flex-col gap-1 px-4.5 py-4">
 							<CheckboxRow
 								label={t("admin.texts.versions.runModal.tokenization")}

@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import {
 	FolderForm,
 	buildInitialFolderForm,
@@ -8,7 +7,9 @@ import {
 } from "@/entities/folder";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
-import { Modal, ModalActions } from "@/shared/ui/modal";import { type SyntheticEvent, useState } from 'react';
+import { Modal, ModalActions } from "@/shared/ui/modal";
+import axios from "axios";
+import { useState } from "react";
 import { useCreateFolder } from "../../model";
 
 export interface CreateFolderModalProps {
@@ -39,10 +40,7 @@ export const CreateFolderModal = ({
 		onClose();
 	};
 
-	const handleSubmit = async (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
 		const trimmedName = value.name.trim();
 		if (!trimmedName) {
 			setError(t("vocabulary.folderModal.errors.nameRequired"));
@@ -73,7 +71,7 @@ export const CreateFolderModal = ({
 			onClose={handleClose}
 			title={t("vocabulary.folderModal.title")}
 		>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
+			<form action={handleSubmit} className="flex flex-col gap-4">
 				<FolderForm
 					value={value}
 					onChange={setValue}

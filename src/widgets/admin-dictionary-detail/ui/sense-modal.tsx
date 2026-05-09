@@ -2,7 +2,7 @@
 
 import type { AdminDictSense } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
-import { ComponentProps, SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { ComponentProps, useEffect, useRef, useState } from "react";
 interface SenseModalProps {
 	isOpen: boolean;
 	editSense?: AdminDictSense | null;
@@ -31,10 +31,7 @@ export const SenseModal = ({
 		}
 	}, [isOpen, editSense]);
 
-	const handleSubmit = (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleSubmit = () => {
 		if (!definition.trim()) return;
 		onSave({ definition: definition.trim(), notes: notes.trim() });
 	};
@@ -49,7 +46,7 @@ export const SenseModal = ({
 	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => setNotes(e.currentTarget.value);
 return (
 		<div
-			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
+			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
 			onClick={handleClick}
 		>
 			<div className="w-[440px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
@@ -61,7 +58,7 @@ return (
 				<div className="mb-4.5 text-[12px] text-t-3">
 					{t("admin.dictionaryDetail.senseModalSub")}
 				</div>
-				<form onSubmit={handleSubmit}>
+				<form action={handleSubmit}>
 					<div className="mb-3.5">
 						<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
 							{t("admin.dictionaryDetail.translation")}

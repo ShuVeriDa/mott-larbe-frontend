@@ -3,7 +3,7 @@
 import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ComponentProps, type SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import { CEFR_LEVELS, type CefrLevel } from "@/shared/types/cefr";
@@ -63,10 +63,7 @@ export const RegisterForm = ({
 		return Object.keys(next).length === 0;
 	};
 
-	const handleSubmit = async (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
 		reset();
 		if (!validate()) return;
 		try {
@@ -92,7 +89,7 @@ export const RegisterForm = ({
 	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowPw((v) => !v);
 	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setPassword2(e.currentTarget.value);
 return (
-		<form onSubmit={handleSubmit} noValidate autoComplete="on">
+		<form action={handleSubmit} noValidate autoComplete="on">
 			{error ? (
 				<div
 					role="alert"

@@ -1,5 +1,5 @@
 "use client";
-import { type SyntheticEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
 import { useI18n } from "@/shared/lib/i18n";
@@ -47,10 +47,7 @@ export const EditFolderModal = ({
 
 	if (!folder) return null;
 
-	const handleSubmit = async (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
 		const trimmedName = value.name.trim();
 		if (!trimmedName) {
 			setError(t("vocabulary.folderModal.errors.nameRequired"));
@@ -78,7 +75,7 @@ export const EditFolderModal = ({
 			onClose={onClose}
 			title={t("vocabulary.folderModal.editTitle")}
 		>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
+			<form action={handleSubmit} className="flex flex-col gap-4">
 				<FolderForm
 					value={value}
 					onChange={setValue}

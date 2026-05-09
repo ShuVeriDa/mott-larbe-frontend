@@ -9,7 +9,7 @@ import type {
 } from "@/entities/admin-coupon";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { ComponentProps, type SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 const PLANS = ["BASIC", "PRO", "PREMIUM", "LIFETIME"] as const;
 const PLAN_STYLES: Record<string, string> = {
 	BASIC: "bg-acc-bg border-acc text-acc-t",
@@ -110,8 +110,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 		return Object.keys(e).length === 0;
 	};
 
-	const handleSubmit = async (e: SyntheticEvent) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
 		if (!validate()) return;
 
 		const payload: CreateCouponDto = {
@@ -156,7 +155,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 	const handleChange8: NonNullable<ComponentProps<"input">["onChange"]> = e => set("newUsersOnly", e.currentTarget.checked);
 	const handleChange9: NonNullable<ComponentProps<"input">["onChange"]> = e => set("isStackable", e.currentTarget.checked);
 return (
-		<form onSubmit={handleSubmit}>
+		<form action={handleSubmit}>
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
 				<h2 className="font-display text-[14px] font-semibold text-t-1">

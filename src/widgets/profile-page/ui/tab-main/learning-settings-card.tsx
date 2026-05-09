@@ -1,5 +1,5 @@
 "use client";
-import { ComponentProps, type SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
@@ -37,10 +37,7 @@ export const LearningSettingsCard = ({ profile }: LearningSettingsCardProps) => 
 	const [language, setLanguage] = useState<UserLanguage>(profile.language ?? "CHE");
 	const [level, setLevel] = useState<UserLevel>(profile.level ?? "A1");
 
-	const handleSubmit = async (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
 		try {
 			await mutateAsync({ language, level });
 			success(t("profile.toasts.saved"));
@@ -53,7 +50,7 @@ export const LearningSettingsCard = ({ profile }: LearningSettingsCardProps) => 
 	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setLevel(e.currentTarget.value as UserLevel);
 return (
 		<SettingCard title={t("profile.learningSettings.title")}>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-3">
+			<form action={handleSubmit} className="flex flex-col gap-3">
 				<div className="grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
 					<div>
 						<InputLabel htmlFor="profile-language">

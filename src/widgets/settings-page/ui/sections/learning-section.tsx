@@ -51,7 +51,7 @@ export const LearningSection = ({
 			/>
 
 			<SettingCard title={t("settings.learning.languageLevel")}>
-				<form onSubmit={handleLanguageSave} className="flex flex-col gap-3">
+				<form action={handleLanguageSave} className="flex flex-col gap-3">
 					<div className="flex gap-2.5 max-sm:flex-col">
 						<div className="flex-1">
 							<InputLabel htmlFor="learning-lang">
@@ -119,7 +119,7 @@ export const LearningSection = ({
 			</SettingCard>
 
 			<SettingCard title={t("settings.learning.dailyGoal")}>
-				<form onSubmit={handleGoalsSave} className="flex flex-col gap-3">
+				<form action={handleGoalsSave} className="flex flex-col gap-3">
 					<div>
 						<InputLabel htmlFor="daily-words">
 							{t("settings.learning.newWords")}

@@ -1,7 +1,6 @@
 "use client";
 
-import { ReactNode } from 'react';
-"use client";
+import { ReactNode } from "react";
 
 import type { LibraryTextCounts } from "@/entities/library-text";
 import { useI18n } from "@/shared/lib/i18n";

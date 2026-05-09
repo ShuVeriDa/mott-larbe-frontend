@@ -5,7 +5,7 @@ import type {
 	RefundReason,
 } from "@/entities/admin-payment";
 import { useI18n } from "@/shared/lib/i18n";
-import { ComponentProps, type SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 const REASONS: RefundReason[] = [
 	"USER_REQUEST",
 	"DUPLICATE_TRANSACTION",
@@ -32,8 +32,7 @@ export const PaymentRefundModal = ({
 	const [amount, setAmount] = useState(String(maxRub));
 	const [reason, setReason] = useState<RefundReason>("USER_REQUEST");
 
-	const handleSubmit = (e: SyntheticEvent) => {
-		e.preventDefault();
+	const handleSubmit = () => {
 		const cents = Math.round(parseFloat(amount) * 100);
 		if (!cents || cents <= 0 || cents > payment.amountCents) return;
 		onSubmit(cents, reason);
@@ -76,7 +75,7 @@ return (
 			</div>
 
 			{/* Body */}
-			<form onSubmit={handleSubmit}>
+			<form action={handleSubmit}>
 				<div className="px-4 py-3.5">
 					{/* Payment summary */}
 					<div className="mb-3 rounded-lg border border-bd-1 bg-surf-2 px-3 py-2.5 text-[12.5px] text-t-2">
@@ -112,7 +111,7 @@ return (
 						<select
 							value={reason}
 							onChange={handleChange2}
-							className="h-[34px] w-full appearance-none rounded-lg border border-bd-2 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%226%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M1%201l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_10px_center] pl-2.5 pr-7 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
+							className="h-[34px] w-full appearance-none rounded-lg border border-bd-2 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%226%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M1%201l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-position-[right_10px_center] pl-2.5 pr-7 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 						>
 							{REASONS.map(r => (
 								<option key={r} value={r}>

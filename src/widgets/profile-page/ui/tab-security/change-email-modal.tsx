@@ -1,5 +1,5 @@
 "use client";
-import { ComponentProps, type SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { useRequestEmailChange } from "@/entities/auth";
@@ -27,8 +27,7 @@ export const ChangeEmailModal = ({ open, onClose }: ChangeEmailModalProps) => {
 		onClose();
 	};
 
-	const handleSubmit = async (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
 		try {
 			await mutateAsync({ newEmail: newEmail.trim(), currentPassword: password });
 			success(t("profile.security.emailChangeSent"));
@@ -45,7 +44,7 @@ return (
 			<Typography tag="p" className="mb-4 text-[12.5px] text-t-2 leading-[1.55]">
 				{t("profile.security.changeEmailDesc")}
 			</Typography>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-3">
+			<form action={handleSubmit} className="flex flex-col gap-3">
 				<div>
 					<InputLabel htmlFor="ce-email">{t("profile.security.newEmail")}</InputLabel>
 					<Input

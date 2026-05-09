@@ -1,5 +1,5 @@
 "use client";
-import { ComponentProps, SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import {
 	Dialog,
@@ -63,8 +63,7 @@ export const TextReportDialog = ({ id, open, onOpenChange, t }: TextReportDialog
 		onOpenChange(next);
 	};
 
-	const handleSubmit = (e: SyntheticEvent) => {
-		e.preventDefault();
+	const handleSubmit = () => {
 		mutation.mutate();
 	};
 
@@ -88,7 +87,7 @@ return (
 						{t("library.textDetail.reportDialog.alreadyReported")}
 					</p>
 				) : (
-					<form onSubmit={handleSubmit} className="flex flex-col gap-4">
+					<form action={handleSubmit} className="flex flex-col gap-4">
 						<div className="flex flex-col gap-1.5">
 							<span className="text-xs text-t-3">
 								{t("library.textDetail.reportDialog.reason")}

@@ -2,7 +2,7 @@
 
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
 import { useI18n } from "@/shared/lib/i18n";
-import { ComponentProps, SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 interface Props {
 	subscriptionId: string | null;
 	mutations: ReturnType<typeof useAdminSubscriptionMutations>;
@@ -25,8 +25,7 @@ export const ExtendSubscriptionModal = ({
 	const [extendDays, setExtendDays] = useState(365);
 	const [reason, setReason] = useState("");
 
-	const handleConfirm = (e: SyntheticEvent) => {
-		e.preventDefault();
+	const handleConfirm = () => {
 		if (!subscriptionId) return;
 		mutations.extend.mutate(
 			{
@@ -63,7 +62,7 @@ return (
 				</button>
 			</div>
 
-			<form onSubmit={handleConfirm} className="px-4 py-3.5">
+			<form action={handleConfirm} className="px-4 py-3.5">
 				<div className="mb-3">
 					<label className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.subscriptions.modal.extendBy")}

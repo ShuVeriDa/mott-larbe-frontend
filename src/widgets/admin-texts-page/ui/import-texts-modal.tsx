@@ -6,7 +6,7 @@ import type {
 } from "@/entities/admin-text";
 import { useAdminTextBulkImport } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
-import { ChangeEvent, ComponentProps, SyntheticEvent, useRef, useState } from 'react';
+import { ChangeEvent, ComponentProps, useRef, useState } from "react";
 interface ImportTextsModalProps {
 	onClose: () => void;
 }
@@ -32,8 +32,7 @@ export const ImportTextsModal = ({ onClose }: ImportTextsModalProps) => {
 		setModalState("idle");
 	};
 
-	const handleSubmit = async (e: SyntheticEvent) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
 		const file = fileRef.current?.files?.[0];
 		if (!file) return;
 
@@ -186,7 +185,7 @@ return (
 							</div>
 						</div>
 					) : (
-						<form onSubmit={handleSubmit} className="flex flex-col gap-4">
+						<form action={handleSubmit} className="flex flex-col gap-4">
 							<p className="text-[12.5px] text-t-3">
 								{t("admin.texts.import.description")}
 							</p>

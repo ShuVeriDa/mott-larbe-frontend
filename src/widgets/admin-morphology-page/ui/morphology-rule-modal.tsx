@@ -6,7 +6,7 @@ import type {
 	MorphRuleType,
 } from "@/entities/morph-rule";
 import { useI18n } from "@/shared/lib/i18n";
-import { ComponentProps, SyntheticEvent, useEffect, useState } from 'react';
+import { ComponentProps, useEffect, useState } from "react";
 const TYPE_OPTIONS: MorphRuleType[] = [
 	"SUFFIX",
 	"ENDING",
@@ -69,10 +69,7 @@ export const MorphologyRuleModal = ({
 
 	const isEdit = !!rule;
 
-	const handleSubmit = (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleSubmit = () => {
 		onSubmit({
 			...form,
 			add: form.add || undefined,
@@ -102,7 +99,7 @@ export const MorphologyRuleModal = ({
 								setForm(p => ({ ...p, isActive: e.currentTarget.checked }));
 return (
 		<div
-			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] sm:p-4 max-sm:items-end max-sm:p-0"
+			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] sm:p-4 max-sm:items-end max-sm:p-0"
 			onClick={handleClick}
 		>
 			<div className="w-full max-w-[480px] overflow-y-auto rounded-[14px] border border-bd-2 bg-surf p-5 shadow-md max-sm:max-w-full max-sm:rounded-b-none max-sm:rounded-t-[16px] max-sm:pb-7">
@@ -115,7 +112,7 @@ return (
 					{t("admin.morphology.ruleModal.subtitle")}
 				</p>
 
-				<form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+				<form action={handleSubmit} className="flex flex-col gap-3.5">
 					{/* Pattern */}
 					<div>
 						<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
@@ -174,7 +171,7 @@ return (
 								value={form.type}
 								onChange={handleChange4
 								}
-								className="h-9 w-full appearance-none rounded-lg border border-bd-2 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2211%22%20height%3D%2211%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M4%206l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[right_8px_center] bg-no-repeat px-2.5 pr-7 text-[12.5px] text-t-2 focus:border-acc focus:outline-none"
+								className="h-9 w-full appearance-none rounded-lg border border-bd-2 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2211%22%20height%3D%2211%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M4%206l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-position-[right_8px_center] bg-no-repeat px-2.5 pr-7 text-[12.5px] text-t-2 focus:border-acc focus:outline-none"
 							>
 								{TYPE_OPTIONS.map(tp => (
 									<option key={tp} value={tp}>

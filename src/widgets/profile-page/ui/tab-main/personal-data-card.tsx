@@ -1,5 +1,5 @@
 "use client";
-import { ComponentProps, type SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
@@ -22,10 +22,7 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 	const [username, setUsername] = useState(profile.username);
 	const [phone, setPhone] = useState(profile.phone ?? "");
 
-	const handleSubmit = async (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
 		try {
 			await mutateAsync({
 				name: name.trim() || undefined,
@@ -45,7 +42,7 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 	const handleChange4: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setPhone(e.currentTarget.value);
 return (
 		<SettingCard title={t("profile.personalData.title")}>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-3">
+			<form action={handleSubmit} className="flex flex-col gap-3">
 				<div className="grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
 					<div>
 						<InputLabel htmlFor="profile-name">{t("profile.personalData.firstName")}</InputLabel>

@@ -1,5 +1,5 @@
 "use client";
-import { ComponentProps, type SyntheticEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { useChangePassword } from "@/entities/auth";
@@ -30,8 +30,7 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 		onClose();
 	};
 
-	const handleSubmit = async (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
 		if (newPassword !== confirmPassword) {
 			setMismatch(true);
 			return;
@@ -54,7 +53,7 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 						};
 return (
 		<Modal open={open} onClose={handleClose} title={t("profile.security.changePassword")}>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-3">
+			<form action={handleSubmit} className="flex flex-col gap-3">
 				<div>
 					<InputLabel htmlFor="cp-current">{t("profile.security.currentPassword")}</InputLabel>
 					<Input
