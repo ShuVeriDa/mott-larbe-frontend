@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import Link from "next/link";
 import { useAdminTextEditPage } from "../model/use-admin-text-edit-page";
@@ -135,9 +136,9 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 
 	const recentVersions = versionsData?.data ?? [];
 
-		const handleDismissRetokenize: NonNullable<React.ComponentProps<typeof TextEditEditor>["onDismissRetokenize"]> = () => setShowRetokenizeBar(false);
-	const handleDeleteRequest: NonNullable<React.ComponentProps<typeof TextEditMetaPanel>["onDeleteRequest"]> = () => setShowDeleteModal(true);
-	const handleCancel: NonNullable<React.ComponentProps<typeof TextEditDeleteModal>["onCancel"]> = () => setShowDeleteModal(false);
+		const handleDismissRetokenize: NonNullable<ComponentProps<typeof TextEditEditor>["onDismissRetokenize"]> = () => setShowRetokenizeBar(false);
+	const handleDeleteRequest: NonNullable<ComponentProps<typeof TextEditMetaPanel>["onDeleteRequest"]> = () => setShowDeleteModal(true);
+	const handleCancel: NonNullable<ComponentProps<typeof TextEditDeleteModal>["onCancel"]> = () => setShowDeleteModal(false);
 return (
 		<div className="flex min-h-screen flex-col text-t-1 transition-colors">
 			<TextEditTopbar

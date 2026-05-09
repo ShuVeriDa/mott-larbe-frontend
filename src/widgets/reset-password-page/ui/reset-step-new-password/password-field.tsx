@@ -1,7 +1,7 @@
 "use client";
 
 import { Eye, EyeOff } from "lucide-react";
-import { useState, type ChangeEvent } from "react";
+import { type ChangeEvent, ComponentProps, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -27,10 +27,10 @@ export const PasswordField = ({
 	const [visible, setVisible] = useState(false);
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		onChange(e.target.value);
+		onChange(e.currentTarget.value);
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setVisible((prev) => !prev);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setVisible((prev) => !prev);
 return (
 		<>
 			<Typography

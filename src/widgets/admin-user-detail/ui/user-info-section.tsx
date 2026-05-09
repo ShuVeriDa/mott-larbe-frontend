@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminUserDetail } from "@/entities/admin-user";
 
@@ -5,7 +6,7 @@ interface UserInfoSectionProps {
 	user: AdminUserDetail;
 }
 
-const InfoRow = ({ label, value }: { label: string; value: React.ReactNode }) => (
+const InfoRow = ({ label, value }: { label: string; value: ReactNode }) => (
 	<div className="flex items-baseline justify-between gap-2">
 		<span className="text-[12px] text-t-3 shrink-0">{label}</span>
 		<span className="text-right text-[12.5px] font-medium text-t-1">{value}</span>

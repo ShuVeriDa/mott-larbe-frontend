@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useState } from "react";
+import { useState } from 'react';
 import {
 	useBillingStats,
 	useBillingPlans,
@@ -43,81 +42,66 @@ export const useAdminBillingPage = () => {
 	const mutations = useBillingMutations();
 
 	// ── Modal handlers ───────────────────────────────────────────────────────
-	const openCreatePlanModal = useCallback(() => {
+	const openCreatePlanModal = () => {
 		setEditingPlan(null);
 		setPlanModalMode("create");
 		setActiveModal("plan");
-	}, []);
+	};
 
-	const openEditPlanModal = useCallback((plan: AdminPlan) => {
+	const openEditPlanModal = (plan: AdminPlan) => {
 		setEditingPlan(plan);
 		setPlanModalMode("edit");
 		setActiveModal("plan");
-	}, []);
+	};
 
-	const openCreateCouponModal = useCallback(() => {
+	const openCreateCouponModal = () => {
 		setEditingCoupon(null);
 		setActiveModal("coupon");
-	}, []);
+	};
 
-	const openLimitsModal = useCallback((plan: AdminPlan) => {
+	const openLimitsModal = (plan: AdminPlan) => {
 		setEditingPlan(plan);
 		setActiveModal("limits");
-	}, []);
+	};
 
-	const closeModal = useCallback(() => {
+	const closeModal = () => {
 		setActiveModal(null);
 		setEditingPlan(null);
 		setEditingCoupon(null);
-	}, []);
+	};
 
 	// ── Submit handlers ──────────────────────────────────────────────────────
-	const handlePlanSubmit = useCallback(
-		(dto: CreatePlanDto | UpdatePlanDto) => {
-			if (planModalMode === "edit" && editingPlan) {
-				mutations.updatePlan.mutate(
-					{ id: editingPlan.id, dto: dto as UpdatePlanDto },
-					{ onSuccess: closeModal },
-				);
-			} else {
-				mutations.createPlan.mutate(dto as CreatePlanDto, {
-					onSuccess: closeModal,
-				});
-			}
-		},
-		[planModalMode, editingPlan, mutations, closeModal],
-	);
-
-	const handleCouponSubmit = useCallback(
-		(dto: CreateCouponDto) => {
-			mutations.createCoupon.mutate(dto, { onSuccess: closeModal });
-		},
-		[mutations, closeModal],
-	);
-
-	const handleDeactivatePlan = useCallback(
-		(id: string) => {
-			mutations.deactivatePlan.mutate(id);
-		},
-		[mutations],
-	);
-
-	const handleDeleteCoupon = useCallback(
-		(id: string) => {
-			mutations.deleteCoupon.mutate(id);
-		},
-		[mutations],
-	);
-
-	const handleLimitsSubmit = useCallback(
-		(id: string, limits: Partial<PlanLimits>) => {
-			mutations.updatePlanLimits.mutate(
-				{ id, dto: { limits } },
+	const handlePlanSubmit = (dto: CreatePlanDto | UpdatePlanDto) => {
+		if (planModalMode === "edit" && editingPlan) {
+			mutations.updatePlan.mutate(
+				{ id: editingPlan.id, dto: dto as UpdatePlanDto },
 				{ onSuccess: closeModal },
 			);
-		},
-		[mutations, closeModal],
-	);
+		} else {
+			mutations.createPlan.mutate(dto as CreatePlanDto, {
+				onSuccess: closeModal,
+			});
+		}
+	};
+
+	const handleCouponSubmit = (dto: CreateCouponDto) => {
+		mutations.createCoupon.mutate(dto, { onSuccess: closeModal });
+	};
+
+	const handleDeactivatePlan = (id: string) => {
+		mutations.deactivatePlan.mutate(id);
+	};
+
+	const handleDeleteCoupon = (id: string) => {
+		mutations.deleteCoupon.mutate(id);
+	};
+
+	const handleLimitsSubmit = (id: string, limits: Partial<PlanLimits>) => {
+		mutations.updatePlanLimits.mutate(
+			{ id, dto: { limits } },
+			{ onSuccess: closeModal },
+		);
+	};
 
 	return {
 		// data

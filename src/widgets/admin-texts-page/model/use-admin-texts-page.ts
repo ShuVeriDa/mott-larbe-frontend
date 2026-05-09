@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useState } from "react";
+import { useState } from 'react';
 import { useAdminTexts, useAdminTextStats, useAdminTextMutations } from "@/entities/admin-text";
 import type { AdminTextsTab, FetchAdminTextsQuery, TextLevel, TextSortBy } from "@/entities/admin-text";
 
@@ -29,43 +28,43 @@ export const useAdminTextsPage = () => {
 	const { data: stats, isLoading: statsLoading } = useAdminTextStats();
 	const mutations = useAdminTextMutations();
 
-	const handleTabChange = useCallback((next: AdminTextsTab) => {
+	const handleTabChange = (next: AdminTextsTab) => {
 		setTab(next);
 		setPage(1);
 		setSelectedIds(new Set());
-	}, []);
+	};
 
-	const handleSearchChange = useCallback((value: string) => {
+	const handleSearchChange = (value: string) => {
 		setSearch(value);
 		setPage(1);
 		setSelectedIds(new Set());
-	}, []);
+	};
 
-	const handleLevelChange = useCallback((value: string) => {
+	const handleLevelChange = (value: string) => {
 		setLevel(value as TextLevel | "");
 		setPage(1);
-	}, []);
+	};
 
-	const handleTagChange = useCallback((value: string) => {
+	const handleTagChange = (value: string) => {
 		setTagId(value);
 		setPage(1);
-	}, []);
+	};
 
-	const handleSortChange = useCallback((value: TextSortBy) => {
+	const handleSortChange = (value: TextSortBy) => {
 		setSortBy(value);
 		setPage(1);
-	}, []);
+	};
 
-	const toggleSelectId = useCallback((id: string) => {
+	const toggleSelectId = (id: string) => {
 		setSelectedIds((prev) => {
 			const next = new Set(prev);
 			if (next.has(id)) next.delete(id);
 			else next.add(id);
 			return next;
 		});
-	}, []);
+	};
 
-	const toggleSelectAll = useCallback(() => {
+	const toggleSelectAll = () => {
 		if (!data?.items) return;
 		setSelectedIds((prev) => {
 			const allIds = data.items.map((t) => t.id);
@@ -73,9 +72,9 @@ export const useAdminTextsPage = () => {
 			if (allSelected) return new Set();
 			return new Set(allIds);
 		});
-	}, [data?.items]);
+	};
 
-	const clearSelection = useCallback(() => setSelectedIds(new Set()), []);
+	const clearSelection = () => setSelectedIds(new Set());
 
 	const allSelected =
 		!!data?.items?.length && data.items.every((t) => selectedIds.has(t.id));

@@ -8,8 +8,7 @@ import {
 } from "@/entities/folder";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
-import { Modal, ModalActions } from "@/shared/ui/modal";
-import { useState, type SyntheticEvent } from "react";
+import { Modal, ModalActions } from "@/shared/ui/modal";import { type SyntheticEvent, useState } from 'react';
 import { useCreateFolder } from "../../model";
 
 export interface CreateFolderModalProps {

@@ -2,8 +2,7 @@
 
 import type { FeatureFlagItem } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
-import { useEffect, useState } from "react";
-
+import { ComponentProps, useEffect, useState } from 'react';
 interface FeatureFlagDuplicateModalProps {
 	flag: FeatureFlagItem | null;
 	isDuplicating: boolean;
@@ -39,11 +38,11 @@ export const FeatureFlagDuplicateModal = ({
 		onConfirm(key);
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
-				if (e.target === e.currentTarget) onClose();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
 			};
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => {
-							setKey(e.target.value);
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => {
+							setKey(e.currentTarget.value);
 							setKeyError("");
 						};
 return (

@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -76,7 +77,7 @@ const SenseBlock = ({
 	onDeleteExample,
 }: SenseBlockProps) => {
 	const { t } = useI18n();
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onAddExample(sense.id);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onAddExample(sense.id);
 return (
 		<div className="group relative border-b border-bd-1 px-4 py-3.5 transition-colors hover:bg-surf-2 last:border-b-0">
 			<div className="mb-2.5 flex items-start gap-2.5">
@@ -109,8 +110,8 @@ return (
 			{sense.examples.length > 0 && (
 				<div className="ml-[30px] flex flex-col gap-2 mb-2.5">
 					{sense.examples.map((ex) => {
-					  const handleEdit: NonNullable<React.ComponentProps<typeof ExampleItem>["onEdit"]> = () => onEditExample(ex);
-					  const handleDelete: NonNullable<React.ComponentProps<typeof ExampleItem>["onDelete"]> = () => onDeleteExample(ex.id);
+					  const handleEdit: NonNullable<ComponentProps<typeof ExampleItem>["onEdit"]> = () => onEditExample(ex);
+					  const handleDelete: NonNullable<ComponentProps<typeof ExampleItem>["onDelete"]> = () => onDeleteExample(ex.id);
 					  return (
 						<ExampleItem
 							key={ex.id}
@@ -183,8 +184,8 @@ export const LemmasSensesCard = ({
 
 	const tabs = relatedLemmas && relatedLemmas.length > 1 ? relatedLemmas : null;
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addSense" });
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addSense" });
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addSense" });
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addSense" });
 return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			{/* Header */}
@@ -208,7 +209,7 @@ return (
 				<div className="mx-4 mb-0 mt-0">
 					<div className="flex w-fit gap-0 rounded-[9px] bg-surf-2 p-0.5">
 						{tabs.map((lemma) => {
-						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 									if (!lemma.isCurrent) router.push(`/${lang}/admin/dictionary/${lemma.id}`);
 								};
 						  return (
@@ -241,10 +242,10 @@ return (
 					</div>
 				) : (
 					data.senses.map((sense, i) => {
-					  const handleEditSense: NonNullable<React.ComponentProps<typeof SenseBlock>["onEditSense"]> = () => onOpenModal({ type: "editSense", sense });
-					  const handleDeleteSense: NonNullable<React.ComponentProps<typeof SenseBlock>["onDeleteSense"]> = () => onDeleteSense(sense.id);
-					  const handleAddExample: NonNullable<React.ComponentProps<typeof SenseBlock>["onAddExample"]> = (senseId) => onOpenModal({ type: "addExample", senseId });
-					  const handleEditExample: NonNullable<React.ComponentProps<typeof SenseBlock>["onEditExample"]> = (ex) => onOpenModal({ type: "editExample", example: ex });
+					  const handleEditSense: NonNullable<ComponentProps<typeof SenseBlock>["onEditSense"]> = () => onOpenModal({ type: "editSense", sense });
+					  const handleDeleteSense: NonNullable<ComponentProps<typeof SenseBlock>["onDeleteSense"]> = () => onDeleteSense(sense.id);
+					  const handleAddExample: NonNullable<ComponentProps<typeof SenseBlock>["onAddExample"]> = (senseId) => onOpenModal({ type: "addExample", senseId });
+					  const handleEditExample: NonNullable<ComponentProps<typeof SenseBlock>["onEditExample"]> = (ex) => onOpenModal({ type: "editExample", example: ex });
 					  return (
 						<SenseBlock
 							key={sense.id}

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { useRequestEmailChange } from "@/entities/auth";
@@ -39,8 +38,8 @@ export const ChangeEmailModal = ({ open, onClose }: ChangeEmailModalProps) => {
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setNewEmail(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setPassword(e.target.value);
+		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setNewEmail(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setPassword(e.currentTarget.value);
 return (
 		<Modal open={open} onClose={handleClose} title={t("profile.security.changeEmailTitle")}>
 			<Typography tag="p" className="mb-4 text-[12.5px] text-t-2 leading-[1.55]">

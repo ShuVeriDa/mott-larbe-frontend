@@ -5,8 +5,7 @@ import { adminSubscriptionApi } from "@/entities/admin-subscription";
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
 import { useI18n } from "@/shared/lib/i18n";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-
+import { ComponentProps, SyntheticEvent, useState } from 'react';
 interface Props {
 	mutations: ReturnType<typeof useAdminSubscriptionMutations>;
 	onClose: () => void;
@@ -32,7 +31,7 @@ export const AddSubscriptionModal = ({
 
 	const plans = plansQuery.data ?? [];
 
-	const handleSubmit = (e: React.SyntheticEvent) => {
+	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
 		mutations.create.mutate(
 			{
@@ -46,11 +45,11 @@ export const AddSubscriptionModal = ({
 		);
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setEmail(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setPlanId(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setDurationDays(e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setProvider(e.target.value as PaymentProvider);
-	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setReason(e.target.value);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setEmail(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => setPlanId(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => setDurationDays(e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = e => setProvider(e.currentTarget.value as PaymentProvider);
+	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = e => setReason(e.currentTarget.value);
 return (
 		<>
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">

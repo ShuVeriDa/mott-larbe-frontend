@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { UnknownWordItem } from "@/entities/admin-unknown-word";
 import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word/model/use-admin-unknown-word-mutations";
@@ -45,10 +46,10 @@ export const UnknownWordsMobileList = ({
 	return (
 		<div className="hidden max-sm:block">
 			{words.map((word) => {
-			  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onAddToDictionary(word);
-			  const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onLinkToLemma(word);
-			  const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onViewContexts(word);
-			  const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => mutations.remove.mutate(word.id);
+			  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onAddToDictionary(word);
+			  const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onLinkToLemma(word);
+			  const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => onViewContexts(word);
+			  const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.remove.mutate(word.id);
 			  return (
 				<div key={word.id} className="border-b border-bd-1 px-3.5 py-3.5 last:border-b-0">
 					<div className="mb-2 flex items-start gap-2.5">

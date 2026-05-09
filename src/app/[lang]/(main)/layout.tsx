@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale } from "@/i18n/locales";
 import { I18nProvider } from "@/shared/lib/i18n";
@@ -7,7 +8,7 @@ const MainLayout = async ({
 	children,
 	params,
 }: {
-	children: React.ReactNode;
+	children: ReactNode;
 	params: Promise<{ lang: string }>;
 }) => {
 	const { lang } = await params;

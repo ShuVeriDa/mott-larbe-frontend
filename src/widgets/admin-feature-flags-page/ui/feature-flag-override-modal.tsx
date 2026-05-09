@@ -7,7 +7,7 @@ import type {
 import { useAdminFeatureFlagKeys } from "@/entities/feature-flag";
 import { http } from "@/shared/api";
 import { useDebounce } from "@/shared/lib/debounce";
-import { useEffect, useRef, useState } from "react";
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { FlagToggle } from "./flag-toggle";
 
 interface UserSuggestion {
@@ -78,7 +78,7 @@ export const FeatureFlagOverrideModal = ({
 		const handler = (e: MouseEvent) => {
 			if (
 				suggestRef.current &&
-				!suggestRef.current.contains(e.target as Node)
+				!suggestRef.current.contains(e.target as Node /* intentional: outside-click target */)
 			) {
 				setShowSuggestions(false);
 			}
@@ -102,16 +102,16 @@ export const FeatureFlagOverrideModal = ({
 	const inputCls =
 		"h-[34px] w-full rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc";
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
-				if (e.target === e.currentTarget) onClose();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
 			};
-	const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setFlagId(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => {
-								setUserInput(e.target.value);
+	const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setFlagId(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => {
+								setUserInput(e.currentTarget.value);
 								setShowSuggestions(true);
 							};
-	const handleFocus: NonNullable<React.ComponentProps<"input">["onFocus"]> = () => suggestions.length > 0 && setShowSuggestions(true);
-	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setReason(e.target.value);
+	const handleFocus: NonNullable<ComponentProps<"input">["onFocus"]> = () => suggestions.length > 0 && setShowSuggestions(true);
+	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = e => setReason(e.currentTarget.value);
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
@@ -164,7 +164,7 @@ return (
 						{showSuggestions && suggestions.length > 0 && (
 							<div className="absolute left-0 top-[calc(100%+4px)] z-50 w-full rounded-[9px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
 								{suggestions.map(u => {
-								  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+								  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 											setUserInput(u.email);
 											setShowSuggestions(false);
 										};

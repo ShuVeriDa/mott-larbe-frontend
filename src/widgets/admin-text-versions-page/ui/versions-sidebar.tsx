@@ -1,5 +1,6 @@
 "use client";
 
+import { ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import { useAdminTextVersionDetail } from "@/entities/admin-text/model/use-admin-text-versions";
@@ -42,7 +43,7 @@ const formatDuration = (ms: number | null): string => {
 
 interface SectionCardProps {
 	title: string;
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
 const SectionCard = ({ title, children }: SectionCardProps) => (
@@ -56,7 +57,7 @@ const SectionCard = ({ title, children }: SectionCardProps) => (
 
 interface InfoRowProps {
 	label: string;
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
 const InfoRow = ({ label, children }: InfoRowProps) => (

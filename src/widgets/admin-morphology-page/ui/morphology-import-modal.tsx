@@ -3,8 +3,7 @@
 import type { ImportMorphRulesResult } from "@/entities/morph-rule";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { useRef, useState } from "react";
-
+import { ChangeEvent, ComponentProps, DragEvent, SyntheticEvent, useRef, useState } from 'react';
 interface Props {
 	open: boolean;
 	isLoading?: boolean;
@@ -28,34 +27,34 @@ export const MorphologyImportModal = ({
 
 	if (!open) return null;
 
-	const handleDrop = (e: React.DragEvent) => {
+	const handleDrop = (e: DragEvent) => {
 		e.preventDefault();
 		setDragging(false);
 		const f = e.dataTransfer.files[0];
 		if (f) setFile(f);
 	};
 
-	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const f = e.target.files?.[0];
+	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const f = e.currentTarget.files?.[0];
 		if (f) setFile(f);
 	};
 
 	const handleSubmit = (
-		e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
 	) => {
 		e.preventDefault();
 		if (!file) return;
 		onSubmit(file, overwrite);
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
-	const handleDragOver: NonNullable<React.ComponentProps<"div">["onDragOver"]> = e => {
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleDragOver: NonNullable<ComponentProps<"div">["onDragOver"]> = e => {
 								e.preventDefault();
 								setDragging(true);
 							};
-	const handleDragLeave: NonNullable<React.ComponentProps<"div">["onDragLeave"]> = () => setDragging(false);
-	const handleClick2: NonNullable<React.ComponentProps<"div">["onClick"]> = () => inputRef.current?.click();
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setOverwrite(e.target.checked);
+	const handleDragLeave: NonNullable<ComponentProps<"div">["onDragLeave"]> = () => setDragging(false);
+	const handleClick2: NonNullable<ComponentProps<"div">["onClick"]> = () => inputRef.current?.click();
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setOverwrite(e.currentTarget.checked);
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"

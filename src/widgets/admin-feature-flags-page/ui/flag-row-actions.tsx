@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useRef, useEffect } from "react";
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagItem } from "@/entities/feature-flag";
 
@@ -20,7 +19,7 @@ export const FlagRowActions = ({ flag, onEdit, onDuplicate, onDelete, onAddOverr
 	useEffect(() => {
 		if (!open) return;
 		const handler = (e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+			if (ref.current && !ref.current.contains(e.target as Node /* intentional: outside-click target */)) setOpen(false);
 		};
 		document.addEventListener("mousedown", handler);
 		return () => document.removeEventListener("mousedown", handler);
@@ -29,11 +28,11 @@ export const FlagRowActions = ({ flag, onEdit, onDuplicate, onDelete, onAddOverr
 	const btn =
 		"flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1";
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onEdit(flag);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { onAddOverride(flag.id); setOpen(false); };
-	const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { onDuplicate(flag); setOpen(false); };
-	const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { onDelete(flag); setOpen(false); };
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onEdit(flag);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => { onAddOverride(flag.id); setOpen(false); };
+	const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => { onDuplicate(flag); setOpen(false); };
+	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => { onDelete(flag); setOpen(false); };
 return (
 		<div ref={ref} className="relative flex items-center gap-0.5">
 			<button type="button" className={btn} title={t("admin.featureFlags.actions.edit")} onClick={handleClick}>

@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps, ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { TextVersionListItem } from "@/entities/admin-text";
@@ -41,7 +42,7 @@ const Dot = ({ status, isCurrent }: DotProps) => {
 };
 
 interface TagProps {
-	children: React.ReactNode;
+	children: ReactNode;
 	variant: "green" | "amber" | "red" | "blue" | "neutral";
 }
 
@@ -89,10 +90,10 @@ export const VersionItem = ({ item, isFirst, isLast, isActive, onClick, onRestor
 
 	const btnClass = "flex size-6 cursor-pointer items-center justify-center rounded-[5px] border-none bg-surf-3 text-t-2 transition-colors hover:bg-surf-4 hover:text-t-1 [&_svg]:size-3";
 
-		const handleKeyDown: NonNullable<React.ComponentProps<"div">["onKeyDown"]> = (e) => e.key === "Enter" && onClick();
-	const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onRestore(); };
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onRetry(); };
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onDownload(item.version); };
+		const handleKeyDown: NonNullable<ComponentProps<"div">["onKeyDown"]> = (e) => e.key === "Enter" && onClick();
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onRestore(); };
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onRetry(); };
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onDownload(item.version); };
 return (
 		<div
 			role="button"

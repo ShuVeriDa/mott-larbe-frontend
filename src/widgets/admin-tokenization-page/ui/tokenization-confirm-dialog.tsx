@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 
 interface TokenizationConfirmDialogProps {
@@ -26,7 +27,7 @@ export const TokenizationConfirmDialog = ({
 		String(count),
 	);
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
 return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"

@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import { createPortal } from "react-dom";
 import { Plus, X } from "lucide-react";
 import type { TextToken } from "@/entities/text";

@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import {
 	formatPrice,
 	type Plan,
@@ -120,7 +121,7 @@ export const PlanCard = ({
 		const baseClass =
 			"h-[30px] w-full text-[11.5px] font-semibold border-0 text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] hover:opacity-[0.88]";
 		if (colorScheme.button === "pro") {
-						const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => onChoose?.(plan);
+						const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => onChoose?.(plan);
 return (
 				<Button
 					variant="action"
@@ -135,7 +136,7 @@ return (
 				</Button>
 			);
 		}
-				const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => onChoose?.(plan);
+				const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => onChoose?.(plan);
 return (
 			<Button
 				variant="action"
@@ -148,7 +149,7 @@ return (
 		);
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<"article">["onClick"]> = () => {
+		const handleClick: NonNullable<ComponentProps<"article">["onClick"]> = () => {
 				if (!current) onChoose?.(plan);
 			};
 return (

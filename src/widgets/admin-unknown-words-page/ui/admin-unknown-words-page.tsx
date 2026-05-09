@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useAdminUnknownWordsPage } from "../model/use-admin-unknown-words-page";
 import { UnknownWordsTopbar } from "./unknown-words-topbar";
 import { UnknownWordsStatsRow } from "./unknown-words-stats-row";
@@ -56,19 +57,19 @@ export const AdminUnknownWordsPage = () => {
 	const handleOpenAdd = (word: UnknownWordListItem) => openAddModal(word, "new");
 	const handleOpenLink = (word: UnknownWordListItem) => openAddModal(word, "link");
 
-	const handleOpenClearAllModal: NonNullable<React.ComponentProps<typeof UnknownWordsTopbar>["onClearAll"]> = () =>
+	const handleOpenClearAllModal: NonNullable<ComponentProps<typeof UnknownWordsTopbar>["onClearAll"]> = () =>
 		setClearModalOpen(true);
-	const handleBulkAddToDictionary: NonNullable<React.ComponentProps<typeof UnknownWordsBulkBar>["onAddToDictionary"]> = () => {
+	const handleBulkAddToDictionary: NonNullable<ComponentProps<typeof UnknownWordsBulkBar>["onAddToDictionary"]> = () => {
 		if (selectedArray.length === 1 && data?.items) {
 			const word = data.items.find(w => w.id === selectedArray[0]);
 			if (word) handleOpenAdd(word);
 		}
 	};
-	const handleBulkDelete: NonNullable<React.ComponentProps<typeof UnknownWordsBulkBar>["onDelete"]> = () =>
+	const handleBulkDelete: NonNullable<ComponentProps<typeof UnknownWordsBulkBar>["onDelete"]> = () =>
 		mutations.bulkDelete.mutate(selectedArray, {
 			onSuccess: clearSelection,
 		});
-	const handleClearModalClose: NonNullable<React.ComponentProps<typeof UnknownWordsClearModal>["onClose"]> = () =>
+	const handleClearModalClose: NonNullable<ComponentProps<typeof UnknownWordsClearModal>["onClose"]> = () =>
 		setClearModalOpen(false);
 return (
 		<>

@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { FaqItem, useFaq } from "@/features/landing-faq";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -45,7 +46,7 @@ export const LandingFaq = () => {
 
 				<div className="mx-auto max-w-[760px]">
 					{items.map((item, idx) => {
-					  const handleToggle: NonNullable<React.ComponentProps<typeof FaqItem>["onToggle"]> = () => toggle(idx);
+					  const handleToggle: NonNullable<ComponentProps<typeof FaqItem>["onToggle"]> = () => toggle(idx);
 					  return (
 						<FaqItem
 							key={`faq-${idx}`}

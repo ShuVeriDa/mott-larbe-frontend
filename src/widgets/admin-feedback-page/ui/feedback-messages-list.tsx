@@ -1,7 +1,7 @@
 "use client";
 
 import type { AdminFeedbackMessage } from "@/entities/feedback";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 import { FeedbackMessageBubble } from "./feedback-message-bubble";
 
 const formatDateDivider = (iso: string): string =>

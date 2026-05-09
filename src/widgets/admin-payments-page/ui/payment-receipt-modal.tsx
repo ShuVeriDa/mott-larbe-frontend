@@ -1,5 +1,6 @@
 "use client";
 
+import { ReactNode } from 'react';
 import type {
 	AdminPaymentListItem,
 	PaymentBackendStatus,
@@ -80,7 +81,7 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 				? "text-red-t"
 				: "text-t-3";
 
-	const rows: { key: string; value: React.ReactNode }[] = [
+	const rows: { key: string; value: ReactNode }[] = [
 		{
 			key: t("admin.payments.receipt.txId"),
 			value: (

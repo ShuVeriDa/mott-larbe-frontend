@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { ComponentProps, useEffect, useState } from 'react';
 import { createPortal } from "react-dom";
 import { cn } from "@/shared/lib/cn";
 import { useToastStore } from "@/shared/lib/toast";
@@ -24,7 +23,7 @@ export const ToastViewport = () => {
 			className="pointer-events-none fixed inset-x-0 bottom-6 z-[300] flex flex-col items-center gap-2 px-4"
 		>
 			{items.map((item) => {
-			  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => dismiss(item.id);
+			  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => dismiss(item.id);
 			  return (
 				<button
 					key={item.id}

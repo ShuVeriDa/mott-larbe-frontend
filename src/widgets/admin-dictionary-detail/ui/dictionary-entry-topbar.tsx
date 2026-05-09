@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import type { AdminDictNavEntry } from "@/entities/dictionary";
 import { ACCESS_TOKEN_STORAGE_KEY, API_URL } from "@/shared/config";
 import { cn } from "@/shared/lib/cn";
@@ -146,13 +147,13 @@ export const DictionaryEntryTopbar = ({
 	const ghostBtn =
 		"flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:opacity-40";
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () =>
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
 						prev.data &&
 						router.push(`/${lang}/admin/dictionary/${prev.data.id}`);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () =>
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () =>
 						next.data &&
 						router.push(`/${lang}/admin/dictionary/${next.data.id}`);
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addLemma" });
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addLemma" });
 return (
 		<header className=" flex items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-[14px] transition-colors max-sm:px-3.5 max-sm:py-3">
 			{/* Breadcrumb */}

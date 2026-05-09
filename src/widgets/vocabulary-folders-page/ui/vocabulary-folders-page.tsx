@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { ComponentProps, useEffect, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useFolders, useFoldersSummary, type Folder } from "@/entities/folder";
 import { CreateFolderModal } from "@/features/create-folder";
@@ -47,14 +46,14 @@ export const VocabularyFoldersPage = () => {
 		return t("vocabulary.foldersPage.section.limitUsed", { used, max });
 	})();
 
-		const handleCreate: NonNullable<React.ComponentProps<typeof FoldersTopbar>["onCreate"]> = () => setCreateOpen(true);
-	const handleCreate2: NonNullable<React.ComponentProps<typeof FoldersGrid>["onCreate"]> = () => setCreateOpen(true);
-	const handleEdit: NonNullable<React.ComponentProps<typeof FoldersGrid>["onEdit"]> = (f) => setEditFolder(f);
-	const handleDelete: NonNullable<React.ComponentProps<typeof FoldersGrid>["onDelete"]> = (f) => setDeleteFolder(f);
-	const handleClose: NonNullable<React.ComponentProps<typeof CreateFolderModal>["onClose"]> = () => setCreateOpen(false);
-	const handleClose2: NonNullable<React.ComponentProps<typeof EditFolderModal>["onClose"]> = () => setEditFolder(null);
-	const handleClose3: NonNullable<React.ComponentProps<typeof DeleteFolderModal>["onClose"]> = () => setDeleteFolder(null);
-	const handleClose4: NonNullable<React.ComponentProps<typeof PremiumUpsellModal>["onClose"]> = () => setUpsellOpen(false);
+		const handleCreate: NonNullable<ComponentProps<typeof FoldersTopbar>["onCreate"]> = () => setCreateOpen(true);
+	const handleCreate2: NonNullable<ComponentProps<typeof FoldersGrid>["onCreate"]> = () => setCreateOpen(true);
+	const handleEdit: NonNullable<ComponentProps<typeof FoldersGrid>["onEdit"]> = (f) => setEditFolder(f);
+	const handleDelete: NonNullable<ComponentProps<typeof FoldersGrid>["onDelete"]> = (f) => setDeleteFolder(f);
+	const handleClose: NonNullable<ComponentProps<typeof CreateFolderModal>["onClose"]> = () => setCreateOpen(false);
+	const handleClose2: NonNullable<ComponentProps<typeof EditFolderModal>["onClose"]> = () => setEditFolder(null);
+	const handleClose3: NonNullable<ComponentProps<typeof DeleteFolderModal>["onClose"]> = () => setDeleteFolder(null);
+	const handleClose4: NonNullable<ComponentProps<typeof PremiumUpsellModal>["onClose"]> = () => setUpsellOpen(false);
 return (
 		<>
 			<FoldersTopbar

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, SyntheticEvent, useState } from 'react';
 import { useMutation } from "@tanstack/react-query";
 import {
 	Dialog,
@@ -64,13 +63,13 @@ export const TextReportDialog = ({ id, open, onOpenChange, t }: TextReportDialog
 		onOpenChange(next);
 	};
 
-	const handleSubmit = (e: React.SyntheticEvent) => {
+	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
 		mutation.mutate();
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => setReason(e.target.value as TextReportReason);
-	const handleChange2: NonNullable<React.ComponentProps<typeof Textarea>["onChange"]> = (e) => setComment(e.target.value);
+		const handleChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => setReason(e.currentTarget.value as TextReportReason);
+	const handleChange2: NonNullable<ComponentProps<typeof Textarea>["onChange"]> = (e) => setComment(e.currentTarget.value);
 return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent>

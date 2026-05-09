@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { EventsTab } from "../model/use-admin-user-detail-page";
@@ -48,7 +49,7 @@ export const UserEventsCard = ({
 				</span>
 				<div className="flex gap-0.5 ml-auto max-sm:order-2 max-sm:w-full">
 					{tabs.map(({ key, label }) => {
-					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setEventsTab(key);
+					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setEventsTab(key);
 					  return (
 						<button
 							key={key}

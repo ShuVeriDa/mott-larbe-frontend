@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminSubscriptionsStats } from "@/entities/admin-subscription";
 
@@ -14,7 +15,7 @@ const KpiCard = ({
 }: {
 	label: string;
 	value: string | number;
-	sub?: React.ReactNode;
+	sub?: ReactNode;
 	isLoading: boolean;
 }) => (
 	<div className="rounded-[11px] border border-bd-1 bg-surf p-3 transition-colors">

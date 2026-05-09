@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useRef } from "react";
+import { ComponentProps, MouseEvent, useEffect, useRef } from 'react';
 import { ArrowRight, PaintBucket, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 
@@ -33,7 +32,7 @@ export const FolderCardActions = ({
 	useEffect(() => {
 		if (!open) return;
 		const onDocClick = (e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) onClose();
+			if (ref.current && !ref.current.contains(e.target as Node /* intentional: outside-click target */)) onClose();
 		};
 		const onKey = (e: KeyboardEvent) => {
 			if (e.key === "Escape") onClose();
@@ -57,13 +56,13 @@ export const FolderCardActions = ({
 		"transition-colors hover:bg-red-bg hover:text-red-t",
 	);
 
-	const handle = (cb: () => void) => (e: React.MouseEvent) => {
+	const handle = (cb: () => void) => (e: MouseEvent) => {
 		e.stopPropagation();
 		cb();
 		onClose();
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
 return (
 		<div
 			ref={ref}

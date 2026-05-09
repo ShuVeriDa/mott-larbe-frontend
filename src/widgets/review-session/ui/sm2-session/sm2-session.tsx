@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useSwipe } from "@/shared/lib/swipe";
 import { Typography } from "@/shared/ui/typography";
@@ -56,6 +55,7 @@ export const Sm2Session = ({
 
 	useEffect(() => {
 		const handleKey = (e: KeyboardEvent) => {
+			// intentional: delegated event inspects the actual clicked element
 			const tag = (e.target as HTMLElement | null)?.tagName;
 			if (tag === "INPUT" || tag === "TEXTAREA") return;
 

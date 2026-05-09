@@ -1,8 +1,7 @@
 "use client";
 
 import { cn } from "@/shared/lib/cn";
-import { useRef, useState } from "react";
-
+import { ComponentProps, KeyboardEvent, useRef, useState } from 'react';
 type Translator = (key: string) => string;
 
 interface FeedbackAdminInputProps {
@@ -42,7 +41,7 @@ export const FeedbackAdminInput = ({
 		if (textareaRef.current) textareaRef.current.style.height = "auto";
 	};
 
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+	const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
 		if (e.key === "Enter" && !e.shiftKey) {
 			e.preventDefault();
 			handleSend();
@@ -67,10 +66,10 @@ export const FeedbackAdminInput = ({
 
 	const isNote = inputMode === "note";
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onModeChange("reply");
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onModeChange("note");
-	const handleChange: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => {
-						setValue(e.target.value);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onModeChange("reply");
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onModeChange("note");
+	const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = e => {
+						setValue(e.currentTarget.value);
 						autoResize();
 					};
 return (

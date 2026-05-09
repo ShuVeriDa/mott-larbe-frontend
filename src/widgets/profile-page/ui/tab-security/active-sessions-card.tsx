@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
@@ -39,7 +40,7 @@ const SessionRow = ({
 	const { t } = useI18n();
 	const locationLabel = session.location?.city ?? t("profile.security.unknownLocation");
 
-		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => onTerminate(session.id);
+		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => onTerminate(session.id);
 return (
 		<div className="flex items-center gap-3 border-b border-hairline border-bd-1 px-4 py-2.5 last:border-b-0">
 			<span

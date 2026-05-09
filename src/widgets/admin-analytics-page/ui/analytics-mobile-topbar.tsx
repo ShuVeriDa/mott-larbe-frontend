@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+"use client";import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AnalyticsRange } from "@/entities/admin-analytics";
@@ -44,9 +42,9 @@ export const AnalyticsMobileTopbar = ({
 		setShowDatePicker(false);
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowDatePicker((v) => !v);
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setLocalFrom(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setLocalTo(e.target.value);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowDatePicker((v) => !v);
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setLocalFrom(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setLocalTo(e.currentTarget.value);
 return (
 		<header className=" border-b border-bd-1 bg-surf transition-colors md:hidden">
 			<div className="flex items-center justify-between px-4 py-2.5">
@@ -56,7 +54,7 @@ return (
 				<div className="flex items-center gap-1">
 					<div className="flex items-center gap-0.5 rounded-lg border border-bd-2 bg-surf-2 p-0.5">
 						{RANGES.map((r) => {
-						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRangeChange(r);
+						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRangeChange(r);
 						  return (
 							<button
 								key={r}

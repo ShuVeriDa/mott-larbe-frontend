@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { DifficultBy, DifficultTextItem } from "@/entities/admin-analytics";
@@ -53,7 +54,7 @@ export const AnalyticsDifficultTexts = ({
 			{/* Tab strip */}
 			<div className="-mb-px flex gap-px overflow-x-auto border-b border-bd-1 px-4">
 				{TABS.map((tb) => {
-				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onTabChange(tb);
+				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onTabChange(tb);
 				  return (
 					<button
 						key={tb}

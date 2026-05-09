@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type {
@@ -206,12 +207,12 @@ export const PaymentsTable = ({
 								item.user.surname,
 							);
 
-														const handleClick: NonNullable<React.ComponentProps<"tr">["onClick"]> = () => onSelectRow(item.id);
-							const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+														const handleClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onSelectRow(item.id);
+							const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
 													e.stopPropagation();
 													onReceipt(item.id);
 												};
-							const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+							const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
 														e.stopPropagation();
 														onRefund(item.id);
 													};

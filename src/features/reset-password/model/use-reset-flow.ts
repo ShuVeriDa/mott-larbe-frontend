@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from 'react';
 import type { AuthLang } from "@/entities/auth";
 import { useI18n } from "@/shared/lib/i18n";
 import {
@@ -24,7 +24,7 @@ const toAuthLang = (lang: string): AuthLang => {
 
 export const useResetFlow = () => {
 	const { lang } = useI18n();
-	const authLang = useMemo(() => toAuthLang(lang), [lang]);
+	const authLang = toAuthLang(lang);
 
 	const searchParams = useSearchParams();
 	const tokenFromUrl = searchParams.get("token");
@@ -42,39 +42,36 @@ export const useResetFlow = () => {
 	const confirmMutation = useConfirmReset();
 	const resendTimer = useResendTimer({ durationSeconds: 60 });
 
-	const goExpired = useCallback(() => setIsExpired(true), []);
+	const goExpired = () => setIsExpired(true);
 
-	const goRequestReset = useCallback(() => {
+	const goRequestReset = () => {
 		setIsExpired(false);
 		setStep(1);
-	}, []);
+	};
 
 	useEffect(() => {
 		if (tokenValidation.data && !tokenValidation.data.valid) {
 			goExpired();
 		}
-	}, [tokenValidation.data, goExpired]);
+	}, [tokenValidation.data]);
 
-	const submitEmail = useCallback(
-		async (rawEmail: string) => {
-			setRequestError(null);
-			const trimmed = rawEmail.trim();
-			try {
-				await requestMutation.mutateAsync({
-					email: trimmed,
-					lang: authLang,
-				});
-				setEmail(trimmed);
-				setStep(2);
-				resendTimer.start();
-			} catch {
-				setRequestError("generic");
-			}
-		},
-		[authLang, requestMutation, resendTimer],
-	);
+	const submitEmail = async (rawEmail: string) => {
+		setRequestError(null);
+		const trimmed = rawEmail.trim();
+		try {
+			await requestMutation.mutateAsync({
+				email: trimmed,
+				lang: authLang,
+			});
+			setEmail(trimmed);
+			setStep(2);
+			resendTimer.start();
+		} catch {
+			setRequestError("generic");
+		}
+	};
 
-	const resend = useCallback(async () => {
+	const resend = async () => {
 		if (!email || resendTimer.isActive) return;
 		try {
 			await requestMutation.mutateAsync({ email, lang: authLang });
@@ -82,38 +79,35 @@ export const useResetFlow = () => {
 		} catch {
 			setRequestError("generic");
 		}
-	}, [authLang, email, requestMutation, resendTimer]);
+	};
 
-	const changeEmail = useCallback(() => {
+	const changeEmail = () => {
 		setRequestError(null);
 		setStep(1);
-	}, []);
+	};
 
-	const submitNewPassword = useCallback(
-		async (password: string) => {
-			if (!tokenFromUrl) return;
-			setConfirmError(null);
-			try {
-				await confirmMutation.mutateAsync({
-					body: { token: tokenFromUrl, password },
-					lang: authLang,
-				});
-				setStep(4);
-			} catch (error) {
-				const reason = extractResetErrorReason(error);
-				if (
-					reason === "token_expired" ||
-					reason === "token_used" ||
-					reason === "token_invalid"
-				) {
-					goExpired();
-				} else {
-					setConfirmError(reason);
-				}
+	const submitNewPassword = async (password: string) => {
+		if (!tokenFromUrl) return;
+		setConfirmError(null);
+		try {
+			await confirmMutation.mutateAsync({
+				body: { token: tokenFromUrl, password },
+				lang: authLang,
+			});
+			setStep(4);
+		} catch (error) {
+			const reason = extractResetErrorReason(error);
+			if (
+				reason === "token_expired" ||
+				reason === "token_used" ||
+				reason === "token_invalid"
+			) {
+				goExpired();
+			} else {
+				setConfirmError(reason);
 			}
-		},
-		[authLang, confirmMutation, goExpired, tokenFromUrl],
-	);
+		}
+	};
 
 	const expiresAt =
 		tokenValidation.data?.valid ? tokenValidation.data.expiresAt : undefined;

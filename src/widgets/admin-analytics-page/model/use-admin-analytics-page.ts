@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useState } from 'react';
 import {
 	adminAnalyticsApi,
 	useAdminAnalytics,
@@ -23,16 +22,10 @@ export const useAdminAnalyticsPage = () => {
 	const [difficultBy, setDifficultBy] = useState<DifficultBy>("fail");
 	const [popularBy, setPopularBy] = useState<PopularBy>("opens");
 
-	const tz = useMemo(() => getBrowserTz(), []);
+	const tz = getBrowserTz();
 
 	// dateFrom+dateTo override range on the backend per API contract
-	const query = useMemo(
-		() =>
-			dateFrom && dateTo
-				? { dateFrom, dateTo, tz }
-				: { range, tz },
-		[range, dateFrom, dateTo, tz],
-	);
+	const query = dateFrom && dateTo ? { dateFrom, dateTo, tz } : { range, tz };
 
 	const overviewQuery = useAdminAnalytics(query);
 
@@ -48,39 +41,33 @@ export const useAdminAnalyticsPage = () => {
 		popularLimit: 7,
 	});
 
-	const handleRangeChange = useCallback((next: AnalyticsRange) => {
+	const handleRangeChange = (next: AnalyticsRange) => {
 		setRange(next);
 		setDateFrom(undefined);
 		setDateTo(undefined);
-	}, []);
+	};
 
-	const handleDateRangeChange = useCallback(
-		(from: string, to: string) => {
-			setDateFrom(from);
-			setDateTo(to);
-		},
-		[],
-	);
+	const handleDateRangeChange = (from: string, to: string) => {
+		setDateFrom(from);
+		setDateTo(to);
+	};
 
-	const handleDateRangeClear = useCallback(() => {
+	const handleDateRangeClear = () => {
 		setDateFrom(undefined);
 		setDateTo(undefined);
-	}, []);
+	};
 
-	const handleDifficultByChange = useCallback((next: DifficultBy) => {
+	const handleDifficultByChange = (next: DifficultBy) => {
 		setDifficultBy(next);
-	}, []);
+	};
 
-	const handlePopularByChange = useCallback((next: PopularBy) => {
+	const handlePopularByChange = (next: PopularBy) => {
 		setPopularBy(next);
-	}, []);
+	};
 
-	const handleExport = useCallback(
-		(format: "json" | "csv" = "csv") => {
-			adminAnalyticsApi.export({ ...query, format });
-		},
-		[query],
-	);
+	const handleExport = (format: "json" | "csv" = "csv") => {
+		adminAnalyticsApi.export({ ...query, format });
+	};
 
 	const data = overviewQuery.data;
 	const isLoading = overviewQuery.isLoading;

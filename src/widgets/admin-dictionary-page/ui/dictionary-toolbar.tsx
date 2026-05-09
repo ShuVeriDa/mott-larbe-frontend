@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import type { AdminDictLanguage, AdminDictSort } from "@/entities/dictionary";
 import type { CefrLevel } from "@/shared/types";
 import { CEFR_LEVELS } from "@/shared/types";
@@ -54,11 +55,11 @@ export const DictionaryToolbar = ({
 	const selectCls =
 		"h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3";
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onSearchChange(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onLanguageChange(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onPosChange(e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onLevelChange(e.target.value);
-	const handleChange5: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onSortChange(e.target.value as AdminDictSort);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onSearchChange(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => onLanguageChange(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => onPosChange(e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = e => onLevelChange(e.currentTarget.value);
+	const handleChange5: NonNullable<ComponentProps<"select">["onChange"]> = e => onSortChange(e.currentTarget.value as AdminDictSort);
 return (
 		<div className="mb-3.5 flex flex-wrap items-center gap-2">
 			<div className="relative min-w-[200px] flex-1 max-w-[320px]">

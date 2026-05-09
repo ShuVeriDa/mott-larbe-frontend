@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { useCurrentUser } from "@/entities/user";

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
 

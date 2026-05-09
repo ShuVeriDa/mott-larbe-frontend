@@ -13,8 +13,7 @@ import {
 } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
-import { useEffect, useState, type ChangeEvent, type SyntheticEvent } from "react";
-
+import { type ChangeEvent, type SyntheticEvent, useEffect, useState } from 'react';
 export interface UseLearningSectionParams {
 	preferences: UserPreferences;
 	goals: UserGoals;

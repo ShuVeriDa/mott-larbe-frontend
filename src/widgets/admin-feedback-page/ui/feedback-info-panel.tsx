@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps, ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackThread, FeedbackStatus, FeedbackPriority } from "@/entities/feedback";
 
@@ -23,14 +24,14 @@ interface FeedbackInfoPanelProps {
 	onDelete: () => void;
 }
 
-const InfoSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
+const InfoSection = ({ title, children }: { title: string; children: ReactNode }) => (
 	<div className="border-b border-bd-1 px-4 py-3.5">
 		<p className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">{title}</p>
 		{children}
 	</div>
 );
 
-const InfoRow = ({ label, children }: { label: string; children: React.ReactNode }) => (
+const InfoRow = ({ label, children }: { label: string; children: ReactNode }) => (
 	<div className="mb-2.5 flex flex-col gap-[3px] last:mb-0">
 		<span className="text-[10.5px] text-t-3">{label}</span>
 		<div className="text-[12px] font-medium text-t-1">{children}</div>
@@ -54,8 +55,8 @@ export const FeedbackInfoPanel = ({
 }: FeedbackInfoPanelProps & { className?: string }) => {
 	const isResolved = thread.status === "RESOLVED";
 
-		const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onStatusChange(e.target.value as FeedbackStatus);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onPriorityChange(e.target.value as FeedbackPriority);
+		const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onStatusChange(e.currentTarget.value as FeedbackStatus);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onPriorityChange(e.currentTarget.value as FeedbackPriority);
 return (
 		<div className={cn("flex w-[220px] shrink-0 flex-col overflow-y-auto border-l border-bd-1 bg-surf [&::-webkit-scrollbar]:w-0", className)}>
 			{/* User */}
@@ -204,8 +205,8 @@ const ActionBtn = ({
 	onClick,
 	className,
 }: {
-	children: React.ReactNode;
-	icon: React.ReactNode;
+	children: ReactNode;
+	icon: ReactNode;
 	onClick: () => void;
 	className: string;
 }) => (

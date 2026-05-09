@@ -15,7 +15,7 @@ import type {
 	SuggestionKeyDownProps,
 	SuggestionProps,
 } from "@tiptap/suggestion";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ComponentProps, CSSProperties, ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from "react-dom";
 import { SlashExtension } from "./slash-extension";
 import type { SlashMenuHandle, SlashMenuItem } from "./slash-menu";
@@ -40,7 +40,7 @@ export interface NotionEditorProps {
 	content: TipTapDoc;
 	placeholder?: string;
 	slashMenuItems: SlashMenuItem[];
-	extraToolbarItems?: React.ReactNode;
+	extraToolbarItems?: ReactNode;
 	onUpdate: (doc: TipTapDoc) => void;
 	onKeyDown?: (event: KeyboardEvent) => boolean;
 	onEditorReady?: (editor: Editor) => void;
@@ -121,10 +121,10 @@ const Btn = ({
 	active?: boolean;
 	onExec: () => void;
 	title: string;
-	children: React.ReactNode;
+	children: ReactNode;
 	wide?: boolean;
 }) => {
-  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); onExec(); };
+  const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); onExec(); };
   return (
 	<button
 		type="button"
@@ -176,12 +176,12 @@ const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 		setAnchor(null);
 	};
 
-		const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = (e) => {
+		const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = (e) => {
 					e.preventDefault();
 					const rect = e.currentTarget.getBoundingClientRect();
 					setAnchor(prev => prev ? null : rect);
 				};
-	const handleMouseDown2: NonNullable<React.ComponentProps<"div">["onMouseDown"]> = () => setAnchor(null);
+	const handleMouseDown2: NonNullable<ComponentProps<"div">["onMouseDown"]> = () => setAnchor(null);
 return (
 		<div className="relative">
 			<button
@@ -205,7 +205,7 @@ return (
 						}}
 					>
 						{BLOCK_TYPES.map(b => {
-						  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); apply(b.value); };
+						  const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); apply(b.value); };
 						  return (
 							<button
 								key={b.value}
@@ -250,7 +250,7 @@ const ColorPanel = ({
 	const activeHighlight =
 		BG_COLORS.find(c => c.value && editor.isActive("highlight", { color: c.value }))?.value ?? null;
 
-		const handleMouseDown: NonNullable<React.ComponentProps<"div">["onMouseDown"]> = (e) => e.preventDefault();
+		const handleMouseDown: NonNullable<ComponentProps<"div">["onMouseDown"]> = (e) => e.preventDefault();
 return (
 		<div
 			className="w-[212px] overflow-hidden rounded-[12px] border border-bd-2 bg-surf shadow-lg"
@@ -259,7 +259,7 @@ return (
 			{/* Tabs */}
 			<div className="flex border-b border-bd-1">
 				{(["text", "bg"] as const).map(t => {
-				  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); setTab(t); };
+				  const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); setTab(t); };
 				  return (
 					<button
 						key={t}
@@ -279,7 +279,7 @@ return (
 					<div className="grid grid-cols-5 gap-1.5">
 						{TEXT_COLORS.map(c => {
 							const isActive = c.value === null ? activeTextColor === null : activeTextColor === c.value;
-							const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+							const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = e => {
 								e.preventDefault();
 								if (c.value === null) {
 									editor.chain().focus().unsetColor().run();
@@ -322,7 +322,7 @@ return (
 					<div className="grid grid-cols-5 gap-1.5">
 						{BG_COLORS.map(c => {
 							const isActive = c.value === null ? activeHighlight === null : activeHighlight === c.value;
-							const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+							const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = e => {
 								e.preventDefault();
 								if (c.value === null) {
 									editor.chain().focus().unsetHighlight().run();
@@ -378,7 +378,7 @@ const BubbleMenuContent = ({
 	extraToolbarItems,
 }: {
 	editor: Editor;
-	extraToolbarItems?: React.ReactNode;
+	extraToolbarItems?: ReactNode;
 }) => {
 	const [colorOpen, setColorOpen] = useState(false);
 	const [colorAnchor, setColorAnchor] = useState<DOMRect | null>(null);
@@ -397,14 +397,14 @@ const BubbleMenuContent = ({
 		setColorOpen(v => !v);
 	};
 
-		const handleExec: NonNullable<React.ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleBold().run();
-	const handleExec2: NonNullable<React.ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleItalic().run();
-	const handleExec3: NonNullable<React.ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleUnderline().run();
-	const handleExec4: NonNullable<React.ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleStrike().run();
-	const handleExec5: NonNullable<React.ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleCode().run();
-	const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); toggleColor(); };
-	const handleMouseDown2: NonNullable<React.ComponentProps<"div">["onMouseDown"]> = () => setColorOpen(false);
-	const handleClose: NonNullable<React.ComponentProps<typeof ColorPanel>["onClose"]> = () => setColorOpen(false);
+		const handleExec: NonNullable<ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleBold().run();
+	const handleExec2: NonNullable<ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleItalic().run();
+	const handleExec3: NonNullable<ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleUnderline().run();
+	const handleExec4: NonNullable<ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleStrike().run();
+	const handleExec5: NonNullable<ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleCode().run();
+	const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); toggleColor(); };
+	const handleMouseDown2: NonNullable<ComponentProps<"div">["onMouseDown"]> = () => setColorOpen(false);
+	const handleClose: NonNullable<ComponentProps<typeof ColorPanel>["onClose"]> = () => setColorOpen(false);
 return (
 		<>
 			{/* ── Main toolbar ── */}
@@ -498,7 +498,7 @@ export const NotionEditor = ({
 	const slashMenuRef = useRef<SlashMenuHandle>(null);
 	const [slashPortal, setSlashPortal] = useState<SlashPortalState | null>(null);
 
-	const hideSlash = useCallback(() => setSlashPortal(null), []);
+	const hideSlash = () => setSlashPortal(null);
 
 	const editor = useEditor({
 		immediatelyRender: false,
@@ -603,7 +603,7 @@ export const NotionEditor = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [editor]);
 
-	const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+	const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = e => {
 		e.preventDefault();
 		if (!editor) return;
 		editor.chain().focus().insertContent("/").run();
@@ -669,7 +669,7 @@ return (
 			{/* ── Editor content ── */}
 			<div
 				className="[&_.tiptap]:cursor-text [&_.tiptap]:outline-none [&_.tiptap_blockquote]:my-3 [&_.tiptap_blockquote]:border-l-[3px] [&_.tiptap_blockquote]:border-acc-muted [&_.tiptap_blockquote]:pl-3.5 [&_.tiptap_blockquote]:text-t-2 [&_.tiptap_blockquote_p]:mb-0 [&_.tiptap_h1]:mb-2 [&_.tiptap_h1]:mt-8 [&_.tiptap_h1]:font-display [&_.tiptap_h1]:text-[26px] [&_.tiptap_h1]:font-semibold [&_.tiptap_h1]:text-t-1 [&_.tiptap_h2]:mb-1.5 [&_.tiptap_h2]:mt-6 [&_.tiptap_h2]:font-display [&_.tiptap_h2]:text-[18px] [&_.tiptap_h2]:font-medium [&_.tiptap_h2]:text-t-1 [&_.tiptap_h3]:mb-1 [&_.tiptap_h3]:mt-4 [&_.tiptap_h3]:text-[15px] [&_.tiptap_h3]:font-semibold [&_.tiptap_h3]:text-t-1 [&_.tiptap_h4]:mb-1 [&_.tiptap_h4]:mt-3 [&_.tiptap_h4]:text-[13.5px] [&_.tiptap_h4]:font-semibold [&_.tiptap_h4]:uppercase [&_.tiptap_h4]:tracking-wide [&_.tiptap_h4]:text-t-2 [&_.tiptap_li]:mb-1 [&_.tiptap_ol]:mb-3 [&_.tiptap_ol]:pl-5 [&_.tiptap_p:last-child]:mb-0 [&_.tiptap_p]:mb-2.5 [&_.tiptap_ul]:mb-3 [&_.tiptap_ul]:pl-5 [&_.tiptap_p.is-editor-empty:first-child]:before:pointer-events-none [&_.tiptap_p.is-editor-empty:first-child]:before:float-left [&_.tiptap_p.is-editor-empty:first-child]:before:h-0 [&_.tiptap_p.is-editor-empty:first-child]:before:text-t-4 [&_.tiptap_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)] [&_.tiptap_mark]:rounded-[2px] [&_.tiptap_mark]:px-[1px]"
-				style={{ "--editor-min-h": minHeight } as React.CSSProperties}
+				style={{ "--editor-min-h": minHeight } as CSSProperties}
 			>
 				{editor && (
 					<Tiptap editor={editor}>

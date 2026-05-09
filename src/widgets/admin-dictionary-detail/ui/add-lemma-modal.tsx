@@ -6,8 +6,7 @@ import type {
 } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
-import { useEffect, useRef, useState } from "react";
-
+import { ComponentProps, SyntheticEvent, useEffect, useRef, useState } from 'react';
 const CEFR_LEVELS: readonly CefrLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 const POS_OPTIONS = [
 	"noun",
@@ -60,7 +59,7 @@ export const AddLemmaModal = ({
 	}, [isOpen]);
 
 	const handleSubmit = (
-		e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
 	) => {
 		e.preventDefault();
 		if (!baseForm.trim()) return;
@@ -83,13 +82,13 @@ export const AddLemmaModal = ({
 		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[12.5px] text-t-2 outline-none transition-colors focus:border-acc appearance-none cursor-pointer";
 	const labelCls = "mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2";
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setBaseForm(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setPartOfSpeech(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setLevel(e.target.value as CefrLevel | "");
-	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setFrequency(e.target.value);
-	const handleChange5: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setLanguage(e.target.value as AdminDictLanguage);
-	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setIsPrimary(e.target.checked);
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setBaseForm(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => setPartOfSpeech(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => setLevel(e.currentTarget.value as CefrLevel | "");
+	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = e => setFrequency(e.currentTarget.value);
+	const handleChange5: NonNullable<ComponentProps<"select">["onChange"]> = e => setLanguage(e.currentTarget.value as AdminDictLanguage);
+	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = e => setIsPrimary(e.currentTarget.checked);
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"

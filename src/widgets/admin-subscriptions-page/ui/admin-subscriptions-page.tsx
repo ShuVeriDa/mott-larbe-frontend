@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useAdminSubscriptionsPage } from "../model/use-admin-subscriptions-page";
 import { AdminSubscriptionsTopbar } from "./admin-subscriptions-topbar";
 import { SubscriptionsKpiRow } from "./subscriptions-kpi-row";
@@ -47,18 +48,18 @@ export const AdminSubscriptionsPage = () => {
 		handleExport,
 	} = state;
 
-		const handleAdd: NonNullable<React.ComponentProps<typeof AdminSubscriptionsTopbar>["onAdd"]> = () => openModal("add");
-	const handleExtend: NonNullable<React.ComponentProps<typeof SubscriptionsTable>["onExtend"]> = (id) => openModal("extend", id);
-	const handleCancel: NonNullable<React.ComponentProps<typeof SubscriptionsTable>["onCancel"]> = (id) => openModal("cancel", id);
-	const handleExtend2: NonNullable<React.ComponentProps<typeof SubscriptionDetailPanel>["onExtend"]> = (id) => openModal("extend", id);
-	const handleCancel2: NonNullable<React.ComponentProps<typeof SubscriptionDetailPanel>["onCancel"]> = (id) => openModal("cancel", id);
-	const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
-	const handleExtend3: NonNullable<React.ComponentProps<typeof SubscriptionDetailPanel>["onExtend"]> = (id) => openModal("extend", id);
-	const handleCancel3: NonNullable<React.ComponentProps<typeof SubscriptionDetailPanel>["onCancel"]> = (id) => openModal("cancel", id);
-	const handleClick2: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => {
-						if (e.target === e.currentTarget) closeModal();
+		const handleAdd: NonNullable<ComponentProps<typeof AdminSubscriptionsTopbar>["onAdd"]> = () => openModal("add");
+	const handleExtend: NonNullable<ComponentProps<typeof SubscriptionsTable>["onExtend"]> = (id) => openModal("extend", id);
+	const handleCancel: NonNullable<ComponentProps<typeof SubscriptionsTable>["onCancel"]> = (id) => openModal("cancel", id);
+	const handleExtend2: NonNullable<ComponentProps<typeof SubscriptionDetailPanel>["onExtend"]> = (id) => openModal("extend", id);
+	const handleCancel2: NonNullable<ComponentProps<typeof SubscriptionDetailPanel>["onCancel"]> = (id) => openModal("cancel", id);
+	const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+	const handleExtend3: NonNullable<ComponentProps<typeof SubscriptionDetailPanel>["onExtend"]> = (id) => openModal("extend", id);
+	const handleCancel3: NonNullable<ComponentProps<typeof SubscriptionDetailPanel>["onCancel"]> = (id) => openModal("cancel", id);
+	const handleClick2: NonNullable<ComponentProps<"div">["onClick"]> = (e) => {
+						if (/* intentional: backdrop-only click */ e.target === e.currentTarget) closeModal();
 					};
-	const handleClick3: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+	const handleClick3: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
 return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<AdminSubscriptionsTopbar

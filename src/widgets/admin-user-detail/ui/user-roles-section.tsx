@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { UserRoleItem, RoleName } from "@/entities/admin-user";
 import type { useAdminUserRoles } from "@/entities/admin-user/model/use-admin-user-roles";
@@ -41,7 +40,7 @@ export const UserRolesSection = ({ roles, roleMutations }: UserRolesSectionProps
 		setShowDropdown(false);
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowDropdown((v) => !v);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowDropdown((v) => !v);
 return (
 		<div className="border-b border-bd-1 px-4 py-3">
 			<div className="mb-2 flex items-center justify-between">
@@ -67,7 +66,7 @@ return (
 						{showDropdown && (
 							<div className="absolute right-0 top-full z-20 mt-1 min-w-[130px] overflow-hidden rounded-lg border border-bd-2 bg-surf shadow-md">
 								{availableRoles.map((role) => {
-								  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => handleAssign(role);
+								  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleAssign(role);
 								  return (
 									<button
 										key={role}
@@ -100,7 +99,7 @@ return (
 						year: "numeric",
 					});
 					const isLearner = role.name === "learner";
-										const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => roleMutations.revoke.mutate(role.id);
+										const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => roleMutations.revoke.mutate(role.id);
 return (
 						<div
 							key={role.id}

@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
 import { adminUserApi } from "@/entities/admin-user";
@@ -141,15 +142,15 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 	const canCancel = sub.status === "ACTIVE" || sub.status === "TRIALING";
 	const initials = (sub.user.name[0] ?? "") + (sub.user.surname[0] ?? "");
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onExtend(sub.id);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onExtend(sub.id);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 								const code = window.prompt(t("admin.subscriptions.detail.coupon"));
 								if (code?.trim()) applyCoupon.mutate(code.trim());
 							};
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onCancel(sub.id);
-	const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => router.push(`/admin/users/${userId}`);
-	const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => logoutAll.mutate();
-	const handleClick6: NonNullable<React.ComponentProps<"button">["onClick"]> = () => freeze.mutate();
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => onCancel(sub.id);
+	const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => router.push(`/admin/users/${userId}`);
+	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => logoutAll.mutate();
+	const handleClick6: NonNullable<ComponentProps<"button">["onClick"]> = () => freeze.mutate();
 return (
 		<div className="flex flex-col gap-2.5">
 			<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
@@ -201,7 +202,7 @@ return (
 						<div className="flex flex-wrap gap-1">
 							{sub.user.roles.map((r) => {
 								const isLearner = r.role.name === LEARNER_ROLE;
-																const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => revokeRole.mutate({ roleId: r.id });
+																const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => revokeRole.mutate({ roleId: r.id });
 return (
 									<span
 										key={r.id}

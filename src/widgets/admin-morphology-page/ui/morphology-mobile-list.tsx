@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import type { MorphRule } from "@/entities/morph-rule";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -46,9 +47,9 @@ export const MorphologyMobileList = ({
 	return (
 		<div className="flex flex-col gap-2 sm:hidden">
 			{items.map(rule => {
-			  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onToggleActive(rule);
-			  const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onEdit(rule);
-			  const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDelete(rule.id);
+			  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onToggleActive(rule);
+			  const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onEdit(rule);
+			  const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => onDelete(rule.id);
 			  return (
 				<div
 					key={rule.id}

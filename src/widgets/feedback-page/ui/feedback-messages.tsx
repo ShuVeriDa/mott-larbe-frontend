@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 import type { FeedbackMessage } from "@/entities/feedback";
 import { FeedbackMessageBubble } from "./feedback-message-bubble";
 

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { useAdminUserSubscription } from "@/entities/admin-user/model/use-admin-user-subscription";
 import type { PaymentStatus } from "@/entities/admin-user";
@@ -39,13 +38,13 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 	const [extendDays, setExtendDays] = useState(30);
 	const [showExtend, setShowExtend] = useState(false);
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowExtend((v) => !v);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowExtend((v) => !v);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 		if (!currentSubscription) return;
 		cancel.mutate(currentSubscription.id);
 	};
-	const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => setExtendDays(Number(e.target.value));
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+	const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setExtendDays(Number(e.currentTarget.value));
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 		if (!currentSubscription) return;
 		extend.mutate(
 			{ subId: currentSubscription.id, days: extendDays },

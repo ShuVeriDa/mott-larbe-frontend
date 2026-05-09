@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useMemo } from "react";
+import { useEffect } from 'react';
 import { createPortal } from "react-dom";
 import { ExternalLink, Plus } from "lucide-react";
 import type { TextToken } from "@/entities/text";
@@ -144,10 +143,7 @@ export const WordPopup = () => {
 		isVisible && token ? token.id : null,
 	);
 
-	const position = useMemo(
-		() => (anchor ? computePosition(anchor) : { left: 0, top: 0 }),
-		[anchor],
-	);
+	const position = anchor ? computePosition(anchor) : { left: 0, top: 0 };
 
 	useEffect(() => {
 		if (!isVisible) return;

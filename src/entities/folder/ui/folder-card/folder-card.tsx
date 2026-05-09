@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/shared/lib/cn";
-import { type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
+import { type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
 import type { Folder } from "../../api/types";
 import { DEFAULT_FOLDER_COLOR } from "../../lib/folder-presets";
 import { FolderIcon } from "../folder-icon";

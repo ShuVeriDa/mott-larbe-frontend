@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
 import { ArrowRight, BookIcon, Check, Sparkles, X, Zap } from "lucide-react";
@@ -20,7 +21,7 @@ interface PlanCardProps {
 	ctaHref: string;
 }
 
-const ICON_BY_PLAN: Record<PlanKey, React.ReactNode> = {
+const ICON_BY_PLAN: Record<PlanKey, ReactNode> = {
 	free: <BookIcon size={14} strokeWidth={1.6} />,
 	premium: <Sparkles size={14} strokeWidth={1.6} />,
 	pro: <Zap size={14} strokeWidth={1.6} />,

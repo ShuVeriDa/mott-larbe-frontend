@@ -1,5 +1,6 @@
 "use client";
 
+import { ReactNode } from 'react';
 import type { ActivityItem, ActivityType } from "@/entities/statistics";
 import { formatRelativeFromNow } from "@/shared/lib/format-relative-time";
 import { useI18n } from "@/shared/lib/i18n";
@@ -11,7 +12,7 @@ interface ActivityLogProps {
 
 const TONE_BY_TYPE: Record<
 	ActivityType,
-	{ bg: string; stroke: string; icon: React.ReactNode }
+	{ bg: string; stroke: string; icon: ReactNode }
 > = {
 	READ_TEXT: {
 		bg: "bg-acc-bg",

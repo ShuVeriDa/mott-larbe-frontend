@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import {
 	useMySubscription,
 	type BillingCycle,
@@ -36,9 +35,9 @@ export const SubscriptionPage = () => {
 		setUpgradeOpen(true);
 	};
 
-		const handleCancel: NonNullable<React.ComponentProps<typeof ManageCard>["onCancel"]> = () => setCancelOpen(true);
-	const handleClose: NonNullable<React.ComponentProps<typeof UpgradeModal>["onClose"]> = () => setUpgradeOpen(false);
-	const handleClose2: NonNullable<React.ComponentProps<typeof CancelModal>["onClose"]> = () => setCancelOpen(false);
+		const handleCancel: NonNullable<ComponentProps<typeof ManageCard>["onCancel"]> = () => setCancelOpen(true);
+	const handleClose: NonNullable<ComponentProps<typeof UpgradeModal>["onClose"]> = () => setUpgradeOpen(false);
+	const handleClose2: NonNullable<ComponentProps<typeof CancelModal>["onClose"]> = () => setCancelOpen(false);
 return (
 		<>
 			<SubscriptionTopbar />

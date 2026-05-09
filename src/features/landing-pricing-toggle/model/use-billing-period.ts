@@ -1,7 +1,5 @@
 "use client";
-
-import { useState } from "react";
-
+import { useState } from 'react';
 export type BillingPeriod = "monthly" | "yearly";
 
 export const useBillingPeriod = (initial: BillingPeriod = "monthly") => {

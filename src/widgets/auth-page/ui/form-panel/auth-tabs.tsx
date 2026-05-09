@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AuthMode } from "../../model";
@@ -25,7 +26,7 @@ export const AuthTabs = ({ mode, onChange }: AuthTabsProps) => {
 		>
 			{tabs.map((tab) => {
 				const isActive = tab.key === mode;
-								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab.key);
+								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab.key);
 return (
 					<button
 						key={tab.key}

@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AdminTextsStats, AdminTextsTab } from "@/entities/admin-text";
@@ -34,7 +35,7 @@ export const TextsTabs = ({ active, stats, onChange }: TextsTabsProps) => {
 					const isActive = active === key;
 					const cnt = stats ? count(stats) : undefined;
 
-										const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(key);
+										const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(key);
 return (
 						<button
 							key={key}

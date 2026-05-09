@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminTextSSE } from "@/entities/admin-text";
 import type { AdminTextListItem, ProcessingStatus } from "@/entities/admin-text";
@@ -38,8 +39,8 @@ const TextTableRow = ({ text, selected, onToggle, mutations }: TextTableRowProps
 		: text.processingStatus;
 	const processingProgress = sseData?.progress ?? text.processingProgress;
 
-		const handleClick: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-	const handleClick2: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+		const handleClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+	const handleClick2: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
 return (
 		<tr className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2">
 			<td className="px-2.5 py-[10px] pl-3.5" onClick={handleClick}>
@@ -190,7 +191,7 @@ export const TextsTable = ({
 				</thead>
 				<tbody>
 					{texts.map((text) => {
-					  const handleToggle: NonNullable<React.ComponentProps<typeof TextTableRow>["onToggle"]> = () => onToggleRow(text.id);
+					  const handleToggle: NonNullable<ComponentProps<typeof TextTableRow>["onToggle"]> = () => onToggleRow(text.id);
 					  return (
 						<TextTableRow
 							key={text.id}

@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
 	type ReviewDueWord,
 	type ReviewQuality,
@@ -52,73 +51,54 @@ export const useSm2Session = (
 	const current = words[index] ?? null;
 	const isFinished = total > 0 && index >= total;
 
-	const advance = useCallback(() => {
+	const advance = () => {
 		setFlipped(false);
 		setIndex((i) => i + 1);
-	}, []);
+	};
 
-	const flip = useCallback(() => setFlipped((v) => !v), []);
+	const flip = () => setFlipped((v) => !v);
 
-	const skip = useCallback(() => {
+	const skip = () => {
 		if (!current) return;
 		advance();
-	}, [advance, current]);
+	};
 
-	const rate = useCallback(
-		(quality: ReviewQuality) => {
-			if (!current) return;
+	const rate = (quality: ReviewQuality) => {
+		if (!current) return;
 
-			setCounts((prev) => {
-				if (quality >= 5) return { ...prev, easy: prev.easy + 1 };
-				if (quality >= 3) return { ...prev, good: prev.good + 1 };
-				return { ...prev, hard: prev.hard + 1 };
-			});
+		setCounts((prev) => {
+			if (quality >= 5) return { ...prev, easy: prev.easy + 1 };
+			if (quality >= 3) return { ...prev, good: prev.good + 1 };
+			return { ...prev, hard: prev.hard + 1 };
+		});
 
-			rateMutation({ lemmaId: current.lemmaId, body: { quality } });
-			advance();
-		},
-		[advance, current, rateMutation],
-	);
+		rateMutation({ lemmaId: current.lemmaId, body: { quality } });
+		advance();
+	};
 
-	const toggleMode = useCallback(() => {
+	const toggleMode = () => {
 		setMode((m) => (m === "wordToTrans" ? "transToWord" : "wordToTrans"));
 		setFlipped(false);
-	}, []);
+	};
 
-	const resetIndex = useCallback(() => {
+	const resetIndex = () => {
 		setIndex(0);
 		setFlipped(false);
 		setCounts({ easy: 0, good: 0, hard: 0 });
-	}, []);
+	};
 
-	return useMemo(
-		() => ({
-			current,
-			currentIndex: index,
-			total,
-			mode,
-			flipped,
-			counts,
-			isFinished,
-			flip,
-			skip,
-			rate,
-			toggleMode,
-			resetIndex,
-		}),
-		[
-			current,
-			counts,
-			flip,
-			flipped,
-			index,
-			isFinished,
-			mode,
-			rate,
-			resetIndex,
-			skip,
-			toggleMode,
-			total,
-		],
-	);
+	return {
+		current,
+		currentIndex: index,
+		total,
+		mode,
+		flipped,
+		counts,
+		isFinished,
+		flip,
+		skip,
+		rate,
+		toggleMode,
+		resetIndex,
+	};
 };

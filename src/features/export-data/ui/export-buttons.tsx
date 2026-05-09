@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import {
 	useExportArchive,
 	useExportProgress,
@@ -44,8 +45,8 @@ export const ExportButtons = () => {
 		}
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => handleVocab("csv");
-	const handleClick2: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => handleVocab("json");
+		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => handleVocab("csv");
+	const handleClick2: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => handleVocab("json");
 return (
 		<>
 			<ExportRow

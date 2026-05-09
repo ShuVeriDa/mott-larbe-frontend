@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from "next/navigation";
 import {
 	useAdminTextCreate,
@@ -93,124 +92,102 @@ export const useAdminTextEditPage = (id: string) => {
 		}
 	}, [textData]);
 
-	const markUnsaved = useCallback(() => {
+	const markUnsaved = () => {
 		setIsUnsaved(true);
 		if (textData?.processingStatus === "COMPLETED") {
 			setShowRetokenizeBar(true);
 		}
-	}, [textData?.processingStatus]);
+	};
 
-	const handleTitleChange = useCallback(
-		(value: string) => {
-			setTitle(value);
-			markUnsaved();
-		},
-		[markUnsaved],
-	);
+	const handleTitleChange = (value: string) => {
+		setTitle(value);
+		markUnsaved();
+	};
 
-	const handlePageContentChange = useCallback(
-		(doc: TipTapDoc, wordCount: number) => {
-			setPages((prev) => {
-				const next = [...prev];
-				next[activePage] = { doc, wordCount };
-				return next;
-			});
-			markUnsaved();
-		},
-		[activePage, markUnsaved],
-	);
+	const handlePageContentChange = (doc: TipTapDoc, wordCount: number) => {
+		setPages((prev) => {
+			const next = [...prev];
+			next[activePage] = { doc, wordCount };
+			return next;
+		});
+		markUnsaved();
+	};
 
-	const handleAddPage = useCallback(() => {
+	const handleAddPage = () => {
 		setPages((prev) => [...prev, { doc: EMPTY_DOC, wordCount: 0 }]);
 		setActivePage((prev) => prev + 1);
 		markUnsaved();
-	}, [markUnsaved]);
+	};
 
-	const handleSelectPage = useCallback((index: number) => {
+	const handleSelectPage = (index: number) => {
 		setActivePage(index);
-	}, []);
+	};
 
-	const handleCoverSelect = useCallback(
-		(file: File) => {
-			setPendingCoverFile(file);
-			setCoverPreviewUrl(URL.createObjectURL(file));
-			markUnsaved();
-		},
-		[markUnsaved],
-	);
+	const handleCoverSelect = (file: File) => {
+		setPendingCoverFile(file);
+		setCoverPreviewUrl(URL.createObjectURL(file));
+		markUnsaved();
+	};
 
-	const handleAddTag = useCallback(
-		(tag: string) => {
-			const trimmed = tag.trim();
-			if (!trimmed || tags.includes(trimmed)) return;
-			setTags((prev) => [...prev, trimmed]);
-			markUnsaved();
-		},
-		[tags, markUnsaved],
-	);
+	const handleAddTag = (tag: string) => {
+		const trimmed = tag.trim();
+		if (!trimmed || tags.includes(trimmed)) return;
+		setTags((prev) => [...prev, trimmed]);
+		markUnsaved();
+	};
 
-	const handleRemoveTag = useCallback(
-		(tag: string) => {
-			setTags((prev) => prev.filter((tg) => tg !== tag));
-			markUnsaved();
-		},
-		[markUnsaved],
-	);
+	const handleRemoveTag = (tag: string) => {
+		setTags((prev) => prev.filter((tg) => tg !== tag));
+		markUnsaved();
+	};
 
-	const handleSave = useCallback(
-		async (targetStatus: TextStatus) => {
-			if (!title.trim()) {
-				toastError(t("admin.texts.editPage.titleRequired"));
-				return;
+	const handleSave = async (targetStatus: TextStatus) => {
+		if (!title.trim()) {
+			toastError(t("admin.texts.editPage.titleRequired"));
+			return;
+		}
+
+		const pagesDto = pages.map((page, i) => ({
+			pageNumber: i + 1,
+			contentRich: page.doc,
+		}));
+
+		try {
+			await update.mutateAsync({
+				id,
+				dto: {
+					title: title.trim(),
+					language,
+					level: level ?? null,
+					description: description.trim() || undefined,
+					author: author.trim() || undefined,
+					source: source.trim() || null,
+					tagNames: tags.length ? tags : undefined,
+					status: targetStatus,
+					autoTokenizeOnSave,
+					useNormalization,
+					useMorphAnalysis,
+					pages: pagesDto,
+				},
+			});
+
+			if (pendingCoverFile) {
+				await uploadCover.mutateAsync({ id, file: pendingCoverFile });
+				setPendingCoverFile(null);
 			}
 
-			const pagesDto = pages.map((page, i) => ({
-				pageNumber: i + 1,
-				contentRich: page.doc,
-			}));
+			setIsUnsaved(false);
+			setShowRetokenizeBar(false);
+			success(t("admin.texts.editPage.updateSuccess"));
+		} catch {
+			toastError(t("admin.texts.editPage.updateFailed"));
+		}
+	};
 
-			try {
-				await update.mutateAsync({
-					id,
-					dto: {
-						title: title.trim(),
-						language,
-						level: level ?? null,
-						description: description.trim() || undefined,
-						author: author.trim() || undefined,
-						source: source.trim() || null,
-						tagNames: tags.length ? tags : undefined,
-						status: targetStatus,
-						autoTokenizeOnSave,
-						useNormalization,
-						useMorphAnalysis,
-						pages: pagesDto,
-					},
-				});
+	const handleSaveDraft = () => handleSave("draft");
+	const handleSaveAndUpdate = () => handleSave(status);
 
-				if (pendingCoverFile) {
-					await uploadCover.mutateAsync({ id, file: pendingCoverFile });
-					setPendingCoverFile(null);
-				}
-
-				setIsUnsaved(false);
-				setShowRetokenizeBar(false);
-				success(t("admin.texts.editPage.updateSuccess"));
-			} catch {
-				toastError(t("admin.texts.editPage.updateFailed"));
-			}
-		},
-		[
-			title, pages, language, level, description, author, source, tags,
-			autoTokenizeOnSave, useNormalization, useMorphAnalysis, pendingCoverFile,
-			id, update, uploadCover, t, success, toastError,
-		],
-	);
-
-	const handleSaveDraft = useCallback(() => handleSave("draft"), [handleSave]);
-	const handleSaveAndUpdate = useCallback(() => handleSave(status), [handleSave, status]);
-
-	const handleDelete = useCallback(async () => {
+	const handleDelete = async () => {
 		try {
 			await remove.mutateAsync(id);
 			success(t("admin.texts.editPage.deleteSuccess"));
@@ -218,16 +195,16 @@ export const useAdminTextEditPage = (id: string) => {
 		} catch {
 			toastError(t("admin.texts.editPage.deleteFailed"));
 		}
-	}, [id, remove, lang, router, t, success, toastError]);
+	};
 
-	const handleTokenize = useCallback(async () => {
+	const handleTokenize = async () => {
 		try {
 			await runTokenization.mutateAsync();
 			success(t("admin.texts.editPage.tokenizeStarted"));
 		} catch {
 			toastError(t("admin.texts.editPage.tokenizeFailed"));
 		}
-	}, [runTokenization, t, success, toastError]);
+	};
 
 	const isSaving = update.isPending || uploadCover.isPending;
 	const isDeleting = remove.isPending;

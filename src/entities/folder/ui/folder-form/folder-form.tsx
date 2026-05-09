@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { ComponentProps, useEffect, useState } from 'react';
 import { Input, InputLabel } from "@/shared/ui/input";
 import { cn } from "@/shared/lib/cn";
 import {
@@ -64,8 +63,8 @@ export const FolderForm = ({
 		onChange(next);
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => update({ name: e.target.value });
-	const handleChange2: NonNullable<React.ComponentProps<"textarea">["onChange"]> = (e) => update({ description: e.target.value });
+		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => update({ name: e.currentTarget.value });
+	const handleChange2: NonNullable<ComponentProps<"textarea">["onChange"]> = (e) => update({ description: e.currentTarget.value });
 return (
 		<div className="flex flex-col gap-3">
 			<div>
@@ -108,7 +107,7 @@ return (
 				</div>
 				<div className="flex flex-wrap gap-1.5">
 					{FOLDER_ICON_KEYS.map((iconKey) => {
-					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => update({ icon: iconKey });
+					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => update({ icon: iconKey });
 					  return (
 						<button
 							key={iconKey}
@@ -137,7 +136,7 @@ return (
 				<div className="flex flex-wrap gap-[7px]">
 					{FOLDER_COLORS.map((c) => {
 						const selected = internal.color === c;
-												const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => update({ color: c });
+												const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => update({ color: c });
 return (
 							<button
 								key={c}

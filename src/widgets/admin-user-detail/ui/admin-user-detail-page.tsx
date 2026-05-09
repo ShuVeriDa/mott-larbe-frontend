@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+"use client";import { ComponentProps, useState } from 'react';
 import { useAdminUserDetailPage } from "../model/use-admin-user-detail-page";
 import { UserDetailTopbar } from "./user-detail-topbar";
 import { UserHeroCard } from "./user-hero-card";
@@ -35,9 +33,9 @@ export const AdminUserDetailPage = ({ userId }: AdminUserDetailPageProps) => {
 		handleEventsLoadMore,
 	} = useAdminUserDetailPage(userId);
 
-		const handleClose: NonNullable<React.ComponentProps<typeof AddSubscriptionModal>["onClose"]> = () => setShowAddSubscription(false);
-	const handleManageSubscription: NonNullable<React.ComponentProps<typeof UserHeroCard>["onManageSubscription"]> = () => setShowAddSubscription(true);
-	const handleManage: NonNullable<React.ComponentProps<typeof UserSubscriptionCard>["onManage"]> = () => setShowAddSubscription(true);
+		const handleClose: NonNullable<ComponentProps<typeof AddSubscriptionModal>["onClose"]> = () => setShowAddSubscription(false);
+	const handleManageSubscription: NonNullable<ComponentProps<typeof UserHeroCard>["onManageSubscription"]> = () => setShowAddSubscription(true);
+	const handleManage: NonNullable<ComponentProps<typeof UserSubscriptionCard>["onManage"]> = () => setShowAddSubscription(true);
 return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<UserDetailTopbar user={detail.data} mutations={mutations} />

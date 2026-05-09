@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState } from 'react';
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
 import { useI18n } from "@/shared/lib/i18n";

@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useAdminFeedbackPage } from "../model/use-admin-feedback-page";
 import { FeedbackAssignModal } from "./feedback-assign-modal";
 import { FeedbackChatPanel } from "./feedback-chat-panel";
@@ -53,25 +54,25 @@ export const AdminFeedbackPage = () => {
 		setIsInfoDrawerOpen,
 	} = useAdminFeedbackPage();
 
-	const handleInfoOpen: NonNullable<React.ComponentProps<typeof FeedbackChatPanel>["onInfoOpen"]> = () =>
+	const handleInfoOpen: NonNullable<ComponentProps<typeof FeedbackChatPanel>["onInfoOpen"]> = () =>
 		setIsInfoDrawerOpen(true);
-	const handleAssignOpen: NonNullable<React.ComponentProps<typeof FeedbackChatPanel>["onAssignOpen"]> = () =>
+	const handleAssignOpen: NonNullable<ComponentProps<typeof FeedbackChatPanel>["onAssignOpen"]> = () =>
 		setIsAssignModalOpen(true);
-	const handleTransferOpen: NonNullable<React.ComponentProps<typeof FeedbackChatPanel>["onTransferOpen"]> = () =>
+	const handleTransferOpen: NonNullable<ComponentProps<typeof FeedbackChatPanel>["onTransferOpen"]> = () =>
 		setIsTransferModalOpen(true);
-	const handleInfoDrawerClose: NonNullable<React.ComponentProps<typeof FeedbackInfoDrawer>["onClose"]> = () =>
+	const handleInfoDrawerClose: NonNullable<ComponentProps<typeof FeedbackInfoDrawer>["onClose"]> = () =>
 		setIsInfoDrawerOpen(false);
-	const handleInfoDrawerAssignOpen: NonNullable<React.ComponentProps<typeof FeedbackInfoDrawer>["onAssignOpen"]> = () => {
+	const handleInfoDrawerAssignOpen: NonNullable<ComponentProps<typeof FeedbackInfoDrawer>["onAssignOpen"]> = () => {
 		setIsInfoDrawerOpen(false);
 		setIsAssignModalOpen(true);
 	};
-	const handleInfoDrawerTransferOpen: NonNullable<React.ComponentProps<typeof FeedbackInfoDrawer>["onTransferOpen"]> = () => {
+	const handleInfoDrawerTransferOpen: NonNullable<ComponentProps<typeof FeedbackInfoDrawer>["onTransferOpen"]> = () => {
 		setIsInfoDrawerOpen(false);
 		setIsTransferModalOpen(true);
 	};
-	const handleAssignModalClose: NonNullable<React.ComponentProps<typeof FeedbackAssignModal>["onClose"]> = () =>
+	const handleAssignModalClose: NonNullable<ComponentProps<typeof FeedbackAssignModal>["onClose"]> = () =>
 		setIsAssignModalOpen(false);
-	const handleTransferModalClose: NonNullable<React.ComponentProps<typeof FeedbackTransferModal>["onClose"]> = () =>
+	const handleTransferModalClose: NonNullable<ComponentProps<typeof FeedbackTransferModal>["onClose"]> = () =>
 		setIsTransferModalOpen(false);
 return (
 		<>

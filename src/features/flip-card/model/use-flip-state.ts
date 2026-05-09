@@ -1,7 +1,5 @@
 "use client";
-
-import { useCallback, useState } from "react";
-
+import { useState } from 'react';
 export interface UseFlipStateResult {
 	flipped: boolean;
 	flip: () => void;
@@ -10,7 +8,7 @@ export interface UseFlipStateResult {
 
 export const useFlipState = (initial = false): UseFlipStateResult => {
 	const [flipped, setFlipped] = useState(initial);
-	const flip = useCallback(() => setFlipped((v) => !v), []);
-	const reset = useCallback(() => setFlipped(false), []);
+	const flip = () => setFlipped((v) => !v);
+	const reset = () => setFlipped(false);
 	return { flipped, flip, reset };
 };

@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
 
@@ -5,7 +6,7 @@ export interface FolderItemProps {
 	name: string;
 	count: number;
 	active?: boolean;
-	icon?: React.ReactNode;
+	icon?: ReactNode;
 	onClick?: () => void;
 }
 

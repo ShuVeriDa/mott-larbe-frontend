@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AdminUsersTabCounts, UsersTab } from "@/entities/admin-user";
@@ -20,7 +21,7 @@ export const UsersTabs = ({ active, counts, onChange }: UsersTabsProps) => {
 			<div className="flex w-fit gap-0.5 rounded-[9px] border border-bd-1 bg-surf-2 p-[3px]">
 				{TABS.map((tab) => {
 					const count = counts?.[tab];
-										const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab);
+										const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab);
 return (
 						<button
 							key={tab}

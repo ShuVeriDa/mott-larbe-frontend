@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import Link from "next/link";
 import type { DetailWordContext } from "@/entities/dictionary";
 import { useDictionaryWordContexts } from "@/entities/dictionary";
@@ -91,7 +90,7 @@ export const ContextsSection = ({
 		);
 	}
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setExpanded(true);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setExpanded(true);
 return (
 		<CardSection
 			title={t("vocabulary.wordDetail.sections.contexts")}

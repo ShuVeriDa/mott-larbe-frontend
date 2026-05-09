@@ -1,5 +1,4 @@
-import type { SVGProps } from "react";
-
+import type { SVGProps } from 'react';
 const baseProps: SVGProps<SVGSVGElement> = {
 	viewBox: "0 0 16 16",
 	fill: "none",

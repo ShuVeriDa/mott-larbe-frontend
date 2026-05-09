@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminUserListItem, RoleName } from "@/entities/admin-user";
 import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
@@ -149,9 +150,9 @@ export const UsersTable = ({
 				</thead>
 				<tbody>
 					{users.map((user) => {
-					  const handleClick: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = () => onToggleRow(user.id);
-					  const handleClick2: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onToggleRow(user.id);
+					  const handleClick2: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
 					  return (
 						<tr
 							key={user.id}

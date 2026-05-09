@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { Button } from "@/shared/ui/button";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -14,8 +15,8 @@ export const FontSizeControl = ({ initialValue }: FontSizeControlProps) => {
 	const { value, change, reset, save, fillPercent, isSaving } =
 		useFontSize(initialValue);
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => change(-1);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => change(1);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => change(-1);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => change(1);
 return (
 		<>
 			<div className="border-hairline border-b border-bd-1 px-4 py-3.5">

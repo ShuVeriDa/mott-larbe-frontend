@@ -1,6 +1,4 @@
 "use client";
-
-import { useMemo } from "react";
 import { useQueries } from "@tanstack/react-query";
 import {
 	dictionaryApi,
@@ -28,16 +26,13 @@ export const useGroupedList = () => {
 	const rawSearch = useVocabularyFilters((s) => s.search);
 	const search = useDebounce(rawSearch, 300);
 
-	const baseQuery: DictionaryListQuery = useMemo(
-		() => ({
-			cefrLevel: cefrLevel ?? undefined,
-			folderId: folderId ?? undefined,
-			sort,
-			search: search.trim() ? search.trim() : undefined,
-			limit: 50,
-		}),
-		[cefrLevel, folderId, sort, search],
-	);
+	const baseQuery: DictionaryListQuery = {
+		cefrLevel: cefrLevel ?? undefined,
+		folderId: folderId ?? undefined,
+		sort,
+		search: search.trim() ? search.trim() : undefined,
+		limit: 50,
+	};
 
 	const statuses: LearningLevel[] = status ? [status] : [...LEARNING_LEVELS];
 

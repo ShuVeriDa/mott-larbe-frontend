@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useAdminTextsPage } from "../model/use-admin-texts-page";
 import { ImportTextsModal } from "./import-texts-modal";
 import { TextsBulkBar } from "./texts-bulk-bar";
@@ -48,20 +49,20 @@ export const AdminTextsPage = () => {
 		mutations.bulkTokenize.isPending ||
 		mutations.bulkDelete.isPending;
 
-		const handleImportClick: NonNullable<React.ComponentProps<typeof TextsTopbar>["onImportClick"]> = () => setImportOpen(true);
-	const handlePublish: NonNullable<React.ComponentProps<typeof TextsBulkBar>["onPublish"]> = () =>
+		const handleImportClick: NonNullable<ComponentProps<typeof TextsTopbar>["onImportClick"]> = () => setImportOpen(true);
+	const handlePublish: NonNullable<ComponentProps<typeof TextsBulkBar>["onPublish"]> = () =>
 							mutations.bulkPublish.mutate(selectedArray, {
 								onSuccess: clearSelection,
 							});
-	const handleTokenize: NonNullable<React.ComponentProps<typeof TextsBulkBar>["onTokenize"]> = () =>
+	const handleTokenize: NonNullable<ComponentProps<typeof TextsBulkBar>["onTokenize"]> = () =>
 							mutations.bulkTokenize.mutate(selectedArray, {
 								onSuccess: clearSelection,
 							});
-	const handleDelete: NonNullable<React.ComponentProps<typeof TextsBulkBar>["onDelete"]> = () =>
+	const handleDelete: NonNullable<ComponentProps<typeof TextsBulkBar>["onDelete"]> = () =>
 							mutations.bulkDelete.mutate(selectedArray, {
 								onSuccess: clearSelection,
 							});
-	const handleClose: NonNullable<React.ComponentProps<typeof ImportTextsModal>["onClose"]> = () => setImportOpen(false);
+	const handleClose: NonNullable<ComponentProps<typeof ImportTextsModal>["onClose"]> = () => setImportOpen(false);
 return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<TextsTopbar onImportClick={handleImportClick} />

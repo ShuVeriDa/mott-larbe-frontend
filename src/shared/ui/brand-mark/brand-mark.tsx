@@ -1,4 +1,4 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 
 const ACC_12 = "rgba(34,84,211,0.12)";

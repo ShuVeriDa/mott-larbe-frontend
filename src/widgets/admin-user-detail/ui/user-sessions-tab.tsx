@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { useAdminUserSessions } from "@/entities/admin-user/model/use-admin-user-sessions";
 import { cn } from "@/shared/lib/cn";
@@ -13,7 +14,7 @@ export const UserSessionsTab = ({ sessions }: UserSessionsTabProps) => {
 	const items = sessions.query.data ?? [];
 	const isLoading = sessions.query.isLoading;
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => sessions.logoutAll.mutate();
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => sessions.logoutAll.mutate();
 return (
 		<>
 			<div className="overflow-x-auto [&::-webkit-scrollbar]:h-0">

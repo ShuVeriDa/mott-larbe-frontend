@@ -1,12 +1,11 @@
 "use client";
 
 import type { Editor } from "@tiptap/react";
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-
+import { ComponentProps, forwardRef, ReactNode, useEffect, useImperativeHandle, useState } from 'react';
 export interface SlashMenuItem {
 	title: string;
 	description: string;
-	icon: React.ReactNode;
+	icon: ReactNode;
 	command: (editor: Editor) => void;
 }
 
@@ -48,7 +47,7 @@ export const SlashMenu = forwardRef<SlashMenuHandle, SlashMenuProps>(
 		return (
 			<div className="z-50 min-w-[220px] overflow-hidden rounded-[10px] border border-bd-2 bg-bg p-1 shadow-lg">
 				{items.map((item, i) => {
-				  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+				  const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = e => {
 							e.preventDefault();
 							command(item);
 						};

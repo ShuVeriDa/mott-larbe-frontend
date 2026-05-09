@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, MouseEvent, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { FeedbackType } from "@/entities/feedback";
 import { useSubmitFeedback } from "@/features/submit-feedback";
@@ -56,12 +55,12 @@ export const FeedbackNewThreadModal = ({
 		);
 	};
 
-	const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-		if (e.target === e.currentTarget) onClose();
+	const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
+		if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setTitle(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"textarea">["onChange"]> = (e) => setBody(e.target.value);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setTitle(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"textarea">["onChange"]> = (e) => setBody(e.currentTarget.value);
 return (
 		<div
 			onClick={handleOverlayClick}
@@ -110,7 +109,7 @@ return (
 					</label>
 					<div className="grid grid-cols-2 gap-[7px]">
 						{TYPE_OPTIONS.map((opt) => {
-						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setType(opt.value);
+						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setType(opt.value);
 						  return (
 							<button
 								key={opt.value}

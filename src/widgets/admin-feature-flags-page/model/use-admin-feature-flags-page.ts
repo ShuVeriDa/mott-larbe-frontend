@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useState } from "react";
+import { useState } from 'react';
 import { useDebounce } from "@/shared/lib/debounce";
 import {
 	useAdminFeatureFlags,
@@ -99,127 +98,118 @@ export const useAdminFeatureFlagsPage = () => {
 	const createOverrideMutation = useCreateFeatureFlagOverride();
 	const importMutation = useImportFeatureFlags();
 
-	const handleTabChange = useCallback((next: FeatureFlagsTab) => {
+	const handleTabChange = (next: FeatureFlagsTab) => {
 		setTab(next);
 		setPage(1);
 		setSearch("");
-	}, []);
+	};
 
-	const handleSearchChange = useCallback((v: string) => {
+	const handleSearchChange = (v: string) => {
 		setSearch(v);
 		setPage(1);
-	}, []);
+	};
 
-	const handleCategoryChange = useCallback((v: string) => {
+	const handleCategoryChange = (v: string) => {
 		setCategory(v);
 		setPage(1);
-	}, []);
+	};
 
-	const handleEnvironmentChange = useCallback((v: string) => {
+	const handleEnvironmentChange = (v: string) => {
 		setEnvironment(v);
 		setPage(1);
-	}, []);
+	};
 
-	const handleStatusChange = useCallback((v: string) => {
+	const handleStatusChange = (v: string) => {
 		setStatus(v);
 		setPage(1);
-	}, []);
+	};
 
-	const handleOverrideFlagIdChange = useCallback((v: string) => {
+	const handleOverrideFlagIdChange = (v: string) => {
 		setOverrideFlagId(v);
 		setPage(1);
-	}, []);
+	};
 
-	const handleOverrideIsEnabledChange = useCallback((v: string) => {
+	const handleOverrideIsEnabledChange = (v: string) => {
 		setOverrideIsEnabled(v);
 		setPage(1);
-	}, []);
+	};
 
-	const handleHistoryEventTypeChange = useCallback((v: string) => {
+	const handleHistoryEventTypeChange = (v: string) => {
 		setHistoryEventType(v);
 		setPage(1);
-	}, []);
+	};
 
-	const handleHistoryActorIdChange = useCallback((v: string) => {
+	const handleHistoryActorIdChange = (v: string) => {
 		setHistoryActorId(v);
 		setPage(1);
-	}, []);
+	};
 
-	const handleToggle = useCallback((id: string, isEnabled: boolean) => {
+	const handleToggle = (id: string, isEnabled: boolean) => {
 		toggleMutation.mutate({ id, isEnabled });
-	}, [toggleMutation]);
+	};
 
-	const openCreate = useCallback(() => {
+	const openCreate = () => {
 		setEditFlag(null);
 		setModalOpen(true);
-	}, []);
+	};
 
-	const openEdit = useCallback((flag: FeatureFlagItem) => {
+	const openEdit = (flag: FeatureFlagItem) => {
 		setEditFlag(flag);
 		setModalOpen(true);
-	}, []);
+	};
 
-	const handleModalSubmit = useCallback(
-		(dto: CreateFeatureFlagDto | UpdateFeatureFlagDto) => {
-			if (editFlag) {
-				updateMutation.mutate(
-					{ id: editFlag.id, dto: dto as UpdateFeatureFlagDto },
-					{ onSuccess: () => setModalOpen(false) },
-				);
-			} else {
-				createMutation.mutate(dto as CreateFeatureFlagDto, {
-					onSuccess: () => setModalOpen(false),
-				});
-			}
-		},
-		[editFlag, updateMutation, createMutation],
-	);
+	const handleModalSubmit = (dto: CreateFeatureFlagDto | UpdateFeatureFlagDto) => {
+		if (editFlag) {
+			updateMutation.mutate(
+				{ id: editFlag.id, dto: dto as UpdateFeatureFlagDto },
+				{ onSuccess: () => setModalOpen(false) },
+			);
+		} else {
+			createMutation.mutate(dto as CreateFeatureFlagDto, {
+				onSuccess: () => setModalOpen(false),
+			});
+		}
+	};
 
-	const openDelete = useCallback((flag: FeatureFlagItem) => {
+	const openDelete = (flag: FeatureFlagItem) => {
 		setDeleteFlag(flag);
-	}, []);
+	};
 
-	const handleDeleteConfirm = useCallback(() => {
+	const handleDeleteConfirm = () => {
 		if (!deleteFlag) return;
 		deleteMutation.mutate(deleteFlag.id, {
 			onSuccess: () => setDeleteFlag(null),
 		});
-	}, [deleteFlag, deleteMutation]);
+	};
 
-	const openDuplicate = useCallback((flag: FeatureFlagItem) => {
+	const openDuplicate = (flag: FeatureFlagItem) => {
 		setDuplicateFlag(flag);
-	}, []);
+	};
 
-	const handleDuplicateConfirm = useCallback((newKey: string) => {
+	const handleDuplicateConfirm = (newKey: string) => {
 		if (!duplicateFlag) return;
 		duplicateMutation.mutate(
 			{ id: duplicateFlag.id, key: newKey },
 			{ onSuccess: () => setDuplicateFlag(null) },
 		);
-	}, [duplicateFlag, duplicateMutation]);
+	};
 
-	const openOverrideModal = useCallback((flagId?: string) => {
+	const openOverrideModal = (flagId?: string) => {
 		setOverridePreselectedFlagId(flagId);
 		setOverrideModalOpen(true);
-	}, []);
+	};
 
-	const handleOverrideSubmit = useCallback(
-		(dto: CreateFeatureFlagOverrideDto) => {
-			createOverrideMutation.mutate(dto, {
-				onSuccess: () => setOverrideModalOpen(false),
-			});
-		},
-		[createOverrideMutation],
-	);
+	const handleOverrideSubmit = (dto: CreateFeatureFlagOverrideDto) => {
+		createOverrideMutation.mutate(dto, {
+			onSuccess: () => setOverrideModalOpen(false),
+		});
+	};
 
-	const handleDeleteOverride = useCallback((overrideId: string) => {
+	const handleDeleteOverride = (overrideId: string) => {
 		deleteOverrideMutation.mutate(overrideId);
-	}, [deleteOverrideMutation]);
+	};
 
-	const handleImportSubmit = useCallback(
-		(dto: ImportFeatureFlagsDto) => importMutation.mutateAsync(dto),
-		[importMutation],
-	);
+	const handleImportSubmit = (dto: ImportFeatureFlagsDto) => importMutation.mutateAsync(dto);
 
 	const activeQuery =
 		tab === "flags" ? flagsQuery : tab === "overrides" ? overridesQuery : historyQuery;

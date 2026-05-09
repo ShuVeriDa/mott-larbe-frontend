@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useRef, type ReactNode } from "react";
+import { ComponentProps, type ReactNode, useEffect, useRef } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { FolderIcon, type Folder } from "@/entities/folder";
@@ -27,7 +26,7 @@ export const FolderPickerPopover = ({
 	useEffect(() => {
 		if (!open) return;
 		const onDocClick = (e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) onClose();
+			if (ref.current && !ref.current.contains(e.target as Node /* intentional: outside-click target */)) onClose();
 		};
 		const onKey = (e: KeyboardEvent) => {
 			if (e.key === "Escape") onClose();
@@ -62,7 +61,7 @@ export const FolderPickerPopover = ({
 			) : (
 				<ul className="max-h-[240px] overflow-y-auto py-1">
 					{folders.map((f) => {
-					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPick(f.id);
+					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onPick(f.id);
 					  return (
 						<li key={f.id}>
 							<button

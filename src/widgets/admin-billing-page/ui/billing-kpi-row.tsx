@@ -1,5 +1,6 @@
 "use client";
 
+import { ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { BillingStats } from "@/entities/admin-billing";
 
@@ -14,7 +15,7 @@ const fmtMoney = (cents: number) => {
 interface KpiCardProps {
 	label: string;
 	value: string;
-	sub?: React.ReactNode;
+	sub?: ReactNode;
 }
 
 const KpiCard = ({ label, value, sub }: KpiCardProps) => (

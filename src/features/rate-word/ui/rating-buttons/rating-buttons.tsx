@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -70,7 +71,7 @@ export const RatingButtons = ({
 
 			<div className="grid grid-cols-4 gap-1.5 max-md:grid-cols-2 max-md:gap-2">
 				{RATINGS.map((rating) => {
-				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRate(rating.quality);
+				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRate(rating.quality);
 				  return (
 					<button
 						key={rating.key}

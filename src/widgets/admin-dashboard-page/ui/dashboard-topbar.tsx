@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import type { DashboardPeriod } from "@/entities/admin-dashboard";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -19,7 +20,7 @@ export const DashboardTopbar = ({
 }: DashboardTopbarProps) => {
 	const { t } = useI18n();
 
-		const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onPeriodChange(e.target.value as DashboardPeriod);
+		const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = e => onPeriodChange(e.currentTarget.value as DashboardPeriod);
 return (
 		<header className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors max-sm:px-3 max-sm:py-2.5">
 			<div className="min-w-0 flex-1">
@@ -34,7 +35,7 @@ return (
 			<div className="ml-auto flex items-center gap-2">
 				<div className="hidden items-center gap-0.5 rounded-base border border-bd-1 bg-surf p-0.5 sm:flex">
 					{PERIODS.map(p => {
-					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPeriodChange(p);
+					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onPeriodChange(p);
 					  return (
 						<button
 							key={p}

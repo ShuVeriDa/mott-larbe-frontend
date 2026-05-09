@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { useResetProgress } from "@/entities/settings";
 import { ClearVocabModal } from "@/features/clear-vocabulary";
 import { DeleteAccountModal } from "@/features/delete-account";
@@ -29,10 +28,10 @@ export const DataSection = () => {
 		}
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => setClearOpen(true);
-	const handleClick2: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => setDeleteOpen(true);
-	const handleClose: NonNullable<React.ComponentProps<typeof ClearVocabModal>["onClose"]> = () => setClearOpen(false);
-	const handleClose2: NonNullable<React.ComponentProps<typeof DeleteAccountModal>["onClose"]> = () => setDeleteOpen(false);
+		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => setClearOpen(true);
+	const handleClick2: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => setDeleteOpen(true);
+	const handleClose: NonNullable<ComponentProps<typeof ClearVocabModal>["onClose"]> = () => setClearOpen(false);
+	const handleClose2: NonNullable<ComponentProps<typeof DeleteAccountModal>["onClose"]> = () => setDeleteOpen(false);
 return (
 		<div className="flex flex-col gap-3.5">
 			<SectionHeader

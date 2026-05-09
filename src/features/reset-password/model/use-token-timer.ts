@@ -1,7 +1,5 @@
 "use client";
-
-import { useEffect, useRef, useState } from "react";
-
+import { useEffect, useRef, useState } from 'react';
 export interface TokenTimeLeft {
 	hours: number;
 	minutes: number;

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -45,7 +44,7 @@ export const PromoForm = () => {
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setCode(e.target.value.toUpperCase());
+		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setCode(e.currentTarget.value.toUpperCase());
 return (
 		<form
 			onSubmit={handleSubmit}

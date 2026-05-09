@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { SECTIONS, type SettingsSectionId } from "../model/section-list";
@@ -24,7 +25,7 @@ export const SettingsNav = ({ active, onChange }: SettingsNavProps) => {
 		>
 			{SECTIONS.map(section => {
 				const isActive = section.id === active;
-								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(section.id);
+								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(section.id);
 return (
 					<button
 						key={section.id}

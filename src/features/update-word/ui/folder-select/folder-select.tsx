@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { Select } from "@/shared/ui/select";
 import { useI18n } from "@/shared/lib/i18n";
 import { useFolders } from "@/entities/folder";
@@ -18,9 +19,9 @@ export const FolderSelect = ({ wordId, currentFolderId }: FolderSelectProps) => 
 	const { mutate, isPending } = useUpdateWord();
 	const hasFolders = usage?.limits.dictionaryFolders ?? true;
 
-		const handleClick: NonNullable<React.ComponentProps<typeof Select>["onClick"]> = (e) => e.stopPropagation();
-	const handleChange: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => {
-				const value = e.target.value;
+		const handleClick: NonNullable<ComponentProps<typeof Select>["onClick"]> = (e) => e.stopPropagation();
+	const handleChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => {
+				const value = e.currentTarget.value;
 				mutate({
 					id: wordId,
 					body: { folderId: value === "" ? null : value },

@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import type {
 	FeatureFlagActor,
 	FeatureFlagHistoryEventType,
@@ -39,9 +40,9 @@ export const HistoryToolbar = ({
 	onActorIdChange,
 	t,
 }: HistoryToolbarProps) => {
-  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onSearchChange(e.target.value);
-  const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onEventTypeChange(e.target.value);
-  const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onActorIdChange(e.target.value);
+  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onSearchChange(e.currentTarget.value);
+  const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => onEventTypeChange(e.currentTarget.value);
+  const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => onActorIdChange(e.currentTarget.value);
   return (
 	<div className="mb-3.5 flex flex-wrap items-center gap-2">
 		<div className="relative max-w-[280px] flex-1">

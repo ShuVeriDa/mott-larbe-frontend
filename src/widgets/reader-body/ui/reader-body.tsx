@@ -1,6 +1,5 @@
 "use client";
-
-import type { CSSProperties } from "react";
+import type { CSSProperties } from 'react';
 import { ArticleTokenized, type TextPageResponse } from "@/entities/text";
 import {
 	FONT_LINE_HEIGHT,

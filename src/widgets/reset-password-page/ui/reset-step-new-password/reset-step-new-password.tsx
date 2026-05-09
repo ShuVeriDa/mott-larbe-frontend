@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertCircle, Check, Shield } from "lucide-react";
-import { useMemo, useState, type SyntheticEvent } from "react";
+import { type SyntheticEvent, useState } from 'react';
 import {
 	allRequirementsMet,
 	checkPasswordRequirements,
@@ -40,11 +40,8 @@ export const ResetStepNewPassword = ({
 	const [password, setPassword] = useState("");
 	const [confirm, setConfirm] = useState("");
 
-	const requirements = useMemo(
-		() => checkPasswordRequirements(password),
-		[password],
-	);
-	const score = useMemo(() => scorePassword(password), [password]);
+	const requirements = checkPasswordRequirements(password);
+	const score = scorePassword(password);
 	const reqsMet = allRequirementsMet(requirements);
 	const matches = password.length > 0 && password === confirm;
 	const showMismatch = confirm.length > 0 && password !== confirm;

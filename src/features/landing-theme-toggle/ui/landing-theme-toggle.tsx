@@ -2,7 +2,7 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { ComponentProps, useEffect, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 
 export const LandingThemeToggle = () => {
@@ -16,7 +16,7 @@ export const LandingThemeToggle = () => {
 
 	const dark = mounted && resolvedTheme === "dark";
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setTheme(dark ? "light" : "dark");
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setTheme(dark ? "light" : "dark");
 return (
 		<button
 			type="button"

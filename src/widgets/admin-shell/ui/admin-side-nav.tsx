@@ -1,5 +1,6 @@
 "use client";
 
+import { ReactNode } from 'react';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
@@ -8,7 +9,7 @@ import { cn } from "@/shared/lib/cn";
 interface NavItemProps {
 	href: string;
 	label: string;
-	icon: React.ReactNode;
+	icon: ReactNode;
 	badge?: number;
 	active?: boolean;
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -99,7 +100,7 @@ export const LibraryTextCard = ({ item, view, index }: LibraryTextCardProps) => 
 		);
 	}
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => { e.preventDefault(); e.stopPropagation(); };
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.preventDefault(); e.stopPropagation(); };
 return (
 		<Link
 			href={href}

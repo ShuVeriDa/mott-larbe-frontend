@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
@@ -15,7 +16,7 @@ export const PremiumUpsellModal = ({
 }: PremiumUpsellModalProps) => {
 	const { t, lang } = useI18n();
 
-		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => {
+		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => {
 						window.location.href = `/${lang}/plans`;
 					};
 return (

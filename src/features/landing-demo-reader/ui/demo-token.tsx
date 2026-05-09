@@ -1,6 +1,5 @@
 "use client";
-
-import type { MouseEvent } from "react";
+import { type ComponentProps, type MouseEvent, type ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 
 export type DemoTokenStatus = "default" | "studied" | "unknown";
@@ -10,7 +9,7 @@ interface DemoTokenProps {
 	status?: DemoTokenStatus;
 	active: boolean;
 	onSelect: (word: string, el: HTMLElement) => void;
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
 export const DemoToken = ({
@@ -25,7 +24,7 @@ export const DemoToken = ({
 		onSelect(word, e.currentTarget);
 	};
 
-		const handleKeyDown: NonNullable<React.ComponentProps<"span">["onKeyDown"]> = (e) => {
+		const handleKeyDown: NonNullable<ComponentProps<"span">["onKeyDown"]> = (e) => {
 				if (e.key === "Enter" || e.key === " ") {
 					e.preventDefault();
 					onSelect(word, e.currentTarget as HTMLElement);

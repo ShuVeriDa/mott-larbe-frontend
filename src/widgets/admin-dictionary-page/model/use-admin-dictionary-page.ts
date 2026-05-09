@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useState } from "react";
+import { useState } from 'react';
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useDebounce } from "@/shared/lib/debounce";
@@ -57,28 +56,22 @@ export const useAdminDictionaryPage = () => {
 	const [addExampleEntry, setAddExampleEntry] = useState<AdminDictListItem | null>(null);
 	const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
-	const push = useCallback(
-		(updates: Record<string, string | null>) => {
-			const params = new URLSearchParams(searchParams.toString());
-			for (const [k, v] of Object.entries(updates)) {
-				if (v === null || v === "" || v === "all" && k === "tab" || v === "1" && k === "page") {
-					params.delete(k);
-				} else {
-					params.set(k, v);
-				}
+	const push = (updates: Record<string, string | null>) => {
+		const params = new URLSearchParams(searchParams.toString());
+		for (const [k, v] of Object.entries(updates)) {
+			if (v === null || v === "" || v === "all" && k === "tab" || v === "1" && k === "page") {
+				params.delete(k);
+			} else {
+				params.set(k, v);
 			}
-			router.replace(`?${params.toString()}`, { scroll: false });
-		},
-		[router, searchParams],
-	);
+		}
+		router.replace(`?${params.toString()}`, { scroll: false });
+	};
 
-	const resetPage = useCallback(
-		(updates: Record<string, string | null>) => {
-			push({ ...updates, page: null });
-			setSelectedIds(new Set());
-		},
-		[push],
-	);
+	const resetPage = (updates: Record<string, string | null>) => {
+		push({ ...updates, page: null });
+		setSelectedIds(new Set());
+	};
 
 	const listQuery = useAdminDictionaryList({
 		q: debouncedSearch || undefined,
@@ -93,9 +86,9 @@ export const useAdminDictionaryPage = () => {
 
 	const statsQuery = useAdminDictionaryStats();
 
-	const invalidateRoot = useCallback(() => {
+	const invalidateRoot = () => {
 		void qc.invalidateQueries({ queryKey: adminDictionaryKeys.all });
-	}, [qc]);
+	};
 
 	const createMutation = useMutation({
 		mutationFn: (dto: CreateAdminEntryDto) => adminDictionaryApi.create(dto),
@@ -142,55 +135,46 @@ export const useAdminDictionaryPage = () => {
 		onSuccess: () => invalidateRoot(),
 	});
 
-	const handleTabChange = useCallback(
-		(next: AdminDictTab) => resetPage({ tab: next }),
-		[resetPage],
-	);
+	const handleTabChange = (next: AdminDictTab) => resetPage({ tab: next });
 
-	const handleSearchChange = useCallback(
-		(v: string) => {
-			setLocalSearch(v);
-			resetPage({ q: v });
-		},
-		[resetPage],
-	);
+	const handleSearchChange = (v: string) => {
+		setLocalSearch(v);
+		resetPage({ q: v });
+	};
 
-	const handlePosChange = useCallback((v: string) => resetPage({ pos: v }), [resetPage]);
-	const handleLevelChange = useCallback((v: string) => resetPage({ level: v }), [resetPage]);
-	const handleSortChange = useCallback((v: AdminDictSort) => push({ sort: v === "alpha" ? null : v }), [push]);
-	const handleLanguageChange = useCallback((v: string) => resetPage({ language: v }), [resetPage]);
+	const handlePosChange = (v: string) => resetPage({ pos: v });
+	const handleLevelChange = (v: string) => resetPage({ level: v });
+	const handleSortChange = (v: AdminDictSort) => push({ sort: v === "alpha" ? null : v });
+	const handleLanguageChange = (v: string) => resetPage({ language: v });
 
-	const handleSetPage = useCallback(
-		(p: number) => push({ page: p === 1 ? null : String(p) }),
-		[push],
-	);
+	const handleSetPage = (p: number) => push({ page: p === 1 ? null : String(p) });
 
-	const handleSelectId = useCallback((id: string) => {
+	const handleSelectId = (id: string) => {
 		setSelectedIds((prev) => {
 			const next = new Set(prev);
 			if (next.has(id)) next.delete(id);
 			else next.add(id);
 			return next;
 		});
-	}, []);
+	};
 
-	const handleSelectAll = useCallback(() => {
+	const handleSelectAll = () => {
 		const items = listQuery.data?.items ?? [];
 		setSelectedIds((prev) => {
 			const allSelected = items.every((it) => prev.has(it.id));
 			if (allSelected) return new Set();
 			return new Set(items.map((it) => it.id));
 		});
-	}, [listQuery.data]);
+	};
 
-	const handleClearSelection = useCallback(() => setSelectedIds(new Set()), []);
+	const handleClearSelection = () => setSelectedIds(new Set());
 
-	const handleBulkDelete = useCallback(() => {
+	const handleBulkDelete = () => {
 		if (selectedIds.size === 0) return;
 		bulkDeleteMutation.mutate(Array.from(selectedIds));
-	}, [selectedIds, bulkDeleteMutation]);
+	};
 
-	const handleExport = useCallback((ids?: string[]) => {
+	const handleExport = (ids?: string[]) => {
 		void adminDictionaryApi.export(ids).then((blob) => {
 			const url = URL.createObjectURL(blob);
 			const a = document.createElement("a");
@@ -199,21 +183,21 @@ export const useAdminDictionaryPage = () => {
 			a.click();
 			URL.revokeObjectURL(url);
 		});
-	}, []);
+	};
 
-	const handleBulkExport = useCallback(() => {
+	const handleBulkExport = () => {
 		handleExport(selectedIds.size > 0 ? Array.from(selectedIds) : undefined);
-	}, [selectedIds, handleExport]);
+	};
 
-	const handleImportOpen = useCallback(() => {
+	const handleImportOpen = () => {
 		setImportResult(null);
 		setImportOpen(true);
-	}, []);
+	};
 
-	const handleImportClose = useCallback(() => {
+	const handleImportClose = () => {
 		setImportOpen(false);
 		setImportResult(null);
-	}, []);
+	};
 
 	const total = listQuery.data?.total ?? 0;
 	const totalPages = Math.max(1, Math.ceil(total / LIMIT));

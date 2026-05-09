@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useEffect, useRef } from "react";
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { UnknownWordItem } from "@/entities/admin-unknown-word";
 import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word/model/use-admin-unknown-word-mutations";
@@ -26,7 +25,7 @@ export const UnknownWordRowActions = ({
 
 	useEffect(() => {
 		const handler = (e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+			if (ref.current && !ref.current.contains(e.target as Node /* intentional: outside-click target */)) setOpen(false);
 		};
 		document.addEventListener("mousedown", handler);
 		return () => document.removeEventListener("mousedown", handler);
@@ -34,18 +33,18 @@ export const UnknownWordRowActions = ({
 
 	const isDeleting = mutations.remove.isPending;
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
 					e.stopPropagation();
 					onAddToDictionary();
 				};
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
 						e.stopPropagation();
 						setOpen((v) => !v);
 					};
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { setOpen(false); onAddToDictionary(); };
-	const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { setOpen(false); onLinkToLemma(); };
-	const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { setOpen(false); onViewContexts(); };
-	const handleClick6: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => { setOpen(false); onAddToDictionary(); };
+	const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => { setOpen(false); onLinkToLemma(); };
+	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => { setOpen(false); onViewContexts(); };
+	const handleClick6: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 								setOpen(false);
 								mutations.remove.mutate(word.id);
 							};

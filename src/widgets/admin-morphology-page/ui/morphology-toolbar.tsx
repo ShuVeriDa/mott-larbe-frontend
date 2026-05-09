@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { MorphRuleType } from "@/entities/morph-rule";
 
@@ -33,9 +34,9 @@ export const MorphologyToolbar = ({
 }: Props) => {
   const { t } = useI18n();
 
-    const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.target.value);
-  const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onPosChange(e.target.value);
-  const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onTypeChange(e.target.value as MorphRuleType | "");
+    const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
+  const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onPosChange(e.currentTarget.value);
+  const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onTypeChange(e.currentTarget.value as MorphRuleType | "");
 return (
     <div className="mb-3.5 flex flex-wrap items-center gap-2">
       <div className="relative min-w-[160px] flex-1">

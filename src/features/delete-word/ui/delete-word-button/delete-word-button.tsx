@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
 import { useI18n } from "@/shared/lib/i18n";
@@ -21,16 +20,16 @@ export const DeleteWordButton = ({
 	const { mutate, isPending } = useDeleteWord();
 	const [confirmOpen, setConfirmOpen] = useState(false);
 
-		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = (e) => {
+		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = (e) => {
 					e.stopPropagation();
 					setConfirmOpen(true);
 				};
-	const handleClose: NonNullable<React.ComponentProps<typeof Modal>["onClose"]> = () => setConfirmOpen(false);
-	const handleClick2: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = (e) => {
+	const handleClose: NonNullable<ComponentProps<typeof Modal>["onClose"]> = () => setConfirmOpen(false);
+	const handleClick2: NonNullable<ComponentProps<typeof Button>["onClick"]> = (e) => {
 							e.stopPropagation();
 							setConfirmOpen(false);
 						};
-	const handleClick3: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = (e) => {
+	const handleClick3: NonNullable<ComponentProps<typeof Button>["onClick"]> = (e) => {
 							e.stopPropagation();
 							mutate(wordId);
 							setConfirmOpen(false);

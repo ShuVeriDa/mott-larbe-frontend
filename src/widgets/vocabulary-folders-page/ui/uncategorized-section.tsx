@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { ChevronRight, Plus } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -31,9 +30,9 @@ const Chip = ({
 }) => {
 	const [open, setOpen] = useState(false);
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
-	const handleClose: NonNullable<React.ComponentProps<typeof FolderPickerPopover>["onClose"]> = () => setOpen(false);
-	const handlePick: NonNullable<React.ComponentProps<typeof FolderPickerPopover>["onPick"]> = (folderId) => {
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleClose: NonNullable<ComponentProps<typeof FolderPickerPopover>["onClose"]> = () => setOpen(false);
+	const handlePick: NonNullable<ComponentProps<typeof FolderPickerPopover>["onPick"]> = (folderId) => {
 					onAssign(entry.id, folderId);
 					setOpen(false);
 				};
@@ -119,7 +118,7 @@ const UncategorizedChips = ({
 		);
 	}
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setLimit((l) => l + PAGE_SIZE);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setLimit((l) => l + PAGE_SIZE);
 return (
 		<div className="flex flex-col gap-2.5">
 			<div className="flex flex-wrap gap-1.5">
@@ -162,9 +161,9 @@ export const UncategorizedSection = ({ count }: UncategorizedSectionProps) => {
 	const handleAssign = (entryId: string, folderId: string) =>
 		assign({ assignments: [{ id: entryId, folderId }] });
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setDistributeOpen(true);
-	const handleClose: NonNullable<React.ComponentProps<typeof DistributeAllModal>["onClose"]> = () => setDistributeOpen(false);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => setDistributeOpen(true);
+	const handleClose: NonNullable<ComponentProps<typeof DistributeAllModal>["onClose"]> = () => setDistributeOpen(false);
 return (
 		<>
 			<div className="overflow-hidden rounded-card border-hairline border-bd-1 bg-surf">

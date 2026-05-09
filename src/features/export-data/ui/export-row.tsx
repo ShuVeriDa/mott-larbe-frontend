@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 import { Typography } from "@/shared/ui/typography";
 
 export interface ExportRowProps {

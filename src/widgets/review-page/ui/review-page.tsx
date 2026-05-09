@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { useReviewDue, useReviewStats } from "@/entities/review";
 import { useDeckDue, useDeckStats } from "@/entities/deck";
 import { ReviewIntro } from "@/widgets/review-intro";
@@ -60,49 +59,37 @@ export const ReviewPage = () => {
 	const deckTotalBadge = deckStats?.total ?? null;
 	const premiumLocked = deckStatsError === true;
 
-	const handleStartSm2 = useCallback(() => {
+	const handleStartSm2 = () => {
 		setSm2Counts(ZERO_SM2);
 		setLiveSm2Counts(ZERO_SM2);
 		setLiveSm2Index(0);
 		goToCard();
-	}, [goToCard]);
+	};
 
-	const handleSm2Progress = useCallback(
-		(idx: number, _total: number, counts: Sm2Counts) => {
-			setLiveSm2Index(idx);
-			setLiveSm2Counts(counts);
-		},
-		[],
-	);
+	const handleSm2Progress = (idx: number, _total: number, counts: Sm2Counts) => {
+		setLiveSm2Index(idx);
+		setLiveSm2Counts(counts);
+	};
 
-	const handleSm2Finish = useCallback(
-		(counts: Sm2Counts) => {
-			setSm2Counts(counts);
-			goToDone();
-		},
-		[goToDone],
-	);
+	const handleSm2Finish = (counts: Sm2Counts) => {
+		setSm2Counts(counts);
+		goToDone();
+	};
 
-	const handleStartDeck = useCallback(() => {
+	const handleStartDeck = () => {
 		setDeckCounts(ZERO_DECK);
 		setLiveDeckCounts(ZERO_DECK);
 		goToCard();
-	}, [goToCard]);
+	};
 
-	const handleDeckProgress = useCallback(
-		(_idx: number, _total: number, counts: DeckCounts) => {
-			setLiveDeckCounts(counts);
-		},
-		[],
-	);
+	const handleDeckProgress = (_idx: number, _total: number, counts: DeckCounts) => {
+		setLiveDeckCounts(counts);
+	};
 
-	const handleDeckFinish = useCallback(
-		(counts: DeckCounts) => {
-			setDeckCounts(counts);
-			goToDone();
-		},
-		[goToDone],
-	);
+	const handleDeckFinish = (counts: DeckCounts) => {
+		setDeckCounts(counts);
+		goToDone();
+	};
 
 	const words = dueWords ?? [];
 	const nextWords =
@@ -115,11 +102,11 @@ export const ReviewPage = () => {
 	const panelSm2Counts = screen === "done" ? sm2Counts : liveSm2Counts;
 	const panelDeckCounts = screen === "done" ? deckCounts : liveDeckCounts;
 
-		const handleTryDeck: NonNullable<React.ComponentProps<typeof ReviewDone>["onTryDeck"]> = () => switchSystem("deck");
-	const handleUpgrade: NonNullable<React.ComponentProps<typeof ReviewDeckIntro>["onUpgrade"]> = () => {
+		const handleTryDeck: NonNullable<ComponentProps<typeof ReviewDone>["onTryDeck"]> = () => switchSystem("deck");
+	const handleUpgrade: NonNullable<ComponentProps<typeof ReviewDeckIntro>["onUpgrade"]> = () => {
 								window.location.assign("/subscription");
 							};
-	const handleGoSm2: NonNullable<React.ComponentProps<typeof ReviewDeckDone>["onGoSm2"]> = () => switchSystem("sm2");
+	const handleGoSm2: NonNullable<ComponentProps<typeof ReviewDeckDone>["onGoSm2"]> = () => switchSystem("sm2");
 return (
 		<>
 			<ReviewTopbar

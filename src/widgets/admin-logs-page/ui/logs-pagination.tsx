@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps, ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 
@@ -25,8 +26,8 @@ export const LogsPagination = ({
 
 	const pages = buildPages(page, totalPages);
 
-		const handleClick: NonNullable<React.ComponentProps<typeof PgBtn>["onClick"]> = () => onChange(page - 1);
-	const handleClick2: NonNullable<React.ComponentProps<typeof PgBtn>["onClick"]> = () => onChange(page + 1);
+		const handleClick: NonNullable<ComponentProps<typeof PgBtn>["onClick"]> = () => onChange(page - 1);
+	const handleClick2: NonNullable<ComponentProps<typeof PgBtn>["onClick"]> = () => onChange(page + 1);
 return (
 		<div className="flex flex-wrap items-center justify-between gap-2 border-t border-bd-1 px-3.5 py-2.5">
 			<span className="text-[12px] text-t-3">
@@ -51,7 +52,7 @@ return (
 
 				{pages.map((p, i) =>
 					{
-				  const handleClick: NonNullable<React.ComponentProps<typeof PgBtn>["onClick"]> = () => onChange(p as number);
+				  const handleClick: NonNullable<ComponentProps<typeof PgBtn>["onClick"]> = () => onChange(p as number);
 				  return p === "…" ? (
 						<span
 							key={`ellipsis-${i}`}
@@ -98,7 +99,7 @@ const PgBtn = ({
 	onClick,
 	"aria-label": ariaLabel,
 }: {
-	children: React.ReactNode;
+	children: ReactNode;
 	active?: boolean;
 	disabled?: boolean;
 	onClick?: () => void;

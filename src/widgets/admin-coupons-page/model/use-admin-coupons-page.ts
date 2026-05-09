@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
 	adminCouponApi,
@@ -39,20 +38,17 @@ export const useAdminCouponsPage = () => {
 		setSearchInput(urlSearch);
 	}, [urlSearch]);
 
-	const updateParams = useCallback(
-		(updates: Record<string, string | undefined>) => {
-			const params = new URLSearchParams(searchParams.toString());
-			for (const [key, value] of Object.entries(updates)) {
-				if (!value) {
-					params.delete(key);
-				} else {
-					params.set(key, value);
-				}
+	const updateParams = (updates: Record<string, string | undefined>) => {
+		const params = new URLSearchParams(searchParams.toString());
+		for (const [key, value] of Object.entries(updates)) {
+			if (!value) {
+				params.delete(key);
+			} else {
+				params.set(key, value);
 			}
-			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-		},
-		[router, pathname, searchParams],
-	);
+		}
+		router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+	};
 
 	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const [modal, setModal] = useState<ModalType>(null);
@@ -84,98 +80,80 @@ export const useAdminCouponsPage = () => {
 		exhausted: stats?.exhaustedCount ?? 0,
 	};
 
-	const handleTabChange = useCallback(
-		(next: CouponsTab) => {
+	const handleTabChange = (next: CouponsTab) => {
+		updateParams({
+			tab: next === DEFAULT_TAB ? undefined : next,
+			page: undefined,
+		});
+		setSelectedId(null);
+		setMobileSheetOpen(false);
+	};
+
+	const handleSearchChange = (value: string) => {
+		setSearchInput(value);
+		clearTimeout(debounceRef.current);
+		debounceRef.current = setTimeout(() => {
+			const params = new URLSearchParams(window.location.search);
+			if (value) {
+				params.set("q", value);
+			} else {
+				params.delete("q");
+			}
+			params.delete("page");
+			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+		}, 300);
+	};
+
+	const handleTypeChange = (value: string) => {
+		updateParams({ type: value || undefined, page: undefined });
+	};
+
+	const handlePlanChange = (value: string) => {
+		updateParams({ plan: value || undefined, page: undefined });
+	};
+
+	const handleSortChange = (sortBy: CouponSortBy) => {
+		if (sortBy === urlSortBy) {
+			const next = urlSortOrder === "desc" ? "asc" : "desc";
 			updateParams({
-				tab: next === DEFAULT_TAB ? undefined : next,
+				sortBy: sortBy === DEFAULT_SORT_BY ? undefined : sortBy,
+				sortOrder: next === DEFAULT_SORT_ORDER ? undefined : next,
 				page: undefined,
 			});
-			setSelectedId(null);
-			setMobileSheetOpen(false);
-		},
-		[updateParams],
-	);
+		} else {
+			updateParams({
+				sortBy: sortBy === DEFAULT_SORT_BY ? undefined : sortBy,
+				sortOrder: undefined,
+				page: undefined,
+			});
+		}
+	};
 
-	const handleSearchChange = useCallback(
-		(value: string) => {
-			setSearchInput(value);
-			clearTimeout(debounceRef.current);
-			debounceRef.current = setTimeout(() => {
-				const params = new URLSearchParams(window.location.search);
-				if (value) {
-					params.set("q", value);
-				} else {
-					params.delete("q");
-				}
-				params.delete("page");
-				router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-			}, 300);
-		},
-		[router, pathname],
-	);
+	const handlePageChange = (next: number) => {
+		updateParams({ page: next === 1 ? undefined : String(next) });
+	};
 
-	const handleTypeChange = useCallback(
-		(value: string) => {
-			updateParams({ type: value || undefined, page: undefined });
-		},
-		[updateParams],
-	);
-
-	const handlePlanChange = useCallback(
-		(value: string) => {
-			updateParams({ plan: value || undefined, page: undefined });
-		},
-		[updateParams],
-	);
-
-	const handleSortChange = useCallback(
-		(sortBy: CouponSortBy) => {
-			if (sortBy === urlSortBy) {
-				const next = urlSortOrder === "desc" ? "asc" : "desc";
-				updateParams({
-					sortBy: sortBy === DEFAULT_SORT_BY ? undefined : sortBy,
-					sortOrder: next === DEFAULT_SORT_ORDER ? undefined : next,
-					page: undefined,
-				});
-			} else {
-				updateParams({
-					sortBy: sortBy === DEFAULT_SORT_BY ? undefined : sortBy,
-					sortOrder: undefined,
-					page: undefined,
-				});
-			}
-		},
-		[urlSortBy, urlSortOrder, updateParams],
-	);
-
-	const handlePageChange = useCallback(
-		(next: number) => {
-			updateParams({ page: next === 1 ? undefined : String(next) });
-		},
-		[updateParams],
-	);
-
-	const handleSelectRow = useCallback((id: string) => {
+	const handleSelectRow = (id: string) => {
 		setSelectedId((prev) => (prev === id ? null : id));
 		setMobileSheetOpen(true);
-	}, []);
+	};
 
-	const closeMobileSheet = useCallback(() => {
+	const closeMobileSheet = () => {
 		setMobileSheetOpen(false);
-	}, []);
+	};
 
-	const openModal = useCallback((type: ModalType, id?: string) => {
+	const openModal = (type: ModalType, id?: string) => {
 		if (id) setSelectedId(id);
 		setDeleteError(false);
 		setModal(type);
-	}, []);
+	};
 
-	const closeModal = useCallback(() => {
+	const closeModal = () => {
 		setModal(null);
 		setDeleteError(false);
-	}, []);
+	};
 
-	const handleExport = useCallback(async () => {
+	const handleExport = async () => {
 		try {
 			const blob = await adminCouponApi.exportCsv({
 				...(urlSearch ? { search: urlSearch } : {}),
@@ -192,36 +170,27 @@ export const useAdminCouponsPage = () => {
 		} catch {
 			// silently ignore
 		}
-	}, [urlSearch, urlType, urlPlan, statusFromTab]);
+	};
 
-	const handleDelete = useCallback(
-		async (id: string) => {
-			try {
-				await mutations.remove.mutateAsync(id);
-				closeModal();
-				setSelectedId(null);
-				setMobileSheetOpen(false);
-			} catch {
-				setDeleteError(true);
-			}
-		},
-		[mutations.remove, closeModal],
-	);
-
-	const handleDeactivate = useCallback(
-		async (id: string) => {
-			await mutations.deactivate.mutateAsync(id);
+	const handleDelete = async (id: string) => {
+		try {
+			await mutations.remove.mutateAsync(id);
 			closeModal();
-		},
-		[mutations.deactivate, closeModal],
-	);
+			setSelectedId(null);
+			setMobileSheetOpen(false);
+		} catch {
+			setDeleteError(true);
+		}
+	};
 
-	const handleActivate = useCallback(
-		async (id: string) => {
-			await mutations.activate.mutateAsync(id);
-		},
-		[mutations.activate],
-	);
+	const handleDeactivate = async (id: string) => {
+		await mutations.deactivate.mutateAsync(id);
+		closeModal();
+	};
+
+	const handleActivate = async (id: string) => {
+		await mutations.activate.mutateAsync(id);
+	};
 
 	return {
 		tab: urlTab,

@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronDown, Plus } from "lucide-react";
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -107,8 +107,8 @@ export const ReaderMock = () => {
 							if (!tok.trim()) return tok;
 							const clean = tok.replace(/[.,!?;:«»]/g, "");
 							const isHl = clean === hl && highlighted === hl;
-														const handleClick: NonNullable<React.ComponentProps<typeof Typography>["onClick"]> = () => setHighlighted(clean);
-							const handleKeyDown: NonNullable<React.ComponentProps<typeof Typography>["onKeyDown"]> = (e) => {
+														const handleClick: NonNullable<ComponentProps<typeof Typography>["onClick"]> = () => setHighlighted(clean);
+							const handleKeyDown: NonNullable<ComponentProps<typeof Typography>["onKeyDown"]> = (e) => {
 										if (e.key === "Enter") setHighlighted(clean);
 									};
 return (

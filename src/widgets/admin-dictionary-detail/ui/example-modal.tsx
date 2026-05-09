@@ -2,8 +2,7 @@
 
 import type { AdminDictExample } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
-import { useEffect, useRef, useState } from "react";
-
+import { ComponentProps, SyntheticEvent, useEffect, useRef, useState } from 'react';
 interface ExampleModalProps {
 	isOpen: boolean;
 	editExample?: AdminDictExample | null;
@@ -33,7 +32,7 @@ export const ExampleModal = ({
 	}, [isOpen, editExample]);
 
 	const handleSubmit = (
-		e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
 	) => {
 		e.preventDefault();
 		if (!text.trim()) return;
@@ -45,9 +44,9 @@ export const ExampleModal = ({
 	const taCls =
 		"w-full resize-y rounded-lg border border-bd-2 bg-surf-2 px-2.5 py-2 text-[12.5px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
-	const handleChange: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => setText(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => setTranslation(e.target.value);
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = e => setText(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"textarea">["onChange"]> = e => setTranslation(e.currentTarget.value);
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"

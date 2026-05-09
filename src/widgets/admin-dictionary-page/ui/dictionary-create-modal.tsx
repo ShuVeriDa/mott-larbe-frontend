@@ -6,8 +6,7 @@ import type {
 } from "@/entities/dictionary";
 import { cn } from "@/shared/lib/cn";
 import { CEFR_LEVELS } from "@/shared/types";
-import { useEffect, useState } from "react";
-
+import { ComponentProps, useEffect, useState } from 'react';
 const POS_OPTIONS = [
 	"noun",
 	"verb",
@@ -84,21 +83,21 @@ export const DictionaryCreateModal = ({
 
 	const labelCls = "mb-1.5 block text-[11.5px] font-semibold text-t-2";
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
-				if (e.target === e.currentTarget) onClose();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
 			};
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => {
-								setWord(e.target.value);
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => {
+								setWord(e.currentTarget.value);
 								setErrors(p => ({ ...p, word: "" }));
 							};
-	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setNormalized(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = e => {
-							setTranslation(e.target.value);
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => setNormalized(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = e => {
+							setTranslation(e.currentTarget.value);
 							setErrors(p => ({ ...p, translation: "" }));
 						};
-	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setPos(e.target.value);
-	const handleChange5: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setLevel(e.target.value);
-	const handleChange6: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => setNotes(e.target.value);
+	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = e => setPos(e.currentTarget.value);
+	const handleChange5: NonNullable<ComponentProps<"select">["onChange"]> = e => setLevel(e.currentTarget.value);
+	const handleChange6: NonNullable<ComponentProps<"textarea">["onChange"]> = e => setNotes(e.currentTarget.value);
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
@@ -119,7 +118,7 @@ return (
 					</label>
 					<div className="flex gap-2">
 						{(["CHE", "RU"] as AdminDictLanguage[]).map(l => {
-						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setLanguage(l);
+						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setLanguage(l);
 						  return (
 							<button
 								key={l}

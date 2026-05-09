@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import type { FeatureFlagItem } from "@/entities/feature-flag";
 
 interface FeatureFlagDeleteModalProps {
@@ -19,8 +20,8 @@ export const FeatureFlagDeleteModal = ({
 }: FeatureFlagDeleteModalProps) => {
 	if (!flag) return null;
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
-				if (e.target === e.currentTarget) onClose();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
 			};
 return (
 		<div

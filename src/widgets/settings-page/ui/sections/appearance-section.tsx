@@ -11,7 +11,7 @@ import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { Select } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { SectionHeader } from "../section-header";
 import { SettingCard } from "../setting-card";
 
@@ -39,7 +39,7 @@ export const AppearanceSection = ({ preferences }: AppearanceSectionProps) => {
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => setUiLanguage(e.target.value as UiLanguage);
+		const handleChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => setUiLanguage(e.currentTarget.value as UiLanguage);
 return (
 		<div className="flex flex-col gap-3.5">
 			<SectionHeader

@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { Lock, Plus } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -55,7 +56,7 @@ export const FoldersList = ({
 		onSelect?.();
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<typeof FolderItem>["onClick"]> = () => handleSelect(null);
+		const handleClick: NonNullable<ComponentProps<typeof FolderItem>["onClick"]> = () => handleSelect(null);
 return (
 		<div className="flex flex-col">
 			<div className="flex flex-col gap-0.5">
@@ -67,7 +68,7 @@ return (
 					onClick={handleClick}
 				/>
 				{folders?.map((f) => {
-				  const handleClick: NonNullable<React.ComponentProps<typeof FolderItem>["onClick"]> = () => handleSelect(f.id);
+				  const handleClick: NonNullable<ComponentProps<typeof FolderItem>["onClick"]> = () => handleSelect(f.id);
 				  return (
 					<FolderItem
 						key={f.id}

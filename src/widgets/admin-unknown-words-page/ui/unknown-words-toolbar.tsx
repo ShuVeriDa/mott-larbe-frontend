@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { TextListItem, UnknownWordsSortOrder } from "@/entities/admin-unknown-word";
 
@@ -30,9 +31,9 @@ export const UnknownWordsToolbar = ({
 }: UnknownWordsToolbarProps) => {
 	const { t } = useI18n();
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onTextChange(e.target.value || undefined);
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.target.value as UnknownWordsSortOrder);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onTextChange(e.currentTarget.value || undefined);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.currentTarget.value as UnknownWordsSortOrder);
 return (
 		<div className="mb-2.5 flex flex-wrap items-center gap-2">
 			{/* Search */}

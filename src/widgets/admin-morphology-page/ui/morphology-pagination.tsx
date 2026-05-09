@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 
@@ -41,8 +42,8 @@ export const MorphologyPagination = ({
     pages.push(totalPages);
   }
 
-    const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(page - 1);
-  const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(page + 1);
+    const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(page - 1);
+  const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(page + 1);
 return (
     <div className="flex flex-wrap items-center justify-between gap-2 border-t border-bd-1 px-4 py-3">
       <span className="text-[12px] text-t-3">
@@ -77,7 +78,7 @@ return (
             );
           }
 
-          const handlePageClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(p);
+          const handlePageClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(p);
 
           return (
             <button

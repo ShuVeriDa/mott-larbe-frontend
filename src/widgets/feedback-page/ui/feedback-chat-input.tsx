@@ -1,7 +1,5 @@
 "use client";
-
-import { useEffect, useRef, useState } from "react";
-
+import { ComponentProps, KeyboardEvent, useEffect, useRef, useState } from 'react';
 type Translator = (key: string) => string;
 
 interface FeedbackChatInputProps {
@@ -42,7 +40,7 @@ export const FeedbackChatInput = ({
 		}
 	};
 
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+	const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
 		if (e.key === "Enter" && !e.shiftKey) {
 			e.preventDefault();
 			handleSend();
@@ -50,7 +48,7 @@ export const FeedbackChatInput = ({
 	};
 
 	if (isClosed && !isReopening) {
-				const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setIsReopening(true);
+				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setIsReopening(true);
 return (
 			<div className="flex flex-col items-center gap-2 border-t border-bd-1 px-4 pb-3.5 pt-3">
 				<p className="text-[12px] text-t-3">{t("feedback.chat.closed")}</p>
@@ -65,8 +63,8 @@ return (
 		);
 	}
 
-		const handleChange: NonNullable<React.ComponentProps<"textarea">["onChange"]> = (e) => {
-						setValue(e.target.value);
+		const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = (e) => {
+						setValue(e.currentTarget.value);
 						autoResize();
 					};
 return (

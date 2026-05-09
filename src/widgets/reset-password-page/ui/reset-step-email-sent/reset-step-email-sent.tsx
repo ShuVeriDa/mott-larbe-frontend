@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { ArrowLeft, Clock, ExternalLink, Mail } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -23,7 +24,7 @@ export const ResetStepEmailSent = ({
 }: ResetStepEmailSentProps) => {
 	const { t } = useI18n();
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => void onResend();
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => void onResend();
 return (
 		<section aria-labelledby="reset-step-email-sent-title">
 			<div className="mb-[18px] inline-flex h-[52px] w-[52px] items-center justify-center rounded-[13px] bg-acc-bg text-acc">

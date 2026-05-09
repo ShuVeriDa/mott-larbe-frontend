@@ -1,6 +1,5 @@
 "use client";
-
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { DashboardStats } from "@/entities/dashboard";
 

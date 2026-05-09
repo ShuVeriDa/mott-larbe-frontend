@@ -8,7 +8,15 @@ import type {
 	TipTapDoc,
 } from "@/shared/ui/notion-editor";
 import { NotionEditor } from "@/shared/ui/notion-editor";
-import { useCallback, useMemo, useRef, useState } from "react";
+import {
+	ChangeEvent,
+	ComponentProps,
+	ReactNode,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { countChars, countParagraphs, countWords } from "../lib/tiptap-utils";
 import type { PageContent } from "../model/use-admin-text-edit-page";
 
@@ -23,9 +31,9 @@ const TbBtn = ({
 	title: string;
 	active?: boolean;
 	onExec: () => void;
-	children: React.ReactNode;
+	children: ReactNode;
 }) => {
-  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+  const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = e => {
 			e.preventDefault();
 			onExec();
 		};
@@ -57,7 +65,7 @@ const EditorToolbar = ({
 	t: ReturnType<typeof useI18n>["t"];
 }) => {
 	const [, forceUpdate] = useState(0);
-	useMemo(() => {
+	useEffect(() => {
 		if (!editor) return;
 		const handler = () => forceUpdate(n => n + 1);
 		editor.on("selectionUpdate", handler);
@@ -70,9 +78,9 @@ const EditorToolbar = ({
 
 	const e = editor;
 
-		const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = ev => {
+		const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = ev => {
 						if (!e) return;
-						const v = ev.target.value;
+						const v = ev.currentTarget.value;
 						if (v === "p") e.chain().focus().setParagraph().run();
 						else if (v === "h2")
 							e.chain().focus().setHeading({ level: 2 }).run();
@@ -81,18 +89,18 @@ const EditorToolbar = ({
 						else if (v === "blockquote")
 							e.chain().focus().setBlockquote().run();
 					};
-	const handleExec: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleBold().run();
-	const handleExec2: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleItalic().run();
-	const handleExec3: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleUnderline().run();
-	const handleExec4: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleStrike().run();
-	const handleExec5: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleBulletList().run();
-	const handleExec6: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleOrderedList().run();
-	const handleExec7: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("left").run();
-	const handleExec8: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("center").run();
-	const handleExec9: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("right").run();
-	const handleExec10: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("justify").run();
-	const handleExec11: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().undo().run();
-	const handleExec12: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().redo().run();
+	const handleExec: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleBold().run();
+	const handleExec2: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleItalic().run();
+	const handleExec3: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleUnderline().run();
+	const handleExec4: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleStrike().run();
+	const handleExec5: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleBulletList().run();
+	const handleExec6: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleOrderedList().run();
+	const handleExec7: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("left").run();
+	const handleExec8: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("center").run();
+	const handleExec9: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("right").run();
+	const handleExec10: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("justify").run();
+	const handleExec11: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().undo().run();
+	const handleExec12: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().redo().run();
 return (
 		<div className="sticky top-[52px] z-10 flex items-center gap-px overflow-x-auto border-b border-bd-1 bg-surf px-2 py-[5px] transition-colors [scrollbar-width:none]">
 			<div className="shrink-0">
@@ -445,7 +453,7 @@ const CharsPopup = ({ onInsert }: { onInsert: (char: string) => void }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const { t } = useI18n();
 
-		const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+		const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = e => {
 					e.preventDefault();
 					setOpen(v => !v);
 				};
@@ -465,7 +473,7 @@ return (
 					style={{ width: "192px" }}
 				>
 					{CHECHEN_CHARS.map(ch => {
-					  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+					  const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = e => {
 								e.preventDefault();
 								onInsert(ch);
 								setOpen(false);
@@ -531,54 +539,45 @@ export const TextEditEditor = ({
 	const editorRef = useRef<Editor | null>(null);
 	const slashItems = useSlashItems(t);
 
-	const adjustTitleHeight = useCallback(() => {
+	const adjustTitleHeight = () => {
 		if (titleRef.current) {
 			titleRef.current.style.height = "auto";
 			titleRef.current.style.height = `${titleRef.current.scrollHeight}px`;
 		}
-	}, []);
+	};
 
-	const handleTitleInput = useCallback(
-		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-			onTitleChange(e.target.value);
-			adjustTitleHeight();
-		},
-		[onTitleChange, adjustTitleHeight],
-	);
+	const handleTitleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
+		onTitleChange(e.currentTarget.value);
+		adjustTitleHeight();
+	};
 
-	const handleUpdate = useCallback(
-		(doc: TipTapDoc) => {
-			const wc = countWords(doc);
-			onPageContentChange(doc, wc);
-			setStats({
-				words: wc,
-				chars: countChars(doc),
-				paragraphs: countParagraphs(doc),
-			});
-		},
-		[onPageContentChange],
-	);
+	const handleUpdate = (doc: TipTapDoc) => {
+		const wc = countWords(doc);
+		onPageContentChange(doc, wc);
+		setStats({
+			words: wc,
+			chars: countChars(doc),
+			paragraphs: countParagraphs(doc),
+		});
+	};
 
-	const handleKeyDown = useCallback(
-		(event: KeyboardEvent) => {
-			if ((event.ctrlKey || event.metaKey) && event.key === "s") {
-				event.preventDefault();
-				onSaveDraft();
-				return true;
-			}
-			if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-				event.preventDefault();
-				onSaveAndUpdate();
-				return true;
-			}
-			return false;
-		},
-		[onSaveDraft, onSaveAndUpdate],
-	);
+	const handleKeyDown = (event: KeyboardEvent) => {
+		if ((event.ctrlKey || event.metaKey) && event.key === "s") {
+			event.preventDefault();
+			onSaveDraft();
+			return true;
+		}
+		if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+			event.preventDefault();
+			onSaveAndUpdate();
+			return true;
+		}
+		return false;
+	};
 
 	const extraToolbarItems = useMemo(
 		() => {
-		  const handleInsert: NonNullable<React.ComponentProps<typeof CharsPopup>["onInsert"]> = char =>
+		  const handleInsert: NonNullable<ComponentProps<typeof CharsPopup>["onInsert"]> = char =>
 					editorRef.current?.chain().focus().insertContent(char).run();
 		  return (
 			<CharsPopup
@@ -679,7 +678,7 @@ export const TextEditEditor = ({
 		return null;
 	};
 
-		const handleEditorReady: NonNullable<React.ComponentProps<typeof NotionEditor>["onEditorReady"]> = ed => {
+		const handleEditorReady: NonNullable<ComponentProps<typeof NotionEditor>["onEditorReady"]> = ed => {
 						editorRef.current = ed;
 						setEditor(ed);
 					};
@@ -748,7 +747,7 @@ return (
 			{/* ── Pages bar ── */}
 			<div className="sticky top-[52px] z-10 flex items-center overflow-x-auto border-b border-bd-1 bg-surf px-3.5 transition-colors [scrollbar-width:none]">
 				{pages.map((_, i) => {
-				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onSelectPage(i);
+				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onSelectPage(i);
 				  return (
 					<div
 						key={i}

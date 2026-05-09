@@ -1,6 +1,5 @@
 "use client";
-
-import { Fragment, type MouseEvent } from "react";
+import { Fragment, type MouseEvent } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { tokenizeContent } from "../../lib/tokenize-content";
 import type { TextToken } from "../../api";

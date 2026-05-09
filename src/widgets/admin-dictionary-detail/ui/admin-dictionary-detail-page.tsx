@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminDictionaryDetailPage } from "../model/use-admin-dictionary-detail-page";
@@ -113,10 +114,10 @@ export const AdminDictionaryDetailPage = ({ lemmaId }: AdminDictionaryDetailPage
 		mutations.addHeadword.mutate(data, { onSuccess: closeModal });
 	};
 
-		const handleDeleteSense: NonNullable<React.ComponentProps<typeof LemmasSensesCard>["onDeleteSense"]> = (senseId) => mutations.deleteSense.mutate(senseId);
-	const handleDeleteExample: NonNullable<React.ComponentProps<typeof LemmasSensesCard>["onDeleteExample"]> = (exId) => mutations.deleteExample.mutate(exId);
-	const handleDeleteForm: NonNullable<React.ComponentProps<typeof MorphFormsCard>["onDeleteForm"]> = (formId) => mutations.deleteForm.mutate(formId);
-	const handleDeleteHeadword: NonNullable<React.ComponentProps<typeof HeadwordsSideCard>["onDeleteHeadword"]> = (hwId) => mutations.deleteHeadword.mutate(hwId);
+		const handleDeleteSense: NonNullable<ComponentProps<typeof LemmasSensesCard>["onDeleteSense"]> = (senseId) => mutations.deleteSense.mutate(senseId);
+	const handleDeleteExample: NonNullable<ComponentProps<typeof LemmasSensesCard>["onDeleteExample"]> = (exId) => mutations.deleteExample.mutate(exId);
+	const handleDeleteForm: NonNullable<ComponentProps<typeof MorphFormsCard>["onDeleteForm"]> = (formId) => mutations.deleteForm.mutate(formId);
+	const handleDeleteHeadword: NonNullable<ComponentProps<typeof HeadwordsSideCard>["onDeleteHeadword"]> = (hwId) => mutations.deleteHeadword.mutate(hwId);
 return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<DictionaryEntryTopbar

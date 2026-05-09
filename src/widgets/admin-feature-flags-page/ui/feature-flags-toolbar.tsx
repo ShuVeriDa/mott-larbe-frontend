@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import type {
 	FeatureFlagCategory,
 	FeatureFlagEnvironment,
@@ -36,10 +37,10 @@ export const FeatureFlagsToolbar = ({
 	onStatusChange,
 	t,
 }: FeatureFlagsToolbarProps) => {
-  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onSearchChange(e.target.value);
-  const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onCategoryChange(e.target.value);
-  const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onEnvironmentChange(e.target.value);
-  const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onStatusChange(e.target.value);
+  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onSearchChange(e.currentTarget.value);
+  const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => onCategoryChange(e.currentTarget.value);
+  const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => onEnvironmentChange(e.currentTarget.value);
+  const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = e => onStatusChange(e.currentTarget.value);
   return (
 	<div className="mb-3.5 flex flex-wrap items-center gap-2">
 		<div className="relative max-w-[280px] flex-1">

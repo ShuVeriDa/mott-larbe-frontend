@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { StatsPeriod } from "@/entities/statistics";
@@ -26,7 +27,7 @@ export const PeriodTabs = ({ value, onChange, className }: PeriodTabsProps) => {
 		>
 			{PERIODS.map((period) => {
 				const active = value === period;
-								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(period);
+								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(period);
 return (
 					<button
 						key={period}

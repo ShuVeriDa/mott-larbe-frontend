@@ -1,8 +1,7 @@
 "use client";
 
 import type { AdminDictListItem } from "@/entities/dictionary";
-import { useEffect, useState } from "react";
-
+import { ComponentProps, useEffect, useState } from 'react';
 interface DictionaryAddExampleModalProps {
 	entry: AdminDictListItem | null;
 	isSubmitting: boolean;
@@ -41,11 +40,11 @@ export const DictionaryAddExampleModal = ({
 	const inputCls =
 		"w-full min-h-[72px] resize-y rounded-[8px] border border-bd-2 bg-bg px-2.5 py-2 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc";
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
-				if (e.target === e.currentTarget) onClose();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
 			};
-	const handleChange: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => {
-							setText(e.target.value);
+	const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = e => {
+							setText(e.currentTarget.value);
 							setError("");
 						};
 return (

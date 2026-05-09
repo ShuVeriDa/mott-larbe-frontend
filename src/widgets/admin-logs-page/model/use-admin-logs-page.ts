@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -40,18 +39,15 @@ export const useAdminLogsPage = () => {
 
 	const selectedId = searchParams.get("detail");
 
-	const setSelectedId = useCallback(
-		(id: string | null) => {
-			const params = new URLSearchParams(searchParams.toString());
-			if (id) {
-				params.set("detail", id);
-			} else {
-				params.delete("detail");
-			}
-			router.replace(`?${params.toString()}`, { scroll: false });
-		},
-		[router, searchParams],
-	);
+	const setSelectedId = (id: string | null) => {
+		const params = new URLSearchParams(searchParams.toString());
+		if (id) {
+			params.set("detail", id);
+		} else {
+			params.delete("detail");
+		}
+		router.replace(`?${params.toString()}`, { scroll: false });
+	};
 
 	const liveCursorRef = useRef<string | null>(null);
 	const liveTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -89,14 +85,14 @@ export const useAdminLogsPage = () => {
 	const servicesQuery = useAdminLogServices();
 	const detailQuery = useAdminLogDetail(selectedId);
 
-	const stopLive = useCallback(() => {
+	const stopLive = () => {
 		if (liveTimerRef.current) {
 			clearInterval(liveTimerRef.current);
 			liveTimerRef.current = null;
 		}
-	}, []);
+	};
 
-	const startLive = useCallback(() => {
+	const startLive = () => {
 		stopLive();
 		liveTimerRef.current = setInterval(async () => {
 			const { tab: t, service: s, range: r, debouncedSearch: q } = liveFilterRef.current;
@@ -128,7 +124,7 @@ export const useAdminLogsPage = () => {
 				// silently ignore live poll errors
 			}
 		}, LIVE_INTERVAL_MS);
-	}, [stopLive, queryClient]);
+	};
 
 	useEffect(() => {
 		if (isLive && page === 1) {
@@ -139,32 +135,32 @@ export const useAdminLogsPage = () => {
 		return stopLive;
 	}, [isLive, page, startLive, stopLive]);
 
-	const handleTabChange = useCallback((next: AdminLogTab) => {
+	const handleTabChange = (next: AdminLogTab) => {
 		setTab(next);
 		setPage(1);
 		setLiveItems([]);
 		liveCursorRef.current = null;
-	}, []);
+	};
 
-	const handleSearchChange = useCallback((v: string) => {
+	const handleSearchChange = (v: string) => {
 		setSearch(v);
-	}, []);
+	};
 
-	const handleServiceChange = useCallback((v: string) => {
+	const handleServiceChange = (v: string) => {
 		setService(v);
 		setPage(1);
 		setLiveItems([]);
 		liveCursorRef.current = null;
-	}, []);
+	};
 
-	const handleRangeChange = useCallback((v: AdminLogRange) => {
+	const handleRangeChange = (v: AdminLogRange) => {
 		setRange(v);
 		setPage(1);
 		setLiveItems([]);
 		liveCursorRef.current = null;
-	}, []);
+	};
 
-	const toggleLive = useCallback(() => {
+	const toggleLive = () => {
 		setIsLive((v) => {
 			if (v) {
 				// pausing: discard accumulated live items; cursor kept to resume from same position
@@ -172,12 +168,12 @@ export const useAdminLogsPage = () => {
 			}
 			return !v;
 		});
-	}, []);
+	};
 
-	const openDetail = useCallback((id: string) => setSelectedId(id), [setSelectedId]);
-	const closeDetail = useCallback(() => setSelectedId(null), [setSelectedId]);
+	const openDetail = (id: string) => setSelectedId(id);
+	const closeDetail = () => setSelectedId(null);
 
-	const handleExport = useCallback(() => {
+	const handleExport = () => {
 		const params = new URLSearchParams();
 		if (query.tab && query.tab !== "all") params.set("tab", query.tab);
 		if (query.q) params.set("q", query.q);
@@ -186,7 +182,7 @@ export const useAdminLogsPage = () => {
 		params.set("format", "csv");
 		const url = `${API_URL}/admin/logs/export?${params}`;
 		window.open(url, "_blank");
-	}, [query, range]);
+	};
 
 	const items = logsQuery.data?.items ?? [];
 	const liveLevel = tab !== "all" ? (tab as AdminLogLevel) : undefined;

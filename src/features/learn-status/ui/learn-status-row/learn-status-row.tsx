@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { LearningLevel } from "@/shared/types";
@@ -40,7 +41,7 @@ export const LearnStatusRow = ({
 		<div className="flex gap-1.5">
 			{LEVELS.map((level) => {
 				const isActive = level === active;
-								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => handleSelect(level);
+								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleSelect(level);
 return (
 					<button
 						key={level}

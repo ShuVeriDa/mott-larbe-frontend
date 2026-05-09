@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AdminLogRange } from "@/entities/admin-log";
@@ -37,9 +38,9 @@ export const LogsToolbar = ({
 }: LogsToolbarProps) => {
 	const { t } = useI18n();
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onServiceChange(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onRangeChange(e.target.value as AdminLogRange);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onServiceChange(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onRangeChange(e.currentTarget.value as AdminLogRange);
 return (
 		<div className="mb-2.5 flex flex-wrap items-center gap-2">
 			{/* Search */}

@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 import { useQueryClient } from "@tanstack/react-query";
 import { useLibraryFilters } from "@/features/library-filters";
 import {
@@ -54,9 +53,9 @@ export const LibraryPage = () => {
 		return () => observer.disconnect();
 	}, [query.hasNextPage, query.isFetchingNextPage, query.fetchNextPage]);
 
-	const handleRefresh = useCallback(() => {
+	const handleRefresh = () => {
 		qc.invalidateQueries({ queryKey: libraryTextKeys.root });
-	}, [qc]);
+	};
 
 	const counts = query.data?.pages[0]?.counts ?? EMPTY_COUNTS;
 	const items = query.data?.pages.flatMap((p) => p.items) ?? [];

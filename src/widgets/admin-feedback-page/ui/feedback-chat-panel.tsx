@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackThread, FeedbackStatus, FeedbackPriority } from "@/entities/feedback";
 import { FeedbackChatHeader } from "./feedback-chat-header";
@@ -16,7 +17,7 @@ interface FeedbackChatPanelProps {
 	onBack: () => void;
 	onInfoOpen: () => void;
 	onCopyLink: () => void;
-	onMoreMenu: (e: React.MouseEvent<HTMLButtonElement>) => void;
+	onMoreMenu: (e: MouseEvent<HTMLButtonElement>) => void;
 	onModeChange: (mode: "reply" | "note") => void;
 	onSend: (body: string, isInternal: boolean) => void;
 	onReopen: () => void;

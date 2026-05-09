@@ -3,7 +3,7 @@
 import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
@@ -55,10 +55,10 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setEmail(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setPassword(e.target.value);
-	const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowPw((v) => !v);
-	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setRemember(e.target.checked);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setEmail(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setPassword(e.currentTarget.value);
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowPw((v) => !v);
+	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setRemember(e.currentTarget.checked);
 return (
 		<form onSubmit={handleSubmit} noValidate autoComplete="on">
 			{error ? (

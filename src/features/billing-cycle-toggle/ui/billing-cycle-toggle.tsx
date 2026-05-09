@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { BillingCycle } from "@/entities/subscription";
@@ -19,7 +20,7 @@ export const BillingCycleToggle = ({
 
 	const renderButton = (cycle: BillingCycle, label: string, badge?: string) => {
 		const active = value === cycle;
-				const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(cycle);
+				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(cycle);
 return (
 			<button
 				type="button"

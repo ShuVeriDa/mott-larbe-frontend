@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { useAdminTextCreate } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
@@ -61,7 +60,7 @@ export const useAdminTextCreatePage = () => {
 	const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const saveNowRef = useRef<((targetStatus: TextStatus, silent: boolean) => Promise<void>) | undefined>(undefined);
 
-	const doSave = useCallback(async (targetStatus: TextStatus, silent: boolean) => {
+	const doSave = async (targetStatus: TextStatus, silent: boolean) => {
 		if (!title.trim()) {
 			if (!silent) toastError(t("admin.texts.createPage.titleRequired"));
 			return;
@@ -135,27 +134,22 @@ export const useAdminTextCreatePage = () => {
 			setSaveState("unsaved");
 			if (!silent) toastError(t("admin.texts.createPage.saveFailed"));
 		}
-	}, [
-		title, author, description, pages, language, level, tags, source,
-		autoTokenizeOnSave, useNormalization, useMorphAnalysis,
-		create, update, uploadCover, pendingCoverFile,
-		t, toastError, success, lang, router,
-	]);
+	};
 
 	saveNowRef.current = doSave;
 
-	const scheduleAutoSave = useCallback(() => {
+	const scheduleAutoSave = () => {
 		if (!savedIdRef.current) return;
 		if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
 		autoSaveTimerRef.current = setTimeout(() => {
 			saveNowRef.current?.("draft", true);
 		}, 2000);
-	}, []);
+	};
 
-	const markUnsaved = useCallback(() => {
+	const markUnsaved = () => {
 		setSaveState("unsaved");
 		scheduleAutoSave();
-	}, [scheduleAutoSave]);
+	};
 
 	useEffect(() => {
 		if (saveState !== "unsaved") return;
@@ -173,31 +167,31 @@ export const useAdminTextCreatePage = () => {
 		};
 	}, []);
 
-	const handleTitleChange = useCallback((value: string) => {
+	const handleTitleChange = (value: string) => {
 		setTitle(value);
 		markUnsaved();
-	}, [markUnsaved]);
+	};
 
-	const handlePageContentChange = useCallback((doc: TipTapDoc, wordCount: number) => {
+	const handlePageContentChange = (doc: TipTapDoc, wordCount: number) => {
 		setPages((prev) => {
 			const next = [...prev];
 			next[activePage] = { doc, wordCount };
 			return next;
 		});
 		markUnsaved();
-	}, [activePage, markUnsaved]);
+	};
 
-	const handleAddPage = useCallback(() => {
+	const handleAddPage = () => {
 		setPages((prev) => [...prev, { doc: EMPTY_DOC, wordCount: 0 }]);
 		setActivePage((prev) => prev + 1);
 		markUnsaved();
-	}, [markUnsaved]);
+	};
 
-	const handleSelectPage = useCallback((index: number) => {
+	const handleSelectPage = (index: number) => {
 		setActivePage(index);
-	}, []);
+	};
 
-	const handleDeletePage = useCallback((index: number) => {
+	const handleDeletePage = (index: number) => {
 		setPages(prev => {
 			if (prev.length <= 1) return prev;
 			return prev.filter((_, i) => i !== index);
@@ -208,15 +202,15 @@ export const useAdminTextCreatePage = () => {
 			return prev;
 		});
 		markUnsaved();
-	}, [markUnsaved]);
+	};
 
-	const handleCoverSelect = useCallback((file: File) => {
+	const handleCoverSelect = (file: File) => {
 		setPendingCoverFile(file);
 		setCoverPreviewUrl(URL.createObjectURL(file));
 		markUnsaved();
-	}, [markUnsaved]);
+	};
 
-	const handleAddTag = useCallback((name: string, id?: string) => {
+	const handleAddTag = (name: string, id?: string) => {
 		const trimmed = name.trim();
 		if (!trimmed) return;
 		setTags((prev) => {
@@ -224,15 +218,15 @@ export const useAdminTextCreatePage = () => {
 			return [...prev, id ? { id, name: trimmed } : { name: trimmed }];
 		});
 		markUnsaved();
-	}, [markUnsaved]);
+	};
 
-	const handleRemoveTag = useCallback((index: number) => {
+	const handleRemoveTag = (index: number) => {
 		setTags((prev) => prev.filter((_, i) => i !== index));
 		markUnsaved();
-	}, [markUnsaved]);
+	};
 
-	const handleSaveDraft = useCallback(() => doSave("draft", false), [doSave]);
-	const handlePublish = useCallback(() => doSave("published", false), [doSave]);
+	const handleSaveDraft = () => doSave("draft", false);
+	const handlePublish = () => doSave("published", false);
 
 	const isSaving = create.isPending || update.isPending || uploadCover.isPending;
 

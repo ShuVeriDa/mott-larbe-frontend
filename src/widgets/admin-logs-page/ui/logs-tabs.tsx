@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import type { AdminLogTab, AdminLogsTabs } from "@/entities/admin-log";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -28,7 +29,7 @@ export const LogsTabs = ({ active, counts, onChange }: LogsTabsProps) => {
 				{TABS.map(({ key, danger, warn }) => {
 					const isActive = active === key;
 					const count = counts?.[key];
-										const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(key);
+										const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(key);
 return (
 						<button
 							key={key}

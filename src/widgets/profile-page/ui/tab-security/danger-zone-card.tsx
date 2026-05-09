@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
@@ -11,8 +10,8 @@ export const DangerZoneCard = () => {
 	const { t } = useI18n();
 	const [deleteOpen, setDeleteOpen] = useState(false);
 
-		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => setDeleteOpen(true);
-	const handleClose: NonNullable<React.ComponentProps<typeof DeleteAccountModal>["onClose"]> = () => setDeleteOpen(false);
+		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => setDeleteOpen(true);
+	const handleClose: NonNullable<ComponentProps<typeof DeleteAccountModal>["onClose"]> = () => setDeleteOpen(false);
 return (
 		<>
 			<SettingCard

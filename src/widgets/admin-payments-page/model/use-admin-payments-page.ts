@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 import {
 	adminPaymentApi,
 	usePaymentChart,
@@ -114,44 +113,38 @@ export const useAdminPaymentsPage = () => {
 	const { data: plans } = useBillingPlans();
 	const mutations = usePaymentMutations();
 
-	const handleTabChange = useCallback((t: PaymentUiTab) => setTab(t), []);
+	const handleTabChange = (t: PaymentUiTab) => setTab(t);
 
-	const handleSelectRow = useCallback((id: string) => {
+	const handleSelectRow = (id: string) => {
 		setSelectedId((prev) => (prev === id ? null : id));
 		setMobileSheetOpen(true);
-	}, []);
+	};
 
-	const closeMobileSheet = useCallback(() => {
+	const closeMobileSheet = () => {
 		setMobileSheetOpen(false);
-	}, []);
+	};
 
-	const openModal = useCallback((type: "receipt" | "refund", id: string) => {
+	const openModal = (type: "receipt" | "refund", id: string) => {
 		setModalPaymentId(id);
 		setModal(type);
-	}, []);
+	};
 
-	const closeModal = useCallback(() => {
+	const closeModal = () => {
 		setModal(null);
 		setModalPaymentId(null);
-	}, []);
+	};
 
-	const handleRefundSubmit = useCallback(
-		(amountCents: number, reason: RefundReason) => {
-			if (!modalPaymentId) return;
-			mutations.refund.mutate(
-				{ id: modalPaymentId, dto: { amountCents, reason } },
-				{ onSuccess: closeModal },
-			);
-		},
-		[modalPaymentId, mutations, closeModal],
-	);
+	const handleRefundSubmit = (amountCents: number, reason: RefundReason) => {
+		if (!modalPaymentId) return;
+		mutations.refund.mutate(
+			{ id: modalPaymentId, dto: { amountCents, reason } },
+			{ onSuccess: closeModal },
+		);
+	};
 
-	const handleSendReceipt = useCallback(
-		(id: string) => mutations.sendReceipt.mutate({ id }),
-		[mutations],
-	);
+	const handleSendReceipt = (id: string) => mutations.sendReceipt.mutate({ id });
 
-	const handleExportCsv = useCallback(() => {
+	const handleExportCsv = () => {
 		void adminPaymentApi.exportCsv(listQuery).then((blob) => {
 			const url = URL.createObjectURL(blob);
 			const a = document.createElement("a");
@@ -160,7 +153,7 @@ export const useAdminPaymentsPage = () => {
 			a.click();
 			URL.revokeObjectURL(url);
 		});
-	}, [listQuery, dateFrom, dateTo]);
+	};
 
 	const tabCounts = {
 		all: stats?.transactionCount ?? 0,

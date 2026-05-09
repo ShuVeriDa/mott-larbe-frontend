@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { ComponentProps } from 'react';
 import type {
 	AdminPaymentDetail,
 	AdminPaymentListItem,
@@ -170,9 +171,9 @@ export const PaymentDetailPanel = ({
 		);
 	}
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onReceipt(payment.id);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onSendReceipt(payment.id);
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRefund(payment.id);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onReceipt(payment.id);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onSendReceipt(payment.id);
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => onRefund(payment.id);
 return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 			{/* Hero */}

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, MouseEvent, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AdminCouponListItem, CouponStatus } from "@/entities/admin-coupon";
@@ -68,7 +67,7 @@ const CouponCodeChip = ({ code }: { code: string }) => {
 	const [copied, setCopied] = useState(false);
 	const { t } = useI18n();
 
-	const handleCopy = (e: React.MouseEvent) => {
+	const handleCopy = (e: MouseEvent) => {
 		e.stopPropagation();
 		navigator.clipboard.writeText(code).then(() => {
 			setCopied(true);
@@ -127,7 +126,7 @@ export const CouponsTable = ({
 	];
 
 	const renderSortableTh = (key: CouponSortBy, label: string, extraClass?: string) => {
-	  const handleClick: NonNullable<React.ComponentProps<"th">["onClick"]> = () => onSortChange(key);
+	  const handleClick: NonNullable<ComponentProps<"th">["onClick"]> = () => onSortChange(key);
 	  return (
 		<th
 			key={key}
@@ -186,9 +185,9 @@ export const CouponsTable = ({
 							const pct = maxR ? Math.min((item.redeemedCount / maxR) * 100, 100) : 0;
 							const isSelected = item.id === selectedId;
 
-														const handleClick: NonNullable<React.ComponentProps<"tr">["onClick"]> = () => onSelectRow(item.id);
-							const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onEdit(item.id); };
-							const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onDelete(item.id); };
+														const handleClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onSelectRow(item.id);
+							const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onEdit(item.id); };
+							const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onDelete(item.id); };
 return (
 								<tr
 									key={item.id}

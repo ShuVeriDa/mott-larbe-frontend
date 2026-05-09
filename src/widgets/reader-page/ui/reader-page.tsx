@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { ComponentProps, useEffect, useState } from 'react';
 import { useTextPage } from "@/entities/text";
 import { useWordLookupStore } from "@/features/word-lookup";
 import { ReaderBody } from "@/widgets/reader-body";
@@ -43,8 +42,8 @@ export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
 		);
 	}
 
-		const handleOpenSettings: NonNullable<React.ComponentProps<typeof ReaderTopbar>["onOpenSettings"]> = () => setSettingsOpen(true);
-	const handleClose: NonNullable<React.ComponentProps<typeof ReaderSettingsSheet>["onClose"]> = () => setSettingsOpen(false);
+		const handleOpenSettings: NonNullable<ComponentProps<typeof ReaderTopbar>["onOpenSettings"]> = () => setSettingsOpen(true);
+	const handleClose: NonNullable<ComponentProps<typeof ReaderSettingsSheet>["onClose"]> = () => setSettingsOpen(false);
 return (
 		<>
 			<ReaderTopbar

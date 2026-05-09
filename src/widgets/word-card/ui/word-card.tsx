@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -60,7 +61,7 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 	const example = entry.lemma?.headwords?.[0]?.entry?.senses?.[0]?.examples?.[0];
 	const forms = entry.lemma?.morphForms ?? [];
 
-		const handleKeyDown: NonNullable<React.ComponentProps<"article">["onKeyDown"]> = (e) => {
+		const handleKeyDown: NonNullable<ComponentProps<"article">["onKeyDown"]> = (e) => {
 				if (e.key === "Enter" || e.key === " ") {
 					e.preventDefault();
 					onToggle();

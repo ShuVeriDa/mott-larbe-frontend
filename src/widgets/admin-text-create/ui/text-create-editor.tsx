@@ -8,7 +8,16 @@ import type {
 	TipTapNode,
 } from "@/shared/ui/notion-editor";
 import { NotionEditor } from "@/shared/ui/notion-editor";
-import { useCallback, useMemo, useRef, useState } from "react";
+import {
+	ChangeEvent,
+	ComponentProps,
+	MouseEvent,
+	ReactNode,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import type { PageContent } from "../model/use-admin-text-create-page";
 
 export type { TipTapDoc, TipTapNode };
@@ -49,9 +58,9 @@ const TbBtn = ({
 	title: string;
 	active?: boolean;
 	onExec: () => void;
-	children: React.ReactNode;
+	children: ReactNode;
 }) => {
-  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+  const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = e => {
 			e.preventDefault();
 			onExec();
 		};
@@ -158,7 +167,7 @@ const EditorToolbar = ({
 }) => {
 	// Re-render on selection change so active states update
 	const [, forceUpdate] = useState(0);
-	useMemo(() => {
+	useEffect(() => {
 		if (!editor) return;
 		const handler = () => forceUpdate(n => n + 1);
 		editor.on("selectionUpdate", handler);
@@ -172,9 +181,9 @@ const EditorToolbar = ({
 
 	const e = editor;
 
-		const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = ev => {
+		const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = ev => {
 						if (!e) return;
-						const v = ev.target.value;
+						const v = ev.currentTarget.value;
 						if (v === "p") e.chain().focus().setParagraph().run();
 						else if (v === "h2")
 							e.chain().focus().setHeading({ level: 2 }).run();
@@ -183,18 +192,18 @@ const EditorToolbar = ({
 						else if (v === "blockquote")
 							e.chain().focus().setBlockquote().run();
 					};
-	const handleExec: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleBold().run();
-	const handleExec2: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleItalic().run();
-	const handleExec3: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleUnderline().run();
-	const handleExec4: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleStrike().run();
-	const handleExec5: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleBulletList().run();
-	const handleExec6: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleOrderedList().run();
-	const handleExec7: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("left").run();
-	const handleExec8: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("center").run();
-	const handleExec9: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("right").run();
-	const handleExec10: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("justify").run();
-	const handleExec11: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().undo().run();
-	const handleExec12: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().redo().run();
+	const handleExec: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleBold().run();
+	const handleExec2: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleItalic().run();
+	const handleExec3: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleUnderline().run();
+	const handleExec4: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleStrike().run();
+	const handleExec5: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleBulletList().run();
+	const handleExec6: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleOrderedList().run();
+	const handleExec7: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("left").run();
+	const handleExec8: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("center").run();
+	const handleExec9: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("right").run();
+	const handleExec10: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("justify").run();
+	const handleExec11: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().undo().run();
+	const handleExec12: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().redo().run();
 return (
 		<div className="sticky top-[52px] z-10 flex items-center gap-px overflow-x-auto border-b border-bd-1 bg-surf px-2 py-[5px] transition-colors [scrollbar-width:none]">
 			{/* Block type select */}
@@ -490,76 +499,64 @@ export const TextCreateEditor = ({
 	const slashItems = useSlashItems(t);
 	const [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(null);
 
-	const handlePageCloseClick = useCallback(
-		(e: React.MouseEvent, index: number) => {
-			e.stopPropagation();
-			const page = pages[index];
-			const hasContent = extractText(page.doc).trim().length > 0;
-			if (hasContent) {
-				setConfirmDeleteIndex(index);
-			} else {
-				onDeletePage(index);
-			}
-		},
-		[pages, onDeletePage],
-	);
+	const handlePageCloseClick = (e: MouseEvent, index: number) => {
+		e.stopPropagation();
+		const page = pages[index];
+		const hasContent = extractText(page.doc).trim().length > 0;
+		if (hasContent) {
+			setConfirmDeleteIndex(index);
+		} else {
+			onDeletePage(index);
+		}
+	};
 
-	const handleConfirmDelete = useCallback(() => {
+	const handleConfirmDelete = () => {
 		if (confirmDeleteIndex !== null) {
 			onDeletePage(confirmDeleteIndex);
 			setConfirmDeleteIndex(null);
 		}
-	}, [confirmDeleteIndex, onDeletePage]);
+	};
 
-	const adjustTitleHeight = useCallback(() => {
+	const adjustTitleHeight = () => {
 		if (titleRef.current) {
 			titleRef.current.style.height = "auto";
 			titleRef.current.style.height = `${titleRef.current.scrollHeight}px`;
 		}
-	}, []);
+	};
 
-	const handleTitleInput = useCallback(
-		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-			onTitleChange(e.target.value);
-			adjustTitleHeight();
-		},
-		[onTitleChange, adjustTitleHeight],
-	);
+	const handleTitleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
+		onTitleChange(e.currentTarget.value);
+		adjustTitleHeight();
+	};
 
-	const handleUpdate = useCallback(
-		(doc: TipTapDoc) => {
-			const wc = countWords(doc);
-			onPageContentChange(doc, wc);
-			setStats({
-				words: wc,
-				chars: countChars(doc),
-				paragraphs: countParagraphs(doc),
-			});
-		},
-		[onPageContentChange],
-	);
+	const handleUpdate = (doc: TipTapDoc) => {
+		const wc = countWords(doc);
+		onPageContentChange(doc, wc);
+		setStats({
+			words: wc,
+			chars: countChars(doc),
+			paragraphs: countParagraphs(doc),
+		});
+	};
 
-	const handleKeyDown = useCallback(
-		(event: KeyboardEvent) => {
-			if ((event.ctrlKey || event.metaKey) && event.key === "s") {
-				event.preventDefault();
-				onSaveDraft();
-				return true;
-			}
-			if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-				event.preventDefault();
-				onPublish();
-				return true;
-			}
-			return false;
-		},
-		[onSaveDraft, onPublish],
-	);
+	const handleKeyDown = (event: KeyboardEvent) => {
+		if ((event.ctrlKey || event.metaKey) && event.key === "s") {
+			event.preventDefault();
+			onSaveDraft();
+			return true;
+		}
+		if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+			event.preventDefault();
+			onPublish();
+			return true;
+		}
+		return false;
+	};
 
 	const titleLen = title.length;
 	const titleWarn = titleLen > 160;
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setConfirmDeleteIndex(null);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setConfirmDeleteIndex(null);
 return (
 		<div className="flex min-w-0 flex-col border-r border-bd-1 max-[900px]:border-r-0">
 			{/* ── Title area ── */}
@@ -586,8 +583,8 @@ return (
 			{/* ── Pages bar ── */}
 			<div className="sticky top-[93px] z-10 flex items-center overflow-x-auto border-b border-bd-1 bg-surf px-3.5 transition-colors [scrollbar-width:none]">
 				{pages.map((_, i) => {
-				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onSelectPage(i);
-				  const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = e => handlePageCloseClick(e, i);
+				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onSelectPage(i);
+				  const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = e => handlePageCloseClick(e, i);
 				  return (
 					<div
 						key={i}

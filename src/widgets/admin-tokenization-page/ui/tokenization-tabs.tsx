@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { TokenizationStats, TokenizationTab } from "@/entities/token";
@@ -31,7 +32,7 @@ export const TokenizationTabs = ({ activeTab, stats, onChange }: TokenizationTab
 		<div className="mb-3.5 overflow-x-auto [&::-webkit-scrollbar]:h-0">
 			<div className="flex w-fit gap-0 rounded-[9px] bg-surf-2 p-[3px]">
 				{TABS.map(({ key, labelKey }) => {
-				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(key);
+				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(key);
 				  return (
 					<button
 						key={key}

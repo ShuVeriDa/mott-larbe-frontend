@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { useChangePassword } from "@/entities/auth";
@@ -47,10 +46,10 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setCurrentPassword(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setNewPassword(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => {
-							setConfirmPassword(e.target.value);
+		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setCurrentPassword(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setNewPassword(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => {
+							setConfirmPassword(e.currentTarget.value);
 							setMismatch(false);
 						};
 return (

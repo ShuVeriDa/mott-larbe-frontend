@@ -3,7 +3,7 @@
 import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import { CEFR_LEVELS, type CefrLevel } from "@/shared/types/cefr";
@@ -84,13 +84,13 @@ export const RegisterForm = ({
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setName(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setSurname(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setUsername(e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setEmail(e.target.value);
-	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setPassword(e.target.value);
-	const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowPw((v) => !v);
-	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setPassword2(e.target.value);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setName(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setSurname(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setUsername(e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setEmail(e.currentTarget.value);
+	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setPassword(e.currentTarget.value);
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowPw((v) => !v);
+	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setPassword2(e.currentTarget.value);
 return (
 		<form onSubmit={handleSubmit} noValidate autoComplete="on">
 			{error ? (
@@ -311,7 +311,7 @@ return (
 				</Typography>
 				<div className="grid grid-cols-3 gap-2">
 					{CEFR_LEVELS.map((cefrLevel) => {
-					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setLevel(cefrLevel);
+					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setLevel(cefrLevel);
 					  return (
 						<button
 							key={cefrLevel}

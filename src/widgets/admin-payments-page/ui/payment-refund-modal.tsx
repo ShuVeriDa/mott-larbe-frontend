@@ -5,8 +5,7 @@ import type {
 	RefundReason,
 } from "@/entities/admin-payment";
 import { useI18n } from "@/shared/lib/i18n";
-import { type SyntheticEvent, useState } from "react";
-
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 const REASONS: RefundReason[] = [
 	"USER_REQUEST",
 	"DUPLICATE_TRANSACTION",
@@ -48,8 +47,8 @@ export const PaymentRefundModal = ({
 		maximumFractionDigits: 0,
 	}).format(maxRub);
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setAmount(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setReason(e.target.value as RefundReason);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setAmount(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => setReason(e.currentTarget.value as RefundReason);
 return (
 		<div className="overflow-hidden rounded-t-[14px] bg-surf sm:rounded-[14px]">
 			{/* Header */}

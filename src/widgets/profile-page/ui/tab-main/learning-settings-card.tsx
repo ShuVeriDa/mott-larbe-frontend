@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
@@ -50,8 +49,8 @@ export const LearningSettingsCard = ({ profile }: LearningSettingsCardProps) => 
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => setLanguage(e.target.value as UserLanguage);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => setLevel(e.target.value as UserLevel);
+		const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setLanguage(e.currentTarget.value as UserLanguage);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setLevel(e.currentTarget.value as UserLevel);
 return (
 		<SettingCard title={t("profile.learningSettings.title")}>
 			<form onSubmit={handleSubmit} className="flex flex-col gap-3">

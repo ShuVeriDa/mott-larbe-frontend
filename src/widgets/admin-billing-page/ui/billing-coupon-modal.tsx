@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { ComponentProps, SyntheticEvent, useEffect, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { CreateCouponDto, CouponType } from "@/entities/admin-billing";
 
@@ -36,7 +35,7 @@ export const BillingCouponModal = ({
 	const set = <K extends keyof typeof empty>(key: K, value: string) =>
 		setForm((prev) => ({ ...prev, [key]: value }));
 
-	const handleSubmit = (e: React.SyntheticEvent) => {
+	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
 		if (!form.code.trim()) return;
 
@@ -60,13 +59,13 @@ export const BillingCouponModal = ({
 
 	if (!open) return null;
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("code", e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("name", e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => set("type", e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("amount", e.target.value);
-	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("maxRedemptions", e.target.value);
-	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("validUntil", e.target.value);
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("code", e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("name", e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => set("type", e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("amount", e.currentTarget.value);
+	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("maxRedemptions", e.currentTarget.value);
+	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("validUntil", e.currentTarget.value);
 return (
 		<div
 			className="fixed inset-0 z-400 flex items-end justify-center bg-black/35 sm:items-center sm:p-4"

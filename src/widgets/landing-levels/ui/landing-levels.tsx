@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -62,7 +61,7 @@ export const LandingLevels = () => {
 					aria-label="CEFR levels"
 				>
 					{LEVEL_KEYS.map((key) => {
-					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setActive(key);
+					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setActive(key);
 					  return (
 						<button
 							key={key}

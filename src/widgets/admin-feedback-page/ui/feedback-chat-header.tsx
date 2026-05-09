@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import type { AdminFeedbackThread } from "@/entities/feedback";
 import { cn } from "@/shared/lib/cn";
 import { FeedbackStatusBadge } from "./feedback-status-badge";
@@ -18,7 +19,7 @@ interface FeedbackChatHeaderProps {
 	onBack: () => void;
 	onInfoOpen: () => void;
 	onCopyLink: () => void;
-	onMoreMenu: (e: React.MouseEvent<HTMLButtonElement>) => void;
+	onMoreMenu: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const FeedbackChatHeader = ({

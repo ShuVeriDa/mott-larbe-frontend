@@ -1,6 +1,5 @@
 "use client";
-
-import { useRef, useState, useEffect } from "react";
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
 import { CefrBadge } from "@/entities/dictionary";
@@ -63,17 +62,17 @@ const RowDropdown = ({ item, lang, onDelete, onAddSense, onAddExample, t }: RowD
 	useEffect(() => {
 		if (!open) return;
 		const handler = (e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+			if (ref.current && !ref.current.contains(e.target as Node /* intentional: outside-click target */)) setOpen(false);
 		};
 		document.addEventListener("mousedown", handler);
 		return () => document.removeEventListener("mousedown", handler);
 	}, [open]);
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setOpen((p) => !p);
-	const handleClick2: NonNullable<React.ComponentProps<typeof Link>["onClick"]> = () => setOpen(false);
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { setOpen(false); onAddSense(item); };
-	const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { setOpen(false); onAddExample(item); };
-	const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { setOpen(false); onDelete(item); };
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((p) => !p);
+	const handleClick2: NonNullable<ComponentProps<typeof Link>["onClick"]> = () => setOpen(false);
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => { setOpen(false); onAddSense(item); };
+	const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => { setOpen(false); onAddExample(item); };
+	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => { setOpen(false); onDelete(item); };
 return (
 		<div ref={ref} className="relative">
 			<button
@@ -234,7 +233,7 @@ export const DictionaryTable = ({
 					{isLoading
 						? Array.from({ length: 8 }).map((_, i) => <SkeletonRow key={i} />)
 						: items.map((item) => {
-						  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = () => onSelectId(item.id);
+						  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onSelectId(item.id);
 						  return (
 							<tr
 								key={item.id}

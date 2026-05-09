@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import type { AdminLogItem } from "@/entities/admin-log";
 import { LevelBadge } from "./level-badge";
 import { DurationBadge } from "./duration-badge";
@@ -47,7 +48,7 @@ export const LogsMobileList = ({
 	return (
 		<div className="md:hidden">
 			{items.map((item) => {
-			  const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = () => onItemClick(item.id);
+			  const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = () => onItemClick(item.id);
 			  return (
 				<div
 					key={item.id}

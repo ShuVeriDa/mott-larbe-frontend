@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagsTab } from "../model/use-admin-feature-flags-page";
 
@@ -12,7 +13,7 @@ const TABS: FeatureFlagsTab[] = ["flags", "overrides", "history"];
 export const FeatureFlagsTabs = ({ active, onChange, t }: FeatureFlagsTabsProps) => (
 	<div className="mb-4 flex w-fit items-center gap-0.5 rounded-[9px] border border-bd-1 bg-surf-2 p-[3px]">
 		{TABS.map((tab) => {
-		  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab);
+		  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab);
 		  return (
 			<button
 				key={tab}

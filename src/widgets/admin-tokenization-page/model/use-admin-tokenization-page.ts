@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
 	useTokenizationDistribution,
@@ -103,92 +102,71 @@ export const useAdminTokenizationPage = () => {
 	const mutations = useTokenizationMutations();
 	const updateSettings = useUpdateTokenizationSettings();
 
-	const handleTabChange = useCallback(
-		(next: TokenizationTab) => {
-			setSelectedIds(new Set());
-			setParams({ tab: next, page: "1" });
-		},
-		[setParams],
-	);
+	const handleTabChange = (next: TokenizationTab) => {
+		setSelectedIds(new Set());
+		setParams({ tab: next, page: "1" });
+	};
 
-	const handleSearchChange = useCallback((value: string) => {
+	const handleSearchChange = (value: string) => {
 		setSearchInput(value);
-	}, []);
+	};
 
-	const handleLevelChange = useCallback(
-		(value: string) => {
-			setParams({ level: value, page: "1" });
-		},
-		[setParams],
-	);
+	const handleLevelChange = (value: string) => {
+		setParams({ level: value, page: "1" });
+	};
 
-	const handleStatusChange = useCallback(
-		(value: string) => {
-			setParams({ status: value, page: "1" });
-		},
-		[setParams],
-	);
+	const handleStatusChange = (value: string) => {
+		setParams({ status: value, page: "1" });
+	};
 
-	const handleSortChange = useCallback(
-		(value: string) => {
-			setParams({ sort: value, page: "1" });
-		},
-		[setParams],
-	);
+	const handleSortChange = (value: string) => {
+		setParams({ sort: value, page: "1" });
+	};
 
-	const handlePageChange = useCallback(
-		(next: number) => {
-			setParams({ page: String(next) });
-		},
-		[setParams],
-	);
+	const handlePageChange = (next: number) => {
+		setParams({ page: String(next) });
+	};
 
-	const toggleSelectId = useCallback((id: string) => {
+	const toggleSelectId = (id: string) => {
 		setSelectedIds((prev) => {
 			const next = new Set(prev);
 			if (next.has(id)) next.delete(id);
 			else next.add(id);
 			return next;
 		});
-	}, []);
+	};
 
-	const toggleSelectAll = useCallback(() => {
+	const toggleSelectAll = () => {
 		if (!data?.data) return;
 		setSelectedIds((prev) => {
 			const allIds = data.data.map((item) => item.id);
 			const allSelected = allIds.every((id) => prev.has(id));
 			return allSelected ? new Set() : new Set(allIds);
 		});
-	}, [data?.data]);
+	};
 
-	const clearSelection = useCallback(() => setSelectedIds(new Set()), []);
+	const clearSelection = () => setSelectedIds(new Set());
 
-	const handleRun = useCallback(
-		async (scope: RunScope) => {
-			await mutations.run.mutateAsync({ scope });
-			setRunModalOpen(false);
-		},
-		[mutations.run],
-	);
+	const handleRun = async (scope: RunScope) => {
+		await mutations.run.mutateAsync({ scope });
+		setRunModalOpen(false);
+	};
 
-	const handleBulkRun = useCallback(async () => {
+	const handleBulkRun = async () => {
 		await mutations.bulkRun.mutateAsync(Array.from(selectedIds));
 		clearSelection();
-	}, [mutations.bulkRun, selectedIds, clearSelection]);
+	};
 
-	const handleBulkReset = useCallback(async () => {
+	const handleBulkReset = async () => {
 		await mutations.bulkReset.mutateAsync(Array.from(selectedIds));
 		clearSelection();
 		setConfirmResetOpen(false);
-	}, [mutations.bulkReset, selectedIds, clearSelection]);
+	};
 
-	const handleSettingToggle = useCallback(
-		(key: keyof UpdateTokenizationSettingsDto) => {
-			if (!settings) return;
-			updateSettings.mutate({ [key]: !settings[key] });
-		},
-		[settings, updateSettings],
-	);
+	const handleSettingToggle = (key: keyof UpdateTokenizationSettingsDto) => {
+		if (!settings) return;
+		updateSettings.mutate({ [key]: !settings[key] });
+	};
 
 	const allSelected =
 		!!data?.data?.length && data.data.every((item) => selectedIds.has(item.id));

@@ -9,7 +9,7 @@ import { CreditCardIcon, GlobeIcon, LayoutDashboardIcon, LifeBuoyIcon, LogOutIco
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { canAccessAdmin, getDisplayName, getUserInitials } from "../lib/user-helpers";
 import { useLogout } from "../model/use-logout";
 
@@ -52,7 +52,7 @@ export const UserMenu = () => {
 		router.push(newPath);
 	};
 
-		const handleSelect: NonNullable<React.ComponentProps<typeof DropdownMenuPrimitive.Item>["onSelect"]> = (e) => e.preventDefault();
+		const handleSelect: NonNullable<ComponentProps<typeof DropdownMenuPrimitive.Item>["onSelect"]> = (e) => e.preventDefault();
 return (
 		<DropdownMenuPrimitive.Root open={open} onOpenChange={setOpen}>
 			<DropdownMenuPrimitive.Trigger asChild>
@@ -149,7 +149,7 @@ return (
 							>
 								{LOCALES.map((locale) => {
 									const active = locale === lang;
-																		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+																		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
 												e.preventDefault();
 												switchLang(locale);
 											};

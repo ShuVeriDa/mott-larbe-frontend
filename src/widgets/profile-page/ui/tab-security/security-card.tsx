@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { useTerminateAllSessions } from "@/entities/auth";
@@ -50,8 +49,8 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 		});
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => setPasswordModalOpen(true);
-	const handleClick2: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => setEmailModalOpen(true);
+		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => setPasswordModalOpen(true);
+	const handleClick2: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => setEmailModalOpen(true);
 const rows = [
 		{
 			id: "password",
@@ -104,8 +103,8 @@ const rows = [
 		},
 	];
 
-		const handleClose: NonNullable<React.ComponentProps<typeof ChangePasswordModal>["onClose"]> = () => setPasswordModalOpen(false);
-	const handleClose2: NonNullable<React.ComponentProps<typeof ChangeEmailModal>["onClose"]> = () => setEmailModalOpen(false);
+		const handleClose: NonNullable<ComponentProps<typeof ChangePasswordModal>["onClose"]> = () => setPasswordModalOpen(false);
+	const handleClose2: NonNullable<ComponentProps<typeof ChangeEmailModal>["onClose"]> = () => setEmailModalOpen(false);
 return (
 		<>
 			<SettingCard title={t("profile.security.title")} noBody>

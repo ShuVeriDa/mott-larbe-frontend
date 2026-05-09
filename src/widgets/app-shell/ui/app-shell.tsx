@@ -1,5 +1,4 @@
-import { ToastViewport } from "@/shared/ui/toast";
-import type { ReactNode } from "react";
+import { ToastViewport } from "@/shared/ui/toast";import type { ReactNode } from 'react';
 import { BottomNav } from "./bottom-nav";
 import { SideNav } from "./side-nav";
 

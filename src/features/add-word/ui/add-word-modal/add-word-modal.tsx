@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { Modal, ModalActions } from "@/shared/ui/modal";
@@ -57,10 +57,10 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setWord(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setTranslation(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => setFolderId(e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => setCefrLevel(e.target.value);
+		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setWord(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setTranslation(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => setFolderId(e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => setCefrLevel(e.currentTarget.value);
 return (
 		<Modal
 			open={open}

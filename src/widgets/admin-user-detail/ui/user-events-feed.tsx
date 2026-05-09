@@ -1,12 +1,13 @@
 "use client";
 
+import { ComponentProps, ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { UserEvent, UserEventType, FetchUserEventsQuery } from "@/entities/admin-user";
 import { cn } from "@/shared/lib/cn";
 
 const EVENT_ICON_CONFIG: Record<
 	string,
-	{ bgClass: string; icon: React.ReactNode }
+	{ bgClass: string; icon: ReactNode }
 > = {
 	OPEN_TEXT: {
 		bgClass: "bg-acc-bg text-acc-t",
@@ -101,9 +102,9 @@ export const UserEventsFeed = ({
 	const shown = events.length;
 	const hasMore = shown < total;
 
-		const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onTypeChange(e.target.value as UserEventType | "");
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) =>
-						onPeriodChange(e.target.value as FetchUserEventsQuery["period"]);
+		const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onTypeChange(e.currentTarget.value as UserEventType | "");
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) =>
+						onPeriodChange(e.currentTarget.value as FetchUserEventsQuery["period"]);
 return (
 		<>
 			<div className="flex items-center gap-1.5 border-b border-bd-1 px-3.5 py-2.5">

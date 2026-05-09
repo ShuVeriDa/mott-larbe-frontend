@@ -1,6 +1,5 @@
 "use client";
-
-import { forwardRef, type MouseEvent } from "react";
+import { ComponentProps, forwardRef, type MouseEvent } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { tokenStatusClass } from "../../lib/status-class";
 import type { TextToken } from "../../api";
@@ -18,7 +17,7 @@ export const ArticleToken = forwardRef<HTMLSpanElement, ArticleTokenProps>(
 			onSelect(token, event);
 		};
 
-				const handleKeyDown: NonNullable<React.ComponentProps<"span">["onKeyDown"]> = (event) => {
+				const handleKeyDown: NonNullable<ComponentProps<"span">["onKeyDown"]> = (event) => {
 					if (event.key === "Enter" || event.key === " ") {
 						event.preventDefault();
 						onSelect(token, event as unknown as MouseEvent<HTMLSpanElement>);

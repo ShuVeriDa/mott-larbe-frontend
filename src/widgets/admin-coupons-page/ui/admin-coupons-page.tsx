@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect } from "react";
+import { ComponentProps, useEffect } from 'react';
 import { useAdminCouponsPage } from "../model/use-admin-coupons-page";
 import { CouponsTopbar } from "./coupons-topbar";
 import { CouponsKpiRow } from "./coupons-kpi-row";
@@ -63,36 +62,36 @@ export const AdminCouponsPage = () => {
 		return () => document.removeEventListener("keydown", handler);
 	}, [closeModal, closeMobileSheet]);
 
-	const handleCreate: NonNullable<React.ComponentProps<typeof CouponsTopbar>["onCreate"]> = () =>
+	const handleCreate: NonNullable<ComponentProps<typeof CouponsTopbar>["onCreate"]> = () =>
 		openModal("create");
-	const handleTableEdit: NonNullable<React.ComponentProps<typeof CouponsTable>["onEdit"]> = id =>
+	const handleTableEdit: NonNullable<ComponentProps<typeof CouponsTable>["onEdit"]> = id =>
 		openModal("edit", id);
-	const handleTableDelete: NonNullable<React.ComponentProps<typeof CouponsTable>["onDelete"]> = id =>
+	const handleTableDelete: NonNullable<ComponentProps<typeof CouponsTable>["onDelete"]> = id =>
 		openModal("delete", id);
-	const handleDetailEdit: NonNullable<React.ComponentProps<typeof CouponDetailPanel>["onEdit"]> = id =>
+	const handleDetailEdit: NonNullable<ComponentProps<typeof CouponDetailPanel>["onEdit"]> = id =>
 		openModal("edit", id);
-	const handleDetailDelete: NonNullable<React.ComponentProps<typeof CouponDetailPanel>["onDelete"]> = id =>
+	const handleDetailDelete: NonNullable<ComponentProps<typeof CouponDetailPanel>["onDelete"]> = id =>
 		openModal("delete", id);
-	const handleMobileDetailEdit: NonNullable<React.ComponentProps<typeof CouponDetailPanel>["onEdit"]> = id => {
+	const handleMobileDetailEdit: NonNullable<ComponentProps<typeof CouponDetailPanel>["onEdit"]> = id => {
 		closeMobileSheet();
 		openModal("edit", id);
 	};
-	const handleMobileDetailDelete: NonNullable<React.ComponentProps<typeof CouponDetailPanel>["onDelete"]> = id => {
+	const handleMobileDetailDelete: NonNullable<ComponentProps<typeof CouponDetailPanel>["onDelete"]> = id => {
 		closeMobileSheet();
 		openModal("delete", id);
 	};
-	const handleMobileDetailDeactivate: NonNullable<React.ComponentProps<typeof CouponDetailPanel>["onDeactivate"]> = async id => {
+	const handleMobileDetailDeactivate: NonNullable<ComponentProps<typeof CouponDetailPanel>["onDeactivate"]> = async id => {
 		closeMobileSheet();
 		await handleDeactivate(id);
 	};
-	const handleMobileDetailActivate: NonNullable<React.ComponentProps<typeof CouponDetailPanel>["onActivate"]> = async id => {
+	const handleMobileDetailActivate: NonNullable<ComponentProps<typeof CouponDetailPanel>["onActivate"]> = async id => {
 		closeMobileSheet();
 		await handleActivate(id);
 	};
-	const handleModalOverlayClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
-		if (e.target === e.currentTarget) closeModal();
+	const handleModalOverlayClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+		if (/* intentional: backdrop-only click */ e.target === e.currentTarget) closeModal();
 	};
-	const handleModalContentClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e =>
+	const handleModalContentClick: NonNullable<ComponentProps<"div">["onClick"]> = e =>
 		e.stopPropagation();
 return (
 		<div className="flex min-h-0 flex-1 flex-col">

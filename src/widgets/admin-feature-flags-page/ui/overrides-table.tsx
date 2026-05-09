@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import type { FeatureFlagOverrideItem } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
 
@@ -63,7 +64,7 @@ export const OverridesTable = ({ items, isLoading, onDelete, t }: OverridesTable
 							const initials = (
 								(item.user.name?.[0] ?? "") + (item.user.surname?.[0] ?? "")
 							).toUpperCase() || item.user.email[0].toUpperCase();
-														const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDelete(item.id);
+														const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onDelete(item.id);
 return (
 								<tr
 									key={item.id}

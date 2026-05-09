@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { LEARNING_LEVELS, type LearningLevel } from "@/shared/types";
@@ -30,7 +31,7 @@ export const StatusButtons = ({ wordId, current }: StatusButtonsProps) => {
 		<div className="mb-2 flex gap-1">
 			{LEARNING_LEVELS.map((level) => {
 				const active = current === level;
-								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
 							e.stopPropagation();
 							mutate({ id: wordId, body: { learningLevel: level }, previousLevel: current });
 						};

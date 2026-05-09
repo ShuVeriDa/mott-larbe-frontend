@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { TextVersionListItem, ProcessingStatus } from "@/entities/admin-text";
@@ -94,7 +95,7 @@ export const VersionsTimeline = ({
 				</span>
 				<div className="flex rounded-[8px] bg-surf-2 p-[3px]">
 					{tabs.map(({ key, label }) => {
-					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onStatusFilterChange(key);
+					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onStatusFilterChange(key);
 					  return (
 						<button
 							key={key}
@@ -155,10 +156,10 @@ export const VersionsTimeline = ({
 							{resolveLabel(group.label)}
 						</div>
 						{allItems.map((item, idx) => {
-						  const handleClick: NonNullable<React.ComponentProps<typeof VersionItem>["onClick"]> = () => onVersionClick(item.id);
-						  const handleRestore: NonNullable<React.ComponentProps<typeof VersionItem>["onRestore"]> = () => onRestore(item.id);
-						  const handleRetry: NonNullable<React.ComponentProps<typeof VersionItem>["onRetry"]> = () => onRetry(item.id);
-						  const handleDownload: NonNullable<React.ComponentProps<typeof VersionItem>["onDownload"]> = () => onDownload(item.id, item.version);
+						  const handleClick: NonNullable<ComponentProps<typeof VersionItem>["onClick"]> = () => onVersionClick(item.id);
+						  const handleRestore: NonNullable<ComponentProps<typeof VersionItem>["onRestore"]> = () => onRestore(item.id);
+						  const handleRetry: NonNullable<ComponentProps<typeof VersionItem>["onRetry"]> = () => onRetry(item.id);
+						  const handleDownload: NonNullable<ComponentProps<typeof VersionItem>["onDownload"]> = () => onDownload(item.id, item.version);
 						  return (
 							<VersionItem
 								key={item.id}

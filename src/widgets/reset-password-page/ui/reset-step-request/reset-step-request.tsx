@@ -2,7 +2,7 @@
 
 import { AlertCircle, ArrowLeft, ArrowRight, Lock } from "lucide-react";
 import Link from "next/link";
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { isValidEmail } from "@/features/reset-password";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -41,8 +41,8 @@ export const ResetStepRequest = ({
 		localError ??
 		(error ? t("auth.resetPassword.step1.errors.generic") : null);
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => {
-							setEmail(e.target.value);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => {
+							setEmail(e.currentTarget.value);
 							if (localError) setLocalError(null);
 						};
 return (

@@ -2,8 +2,7 @@
 
 import type { AdminDictSense } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
-import { useEffect, useRef, useState } from "react";
-
+import { ComponentProps, SyntheticEvent, useEffect, useRef, useState } from 'react';
 interface SenseModalProps {
 	isOpen: boolean;
 	editSense?: AdminDictSense | null;
@@ -33,7 +32,7 @@ export const SenseModal = ({
 	}, [isOpen, editSense]);
 
 	const handleSubmit = (
-		e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
 	) => {
 		e.preventDefault();
 		if (!definition.trim()) return;
@@ -45,9 +44,9 @@ export const SenseModal = ({
 	const inputCls =
 		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 py-0 h-[34px] text-[13px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setDefinition(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setNotes(e.target.value);
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setDefinition(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => setNotes(e.currentTarget.value);
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"

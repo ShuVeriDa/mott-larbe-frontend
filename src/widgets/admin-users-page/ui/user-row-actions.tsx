@@ -1,6 +1,5 @@
 "use client";
-
-import { useRef, useState, useEffect } from "react";
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -21,7 +20,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 	useEffect(() => {
 		if (!open) return;
 		const handler = (e: MouseEvent) => {
-			if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+			if (menuRef.current && !menuRef.current.contains(e.target as Node /* intentional: outside-click target */)) {
 				setOpen(false);
 			}
 		};
@@ -43,29 +42,29 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 	const menuDangerClass =
 		"flex w-full cursor-pointer items-center gap-2 rounded-md border-none bg-transparent px-2.5 py-2 text-left font-sans text-[13px] text-red-t transition-colors hover:bg-red-bg";
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => router.push(`/${lang}/admin/users/${user.id}`);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => router.push(`/${lang}/admin/users/${user.id}`);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 								setOpen(false);
 								router.push(`/${lang}/admin/users/${user.id}`);
 							};
-	const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+	const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 									setOpen(false);
 									mutations.freeze.mutate(user.id);
 								};
-	const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 									setOpen(false);
 									mutations.unfreeze.mutate(user.id);
 								};
-	const handleClick6: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+	const handleClick6: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 									setOpen(false);
 									mutations.unblock.mutate(user.id);
 								};
-	const handleClick7: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+	const handleClick7: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 									setOpen(false);
 									mutations.block.mutate(user.id);
 								};
-	const handleClick8: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+	const handleClick8: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 									setOpen(false);
 									mutations.remove.mutate(user.id);
 								};

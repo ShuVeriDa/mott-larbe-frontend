@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminDictHeadword } from "@/entities/dictionary";
 import type { DictModal } from "../model/use-admin-dictionary-detail-page";
@@ -26,7 +27,7 @@ export const HeadwordsSideCard = ({
 }: HeadwordsSideCardProps) => {
 	const { t } = useI18n();
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addHeadword" });
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addHeadword" });
 return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
@@ -55,7 +56,7 @@ return (
 			) : (
 				<div>
 					{headwords.map((hw) => {
-					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDeleteHeadword(hw.id);
+					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onDeleteHeadword(hw.id);
 					  return (
 						<div
 							key={hw.id}

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, RefreshCw, Trash2 } from "lucide-react";
@@ -43,8 +42,8 @@ export const WordDetailTopbar = ({ entry }: WordDetailTopbarProps) => {
 
 	const buildHref = (id: string) => `/${lang}/vocabulary/${id}`;
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setReviewOpen(true);
-	const handleClose: NonNullable<React.ComponentProps<typeof ReviewWordModal>["onClose"]> = () => setReviewOpen(false);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setReviewOpen(true);
+	const handleClose: NonNullable<ComponentProps<typeof ReviewWordModal>["onClose"]> = () => setReviewOpen(false);
 return (
 		<>
 			<header className="flex shrink-0 items-center gap-2.5 border-b border-hairline border-bd-1 bg-surf px-[22px] py-3 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">

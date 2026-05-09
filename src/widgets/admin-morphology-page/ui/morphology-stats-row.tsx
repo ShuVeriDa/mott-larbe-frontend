@@ -1,7 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 import type { MorphRuleStats } from "@/entities/morph-rule";
 
 interface Props {
@@ -16,7 +16,7 @@ const StatCard = ({
   valueClass,
 }: {
   label: string;
-  value: React.ReactNode;
+  value: ReactNode;
   sub?: ReactNode;
   valueClass?: string;
 }) => (

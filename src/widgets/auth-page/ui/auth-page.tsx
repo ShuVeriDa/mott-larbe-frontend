@@ -1,7 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
-import { useState } from "react";
+import { useState } from 'react';
 import type { AuthMode } from "../model";
 import { BrandPanel } from "./brand-panel";
 import { FormPanel } from "./form-panel";

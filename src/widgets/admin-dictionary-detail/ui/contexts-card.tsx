@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminDictContextItem } from "@/entities/dictionary";
@@ -43,7 +44,7 @@ export const ContextsCard = ({ items, total, lang, isLoading }: ContextsCardProp
 			) : (
 				<div>
 					{items.map((ctx) => {
-					  const handleClick: NonNullable<React.ComponentProps<typeof Link>["onClick"]> = (e) => e.stopPropagation();
+					  const handleClick: NonNullable<ComponentProps<typeof Link>["onClick"]> = (e) => e.stopPropagation();
 					  return (
 						<div
 							key={ctx.id}

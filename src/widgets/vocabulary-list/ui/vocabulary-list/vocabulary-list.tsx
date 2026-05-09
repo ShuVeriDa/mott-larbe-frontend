@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { LearningLevel } from "@/shared/types";
 import { Typography } from "@/shared/ui/typography";
@@ -64,7 +63,7 @@ export const VocabularyList = () => {
 							</Typography>
 						</header>
 						{sec.items.map((entry) => {
-						  const handleToggle: NonNullable<React.ComponentProps<typeof WordCard>["onToggle"]> = () =>
+						  const handleToggle: NonNullable<ComponentProps<typeof WordCard>["onToggle"]> = () =>
 									setExpandedId((prev) => (prev === entry.id ? null : entry.id));
 						  return (
 							<WordCard

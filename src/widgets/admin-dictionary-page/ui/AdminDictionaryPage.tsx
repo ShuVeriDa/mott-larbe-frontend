@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminDictionaryPage } from "../model/use-admin-dictionary-page";
 import { DictionaryAddExampleModal } from "./dictionary-add-example-modal";
@@ -77,20 +78,20 @@ export const AdminDictionaryPage = () => {
 	const hasSelection = selectedIds.size > 0;
 	const unknownWordsCount = statsQuery.data?.unknownWordsCount ?? 0;
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => handleBulkExport();
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setCreateOpen(true);
-	const handleClose: NonNullable<React.ComponentProps<typeof DictionaryCreateModal>["onClose"]> = () => setCreateOpen(false);
-	const handleClose2: NonNullable<React.ComponentProps<typeof DictionaryDeleteModal>["onClose"]> = () => setDeleteEntry(null);
-	const handleConfirm: NonNullable<React.ComponentProps<typeof DictionaryAddSenseModal>["onConfirm"]> = def => {
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleBulkExport();
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => setCreateOpen(true);
+	const handleClose: NonNullable<ComponentProps<typeof DictionaryCreateModal>["onClose"]> = () => setCreateOpen(false);
+	const handleClose2: NonNullable<ComponentProps<typeof DictionaryDeleteModal>["onClose"]> = () => setDeleteEntry(null);
+	const handleConfirm: NonNullable<ComponentProps<typeof DictionaryAddSenseModal>["onConfirm"]> = def => {
 					handleAddSenseConfirm(def);
 					setAddSenseEntry(null);
 				};
-	const handleClose3: NonNullable<React.ComponentProps<typeof DictionaryAddSenseModal>["onClose"]> = () => setAddSenseEntry(null);
-	const handleConfirm2: NonNullable<React.ComponentProps<typeof DictionaryAddExampleModal>["onConfirm"]> = text => {
+	const handleClose3: NonNullable<ComponentProps<typeof DictionaryAddSenseModal>["onClose"]> = () => setAddSenseEntry(null);
+	const handleConfirm2: NonNullable<ComponentProps<typeof DictionaryAddExampleModal>["onConfirm"]> = text => {
 					handleAddExampleConfirm(text);
 					setAddExampleEntry(null);
 				};
-	const handleClose4: NonNullable<React.ComponentProps<typeof DictionaryAddExampleModal>["onClose"]> = () => setAddExampleEntry(null);
+	const handleClose4: NonNullable<ComponentProps<typeof DictionaryAddExampleModal>["onClose"]> = () => setAddExampleEntry(null);
 return (
 		<div className="flex min-h-screen flex-col">
 			<DictionaryTopbar

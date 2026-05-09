@@ -5,8 +5,7 @@ import type {
 	ImportFeatureFlagsResult,
 } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
-import { useState } from "react";
-
+import { ComponentProps, useState } from 'react';
 interface FeatureFlagImportModalProps {
 	open: boolean;
 	onSubmit: (dto: ImportFeatureFlagsDto) => Promise<ImportFeatureFlagsResult>;
@@ -74,11 +73,11 @@ export const FeatureFlagImportModal = ({
 		onClose();
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
-				if (e.target === e.currentTarget) handleClose();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) handleClose();
 			};
-	const handleChange: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => {
-						setRaw(e.target.value);
+	const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = e => {
+						setRaw(e.currentTarget.value);
 						setParseError("");
 						setPreview(null);
 					};

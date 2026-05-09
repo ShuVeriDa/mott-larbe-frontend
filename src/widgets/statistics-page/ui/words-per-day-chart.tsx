@@ -1,6 +1,4 @@
 "use client";
-
-import { useMemo } from "react";
 import type { StatsPeriod, WordsPerDayPoint } from "@/entities/statistics";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -15,10 +13,7 @@ const CHART_HEIGHT = 65;
 export const WordsPerDayChart = ({ points, period }: WordsPerDayChartProps) => {
 	const { t } = useI18n();
 
-	const max = useMemo(
-		() => points.reduce((acc, p) => Math.max(acc, p.count), 1),
-		[points],
-	);
+	const max = points.reduce((acc, p) => Math.max(acc, p.count), 1);
 
 	return (
 		<section className="rounded-card border-hairline border-bd-1 bg-surf p-4">

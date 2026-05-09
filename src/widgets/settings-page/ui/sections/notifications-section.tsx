@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import {
 	useUpdateNotifications,
 	type UserNotifications,
@@ -56,13 +55,13 @@ export const NotificationsSection = ({
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ repeatReminder: v });
-	const handleChange2: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ weeklyReport: v });
-	const handleChange3: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ newTexts: v });
-	const handleChange4: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ supportReplies: v });
-	const handleChange5: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ marketing: v });
-	const handleChange6: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setReminderTime(e.target.value);
-	const handleChange7: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => setTimezone(e.target.value);
+		const handleChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ repeatReminder: v });
+	const handleChange2: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ weeklyReport: v });
+	const handleChange3: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ newTexts: v });
+	const handleChange4: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ supportReplies: v });
+	const handleChange5: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ marketing: v });
+	const handleChange6: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setReminderTime(e.currentTarget.value);
+	const handleChange7: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => setTimezone(e.currentTarget.value);
 return (
 		<div className="flex flex-col gap-3.5">
 			<SectionHeader

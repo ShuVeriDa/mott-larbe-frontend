@@ -9,8 +9,7 @@ import type {
 } from "@/entities/admin-coupon";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { useState, type SyntheticEvent } from "react";
-
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 const PLANS = ["BASIC", "PRO", "PREMIUM", "LIFETIME"] as const;
 const PLAN_STYLES: Record<string, string> = {
 	BASIC: "bg-acc-bg border-acc text-acc-t",
@@ -145,17 +144,17 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 		onClose();
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("code", e.target.value.toUpperCase());
-	const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => set("code", generateCode());
-	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("name", e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("amount", e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("maxRedemptions", e.target.value);
-	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("maxPerUser", e.target.value);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => set("applicablePlans", []);
-	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("validFrom", e.target.value);
-	const handleChange7: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("validUntil", e.target.value);
-	const handleChange8: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("newUsersOnly", e.target.checked);
-	const handleChange9: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("isStackable", e.target.checked);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => set("code", e.currentTarget.value.toUpperCase());
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => set("code", generateCode());
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => set("name", e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = e => set("amount", e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = e => set("maxRedemptions", e.currentTarget.value);
+	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = e => set("maxPerUser", e.currentTarget.value);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => set("applicablePlans", []);
+	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = e => set("validFrom", e.currentTarget.value);
+	const handleChange7: NonNullable<ComponentProps<"input">["onChange"]> = e => set("validUntil", e.currentTarget.value);
+	const handleChange8: NonNullable<ComponentProps<"input">["onChange"]> = e => set("newUsersOnly", e.currentTarget.checked);
+	const handleChange9: NonNullable<ComponentProps<"input">["onChange"]> = e => set("isStackable", e.currentTarget.checked);
 return (
 		<form onSubmit={handleSubmit}>
 			{/* Header */}
@@ -235,7 +234,7 @@ return (
 						</label>
 						<div className="flex gap-1">
 							{(["PERCENT", "FIXED"] as CouponType[]).map(tp => {
-							  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => set("type", tp);
+							  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => set("type", tp);
 							  return (
 								<button
 									key={tp}
@@ -330,7 +329,7 @@ return (
 							{t("admin.coupons.modal.plansAll")}
 						</button>
 						{PLANS.map(p => {
-						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => togglePlan(p);
+						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => togglePlan(p);
 						  return (
 							<button
 								key={p}

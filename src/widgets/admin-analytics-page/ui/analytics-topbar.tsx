@@ -2,9 +2,7 @@
 
 import type { AnalyticsRange } from "@/entities/admin-analytics";
 import { cn } from "@/shared/lib/cn";
-import { useI18n } from "@/shared/lib/i18n";
-import { useRef, useState } from "react";
-
+import { useI18n } from "@/shared/lib/i18n";import { ComponentProps, useRef, useState } from 'react';
 const RANGES: AnalyticsRange[] = ["7d", "30d", "90d", "all"];
 
 interface AnalyticsTopbarProps {
@@ -53,10 +51,10 @@ export const AnalyticsTopbar = ({
 		setShowDatePicker(false);
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowDatePicker(v => !v);
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setLocalFrom(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setLocalTo(e.target.value);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowExportMenu(v => !v);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowDatePicker(v => !v);
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setLocalFrom(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => setLocalTo(e.currentTarget.value);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowExportMenu(v => !v);
 return (
 		<header className=" flex items-center gap-3 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors max-md:hidden">
 			<div>
@@ -72,7 +70,7 @@ return (
 				{/* Preset range segment */}
 				<div className="flex items-center gap-0.5 rounded-lg border border-bd-2 bg-surf-2 p-0.5">
 					{RANGES.map(r => {
-					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRangeChange(r);
+					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRangeChange(r);
 					  return (
 						<button
 							key={r}
@@ -208,7 +206,7 @@ return (
 					{showExportMenu && (
 						<div className="absolute top-full right-0 z-20 mt-1.5 flex flex-col overflow-hidden rounded-xl border border-bd-2 bg-surf shadow-lg">
 							{(["csv", "json"] as const).map(fmt => {
-							  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+							  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 										onExport(fmt);
 										setShowExportMenu(false);
 									};

@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import type { AdminFeedbackThread, FeedbackStatus, FeedbackPriority } from "@/entities/feedback";
 import { FeedbackInfoPanel } from "./feedback-info-panel";
 

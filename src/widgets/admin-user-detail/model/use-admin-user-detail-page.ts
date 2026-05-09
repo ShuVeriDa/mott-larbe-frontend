@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useState } from "react";
+import { useState } from 'react';
 import { useAdminUserDetail } from "@/entities/admin-user/model/use-admin-user-detail";
 import { useAdminUserRoles } from "@/entities/admin-user/model/use-admin-user-roles";
 import { useAdminUserEvents, useAdminUserEventsSummary } from "@/entities/admin-user/model/use-admin-user-events";
@@ -30,20 +29,17 @@ export const useAdminUserDetailPage = (userId: string) => {
 	const mutations = useAdminUserMutations();
 	const subscriptionMutations = useAdminSubscriptionMutations();
 
-	const handleEventTypeChange = useCallback((type: UserEventType | "") => {
+	const handleEventTypeChange = (type: UserEventType | "") => {
 		setEventsFilter((prev) => ({ ...prev, type: type || undefined, page: 1 }));
-	}, []);
+	};
 
-	const handleEventPeriodChange = useCallback(
-		(period: FetchUserEventsQuery["period"]) => {
-			setEventsFilter((prev) => ({ ...prev, period, page: 1 }));
-		},
-		[],
-	);
+	const handleEventPeriodChange = (period: FetchUserEventsQuery["period"]) => {
+		setEventsFilter((prev) => ({ ...prev, period, page: 1 }));
+	};
 
-	const handleEventsLoadMore = useCallback(() => {
+	const handleEventsLoadMore = () => {
 		setEventsFilter((prev) => ({ ...prev, page: (prev.page ?? 1) + 1 }));
-	}, []);
+	};
 
 	return {
 		detail,

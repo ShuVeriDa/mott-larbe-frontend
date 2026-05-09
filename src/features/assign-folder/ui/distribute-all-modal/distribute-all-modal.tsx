@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { useQuery } from "@tanstack/react-query";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -66,7 +65,7 @@ export const DistributeAllModal = ({
 
 			<ul className="mb-4 max-h-[240px] overflow-y-auto rounded-card border-hairline border-bd-1">
 				{folders.map((f) => {
-				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setSelectedId(f.id);
+				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setSelectedId(f.id);
 				  return (
 					<li key={f.id}>
 						<button

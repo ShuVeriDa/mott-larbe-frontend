@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminDictTab } from "@/entities/dictionary";
 
@@ -13,7 +14,7 @@ interface DictionaryTabsProps {
 export const DictionaryTabs = ({ active, counts, onChange, t }: DictionaryTabsProps) => (
 	<div className="mb-3.5 flex gap-1 border-b border-bd-1">
 		{TABS.map((tab) => {
-		  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab);
+		  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab);
 		  return (
 			<button
 				key={tab}

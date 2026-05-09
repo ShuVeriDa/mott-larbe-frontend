@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState } from 'react';
 import { useUpdatePreferences } from "@/entities/settings";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";

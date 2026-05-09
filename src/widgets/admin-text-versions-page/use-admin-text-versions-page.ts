@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState } from 'react';
 import { useAdminTextDetail } from "@/entities/admin-text/model/use-admin-text-detail";
 import { useAdminTextVersions } from "@/entities/admin-text/model/use-admin-text-versions";
 import { useAdminTextVersionMutations } from "@/entities/admin-text/model/use-admin-text-version-mutations";

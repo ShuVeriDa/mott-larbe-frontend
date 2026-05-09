@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminLogItem } from "@/entities/admin-log";
 import { LevelBadge } from "./level-badge";
@@ -57,8 +58,8 @@ export const LogsTable = ({ items, isLoading, onRowClick }: LogsTableProps) => {
 				<tbody>
 					{items.map((item) => {
 						const { time, ms } = formatTime(item.timestamp);
-												const handleClick: NonNullable<React.ComponentProps<"tr">["onClick"]> = () => onRowClick(item.id);
-						const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+												const handleClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onRowClick(item.id);
+						const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
 												e.stopPropagation();
 												onRowClick(item.id);
 											};

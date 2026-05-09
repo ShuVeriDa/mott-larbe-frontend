@@ -8,7 +8,7 @@ import type {
 	UpdateFeatureFlagDto,
 } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
-import { useEffect, useState } from "react";
+import { ComponentProps, useEffect, useState } from 'react';
 import { FlagToggle } from "./flag-toggle";
 
 const CATEGORIES: FeatureFlagCategory[] = [
@@ -110,18 +110,18 @@ export const FeatureFlagModal = ({
 	const inputCls =
 		"h-[34px] w-full rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc";
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
-				if (e.target === e.currentTarget) onClose();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
 			};
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => {
-							setKey(e.target.value);
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => {
+							setKey(e.currentTarget.value);
 							setKeyError("");
 						};
-	const handleChange2: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => setDescription(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setCategory(e.target.value as FeatureFlagCategory);
-	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = e =>
+	const handleChange2: NonNullable<ComponentProps<"textarea">["onChange"]> = e => setDescription(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => setCategory(e.currentTarget.value as FeatureFlagCategory);
+	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = e =>
 								setRolloutPercent(
-									Math.max(0, Math.min(100, Number(e.target.value))),
+									Math.max(0, Math.min(100, Number(e.currentTarget.value))),
 								);
 return (
 		<div
@@ -216,7 +216,7 @@ return (
 					<div className="flex flex-wrap gap-1.5">
 						{ENVIRONMENTS.map(env => {
 							const selected = environments.includes(env);
-														const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => toggleEnv(env);
+														const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => toggleEnv(env);
 return (
 								<button
 									key={env}

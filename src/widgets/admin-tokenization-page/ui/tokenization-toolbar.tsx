@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import type { CefrLevel, TokenSort, TokenStatus } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
 
@@ -46,17 +47,17 @@ export const TokenizationToolbar = ({
 	const { t } = useI18n();
 
 	const handleChange: NonNullable<
-		React.ComponentProps<"input">["onChange"]
-	> = e => onSearchChange(e.target.value);
+		ComponentProps<"input">["onChange"]
+	> = e => onSearchChange(e.currentTarget.value);
 	const handleChange2: NonNullable<
-		React.ComponentProps<"select">["onChange"]
-	> = e => onLevelChange(e.target.value);
+		ComponentProps<"select">["onChange"]
+	> = e => onLevelChange(e.currentTarget.value);
 	const handleChange3: NonNullable<
-		React.ComponentProps<"select">["onChange"]
-	> = e => onStatusChange(e.target.value);
+		ComponentProps<"select">["onChange"]
+	> = e => onStatusChange(e.currentTarget.value);
 	const handleChange4: NonNullable<
-		React.ComponentProps<"select">["onChange"]
-	> = e => onSortChange(e.target.value);
+		ComponentProps<"select">["onChange"]
+	> = e => onSortChange(e.currentTarget.value);
 	return (
 		<div className="mb-3.5 flex flex-wrap items-center gap-2">
 			<div className="relative min-w-[160px] flex-1">

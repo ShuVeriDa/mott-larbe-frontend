@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 
 interface TextEditDeleteModalProps {
@@ -17,7 +18,7 @@ export const TextEditDeleteModal = ({
 }: TextEditDeleteModalProps) => {
 	const { t } = useI18n();
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.stopPropagation();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => e.stopPropagation();
 return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"

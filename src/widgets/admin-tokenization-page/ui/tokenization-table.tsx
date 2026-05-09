@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { ProcessingStatus, TokenizationTextItem } from "@/entities/token";
 import type { useTokenizationMutations } from "@/entities/token";
@@ -124,13 +125,13 @@ export const TokenizationTable = ({
 				</thead>
 				<tbody>
 					{items.map((item) => {
-					  const handleClick: NonNullable<React.ComponentProps<"tr">["onClick"]> = () => onRowClick(item.id);
-					  const handleClick2: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = () => onToggleRow(item.id);
-					  const handleClick3: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => mutations.cancelText.mutate(item.id);
-					  const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => mutations.runText.mutate(item.id);
-					  const handleClick6: NonNullable<React.ComponentProps<"button">["onClick"]> = () => mutations.resetText.mutate(item.id);
+					  const handleClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onRowClick(item.id);
+					  const handleClick2: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onToggleRow(item.id);
+					  const handleClick3: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.cancelText.mutate(item.id);
+					  const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.runText.mutate(item.id);
+					  const handleClick6: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.resetText.mutate(item.id);
 					  return (
 						<tr
 							key={item.id}

@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect } from "react";
+import { ComponentProps, useEffect } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { useAdminPaymentsPage } from "../model/use-admin-payments-page";
@@ -80,32 +79,32 @@ export const AdminPaymentsPage = () => {
 		success(t("admin.payments.toast.receiptSent"));
 	};
 
-	const handleProviderChange: NonNullable<React.ComponentProps<typeof PaymentsToolbar>["onProviderChange"]> = v =>
+	const handleProviderChange: NonNullable<ComponentProps<typeof PaymentsToolbar>["onProviderChange"]> = v =>
 		setProvider(v as Parameters<typeof setProvider>[0]);
-	const handleTableReceipt: NonNullable<React.ComponentProps<typeof PaymentsTable>["onReceipt"]> = id =>
+	const handleTableReceipt: NonNullable<ComponentProps<typeof PaymentsTable>["onReceipt"]> = id =>
 		openModal("receipt", id);
-	const handleTableRefund: NonNullable<React.ComponentProps<typeof PaymentsTable>["onRefund"]> = id =>
+	const handleTableRefund: NonNullable<ComponentProps<typeof PaymentsTable>["onRefund"]> = id =>
 		openModal("refund", id);
-	const handleDetailReceipt: NonNullable<React.ComponentProps<typeof PaymentDetailPanel>["onReceipt"]> = id =>
+	const handleDetailReceipt: NonNullable<ComponentProps<typeof PaymentDetailPanel>["onReceipt"]> = id =>
 		openModal("receipt", id);
-	const handleDetailRefund: NonNullable<React.ComponentProps<typeof PaymentDetailPanel>["onRefund"]> = id =>
+	const handleDetailRefund: NonNullable<ComponentProps<typeof PaymentDetailPanel>["onRefund"]> = id =>
 		openModal("refund", id);
-	const handleMobileDetailReceipt: NonNullable<React.ComponentProps<typeof PaymentDetailPanel>["onReceipt"]> = id => {
+	const handleMobileDetailReceipt: NonNullable<ComponentProps<typeof PaymentDetailPanel>["onReceipt"]> = id => {
 		closeMobileSheet();
 		openModal("receipt", id);
 	};
-	const handleMobileDetailSendReceipt: NonNullable<React.ComponentProps<typeof PaymentDetailPanel>["onSendReceipt"]> = id => {
+	const handleMobileDetailSendReceipt: NonNullable<ComponentProps<typeof PaymentDetailPanel>["onSendReceipt"]> = id => {
 		closeMobileSheet();
 		handleSendReceiptWithToast(id);
 	};
-	const handleMobileDetailRefund: NonNullable<React.ComponentProps<typeof PaymentDetailPanel>["onRefund"]> = id => {
+	const handleMobileDetailRefund: NonNullable<ComponentProps<typeof PaymentDetailPanel>["onRefund"]> = id => {
 		closeMobileSheet();
 		openModal("refund", id);
 	};
-	const handleModalOverlayClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
-		if (e.target === e.currentTarget) closeModal();
+	const handleModalOverlayClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+		if (/* intentional: backdrop-only click */ e.target === e.currentTarget) closeModal();
 	};
-	const handleModalContentClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e =>
+	const handleModalContentClick: NonNullable<ComponentProps<"div">["onClick"]> = e =>
 		e.stopPropagation();
 return (
 		<div className="flex min-h-0 flex-1 flex-col">

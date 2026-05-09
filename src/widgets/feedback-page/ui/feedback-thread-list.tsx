@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useRef } from "react";
+import { ComponentProps, useEffect, useRef } from 'react';
 import type { FeedbackThread } from "@/entities/feedback";
 import { FeedbackThreadItem } from "./feedback-thread-item";
 import { FeedbackEmpty } from "./feedback-empty";
@@ -84,7 +83,7 @@ export const FeedbackThreadList = ({
 				) : (
 					<>
 						{threads.map((thread) => {
-						  const handleClick: NonNullable<React.ComponentProps<typeof FeedbackThreadItem>["onClick"]> = () => onSelect(thread);
+						  const handleClick: NonNullable<ComponentProps<typeof FeedbackThreadItem>["onClick"]> = () => onSelect(thread);
 						  return (
 							<FeedbackThreadItem
 								key={thread.id}

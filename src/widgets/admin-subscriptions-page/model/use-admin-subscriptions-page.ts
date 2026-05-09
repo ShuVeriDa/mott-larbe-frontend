@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
 	useAdminSubscriptionDetail,
@@ -45,20 +44,17 @@ export const useAdminSubscriptionsPage = () => {
 		setSearchInput(urlSearch);
 	}, [urlSearch]);
 
-	const updateParams = useCallback(
-		(updates: Record<string, string | undefined>) => {
-			const params = new URLSearchParams(searchParams.toString());
-			for (const [key, value] of Object.entries(updates)) {
-				if (!value) {
-					params.delete(key);
-				} else {
-					params.set(key, value);
-				}
+	const updateParams = (updates: Record<string, string | undefined>) => {
+		const params = new URLSearchParams(searchParams.toString());
+		for (const [key, value] of Object.entries(updates)) {
+			if (!value) {
+				params.delete(key);
+			} else {
+				params.set(key, value);
 			}
-			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-		},
-		[router, pathname, searchParams],
-	);
+		}
+		router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+	};
 
 	const statusFromTab: SubscriptionStatus | undefined =
 		urlTab === "all" ? undefined : (urlTab.toUpperCase() as SubscriptionStatus);
@@ -88,84 +84,60 @@ export const useAdminSubscriptionsPage = () => {
 		expired: stats?.expiredCount ?? 0,
 	};
 
-	const handleTabChange = useCallback(
-		(next: SubscriptionsTab) => {
-			updateParams({ tab: next === DEFAULT_TAB ? undefined : next, page: undefined, selected: undefined });
-			setMobileSheetOpen(false);
-		},
-		[updateParams],
-	);
-
-	const handleSearchChange = useCallback(
-		(value: string) => {
-			setSearchInput(value);
-			clearTimeout(debounceRef.current);
-			debounceRef.current = setTimeout(() => {
-				const params = new URLSearchParams(window.location.search);
-				if (value.length >= 2) {
-					params.set("q", value);
-				} else {
-					params.delete("q");
-				}
-				params.delete("page");
-				router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-			}, 300);
-		},
-		[router, pathname],
-	);
-
-	const handlePlanChange = useCallback(
-		(value: string) => {
-			updateParams({ plan: value || undefined, page: undefined });
-		},
-		[updateParams],
-	);
-
-	const handleProviderChange = useCallback(
-		(value: string) => {
-			updateParams({ provider: value || undefined, page: undefined });
-		},
-		[updateParams],
-	);
-
-	const handleSortChange = useCallback(
-		(value: SubscriptionsSort) => {
-			updateParams({ sort: value === DEFAULT_SORT ? undefined : value, page: undefined });
-		},
-		[updateParams],
-	);
-
-	const handleSelectRow = useCallback(
-		(id: string) => {
-			const next = urlSelectedId === id ? undefined : id;
-			updateParams({ selected: next });
-			setMobileSheetOpen(!!next);
-		},
-		[urlSelectedId, updateParams],
-	);
-
-	const closeMobileSheet = useCallback(() => {
+	const handleTabChange = (next: SubscriptionsTab) => {
+		updateParams({ tab: next === DEFAULT_TAB ? undefined : next, page: undefined, selected: undefined });
 		setMobileSheetOpen(false);
-	}, []);
+	};
 
-	const openModal = useCallback(
-		(type: ModalType, id?: string) => {
-			if (id) updateParams({ selected: id });
-			setModal(type);
-		},
-		[updateParams],
-	);
+	const handleSearchChange = (value: string) => {
+		setSearchInput(value);
+		clearTimeout(debounceRef.current);
+		debounceRef.current = setTimeout(() => {
+			const params = new URLSearchParams(window.location.search);
+			if (value.length >= 2) {
+				params.set("q", value);
+			} else {
+				params.delete("q");
+			}
+			params.delete("page");
+			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+		}, 300);
+	};
 
-	const closeModal = useCallback(() => setModal(null), []);
+	const handlePlanChange = (value: string) => {
+		updateParams({ plan: value || undefined, page: undefined });
+	};
 
-	const handlePageChange = useCallback(
-		(next: number) => {
-			updateParams({ page: next === 1 ? undefined : String(next) });
-		},
-		[updateParams],
-	);
+	const handleProviderChange = (value: string) => {
+		updateParams({ provider: value || undefined, page: undefined });
+	};
 
-	const handleExport = useCallback(async () => {
+	const handleSortChange = (value: SubscriptionsSort) => {
+		updateParams({ sort: value === DEFAULT_SORT ? undefined : value, page: undefined });
+	};
+
+	const handleSelectRow = (id: string) => {
+		const next = urlSelectedId === id ? undefined : id;
+		updateParams({ selected: next });
+		setMobileSheetOpen(!!next);
+	};
+
+	const closeMobileSheet = () => {
+		setMobileSheetOpen(false);
+	};
+
+	const openModal = (type: ModalType, id?: string) => {
+		if (id) updateParams({ selected: id });
+		setModal(type);
+	};
+
+	const closeModal = () => setModal(null);
+
+	const handlePageChange = (next: number) => {
+		updateParams({ page: next === 1 ? undefined : String(next) });
+	};
+
+	const handleExport = async () => {
 		try {
 			const blob = await adminSubscriptionApi.exportCsv(query);
 			const url = URL.createObjectURL(blob);
@@ -177,7 +149,7 @@ export const useAdminSubscriptionsPage = () => {
 		} catch {
 			// silently ignore
 		}
-	}, [query]);
+	};
 
 	return {
 		tab: urlTab,

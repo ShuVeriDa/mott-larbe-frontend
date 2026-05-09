@@ -3,8 +3,7 @@
 import type { AdminCouponDetail, CouponStatus } from "@/entities/admin-coupon";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { useState } from "react";
-
+import { ComponentProps, useState } from 'react';
 interface Props {
 	coupon: AdminCouponDetail;
 	isLoading: boolean;
@@ -104,8 +103,8 @@ export const CouponDetailPanel = ({
 	const maxR = coupon.maxRedemptions;
 	const pct = maxR ? Math.min(coupon.redeemedCount / maxR, 1) : 0;
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onEdit(coupon.id);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDelete(coupon.id);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onEdit(coupon.id);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onDelete(coupon.id);
 return (
 		<div className="flex flex-col gap-0 overflow-hidden rounded-[11px] border border-bd-1 bg-surf">
 			{/* Hero */}

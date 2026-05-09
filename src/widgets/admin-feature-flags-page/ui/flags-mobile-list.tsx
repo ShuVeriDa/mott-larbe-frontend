@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagItem } from "@/entities/feature-flag";
 import { FlagToggle } from "./flag-toggle";
@@ -50,7 +51,7 @@ export const FlagsMobileList = ({
 	return (
 		<div className="hidden max-sm:block">
 			{items.map((flag) => {
-			  const handleChange: NonNullable<React.ComponentProps<typeof FlagToggle>["onChange"]> = (v) => onToggle(flag.id, v);
+			  const handleChange: NonNullable<ComponentProps<typeof FlagToggle>["onChange"]> = (v) => onToggle(flag.id, v);
 			  return (
 				<div
 					key={flag.id}

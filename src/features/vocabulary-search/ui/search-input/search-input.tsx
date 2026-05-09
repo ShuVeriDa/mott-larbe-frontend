@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { SearchBox } from "@/shared/ui/search-box";
 import { useI18n } from "@/shared/lib/i18n";
 import { useVocabularyFilters } from "@/features/vocabulary-filters";
@@ -13,7 +14,7 @@ export const SearchInput = ({ className }: SearchInputProps) => {
 	const search = useVocabularyFilters((s) => s.search);
 	const setSearch = useVocabularyFilters((s) => s.setSearch);
 
-		const handleChange: NonNullable<React.ComponentProps<typeof SearchBox>["onChange"]> = (e) => setSearch(e.target.value);
+		const handleChange: NonNullable<ComponentProps<typeof SearchBox>["onChange"]> = (e) => setSearch(e.currentTarget.value);
 return (
 		<SearchBox
 			value={search}

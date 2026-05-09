@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, type ReactNode } from "react";
+import { ComponentProps, type ReactNode, useEffect } from 'react';
 import { createPortal } from "react-dom";
 import { cn } from "@/shared/lib/cn";
 
@@ -35,8 +34,8 @@ export const Modal = ({
 
 	if (!open || typeof window === "undefined") return null;
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => {
-				if (e.target === e.currentTarget) onClose();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => {
+				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
 			};
 return createPortal(
 		<div

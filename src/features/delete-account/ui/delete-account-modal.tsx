@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { useDeleteAccount } from "@/entities/settings";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
@@ -38,7 +37,7 @@ export const DeleteAccountModal = ({
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setEmail(e.target.value);
+		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setEmail(e.currentTarget.value);
 return (
 		<Modal open={open} onClose={onClose} title={t("settings.deleteAccountModal.title")}>
 			<Typography tag="p" className="mb-4 text-[12px] text-t-3 leading-[1.55]">

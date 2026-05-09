@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { FetchAdminUsersQuery, RoleName, UsersSort } from "@/entities/admin-user";
 
@@ -54,10 +55,10 @@ export const UsersToolbar = ({
 }: UsersToolbarProps) => {
 	const { t } = useI18n();
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onRoleChange(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onPlanChange(e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.target.value as UsersSort);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onRoleChange(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onPlanChange(e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.currentTarget.value as UsersSort);
 return (
 		<div className="mb-2.5 flex flex-wrap items-center gap-2">
 			{/* Search */}

@@ -1,6 +1,5 @@
 "use client";
-
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 

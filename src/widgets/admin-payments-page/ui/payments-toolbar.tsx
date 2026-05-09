@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import type { AdminPlan } from "@/entities/admin-billing";
 import type { PaymentProvider } from "@/entities/admin-payment";
 import { useI18n } from "@/shared/lib/i18n";
@@ -40,11 +41,11 @@ export const PaymentsToolbar = ({
 }: Props) => {
 	const { t } = useI18n();
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onSearchChange(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onPlanChange(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onProviderChange(e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onDateFromChange(e.target.value);
-	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onDateToChange(e.target.value);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onSearchChange(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => onPlanChange(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => onProviderChange(e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = e => onDateFromChange(e.currentTarget.value);
+	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = e => onDateToChange(e.currentTarget.value);
 return (
 		<div className="flex flex-wrap items-center gap-2 border-b border-bd-1 px-3.5 py-2.5">
 			{/* Search */}

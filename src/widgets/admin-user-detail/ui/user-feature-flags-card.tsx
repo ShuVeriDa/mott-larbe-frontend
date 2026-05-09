@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { useAdminUserFeatureFlags } from "@/entities/admin-user/model/use-admin-user-feature-flags";
 import { cn } from "@/shared/lib/cn";
@@ -46,7 +47,7 @@ export const UserFeatureFlagsCard = ({ featureFlags }: UserFeatureFlagsCardProps
 					{flags.map((flag) => {
 						const isOn = flag.effectiveValue;
 						const hasOverride = flag.userOverride !== null;
-												const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => handleToggle(flag.flagId, isOn, hasOverride);
+												const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleToggle(flag.flagId, isOn, hasOverride);
 return (
 							<div
 								key={flag.flagId}

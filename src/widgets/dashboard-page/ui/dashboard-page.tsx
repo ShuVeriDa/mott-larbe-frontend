@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { useDashboard } from "@/entities/dashboard";
 import { useCurrentUser } from "@/entities/user";
@@ -33,8 +32,8 @@ export const DashboardPage = () => {
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setSearchQuery(e.target.value);
-	const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => refetch();
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setSearchQuery(e.currentTarget.value);
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => refetch();
 return (
 		<>
 			<header className="flex shrink-0 items-center gap-3 border-hairline border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-md:px-4 max-sm:px-3.5 max-sm:py-2.5">

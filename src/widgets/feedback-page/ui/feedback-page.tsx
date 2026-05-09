@@ -3,7 +3,7 @@
 import type { FeedbackThread } from "@/entities/feedback";
 import { useFeedbackThreads } from "@/entities/feedback";
 import { useI18n } from "@/shared/lib/i18n";
-import { useCallback, useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { FeedbackChat } from "./feedback-chat";
 import { FeedbackNewThreadModal } from "./feedback-new-thread-modal";
 import { FeedbackListSkeleton } from "./feedback-skeleton";
@@ -38,13 +38,13 @@ export const FeedbackPage = () => {
 		setIsChatVisible(true);
 	};
 
-	const handleLoadMore = useCallback(() => {
+	const handleLoadMore = () => {
 		if (hasNextPage && !isFetchingNextPage) fetchNextPage();
-	}, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+	};
 
 	const userInitials = "У";
 
-		const handleClose: NonNullable<React.ComponentProps<typeof FeedbackNewThreadModal>["onClose"]> = () => setIsModalOpen(false);
+		const handleClose: NonNullable<ComponentProps<typeof FeedbackNewThreadModal>["onClose"]> = () => setIsModalOpen(false);
 return (
 		<>
 			{/* Topbar — mobile "New" button */}

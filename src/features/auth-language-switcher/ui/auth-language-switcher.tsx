@@ -4,8 +4,7 @@ import { LOCALES, type Locale } from "@/i18n/locale-list";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { usePathname, useRouter } from "next/navigation";
-import { useTransition } from "react";
-
+import { ComponentProps, useTransition } from 'react';
 const LABELS: Record<Locale, string> = {
 	ru: "РУ",
 	che: "НАХ",
@@ -44,7 +43,7 @@ export const AuthLanguageSwitcher = () => {
 		>
 			{LOCALES.map(locale => {
 				const isActive = locale === lang;
-								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => handleSelect(locale);
+								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleSelect(locale);
 return (
 					<button
 						key={locale}

@@ -2,8 +2,7 @@
 
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
 import { useI18n } from "@/shared/lib/i18n";
-import { useState } from "react";
-
+import { ComponentProps, SyntheticEvent, useState } from 'react';
 interface Props {
 	subscriptionId: string | null;
 	mutations: ReturnType<typeof useAdminSubscriptionMutations>;
@@ -18,7 +17,7 @@ export const CancelSubscriptionModal = ({
 	const { t } = useI18n();
 	const [reason, setReason] = useState("");
 
-	const handleConfirm = (e: React.SyntheticEvent) => {
+	const handleConfirm = (e: SyntheticEvent) => {
 		e.preventDefault();
 		if (!subscriptionId) return;
 		mutations.cancel.mutate(
@@ -27,7 +26,7 @@ export const CancelSubscriptionModal = ({
 		);
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setReason(e.target.value);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setReason(e.currentTarget.value);
 return (
 		<>
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">

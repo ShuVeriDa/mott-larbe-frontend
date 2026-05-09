@@ -1,6 +1,4 @@
 "use client";
-
-import { useCallback } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import type { CefrLevel } from "@/shared/types";
 import type {
@@ -30,19 +28,16 @@ export const useLibraryFilters = () => {
 		(searchParams.get("view") as LibraryView | null) ?? DEFAULT_VIEW;
 	const search: string = searchParams.get("q") ?? "";
 
-	const update = useCallback(
-		(key: string, value: string | null) => {
-			const params = new URLSearchParams(searchParams.toString());
-			if (!value) {
-				params.delete(key);
-			} else {
-				params.set(key, value);
-			}
-			const qs = params.toString();
-			router.replace(`${pathname}${qs ? `?${qs}` : ""}`, { scroll: false });
-		},
-		[router, pathname, searchParams],
-	);
+	const update = (key: string, value: string | null) => {
+		const params = new URLSearchParams(searchParams.toString());
+		if (!value) {
+			params.delete(key);
+		} else {
+			params.set(key, value);
+		}
+		const qs = params.toString();
+		router.replace(`${pathname}${qs ? `?${qs}` : ""}`, { scroll: false });
+	};
 
 	return {
 		level,

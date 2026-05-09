@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { Check } from "lucide-react";
 
@@ -39,7 +40,7 @@ const previews: Record<
 
 export const ThemeCard = ({ id, name, selected, onSelect }: ThemeCardProps) => {
 	const p = previews[id];
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onSelect(id);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onSelect(id);
 return (
 		<button
 			type="button"

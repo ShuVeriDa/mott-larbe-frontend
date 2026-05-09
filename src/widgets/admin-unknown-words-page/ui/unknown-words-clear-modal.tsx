@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 
 interface UnknownWordsClearModalProps {
@@ -21,7 +22,7 @@ export const UnknownWordsClearModal = ({
 
 	if (!open) return null;
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 p-4 backdrop-blur-sm max-sm:items-end max-sm:p-0"

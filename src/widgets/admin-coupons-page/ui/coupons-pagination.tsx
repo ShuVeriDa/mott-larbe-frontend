@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 
 interface Props {
@@ -19,8 +20,8 @@ export const CouponsPagination = ({ page, limit, total, onPageChange }: Props) =
 		return page - 3 + i;
 	});
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(page - 1);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(page + 1);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(page - 1);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(page + 1);
 return (
 		<div className="flex items-center justify-between border-t border-bd-1 px-3.5 py-2.5">
 			<span className="text-[11.5px] text-t-3">
@@ -36,7 +37,7 @@ return (
 					‹
 				</button>
 				{pages.map((p) => {
-				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(p);
+				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(p);
 				  return (
 					<button
 						key={p}

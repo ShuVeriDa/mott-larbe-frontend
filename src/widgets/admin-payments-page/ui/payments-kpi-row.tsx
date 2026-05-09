@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminPaymentStats } from "@/entities/admin-payment";
 
@@ -34,7 +35,7 @@ const GrowthSpan = ({ val }: { val: number | null | undefined }) => {
 interface KpiCardProps {
 	label: string;
 	value: string;
-	sub: React.ReactNode;
+	sub: ReactNode;
 	hidden?: boolean;
 }
 

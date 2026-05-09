@@ -2,8 +2,7 @@
 
 import { useLibraryFilters } from "@/features/library-filters";
 import { useI18n } from "@/shared/lib/i18n";
-import { useCallback } from "react";
-
+import { ChangeEvent } from 'react';
 interface LibraryTopbarProps {
 	totalCount: number;
 	onRefresh: () => void;
@@ -16,12 +15,9 @@ export const LibraryTopbar = ({
 	const { t } = useI18n();
 	const { search, setSearch } = useLibraryFilters();
 
-	const handleSearch = useCallback(
-		(e: React.ChangeEvent<HTMLInputElement>) => {
-			setSearch(e.target.value);
-		},
-		[setSearch],
-	);
+	const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+		setSearch(e.currentTarget.value);
+	};
 
 	return (
 		<>

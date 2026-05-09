@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps, ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { CefrBadge } from "@/entities/dictionary";
 import type { AdminDictEntryCard } from "@/entities/dictionary";
@@ -45,7 +46,7 @@ export const MetaSideCard = ({ data, isLoading, onOpenModal }: MetaSideCardProps
 
 	if (!data) return null;
 
-	const rows: Array<{ key: string; value: React.ReactNode }> = [
+	const rows: Array<{ key: string; value: ReactNode }> = [
 		{
 			key: t("admin.dictionaryDetail.pos"),
 			value: data.partOfSpeech ?? "—",
@@ -74,7 +75,7 @@ export const MetaSideCard = ({ data, isLoading, onOpenModal }: MetaSideCardProps
 		},
 	];
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "editMeta" });
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "editMeta" });
 return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">

@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import type { AdminDictListItem } from "@/entities/dictionary";
 
 interface DictionaryDeleteModalProps {
@@ -17,8 +18,8 @@ export const DictionaryDeleteModal = ({
 }: DictionaryDeleteModalProps) => {
 	if (!entry) return null;
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
-				if (e.target === e.currentTarget) onClose();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
 			};
 return (
 		<div

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, type SyntheticEvent } from "react";
+import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
@@ -40,10 +39,10 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setName(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setSurname(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setUsername(e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setPhone(e.target.value);
+		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setName(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setSurname(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setUsername(e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setPhone(e.currentTarget.value);
 return (
 		<SettingCard title={t("profile.personalData.title")}>
 			<form onSubmit={handleSubmit} className="flex flex-col gap-3">

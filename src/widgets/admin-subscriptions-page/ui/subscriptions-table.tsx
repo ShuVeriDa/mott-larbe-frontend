@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type {
@@ -141,10 +142,10 @@ export const SubscriptionsTable = ({
 							const canExtend = !sub.isLifetime && (sub.status === "ACTIVE" || sub.status === "TRIALING" || sub.status === "EXPIRED");
 							const canCancel = sub.status === "ACTIVE" || sub.status === "TRIALING";
 
-														const handleClick: NonNullable<React.ComponentProps<"tr">["onClick"]> = () => onSelectRow(sub.id);
-							const handleClick2: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-							const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onExtend(sub.id);
-							const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onCancel(sub.id);
+														const handleClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onSelectRow(sub.id);
+							const handleClick2: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+							const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => onExtend(sub.id);
+							const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => onCancel(sub.id);
 return (
 								<tr
 									key={sub.id}

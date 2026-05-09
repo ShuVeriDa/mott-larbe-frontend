@@ -1,9 +1,10 @@
+import { ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
 
 export interface SidebarSectionProps {
 	title: string;
-	children: React.ReactNode;
+	children: ReactNode;
 	className?: string;
 }
 
@@ -25,7 +26,7 @@ export const SidebarSection = ({
 
 export interface SidebarSectionTitleProps {
 	className?: string;
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
 export const SidebarSectionTitle = ({

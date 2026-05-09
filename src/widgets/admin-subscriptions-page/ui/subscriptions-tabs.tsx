@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import type { SubscriptionsTab } from "@/entities/admin-subscription";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -31,7 +32,7 @@ export const SubscriptionsTabs = ({ active, counts, onChange }: Props) => {
 		<div className="border-b border-bd-1 px-3.5 pt-2.5">
 			<div className="flex gap-0.5 rounded-[9px] border border-bd-1 bg-surf-2 p-[3px] w-fit overflow-x-auto [&::-webkit-scrollbar]:h-0">
 				{tabs.map(({ key, label }) => {
-				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(key);
+				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(key);
 				  return (
 					<button
 						key={key}

@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useState } from "react";
+import { useState } from 'react';
 import type { ReviewSystem } from "../ui/review-topbar";
 
 export type ReviewScreen = "intro" | "card" | "done";
@@ -23,14 +22,14 @@ export const useReviewFlow = (
 	const [system, setSystem] = useState<ReviewSystem>(initial);
 	const [screen, setScreen] = useState<ReviewScreen>("intro");
 
-	const switchSystem = useCallback((next: ReviewSystem) => {
+	const switchSystem = (next: ReviewSystem) => {
 		setSystem(next);
 		setScreen("intro");
-	}, []);
+	};
 
-	const goToCard = useCallback(() => setScreen("card"), []);
-	const goToDone = useCallback(() => setScreen("done"), []);
-	const goToIntro = useCallback(() => setScreen("intro"), []);
+	const goToCard = () => setScreen("card");
+	const goToDone = () => setScreen("done");
+	const goToIntro = () => setScreen("intro");
 
 	return { system, screen, switchSystem, goToCard, goToDone, goToIntro };
 };

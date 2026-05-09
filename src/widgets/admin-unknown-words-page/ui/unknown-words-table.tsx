@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { UnknownWordItem } from "@/entities/admin-unknown-word";
 import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word/model/use-admin-unknown-word-mutations";
@@ -113,13 +114,13 @@ export const UnknownWordsTable = ({
 				</thead>
 				<tbody>
 					{words.map((word) => {
-					  const handleClick: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = () => onToggleRow(word.id);
-					  const handleClick2: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleClick3: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleAddToDictionary: NonNullable<React.ComponentProps<typeof UnknownWordRowActions>["onAddToDictionary"]> = () => onAddToDictionary(word);
-					  const handleLinkToLemma: NonNullable<React.ComponentProps<typeof UnknownWordRowActions>["onLinkToLemma"]> = () => onLinkToLemma(word);
-					  const handleViewContexts: NonNullable<React.ComponentProps<typeof UnknownWordRowActions>["onViewContexts"]> = () => onViewContexts(word);
+					  const handleClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onToggleRow(word.id);
+					  const handleClick2: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleClick3: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleAddToDictionary: NonNullable<ComponentProps<typeof UnknownWordRowActions>["onAddToDictionary"]> = () => onAddToDictionary(word);
+					  const handleLinkToLemma: NonNullable<ComponentProps<typeof UnknownWordRowActions>["onLinkToLemma"]> = () => onLinkToLemma(word);
+					  const handleViewContexts: NonNullable<ComponentProps<typeof UnknownWordRowActions>["onViewContexts"]> = () => onViewContexts(word);
 					  return (
 						<tr
 							key={word.id}

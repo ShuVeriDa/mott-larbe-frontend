@@ -1,6 +1,4 @@
 "use client";
-
-import { useMemo } from "react";
 import type { WordsBreakdown } from "@/entities/statistics";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -48,14 +46,11 @@ export const WordProgressCard = ({ words }: WordProgressCardProps) => {
 	const goal = words.goal || total;
 	const remaining = Math.max(0, goal - words.total);
 
-	const ratios = useMemo(
-		() => ({
-			known: known / total,
-			learning: learning / total,
-			new: isNew / total,
-		}),
-		[known, learning, isNew, total],
-	);
+	const ratios = {
+		known: known / total,
+		learning: learning / total,
+		new: isNew / total,
+	};
 
 	const knownDash = ratios.known * CIRCUMFERENCE;
 	const learningDash = ratios.learning * CIRCUMFERENCE;

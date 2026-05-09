@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 
@@ -41,8 +42,8 @@ export const UsersPagination = ({
 			active && "border-acc/20 bg-acc-bg font-semibold text-acc-t",
 		);
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(page - 1);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(page + 1);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(page - 1);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(page + 1);
 return (
 		<div className="flex flex-wrap items-center justify-between gap-2 border-t border-bd-1 px-3.5 py-2.5">
 			<span className="text-[12px] text-t-3">
@@ -88,7 +89,7 @@ return (
 						);
 					}
 
-					const handlePageClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(p);
+					const handlePageClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(p);
 
 					return (
 						<button

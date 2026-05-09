@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import type { ProcessingStatus, TokenizationTextItem } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
 import { TokenizationLevelBadge } from "./tokenization-level-badge";
@@ -30,7 +31,7 @@ export const TokenizationMobileList = ({
 	return (
 		<div className="hidden max-sm:block">
 			{items.map(item => {
-			  const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = () => onRowClick(item.id);
+			  const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = () => onRowClick(item.id);
 			  return (
 				<div
 					key={item.id}

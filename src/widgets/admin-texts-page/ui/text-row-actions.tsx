@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useRef, useEffect } from "react";
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminTextListItem } from "@/entities/admin-text";
@@ -18,7 +17,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 
 	useEffect(() => {
 		const handler = (e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+			if (ref.current && !ref.current.contains(e.target as Node /* intentional: outside-click target */)) setOpen(false);
 		};
 		document.addEventListener("mousedown", handler);
 		return () => document.removeEventListener("mousedown", handler);
@@ -36,15 +35,15 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 	const dropItemClass =
 		"flex w-full cursor-pointer items-center gap-2 rounded-[6px] px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2";
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => mutations.tokenize.mutate(text.id);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => mutations.tokenize.mutate(text.id);
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
-	const handleClick4: NonNullable<React.ComponentProps<typeof Link>["onClick"]> = () => setOpen(false);
-	const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { mutations.tokenize.mutate(text.id); setOpen(false); };
-	const handleClick6: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { mutations.unpublish.mutate(text.id); setOpen(false); };
-	const handleClick7: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { mutations.publish.mutate(text.id); setOpen(false); };
-	const handleClick8: NonNullable<React.ComponentProps<typeof Link>["onClick"]> = () => setOpen(false);
-	const handleClick9: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { mutations.remove.mutate(text.id); setOpen(false); };
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.tokenize.mutate(text.id);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.tokenize.mutate(text.id);
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleClick4: NonNullable<ComponentProps<typeof Link>["onClick"]> = () => setOpen(false);
+	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => { mutations.tokenize.mutate(text.id); setOpen(false); };
+	const handleClick6: NonNullable<ComponentProps<"button">["onClick"]> = () => { mutations.unpublish.mutate(text.id); setOpen(false); };
+	const handleClick7: NonNullable<ComponentProps<"button">["onClick"]> = () => { mutations.publish.mutate(text.id); setOpen(false); };
+	const handleClick8: NonNullable<ComponentProps<typeof Link>["onClick"]> = () => setOpen(false);
+	const handleClick9: NonNullable<ComponentProps<"button">["onClick"]> = () => { mutations.remove.mutate(text.id); setOpen(false); };
 return (
 		<div className="flex items-center gap-1">
 			{/* Edit */}

@@ -1,5 +1,6 @@
 "use client";
 
+import { ReactNode } from 'react';
 import type { TextToken } from "@/entities/text";
 import { useWordLookup, type WordLookupResponse } from "@/entities/word";
 import { LearnStatusRow } from "@/features/learn-status";
@@ -19,7 +20,7 @@ const Section = ({
 	children,
 }: {
 	title: string;
-	children: React.ReactNode;
+	children: ReactNode;
 }) => (
 	<div className="border-b border-hairline border-bd-1 px-4 py-3 last:border-b-0">
 		<div className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.6px] text-t-3">

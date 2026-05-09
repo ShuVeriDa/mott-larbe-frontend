@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminPlan, PlanType } from "@/entities/admin-billing";
 
@@ -44,9 +45,9 @@ export const BillingPlanCard = ({
 	const colorClass = PLAN_COLORS[plan.type] ?? "bg-surf-3 text-t-2";
 	const barColor = PLAN_BAR_COLORS[plan.type] ?? "bg-surf-3";
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onEdit(plan);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onEditLimits(plan);
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDeactivate(plan.id);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onEdit(plan);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onEditLimits(plan);
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => onDeactivate(plan.id);
 return (
 		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-[box-shadow,border-color] hover:border-bd-2 hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
 			{/* Top */}

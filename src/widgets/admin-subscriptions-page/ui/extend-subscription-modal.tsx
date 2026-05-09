@@ -2,8 +2,7 @@
 
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
 import { useI18n } from "@/shared/lib/i18n";
-import { useState } from "react";
-
+import { ComponentProps, SyntheticEvent, useState } from 'react';
 interface Props {
 	subscriptionId: string | null;
 	mutations: ReturnType<typeof useAdminSubscriptionMutations>;
@@ -26,7 +25,7 @@ export const ExtendSubscriptionModal = ({
 	const [extendDays, setExtendDays] = useState(365);
 	const [reason, setReason] = useState("");
 
-	const handleConfirm = (e: React.SyntheticEvent) => {
+	const handleConfirm = (e: SyntheticEvent) => {
 		e.preventDefault();
 		if (!subscriptionId) return;
 		mutations.extend.mutate(
@@ -38,8 +37,8 @@ export const ExtendSubscriptionModal = ({
 		);
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setExtendDays(Number(e.target.value));
-	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setReason(e.target.value);
+		const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setExtendDays(Number(e.currentTarget.value));
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => setReason(e.currentTarget.value);
 return (
 		<>
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">

@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminTags } from "@/entities/admin-tag";
 import type { TextLevel, TextSortBy } from "@/entities/admin-text";
@@ -31,10 +32,10 @@ export const TextsToolbar = ({
 	const selClass =
 		"h-8 cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf px-2.5 pr-7 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3 focus:border-acc [background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23a5a39a' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")] [background-position:right_8px_center] [background-repeat:no-repeat]";
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onLevelChange(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onTagChange(e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.target.value as TextSortBy);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onLevelChange(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onTagChange(e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.currentTarget.value as TextSortBy);
 return (
 		<div className="mb-3.5 flex flex-wrap items-center gap-2">
 			{/* Search */}

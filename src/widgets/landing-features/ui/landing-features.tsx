@@ -1,5 +1,6 @@
 "use client";
 
+import { ReactNode } from 'react';
 import {
 	BookmarkIcon,
 	CompassIcon,
@@ -14,7 +15,7 @@ import { FeatureCard, type FeatureIconColor } from "./feature-card";
 
 interface FeatureDef {
 	key: string;
-	icon: React.ReactNode;
+	icon: ReactNode;
 	color: FeatureIconColor;
 }
 

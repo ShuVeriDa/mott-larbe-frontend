@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import {
 	useUpdatePreferences,
@@ -65,9 +66,9 @@ export const ReaderSection = ({ preferences }: ReaderSectionProps) => {
 		}
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ highlightKnown: v });
-	const handleChange2: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ showProgress: v });
-	const handleChange3: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ autoNextPage: v });
+		const handleChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ highlightKnown: v });
+	const handleChange2: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ showProgress: v });
+	const handleChange3: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ autoNextPage: v });
 return (
 		<div className="flex flex-col gap-3.5">
 			<SectionHeader
@@ -83,7 +84,7 @@ return (
 				<div className="flex flex-col">
 					{POPUP_OPTIONS.map((opt) => {
 						const selected = preferences.popupMode === opt.value;
-												const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => updatePopup(opt.value);
+												const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => updatePopup(opt.value);
 return (
 							<button
 								key={opt.value}

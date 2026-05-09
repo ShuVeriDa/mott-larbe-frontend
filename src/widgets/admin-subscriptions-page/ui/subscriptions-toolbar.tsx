@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { PaymentProvider, PlanType, SubscriptionsSort } from "@/entities/admin-subscription";
 
@@ -28,10 +29,10 @@ export const SubscriptionsToolbar = ({
 }: Props) => {
 	const { t } = useI18n();
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onPlanChange(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onProviderChange(e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.target.value as import("@/entities/admin-subscription").SubscriptionsSort);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onPlanChange(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onProviderChange(e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.currentTarget.value as import("@/entities/admin-subscription").SubscriptionsSort);
 return (
 		<div className="flex flex-wrap items-center gap-2 border-b border-bd-1 px-3.5 py-2.5">
 			{/* Search */}

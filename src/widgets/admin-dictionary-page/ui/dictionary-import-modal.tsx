@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useRef, useState } from "react";
+import { ComponentProps, DragEvent, useRef, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminImportResult } from "@/entities/dictionary";
 
@@ -28,12 +27,12 @@ export const DictionaryImportModal = ({
 	const [error, setError] = useState("");
 	const [dragging, setDragging] = useState(false);
 
-	const reset = useCallback(() => {
+	const reset = () => {
 		setFile(null);
 		setError("");
 		setDragging(false);
 		if (inputRef.current) inputRef.current.value = "";
-	}, []);
+	};
 
 	const validate = (f: File): boolean => {
 		if (!f.name.endsWith(".json")) {
@@ -52,13 +51,12 @@ export const DictionaryImportModal = ({
 		if (validate(f)) setFile(f);
 	};
 
-	const handleDrop = useCallback((e: React.DragEvent) => {
+	const handleDrop = (e: DragEvent) => {
 		e.preventDefault();
 		setDragging(false);
 		const f = e.dataTransfer.files[0];
 		if (f) pick(f);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	};
 
 	const handleClose = () => {
 		if (isSubmitting) return;
@@ -68,15 +66,15 @@ export const DictionaryImportModal = ({
 
 	if (!open) return null;
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => { if (e.target === e.currentTarget) handleClose(); };
-	const handleDragOver: NonNullable<React.ComponentProps<"div">["onDragOver"]> = (e) => { e.preventDefault(); setDragging(true); };
-	const handleDragLeave: NonNullable<React.ComponentProps<"div">["onDragLeave"]> = () => setDragging(false);
-	const handleClick2: NonNullable<React.ComponentProps<"div">["onClick"]> = () => inputRef.current?.click();
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => {
-									const f = e.target.files?.[0];
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => { if (/* intentional: backdrop-only click */ e.target === e.currentTarget) handleClose(); };
+	const handleDragOver: NonNullable<ComponentProps<"div">["onDragOver"]> = (e) => { e.preventDefault(); setDragging(true); };
+	const handleDragLeave: NonNullable<ComponentProps<"div">["onDragLeave"]> = () => setDragging(false);
+	const handleClick2: NonNullable<ComponentProps<"div">["onClick"]> = () => inputRef.current?.click();
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => {
+									const f = e.currentTarget.files?.[0];
 									if (f) pick(f);
 								};
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { if (file) onSubmit(file); };
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => { if (file) onSubmit(file); };
 return (
 		<div
 			className="fixed inset-0 z-200 flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"

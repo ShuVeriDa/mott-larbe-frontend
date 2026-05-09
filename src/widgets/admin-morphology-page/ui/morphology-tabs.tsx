@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { MorphRuleStats, MorphRuleStatus } from "@/entities/morph-rule";
@@ -36,7 +37,7 @@ export const MorphologyTabs = ({ active, stats, onChange }: Props) => {
     <div className="mb-3.5 overflow-x-auto [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:h-0">
       <div className="inline-flex min-w-full gap-0 rounded-[9px] bg-surf-2 p-[3px]">
         {tabs.map((tab) => {
-          const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab.key);
+          const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab.key);
           return (
           <button
             key={tab.key}

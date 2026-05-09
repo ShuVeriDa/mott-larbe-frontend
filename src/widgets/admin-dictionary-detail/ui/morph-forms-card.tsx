@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminDictMorphForm } from "@/entities/dictionary";
 import type { DictModal } from "../model/use-admin-dictionary-detail-page";
@@ -81,7 +82,7 @@ export const MorphFormsCard = ({
 		);
 	}
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addForm" });
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addForm" });
 return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
@@ -110,8 +111,8 @@ return (
 				<>
 					<div className="grid grid-cols-2">
 						{visible.map((form, i) => {
-						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "editForm", form });
-						  const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDeleteForm(form.id);
+						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "editForm", form });
+						  const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onDeleteForm(form.id);
 						  return (
 							<div
 								key={form.id}

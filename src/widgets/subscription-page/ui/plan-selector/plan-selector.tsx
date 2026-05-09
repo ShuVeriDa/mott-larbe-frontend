@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, type ReactNode } from "react";
+import { ComponentProps, type ReactNode, useState } from 'react';
 import {
 	buildTiers,
 	pickPlanForCycle,
@@ -79,7 +78,7 @@ export const PlanSelector = ({
 							if (!plan) return null;
 							const isCurrent = plan.id === currentPlanId;
 							const popular = tier.type === "PREMIUM" && !isCurrent;
-														const handleChoose: NonNullable<React.ComponentProps<typeof PlanCard>["onChoose"]> = (chosen) => onChoosePlan(chosen, cycle);
+														const handleChoose: NonNullable<ComponentProps<typeof PlanCard>["onChoose"]> = (chosen) => onChoosePlan(chosen, cycle);
 return (
 								<PlanCard
 									key={tier.key}

@@ -3,8 +3,7 @@
 import type { ProcessTextDto } from "@/entities/admin-text";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { useState } from "react";
-
+import { ComponentProps, FormEvent, useState } from 'react';
 interface RunProcessModalProps {
 	defaultNormalization: boolean;
 	defaultMorphAnalysis: boolean;
@@ -26,7 +25,7 @@ export const RunProcessModal = ({
 	const [useMorphAnalysis, setUseMorphAnalysis] =
 		useState(defaultMorphAnalysis);
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		onConfirm({ useNormalization, useMorphAnalysis });
 	};
@@ -135,7 +134,7 @@ const CheckboxRow = ({
 	disabled,
 	onChange,
 }: CheckboxRowProps) => {
-  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onChange?.(e.target.checked);
+  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onChange?.(e.currentTarget.checked);
   return (
 	<label
 		className={cn(

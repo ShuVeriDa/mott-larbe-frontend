@@ -9,7 +9,7 @@ import type {
 } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { ComponentProps, InputHTMLAttributes, KeyboardEvent, ReactNode, SelectHTMLAttributes, useRef, useState } from 'react';
 import type { PageContent } from "../model/use-admin-text-edit-page";
 
 interface TextEditMetaPanelProps {
@@ -65,7 +65,7 @@ const MetaSection = ({
 	children,
 }: {
 	title: string;
-	children: React.ReactNode;
+	children: ReactNode;
 }) => (
 	<div className="border-b border-bd-1 px-4 py-[14px]">
 		<div className="mb-3 text-[10.5px] font-semibold uppercase tracking-[0.6px] text-t-3">
@@ -75,20 +75,20 @@ const MetaSection = ({
 	</div>
 );
 
-const FieldLabel = ({ children }: { children: React.ReactNode }) => (
+const FieldLabel = ({ children }: { children: ReactNode }) => (
 	<label className="mb-1.5 block text-[11px] font-medium text-t-3">
 		{children}
 	</label>
 );
 
-const FieldInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
+const FieldInput = (props: InputHTMLAttributes<HTMLInputElement>) => (
 	<input
 		{...props}
 		className="h-[34px] w-full rounded-base border border-bd-2 bg-surf px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 	/>
 );
 
-const FieldSelect = (props: React.SelectHTMLAttributes<HTMLSelectElement>) => (
+const FieldSelect = (props: SelectHTMLAttributes<HTMLSelectElement>) => (
 	<select
 		{...props}
 		className="h-[34px] w-full cursor-pointer appearance-none rounded-base border border-bd-2 bg-surf px-2.5 pr-7 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
@@ -102,7 +102,7 @@ const Toggle = ({
 	checked: boolean;
 	onChange: (v: boolean) => void;
 }) => {
-  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(!checked);
+  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(!checked);
   return (
 	<button
 		type="button"
@@ -175,7 +175,7 @@ export const TextEditMetaPanel = ({
 
 	const maxWordCount = Math.max(...pages.map(p => p.wordCount), 1);
 
-	const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+	const handleTagKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
 			e.preventDefault();
 			if (tagInputValue.trim()) {
@@ -201,19 +201,19 @@ export const TextEditMetaPanel = ({
 		}
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setMetaOpen(v => !v);
-	const handleChange: NonNullable<React.ComponentProps<typeof FieldSelect>["onChange"]> = e => onStatusChange(e.target.value as TextStatus);
-	const handleChange2: NonNullable<React.ComponentProps<typeof FieldSelect>["onChange"]> = e => onLanguageChange(e.target.value as TextLanguage);
-	const handleChange3: NonNullable<React.ComponentProps<typeof FieldInput>["onChange"]> = e => onAuthorChange(e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<typeof FieldInput>["onChange"]> = e => onSourceChange(e.target.value);
-	const handleClick2: NonNullable<React.ComponentProps<"div">["onClick"]> = () => tagInputRef.current?.focus();
-	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setTagInputValue(e.target.value);
-	const handleChange6: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => onDescriptionChange(e.target.value);
-	const handleChange7: NonNullable<React.ComponentProps<"input">["onChange"]> = e => {
-							const f = e.target.files?.[0];
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setMetaOpen(v => !v);
+	const handleChange: NonNullable<ComponentProps<typeof FieldSelect>["onChange"]> = e => onStatusChange(e.currentTarget.value as TextStatus);
+	const handleChange2: NonNullable<ComponentProps<typeof FieldSelect>["onChange"]> = e => onLanguageChange(e.currentTarget.value as TextLanguage);
+	const handleChange3: NonNullable<ComponentProps<typeof FieldInput>["onChange"]> = e => onAuthorChange(e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<typeof FieldInput>["onChange"]> = e => onSourceChange(e.currentTarget.value);
+	const handleClick2: NonNullable<ComponentProps<"div">["onClick"]> = () => tagInputRef.current?.focus();
+	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = e => setTagInputValue(e.currentTarget.value);
+	const handleChange6: NonNullable<ComponentProps<"textarea">["onChange"]> = e => onDescriptionChange(e.currentTarget.value);
+	const handleChange7: NonNullable<ComponentProps<"input">["onChange"]> = e => {
+							const f = e.currentTarget.files?.[0];
 							if (f) onCoverSelect(f);
 						};
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => fileInputRef.current?.click();
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => fileInputRef.current?.click();
 return (
 		<div className="flex flex-col overflow-y-auto [&::-webkit-scrollbar]:w-0">
 			{/* Mobile toggle header */}
@@ -288,7 +288,7 @@ return (
 						<FieldLabel>{t("admin.texts.createPage.levelLabel")}</FieldLabel>
 						<div className="grid grid-cols-6 gap-1.5">
 							{LEVELS.map(lvl => {
-							  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onLevelChange(level === lvl ? null : lvl);
+							  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onLevelChange(level === lvl ? null : lvl);
 							  return (
 								<button
 									key={lvl}
@@ -335,7 +335,7 @@ return (
 						onClick={handleClick2}
 					>
 						{tags.map(tag => {
-						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = e => {
+						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = e => {
 										e.stopPropagation();
 										onTagRemove(tag);
 									};

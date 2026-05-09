@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 import { ChechenIcon, GrammarIcon, LogoIcon } from "./nav-icons";
 import { NavStreak } from "./nav-streak";
 import { NavVocab } from "./nav-vocab";

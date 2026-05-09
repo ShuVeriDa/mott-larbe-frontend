@@ -1,12 +1,10 @@
 "use client";
-
-import { useCallback, useEffect, useState } from "react";
-
+import { useEffect, useState } from 'react';
 export const useMobileMenu = () => {
 	const [open, setOpen] = useState(false);
 
-	const openMenu = useCallback(() => setOpen(true), []);
-	const closeMenu = useCallback(() => setOpen(false), []);
+	const openMenu = () => setOpen(true);
+	const closeMenu = () => setOpen(false);
 
 	useEffect(() => {
 		if (!open) return;

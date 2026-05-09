@@ -3,7 +3,7 @@
 import { useFeedbackThread } from "@/entities/feedback";
 import { useSendFeedbackMessage } from "@/features/send-feedback-message";
 import { useMarkFeedbackRead } from "@/features/mark-feedback-read";
-import { useEffect } from "react";
+import { ComponentProps, useEffect } from 'react';
 import { FeedbackChatHeader } from "./feedback-chat-header";
 import { FeedbackMessages } from "./feedback-messages";
 import { FeedbackChatInput } from "./feedback-chat-input";
@@ -38,7 +38,7 @@ export const FeedbackChat = ({
 
 	const isClosed = thread?.status === "RESOLVED";
 
-		const handleSend: NonNullable<React.ComponentProps<typeof FeedbackChatInput>["onSend"]> = (text) => sendMessage.mutate(text);
+		const handleSend: NonNullable<ComponentProps<typeof FeedbackChatInput>["onSend"]> = (text) => sendMessage.mutate(text);
 return (
 		<div
 			className={[

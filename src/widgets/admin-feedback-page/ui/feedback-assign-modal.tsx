@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackAssignee, AdminFeedbackThread } from "@/entities/feedback";
 
@@ -35,8 +36,8 @@ export const FeedbackAssignModal = ({
 }: FeedbackAssignModalProps) => {
 	if (!isOpen) return null;
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.target === e.currentTarget && onClose();
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onAssign(null);
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onAssign(null);
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 px-5"
@@ -86,7 +87,7 @@ return (
 				) : (
 					<div className="flex flex-col gap-1.5">
 						{assignees.map((a) => {
-						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onAssign(a.id);
+						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onAssign(a.id);
 						  return (
 							<button
 								key={a.id}

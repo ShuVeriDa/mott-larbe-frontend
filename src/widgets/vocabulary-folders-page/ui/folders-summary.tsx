@@ -4,8 +4,7 @@ import { useFoldersSummary } from "@/entities/folder";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { CheckCircle2, Clock, FolderOpen, ListOrdered } from "lucide-react";
-import type { ComponentType, SVGProps } from "react";
-
+import type { ComponentType, SVGProps } from 'react';
 interface SummaryItemProps {
 	tone: "acc" | "neutral" | "grn" | "amb";
 	icon: ComponentType<SVGProps<SVGSVGElement> & { strokeWidth?: number }>;

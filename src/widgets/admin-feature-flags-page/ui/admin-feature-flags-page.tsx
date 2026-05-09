@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminFeatureFlagsPage } from "../model/use-admin-feature-flags-page";
 import { FeatureFlagDeleteModal } from "./feature-flag-delete-modal";
@@ -98,13 +99,13 @@ export const AdminFeatureFlagsPage = () => {
 				? overrideItems.length === 0 && !isOverridesLoading
 				: historyItems.length === 0 && !isHistoryLoading;
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setImportModalOpen(true);
-	const handleAddOverride: NonNullable<React.ComponentProps<typeof OverridesToolbar>["onAddOverride"]> = () => openOverrideModal();
-	const handleClose: NonNullable<React.ComponentProps<typeof FeatureFlagModal>["onClose"]> = () => setModalOpen(false);
-	const handleClose2: NonNullable<React.ComponentProps<typeof FeatureFlagDeleteModal>["onClose"]> = () => setDeleteFlag(null);
-	const handleClose3: NonNullable<React.ComponentProps<typeof FeatureFlagDuplicateModal>["onClose"]> = () => setDuplicateFlag(null);
-	const handleClose4: NonNullable<React.ComponentProps<typeof FeatureFlagOverrideModal>["onClose"]> = () => setOverrideModalOpen(false);
-	const handleClose5: NonNullable<React.ComponentProps<typeof FeatureFlagImportModal>["onClose"]> = () => setImportModalOpen(false);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setImportModalOpen(true);
+	const handleAddOverride: NonNullable<ComponentProps<typeof OverridesToolbar>["onAddOverride"]> = () => openOverrideModal();
+	const handleClose: NonNullable<ComponentProps<typeof FeatureFlagModal>["onClose"]> = () => setModalOpen(false);
+	const handleClose2: NonNullable<ComponentProps<typeof FeatureFlagDeleteModal>["onClose"]> = () => setDeleteFlag(null);
+	const handleClose3: NonNullable<ComponentProps<typeof FeatureFlagDuplicateModal>["onClose"]> = () => setDuplicateFlag(null);
+	const handleClose4: NonNullable<ComponentProps<typeof FeatureFlagOverrideModal>["onClose"]> = () => setOverrideModalOpen(false);
+	const handleClose5: NonNullable<ComponentProps<typeof FeatureFlagImportModal>["onClose"]> = () => setImportModalOpen(false);
 return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<FeatureFlagsTopbar

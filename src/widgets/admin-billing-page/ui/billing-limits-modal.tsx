@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { ComponentProps, SyntheticEvent, useEffect, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminPlan, PlanLimits } from "@/entities/admin-billing";
 
@@ -83,7 +82,7 @@ export const BillingLimitsModal = ({
 		setBools(buildInitialBool(plan.limits));
 	}, [open, plan]);
 
-	const handleSubmit = (e: React.SyntheticEvent) => {
+	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
 		if (!plan) return;
 
@@ -99,7 +98,7 @@ export const BillingLimitsModal = ({
 
 	if (!open || !plan) return null;
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
 return (
 		<div
 			className="fixed inset-0 z-400 flex items-end justify-center bg-black/35 sm:items-center sm:p-4"
@@ -140,8 +139,8 @@ return (
 						</p>
 						<div className="space-y-2.5">
 							{NUMERIC_FIELDS.map(({ key, label }) => {
-							  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) =>
-											setNumeric((prev) => ({ ...prev, [key as string]: e.target.value }));
+							  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) =>
+											setNumeric((prev) => ({ ...prev, [key as string]: e.currentTarget.value }));
 							  return (
 								<div key={key as string} className="flex items-center gap-3">
 									<label className="w-40 shrink-0 text-[12.5px] text-t-1">{label}</label>
@@ -166,8 +165,8 @@ return (
 						</div>
 						<div className="space-y-2">
 							{BOOL_FIELDS.map(({ key, label }) => {
-							  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) =>
-												setBools((prev) => ({ ...prev, [key as string]: e.target.checked }));
+							  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) =>
+												setBools((prev) => ({ ...prev, [key as string]: e.currentTarget.checked }));
 							  return (
 								<div key={key as string} className="flex items-center justify-between">
 									<span className="text-[12.5px] text-t-1">{label}</span>

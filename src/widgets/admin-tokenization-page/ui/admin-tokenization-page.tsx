@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useAdminTokenizationPage } from "../model/use-admin-tokenization-page";
 import { TokenizationTopbar } from "./tokenization-topbar";
 import { TokenizationStatsRow } from "./tokenization-stats-row";
@@ -54,19 +55,19 @@ export const AdminTokenizationPage = () => {
 
 	const items = data?.data ?? [];
 
-	const handleOpenRunModal: NonNullable<React.ComponentProps<typeof TokenizationTopbar>["onRun"]> = () =>
+	const handleOpenRunModal: NonNullable<ComponentProps<typeof TokenizationTopbar>["onRun"]> = () =>
 		setRunModalOpen(true);
-	const handleOpenBatchRunModal: NonNullable<React.ComponentProps<typeof TokenizationTopbar>["onBatchRun"]> = () =>
+	const handleOpenBatchRunModal: NonNullable<ComponentProps<typeof TokenizationTopbar>["onBatchRun"]> = () =>
 		setRunModalOpen(true);
-	const handleOpenResetConfirm: NonNullable<React.ComponentProps<typeof TokenizationBulkBar>["onReset"]> = () =>
+	const handleOpenResetConfirm: NonNullable<ComponentProps<typeof TokenizationBulkBar>["onReset"]> = () =>
 		setConfirmResetOpen(true);
-	const handleOpenSideRunModal: NonNullable<React.ComponentProps<typeof TokenizationSidePanel>["onRun"]> = () =>
+	const handleOpenSideRunModal: NonNullable<ComponentProps<typeof TokenizationSidePanel>["onRun"]> = () =>
 		setRunModalOpen(true);
-	const handleRunModalClose: NonNullable<React.ComponentProps<typeof TokenizationRunModal>["onClose"]> = () =>
+	const handleRunModalClose: NonNullable<ComponentProps<typeof TokenizationRunModal>["onClose"]> = () =>
 		setRunModalOpen(false);
-	const handleConfirmDialogClose: NonNullable<React.ComponentProps<typeof TokenizationConfirmDialog>["onClose"]> = () =>
+	const handleConfirmDialogClose: NonNullable<ComponentProps<typeof TokenizationConfirmDialog>["onClose"]> = () =>
 		setConfirmResetOpen(false);
-	const handleDetailModalClose: NonNullable<React.ComponentProps<typeof TokenizationTextDetailModal>["onClose"]> = () =>
+	const handleDetailModalClose: NonNullable<ComponentProps<typeof TokenizationTextDetailModal>["onClose"]> = () =>
 		setDetailTextId(null);
 return (
 		<>

@@ -1,5 +1,6 @@
 "use client";
 
+import { ReactNode } from 'react';
 "use client";
 
 import type { LibraryTextCounts } from "@/entities/library-text";
@@ -38,7 +39,7 @@ const StatChip = ({
 	children,
 	dotClass,
 }: {
-	children: React.ReactNode;
+	children: ReactNode;
 	dotClass: string;
 }) => (
 	<div className="flex shrink-0 items-center gap-[5px] text-t-3">

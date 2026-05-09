@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { ComponentProps, SyntheticEvent, useEffect, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminPlan, CreatePlanDto, PlanInterval, PlanType, UpdatePlanDto } from "@/entities/admin-billing";
 
@@ -59,7 +58,7 @@ export const BillingPlanModal = ({
 	const set = <K extends keyof typeof empty>(key: K, value: (typeof empty)[K]) =>
 		setForm((prev) => ({ ...prev, [key]: value }));
 
-	const handleSubmit = (e: React.SyntheticEvent) => {
+	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
 		if (!form.name.trim()) return;
 
@@ -87,13 +86,13 @@ export const BillingPlanModal = ({
 
 	if (!open) return null;
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("name", e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => set("type", e.target.value as PlanType);
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => set("interval", (e.target.value || null) as PlanInterval);
-	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("priceCents", e.target.value);
-	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("description", e.target.value);
-	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("isActive", e.target.checked);
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("name", e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => set("type", e.currentTarget.value as PlanType);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => set("interval", (e.currentTarget.value || null) as PlanInterval);
+	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("priceCents", e.currentTarget.value);
+	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("description", e.currentTarget.value);
+	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("isActive", e.currentTarget.checked);
 return (
 		<div
 			className="fixed inset-0 z-400 flex items-end justify-center bg-black/35 sm:items-center sm:p-4"

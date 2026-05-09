@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import { createPortal } from "react-dom";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";

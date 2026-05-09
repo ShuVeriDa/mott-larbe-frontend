@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
 import { CefrBadge } from "@/entities/dictionary";
@@ -36,7 +37,7 @@ export const DictionaryMobileList = ({
 		{isLoading
 			? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
 			: items.map((item) => {
-			  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDelete(item);
+			  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onDelete(item);
 			  return (
 				<div
 					key={item.id}

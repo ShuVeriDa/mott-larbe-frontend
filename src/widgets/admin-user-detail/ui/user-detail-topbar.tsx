@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import type { AdminUserDetail } from "@/entities/admin-user";
 import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
 import { useI18n } from "@/shared/lib/i18n";
@@ -22,11 +23,11 @@ export const UserDetailTopbar = ({
 	const isFrozen = user?.status === "FROZEN";
 	const isBlocked = user?.status === "BLOCKED";
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () =>
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
 							isFrozen
 								? mutations.unfreeze.mutate(user!.id)
 								: mutations.freeze.mutate(user!.id);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () =>
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () =>
 							isBlocked
 								? mutations.unblock.mutate(user!.id)
 								: mutations.block.mutate(user!.id);

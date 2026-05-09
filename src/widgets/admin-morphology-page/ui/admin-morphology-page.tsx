@@ -1,7 +1,6 @@
 "use client";
 
-import type { ImportMorphRulesResult } from "@/entities/morph-rule";
-import { useState } from "react";
+import type { ImportMorphRulesResult } from "@/entities/morph-rule";import { ComponentProps, useState } from 'react';
 import { useAdminMorphologyPage } from "../model/use-admin-morphology-page";
 import { MorphologyBulkBar } from "./morphology-bulk-bar";
 import { MorphologyImportModal } from "./morphology-import-modal";
@@ -75,13 +74,13 @@ export const AdminMorphologyPage = () => {
 		setImportResult(null);
 	};
 
-	const handleOpenImport: NonNullable<React.ComponentProps<typeof MorphologyTopbar>["onImport"]> = () =>
+	const handleOpenImport: NonNullable<ComponentProps<typeof MorphologyTopbar>["onImport"]> = () =>
 		setImportModalOpen(true);
-	const handleBulkActivate: NonNullable<React.ComponentProps<typeof MorphologyBulkBar>["onActivate"]> = () =>
+	const handleBulkActivate: NonNullable<ComponentProps<typeof MorphologyBulkBar>["onActivate"]> = () =>
 		bulkActivateMutation.mutate();
-	const handleBulkDeactivate: NonNullable<React.ComponentProps<typeof MorphologyBulkBar>["onDeactivate"]> = () =>
+	const handleBulkDeactivate: NonNullable<ComponentProps<typeof MorphologyBulkBar>["onDeactivate"]> = () =>
 		bulkDeactivateMutation.mutate();
-	const handleBulkDelete: NonNullable<React.ComponentProps<typeof MorphologyBulkBar>["onDelete"]> = () =>
+	const handleBulkDelete: NonNullable<ComponentProps<typeof MorphologyBulkBar>["onDelete"]> = () =>
 		bulkDeleteMutation.mutate();
 return (
 		<div className="flex min-h-0 flex-1 flex-col">

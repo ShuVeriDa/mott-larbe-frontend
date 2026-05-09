@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { Chip } from "@/shared/ui/chip";
 import { Select } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
@@ -32,9 +33,9 @@ export const FilterBar = () => {
 	const setCefrLevel = useVocabularyFilters((s) => s.setCefrLevel);
 	const setSort = useVocabularyFilters((s) => s.setSort);
 
-		const handleClick: NonNullable<React.ComponentProps<typeof Chip>["onClick"]> = () => setStatus(null);
-	const handleClick2: NonNullable<React.ComponentProps<typeof Chip>["onClick"]> = () => setCefrLevel(null);
-	const handleChange: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => setSort(e.target.value as DictionarySort);
+		const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> = () => setStatus(null);
+	const handleClick2: NonNullable<ComponentProps<typeof Chip>["onClick"]> = () => setCefrLevel(null);
+	const handleChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => setSort(e.currentTarget.value as DictionarySort);
 return (
 		<div
 			className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-hairline border-b border-bd-1 bg-surf px-[18px] py-2.5 transition-colors duration-200 [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden max-md:px-[14px]"
@@ -51,7 +52,7 @@ return (
 				{t("vocabulary.all")}
 			</Chip>
 			{LEARNING_LEVELS.map((level) => {
-			  const handleClick: NonNullable<React.ComponentProps<typeof Chip>["onClick"]> = () => setStatus(level);
+			  const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> = () => setStatus(level);
 			  return (
 				<Chip
 					key={level}
@@ -81,7 +82,7 @@ return (
 				{t("vocabulary.all")}
 			</Chip>
 			{CEFR_LEVELS.map((level) => {
-			  const handleClick: NonNullable<React.ComponentProps<typeof Chip>["onClick"]> = () => setCefrLevel(level);
+			  const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> = () => setCefrLevel(level);
 			  return (
 				<Chip
 					key={level}

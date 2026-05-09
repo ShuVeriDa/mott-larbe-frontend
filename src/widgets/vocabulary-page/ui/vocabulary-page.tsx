@@ -9,21 +9,20 @@ import { VocabularyDrawer } from "@/widgets/vocabulary-drawer";
 import { VocabularyList } from "@/widgets/vocabulary-list";
 import { VocabularySidebar } from "@/widgets/vocabulary-sidebar";
 import { VocabularyTopbar } from "@/widgets/vocabulary-topbar";
-import { useState } from "react";
-
+import { ComponentProps, useState } from 'react';
 export const VocabularyPage = () => {
 	const { lang } = useI18n();
 	const [addWordOpen, setAddWordOpen] = useState(false);
 	const [createFolderOpen, setCreateFolderOpen] = useState(false);
 	const [drawerOpen, setDrawerOpen] = useState(false);
 
-		const handleAddWord: NonNullable<React.ComponentProps<typeof VocabularyTopbar>["onAddWord"]> = () => setAddWordOpen(true);
-	const handleOpenDrawer: NonNullable<React.ComponentProps<typeof VocabularyTopbar>["onOpenDrawer"]> = () => setDrawerOpen(true);
-	const handleCreateFolder: NonNullable<React.ComponentProps<typeof VocabularySidebar>["onCreateFolder"]> = () => setCreateFolderOpen(true);
-	const handleClose: NonNullable<React.ComponentProps<typeof AddWordModal>["onClose"]> = () => setAddWordOpen(false);
-	const handleClose2: NonNullable<React.ComponentProps<typeof CreateFolderModal>["onClose"]> = () => setCreateFolderOpen(false);
-	const handleClose3: NonNullable<React.ComponentProps<typeof VocabularyDrawer>["onClose"]> = () => setDrawerOpen(false);
-	const handleCreateFolder2: NonNullable<React.ComponentProps<typeof VocabularyDrawer>["onCreateFolder"]> = () => {
+		const handleAddWord: NonNullable<ComponentProps<typeof VocabularyTopbar>["onAddWord"]> = () => setAddWordOpen(true);
+	const handleOpenDrawer: NonNullable<ComponentProps<typeof VocabularyTopbar>["onOpenDrawer"]> = () => setDrawerOpen(true);
+	const handleCreateFolder: NonNullable<ComponentProps<typeof VocabularySidebar>["onCreateFolder"]> = () => setCreateFolderOpen(true);
+	const handleClose: NonNullable<ComponentProps<typeof AddWordModal>["onClose"]> = () => setAddWordOpen(false);
+	const handleClose2: NonNullable<ComponentProps<typeof CreateFolderModal>["onClose"]> = () => setCreateFolderOpen(false);
+	const handleClose3: NonNullable<ComponentProps<typeof VocabularyDrawer>["onClose"]> = () => setDrawerOpen(false);
+	const handleCreateFolder2: NonNullable<ComponentProps<typeof VocabularyDrawer>["onCreateFolder"]> = () => {
 					setDrawerOpen(false);
 					setCreateFolderOpen(true);
 				};

@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import type { Metadata } from "next";
 import { Playfair_Display, Golos_Text, Geist_Mono, Inter } from "next/font/google";
 import { headers } from "next/headers";
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
 const RootLayout = async ({
 	children,
 }: Readonly<{
-	children: React.ReactNode;
+	children: ReactNode;
 }>) => {
 	const locale = (await headers()).get("x-locale") ?? "ru";
 

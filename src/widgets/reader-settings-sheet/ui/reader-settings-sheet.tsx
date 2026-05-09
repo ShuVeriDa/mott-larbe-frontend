@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import { createPortal } from "react-dom";
 import { FontSizeGroup } from "@/features/reader-font-size";
 import { useI18n } from "@/shared/lib/i18n";

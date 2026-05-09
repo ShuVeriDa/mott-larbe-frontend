@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { UnknownWordsTab, UnknownWordTabCounts } from "@/entities/admin-unknown-word";
@@ -25,7 +26,7 @@ export const UnknownWordsTabs = ({
 				{TABS.map((tab) => {
 					const count = counts?.[tab];
 					const isFrequent = tab === "frequent";
-										const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab);
+										const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab);
 return (
 						<button
 							key={tab}

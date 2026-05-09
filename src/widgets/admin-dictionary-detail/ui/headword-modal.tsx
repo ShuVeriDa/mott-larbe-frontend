@@ -1,8 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
-import { useEffect, useRef, useState } from "react";
-
+import { ComponentProps, SyntheticEvent, useEffect, useRef, useState } from 'react';
 interface HeadwordModalProps {
 	isOpen: boolean;
 	isPending: boolean;
@@ -30,7 +29,7 @@ export const HeadwordModal = ({
 	}, [isOpen]);
 
 	const handleSubmit = (
-		e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
 	) => {
 		e.preventDefault();
 		if (!word.trim()) return;
@@ -39,9 +38,9 @@ export const HeadwordModal = ({
 
 	if (!isOpen) return null;
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setWord(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setIsPrimary(e.target.checked);
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setWord(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => setIsPrimary(e.currentTarget.checked);
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"

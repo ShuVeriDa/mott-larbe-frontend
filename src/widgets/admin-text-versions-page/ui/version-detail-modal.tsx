@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, ReactNode, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import { useAdminTextVersionDetail } from "@/entities/admin-text/model/use-admin-text-versions";
@@ -29,7 +28,7 @@ const formatDuration = (ms: number | null): string => {
 
 interface MetaCellProps {
 	label: string;
-	value: React.ReactNode;
+	value: ReactNode;
 	mono?: boolean;
 }
 
@@ -75,12 +74,12 @@ export const VersionDetailModal = ({
 	const canRestore = version?.status === "COMPLETED" && !version.isCurrent;
 	const canRetry = version?.status === "ERROR";
 
-	const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 		if (!version) return;
 		onDownload(versionId, version.version);
 	};
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRetry(versionId);
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRestore(versionId);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onRetry(versionId);
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => onRestore(versionId);
 return (
 		<>
 			{/* Backdrop */}
@@ -118,7 +117,7 @@ return (
 					{/* Tabs */}
 					<div className="flex shrink-0 gap-0 border-b border-bd-1 px-4">
 						{tabs.map(({ key, label }) => {
-						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setTab(key);
+						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setTab(key);
 						  return (
 							<button
 								key={key}

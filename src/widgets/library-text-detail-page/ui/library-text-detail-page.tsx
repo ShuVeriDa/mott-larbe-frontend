@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useCallback } from "react";
+import { ComponentProps, useState } from 'react';
 import Link from "next/link";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useI18n } from "@/shared/lib/i18n";
@@ -61,7 +60,7 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 		},
 	});
 
-	const handleShare = useCallback(() => {
+	const handleShare = () => {
 		const url = window.location.href;
 		if (typeof navigator.share === "function") {
 			navigator.share({ url }).catch(() => {});
@@ -74,12 +73,12 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 				})
 				.catch(() => {});
 		}
-	}, []);
+	};
 
 	if (detail.isPending) return <DetailSkeleton />;
 
 	if (detail.isError) {
-				const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => detail.refetch();
+				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => detail.refetch();
 return (
 			<div className="flex flex-1 flex-col items-center justify-center gap-3 py-20 text-t-3">
 				<p className="text-sm text-t-2">{t("library.textDetail.error")}</p>
@@ -96,8 +95,8 @@ return (
 
 	const text = detail.data;
 
-		const handleSelect: NonNullable<React.ComponentProps<typeof DropdownMenuItem>["onSelect"]> = () => bookmarkMutation.mutate();
-	const handleSelect2: NonNullable<React.ComponentProps<typeof DropdownMenuItem>["onSelect"]> = () => setReportOpen(true);
+		const handleSelect: NonNullable<ComponentProps<typeof DropdownMenuItem>["onSelect"]> = () => bookmarkMutation.mutate();
+	const handleSelect2: NonNullable<ComponentProps<typeof DropdownMenuItem>["onSelect"]> = () => setReportOpen(true);
 return (
 		<div className="flex flex-1 flex-col overflow-hidden">
 			{/* Topbar */}

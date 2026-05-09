@@ -3,7 +3,7 @@
 import type { AdminLogDetail } from "@/entities/admin-log";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from 'react';
 import { LevelBadge } from "./level-badge";
 
 interface LogsDetailPanelProps {
@@ -183,7 +183,7 @@ const Section = ({
 	children,
 }: {
 	label: string;
-	children: React.ReactNode;
+	children: ReactNode;
 }) => (
 	<div className="mb-[18px]">
 		<div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
@@ -198,7 +198,7 @@ const Row = ({
 	children,
 }: {
 	label: string;
-	children: React.ReactNode;
+	children: ReactNode;
 }) => (
 	<div className="mb-2 flex items-start gap-2.5">
 		<span className="w-[110px] shrink-0 pt-px text-[12px] text-t-3">
@@ -214,7 +214,7 @@ const CodeBlock = ({
 	children,
 	className,
 }: {
-	children: React.ReactNode;
+	children: ReactNode;
 	className?: string;
 }) => (
 	<pre

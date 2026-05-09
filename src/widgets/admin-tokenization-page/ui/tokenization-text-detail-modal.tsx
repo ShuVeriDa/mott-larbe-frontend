@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import type {
 	ProcessingStatus,
 	TokenSource,
@@ -59,9 +60,9 @@ export const TokenizationTextDetailModal = ({
 		ERROR: t("admin.tokenization.status.ERROR"),
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.stopPropagation();
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => textId && mutations.runText.mutate(textId);
-	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => textId && mutations.resetText.mutate(textId);
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => e.stopPropagation();
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => textId && mutations.runText.mutate(textId);
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => textId && mutations.resetText.mutate(textId);
 return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"

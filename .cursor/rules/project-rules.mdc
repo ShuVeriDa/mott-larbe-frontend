@@ -270,6 +270,99 @@ const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
 
 ---
 
+## React 19 — Rules & Best Practices
+
+Project uses **React 19** (stable, released December 5, 2024).
+
+### Memoization — do not use manually
+
+React Compiler handles memoization automatically.
+
+```ts
+// ❌ wrong
+useMemo(() => compute(a, b), [a, b])
+useCallback(fn, [deps])
+memo(MyComponent)
+
+// ✅ exception only: explicitly heavy computations (sorting 10k+ items, d3, canvas)
+```
+
+### forwardRef — do not use
+
+`ref` now works as a regular prop.
+
+```tsx
+// ❌ wrong
+const Input = forwardRef<HTMLInputElement, Props>((props, ref) => (
+  <input ref={ref} {...props} />
+))
+
+// ✅ correct
+const Input = ({ ref, ...props }: Props & { ref?: Ref<HTMLInputElement> }) => (
+  <input ref={ref} {...props} />
+)
+```
+
+### New hooks — use instead of old patterns
+
+| Old pattern | React 19 |
+|---|---|
+| `useContext()` | `use(Context)` |
+| manual form state | `useActionState()` |
+| manual optimistic UI | `useOptimistic()` |
+| prop drilling form status | `useFormStatus()` |
+
+```tsx
+// use() — works in conditionals and loops
+const user = use(UserContext)
+const data = use(fetchDataPromise) // + Suspense
+
+// useActionState() — for forms
+const [state, action, isPending] = useActionState(submitForm, initialState)
+
+// useOptimistic() — optimistic UI
+const [optimisticList, addOptimistic] = useOptimistic(list)
+
+// useFormStatus() — parent form status
+const { pending } = useFormStatus()
+```
+
+### Actions — instead of onSubmit
+
+```tsx
+// ❌ wrong
+<form onSubmit={handleSubmit}>
+
+// ✅ correct
+<form action={submitAction}>
+```
+
+### Document Metadata — native, no react-helmet
+
+```tsx
+// ✅ works directly inside a component — React hoists to <head>
+<title>Page Title</title>
+<meta name="description" content="..." />
+```
+
+### Resource Loading APIs
+
+```tsx
+import { preload, preinit } from 'react-dom'
+
+preload('/fonts/font.woff2', { as: 'font' })
+preinit('/scripts/analytics.js', { as: 'script' })
+```
+
+### Server Components & Directives
+
+- Server Components are the **default** in Next.js App Router.
+- Add `'use client'` **only** when hooks or interactivity are required.
+- `'use server'` is for **Server Actions only** — not for Server Components.
+- Think twice before adding `'use client'`.
+
+---
+
 ## TypeScript
 
 - No `any`. Use `unknown` and narrow with type guards.

@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import type { FeatureFlagKeyItem } from "@/entities/feature-flag";
 
 interface OverridesToolbarProps {
@@ -23,9 +24,9 @@ export const OverridesToolbar = ({
 	onAddOverride,
 	t,
 }: OverridesToolbarProps) => {
-  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onSearchChange(e.target.value);
-  const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onFlagIdChange(e.target.value);
-  const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onIsEnabledChange(e.target.value);
+  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onSearchChange(e.currentTarget.value);
+  const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => onFlagIdChange(e.currentTarget.value);
+  const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => onIsEnabledChange(e.currentTarget.value);
   return (
 	<div className="mb-3.5 flex flex-wrap items-center gap-2">
 		<div className="relative max-w-[280px] flex-1">

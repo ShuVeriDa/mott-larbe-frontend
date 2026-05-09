@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useState } from "react";
+import { useState } from 'react';
 import { useAdminUserMutations, useAdminUsers } from "@/entities/admin-user";
 import { useAdminUserStats } from "@/entities/admin-user/model/use-admin-user-stats";
 import { adminUserApi } from "@/entities/admin-user/api/admin-user-api";
@@ -29,43 +28,43 @@ export const useAdminUsersPage = () => {
 	const { data: stats, isLoading: statsLoading } = useAdminUserStats();
 	const mutations = useAdminUserMutations();
 
-	const handleTabChange = useCallback((next: UsersTab) => {
+	const handleTabChange = (next: UsersTab) => {
 		setTab(next);
 		setPage(1);
 		setSelectedIds(new Set());
-	}, []);
+	};
 
-	const handleSearchChange = useCallback((value: string) => {
+	const handleSearchChange = (value: string) => {
 		setSearch(value);
 		setPage(1);
 		setSelectedIds(new Set());
-	}, []);
+	};
 
-	const handleRoleChange = useCallback((value: string) => {
+	const handleRoleChange = (value: string) => {
 		setRole(value as FetchAdminUsersQuery["role"]);
 		setPage(1);
-	}, []);
+	};
 
-	const handlePlanChange = useCallback((value: string) => {
+	const handlePlanChange = (value: string) => {
 		setPlan(value);
 		setPage(1);
-	}, []);
+	};
 
-	const handleSortChange = useCallback((value: UsersSort) => {
+	const handleSortChange = (value: UsersSort) => {
 		setSort(value);
 		setPage(1);
-	}, []);
+	};
 
-	const toggleSelectId = useCallback((id: string) => {
+	const toggleSelectId = (id: string) => {
 		setSelectedIds((prev) => {
 			const next = new Set(prev);
 			if (next.has(id)) next.delete(id);
 			else next.add(id);
 			return next;
 		});
-	}, []);
+	};
 
-	const toggleSelectAll = useCallback(() => {
+	const toggleSelectAll = () => {
 		if (!data?.users) return;
 		setSelectedIds((prev) => {
 			const allIds = data.users.map((u) => u.id);
@@ -73,11 +72,11 @@ export const useAdminUsersPage = () => {
 			if (allSelected) return new Set();
 			return new Set(allIds);
 		});
-	}, [data?.users]);
+	};
 
-	const clearSelection = useCallback(() => setSelectedIds(new Set()), []);
+	const clearSelection = () => setSelectedIds(new Set());
 
-	const handleExport = useCallback(async () => {
+	const handleExport = async () => {
 		try {
 			const blob = await adminUserApi.exportCsv(query);
 			const url = URL.createObjectURL(blob);
@@ -89,7 +88,7 @@ export const useAdminUsersPage = () => {
 		} catch {
 			// silently ignore
 		}
-	}, [query]);
+	};
 
 	const allSelected =
 		!!data?.users?.length &&

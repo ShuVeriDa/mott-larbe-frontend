@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState } from 'react';
 import { Check } from "lucide-react";
 import { RatingButtons, useRateWord } from "@/features/rate-word";
 import type { DictionaryEntryDetail } from "@/entities/dictionary";

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useEffect, useRef } from "react";
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AddToDictionaryPayload } from "@/entities/admin-unknown-word";
@@ -43,17 +42,17 @@ const LemmaAutocomplete = ({
 
 	useEffect(() => {
 		const handler = (e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+			if (ref.current && !ref.current.contains(e.target as Node /* intentional: outside-click target */)) setOpen(false);
 		};
 		document.addEventListener("mousedown", handler);
 		return () => document.removeEventListener("mousedown", handler);
 	}, []);
 
-		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => {
-					setQ(e.target.value);
+		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => {
+					setQ(e.currentTarget.value);
 					setOpen(true);
 				};
-	const handleFocus: NonNullable<React.ComponentProps<"input">["onFocus"]> = () => q && setOpen(true);
+	const handleFocus: NonNullable<ComponentProps<"input">["onFocus"]> = () => q && setOpen(true);
 return (
 		<div ref={ref} className="relative">
 			<input
@@ -71,7 +70,7 @@ return (
 						<div className="px-3 py-2.5 text-[12px] text-t-3">…</div>
 					) : data?.length ? (
 						data.map((item) => {
-						  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = (e) => {
+						  const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = (e) => {
 									e.preventDefault();
 									onSelect(item.id, item.headword);
 									setQ(
@@ -165,14 +164,14 @@ export const UnknownWordsAddModal = ({
 	const canSubmit =
 		action === "new" ? !!translation && !isPending : !!selectedLemma && !isPending;
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.target === e.currentTarget && onClose();
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setHeadword(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => setPartOfSpeech(e.target.value);
-	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setTranslation(e.target.value);
-	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => setLevel(e.target.value);
-	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setDomain(e.target.value);
-	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setFormsRaw(e.target.value);
-	const handleSelect: NonNullable<React.ComponentProps<typeof LemmaAutocomplete>["onSelect"]> = (id, label) => setSelectedLemma({ id, label });
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setHeadword(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setPartOfSpeech(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setTranslation(e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setLevel(e.currentTarget.value);
+	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setDomain(e.currentTarget.value);
+	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setFormsRaw(e.currentTarget.value);
+	const handleSelect: NonNullable<ComponentProps<typeof LemmaAutocomplete>["onSelect"]> = (id, label) => setSelectedLemma({ id, label });
 return (
 		<div
 			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 p-4 backdrop-blur-sm max-sm:items-end max-sm:p-0"
@@ -224,7 +223,7 @@ return (
 					</div>
 					<div className="flex flex-col gap-1.5">
 						{(["new", "link"] as ActionType[]).map((type) => {
-						  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = () => setAction(type);
+						  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => setAction(type);
 						  return (
 							<label
 								key={type}

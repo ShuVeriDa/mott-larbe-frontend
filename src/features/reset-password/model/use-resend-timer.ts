@@ -1,7 +1,5 @@
 "use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
-
+import { useEffect, useRef, useState } from 'react';
 interface UseResendTimerOptions {
 	durationSeconds?: number;
 }
@@ -12,14 +10,14 @@ export const useResendTimer = ({
 	const [secondsLeft, setSecondsLeft] = useState(0);
 	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-	const clear = useCallback(() => {
+	const clear = () => {
 		if (intervalRef.current) {
 			clearInterval(intervalRef.current);
 			intervalRef.current = null;
 		}
-	}, []);
+	};
 
-	const start = useCallback(() => {
+	const start = () => {
 		clear();
 		setSecondsLeft(durationSeconds);
 		intervalRef.current = setInterval(() => {
@@ -31,7 +29,7 @@ export const useResendTimer = ({
 				return prev - 1;
 			});
 		}, 1000);
-	}, [clear, durationSeconds]);
+	};
 
 	useEffect(() => () => clear(), [clear]);
 

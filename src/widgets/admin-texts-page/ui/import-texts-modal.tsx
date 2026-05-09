@@ -6,8 +6,7 @@ import type {
 } from "@/entities/admin-text";
 import { useAdminTextBulkImport } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
-import { useRef, useState } from "react";
-
+import { ChangeEvent, ComponentProps, SyntheticEvent, useRef, useState } from 'react';
 interface ImportTextsModalProps {
 	onClose: () => void;
 }
@@ -25,15 +24,15 @@ export const ImportTextsModal = ({ onClose }: ImportTextsModalProps) => {
 
 	const bulkImport = useAdminTextBulkImport();
 
-	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0];
+	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const file = e.currentTarget.files?.[0];
 		if (!file) return;
 		setFileName(file.name);
 		setParseError("");
 		setModalState("idle");
 	};
 
-	const handleSubmit = async (e: React.SyntheticEvent) => {
+	const handleSubmit = async (e: SyntheticEvent) => {
 		e.preventDefault();
 		const file = fileRef.current?.files?.[0];
 		if (!file) return;
@@ -77,11 +76,11 @@ export const ImportTextsModal = ({ onClose }: ImportTextsModalProps) => {
 		if (fileRef.current) fileRef.current.value = "";
 	};
 
-		const handleMouseDown: NonNullable<React.ComponentProps<"div">["onMouseDown"]> = e => {
-				if (e.target === e.currentTarget) onClose();
+		const handleMouseDown: NonNullable<ComponentProps<"div">["onMouseDown"]> = e => {
+				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
 			};
-	const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = () => fileRef.current?.click();
-	const handleKeyDown: NonNullable<React.ComponentProps<"div">["onKeyDown"]> = e => {
+	const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = () => fileRef.current?.click();
+	const handleKeyDown: NonNullable<ComponentProps<"div">["onKeyDown"]> = e => {
 									if (e.key === "Enter") fileRef.current?.click();
 								};
 return (

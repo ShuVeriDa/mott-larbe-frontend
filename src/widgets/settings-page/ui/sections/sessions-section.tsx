@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import {
 	useSessions,
 	useTerminateAllSessions,
@@ -106,7 +107,7 @@ export const SessionsSection = () => {
 						const isTerminating =
 							terminateOne.isPending && terminateOne.variables === s.id;
 
-												const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => handleTerminate(s.id);
+												const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => handleTerminate(s.id);
 return (
 							<div
 								key={s.id}

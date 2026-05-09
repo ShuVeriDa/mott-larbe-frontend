@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps, ReactNode } from 'react';
 import type {
 	LibraryProgressStatus,
 	LibrarySortOption,
@@ -44,12 +45,12 @@ export const LibraryFilterBar = () => {
 		setView,
 	} = useLibraryFilters();
 
-		const handleClick: NonNullable<React.ComponentProps<typeof Pill>["onClick"]> = () => setLevel("all");
-	const handleClick2: NonNullable<React.ComponentProps<typeof Pill>["onClick"]> = () => setLang("all");
-	const handleClick3: NonNullable<React.ComponentProps<typeof Pill>["onClick"]> = () => setStatus("all");
-	const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setSort(e.target.value as LibrarySortOption);
-	const handleClick4: NonNullable<React.ComponentProps<typeof ViewBtn>["onClick"]> = () => setView("grid");
-	const handleClick5: NonNullable<React.ComponentProps<typeof ViewBtn>["onClick"]> = () => setView("list");
+		const handleClick: NonNullable<ComponentProps<typeof Pill>["onClick"]> = () => setLevel("all");
+	const handleClick2: NonNullable<ComponentProps<typeof Pill>["onClick"]> = () => setLang("all");
+	const handleClick3: NonNullable<ComponentProps<typeof Pill>["onClick"]> = () => setStatus("all");
+	const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setSort(e.currentTarget.value as LibrarySortOption);
+	const handleClick4: NonNullable<ComponentProps<typeof ViewBtn>["onClick"]> = () => setView("grid");
+	const handleClick5: NonNullable<ComponentProps<typeof ViewBtn>["onClick"]> = () => setView("list");
 return (
 		<div className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-b border-bd-1 bg-surf px-5 py-2 [scrollbar-width:none] max-sm:px-3 max-sm:gap-1 [&::-webkit-scrollbar]:hidden">
 			<span className="shrink-0 text-[11px] font-medium text-t-3 max-sm:hidden">
@@ -69,7 +70,7 @@ return (
 			</Pill>
 
 			{CEFR_LEVELS.map(l => {
-			  const handleClick: NonNullable<React.ComponentProps<typeof Pill>["onClick"]> = () => setLevel(l);
+			  const handleClick: NonNullable<ComponentProps<typeof Pill>["onClick"]> = () => setLevel(l);
 			  return (
 				<Pill
 					key={l}
@@ -101,7 +102,7 @@ return (
 			</Pill>
 
 			{LANGUAGES.map(l => {
-			  const handleClick: NonNullable<React.ComponentProps<typeof Pill>["onClick"]> = () => setLang(l);
+			  const handleClick: NonNullable<ComponentProps<typeof Pill>["onClick"]> = () => setLang(l);
 			  return (
 				<Pill
 					key={l}
@@ -137,7 +138,7 @@ return (
 			</Pill>
 
 			{PROGRESS_STATUSES.map(s => {
-			  const handleClick: NonNullable<React.ComponentProps<typeof Pill>["onClick"]> = () => setStatus(s);
+			  const handleClick: NonNullable<ComponentProps<typeof Pill>["onClick"]> = () => setStatus(s);
 			  return (
 				<Pill
 					key={s}
@@ -198,7 +199,7 @@ const Pill = ({
 	onClick,
 	className,
 }: {
-	children: React.ReactNode;
+	children: ReactNode;
 	active: boolean;
 	onClick: () => void;
 	className: string;
@@ -226,7 +227,7 @@ const ViewBtn = ({
 	onClick,
 	"aria-label": ariaLabel,
 }: {
-	children: React.ReactNode;
+	children: ReactNode;
 	active: boolean;
 	onClick: () => void;
 	"aria-label": string;

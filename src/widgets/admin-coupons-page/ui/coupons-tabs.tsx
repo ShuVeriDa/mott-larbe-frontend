@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { CouponsTab } from "../model/use-admin-coupons-page";
@@ -24,7 +25,7 @@ export const CouponsTabs = ({ active, counts, onChange }: Props) => {
 		<div className="overflow-x-auto border-b border-bd-1 px-3.5 pb-0 pt-2.5 [&::-webkit-scrollbar]:h-0">
 			<div className="flex w-fit gap-0.5 rounded-[9px] border border-bd-1 bg-surf-2 p-[3px]">
 				{TABS.map(tab => {
-				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab);
+				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab);
 				  return (
 					<button
 						key={tab}

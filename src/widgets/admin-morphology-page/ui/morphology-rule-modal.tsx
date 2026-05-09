@@ -6,8 +6,7 @@ import type {
 	MorphRuleType,
 } from "@/entities/morph-rule";
 import { useI18n } from "@/shared/lib/i18n";
-import { useEffect, useState } from "react";
-
+import { ComponentProps, SyntheticEvent, useEffect, useState } from 'react';
 const TYPE_OPTIONS: MorphRuleType[] = [
 	"SUFFIX",
 	"ENDING",
@@ -71,7 +70,7 @@ export const MorphologyRuleModal = ({
 	const isEdit = !!rule;
 
 	const handleSubmit = (
-		e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
 	) => {
 		e.preventDefault();
 		onSubmit({
@@ -82,25 +81,25 @@ export const MorphologyRuleModal = ({
 		});
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, suffix: e.target.value }));
-	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, add: e.target.value }));
-	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, pos: e.target.value }));
-	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = e =>
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, suffix: e.currentTarget.value }));
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, add: e.currentTarget.value }));
+	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, pos: e.currentTarget.value }));
+	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = e =>
 									setForm(p => ({
 										...p,
-										type: e.target.value as MorphRuleType,
-										isRegex: e.target.value === "REGEX",
+										type: e.currentTarget.value as MorphRuleType,
+										isRegex: e.currentTarget.value === "REGEX",
 									}));
-	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = e =>
+	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = e =>
 									setForm(p => ({
 										...p,
-										priority: parseInt(e.target.value, 10) || 0,
+										priority: parseInt(e.currentTarget.value, 10) || 0,
 									}));
-	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = e =>
-								setForm(p => ({ ...p, description: e.target.value }));
-	const handleChange7: NonNullable<React.ComponentProps<"input">["onChange"]> = e =>
-								setForm(p => ({ ...p, isActive: e.target.checked }));
+	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+								setForm(p => ({ ...p, description: e.currentTarget.value }));
+	const handleChange7: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+								setForm(p => ({ ...p, isActive: e.currentTarget.checked }));
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] sm:p-4 max-sm:items-end max-sm:p-0"

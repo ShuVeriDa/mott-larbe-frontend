@@ -1,7 +1,5 @@
 "use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
-
+import { useEffect, useRef, useState } from 'react';
 export const useAudioPlayback = (url: string | null | undefined) => {
 	const audioRef = useRef<HTMLAudioElement | null>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -24,7 +22,7 @@ export const useAudioPlayback = (url: string | null | undefined) => {
 		};
 	}, [url]);
 
-	const play = useCallback(() => {
+	const play = () => {
 		const audio = audioRef.current;
 		if (!audio) return;
 		audio.currentTime = 0;
@@ -34,7 +32,7 @@ export const useAudioPlayback = (url: string | null | undefined) => {
 		} else {
 			setIsPlaying(true);
 		}
-	}, []);
+	};
 
 	return { play, isPlaying, isAvailable: Boolean(url) };
 };

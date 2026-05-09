@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { adminDashboardApi, adminDashboardKeys } from "@/entities/admin-dashboard";
 import { featureFlagApi } from "@/entities/feature-flag";

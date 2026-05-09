@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { RunScope, TokenizationStats } from "@/entities/token";
@@ -47,8 +46,8 @@ export const TokenizationRunModal = ({
 			},
 		];
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRun(scope);
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onRun(scope);
 return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"
@@ -83,7 +82,7 @@ return (
 					</p>
 					<div className="flex flex-col gap-2">
 						{options.map((opt) => {
-						  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = () => setScope(opt.value);
+						  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => setScope(opt.value);
 						  return (
 							<label
 								key={opt.value}

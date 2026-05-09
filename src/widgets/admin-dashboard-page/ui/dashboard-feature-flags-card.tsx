@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
@@ -12,7 +13,7 @@ interface FlagToggleProps {
 }
 
 const FlagToggle = ({ flag, onToggle }: FlagToggleProps) => {
-  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onToggle(flag.id, flag.isEnabled);
+  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onToggle(flag.id, flag.isEnabled);
   return (
 	<button
 		type="button"

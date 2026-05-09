@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { ComponentProps, ReactNode, useState } from 'react';
 import type { LibraryTextLanguage, LibraryTextListItem } from "@/entities/library-text";
 import { useLibraryTexts } from "@/entities/library-text";
 import type { CefrLevel } from "@/shared/types";
@@ -135,7 +135,7 @@ const LibraryCard = ({ item, lang }: LibraryCardProps) => {
 interface FilterButtonProps {
 	active: boolean;
 	onClick: () => void;
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
 const FilterButton = ({ active, onClick, children }: FilterButtonProps) => (
@@ -179,8 +179,8 @@ export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 		return `/${lang}/texts${qs ? `?${qs}` : ""}`;
 	})();
 
-		const handleClick: NonNullable<React.ComponentProps<typeof FilterButton>["onClick"]> = () => setFilterLang(undefined);
-	const handleClick2: NonNullable<React.ComponentProps<typeof FilterButton>["onClick"]> = () => setFilterLevel(undefined);
+		const handleClick: NonNullable<ComponentProps<typeof FilterButton>["onClick"]> = () => setFilterLang(undefined);
+	const handleClick2: NonNullable<ComponentProps<typeof FilterButton>["onClick"]> = () => setFilterLevel(undefined);
 return (
 		<section>
 			<div className="mb-2.5 flex items-center justify-between gap-2">
@@ -204,7 +204,7 @@ return (
 						{t("dashboard.library.langAll")}
 					</FilterButton>
 					{LANG_FILTERS.map((l) => {
-					  const handleClick: NonNullable<React.ComponentProps<typeof FilterButton>["onClick"]> = () =>
+					  const handleClick: NonNullable<ComponentProps<typeof FilterButton>["onClick"]> = () =>
 								setFilterLang(filterLang === l ? undefined : l);
 					  return (
 						<FilterButton
@@ -229,7 +229,7 @@ return (
 						{t("dashboard.library.levelAll")}
 					</FilterButton>
 					{LEVEL_FILTERS.map((lvl) => {
-					  const handleClick: NonNullable<React.ComponentProps<typeof FilterButton>["onClick"]> = () =>
+					  const handleClick: NonNullable<ComponentProps<typeof FilterButton>["onClick"]> = () =>
 								setFilterLevel(filterLevel === lvl ? undefined : lvl);
 					  return (
 						<FilterButton

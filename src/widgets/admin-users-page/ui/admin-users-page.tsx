@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useAdminUsersPage } from "../model/use-admin-users-page";
 import { AdminUsersTopbar } from "./admin-users-topbar";
 import { UsersStatsRow } from "./users-stats-row";
@@ -46,9 +47,9 @@ export const AdminUsersPage = () => {
 		mutations.bulkBlock.isPending ||
 		mutations.bulkResetRoles.isPending;
 
-		const handleFreeze: NonNullable<React.ComponentProps<typeof UsersBulkBar>["onFreeze"]> = () => mutations.bulkFreeze.mutate(selectedArray, { onSuccess: clearSelection });
-	const handleResetRoles: NonNullable<React.ComponentProps<typeof UsersBulkBar>["onResetRoles"]> = () => mutations.bulkResetRoles.mutate(selectedArray, { onSuccess: clearSelection });
-	const handleBlock: NonNullable<React.ComponentProps<typeof UsersBulkBar>["onBlock"]> = () => mutations.bulkBlock.mutate(selectedArray, { onSuccess: clearSelection });
+		const handleFreeze: NonNullable<ComponentProps<typeof UsersBulkBar>["onFreeze"]> = () => mutations.bulkFreeze.mutate(selectedArray, { onSuccess: clearSelection });
+	const handleResetRoles: NonNullable<ComponentProps<typeof UsersBulkBar>["onResetRoles"]> = () => mutations.bulkResetRoles.mutate(selectedArray, { onSuccess: clearSelection });
+	const handleBlock: NonNullable<ComponentProps<typeof UsersBulkBar>["onBlock"]> = () => mutations.bulkBlock.mutate(selectedArray, { onSuccess: clearSelection });
 return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<AdminUsersTopbar onExport={handleExport} />

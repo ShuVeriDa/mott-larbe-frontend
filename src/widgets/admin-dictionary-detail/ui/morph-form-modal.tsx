@@ -6,8 +6,7 @@ import type {
 	AdminDictMorphForm,
 } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
-import { useEffect, useRef, useState } from "react";
-
+import { ComponentProps, SyntheticEvent, useEffect, useRef, useState } from 'react';
 interface MorphFormModalProps {
 	isOpen: boolean;
 	editForm?: AdminDictMorphForm | null;
@@ -58,7 +57,7 @@ export const MorphFormModal = ({
 	}, [isOpen, editForm]);
 
 	const handleSubmit = (
-		e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
 	) => {
 		e.preventDefault();
 		if (!form.trim()) return;
@@ -76,12 +75,12 @@ export const MorphFormModal = ({
 	const selectCls =
 		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[12.5px] text-t-2 outline-none transition-colors focus:border-acc appearance-none cursor-pointer";
 
-		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setForm(e.target.value);
-	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e =>
-									setGramCase(e.target.value as AdminDictGramCase | "");
-	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e =>
-									setGramNumber(e.target.value as AdminDictGramNumber | "");
+		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e =>
+									setGramCase(e.currentTarget.value as AdminDictGramCase | "");
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e =>
+									setGramNumber(e.currentTarget.value as AdminDictGramNumber | "");
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"

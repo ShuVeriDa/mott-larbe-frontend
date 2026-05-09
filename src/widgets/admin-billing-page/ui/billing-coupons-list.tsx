@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminCoupon } from "@/entities/admin-billing";
 
@@ -65,7 +66,7 @@ export const BillingCouponsList = ({
 						const badgeClass =
 							STATUS_BADGE[coupon.computedStatus] ?? "bg-surf-3 text-t-2";
 
-												const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDelete(coupon.id);
+												const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onDelete(coupon.id);
 return (
 							<div
 								key={coupon.id}

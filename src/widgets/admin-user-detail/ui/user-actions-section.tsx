@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, ReactNode, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { adminUserApi } from "@/entities/admin-user";
 import type { AdminUserDetail } from "@/entities/admin-user";
@@ -36,16 +35,16 @@ export const UserActionsSection = ({ user, mutations, sessions, onManageSubscrip
 		}
 	};
 
-		const handleClick: NonNullable<React.ComponentProps<typeof ActionButton>["onClick"]> = () => sessions.logoutAll.mutate();
-	const handleClick2: NonNullable<React.ComponentProps<typeof ActionButton>["onClick"]> = () => setShowCoupon((v) => !v);
-	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setCouponInput(e.target.value);
-	const handleKeyDown: NonNullable<React.ComponentProps<"input">["onKeyDown"]> = (e) => e.key === "Enter" && handleCouponSubmit();
-	const handleClick3: NonNullable<React.ComponentProps<typeof ActionButton>["onClick"]> = () =>
+		const handleClick: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => sessions.logoutAll.mutate();
+	const handleClick2: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => setShowCoupon((v) => !v);
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setCouponInput(e.currentTarget.value);
+	const handleKeyDown: NonNullable<ComponentProps<"input">["onKeyDown"]> = (e) => e.key === "Enter" && handleCouponSubmit();
+	const handleClick3: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () =>
 						isFrozen
 							? mutations.unfreeze.mutate(user.id)
 							: mutations.freeze.mutate(user.id);
-	const handleClick4: NonNullable<React.ComponentProps<typeof ActionButton>["onClick"]> = () => mutations.block.mutate(user.id);
-	const handleClick5: NonNullable<React.ComponentProps<typeof ActionButton>["onClick"]> = () => mutations.remove.mutate(user.id);
+	const handleClick4: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => mutations.block.mutate(user.id);
+	const handleClick5: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => mutations.remove.mutate(user.id);
 return (
 		<div className="flex flex-col gap-1.5 px-4 py-3">
 			<div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
@@ -126,7 +125,7 @@ return (
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 interface ActionButtonProps {
-	icon: React.ReactNode;
+	icon: ReactNode;
 	label: string;
 	variant?: "default" | "amber" | "danger";
 	onClick?: () => void;

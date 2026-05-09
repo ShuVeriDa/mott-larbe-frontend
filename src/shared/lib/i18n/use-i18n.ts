@@ -1,6 +1,5 @@
 "use client";
-
-import { useContext } from "react";
+import { useContext } from 'react';
 import { I18nContext } from "./i18n-context";
 
 const resolvePath = (obj: unknown, path: string): unknown => {

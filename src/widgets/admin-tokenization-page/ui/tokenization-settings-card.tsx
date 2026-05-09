@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { TokenizationSettings, UpdateTokenizationSettingsDto } from "@/entities/token";
@@ -75,7 +76,7 @@ export const TokenizationSettingsCard = ({
 
 			<div className="flex flex-col gap-2.5 px-3.5 py-3">
 				{SETTINGS.map(({ key, labelKey, subKey }) => {
-				  const handleChange: NonNullable<React.ComponentProps<typeof Toggle>["onChange"]> = () => onToggle(key);
+				  const handleChange: NonNullable<ComponentProps<typeof Toggle>["onChange"]> = () => onToggle(key);
 				  return (
 					<div key={key} className="flex items-start justify-between gap-2">
 						<div>

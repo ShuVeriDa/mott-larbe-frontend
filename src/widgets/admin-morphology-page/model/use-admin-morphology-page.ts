@@ -1,6 +1,5 @@
 "use client";
-
-import { useCallback, useState } from "react";
+import { useState } from 'react';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   morphRuleApi,
@@ -102,89 +101,77 @@ export const useAdminMorphologyPage = () => {
     items.length > 0 && items.every((r) => selectedIds.has(r.id));
   const someSelected = items.some((r) => selectedIds.has(r.id)) && !allSelected;
 
-  const handleStatusChange = useCallback(
-    (s: MorphRuleStatus) => {
-      setStatus(s);
-      setPage(1);
-      setSelectedIds(new Set());
-    },
-    [],
-  );
+  const handleStatusChange = (s: MorphRuleStatus) => {
+    setStatus(s);
+    setPage(1);
+    setSelectedIds(new Set());
+  };
 
-  const handleSearchChange = useCallback((v: string) => {
+  const handleSearchChange = (v: string) => {
     setSearch(v);
     setPage(1);
-  }, []);
+  };
 
-  const handlePosChange = useCallback((v: string) => {
+  const handlePosChange = (v: string) => {
     setPos(v);
     setPage(1);
-  }, []);
+  };
 
-  const handleTypeChange = useCallback((v: MorphRuleType | "") => {
+  const handleTypeChange = (v: MorphRuleType | "") => {
     setType(v);
     setPage(1);
-  }, []);
+  };
 
-  const toggleSelectId = useCallback((id: string) => {
+  const toggleSelectId = (id: string) => {
     setSelectedIds((prev) => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
       return next;
     });
-  }, []);
+  };
 
-  const toggleSelectAll = useCallback(() => {
+  const toggleSelectAll = () => {
     setSelectedIds((prev) => {
       const allIds = items.map((r) => r.id);
       const allSel = allIds.every((id) => prev.has(id));
       if (allSel) return new Set();
       return new Set(allIds);
     });
-  }, [items]);
+  };
 
-  const clearSelection = useCallback(() => setSelectedIds(new Set()), []);
+  const clearSelection = () => setSelectedIds(new Set());
 
-  const openAddModal = useCallback(() => {
+  const openAddModal = () => {
     setEditRule(null);
     setRuleModalOpen(true);
-  }, []);
+  };
 
-  const openEditModal = useCallback((rule: MorphRule) => {
+  const openEditModal = (rule: MorphRule) => {
     setEditRule(rule);
     setRuleModalOpen(true);
-  }, []);
+  };
 
-  const closeRuleModal = useCallback(() => {
+  const closeRuleModal = () => {
     setRuleModalOpen(false);
     setEditRule(null);
-  }, []);
+  };
 
-  const handleRuleSubmit = useCallback(
-    (dto: CreateMorphRuleDto) => {
-      if (editRule) {
-        updateMutation.mutate(
-          { id: editRule.id, dto },
-          { onSuccess: closeRuleModal },
-        );
-      } else {
-        createMutation.mutate(dto, { onSuccess: closeRuleModal });
-      }
-    },
-    [editRule, updateMutation, createMutation, closeRuleModal],
-  );
+  const handleRuleSubmit = (dto: CreateMorphRuleDto) => {
+    if (editRule) {
+      updateMutation.mutate(
+        { id: editRule.id, dto },
+        { onSuccess: closeRuleModal },
+      );
+    } else {
+      createMutation.mutate(dto, { onSuccess: closeRuleModal });
+    }
+  };
 
-  const handleToggleActive = useCallback(
-    (rule: MorphRule) => {
-      updateMutation.mutate({ id: rule.id, dto: { isActive: !rule.isActive } });
-    },
-    [updateMutation],
-  );
+  const handleToggleActive = (rule: MorphRule) => {
+    updateMutation.mutate({ id: rule.id, dto: { isActive: !rule.isActive } });
+  };
 
-  const handleDelete = useCallback(
-    (id: string) => deleteMutation.mutate(id),
-    [deleteMutation],
-  );
+  const handleDelete = (id: string) => deleteMutation.mutate(id);
 
   return {
     status,

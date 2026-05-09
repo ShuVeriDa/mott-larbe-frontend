@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import type { useCouponMutations } from "@/entities/admin-coupon";
 import { useI18n } from "@/shared/lib/i18n";
 
@@ -24,8 +25,8 @@ export const DeleteCouponModal = ({
 
 	if (!couponId) return null;
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDeactivate(couponId);
-	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDelete(couponId);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onDeactivate(couponId);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onDelete(couponId);
 return (
 		<>
 			{/* Header */}

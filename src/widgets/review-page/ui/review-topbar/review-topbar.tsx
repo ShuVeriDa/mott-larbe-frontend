@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
@@ -21,8 +22,8 @@ export const ReviewTopbar = ({
 }: ReviewTopbarProps) => {
 	const { t } = useI18n();
 
-		const handleClick: NonNullable<React.ComponentProps<typeof TabButton>["onClick"]> = () => onChange("sm2");
-	const handleClick2: NonNullable<React.ComponentProps<typeof TabButton>["onClick"]> = () => onChange("deck");
+		const handleClick: NonNullable<ComponentProps<typeof TabButton>["onClick"]> = () => onChange("sm2");
+	const handleClick2: NonNullable<ComponentProps<typeof TabButton>["onClick"]> = () => onChange("deck");
 return (
 		<header className="flex shrink-0 items-center gap-2.5 border-hairline border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-3.5 max-md:py-2.5">
 			<svg

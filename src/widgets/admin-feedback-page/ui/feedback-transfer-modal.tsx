@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, MouseEvent, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackAssignee } from "@/entities/feedback";
 
@@ -48,11 +47,11 @@ export const FeedbackTransferModal = ({
 		setNote("");
 	};
 
-	const handleBackdrop = (e: React.MouseEvent) => {
-		if (e.target === e.currentTarget) onClose();
+	const handleBackdrop = (e: MouseEvent) => {
+		if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
 	};
 
-		const handleChange: NonNullable<React.ComponentProps<"textarea">["onChange"]> = (e) => setNote(e.target.value);
+		const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = (e) => setNote(e.currentTarget.value);
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 px-5"
@@ -92,7 +91,7 @@ return (
 				) : (
 					<div className="mb-3 flex flex-col gap-1.5">
 						{candidates.map((a) => {
-						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setSelectedId(a.id);
+						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setSelectedId(a.id);
 						  return (
 							<button
 								key={a.id}

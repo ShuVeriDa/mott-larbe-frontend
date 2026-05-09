@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 
@@ -22,7 +23,7 @@ export const ProfileTabs = ({ active, onChange }: ProfileTabsProps) => {
 	return (
 		<div className="flex gap-px rounded-[9px] bg-surf-3 p-[3px] w-fit max-sm:w-full">
 			{tabs.map(({ id, label }) => {
-			  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(id);
+			  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(id);
 			  return (
 				<button
 					key={id}

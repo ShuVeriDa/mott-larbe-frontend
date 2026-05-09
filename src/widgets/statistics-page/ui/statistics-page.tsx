@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { ComponentProps, useState } from 'react';
 import { useStatistics, type StatsPeriod } from "@/entities/statistics";
 import { PeriodTabs } from "@/features/stats-period-tabs";
 import { useI18n } from "@/shared/lib/i18n";
@@ -29,7 +28,7 @@ export const StatisticsPage = () => {
 		activityLimit: 15,
 	});
 
-		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => refetch();
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => refetch();
 return (
 		<>
 			<header className="flex shrink-0 items-center gap-3 border-hairline border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-md:flex-wrap max-md:px-4 max-md:py-2.5">

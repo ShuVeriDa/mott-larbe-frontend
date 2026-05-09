@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminUserListItem, RoleName } from "@/entities/admin-user";
 import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
@@ -70,7 +71,7 @@ export const UsersMobileList = ({
 	return (
 		<div className="hidden max-sm:block">
 			{users.map((user) => {
-			  const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+			  const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
 			  return (
 				<div
 					key={user.id}

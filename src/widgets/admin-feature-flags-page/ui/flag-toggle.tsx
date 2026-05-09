@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 
 interface FlagToggleProps {
@@ -9,7 +10,7 @@ interface FlagToggleProps {
 }
 
 export const FlagToggle = ({ enabled, disabled, onChange }: FlagToggleProps) => {
-  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => onChange(e.target.checked);
+  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onChange(e.currentTarget.checked);
   return (
 	<label
 		className={cn(

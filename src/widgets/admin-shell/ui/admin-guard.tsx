@@ -4,8 +4,7 @@ import { useCurrentUser } from "@/entities/user";
 import { hasAnyPermission } from "@/shared/lib/permissions";
 import { useI18n } from "@/shared/lib/i18n";
 import { useRouter } from "next/navigation";
-import { type ReactNode, useEffect } from "react";
-
+import { type ReactNode, useEffect } from 'react';
 const ADMIN_PERMISSIONS = [
 	"CAN_MANAGE_USERS",
 	"CAN_EDIT_TEXTS",
