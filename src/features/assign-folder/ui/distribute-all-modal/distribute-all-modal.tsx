@@ -1,13 +1,9 @@
 "use client";
-import { ComponentProps, useState } from 'react';
-import { useQuery } from "@tanstack/react-query";
 import { cn } from "@/shared/lib/cn";
-import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
-import { dictionaryApi, dictionaryKeys } from "@/entities/dictionary";
 import { FolderIcon, type Folder } from "@/entities/folder";
-import { useAssignEntriesToFolder } from "../../model";
+import { useDistributeAllModal } from "../../model";
 
 export interface DistributeAllModalProps {
 	open: boolean;
@@ -22,34 +18,18 @@ export const DistributeAllModal = ({
 	folders,
 	uncatCount,
 }: DistributeAllModalProps) => {
-	const { t } = useI18n();
-	const [selectedId, setSelectedId] = useState<string | null>(null);
-
-	const { data: uncatData, isLoading: loadingEntries } = useQuery({
-		queryKey: dictionaryKeys.list({ noFolder: true, limit: 500 }),
-		queryFn: () => dictionaryApi.list({ noFolder: true, limit: 500 }),
-		enabled: open,
+	const {
+		t,
+		selectedId,
+		isPending,
+		loadingEntries,
+		handleClose,
+		handleConfirm,
+		handleFolderSelectClick,
+	} = useDistributeAllModal({
+		onClose,
+		open,
 	});
-
-	const { mutate: assign, isPending } = useAssignEntriesToFolder();
-
-	const handleClose = () => {
-		setSelectedId(null);
-		onClose();
-	};
-
-	const handleConfirm = () => {
-		if (!selectedId || !uncatData) return;
-		assign(
-			{
-				assignments: uncatData.items.map((e) => ({
-					id: e.id,
-					folderId: selectedId,
-				})),
-			},
-			{ onSuccess: handleClose },
-		);
-	};
 
 	return (
 		<Modal
@@ -65,12 +45,12 @@ export const DistributeAllModal = ({
 
 			<ul className="mb-4 max-h-[240px] overflow-y-auto rounded-card border-hairline border-bd-1">
 				{folders.map((f) => {
-				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setSelectedId(f.id);
 				  return (
 					<li key={f.id}>
 						<button
 							type="button"
-							onClick={handleClick}
+							data-folder-id={f.id}
+							onClick={handleFolderSelectClick}
 							className={cn(
 								"flex w-full items-center gap-2.5 px-3 py-2.5 text-left",
 								"text-[13px] transition-colors",

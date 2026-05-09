@@ -1,11 +1,7 @@
 "use client";
 
-import { ComponentProps } from 'react';
 import { Select } from "@/shared/ui/select";
-import { useI18n } from "@/shared/lib/i18n";
-import { useFolders } from "@/entities/folder";
-import { useUsage } from "@/entities/subscription";
-import { useUpdateWord } from "../../model";
+import { useFolderSelect } from "../../model";
 
 export interface FolderSelectProps {
 	wordId: string;
@@ -13,26 +9,21 @@ export interface FolderSelectProps {
 }
 
 export const FolderSelect = ({ wordId, currentFolderId }: FolderSelectProps) => {
-	const { t } = useI18n();
-	const { data: folders } = useFolders();
-	const { data: usage } = useUsage();
-	const { mutate, isPending } = useUpdateWord();
-	const hasFolders = usage?.limits.dictionaryFolders ?? true;
+	const {
+		t,
+		folders,
+		isPending,
+		hasFolders,
+		handleSelectClick,
+		handleSelectChange,
+	} = useFolderSelect({ wordId });
 
-		const handleClick: NonNullable<ComponentProps<typeof Select>["onClick"]> = (e) => e.stopPropagation();
-	const handleChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => {
-				const value = e.currentTarget.value;
-				mutate({
-					id: wordId,
-					body: { folderId: value === "" ? null : value },
-				});
-			};
-return (
+	return (
 		<Select
 			value={currentFolderId ?? ""}
 			disabled={isPending || !hasFolders}
-			onClick={handleClick}
-			onChange={handleChange}
+			onClick={handleSelectClick}
+			onChange={handleSelectChange}
 			aria-label={t("vocabulary.card.folder")}
 		>
 			<option value="">{t("vocabulary.card.noFolder")}</option>

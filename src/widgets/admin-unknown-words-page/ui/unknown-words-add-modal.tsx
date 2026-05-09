@@ -37,7 +37,10 @@ const LemmaAutocomplete = ({
 	const { data, isFetching } = useLemmaSearch(q);
 
 	useEffect(() => {
-		if (!value) setQ("");
+		if (!value) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- clear local query when external value resets
+			setQ("");
+		}
 	}, [value]);
 
 	useEffect(() => {
@@ -122,6 +125,7 @@ export const UnknownWordsAddModal = ({
 
 	useEffect(() => {
 		if (state?.open) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- initialize modal form from selected unknown word
 			setAction(state.initialAction ?? "new");
 			setHeadword(state.word);
 			setPartOfSpeech("");

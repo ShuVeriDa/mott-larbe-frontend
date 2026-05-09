@@ -24,7 +24,6 @@ export const AdminTextsPage = () => {
 		page,
 		selectedIds,
 		allSelected,
-		someSelected,
 		importOpen,
 		data,
 		stats,

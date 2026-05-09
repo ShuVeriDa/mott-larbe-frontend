@@ -14,7 +14,7 @@ export const UserFeatureFlagsCard = ({ featureFlags }: UserFeatureFlagsCardProps
 	const { query, setOverride } = featureFlags;
 	const flags = query.data ?? [];
 
-	const handleToggle = (flagId: string, currentEffective: boolean, hasOverride: boolean) => {
+	const handleToggle = (flagId: string, currentEffective: boolean) => {
 		const newValue = !currentEffective;
 		setOverride.mutate({ flagId, value: newValue });
 	};
@@ -47,7 +47,7 @@ export const UserFeatureFlagsCard = ({ featureFlags }: UserFeatureFlagsCardProps
 					{flags.map((flag) => {
 						const isOn = flag.effectiveValue;
 						const hasOverride = flag.userOverride !== null;
-												const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleToggle(flag.flagId, isOn, hasOverride);
+												const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleToggle(flag.flagId, isOn);
 return (
 							<div
 								key={flag.flagId}

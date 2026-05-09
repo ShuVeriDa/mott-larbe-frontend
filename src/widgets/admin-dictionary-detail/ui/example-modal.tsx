@@ -25,6 +25,7 @@ export const ExampleModal = ({
 
 	useEffect(() => {
 		if (isOpen) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate modal from edited example/open state
 			setText(editExample?.text ?? "");
 			setTranslation(editExample?.translation ?? "");
 			setTimeout(() => textareaRef.current?.focus(), 50);

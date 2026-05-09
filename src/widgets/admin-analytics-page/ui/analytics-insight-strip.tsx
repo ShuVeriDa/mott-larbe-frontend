@@ -1,6 +1,5 @@
 "use client";
 
-import { useI18n } from "@/shared/lib/i18n";
 import type { AnalyticsInsight } from "@/entities/admin-analytics";
 
 interface AnalyticsInsightStripProps {
@@ -12,8 +11,6 @@ export const AnalyticsInsightStrip = ({
 	insight,
 	isLoading,
 }: AnalyticsInsightStripProps) => {
-	const { t } = useI18n();
-
 	if (isLoading) {
 		return (
 			<div className="mb-3.5 h-10 animate-pulse rounded-[9px] bg-surf-2" />

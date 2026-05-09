@@ -1,5 +1,5 @@
 "use client";
-import { ComponentProps, useEffect, useState } from 'react';
+import { useFolderForm } from "../../model";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { cn } from "@/shared/lib/cn";
 import {
@@ -51,21 +51,15 @@ export const FolderForm = ({
 	labels,
 	autoFocusName,
 }: FolderFormProps) => {
-	const [internal, setInternal] = useState(value);
+	const {
+		internal,
+		handleNameChange,
+		handleDescriptionChange,
+		handleIconClick,
+		handleColorClick,
+	} = useFolderForm({ value, onChange });
 
-	useEffect(() => {
-		setInternal(value);
-	}, [value]);
-
-	const update = (patch: Partial<FolderFormValue>) => {
-		const next = { ...internal, ...patch };
-		setInternal(next);
-		onChange(next);
-	};
-
-		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => update({ name: e.currentTarget.value });
-	const handleChange2: NonNullable<ComponentProps<"textarea">["onChange"]> = (e) => update({ description: e.currentTarget.value });
-return (
+	return (
 		<div className="flex flex-col gap-3">
 			<div>
 				<InputLabel htmlFor="folder-form-name">{labels.nameLabel}</InputLabel>
@@ -73,7 +67,7 @@ return (
 					id="folder-form-name"
 					autoFocus={autoFocusName}
 					value={internal.name}
-					onChange={handleChange}
+					onChange={handleNameChange}
 					placeholder={labels.namePlaceholder}
 					maxLength={64}
 					required
@@ -87,7 +81,7 @@ return (
 				<textarea
 					id="folder-form-desc"
 					value={internal.description}
-					onChange={handleChange2}
+					onChange={handleDescriptionChange}
 					placeholder={labels.descriptionPlaceholder}
 					maxLength={256}
 					rows={3}
@@ -107,12 +101,12 @@ return (
 				</div>
 				<div className="flex flex-wrap gap-1.5">
 					{FOLDER_ICON_KEYS.map((iconKey) => {
-					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => update({ icon: iconKey });
 					  return (
 						<button
 							key={iconKey}
 							type="button"
-							onClick={handleClick}
+							data-icon={iconKey}
+							onClick={handleIconClick}
 							aria-pressed={internal.icon === iconKey}
 							className={cn(
 								"flex size-9 items-center justify-center rounded-[8px]",
@@ -136,12 +130,12 @@ return (
 				<div className="flex flex-wrap gap-[7px]">
 					{FOLDER_COLORS.map((c) => {
 						const selected = internal.color === c;
-												const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => update({ color: c });
 return (
 							<button
 								key={c}
 								type="button"
-								onClick={handleClick}
+								data-color={c}
+								onClick={handleColorClick}
 								aria-label={c}
 								aria-pressed={selected}
 								className={cn(

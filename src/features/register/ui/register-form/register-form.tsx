@@ -2,13 +2,10 @@
 
 import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ComponentProps, useState } from "react";
-import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
-import { CEFR_LEVELS, type CefrLevel } from "@/shared/types/cefr";
+import { CEFR_LEVELS } from "@/shared/types/cefr";
 import { Typography } from "@/shared/ui/typography";
-import { useRegister } from "../../model";
+import { useRegisterForm } from "../../model";
 import { PasswordStrengthMeter } from "../password-strength-meter";
 
 interface RegisterFormProps {
@@ -17,78 +14,36 @@ interface RegisterFormProps {
 	privacyHref: string;
 }
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-interface RegisterErrors {
-	name?: string;
-	surname?: string;
-	username?: string;
-	email?: string;
-	password?: string;
-	password2?: string;
-}
-
 export const RegisterForm = ({
 	successHref,
 	termsHref,
 	privacyHref,
 }: RegisterFormProps) => {
-	const { t } = useI18n();
-	const router = useRouter();
-	const { mutateAsync, isPending, error, reset } = useRegister();
+	const {
+		t,
+		isPending,
+		error,
+		name,
+		surname,
+		username,
+		email,
+		password,
+		password2,
+		level,
+		showPw,
+		errors,
+		handleSubmit,
+		handleNameChange,
+		handleSurnameChange,
+		handleUsernameChange,
+		handleEmailChange,
+		handlePasswordChange,
+		handleTogglePasswordVisibility,
+		handlePasswordConfirmChange,
+		handleLevelClick,
+	} = useRegisterForm({ successHref });
 
-	const [name, setName] = useState("");
-	const [surname, setSurname] = useState("");
-	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [password2, setPassword2] = useState("");
-	const [level, setLevel] = useState<CefrLevel>("A2");
-	const [showPw, setShowPw] = useState(false);
-	const [errors, setErrors] = useState<RegisterErrors>({});
-
-	const validate = () => {
-		const next: RegisterErrors = {};
-		if (!name.trim() || name.trim().length < 2)
-			next.name = t("auth.errors.name");
-		if (!surname.trim() || surname.trim().length < 2)
-			next.surname = t("auth.errors.surname");
-		if (!username.trim() || username.trim().length < 2 || username.trim().length > 16)
-			next.username = t("auth.errors.username");
-		if (!email || !EMAIL_RE.test(email)) next.email = t("auth.errors.email");
-		if (!password || password.length < 8)
-			next.password = t("auth.errors.password");
-		if (password !== password2) next.password2 = t("auth.errors.passwordMatch");
-		setErrors(next);
-		return Object.keys(next).length === 0;
-	};
-
-	const handleSubmit = async () => {
-		reset();
-		if (!validate()) return;
-		try {
-			await mutateAsync({
-				email: email.trim(),
-				password,
-				username: username.trim(),
-				name: name.trim(),
-				surname: surname.trim(),
-			});
-			router.push(successHref);
-			router.refresh();
-		} catch {
-			// surfaced via mutation state
-		}
-	};
-
-		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setName(e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setSurname(e.currentTarget.value);
-	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setUsername(e.currentTarget.value);
-	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setEmail(e.currentTarget.value);
-	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setPassword(e.currentTarget.value);
-	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowPw((v) => !v);
-	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setPassword2(e.currentTarget.value);
-return (
+	return (
 		<form action={handleSubmit} noValidate autoComplete="on">
 			{error ? (
 				<div
@@ -118,7 +73,7 @@ return (
 						required
 						placeholder={t("auth.placeholders.name")}
 						value={name}
-						onChange={handleChange}
+						onChange={handleNameChange}
 						className={cn(
 							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 							errors.name && "border-red",
@@ -147,7 +102,7 @@ return (
 						required
 						placeholder={t("auth.placeholders.surname")}
 						value={surname}
-						onChange={handleChange2}
+						onChange={handleSurnameChange}
 						className={cn(
 							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 							errors.surname && "border-red",
@@ -178,7 +133,7 @@ return (
 					required
 					placeholder={t("auth.placeholders.username")}
 					value={username}
-					onChange={handleChange3}
+					onChange={handleUsernameChange}
 					className={cn(
 						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 						errors.username && "border-red",
@@ -209,7 +164,7 @@ return (
 					required
 					placeholder="you@example.com"
 					value={email}
-					onChange={handleChange4}
+					onChange={handleEmailChange}
 					className={cn(
 						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 						errors.email && "border-red",
@@ -240,7 +195,7 @@ return (
 						required
 						placeholder="••••••••••"
 						value={password}
-						onChange={handleChange5}
+						onChange={handlePasswordChange}
 						className={cn(
 							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 pr-11 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 							errors.password && "border-red",
@@ -250,7 +205,7 @@ return (
 					<button
 						type="button"
 						tabIndex={-1}
-						onClick={handleClick}
+						onClick={handleTogglePasswordVisibility}
 						aria-label={t(
 							showPw ? "auth.password.hide" : "auth.password.show",
 						)}
@@ -287,7 +242,7 @@ return (
 					required
 					placeholder="••••••••••"
 					value={password2}
-					onChange={handleChange6}
+					onChange={handlePasswordConfirmChange}
 					className={cn(
 						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 						errors.password2 && "border-red",
@@ -308,12 +263,12 @@ return (
 				</Typography>
 				<div className="grid grid-cols-3 gap-2">
 					{CEFR_LEVELS.map((cefrLevel) => {
-					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setLevel(cefrLevel);
 					  return (
 						<button
 							key={cefrLevel}
 							type="button"
-							onClick={handleClick}
+							data-level={cefrLevel}
+							onClick={handleLevelClick}
 							className={cn(
 								"h-9 rounded-[9px] border-[0.5px] text-[12.5px] font-semibold transition-colors",
 								level === cefrLevel

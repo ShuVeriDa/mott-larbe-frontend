@@ -1,8 +1,8 @@
 "use client";
-import { ComponentProps, type ReactNode, useEffect, useRef } from 'react';
+import { type ReactNode } from "react";
 import { cn } from "@/shared/lib/cn";
-import { useI18n } from "@/shared/lib/i18n";
 import { FolderIcon, type Folder } from "@/entities/folder";
+import { useFolderPickerPopover } from "../../model";
 
 export interface FolderPickerPopoverProps {
 	open: boolean;
@@ -20,24 +20,11 @@ export const FolderPickerPopover = ({
 	onPick,
 	className,
 }: FolderPickerPopoverProps) => {
-	const { t } = useI18n();
-	const ref = useRef<HTMLDivElement | null>(null);
-
-	useEffect(() => {
-		if (!open) return;
-		const onDocClick = (e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node /* intentional: outside-click target */)) onClose();
-		};
-		const onKey = (e: KeyboardEvent) => {
-			if (e.key === "Escape") onClose();
-		};
-		document.addEventListener("mousedown", onDocClick);
-		document.addEventListener("keydown", onKey);
-		return () => {
-			document.removeEventListener("mousedown", onDocClick);
-			document.removeEventListener("keydown", onKey);
-		};
-	}, [open, onClose]);
+	const { t, ref, handleFolderPickClick } = useFolderPickerPopover({
+		open,
+		onClose,
+		onPick,
+	});
 
 	if (!open) return null;
 
@@ -61,12 +48,12 @@ export const FolderPickerPopover = ({
 			) : (
 				<ul className="max-h-[240px] overflow-y-auto py-1">
 					{folders.map((f) => {
-					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onPick(f.id);
 					  return (
 						<li key={f.id}>
 							<button
 								type="button"
-								onClick={handleClick}
+								data-folder-id={f.id}
+								onClick={handleFolderPickClick}
 								className={cn(
 									"flex w-full items-center gap-2 px-3 py-2",
 									"text-left text-[13px] text-t-2",

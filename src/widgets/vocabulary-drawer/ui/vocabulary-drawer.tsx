@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { createPortal } from "react-dom";
+import { useDictionaryStats } from "@/entities/dictionary";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { useMounted } from "@/shared/lib/mounted";
 import { Typography } from "@/shared/ui/typography";
-import { useDictionaryStats } from "@/entities/dictionary";
 import { FoldersList, StatsList } from "@/widgets/vocabulary-sidebar";
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
 
 export interface VocabularyDrawerProps {
 	open: boolean;
@@ -20,11 +21,7 @@ export const VocabularyDrawer = ({
 }: VocabularyDrawerProps) => {
 	const { t } = useI18n();
 	const { data: stats } = useDictionaryStats();
-	const [mounted, setMounted] = useState(false);
-
-	useEffect(() => {
-		setMounted(true);
-	}, []);
+	const mounted = useMounted();
 
 	useEffect(() => {
 		if (!open) return;
@@ -43,7 +40,7 @@ export const VocabularyDrawer = ({
 				aria-hidden="true"
 				onClick={onClose}
 				className={cn(
-					"fixed inset-0 z-[150] bg-black/30 backdrop-blur-[1px] transition-opacity",
+					"fixed inset-0 z-150 bg-black/30 backdrop-blur-[1px] transition-opacity",
 					open ? "opacity-100" : "pointer-events-none opacity-0",
 				)}
 			/>
@@ -52,8 +49,8 @@ export const VocabularyDrawer = ({
 				aria-modal="true"
 				aria-label={t("vocabulary.filtersAndFolders")}
 				className={cn(
-					"fixed inset-x-0 bottom-0 z-[160] flex max-h-[80vh] flex-col rounded-t-2xl bg-surf",
-					"transition-transform duration-300 [transition-timing-function:cubic-bezier(.32,.72,0,1)]",
+					"fixed inset-x-0 bottom-0 z-160 flex max-h-[80vh] flex-col rounded-t-2xl bg-surf",
+					"transition-transform duration-300 ease-[cubic-bezier(.32,.72,0,1)]",
 					"pb-[env(safe-area-inset-bottom)]",
 					open ? "translate-y-0" : "translate-y-full",
 				)}

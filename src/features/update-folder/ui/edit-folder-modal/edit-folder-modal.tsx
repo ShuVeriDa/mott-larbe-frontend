@@ -1,17 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
-import { useI18n } from "@/shared/lib/i18n";
 import {
 	FolderForm,
-	buildInitialFolderForm,
-	isFolderIconKey,
 	type Folder,
-	type FolderFormValue,
-	type FolderIconKey,
 } from "@/entities/folder";
-import { useUpdateFolder } from "../../model";
+import { useEditFolderModal } from "../../model";
 
 export interface EditFolderModalProps {
 	open: boolean;
@@ -24,50 +18,13 @@ export const EditFolderModal = ({
 	folder,
 	onClose,
 }: EditFolderModalProps) => {
-	const { t } = useI18n();
-	const { mutateAsync, isPending } = useUpdateFolder();
-	const [value, setValue] = useState<FolderFormValue>(() =>
-		buildInitialFolderForm(),
-	);
-	const [error, setError] = useState<string | null>(null);
-
-	useEffect(() => {
-		if (!folder) return;
-		const icon: FolderIconKey = isFolderIconKey(folder.icon)
-			? folder.icon
-			: "book";
-		setValue({
-			name: folder.name,
-			description: folder.description ?? "",
-			color: folder.color ?? buildInitialFolderForm().color,
-			icon,
+	const { t, value, setValue, error, isPending, handleSubmit } =
+		useEditFolderModal({
+			folder,
+			onClose,
 		});
-		setError(null);
-	}, [folder]);
 
 	if (!folder) return null;
-
-	const handleSubmit = async () => {
-		const trimmedName = value.name.trim();
-		if (!trimmedName) {
-			setError(t("vocabulary.folderModal.errors.nameRequired"));
-			return;
-		}
-		try {
-			await mutateAsync({
-				id: folder.id,
-				body: {
-					name: trimmedName,
-					description: value.description.trim() || null,
-					color: value.color,
-					icon: value.icon,
-				},
-			});
-			onClose();
-		} catch {
-			setError(t("vocabulary.folderModal.errors.saveFailed"));
-		}
-	};
 
 	return (
 		<Modal

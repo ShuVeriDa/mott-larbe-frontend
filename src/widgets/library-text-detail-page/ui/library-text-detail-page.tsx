@@ -1,15 +1,7 @@
 "use client";
-import { ComponentProps, useState } from 'react';
+import { ComponentProps } from "react";
 import Link from "next/link";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useI18n } from "@/shared/lib/i18n";
-import {
-	libraryTextApi,
-	libraryTextKeys,
-	useLibraryTextDetail,
-	useLibraryTextRelated,
-} from "@/entities/library-text";
-import type { LibraryTextDetail } from "@/entities/library-text";
+import { useLibraryTextDetailPage } from "../model";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -31,60 +23,33 @@ interface LibraryTextDetailPageProps {
 }
 
 export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
-	const { t, lang } = useI18n();
-	const qc = useQueryClient();
-
-	const detail = useLibraryTextDetail(id);
-	const related = useLibraryTextRelated(id);
-
-	const [copied, setCopied] = useState(false);
-	const [reportOpen, setReportOpen] = useState(false);
-
-	const bookmarkMutation = useMutation({
-		mutationFn: () => libraryTextApi.toggleBookmark(id),
-		onMutate: async () => {
-			await qc.cancelQueries({ queryKey: libraryTextKeys.detail(id) });
-			const prev = qc.getQueryData<LibraryTextDetail>(libraryTextKeys.detail(id));
-			qc.setQueryData<LibraryTextDetail>(libraryTextKeys.detail(id), (old) =>
-				old ? { ...old, isFavorite: !old.isFavorite } : old,
-			);
-			return { prev };
-		},
-		onError: (_err, _vars, ctx) => {
-			if (ctx?.prev) {
-				qc.setQueryData(libraryTextKeys.detail(id), ctx.prev);
-			}
-		},
-		onSettled: () => {
-			qc.invalidateQueries({ queryKey: libraryTextKeys.detail(id) });
-		},
-	});
-
-	const handleShare = () => {
-		const url = window.location.href;
-		if (typeof navigator.share === "function") {
-			navigator.share({ url }).catch(() => {});
-		} else {
-			navigator.clipboard
-				.writeText(url)
-				.then(() => {
-					setCopied(true);
-					setTimeout(() => setCopied(false), 1800);
-				})
-				.catch(() => {});
-		}
-	};
+	const {
+		t,
+		lang,
+		detail,
+		related,
+		copied,
+		reportOpen,
+		setReportOpen,
+		bookmarkMutation,
+		handleShare,
+		handleRetry,
+		handleToggleBookmark,
+		handleOpenReport,
+	} = useLibraryTextDetailPage(id);
 
 	if (detail.isPending) return <DetailSkeleton />;
 
 	if (detail.isError) {
-				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => detail.refetch();
-return (
+		const handleRetryClick: NonNullable<
+			ComponentProps<"button">["onClick"]
+		> = handleRetry;
+		return (
 			<div className="flex flex-1 flex-col items-center justify-center gap-3 py-20 text-t-3">
 				<p className="text-sm text-t-2">{t("library.textDetail.error")}</p>
 				<button
 					type="button"
-					onClick={handleClick}
+					onClick={handleRetryClick}
 					className="text-xs text-acc-t hover:underline"
 				>
 					{t("library.textDetail.retry")}
@@ -95,9 +60,14 @@ return (
 
 	const text = detail.data;
 
-		const handleSelect: NonNullable<ComponentProps<typeof DropdownMenuItem>["onSelect"]> = () => bookmarkMutation.mutate();
-	const handleSelect2: NonNullable<ComponentProps<typeof DropdownMenuItem>["onSelect"]> = () => setReportOpen(true);
-return (
+	const handleBookmarkSelect: NonNullable<
+		ComponentProps<typeof DropdownMenuItem>["onSelect"]
+	> = handleToggleBookmark;
+	const handleReportSelect: NonNullable<
+		ComponentProps<typeof DropdownMenuItem>["onSelect"]
+	> = handleOpenReport;
+
+	return (
 		<div className="flex flex-1 flex-col overflow-hidden">
 			{/* Topbar */}
 			<div className="h-12 bg-panel border-b border-bd-1 flex items-center gap-2.5 px-5 shrink-0 max-sm:h-11 max-sm:px-3.5">
@@ -191,7 +161,7 @@ return (
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end" className="min-w-[168px]">
 							<DropdownMenuItem
-								onSelect={handleSelect}
+								onSelect={handleBookmarkSelect}
 								disabled={bookmarkMutation.isPending}
 							>
 								<BookmarkMenuIcon filled={text.isFavorite} />
@@ -201,7 +171,7 @@ return (
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem
-								onSelect={handleSelect2}
+								onSelect={handleReportSelect}
 								variant="destructive"
 							>
 								<FlagIcon />

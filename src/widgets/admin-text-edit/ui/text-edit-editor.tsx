@@ -77,7 +77,7 @@ const EditorToolbar = ({
 
 	const e = editor;
 
-		const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = ev => {
+	const handleBlockTypeChange: NonNullable<ComponentProps<"select">["onChange"]> = ev => {
 						if (!e) return;
 						const v = ev.currentTarget.value;
 						if (v === "p") e.chain().focus().setParagraph().run();
@@ -88,18 +88,30 @@ const EditorToolbar = ({
 						else if (v === "blockquote")
 							e.chain().focus().setBlockquote().run();
 					};
-	const handleExec: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleBold().run();
-	const handleExec2: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleItalic().run();
-	const handleExec3: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleUnderline().run();
-	const handleExec4: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleStrike().run();
-	const handleExec5: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleBulletList().run();
-	const handleExec6: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleOrderedList().run();
-	const handleExec7: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("left").run();
-	const handleExec8: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("center").run();
-	const handleExec9: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("right").run();
-	const handleExec10: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("justify").run();
-	const handleExec11: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().undo().run();
-	const handleExec12: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().redo().run();
+	const handleToggleBold: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () =>
+		e?.chain().focus().toggleBold().run();
+	const handleToggleItalic: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () =>
+		e?.chain().focus().toggleItalic().run();
+	const handleToggleUnderline: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () =>
+		e?.chain().focus().toggleUnderline().run();
+	const handleToggleStrike: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () =>
+		e?.chain().focus().toggleStrike().run();
+	const handleToggleBulletList: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> =
+		() => e?.chain().focus().toggleBulletList().run();
+	const handleToggleOrderedList: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> =
+		() => e?.chain().focus().toggleOrderedList().run();
+	const handleSetAlignLeft: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () =>
+		e?.chain().focus().setTextAlign("left").run();
+	const handleSetAlignCenter: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> =
+		() => e?.chain().focus().setTextAlign("center").run();
+	const handleSetAlignRight: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () =>
+		e?.chain().focus().setTextAlign("right").run();
+	const handleSetAlignJustify: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> =
+		() => e?.chain().focus().setTextAlign("justify").run();
+	const handleUndo: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () =>
+		e?.chain().focus().undo().run();
+	const handleRedo: NonNullable<ComponentProps<typeof TbBtn>["onExec"]> = () =>
+		e?.chain().focus().redo().run();
 return (
 		<div className="sticky top-[52px] z-10 flex items-center gap-px overflow-x-auto border-b border-bd-1 bg-surf px-2 py-[5px] transition-colors [scrollbar-width:none]">
 			<div className="shrink-0">
@@ -114,7 +126,7 @@ return (
 									? "blockquote"
 									: "p"
 					}
-					onChange={handleChange}
+					onChange={handleBlockTypeChange}
 				>
 					<option value="p">{t("admin.texts.createPage.formatText")}</option>
 					<option value="h2">{t("admin.texts.createPage.formatH2")}</option>
@@ -130,7 +142,7 @@ return (
 			<TbBtn
 				title={t("admin.texts.createPage.bold")}
 				active={e?.isActive("bold")}
-				onExec={handleExec}
+				onExec={handleToggleBold}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -145,7 +157,7 @@ return (
 			<TbBtn
 				title={t("admin.texts.createPage.italic")}
 				active={e?.isActive("italic")}
-				onExec={handleExec2}
+				onExec={handleToggleItalic}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -159,7 +171,7 @@ return (
 			<TbBtn
 				title={t("admin.texts.createPage.underline")}
 				active={e?.isActive("underline")}
-				onExec={handleExec3}
+				onExec={handleToggleUnderline}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -173,7 +185,7 @@ return (
 			<TbBtn
 				title="Strike"
 				active={e?.isActive("strike")}
-				onExec={handleExec4}
+				onExec={handleToggleStrike}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -196,7 +208,7 @@ return (
 			<TbBtn
 				title={t("admin.texts.createPage.bulletList")}
 				active={e?.isActive("bulletList")}
-				onExec={handleExec5}
+				onExec={handleToggleBulletList}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<circle cx="3" cy="5" r="1.2" fill="currentColor" />
@@ -213,7 +225,7 @@ return (
 			<TbBtn
 				title={t("admin.texts.createPage.orderedList")}
 				active={e?.isActive("orderedList")}
-				onExec={handleExec6}
+				onExec={handleToggleOrderedList}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -237,7 +249,7 @@ return (
 			<TbBtn
 				title="По левому краю"
 				active={e?.isActive({ textAlign: "left" })}
-				onExec={handleExec7}
+				onExec={handleSetAlignLeft}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -251,7 +263,7 @@ return (
 			<TbBtn
 				title="По центру"
 				active={e?.isActive({ textAlign: "center" })}
-				onExec={handleExec8}
+				onExec={handleSetAlignCenter}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -265,7 +277,7 @@ return (
 			<TbBtn
 				title="По правому краю"
 				active={e?.isActive({ textAlign: "right" })}
-				onExec={handleExec9}
+				onExec={handleSetAlignRight}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -279,7 +291,7 @@ return (
 			<TbBtn
 				title="По ширине"
 				active={e?.isActive({ textAlign: "justify" })}
-				onExec={handleExec10}
+				onExec={handleSetAlignJustify}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -295,7 +307,7 @@ return (
 
 			<TbBtn
 				title={t("admin.texts.createPage.undo")}
-				onExec={handleExec11}
+				onExec={handleUndo}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -315,7 +327,7 @@ return (
 			</TbBtn>
 			<TbBtn
 				title={t("admin.texts.createPage.redo")}
-				onExec={handleExec12}
+				onExec={handleRedo}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path

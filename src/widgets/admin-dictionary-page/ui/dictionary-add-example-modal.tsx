@@ -22,6 +22,7 @@ export const DictionaryAddExampleModal = ({
 
 	useEffect(() => {
 		if (entry) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- clear modal state when target entry changes
 			setText("");
 			setError("");
 		}

@@ -29,7 +29,10 @@ export const BillingCouponModal = ({
 	const [form, setForm] = useState(empty);
 
 	useEffect(() => {
-		if (open) setForm(empty);
+		if (open) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- reset form when modal opens
+			setForm(empty);
+		}
 	}, [open]);
 
 	const set = <K extends keyof typeof empty>(key: K, value: string) =>

@@ -48,6 +48,7 @@ export const MetaModal = ({
 
 	useEffect(() => {
 		if (isOpen && data) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate edit form from selected entry
 			setBaseForm(data.baseForm);
 			setPartOfSpeech(data.partOfSpeech ?? "");
 			setLevel(data.level ?? "");

@@ -25,7 +25,6 @@ export const AdminTokenizationPage = () => {
 		page,
 		selectedIds,
 		allSelected,
-		someSelected,
 		data,
 		stats,
 		distribution,

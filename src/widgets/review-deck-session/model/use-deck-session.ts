@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type {
 	DeckCard,
 	DeckDueResponse,
@@ -40,10 +40,6 @@ export const useDeckSession = (
 	const [counts, setCounts] = useState<DeckCounts>({ know: 0, again: 0 });
 
 	const { mutate: rateMutation } = useRateDeckCard();
-
-	useEffect(() => {
-		setFlipped(false);
-	}, [index]);
 
 	const total = queue.length;
 	const current = queue[index] ?? null;

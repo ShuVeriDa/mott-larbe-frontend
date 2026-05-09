@@ -44,6 +44,7 @@ export const DictionaryCreateModal = ({
 
 	useEffect(() => {
 		if (!open) return;
+		// eslint-disable-next-line react-hooks/set-state-in-effect -- reset create form on each modal open
 		setWord("");
 		setNormalized("");
 		setLanguage("CHE");

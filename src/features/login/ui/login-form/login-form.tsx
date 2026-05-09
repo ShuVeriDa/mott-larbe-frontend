@@ -2,61 +2,33 @@
 
 import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ComponentProps, useState } from "react";
-import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
-import { useLogin } from "../../model";
+import { useLoginForm } from "../../model";
 
 interface LoginFormProps {
 	forgotHref: string;
 	successHref: string;
 }
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
-	const { t } = useI18n();
-	const router = useRouter();
-	const { mutateAsync, isPending, error, reset } = useLogin();
+	const {
+		t,
+		isPending,
+		error,
+		email,
+		password,
+		remember,
+		showPw,
+		errors,
+		handleSubmit,
+		handleEmailChange,
+		handlePasswordChange,
+		handleTogglePasswordVisibility,
+		handleRememberChange,
+	} = useLoginForm({ successHref });
 
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [remember, setRemember] = useState(true);
-	const [showPw, setShowPw] = useState(false);
-	const [errors, setErrors] = useState<{ email?: string; password?: string }>(
-		{},
-	);
-
-	const validate = () => {
-		const next: { email?: string; password?: string } = {};
-		const loginValue = email.trim();
-		if (!loginValue || (!EMAIL_RE.test(loginValue) && loginValue.length < 2))
-			next.email = t("auth.errors.loginIdentifier");
-		if (!password || password.length < 8)
-			next.password = t("auth.errors.password");
-		setErrors(next);
-		return Object.keys(next).length === 0;
-	};
-
-	const handleSubmit = async () => {
-		reset();
-		if (!validate()) return;
-		try {
-			await mutateAsync({ username: email.trim(), password });
-			router.push(successHref);
-			router.refresh();
-		} catch {
-			// error surfaced via mutation state
-		}
-	};
-
-		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setEmail(e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setPassword(e.currentTarget.value);
-	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowPw((v) => !v);
-	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setRemember(e.currentTarget.checked);
-return (
+	return (
 		<form action={handleSubmit} noValidate autoComplete="on">
 			{error ? (
 				<div
@@ -82,7 +54,7 @@ return (
 					required
 					placeholder={t("auth.placeholders.loginIdentifier")}
 					value={email}
-					onChange={handleChange}
+					onChange={handleEmailChange}
 					className={cn(
 						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 						errors.email && "border-red",
@@ -117,7 +89,7 @@ return (
 						required
 						placeholder="••••••••••"
 						value={password}
-						onChange={handleChange2}
+						onChange={handlePasswordChange}
 						className={cn(
 							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 pr-11 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 							errors.password && "border-red",
@@ -127,7 +99,7 @@ return (
 					<button
 						type="button"
 						tabIndex={-1}
-						onClick={handleClick}
+						onClick={handleTogglePasswordVisibility}
 						aria-label={t(
 							showPw ? "auth.password.hide" : "auth.password.show",
 						)}
@@ -157,7 +129,7 @@ return (
 						type="checkbox"
 						className="peer sr-only"
 						checked={remember}
-						onChange={handleChange3}
+						onChange={handleRememberChange}
 					/>
 					<Typography
 						tag="span"

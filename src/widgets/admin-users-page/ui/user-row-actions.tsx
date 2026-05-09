@@ -2,7 +2,6 @@
 import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type { AdminUserListItem } from "@/entities/admin-user";
 import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
 

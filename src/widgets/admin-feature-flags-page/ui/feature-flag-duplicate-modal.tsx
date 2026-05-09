@@ -23,6 +23,7 @@ export const FeatureFlagDuplicateModal = ({
 
 	useEffect(() => {
 		if (!flag) return;
+		// eslint-disable-next-line react-hooks/set-state-in-effect -- prefill duplicate key from selected flag
 		setKey(`${flag.key}_copy`);
 		setKeyError("");
 	}, [flag]);

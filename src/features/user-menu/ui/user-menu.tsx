@@ -1,23 +1,11 @@
 "use client";
 
-import { useCurrentUser } from "@/entities/user";
-import { LOCALES, type Locale } from "@/i18n/locale-list";
 import { cn } from "@/shared/lib/cn";
-import { useI18n } from "@/shared/lib/i18n";
 import { Avatar } from "@/shared/ui/avatar";
 import { CreditCardIcon, GlobeIcon, LayoutDashboardIcon, LifeBuoyIcon, LogOutIcon, SettingsIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
-import { ComponentProps, useState } from 'react';
-import { canAccessAdmin, getDisplayName, getUserInitials } from "../lib/user-helpers";
-import { useLogout } from "../model/use-logout";
-
-const LOCALE_SHORT: Record<Locale, string> = {
-	che: "CHE",
-	ru: "RU",
-	en: "EN",
-};
+import { useUserMenu } from "../model";
 
 const itemCls = cn(
 	"flex w-full items-center gap-2.5 px-3 py-[7px] text-[12.5px] text-t-2 text-left",
@@ -26,34 +14,26 @@ const itemCls = cn(
 );
 
 export const UserMenu = () => {
-	const { t, lang } = useI18n();
-	const { data: user } = useCurrentUser();
-	const [open, setOpen] = useState(false);
-	const logout = useLogout();
-	const router = useRouter();
-	const pathname = usePathname();
+	const {
+		t,
+		lang,
+		user,
+		open,
+		setOpen,
+		logout,
+		initials,
+		displayName,
+		showAdmin,
+		handleLogout,
+		handleLanguageItemSelect,
+		handleLocaleClick,
+		localeShort,
+		locales,
+	} = useUserMenu();
 
 	if (!user) return null;
 
-	const initials = getUserInitials(user);
-	const displayName = getDisplayName(user);
-	const showAdmin = canAccessAdmin(user);
-
-	const handleLogout = async () => {
-		setOpen(false);
-		await logout.mutateAsync();
-		router.replace(`/${lang}`);
-		router.refresh();
-	};
-
-	const switchLang = (next: Locale) => {
-		if (next === lang) return;
-		const newPath = pathname.replace(/^\/[^/]+/, `/${next}`);
-		router.push(newPath);
-	};
-
-		const handleSelect: NonNullable<ComponentProps<typeof DropdownMenuPrimitive.Item>["onSelect"]> = (e) => e.preventDefault();
-return (
+	return (
 		<DropdownMenuPrimitive.Root open={open} onOpenChange={setOpen}>
 			<DropdownMenuPrimitive.Trigger asChild>
 				<button
@@ -135,7 +115,7 @@ return (
 					{/* Language switcher */}
 					<div className="border-t border-bd-1">
 						<DropdownMenuPrimitive.Item
-							onSelect={handleSelect}
+							onSelect={handleLanguageItemSelect}
 							className="flex items-center justify-between gap-3 px-3 py-2 focus-visible:outline-none cursor-default"
 						>
 							<div className="flex items-center gap-2.5 text-[12.5px] text-t-2 shrink-0">
@@ -147,19 +127,16 @@ return (
 								aria-label={t("nav.userMenu.language")}
 								className="flex rounded-full border border-bd-1 bg-surf-2 p-0.5 gap-px"
 							>
-								{LOCALES.map((locale) => {
+								{locales.map((locale) => {
 									const active = locale === lang;
-																		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
-												e.preventDefault();
-												switchLang(locale);
-											};
 return (
 										<button
 											key={locale}
 											type="button"
+											data-locale={locale}
 											role="radio"
 											aria-checked={active}
-											onClick={handleClick}
+											onClick={handleLocaleClick}
 											className={cn(
 												"px-2 py-0.5 min-w-[28px] text-[10.5px] font-medium rounded-full transition-colors",
 												active
@@ -167,7 +144,7 @@ return (
 													: "text-t-3 hover:text-t-1",
 											)}
 										>
-											{LOCALE_SHORT[locale]}
+											{localeShort[locale]}
 										</button>
 									);
 								})}

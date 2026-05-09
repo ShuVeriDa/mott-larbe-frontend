@@ -209,15 +209,16 @@ return (
 				<div className="mx-4 mb-0 mt-0">
 					<div className="flex w-fit gap-0 rounded-[9px] bg-surf-2 p-0.5">
 						{tabs.map((lemma) => {
+						  const isActiveLemma = lemma.id === currentLemmaId || lemma.isCurrent;
 						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
-									if (!lemma.isCurrent) router.push(`/${lang}/admin/dictionary/${lemma.id}`);
+									if (!isActiveLemma) router.push(`/${lang}/admin/dictionary/${lemma.id}`);
 								};
 						  return (
 							<button
 								key={lemma.id}
 								className={cn(
 									"rounded-[6px] px-3.5 py-1 font-display text-[12.5px] font-medium transition-colors",
-									lemma.isCurrent
+									isActiveLemma
 										? "bg-surf text-t-1 shadow-[0_1px_3px_rgba(0,0,0,0.07)]"
 										: "bg-transparent text-t-3 hover:text-t-2",
 								)}

@@ -1,11 +1,9 @@
 "use client";
-import { useState } from 'react';
 import { Check } from "lucide-react";
-import { RatingButtons, useRateWord } from "@/features/rate-word";
+import { RatingButtons } from "@/features/rate-word";
 import type { DictionaryEntryDetail } from "@/entities/dictionary";
-import type { ReviewQuality } from "@/entities/review";
 import { Modal } from "@/shared/ui/modal";
-import { useI18n } from "@/shared/lib/i18n";
+import { useReviewWordModal } from "../../model";
 
 export interface ReviewWordModalProps {
 	open: boolean;
@@ -18,22 +16,10 @@ export const ReviewWordModal = ({
 	onClose,
 	entry,
 }: ReviewWordModalProps) => {
-	const { t } = useI18n();
-	const { mutate: rate, isPending } = useRateWord();
-	const [done, setDone] = useState(false);
-
-	const handleRate = (quality: ReviewQuality) => {
-		if (!entry.lemma) return;
-		rate(
-			{ lemmaId: entry.lemma.id, body: { quality } },
-			{ onSuccess: () => setDone(true) },
-		);
-	};
-
-	const handleClose = () => {
-		setDone(false);
-		onClose();
-	};
+	const { t, isPending, done, handleRate, handleClose } = useReviewWordModal({
+		onClose,
+		entry,
+	});
 
 	return (
 		<Modal

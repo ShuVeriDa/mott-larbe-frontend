@@ -26,13 +26,6 @@ const IconEye = () => (
 	</svg>
 );
 
-const IconTrash = () => (
-	<svg className="size-[13px]" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3">
-		<path d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4" strokeLinecap="round" />
-		<path d="M4 5l.7 7.5A1 1 0 005.7 13h4.6a1 1 0 001-.95L12 5" strokeLinecap="round" />
-	</svg>
-);
-
 const IconChevronDown = () => (
 	<svg className="size-[11px]" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
 		<path d="M2 4l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
@@ -135,6 +128,36 @@ interface DictionaryTableProps {
 	t: (key: string, vars?: Record<string, string | number>) => string;
 }
 
+interface SortableHeaderCellProps {
+	label: string;
+	isActive: boolean;
+	dir?: "asc" | "desc";
+	className?: string;
+	onClick: () => void;
+}
+
+const SortableHeaderCell = ({
+	label,
+	isActive,
+	dir,
+	className,
+	onClick,
+}: SortableHeaderCellProps) => (
+	<th
+		className={cn(
+			"pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1",
+			"cursor-pointer select-none hover:text-t-2",
+			className,
+		)}
+		onClick={onClick}
+	>
+		<span className="inline-flex items-center">
+			{label}
+			<IconSortable active={isActive} dir={dir} />
+		</span>
+	</th>
+);
+
 export const DictionaryTable = ({
 	items,
 	isLoading,
@@ -157,40 +180,21 @@ export const DictionaryTable = ({
 	const thCls =
 		"pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1";
 
-	const SortableTh = ({
-		label,
-		sortAsc,
-		sortDesc,
-		className,
-	}: {
-		label: string;
-		sortAsc?: AdminDictSort;
-		sortDesc?: AdminDictSort;
-		className?: string;
-	}) => {
+	const getSortableHeaderProps = (
+		sortAsc: AdminDictSort | undefined,
+		sortDesc: AdminDictSort | undefined,
+	) => {
 		const isActive = sort === sortAsc || sort === sortDesc;
 		const dir = sort === sortAsc ? "asc" : sort === sortDesc ? "desc" : undefined;
-
 		const handleClick = () => {
 			if (!sortAsc && !sortDesc) return;
 			if (sortAsc && sortDesc) {
 				onSortChange(sort === sortAsc ? sortDesc : sortAsc);
-			} else {
-				onSortChange((sortAsc ?? sortDesc)!);
+				return;
 			}
+			onSortChange((sortAsc ?? sortDesc)!);
 		};
-
-		return (
-			<th
-				className={cn(thCls, "cursor-pointer select-none hover:text-t-2", className)}
-				onClick={handleClick}
-			>
-				<span className="inline-flex items-center">
-					{label}
-					<IconSortable active={isActive} dir={dir} />
-				</span>
-			</th>
-		);
+		return { isActive, dir, handleClick };
 	};
 
 	return (
@@ -207,23 +211,22 @@ export const DictionaryTable = ({
 								className="size-[13px] cursor-pointer accent-acc"
 							/>
 						</th>
-						<SortableTh
+						<SortableHeaderCell
 							label={t("admin.dictionary.table.headword")}
-							sortAsc="alpha"
+							{...getSortableHeaderProps("alpha", undefined)}
 						/>
 						<th className={cn(thCls, "w-[80px]")}>{t("admin.dictionary.table.pos")}</th>
 						<th className={cn(thCls, "w-[80px]")}>{t("admin.dictionary.table.meanings")}</th>
 						<th className={cn(thCls, "w-[72px]")}>{t("admin.dictionary.table.level")}</th>
-						<SortableTh
+						<SortableHeaderCell
 							label={t("admin.dictionary.table.frequency")}
-							sortDesc="frequency_desc"
+							{...getSortableHeaderProps(undefined, "frequency_desc")}
 							className="w-[100px]"
 						/>
 						<th className={cn(thCls, "w-[68px]")}>{t("admin.dictionary.table.forms")}</th>
-						<SortableTh
+						<SortableHeaderCell
 							label={t("admin.dictionary.table.added")}
-							sortDesc="newest"
-							sortAsc="oldest"
+							{...getSortableHeaderProps("oldest", "newest")}
 							className="w-[88px]"
 						/>
 						<th className="w-[60px] pb-2 pr-3.5 border-b border-bd-1" />

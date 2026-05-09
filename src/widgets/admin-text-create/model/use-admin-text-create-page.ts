@@ -58,7 +58,6 @@ export const useAdminTextCreatePage = () => {
 
 	const savedIdRef = useRef<string | null>(null);
 	const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-	const saveNowRef = useRef<((targetStatus: TextStatus, silent: boolean) => Promise<void>) | undefined>(undefined);
 
 	const doSave = async (targetStatus: TextStatus, silent: boolean) => {
 		if (!title.trim()) {
@@ -136,13 +135,11 @@ export const useAdminTextCreatePage = () => {
 		}
 	};
 
-	saveNowRef.current = doSave;
-
 	const scheduleAutoSave = () => {
 		if (!savedIdRef.current) return;
 		if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
 		autoSaveTimerRef.current = setTimeout(() => {
-			saveNowRef.current?.("draft", true);
+			void doSave("draft", true);
 		}, 2000);
 	};
 

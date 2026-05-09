@@ -24,11 +24,11 @@ export const TextProgressCard = ({
 
 	const formatLastRead = (iso: string | null) => {
 		if (!iso) return null;
-		const diff = Date.now() - new Date(iso).getTime();
-		const days = Math.floor(diff / 86_400_000);
-		if (days === 0) return t("time.now");
-		if (days === 1) return t("time.days", { n: 1 });
-		return t("time.days", { n: days });
+		return new Date(iso).toLocaleDateString("ru-RU", {
+			day: "numeric",
+			month: "short",
+			year: "numeric",
+		});
 	};
 
 	const lastReadStr = formatLastRead(lastOpened);

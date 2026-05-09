@@ -31,7 +31,10 @@ export const FeedbackThreadList = ({
 }: FeedbackThreadListProps) => {
 	const sentinelRef = useRef<HTMLDivElement>(null);
 	const onLoadMoreRef = useRef(onLoadMore);
-	onLoadMoreRef.current = onLoadMore;
+
+	useEffect(() => {
+		onLoadMoreRef.current = onLoadMore;
+	}, [onLoadMore]);
 
 	useEffect(() => {
 		const el = sentinelRef.current;

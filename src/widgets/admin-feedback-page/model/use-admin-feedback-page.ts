@@ -15,7 +15,7 @@ import {
 	useAdminFeedbackThreads,
 } from "@/entities/feedback";
 import { useI18n } from "@/shared/lib/i18n";
-import { MouseEvent, useState } from 'react';
+import { type MouseEvent as ReactMouseEvent, useState } from "react";
 const showToast = (msg: string) => {
 	const existing = document.querySelectorAll("[data-feedback-toast]");
 	existing.forEach(el => el.remove());
@@ -184,7 +184,7 @@ export const useAdminFeedbackPage = () => {
 		}
 	};
 
-	const handleMoreMenu = (e: MouseEvent<HTMLButtonElement>) => {
+	const handleMoreMenu = (e: ReactMouseEvent<HTMLButtonElement>) => {
 		if (!thread) return;
 		const btn = e.currentTarget;
 		const existing = document.getElementById("feedback-more-menu");
@@ -240,7 +240,7 @@ export const useAdminFeedbackPage = () => {
 		menu.style.top = `${rect.bottom + 4}px`;
 		menu.style.left = `${left}px`;
 
-		const closeMenu = (ev: MouseEvent) => {
+		const closeMenu = (ev: globalThis.MouseEvent) => {
 			if (!menu.contains(ev.target as Node)) {
 				menu.remove();
 				document.removeEventListener("click", closeMenu);

@@ -2,15 +2,10 @@
 
 import {
 	FolderForm,
-	buildInitialFolderForm,
-	type FolderFormValue,
 } from "@/entities/folder";
-import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
-import axios from "axios";
-import { useState } from "react";
-import { useCreateFolder } from "../../model";
+import { useCreateFolderModal } from "../../model";
 
 export interface CreateFolderModalProps {
 	open: boolean;
@@ -23,47 +18,11 @@ export const CreateFolderModal = ({
 	onClose,
 	onForbidden,
 }: CreateFolderModalProps) => {
-	const { t } = useI18n();
-	const { mutateAsync, isPending } = useCreateFolder();
-	const [value, setValue] = useState<FolderFormValue>(() =>
-		buildInitialFolderForm(),
-	);
-	const [error, setError] = useState<string | null>(null);
-
-	const reset = () => {
-		setValue(buildInitialFolderForm());
-		setError(null);
-	};
-
-	const handleClose = () => {
-		reset();
-		onClose();
-	};
-
-	const handleSubmit = async () => {
-		const trimmedName = value.name.trim();
-		if (!trimmedName) {
-			setError(t("vocabulary.folderModal.errors.nameRequired"));
-			return;
-		}
-		try {
-			await mutateAsync({
-				name: trimmedName,
-				description: value.description.trim() || null,
-				color: value.color,
-				icon: value.icon,
-			});
-			reset();
-			onClose();
-		} catch (err) {
-			if (axios.isAxiosError(err) && err.response?.status === 403) {
-				handleClose();
-				onForbidden?.();
-			} else {
-				setError(t("vocabulary.folderModal.errors.createFailed"));
-			}
-		}
-	};
+	const { t, value, setValue, error, isPending, handleClose, handleSubmit } =
+		useCreateFolderModal({
+			onClose,
+			onForbidden,
+		});
 
 	return (
 		<Modal

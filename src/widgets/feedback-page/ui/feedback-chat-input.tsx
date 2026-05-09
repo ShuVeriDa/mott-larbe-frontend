@@ -1,5 +1,5 @@
 "use client";
-import { ComponentProps, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { ComponentProps, KeyboardEvent, useRef, useState } from 'react';
 type Translator = (key: string) => string;
 
 interface FeedbackChatInputProps {
@@ -18,10 +18,6 @@ export const FeedbackChatInput = ({
 	const [value, setValue] = useState("");
 	const [isReopening, setIsReopening] = useState(false);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-	useEffect(() => {
-		if (!isClosed) setIsReopening(false);
-	}, [isClosed]);
 
 	const autoResize = () => {
 		const el = textareaRef.current;

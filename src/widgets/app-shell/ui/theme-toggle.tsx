@@ -2,18 +2,14 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { useMounted } from "@/shared/lib/mounted";
 import { Typography } from "@/shared/ui/typography";
 
 export const ThemeToggle = () => {
 	const { t } = useI18n();
 	const { resolvedTheme, setTheme } = useTheme();
-	const [mounted, setMounted] = useState(false);
-
-	useEffect(() => {
-		setMounted(true);
-	}, []);
+	const mounted = useMounted();
 
 	const dark = mounted && resolvedTheme === "dark";
 

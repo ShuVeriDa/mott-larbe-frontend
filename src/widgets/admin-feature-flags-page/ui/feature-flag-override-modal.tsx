@@ -55,6 +55,7 @@ export const FeatureFlagOverrideModal = ({
 
 	useEffect(() => {
 		if (!open) return;
+		// eslint-disable-next-line react-hooks/set-state-in-effect -- reset modal state on open
 		setFlagId(preselectedFlagId ?? "");
 		setUserInput("");
 		setSuggestions([]);
@@ -64,6 +65,7 @@ export const FeatureFlagOverrideModal = ({
 
 	useEffect(() => {
 		if (!debouncedUser || debouncedUser.length < 2) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- clear typeahead list for short query
 			setSuggestions([]);
 			return;
 		}

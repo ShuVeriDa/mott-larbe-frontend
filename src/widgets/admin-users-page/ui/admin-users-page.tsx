@@ -23,7 +23,6 @@ export const AdminUsersPage = () => {
 		page,
 		selectedIds,
 		allSelected,
-		someSelected,
 		data,
 		stats,
 		isLoading,
@@ -75,7 +74,7 @@ return (
 				/>
 
 				{/* Table card */}
-				<div className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf">
+				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 					<UsersBulkBar
 						selectedCount={selectedIds.size}
 						onFreeze={handleFreeze}

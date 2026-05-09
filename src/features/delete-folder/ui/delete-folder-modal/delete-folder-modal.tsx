@@ -1,10 +1,8 @@
 "use client";
-import { useState } from 'react';
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
-import { useI18n } from "@/shared/lib/i18n";
 import type { Folder } from "@/entities/folder";
-import { useDeleteFolder } from "../../model";
+import { useDeleteFolderModal } from "../../model";
 
 export interface DeleteFolderModalProps {
 	open: boolean;
@@ -19,21 +17,13 @@ export const DeleteFolderModal = ({
 	onClose,
 	onDeleted,
 }: DeleteFolderModalProps) => {
-	const { t } = useI18n();
-	const { mutateAsync, isPending } = useDeleteFolder();
-	const [error, setError] = useState<string | null>(null);
+	const { t, error, isPending, handleDelete } = useDeleteFolderModal({
+		folder,
+		onClose,
+		onDeleted,
+	});
 
 	if (!folder) return null;
-
-	const handleDelete = async () => {
-		try {
-			await mutateAsync(folder.id);
-			onClose();
-			onDeleted?.();
-		} catch {
-			setError(t("vocabulary.folderModal.errors.deleteFailed"));
-		}
-	};
 
 	return (
 		<Modal

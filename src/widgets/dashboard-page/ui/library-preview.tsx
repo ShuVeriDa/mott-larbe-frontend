@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { ComponentProps, ReactNode, useState } from 'react';
-import type { LibraryTextLanguage, LibraryTextListItem } from "@/entities/library-text";
-import { useLibraryTexts } from "@/entities/library-text";
-import type { CefrLevel } from "@/shared/types";
+import { ReactNode } from "react";
+import type { LibraryTextListItem } from "@/entities/library-text";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { useLibraryPreview } from "../model";
 
 type CefrKey = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 
@@ -31,9 +30,6 @@ const progressColor = (pct: number): string => {
 	if (pct > 0) return "var(--acc)";
 	return "transparent";
 };
-
-const LANG_FILTERS: LibraryTextLanguage[] = ["CHE", "RU", "EN"];
-const LEVEL_FILTERS: CefrLevel[] = ["A1", "A2", "B1", "B2"];
 
 interface LibraryCardProps {
 	item: LibraryTextListItem;
@@ -159,29 +155,20 @@ interface LibraryPreviewProps {
 
 export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 	const { t } = useI18n();
-	const [filterLang, setFilterLang] = useState<LibraryTextLanguage | undefined>();
-	const [filterLevel, setFilterLevel] = useState<CefrLevel | undefined>();
+	const {
+		filterLang,
+		filterLevel,
+		items,
+		viewAllHref,
+		langFilters,
+		levelFilters,
+		handleResetLanguageFilter,
+		handleResetLevelFilter,
+		handleLanguageFilterToggle,
+		handleLevelFilterToggle,
+	} = useLibraryPreview(lang);
 
-	const { data: library } = useLibraryTexts({
-		orderBy: "newest",
-		limit: 6,
-		language: filterLang ? [filterLang] : undefined,
-		level: filterLevel ? [filterLevel] : undefined,
-	});
-
-	const items = library?.items ?? [];
-
-	const viewAllHref = (() => {
-		const params = new URLSearchParams();
-		if (filterLang) params.set("language", filterLang);
-		if (filterLevel) params.set("level", filterLevel);
-		const qs = params.toString();
-		return `/${lang}/texts${qs ? `?${qs}` : ""}`;
-	})();
-
-		const handleClick: NonNullable<ComponentProps<typeof FilterButton>["onClick"]> = () => setFilterLang(undefined);
-	const handleClick2: NonNullable<ComponentProps<typeof FilterButton>["onClick"]> = () => setFilterLevel(undefined);
-return (
+	return (
 		<section>
 			<div className="mb-2.5 flex items-center justify-between gap-2">
 				<span className="text-[13px] font-semibold text-t-1">
@@ -199,21 +186,21 @@ return (
 				<div className="flex items-center gap-[3px]">
 					<FilterButton
 						active={filterLang === undefined}
-						onClick={handleClick}
+						onClick={handleResetLanguageFilter}
 					>
 						{t("dashboard.library.langAll")}
 					</FilterButton>
-					{LANG_FILTERS.map((l) => {
-					  const handleClick: NonNullable<ComponentProps<typeof FilterButton>["onClick"]> = () =>
-								setFilterLang(filterLang === l ? undefined : l);
+					{langFilters.map((languageFilter) => {
+						const handleLanguageClick = () => {
+							handleLanguageFilterToggle(languageFilter);
+						};
 					  return (
 						<FilterButton
-							key={l}
-							active={filterLang === l}
-							onClick={handleClick
-							}
+							key={languageFilter}
+							active={filterLang === languageFilter}
+							onClick={handleLanguageClick}
 						>
-							{LANG_TAG[l]}
+							{LANG_TAG[languageFilter]}
 						</FilterButton>
 					);
 					})}
@@ -224,21 +211,21 @@ return (
 				<div className="flex items-center gap-[3px]">
 					<FilterButton
 						active={filterLevel === undefined}
-						onClick={handleClick2}
+						onClick={handleResetLevelFilter}
 					>
 						{t("dashboard.library.levelAll")}
 					</FilterButton>
-					{LEVEL_FILTERS.map((lvl) => {
-					  const handleClick: NonNullable<ComponentProps<typeof FilterButton>["onClick"]> = () =>
-								setFilterLevel(filterLevel === lvl ? undefined : lvl);
+					{levelFilters.map((levelFilter) => {
+						const handleLevelClick = () => {
+							handleLevelFilterToggle(levelFilter);
+						};
 					  return (
 						<FilterButton
-							key={lvl}
-							active={filterLevel === lvl}
-							onClick={handleClick
-							}
+							key={levelFilter}
+							active={filterLevel === levelFilter}
+							onClick={handleLevelClick}
 						>
-							{lvl}
+							{levelFilter}
 						</FilterButton>
 					);
 					})}

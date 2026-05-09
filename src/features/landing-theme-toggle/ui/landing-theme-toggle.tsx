@@ -2,17 +2,14 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { ComponentProps, useEffect, useState } from 'react';
+import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { useMounted } from "@/shared/lib/mounted";
 
 export const LandingThemeToggle = () => {
 	const { t } = useI18n();
 	const { resolvedTheme, setTheme } = useTheme();
-	const [mounted, setMounted] = useState(false);
-
-	useEffect(() => {
-		setMounted(true);
-	}, []);
+	const mounted = useMounted();
 
 	const dark = mounted && resolvedTheme === "dark";
 

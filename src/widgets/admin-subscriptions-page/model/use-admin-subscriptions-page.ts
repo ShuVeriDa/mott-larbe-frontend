@@ -41,6 +41,7 @@ export const useAdminSubscriptionsPage = () => {
 	const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
 	useEffect(() => {
+		// eslint-disable-next-line react-hooks/set-state-in-effect -- sync local input with URL query param
 		setSearchInput(urlSearch);
 	}, [urlSearch]);
 

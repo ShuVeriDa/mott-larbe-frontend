@@ -1,10 +1,7 @@
 "use client";
-import { useEffect, useState } from 'react';
-import {
-	type ReviewDueWord,
-	type ReviewQuality,
-} from "@/entities/review";
+import { type ReviewDueWord, type ReviewQuality } from "@/entities/review";
 import { useRateWord } from "@/features/rate-word";
+import { useState } from "react";
 
 export type Sm2Mode = "wordToTrans" | "transToWord";
 
@@ -29,9 +26,7 @@ export interface UseSm2SessionResult {
 	resetIndex: () => void;
 }
 
-export const useSm2Session = (
-	words: ReviewDueWord[],
-): UseSm2SessionResult => {
+export const useSm2Session = (words: ReviewDueWord[]): UseSm2SessionResult => {
 	const [index, setIndex] = useState(0);
 	const [mode, setMode] = useState<Sm2Mode>("wordToTrans");
 	const [flipped, setFlipped] = useState(false);
@@ -43,20 +38,16 @@ export const useSm2Session = (
 
 	const { mutate: rateMutation } = useRateWord();
 
-	useEffect(() => {
-		setFlipped(false);
-	}, [index]);
-
 	const total = words.length;
 	const current = words[index] ?? null;
 	const isFinished = total > 0 && index >= total;
 
 	const advance = () => {
 		setFlipped(false);
-		setIndex((i) => i + 1);
+		setIndex(i => i + 1);
 	};
 
-	const flip = () => setFlipped((v) => !v);
+	const flip = () => setFlipped(v => !v);
 
 	const skip = () => {
 		if (!current) return;
@@ -66,7 +57,7 @@ export const useSm2Session = (
 	const rate = (quality: ReviewQuality) => {
 		if (!current) return;
 
-		setCounts((prev) => {
+		setCounts(prev => {
 			if (quality >= 5) return { ...prev, easy: prev.easy + 1 };
 			if (quality >= 3) return { ...prev, good: prev.good + 1 };
 			return { ...prev, hard: prev.hard + 1 };
@@ -77,7 +68,7 @@ export const useSm2Session = (
 	};
 
 	const toggleMode = () => {
-		setMode((m) => (m === "wordToTrans" ? "transToWord" : "wordToTrans"));
+		setMode(m => (m === "wordToTrans" ? "transToWord" : "wordToTrans"));
 		setFlipped(false);
 	};
 

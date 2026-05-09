@@ -42,6 +42,7 @@ export const BillingPlanModal = ({
 	useEffect(() => {
 		if (!open) return;
 		if (mode === "edit" && plan) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate edit form from selected plan
 			setForm({
 				name: plan.name,
 				type: plan.type,

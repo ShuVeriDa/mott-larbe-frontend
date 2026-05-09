@@ -1,7 +1,6 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type { AdminDashboardContent } from "@/entities/admin-dashboard";
 
 const LEVEL_COLORS: Record<string, string> = {

@@ -608,13 +608,21 @@ export const NotionEditor = ({
 		if (!editor) return;
 		editor.chain().focus().insertContent("/").run();
 	};
-return (
+
+	const handleBubbleAppendTo = () => document.body;
+	const handleSlashCommand = (item: SlashMenuItem) => {
+		if (!slashPortal) return;
+		slashPortal.command(item);
+		hideSlash();
+	};
+
+	return (
 		<div className="relative">
 			{/* ── Bubble menu ── */}
 			{editor && (
 				<BubbleMenu
 					editor={editor}
-					appendTo={() => document.body}
+					appendTo={handleBubbleAppendTo}
 					options={{ placement: "top" }}
 					className="z-[9997]"
 				>
@@ -691,10 +699,7 @@ return (
 						<SlashMenu
 							ref={slashMenuRef}
 							items={slashPortal.items}
-							command={item => {
-								slashPortal.command(item);
-								hideSlash();
-							}}
+							command={handleSlashCommand}
 						/>
 					</div>,
 					document.body,

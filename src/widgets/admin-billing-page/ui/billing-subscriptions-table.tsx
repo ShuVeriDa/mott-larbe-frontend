@@ -55,6 +55,9 @@ export const BillingSubscriptionsTable = ({
 					<span className="text-[12.5px] font-semibold text-t-1">
 						{t("admin.plans.subscriptions.title")}
 					</span>
+					<span className="rounded-[5px] bg-surf-2 px-1.5 py-px text-[10.5px] font-medium text-t-3">
+						{total.toLocaleString("ru-RU")}
+					</span>
 					{activeCount > 0 && (
 						<span className="rounded-[5px] bg-grn-bg px-1.5 py-px text-[10.5px] font-semibold text-grn-t">
 							{activeCount.toLocaleString("ru-RU")} {t("admin.plans.subscriptions.active")}

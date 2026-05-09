@@ -28,7 +28,10 @@ export const VocabularyFoldersPage = () => {
 	const [upsellOpen, setUpsellOpen] = useState(false);
 
 	useEffect(() => {
-		if (is403(foldersError)) setUpsellOpen(true);
+		if (is403(foldersError)) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- open upsell after forbidden response
+			setUpsellOpen(true);
+		}
 	}, [foldersError]);
 
 	const showUpsell = () => setUpsellOpen(true);

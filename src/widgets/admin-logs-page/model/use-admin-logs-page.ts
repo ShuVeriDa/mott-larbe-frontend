@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -53,7 +53,9 @@ export const useAdminLogsPage = () => {
 	const liveTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 	// Always-fresh ref so the live interval closure can read current filter state
 	const liveFilterRef = useRef({ tab, service, range, debouncedSearch });
-	liveFilterRef.current = { tab, service, range, debouncedSearch };
+	useEffect(() => {
+		liveFilterRef.current = { tab, service, range, debouncedSearch };
+	}, [tab, service, range, debouncedSearch]);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -85,14 +87,14 @@ export const useAdminLogsPage = () => {
 	const servicesQuery = useAdminLogServices();
 	const detailQuery = useAdminLogDetail(selectedId);
 
-	const stopLive = () => {
+	const stopLive = useCallback(() => {
 		if (liveTimerRef.current) {
 			clearInterval(liveTimerRef.current);
 			liveTimerRef.current = null;
 		}
-	};
+	}, []);
 
-	const startLive = () => {
+	const startLive = useCallback(() => {
 		stopLive();
 		liveTimerRef.current = setInterval(async () => {
 			const { tab: t, service: s, range: r, debouncedSearch: q } = liveFilterRef.current;
@@ -124,7 +126,7 @@ export const useAdminLogsPage = () => {
 				// silently ignore live poll errors
 			}
 		}, LIVE_INTERVAL_MS);
-	};
+	}, [queryClient, stopLive]);
 
 	useEffect(() => {
 		if (isLive && page === 1) {

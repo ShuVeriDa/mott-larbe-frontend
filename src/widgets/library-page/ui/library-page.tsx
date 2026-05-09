@@ -33,6 +33,7 @@ export const LibraryPage = () => {
 		orderBy: sort,
 		search: search || undefined,
 	});
+	const { hasNextPage, isFetchingNextPage, fetchNextPage } = query;
 
 	useEffect(() => {
 		const sentinel = sentinelRef.current;
@@ -41,17 +42,17 @@ export const LibraryPage = () => {
 			([entry]) => {
 				if (
 					entry.isIntersecting &&
-					query.hasNextPage &&
-					!query.isFetchingNextPage
+					hasNextPage &&
+					!isFetchingNextPage
 				) {
-					query.fetchNextPage();
+					fetchNextPage();
 				}
 			},
 			{ rootMargin: "200px" },
 		);
 		observer.observe(sentinel);
 		return () => observer.disconnect();
-	}, [query.hasNextPage, query.isFetchingNextPage, query.fetchNextPage]);
+	}, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
 	const handleRefresh = () => {
 		qc.invalidateQueries({ queryKey: libraryTextKeys.root });

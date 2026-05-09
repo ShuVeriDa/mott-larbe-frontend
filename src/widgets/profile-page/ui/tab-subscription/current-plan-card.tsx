@@ -7,7 +7,6 @@ import { Button } from "@/shared/ui/button";
 import {
 	useMySubscription,
 	useUsage,
-	formatPrice,
 	isUnlimited,
 	UNLIMITED_SYMBOL,
 	type Subscription,

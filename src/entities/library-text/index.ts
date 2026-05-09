@@ -12,6 +12,9 @@ export type {
 	LibraryTextPage,
 	LibraryTextWordStats,
 	LibraryRelatedText,
+	TextReportBody,
+	TextReportReason,
+	TextReportResponse,
 } from "./api";
 export {
 	useLibraryTexts,

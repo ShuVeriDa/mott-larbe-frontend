@@ -11,7 +11,10 @@ export const useTokenTimer = (
 ): TokenTimeLeft | null => {
 	const [timeLeft, setTimeLeft] = useState<TokenTimeLeft | null>(null);
 	const onExpireRef = useRef(onExpire);
-	onExpireRef.current = onExpire;
+
+	useEffect(() => {
+		onExpireRef.current = onExpire;
+	}, [onExpire]);
 
 	useEffect(() => {
 		if (!expiresAt) return;

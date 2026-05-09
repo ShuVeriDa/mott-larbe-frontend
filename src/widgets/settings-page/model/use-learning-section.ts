@@ -13,7 +13,7 @@ import {
 } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
-import { type ChangeEvent, type SyntheticEvent, useEffect, useState } from 'react';
+import { type ChangeEvent, useEffect, useState } from "react";
 export interface UseLearningSectionParams {
 	preferences: UserPreferences;
 	goals: UserGoals;
@@ -43,14 +43,13 @@ export const useLearningSection = ({
 	const [dailyMinutes, setDailyMinutes] = useState<number>(goals.dailyMinutes);
 
 	useEffect(() => {
+		// Sync local form state when user profile arrives.
+		// eslint-disable-next-line react-hooks/set-state-in-effect
 		if (user?.language) setLearningLang(user.language);
 		if (user?.level) setLevel(user.level);
 	}, [user?.language, user?.level]);
 
-	const handleLanguageSave = async (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleLanguageSave = async () => {
 		try {
 			await Promise.all([
 				updatePrefs({ translationLanguage: transLang }),
@@ -62,10 +61,7 @@ export const useLearningSection = ({
 		}
 	};
 
-	const handleGoalsSave = async (
-		e: SyntheticEvent<HTMLFormElement, SubmitEvent>,
-	) => {
-		e.preventDefault();
+	const handleGoalsSave = async () => {
 		try {
 			await updateGoals({ dailyWords, dailyMinutes });
 			success(t("settings.toasts.goalsSaved"));
@@ -79,7 +75,7 @@ export const useLearningSection = ({
 	};
 
 	const handleLevelChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		setLevel(e.currentTarget.value);
+		setLevel(e.currentTarget.value as UserLevel);
 	};
 
 	const handleTransLangChange = (e: ChangeEvent<HTMLSelectElement>) => {

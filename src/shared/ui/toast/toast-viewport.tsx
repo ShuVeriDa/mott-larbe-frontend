@@ -1,17 +1,11 @@
 "use client";
-import { ComponentProps, useEffect, useState } from 'react';
+import { ComponentProps } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/shared/lib/cn";
-import { useToastStore } from "@/shared/lib/toast";
+import { useToastViewport } from "@/shared/lib/toast";
 
 export const ToastViewport = () => {
-	const items = useToastStore((s) => s.items);
-	const dismiss = useToastStore((s) => s.dismiss);
-	const [mounted, setMounted] = useState(false);
-
-	useEffect(() => {
-		setMounted(true);
-	}, []);
+	const { items, mounted, handleDismiss } = useToastViewport();
 
 	if (!mounted || typeof window === "undefined") return null;
 
@@ -23,7 +17,8 @@ export const ToastViewport = () => {
 			className="pointer-events-none fixed inset-x-0 bottom-6 z-[300] flex flex-col items-center gap-2 px-4"
 		>
 			{items.map((item) => {
-			  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => dismiss(item.id);
+				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+					handleDismiss(item.id);
 			  return (
 				<button
 					key={item.id}

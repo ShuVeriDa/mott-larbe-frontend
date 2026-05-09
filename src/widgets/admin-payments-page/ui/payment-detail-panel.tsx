@@ -123,9 +123,7 @@ export const PaymentDetailPanel = ({
 	const { t } = useI18n();
 
 	const sc = STATUS_CFG[payment.status] ?? STATUS_CFG.PENDING;
-	const planCode = payment.subscription?.plan?.type ?? "";
 	const planName = payment.subscription?.plan?.name ?? "—";
-	const planChipCls = PLAN_CHIP_CFG[planCode] ?? "bg-surf-3 text-t-2";
 	const provColor = PROVIDER_COLORS[payment.provider] ?? "#a5a39a";
 	const amtStr = fmtAmount(payment);
 	const amtColor =

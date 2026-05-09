@@ -105,8 +105,6 @@ const SkeletonRow = () => (
 	</tr>
 );
 
-type SortableCol = { key: CouponSortBy; label: string };
-
 export const CouponsTable = ({
 	items,
 	selectedId,
@@ -119,11 +117,6 @@ export const CouponsTable = ({
 	onSortChange,
 }: Props) => {
 	const { t } = useI18n();
-
-	const sortableCols: SortableCol[] = [
-		{ key: "code", label: t("admin.coupons.table.code") },
-		{ key: "createdAt", label: t("admin.coupons.table.name") },
-	];
 
 	const renderSortableTh = (key: CouponSortBy, label: string, extraClass?: string) => {
 	  const handleClick: NonNullable<ComponentProps<"th">["onClick"]> = () => onSortChange(key);

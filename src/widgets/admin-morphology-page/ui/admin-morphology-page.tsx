@@ -1,6 +1,7 @@
 "use client";
 
-import type { ImportMorphRulesResult } from "@/entities/morph-rule";import { ComponentProps, useState } from 'react';
+import type { ImportMorphRulesResult } from "@/entities/morph-rule";
+import { ComponentProps, useState } from 'react';
 import { useAdminMorphologyPage } from "../model/use-admin-morphology-page";
 import { MorphologyBulkBar } from "./morphology-bulk-bar";
 import { MorphologyImportModal } from "./morphology-import-modal";
@@ -35,7 +36,6 @@ export const AdminMorphologyPage = () => {
 		importModalOpen,
 		createMutation,
 		updateMutation,
-		deleteMutation,
 		bulkActivateMutation,
 		bulkDeactivateMutation,
 		bulkDeleteMutation,

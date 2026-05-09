@@ -22,6 +22,7 @@ export const HeadwordModal = ({
 
 	useEffect(() => {
 		if (isOpen) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- reset modal fields on open
 			setWord("");
 			setIsPrimary(false);
 			setTimeout(() => inputRef.current?.focus(), 50);

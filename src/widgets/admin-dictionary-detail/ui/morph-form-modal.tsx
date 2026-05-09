@@ -49,6 +49,7 @@ export const MorphFormModal = ({
 
 	useEffect(() => {
 		if (isOpen) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate modal fields from selected form
 			setForm(editForm?.form ?? "");
 			setGramCase(editForm?.gramCase ?? "");
 			setGramNumber(editForm?.gramNumber ?? "");

@@ -25,6 +25,7 @@ export const SenseModal = ({
 
 	useEffect(() => {
 		if (isOpen) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate modal fields from selected sense
 			setDefinition(editSense?.definition ?? "");
 			setNotes(editSense?.notes ?? "");
 			setTimeout(() => inputRef.current?.focus(), 50);

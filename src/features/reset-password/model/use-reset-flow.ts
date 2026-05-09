@@ -51,6 +51,7 @@ export const useResetFlow = () => {
 
 	useEffect(() => {
 		if (tokenValidation.data && !tokenValidation.data.valid) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- transition UI to explicit expired state
 			goExpired();
 		}
 	}, [tokenValidation.data]);

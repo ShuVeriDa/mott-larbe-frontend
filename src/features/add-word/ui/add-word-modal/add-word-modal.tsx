@@ -1,15 +1,11 @@
 "use client";
 
-import axios from "axios";
-import { ComponentProps, useState } from "react";
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { Modal, ModalActions } from "@/shared/ui/modal";
 import { Select } from "@/shared/ui/select";
-import { useI18n } from "@/shared/lib/i18n";
-import { CEFR_LEVELS, type CefrLevel } from "@/shared/types";
-import { useFolders } from "@/entities/folder";
-import { useAddWord } from "../../model";
+import { CEFR_LEVELS } from "@/shared/types";
+import { useAddWordModal } from "../../model";
 
 export interface AddWordModalProps {
 	open: boolean;
@@ -17,48 +13,23 @@ export interface AddWordModalProps {
 }
 
 export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
-	const { t } = useI18n();
-	const { data: folders } = useFolders();
-	const { mutateAsync, isPending } = useAddWord();
+	const {
+		t,
+		folders,
+		isPending,
+		word,
+		translation,
+		folderId,
+		cefrLevel,
+		error,
+		handleSubmit,
+		handleWordChange,
+		handleTranslationChange,
+		handleFolderChange,
+		handleCefrLevelChange,
+	} = useAddWordModal({ onClose });
 
-	const [word, setWord] = useState("");
-	const [translation, setTranslation] = useState("");
-	const [folderId, setFolderId] = useState<string>("");
-	const [cefrLevel, setCefrLevel] = useState<string>("");
-	const [error, setError] = useState<string | null>(null);
-
-	const reset = () => {
-		setWord("");
-		setTranslation("");
-		setFolderId("");
-		setCefrLevel("");
-		setError(null);
-	};
-
-	const handleSubmit = async () => {
-		if (!word.trim() || !translation.trim()) return;
-		setError(null);
-		try {
-			await mutateAsync({
-				word: word.trim(),
-				translation: translation.trim(),
-				folderId: folderId || null,
-				cefrLevel: (cefrLevel as CefrLevel) || null,
-			});
-			reset();
-			onClose();
-		} catch (err) {
-			if (axios.isAxiosError(err) && err.response?.status === 403) {
-				setError(t("vocabulary.limitReached"));
-			}
-		}
-	};
-
-		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setWord(e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setTranslation(e.currentTarget.value);
-	const handleChange3: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => setFolderId(e.currentTarget.value);
-	const handleChange4: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => setCefrLevel(e.currentTarget.value);
-return (
+	return (
 		<Modal
 			open={open}
 			onClose={onClose}
@@ -71,7 +42,7 @@ return (
 				<Input
 					id="add-word-input"
 					value={word}
-					onChange={handleChange}
+					onChange={handleWordChange}
 					placeholder={t("vocabulary.addModal.wordPlaceholder")}
 					className="mb-3"
 					required
@@ -83,7 +54,7 @@ return (
 				<Input
 					id="add-word-translation"
 					value={translation}
-					onChange={handleChange2}
+					onChange={handleTranslationChange}
 					placeholder={t("vocabulary.addModal.translationPlaceholder")}
 					className="mb-3"
 					required
@@ -95,7 +66,7 @@ return (
 				<Select
 					id="add-word-folder"
 					value={folderId}
-					onChange={handleChange3}
+					onChange={handleFolderChange}
 					wrapperClassName="mb-3"
 				>
 					<option value="">{t("vocabulary.card.noFolder")}</option>
@@ -112,7 +83,7 @@ return (
 				<Select
 					id="add-word-level"
 					value={cefrLevel}
-					onChange={handleChange4}
+					onChange={handleCefrLevelChange}
 					wrapperClassName="mb-3"
 				>
 					<option value="">—</option>

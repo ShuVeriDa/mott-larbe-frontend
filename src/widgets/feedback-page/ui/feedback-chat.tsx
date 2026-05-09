@@ -28,13 +28,14 @@ export const FeedbackChat = ({
 }: FeedbackChatProps) => {
 	const { data: thread, isPending } = useFeedbackThread(threadId);
 	const sendMessage = useSendFeedbackMessage(threadId);
-	const markRead = useMarkFeedbackRead();
+	const { mutate: markReadThread } = useMarkFeedbackRead();
+	const unreadCount = thread?.unreadCountUser ?? 0;
 
 	useEffect(() => {
-		if (thread && thread.unreadCountUser > 0) {
-			markRead.mutate(threadId);
+		if (unreadCount > 0) {
+			markReadThread(threadId);
 		}
-	}, [threadId, thread?.unreadCountUser]);
+	}, [threadId, unreadCount, markReadThread]);
 
 	const isClosed = thread?.status === "RESOLVED";
 
@@ -42,7 +43,7 @@ export const FeedbackChat = ({
 return (
 		<div
 			className={[
-				"flex flex-1 min-w-0 flex-col bg-bg transition-transform duration-[280ms]",
+				"flex flex-1 min-w-0 flex-col bg-bg transition-transform duration-280",
 				// Mobile: absolute, slides in from right
 				"max-sm:absolute max-sm:inset-0 max-sm:z-10",
 				isMobileVisible ? "max-sm:translate-x-0" : "max-sm:translate-x-full",

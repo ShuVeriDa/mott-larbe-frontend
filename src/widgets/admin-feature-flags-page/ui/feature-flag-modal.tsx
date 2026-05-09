@@ -2,22 +2,13 @@
 
 import type {
 	CreateFeatureFlagDto,
-	FeatureFlagCategory,
 	FeatureFlagEnvironment,
 	FeatureFlagItem,
 	UpdateFeatureFlagDto,
 } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
-import { ComponentProps, useEffect, useState } from 'react';
+import { useFeatureFlagModal } from "../model/use-feature-flag-modal";
 import { FlagToggle } from "./flag-toggle";
-
-const CATEGORIES: FeatureFlagCategory[] = [
-	"FUNCTIONAL",
-	"EXPERIMENTS",
-	"TECHNICAL",
-	"MONETIZATION",
-];
-const ENVIRONMENTS: FeatureFlagEnvironment[] = ["PROD", "STAGE", "DEV"];
 
 const ENV_SELECTED_STYLES: Record<FeatureFlagEnvironment, string> = {
 	PROD: "border-red-400 bg-red-bg text-red-t",
@@ -39,8 +30,6 @@ interface FeatureFlagModalProps {
 	t: (key: string) => string;
 }
 
-const DEFAULT_ENVS: FeatureFlagEnvironment[] = ["PROD", "STAGE", "DEV"];
-
 export const FeatureFlagModal = ({
 	open,
 	editFlag,
@@ -49,84 +38,42 @@ export const FeatureFlagModal = ({
 	onClose,
 	t,
 }: FeatureFlagModalProps) => {
-	const isEdit = !!editFlag;
-
-	const [key, setKey] = useState("");
-	const [description, setDescription] = useState("");
-	const [category, setCategory] = useState<FeatureFlagCategory>("FUNCTIONAL");
-	const [environments, setEnvironments] =
-		useState<FeatureFlagEnvironment[]>(DEFAULT_ENVS);
-	const [rolloutPercent, setRolloutPercent] = useState(100);
-	const [isEnabled, setIsEnabled] = useState(false);
-	const [keyError, setKeyError] = useState("");
-
-	useEffect(() => {
-		if (!open) return;
-		if (editFlag) {
-			setKey(editFlag.key);
-			setDescription(editFlag.description ?? "");
-			setCategory(editFlag.category);
-			setEnvironments(editFlag.environments);
-			setRolloutPercent(editFlag.rolloutPercent);
-			setIsEnabled(editFlag.isEnabled);
-		} else {
-			setKey("");
-			setDescription("");
-			setCategory("FUNCTIONAL");
-			setEnvironments(DEFAULT_ENVS);
-			setRolloutPercent(100);
-			setIsEnabled(false);
-		}
-		setKeyError("");
-	}, [open, editFlag]);
-
-	const toggleEnv = (env: FeatureFlagEnvironment) => {
-		setEnvironments(prev =>
-			prev.includes(env) ? prev.filter(e => e !== env) : [...prev, env],
-		);
-	};
-
-	const handleSubmit = () => {
-		const keyPattern = /^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/;
-		if (!keyPattern.test(key)) {
-			setKeyError(t("admin.featureFlags.modal.keyHint"));
-			return;
-		}
-		if (environments.length === 0) return;
-
-		const dto: CreateFeatureFlagDto = {
-			key,
-			description: description.trim() || undefined,
-			isEnabled,
-			category,
-			environments,
-			rolloutPercent,
-		};
-		onSubmit(dto);
-	};
+	const {
+		categories,
+		environmentsList,
+		isEdit,
+		key,
+		description,
+		category,
+		environments,
+		rolloutPercent,
+		isEnabled,
+		keyError,
+		setIsEnabled,
+		handleSubmit,
+		handleBackdropClick,
+		handleKeyChange,
+		handleDescriptionChange,
+		handleCategoryChange,
+		handleRolloutPercentChange,
+		handleEnvironmentClick,
+	} = useFeatureFlagModal({
+		open,
+		editFlag,
+		onSubmit,
+		onClose,
+		t,
+	});
 
 	if (!open) return null;
 
 	const inputCls =
 		"h-[34px] w-full rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc";
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
-				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
-			};
-	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => {
-							setKey(e.currentTarget.value);
-							setKeyError("");
-						};
-	const handleChange2: NonNullable<ComponentProps<"textarea">["onChange"]> = e => setDescription(e.currentTarget.value);
-	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => setCategory(e.currentTarget.value as FeatureFlagCategory);
-	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = e =>
-								setRolloutPercent(
-									Math.max(0, Math.min(100, Number(e.currentTarget.value))),
-								);
-return (
+	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={handleClick}
+			onClick={handleBackdropClick}
 		>
 			<div className="w-[480px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08),0_2px_4px_rgba(0,0,0,0.04)] max-sm:w-full max-sm:max-h-[92vh] max-sm:overflow-y-auto max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -149,7 +96,7 @@ return (
 						className={cn(inputCls, keyError && "border-red-400")}
 						placeholder="category.feature_name"
 						value={key}
-						onChange={handleChange}
+						onChange={handleKeyChange}
 						disabled={isEdit}
 					/>
 					{keyError ? (
@@ -170,7 +117,7 @@ return (
 						className="w-full min-h-[64px] resize-y rounded-[8px] border border-bd-2 bg-bg px-2.5 py-2 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 						placeholder={t("admin.featureFlags.modal.descPlaceholder")}
 						value={description}
-						onChange={handleChange2}
+						onChange={handleDescriptionChange}
 					/>
 				</div>
 
@@ -183,9 +130,9 @@ return (
 						<select
 							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 							value={category}
-							onChange={handleChange3}
+							onChange={handleCategoryChange}
 						>
-							{CATEGORIES.map(c => (
+							{categories.map(c => (
 								<option key={c} value={c}>
 									{t(`admin.featureFlags.category.${c}`)}
 								</option>
@@ -202,8 +149,7 @@ return (
 							max={100}
 							className={inputCls}
 							value={rolloutPercent}
-							onChange={handleChange4
-							}
+							onChange={handleRolloutPercentChange}
 						/>
 					</div>
 				</div>
@@ -214,14 +160,14 @@ return (
 						{t("admin.featureFlags.modal.envsLabel")}
 					</label>
 					<div className="flex flex-wrap gap-1.5">
-						{ENVIRONMENTS.map(env => {
+						{environmentsList.map(env => {
 							const selected = environments.includes(env);
-														const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => toggleEnv(env);
 return (
 								<button
 									key={env}
 									type="button"
-									onClick={handleClick}
+									data-environment={env}
+									onClick={handleEnvironmentClick}
 									className={cn(
 										"flex cursor-pointer items-center gap-1.5 rounded-[6px] border px-2.5 py-[5px] text-[12px] transition-all select-none",
 										selected

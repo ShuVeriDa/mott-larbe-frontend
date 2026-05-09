@@ -48,6 +48,7 @@ export const AddLemmaModal = ({
 
 	useEffect(() => {
 		if (isOpen) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- reset modal fields for fresh entry
 			setBaseForm("");
 			setLanguage("CHE");
 			setPartOfSpeech("");

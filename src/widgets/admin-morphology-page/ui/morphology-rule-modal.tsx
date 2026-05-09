@@ -49,6 +49,7 @@ export const MorphologyRuleModal = ({
 
 	useEffect(() => {
 		if (rule) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate form when editing existing rule
 			setForm({
 				suffix: rule.suffix,
 				add: rule.add ?? "",
