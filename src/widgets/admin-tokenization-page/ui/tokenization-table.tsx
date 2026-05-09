@@ -129,24 +129,24 @@ export const TokenizationTable = ({
 				</thead>
 				<tbody>
 					{items.map((item) => {
-					  const handleClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onRowClick(item.id);
-					  const handleClick2: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onToggleRow(item.id);
-					  const handleClick3: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.cancelText.mutate(item.id);
-					  const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.runText.mutate(item.id);
-					  const handleClick6: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.resetText.mutate(item.id);
+					  const handleRowClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onRowClick(item.id);
+					  const handleCheckboxClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleToggleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onToggleRow(item.id);
+					  const handleActionsClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleCancelClick: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.cancelText.mutate(item.id);
+					  const handleRunClick: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.runText.mutate(item.id);
+					  const handleResetClick: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.resetText.mutate(item.id);
 					  return (
 						<tr
 							key={item.id}
-							onClick={handleClick}
+							onClick={handleRowClick}
 							className="cursor-pointer border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2 group"
 						>
-							<td className="py-2.5 pl-3.5 pr-2" onClick={handleClick2}>
+							<td className="py-2.5 pl-3.5 pr-2" onClick={handleCheckboxClick}>
 								<input
 									type="checkbox"
 									checked={selectedIds.has(item.id)}
-									onChange={handleChange}
+									onChange={handleToggleChange}
 									className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
 								/>
 							</td>
@@ -196,11 +196,11 @@ export const TokenizationTable = ({
 									<Typography tag="span" className="text-t-4">—</Typography>
 								)}
 							</td>
-							<td className="px-2 py-2.5" onClick={handleClick3}>
+							<td className="px-2 py-2.5" onClick={handleActionsClick}>
 								<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
 									{item.processingStatus === "RUNNING" ? (
 										<Button
-											onClick={handleClick4}
+											onClick={handleCancelClick}
 											disabled={mutations.cancelText.isPending}
 											title={t("admin.tokenization.row.cancel")}
 											className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
@@ -211,7 +211,7 @@ export const TokenizationTable = ({
 										</Button>
 									) : (
 										<Button
-											onClick={handleClick5}
+											onClick={handleRunClick}
 											disabled={mutations.runText.isPending}
 											title={t("admin.tokenization.row.run")}
 											className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
@@ -222,7 +222,7 @@ export const TokenizationTable = ({
 										</Button>
 									)}
 									<Button
-										onClick={handleClick6}
+										onClick={handleResetClick}
 										disabled={mutations.resetText.isPending}
 										title={t("admin.tokenization.row.reset")}
 										className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"

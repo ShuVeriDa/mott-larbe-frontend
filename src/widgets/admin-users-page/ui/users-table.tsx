@@ -150,19 +150,19 @@ export const UsersTable = ({
 				</thead>
 				<tbody>
 					{users.map((user) => {
-					  const handleClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onToggleRow(user.id);
-					  const handleClick2: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleCheckboxClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleToggleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onToggleRow(user.id);
+					  const handleActionsClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
 					  return (
 						<tr
 							key={user.id}
 							className="cursor-pointer border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2"
 						>
-							<td className="px-2.5 py-[9px] pl-3.5" onClick={handleClick}>
+							<td className="px-2.5 py-[9px] pl-3.5" onClick={handleCheckboxClick}>
 								<input
 									type="checkbox"
 									checked={selectedIds.has(user.id)}
-									onChange={handleChange}
+									onChange={handleToggleChange}
 									className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
 								/>
 							</td>
@@ -214,7 +214,7 @@ export const UsersTable = ({
 									year: "numeric",
 								})}
 							</td>
-							<td className="px-2.5 py-[9px]" onClick={handleClick2}>
+							<td className="px-2.5 py-[9px]" onClick={handleActionsClick}>
 								<UserRowActions user={user} mutations={mutations} />
 							</td>
 						</tr>

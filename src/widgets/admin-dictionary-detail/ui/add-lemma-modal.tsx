@@ -84,17 +84,17 @@ export const AddLemmaModal = ({
 		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[12.5px] text-t-2 outline-none transition-colors focus:border-acc appearance-none cursor-pointer";
 	const labelCls = "mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2";
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
-	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setBaseForm(e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => setPartOfSpeech(e.currentTarget.value);
-	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => setLevel(e.currentTarget.value as CefrLevel | "");
-	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = e => setFrequency(e.currentTarget.value);
-	const handleChange5: NonNullable<ComponentProps<"select">["onChange"]> = e => setLanguage(e.currentTarget.value as AdminDictLanguage);
-	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = e => setIsPrimary(e.currentTarget.checked);
+		const handleBackdropClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleBaseFormChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setBaseForm(e.currentTarget.value);
+	const handlePosChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setPartOfSpeech(e.currentTarget.value);
+	const handleLevelChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setLevel(e.currentTarget.value as CefrLevel | "");
+	const handleFrequencyChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setFrequency(e.currentTarget.value);
+	const handleLanguageChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setLanguage(e.currentTarget.value as AdminDictLanguage);
+	const handlePrimaryChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setIsPrimary(e.currentTarget.checked);
 return (
 		<div
 			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
-			onClick={handleClick}
+			onClick={handleBackdropClick}
 		>
 			<div className="w-[480px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
 				<div className="mb-1 font-display text-[15px] text-t-1">
@@ -113,7 +113,7 @@ return (
 							className={`${inputCls} font-display text-[14px]`}
 							type="text"
 							value={baseForm}
-							onChange={handleChange}
+							onChange={handleBaseFormChange}
 							placeholder={t("admin.dictionaryDetail.baseFormPlaceholder")}
 						/>
 					</div>
@@ -124,7 +124,7 @@ return (
 							<select
 								className={selectCls}
 								value={partOfSpeech}
-								onChange={handleChange2}
+								onChange={handlePosChange}
 							>
 								<option value="">
 									— {t("admin.dictionaryDetail.selectPos")} —
@@ -143,7 +143,7 @@ return (
 							<select
 								className={selectCls}
 								value={level}
-								onChange={handleChange3}
+								onChange={handleLevelChange}
 							>
 								<option value="">
 									— {t("admin.dictionaryDetail.selectLevel")} —
@@ -167,7 +167,7 @@ return (
 								type="number"
 								min={0}
 								value={frequency}
-								onChange={handleChange4}
+								onChange={handleFrequencyChange}
 								placeholder="0"
 							/>
 						</div>
@@ -178,7 +178,7 @@ return (
 							<select
 								className={selectCls}
 								value={language}
-								onChange={handleChange5}
+								onChange={handleLanguageChange}
 							>
 								<option value="CHE">CHE</option>
 								<option value="RU">RU</option>
@@ -191,7 +191,7 @@ return (
 							type="checkbox"
 							className="size-4 cursor-pointer rounded"
 							checked={isPrimary}
-							onChange={handleChange6}
+							onChange={handlePrimaryChange}
 						/>
 						<Typography tag="span" className="text-[13px] text-t-2">
 							{t("admin.dictionaryDetail.markAsPrimary")}

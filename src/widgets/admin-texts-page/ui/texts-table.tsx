@@ -41,11 +41,11 @@ const TextTableRow = ({ text, selected, onToggle, mutations }: TextTableRowProps
 		: text.processingStatus;
 	const processingProgress = sseData?.progress ?? text.processingProgress;
 
-		const handleClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-	const handleClick2: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+		const handleCheckboxClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+	const handleActionsClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
 return (
 		<tr className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2">
-			<td className="px-2.5 py-[10px] pl-3.5" onClick={handleClick}>
+			<td className="px-2.5 py-[10px] pl-3.5" onClick={handleCheckboxClick}>
 				<input
 					type="checkbox"
 					checked={selected}
@@ -108,7 +108,7 @@ return (
 				{formatDate(text.createdAt)}
 			</td>
 
-			<td className="px-2.5 py-[10px]" onClick={handleClick2}>
+			<td className="px-2.5 py-[10px]" onClick={handleActionsClick}>
 				<TextRowActions text={text} mutations={mutations} />
 			</td>
 		</tr>

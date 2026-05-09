@@ -1,7 +1,6 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
 import { ComponentProps, MouseEvent, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
@@ -47,6 +46,8 @@ const usageColor = (redeemed: number, max: number | null | undefined) => {
 	if (pct >= 0.8) return "bg-amb";
 	return "bg-acc";
 };
+
+// ── Sub-components ─────────────────────────────────────────────────────────────
 
 const SortIcon = ({ active, order }: { active: boolean; order: "asc" | "desc" }) => (
 	<svg
@@ -109,6 +110,137 @@ const SkeletonRow = () => (
 	</tr>
 );
 
+const CouponRow = ({
+	item,
+	isSelected,
+	onSelectRow,
+	onEdit,
+	onDelete,
+	t,
+}: {
+	item: AdminCouponListItem;
+	isSelected: boolean;
+	onSelectRow: (id: string) => void;
+	onEdit: (id: string) => void;
+	onDelete: (id: string) => void;
+	t: ReturnType<typeof useI18n>["t"];
+}) => {
+	const maxR = item.maxRedemptions;
+	const pct = maxR ? Math.min((item.redeemedCount / maxR) * 100, 100) : 0;
+
+	const handleRowClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onSelectRow(item.id);
+	const handleEditClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onEdit(item.id); };
+	const handleDeleteClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onDelete(item.id); };
+
+	return (
+		<tr
+			onClick={handleRowClick}
+			className={cn(
+				"cursor-pointer border-b border-bd-1 transition-colors last:border-b-0",
+				isSelected ? "bg-acc-bg" : "hover:bg-surf-2",
+			)}
+		>
+			{/* Code */}
+			<td className="px-3.5 py-2.5">
+				<CouponCodeChip code={item.code} />
+			</td>
+
+			{/* Name */}
+			<td className="max-w-[140px] px-3.5 py-2.5">
+				<Typography tag="span" className="block truncate text-t-2">{item.name ?? "—"}</Typography>
+			</td>
+
+			{/* Discount */}
+			<td className="px-3.5 py-2.5">
+				<Typography tag="span" className="text-[13.5px] font-bold text-t-1">
+					{item.amount}
+				</Typography>
+				<Typography tag="span" className="ml-0.5 text-[10.5px] text-t-3">
+					{item.type === "PERCENT" ? "%" : "₽"}
+				</Typography>
+			</td>
+
+			{/* Plans */}
+			<td className="px-3.5 py-2.5 max-md:hidden">
+				{item.applicablePlans.length === 0 ? (
+					<Typography tag="span" className="rounded bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
+						{t("admin.coupons.table.planAll")}
+					</Typography>
+				) : (
+					<div className="flex flex-wrap gap-1">
+						{item.applicablePlans.slice(0, 3).map((p) => (
+							<Typography tag="span"
+								key={p}
+								className={cn("rounded px-1.5 py-0.5 text-[10px] font-semibold", PLAN_STYLES[p] ?? "bg-surf-3 text-t-2")}
+							>
+								{p.charAt(0) + p.slice(1).toLowerCase()}
+							</Typography>
+						))}
+						{item.applicablePlans.length > 3 && (
+							<Typography tag="span" className="rounded bg-surf-3 px-1.5 py-0.5 text-[10px] text-t-3">
+								+{item.applicablePlans.length - 3}
+							</Typography>
+						)}
+					</div>
+				)}
+			</td>
+
+			{/* Uses */}
+			<td className="px-3.5 py-2.5 max-sm:hidden">
+				<div className="flex items-center gap-2">
+					{maxR && (
+						<div className="h-[5px] min-w-[50px] flex-1 overflow-hidden rounded-full bg-surf-3 max-md:hidden">
+							<div
+								className={cn("h-full rounded-full transition-all", usageColor(item.redeemedCount, maxR))}
+								style={{ width: `${pct}%` }}
+							/>
+						</div>
+					)}
+					<Typography tag="span" className="whitespace-nowrap text-[11.5px] font-medium text-t-2">
+						{item.redeemedCount}
+						{maxR ? ` / ${maxR}` : ""}
+					</Typography>
+				</div>
+			</td>
+
+			{/* Valid until */}
+			<td className="px-3.5 py-2.5 text-[12px] text-t-3 max-sm:hidden">
+				{formatDate(item.validUntil)}
+			</td>
+
+			{/* Status */}
+			<td className="px-3.5 py-2.5">
+				<Typography tag="span" className={cn("inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold", STATUS_STYLES[item.computedStatus])}>
+					{item.computedStatus === "active" && (
+						<Typography tag="span" className="size-[5px] rounded-full bg-grn" />
+					)}
+					{t(`admin.coupons.status.${item.computedStatus}`)}
+				</Typography>
+			</td>
+
+			{/* Actions */}
+			<td className="px-3.5 py-2.5">
+				<div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100 [tr:hover_&]:opacity-100 [tr.bg-acc-bg_&]:opacity-100">
+					<Button
+						onClick={handleEditClick}
+						className="flex h-6 items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
+					>
+						{t("admin.coupons.table.edit")}
+					</Button>
+					<Button
+						onClick={handleDeleteClick}
+						className="flex h-6 items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
+					>
+						{t("admin.coupons.table.delete")}
+					</Button>
+				</div>
+			</td>
+		</tr>
+	);
+};
+
+// ── Main component ─────────────────────────────────────────────────────────────
+
 export const CouponsTable = ({
 	items,
 	selectedId,
@@ -123,20 +255,20 @@ export const CouponsTable = ({
 	const { t } = useI18n();
 
 	const renderSortableTh = (key: CouponSortBy, label: string, extraClass?: string) => {
-	  const handleClick: NonNullable<ComponentProps<"th">["onClick"]> = () => onSortChange(key);
-	  return (
-		<th
-			key={key}
-			onClick={handleClick}
-			className={cn(
-				"cursor-pointer select-none whitespace-nowrap px-3.5 py-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 hover:text-t-1",
-				extraClass,
-			)}
-		>
-			{label}
-			<SortIcon active={sortBy === key} order={sortOrder} />
-		</th>
-	);
+		const handleClick: NonNullable<ComponentProps<"th">["onClick"]> = () => onSortChange(key);
+		return (
+			<th
+				key={key}
+				onClick={handleClick}
+				className={cn(
+					"cursor-pointer select-none whitespace-nowrap px-3.5 py-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 hover:text-t-1",
+					extraClass,
+				)}
+			>
+				{label}
+				<SortIcon active={sortBy === key} order={sortOrder} />
+			</th>
+		);
 	};
 
 	const renderStaticTh = (label: string, extraClass?: string) => (
@@ -177,121 +309,17 @@ export const CouponsTable = ({
 								</td>
 							</tr>
 						)
-						: items.map((item) => {
-							const maxR = item.maxRedemptions;
-							const pct = maxR ? Math.min((item.redeemedCount / maxR) * 100, 100) : 0;
-							const isSelected = item.id === selectedId;
-
-														const handleClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onSelectRow(item.id);
-							const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onEdit(item.id); };
-							const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onDelete(item.id); };
-return (
-								<tr
-									key={item.id}
-									onClick={handleClick}
-									className={cn(
-										"cursor-pointer border-b border-bd-1 transition-colors last:border-b-0",
-										isSelected ? "bg-acc-bg" : "hover:bg-surf-2",
-									)}
-								>
-									{/* Code */}
-									<td className="px-3.5 py-2.5">
-										<CouponCodeChip code={item.code} />
-									</td>
-
-									{/* Name */}
-									<td className="max-w-[140px] px-3.5 py-2.5">
-										<Typography tag="span" className="block truncate text-t-2">{item.name ?? "—"}</Typography>
-									</td>
-
-									{/* Discount */}
-									<td className="px-3.5 py-2.5">
-										<Typography tag="span" className="text-[13.5px] font-bold text-t-1">
-											{item.amount}
-										</Typography>
-										<Typography tag="span" className="ml-0.5 text-[10.5px] text-t-3">
-											{item.type === "PERCENT" ? "%" : "₽"}
-										</Typography>
-									</td>
-
-									{/* Plans */}
-									<td className="px-3.5 py-2.5 max-md:hidden">
-										{item.applicablePlans.length === 0 ? (
-											<Typography tag="span" className="rounded bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
-												{t("admin.coupons.table.planAll")}
-											</Typography>
-										) : (
-											<div className="flex flex-wrap gap-1">
-												{item.applicablePlans.slice(0, 3).map((p) => (
-													<Typography tag="span"
-														key={p}
-														className={cn("rounded px-1.5 py-0.5 text-[10px] font-semibold", PLAN_STYLES[p] ?? "bg-surf-3 text-t-2")}
-													>
-														{p.charAt(0) + p.slice(1).toLowerCase()}
-													</Typography>
-												))}
-												{item.applicablePlans.length > 3 && (
-													<Typography tag="span" className="rounded bg-surf-3 px-1.5 py-0.5 text-[10px] text-t-3">
-														+{item.applicablePlans.length - 3}
-													</Typography>
-												)}
-											</div>
-										)}
-									</td>
-
-									{/* Uses */}
-									<td className="px-3.5 py-2.5 max-sm:hidden">
-										<div className="flex items-center gap-2">
-											{maxR && (
-												<div className="h-[5px] min-w-[50px] flex-1 overflow-hidden rounded-full bg-surf-3 max-md:hidden">
-													<div
-														className={cn("h-full rounded-full transition-all", usageColor(item.redeemedCount, maxR))}
-														style={{ width: `${pct}%` }}
-													/>
-												</div>
-											)}
-											<Typography tag="span" className="whitespace-nowrap text-[11.5px] font-medium text-t-2">
-												{item.redeemedCount}
-												{maxR ? ` / ${maxR}` : ""}
-											</Typography>
-										</div>
-									</td>
-
-									{/* Valid until */}
-									<td className="px-3.5 py-2.5 text-[12px] text-t-3 max-sm:hidden">
-										{formatDate(item.validUntil)}
-									</td>
-
-									{/* Status */}
-									<td className="px-3.5 py-2.5">
-										<Typography tag="span" className={cn("inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold", STATUS_STYLES[item.computedStatus])}>
-											{item.computedStatus === "active" && (
-												<Typography tag="span" className="size-[5px] rounded-full bg-grn" />
-											)}
-											{t(`admin.coupons.status.${item.computedStatus}`)}
-										</Typography>
-									</td>
-
-									{/* Actions */}
-									<td className="px-3.5 py-2.5">
-										<div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100 [tr:hover_&]:opacity-100 [tr.bg-acc-bg_&]:opacity-100">
-											<Button
-												onClick={handleClick2}
-												className="flex h-6 items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
-											>
-												{t("admin.coupons.table.edit")}
-											</Button>
-											<Button
-												onClick={handleClick3}
-												className="flex h-6 items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
-											>
-												{t("admin.coupons.table.delete")}
-											</Button>
-										</div>
-									</td>
-								</tr>
-							);
-						})}
+						: items.map((item) => (
+							<CouponRow
+								key={item.id}
+								item={item}
+								isSelected={item.id === selectedId}
+								onSelectRow={onSelectRow}
+								onEdit={onEdit}
+								onDelete={onDelete}
+								t={t}
+							/>
+						))}
 				</tbody>
 			</table>
 		</div>

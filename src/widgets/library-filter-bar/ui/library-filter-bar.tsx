@@ -49,13 +49,13 @@ export const LibraryFilterBar = () => {
 		setView,
 	} = useLibraryFilters();
 
-		const handleClick: NonNullable<ComponentProps<typeof Pill>["onClick"]> = () => setLevel("all");
-	const handleClick2: NonNullable<ComponentProps<typeof Pill>["onClick"]> = () => setLang("all");
-	const handleClick3: NonNullable<ComponentProps<typeof Pill>["onClick"]> = () => setStatus("all");
-	const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setSort(e.currentTarget.value as LibrarySortOption);
-	const handleClick4: NonNullable<ComponentProps<typeof ViewBtn>["onClick"]> = () => setView("grid");
-	const handleClick5: NonNullable<ComponentProps<typeof ViewBtn>["onClick"]> = () => setView("list");
-return (
+	const handleAllLevelsClick: NonNullable<ComponentProps<typeof Pill>["onClick"]> = () => setLevel("all");
+	const handleAllLangsClick: NonNullable<ComponentProps<typeof Pill>["onClick"]> = () => setLang("all");
+	const handleAllStatusClick: NonNullable<ComponentProps<typeof Pill>["onClick"]> = () => setStatus("all");
+	const handleSortChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setSort(e.currentTarget.value as LibrarySortOption);
+	const handleGridViewClick: NonNullable<ComponentProps<typeof ViewBtn>["onClick"]> = () => setView("grid");
+	const handleListViewClick: NonNullable<ComponentProps<typeof ViewBtn>["onClick"]> = () => setView("list");
+	return (
 		<div className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-b border-bd-1 bg-surf px-5 py-2 [scrollbar-width:none] max-sm:px-3 max-sm:gap-1 [&::-webkit-scrollbar]:hidden">
 			<Typography tag="span" className="shrink-0 text-[11px] font-medium text-t-3 max-sm:hidden">
 				{t("library.filterLevel")}
@@ -63,7 +63,7 @@ return (
 
 			<Pill
 				active={level === "all"}
-				onClick={handleClick}
+				onClick={handleAllLevelsClick}
 				className={
 					level === "all"
 						? "bg-acc-bg border-acc/25 text-acc-t"
@@ -95,7 +95,7 @@ return (
 
 			<Pill
 				active={lang === "all"}
-				onClick={handleClick2}
+				onClick={handleAllLangsClick}
 				className={
 					lang === "all"
 						? "bg-acc-bg border-acc/25 text-acc-t"
@@ -131,7 +131,7 @@ return (
 
 			<Pill
 				active={status === "all"}
-				onClick={handleClick3}
+				onClick={handleAllStatusClick}
 				className={
 					status === "all"
 						? "bg-acc-bg border-acc/25 text-acc-t"
@@ -163,7 +163,7 @@ return (
 
 			<select
 				value={sort}
-				onChange={handleChange}
+				onChange={handleSortChange}
 				aria-label={t("library.sort.label")}
 				className="h-[26px] shrink-0 cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[11px] text-t-2 outline-none"
 			>
@@ -180,14 +180,14 @@ return (
 			<div className="flex shrink-0 overflow-hidden rounded-base border border-bd-2 max-sm:hidden">
 				<ViewBtn
 					active={view === "grid"}
-					onClick={handleClick4}
+					onClick={handleGridViewClick}
 					aria-label={t("library.view.grid")}
 				>
 					<GridIcon />
 				</ViewBtn>
 				<ViewBtn
 					active={view === "list"}
-					onClick={handleClick5}
+					onClick={handleListViewClick}
 					aria-label={t("library.view.list")}
 				>
 					<ListIcon />

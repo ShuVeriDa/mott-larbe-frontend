@@ -59,8 +59,8 @@ export const FeedbackInfoPanel = ({
 }: FeedbackInfoPanelProps & { className?: string }) => {
 	const isResolved = thread.status === "RESOLVED";
 
-		const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onStatusChange(e.currentTarget.value as FeedbackStatus);
-	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onPriorityChange(e.currentTarget.value as FeedbackPriority);
+		const handleStatusChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onStatusChange(e.currentTarget.value as FeedbackStatus);
+	const handlePriorityChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onPriorityChange(e.currentTarget.value as FeedbackPriority);
 return (
 		<div className={cn("flex w-[220px] shrink-0 flex-col overflow-y-auto border-l border-bd-1 bg-surf [&::-webkit-scrollbar]:w-0", className)}>
 			{/* User */}
@@ -89,7 +89,7 @@ return (
 				<InfoRow label={t("admin.feedback.ticket.status")}>
 					<select
 						value={thread.status}
-						onChange={handleChange}
+						onChange={handleStatusChange}
 						className={selectStyles}
 					>
 						{STATUSES.map((s) => (
@@ -102,7 +102,7 @@ return (
 				<InfoRow label={t("admin.feedback.ticket.priority")}>
 					<select
 						value={thread.priority}
-						onChange={handleChange2}
+						onChange={handlePriorityChange}
 						className={selectStyles}
 					>
 						{PRIORITIES.map((p) => (

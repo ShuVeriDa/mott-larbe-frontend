@@ -82,7 +82,7 @@ export const ImportTextsModal = ({ onClose }: ImportTextsModalProps) => {
 		const handleMouseDown: NonNullable<ComponentProps<"div">["onMouseDown"]> = e => {
 				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
 			};
-	const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = () => fileRef.current?.click();
+	const handleFilePickerClick: NonNullable<ComponentProps<"div">["onClick"]> = () => fileRef.current?.click();
 	const handleKeyDown: NonNullable<ComponentProps<"div">["onKeyDown"]> = e => {
 									if (e.key === "Enter") fileRef.current?.click();
 								};
@@ -194,7 +194,7 @@ return (
 							{/* File picker */}
 							<div
 								className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[8px] border border-dashed border-bd-3 bg-surf-2 px-4 py-8 transition-colors hover:border-acc hover:bg-surf-3"
-								onClick={handleClick}
+								onClick={handleFilePickerClick}
 								onKeyDown={handleKeyDown}
 								role="button"
 								tabIndex={0}

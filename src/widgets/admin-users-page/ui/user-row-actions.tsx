@@ -43,38 +43,38 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 	const menuDangerClass =
 		"flex w-full cursor-pointer items-center gap-2 rounded-md border-none bg-transparent px-2.5 py-2 text-left font-sans text-[13px] text-red-t transition-colors hover:bg-red-bg";
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => router.push(`/${lang}/admin/users/${user.id}`);
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
-	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => {
-								setOpen(false);
-								router.push(`/${lang}/admin/users/${user.id}`);
-							};
-	const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => {
-									setOpen(false);
-									mutations.freeze.mutate(user.id);
-								};
-	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => {
-									setOpen(false);
-									mutations.unfreeze.mutate(user.id);
-								};
-	const handleClick6: NonNullable<ComponentProps<"button">["onClick"]> = () => {
-									setOpen(false);
-									mutations.unblock.mutate(user.id);
-								};
-	const handleClick7: NonNullable<ComponentProps<"button">["onClick"]> = () => {
-									setOpen(false);
-									mutations.block.mutate(user.id);
-								};
-	const handleClick8: NonNullable<ComponentProps<"button">["onClick"]> = () => {
-									setOpen(false);
-									mutations.remove.mutate(user.id);
-								};
+	const handleOpenProfileClick: NonNullable<ComponentProps<"button">["onClick"]> = () => router.push(`/${lang}/admin/users/${user.id}`);
+	const handleMenuToggleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleMenuOpenProfileClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		setOpen(false);
+		router.push(`/${lang}/admin/users/${user.id}`);
+	};
+	const handleFreezeClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		setOpen(false);
+		mutations.freeze.mutate(user.id);
+	};
+	const handleUnfreezeClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		setOpen(false);
+		mutations.unfreeze.mutate(user.id);
+	};
+	const handleUnblockClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		setOpen(false);
+		mutations.unblock.mutate(user.id);
+	};
+	const handleBlockClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		setOpen(false);
+		mutations.block.mutate(user.id);
+	};
+	const handleDeleteClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		setOpen(false);
+		mutations.remove.mutate(user.id);
+	};
 return (
 		<div className="flex items-center justify-end gap-0.5">
 			<Button
 				aria-label={t("admin.users.actions.openProfile")}
 				className={btnClass}
-				onClick={handleClick}
+				onClick={handleOpenProfileClick}
 			>
 				<svg className="size-3.5" viewBox="0 0 16 16" fill="none">
 					<path
@@ -90,7 +90,7 @@ return (
 			<div ref={menuRef} className="relative">
 				<Button
 					className={btnClass}
-					onClick={handleClick2}
+					onClick={handleMenuToggleClick}
 					disabled={isPending}
 				>
 					<svg className="size-3.5" viewBox="0 0 16 16" fill="none">
@@ -104,7 +104,7 @@ return (
 					<div className="absolute right-0 top-[calc(100%+4px)] z-300 min-w-[170px] rounded-[10px] border border-bd-2 bg-surf p-1 shadow-md">
 						<Button
 							className={menuItemClass}
-							onClick={handleClick3}
+							onClick={handleMenuOpenProfileClick}
 						>
 							<svg
 								className="size-3.5 shrink-0 text-t-3"
@@ -127,7 +127,7 @@ return (
 						{user.status === "ACTIVE" && (
 							<Button
 								className={menuItemClass}
-								onClick={handleClick4}
+								onClick={handleFreezeClick}
 							>
 								<svg
 									className="size-3.5 shrink-0 text-t-3"
@@ -148,7 +148,7 @@ return (
 						{user.status === "FROZEN" && (
 							<Button
 								className={menuItemClass}
-								onClick={handleClick5}
+								onClick={handleUnfreezeClick}
 							>
 								<svg
 									className="size-3.5 shrink-0 text-t-3"
@@ -170,7 +170,7 @@ return (
 						{user.status === "BLOCKED" && (
 							<Button
 								className={menuItemClass}
-								onClick={handleClick6}
+								onClick={handleUnblockClick}
 							>
 								<svg
 									className="size-3.5 shrink-0 text-t-3"
@@ -192,7 +192,7 @@ return (
 						{(user.status === "ACTIVE" || user.status === "FROZEN") && (
 							<Button
 								className={menuDangerClass}
-								onClick={handleClick7}
+								onClick={handleBlockClick}
 							>
 								<svg
 									className="size-3.5 shrink-0 text-red-t"
@@ -214,7 +214,7 @@ return (
 						{user.status === "BLOCKED" && (
 							<Button
 								className={menuDangerClass}
-								onClick={handleClick8}
+								onClick={handleDeleteClick}
 							>
 								<svg
 									className="size-3.5 shrink-0 text-red-t"

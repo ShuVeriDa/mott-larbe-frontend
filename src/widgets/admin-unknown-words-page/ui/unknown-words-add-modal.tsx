@@ -1,7 +1,6 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
@@ -25,6 +24,8 @@ const inputCls =
 const selectCls = cn(inputCls, "cursor-pointer appearance-none pr-7");
 const CHEVRON_BG =
 	"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23a5a39a' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")";
+
+// ── Sub-components ─────────────────────────────────────────────────────────────
 
 const LemmaAutocomplete = ({
 	value,
@@ -55,12 +56,13 @@ const LemmaAutocomplete = ({
 		return () => document.removeEventListener("mousedown", handler);
 	}, []);
 
-		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => {
-					setQ(e.currentTarget.value);
-					setOpen(true);
-				};
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => {
+		setQ(e.currentTarget.value);
+		setOpen(true);
+	};
 	const handleFocus: NonNullable<ComponentProps<"input">["onFocus"]> = () => q && setOpen(true);
-return (
+
+	return (
 		<div ref={ref} className="relative">
 			<input
 				type="text"
@@ -77,28 +79,28 @@ return (
 						<div className="px-3 py-2.5 text-[12px] text-t-3">…</div>
 					) : data?.length ? (
 						data.map((item) => {
-						  const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = (e) => {
-									e.preventDefault();
-									onSelect(item.id, item.headword);
-									setQ(
-										item.translation
-											? `${item.headword} — ${item.translation}`
-											: item.headword,
-									);
-									setOpen(false);
-								};
-						  return (
-							<Button
-								key={item.id}
-								onMouseDown={handleMouseDown}
-								className="flex w-full flex-col gap-0.5 px-3 py-2 text-left transition-colors hover:bg-surf-2"
-							>
-								<Typography tag="span" className="text-[13px] font-medium text-t-1">{item.headword}</Typography>
-								{item.translation && (
-									<Typography tag="span" className="text-[11px] text-t-3">{item.translation}</Typography>
-								)}
-							</Button>
-						);
+							const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = (e) => {
+								e.preventDefault();
+								onSelect(item.id, item.headword);
+								setQ(
+									item.translation
+										? `${item.headword} — ${item.translation}`
+										: item.headword,
+								);
+								setOpen(false);
+							};
+							return (
+								<Button
+									key={item.id}
+									onMouseDown={handleMouseDown}
+									className="flex w-full flex-col gap-0.5 px-3 py-2 text-left transition-colors hover:bg-surf-2"
+								>
+									<Typography tag="span" className="text-[13px] font-medium text-t-1">{item.headword}</Typography>
+									{item.translation && (
+										<Typography tag="span" className="text-[11px] text-t-3">{item.translation}</Typography>
+									)}
+								</Button>
+							);
 						})
 					) : (
 						<div className="px-3 py-2.5 text-[12px] text-t-3">—</div>
@@ -108,6 +110,143 @@ return (
 		</div>
 	);
 };
+
+const NewEntryForm = ({
+	state,
+	headword,
+	partOfSpeech,
+	translation,
+	level,
+	domain,
+	formsRaw,
+	onHeadwordChange,
+	onPartOfSpeechChange,
+	onTranslationChange,
+	onLevelChange,
+	onDomainChange,
+	onFormsRawChange,
+	t,
+}: {
+	state: AddModalState;
+	headword: string;
+	partOfSpeech: string;
+	translation: string;
+	level: string;
+	domain: string;
+	formsRaw: string;
+	onHeadwordChange: NonNullable<ComponentProps<"input">["onChange"]>;
+	onPartOfSpeechChange: NonNullable<ComponentProps<"select">["onChange"]>;
+	onTranslationChange: NonNullable<ComponentProps<"input">["onChange"]>;
+	onLevelChange: NonNullable<ComponentProps<"select">["onChange"]>;
+	onDomainChange: NonNullable<ComponentProps<"input">["onChange"]>;
+	onFormsRawChange: NonNullable<ComponentProps<"input">["onChange"]>;
+	t: ReturnType<typeof useI18n>["t"];
+}) => (
+	<div>
+		<div className="grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
+			<div className="mb-3">
+				<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					{t("admin.unknownWords.addModal.headword")}
+				</Typography>
+				<input
+					type="text"
+					value={headword}
+					onChange={onHeadwordChange}
+					placeholder={state?.word}
+					className={inputCls}
+				/>
+			</div>
+			<div className="mb-3">
+				<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					{t("admin.unknownWords.addModal.partOfSpeech")}
+				</Typography>
+				<select
+					value={partOfSpeech}
+					onChange={onPartOfSpeechChange}
+					className={selectCls}
+					style={{
+						backgroundImage: CHEVRON_BG,
+						backgroundRepeat: "no-repeat",
+						backgroundPosition: "right 8px center",
+					}}
+				>
+					<option value="">{t("admin.unknownWords.addModal.posNone")}</option>
+					<option value="noun">{t("admin.unknownWords.addModal.posNoun")}</option>
+					<option value="verb">{t("admin.unknownWords.addModal.posVerb")}</option>
+					<option value="adjective">{t("admin.unknownWords.addModal.posAdj")}</option>
+					<option value="adverb">{t("admin.unknownWords.addModal.posAdv")}</option>
+					<option value="particle">{t("admin.unknownWords.addModal.posParticle")}</option>
+				</select>
+			</div>
+		</div>
+
+		<div className="mb-3">
+			<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+				{t("admin.unknownWords.addModal.translation")}
+			</Typography>
+			<input
+				type="text"
+				value={translation}
+				onChange={onTranslationChange}
+				placeholder={t("admin.unknownWords.addModal.translationPlaceholder")}
+				className={inputCls}
+			/>
+		</div>
+
+		<div className="grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
+			<div className="mb-3">
+				<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					{t("admin.unknownWords.addModal.level")}
+				</Typography>
+				<select
+					value={level}
+					onChange={onLevelChange}
+					className={selectCls}
+					style={{
+						backgroundImage: CHEVRON_BG,
+						backgroundRepeat: "no-repeat",
+						backgroundPosition: "right 8px center",
+					}}
+				>
+					<option value="">{t("admin.unknownWords.addModal.levelNone")}</option>
+					{["A1", "A2", "B1", "B2", "C1", "C2"].map((l) => (
+						<option key={l} value={l}>{l}</option>
+					))}
+				</select>
+			</div>
+			<div className="mb-3">
+				<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					{t("admin.unknownWords.addModal.domain")}
+				</Typography>
+				<input
+					type="text"
+					value={domain}
+					onChange={onDomainChange}
+					placeholder={t("admin.unknownWords.addModal.domainPlaceholder")}
+					className={inputCls}
+				/>
+			</div>
+		</div>
+
+		<div className="mb-3">
+			<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+				{t("admin.unknownWords.addModal.forms")}
+			</Typography>
+			<input
+				type="text"
+				value={formsRaw}
+				onChange={onFormsRawChange}
+				placeholder={t("admin.unknownWords.addModal.formsPlaceholder")}
+				className={inputCls}
+			/>
+			<Typography tag="p" className="mt-1 text-[11px] text-t-3">
+				{t("admin.unknownWords.addModal.formsHint")}
+			</Typography>
+		</div>
+	</div>
+);
+
+// ── Main component ─────────────────────────────────────────────────────────────
 
 export const UnknownWordsAddModal = ({
 	state,
@@ -171,18 +310,20 @@ export const UnknownWordsAddModal = ({
 	const canSubmit =
 		action === "new" ? !!translation && !isPending : !!selectedLemma && !isPending;
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
-	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setHeadword(e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setPartOfSpeech(e.currentTarget.value);
-	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setTranslation(e.currentTarget.value);
-	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setLevel(e.currentTarget.value);
-	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setDomain(e.currentTarget.value);
-	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setFormsRaw(e.currentTarget.value);
-	const handleSelect: NonNullable<ComponentProps<typeof LemmaAutocomplete>["onSelect"]> = (id, label) => setSelectedLemma({ id, label });
-return (
+	const handleBackdropClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) =>
+		/* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleHeadwordChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setHeadword(e.currentTarget.value);
+	const handlePartOfSpeechChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setPartOfSpeech(e.currentTarget.value);
+	const handleTranslationChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setTranslation(e.currentTarget.value);
+	const handleLevelChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setLevel(e.currentTarget.value);
+	const handleDomainChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setDomain(e.currentTarget.value);
+	const handleFormsRawChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setFormsRaw(e.currentTarget.value);
+	const handleLemmaSelect: NonNullable<ComponentProps<typeof LemmaAutocomplete>["onSelect"]> = (id, label) => setSelectedLemma({ id, label });
+
+	return (
 		<div
 			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 p-4 backdrop-blur-sm max-sm:items-end max-sm:p-0"
-			onClick={handleClick}
+			onClick={handleBackdropClick}
 		>
 			<div className="w-full max-w-[520px] max-h-[calc(100vh-32px)] overflow-y-auto [&::-webkit-scrollbar]:w-0 rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] animate-[modal-in_0.15s_ease] max-sm:max-w-full max-sm:rounded-t-[18px] max-sm:rounded-b-none max-sm:max-h-[94vh]">
 				{/* Header */}
@@ -229,151 +370,65 @@ return (
 					</div>
 					<div className="flex flex-col gap-1.5">
 						{(["new", "link"] as ActionType[]).map((type) => {
-						  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => setAction(type);
-						  return (
-							<Typography tag="label"
-								key={type}
-								className={cn(
-									"flex cursor-pointer items-center gap-2 rounded-lg border px-2.5 py-2 transition-colors",
-									action === type
-										? "border-acc/30 bg-acc-bg"
-										: "border-bd-2 hover:border-bd-3 hover:bg-surf-2",
-								)}
-							>
-								<input
-									type="radio"
-									name="dictAction"
-									value={type}
-									checked={action === type}
-									onChange={handleChange}
-									className="accent-acc shrink-0"
-								/>
-								<div>
-									<div className="text-[12.5px] font-medium text-t-1">
-										{t(
-											type === "new"
-												? "admin.unknownWords.addModal.createNew"
-												: "admin.unknownWords.addModal.linkExisting",
-										)}
+							const handleActionChange: NonNullable<ComponentProps<"input">["onChange"]> = () => setAction(type);
+							return (
+								<Typography tag="label"
+									key={type}
+									className={cn(
+										"flex cursor-pointer items-center gap-2 rounded-lg border px-2.5 py-2 transition-colors",
+										action === type
+											? "border-acc/30 bg-acc-bg"
+											: "border-bd-2 hover:border-bd-3 hover:bg-surf-2",
+									)}
+								>
+									<input
+										type="radio"
+										name="dictAction"
+										value={type}
+										checked={action === type}
+										onChange={handleActionChange}
+										className="accent-acc shrink-0"
+									/>
+									<div>
+										<div className="text-[12.5px] font-medium text-t-1">
+											{t(
+												type === "new"
+													? "admin.unknownWords.addModal.createNew"
+													: "admin.unknownWords.addModal.linkExisting",
+											)}
+										</div>
+										<div className="text-[11px] text-t-3">
+											{t(
+												type === "new"
+													? "admin.unknownWords.addModal.createNewSub"
+													: "admin.unknownWords.addModal.linkExistingSub",
+											)}
+										</div>
 									</div>
-									<div className="text-[11px] text-t-3">
-										{t(
-											type === "new"
-												? "admin.unknownWords.addModal.createNewSub"
-												: "admin.unknownWords.addModal.linkExistingSub",
-										)}
-									</div>
-								</div>
-							</Typography>
-						);
+								</Typography>
+							);
 						})}
 					</div>
 				</div>
 
 				{/* New entry fields */}
 				{action === "new" && (
-					<div>
-						<div className="grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
-							<div className="mb-3">
-								<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
-									{t("admin.unknownWords.addModal.headword")}
-								</Typography>
-								<input
-									type="text"
-									value={headword}
-									onChange={handleChange}
-									placeholder={state.word}
-									className={inputCls}
-								/>
-							</div>
-							<div className="mb-3">
-								<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
-									{t("admin.unknownWords.addModal.partOfSpeech")}
-								</Typography>
-								<select
-									value={partOfSpeech}
-									onChange={handleChange2}
-									className={selectCls}
-									style={{
-										backgroundImage: CHEVRON_BG,
-										backgroundRepeat: "no-repeat",
-										backgroundPosition: "right 8px center",
-									}}
-								>
-									<option value="">{t("admin.unknownWords.addModal.posNone")}</option>
-									<option value="noun">{t("admin.unknownWords.addModal.posNoun")}</option>
-									<option value="verb">{t("admin.unknownWords.addModal.posVerb")}</option>
-									<option value="adjective">{t("admin.unknownWords.addModal.posAdj")}</option>
-									<option value="adverb">{t("admin.unknownWords.addModal.posAdv")}</option>
-									<option value="particle">{t("admin.unknownWords.addModal.posParticle")}</option>
-								</select>
-							</div>
-						</div>
-
-						<div className="mb-3">
-							<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
-								{t("admin.unknownWords.addModal.translation")}
-							</Typography>
-							<input
-								type="text"
-								value={translation}
-								onChange={handleChange3}
-								placeholder={t("admin.unknownWords.addModal.translationPlaceholder")}
-								className={inputCls}
-							/>
-						</div>
-
-						<div className="grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
-							<div className="mb-3">
-								<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
-									{t("admin.unknownWords.addModal.level")}
-								</Typography>
-								<select
-									value={level}
-									onChange={handleChange4}
-									className={selectCls}
-									style={{
-										backgroundImage: CHEVRON_BG,
-										backgroundRepeat: "no-repeat",
-										backgroundPosition: "right 8px center",
-									}}
-								>
-									<option value="">{t("admin.unknownWords.addModal.levelNone")}</option>
-									{["A1", "A2", "B1", "B2", "C1", "C2"].map((l) => (
-										<option key={l} value={l}>{l}</option>
-									))}
-								</select>
-							</div>
-							<div className="mb-3">
-								<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
-									{t("admin.unknownWords.addModal.domain")}
-								</Typography>
-								<input
-									type="text"
-									value={domain}
-									onChange={handleChange5}
-									placeholder={t("admin.unknownWords.addModal.domainPlaceholder")}
-									className={inputCls}
-								/>
-							</div>
-						</div>
-
-						<div className="mb-3">
-							<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
-								{t("admin.unknownWords.addModal.forms")}
-							</Typography>
-							<input
-								type="text"
-								value={formsRaw}
-								onChange={handleChange6}
-								placeholder={t("admin.unknownWords.addModal.formsPlaceholder")}
-								className={inputCls}
-							/>
-							<Typography tag="p" className="mt-1 text-[11px] text-t-3">
-								{t("admin.unknownWords.addModal.formsHint")}
-							</Typography>
-						</div>
-					</div>
+					<NewEntryForm
+						state={state}
+						headword={headword}
+						partOfSpeech={partOfSpeech}
+						translation={translation}
+						level={level}
+						domain={domain}
+						formsRaw={formsRaw}
+						onHeadwordChange={handleHeadwordChange}
+						onPartOfSpeechChange={handlePartOfSpeechChange}
+						onTranslationChange={handleTranslationChange}
+						onLevelChange={handleLevelChange}
+						onDomainChange={handleDomainChange}
+						onFormsRawChange={handleFormsRawChange}
+						t={t}
+					/>
 				)}
 
 				{/* Link lemma */}
@@ -384,7 +439,7 @@ return (
 						</Typography>
 						<LemmaAutocomplete
 							value={selectedLemma}
-							onSelect={handleSelect}
+							onSelect={handleLemmaSelect}
 							placeholder={t("admin.unknownWords.addModal.findLemmaPlaceholder")}
 						/>
 					</div>

@@ -132,7 +132,7 @@ return (
 			<div className="ml-[30px]">
 				<Button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-dashed border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-3 transition-colors hover:border-solid hover:border-acc hover:bg-acc-bg hover:text-acc-t"
-					onClick={handleClick}
+					onClick={handleAddSenseClick}
 				>
 					<IconPlus />
 					{t("admin.dictionaryDetail.addExample")}
@@ -188,9 +188,8 @@ export const LemmasSensesCard = ({
 
 	const tabs = relatedLemmas && relatedLemmas.length > 1 ? relatedLemmas : null;
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addSense" });
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addSense" });
-return (
+	const handleAddSenseClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addSense" });
+	return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			{/* Header */}
 			<div className="flex items-center justify-between border-b-0 px-4 py-3">
@@ -199,7 +198,7 @@ return (
 				</Typography>
 				<Button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
-					onClick={handleClick}
+					onClick={handleAddSenseClick}
 				>
 					<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
 						<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
@@ -226,7 +225,7 @@ return (
 										? "bg-surf text-t-1 shadow-[0_1px_3px_rgba(0,0,0,0.07)]"
 										: "bg-transparent text-t-3 hover:text-t-2",
 								)}
-								onClick={handleClick}
+								onClick={handleAddSenseClick}
 							>
 								{lemma.baseForm}{" "}
 								{lemma.partOfSpeech && (

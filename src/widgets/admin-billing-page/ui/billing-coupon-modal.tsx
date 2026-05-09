@@ -65,13 +65,13 @@ export const BillingCouponModal = ({
 
 	if (!open) return null;
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
-	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("code", e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("name", e.currentTarget.value);
-	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => set("type", e.currentTarget.value);
-	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("amount", e.currentTarget.value);
-	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("maxRedemptions", e.currentTarget.value);
-	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("validUntil", e.currentTarget.value);
+		const handleInnerClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+	const handleCodeChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("code", e.currentTarget.value);
+	const handleNameChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("name", e.currentTarget.value);
+	const handleTypeChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => set("type", e.currentTarget.value);
+	const handleAmountChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("amount", e.currentTarget.value);
+	const handleMaxRedemptionsChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("maxRedemptions", e.currentTarget.value);
+	const handleValidUntilChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("validUntil", e.currentTarget.value);
 return (
 		<div
 			className="fixed inset-0 z-400 flex items-end justify-center bg-black/35 sm:items-center sm:p-4"
@@ -79,7 +79,7 @@ return (
 		>
 			<div
 				className="w-full max-w-[440px] overflow-hidden rounded-t-[14px] bg-surf shadow-[0_20px_60px_rgba(0,0,0,0.18)] sm:rounded-[14px]"
-				onClick={handleClick}
+				onClick={handleInnerClick}
 			>
 				{/* Header */}
 				<div className="flex items-center justify-between border-b border-bd-1 px-[18px] py-4">
@@ -105,7 +105,7 @@ return (
 							</Typography>
 							<input
 								value={form.code}
-								onChange={handleChange}
+								onChange={handleCodeChange}
 								placeholder={t("admin.plans.couponModal.codePlaceholder")}
 								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] uppercase text-t-1 outline-none placeholder:normal-case placeholder:text-t-3 focus:border-acc focus:bg-surf"
 							/>
@@ -117,7 +117,7 @@ return (
 							</Typography>
 							<input
 								value={form.name}
-								onChange={handleChange2}
+								onChange={handleNameChange}
 								placeholder={t("admin.plans.couponModal.namePlaceholder")}
 								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 							/>
@@ -130,7 +130,7 @@ return (
 								</Typography>
 								<select
 									value={form.type}
-									onChange={handleChange3}
+									onChange={handleTypeChange}
 									className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 								>
 									<option value="PERCENT">% скидка</option>
@@ -148,7 +148,7 @@ return (
 										max={form.type === "PERCENT" ? 100 : undefined}
 										step={form.type === "PERCENT" ? 1 : 0.01}
 										value={form.amount}
-										onChange={handleChange4}
+										onChange={handleAmountChange}
 										placeholder={form.type === "PERCENT" ? "10" : "500"}
 										className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 pr-7 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 									/>
@@ -168,7 +168,7 @@ return (
 									type="number"
 									min={1}
 									value={form.maxRedemptions}
-									onChange={handleChange5}
+									onChange={handleMaxRedemptionsChange}
 									placeholder="∞"
 									className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 								/>
@@ -180,7 +180,7 @@ return (
 								<input
 									type="date"
 									value={form.validUntil}
-									onChange={handleChange6}
+									onChange={handleValidUntilChange}
 									className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 								/>
 							</div>

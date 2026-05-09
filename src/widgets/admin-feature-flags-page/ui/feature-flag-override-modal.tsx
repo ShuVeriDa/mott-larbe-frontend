@@ -108,20 +108,20 @@ export const FeatureFlagOverrideModal = ({
 	const inputCls =
 		"h-[34px] w-full rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc";
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
-				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
-			};
-	const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setFlagId(e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => {
-								setUserInput(e.currentTarget.value);
-								setShowSuggestions(true);
-							};
+	const handleBackdropClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+			if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
+		};
+	const handleFlagChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setFlagId(e.currentTarget.value);
+	const handleUserInputChange: NonNullable<ComponentProps<"input">["onChange"]> = e => {
+		setUserInput(e.currentTarget.value);
+		setShowSuggestions(true);
+	};
 	const handleFocus: NonNullable<ComponentProps<"input">["onFocus"]> = () => suggestions.length > 0 && setShowSuggestions(true);
-	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = e => setReason(e.currentTarget.value);
+	const handleReasonChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setReason(e.currentTarget.value);
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={handleClick}
+			onClick={handleBackdropClick}
 		>
 			<div className="w-[440px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<Typography tag="h2" className="font-display text-[16px] text-t-1 mb-1">
@@ -139,7 +139,7 @@ return (
 					<select
 						className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 						value={flagId}
-						onChange={handleChange}
+						onChange={handleFlagChange}
 					>
 						<option value="">
 							{t("admin.featureFlags.overrideModal.selectFlag")}
@@ -164,7 +164,7 @@ return (
 								"admin.featureFlags.overrideModal.userPlaceholder",
 							)}
 							value={userInput}
-							onChange={handleChange2}
+							onChange={handleUserInputChange}
 							onFocus={handleFocus}
 						/>
 						{showSuggestions && suggestions.length > 0 && (
@@ -211,7 +211,7 @@ return (
 							"admin.featureFlags.overrideModal.reasonPlaceholder",
 						)}
 						value={reason}
-						onChange={handleChange3}
+						onChange={handleReasonChange}
 					/>
 				</div>
 

@@ -104,7 +104,7 @@ export const LibraryTextCard = ({ item, view, index }: LibraryTextCardProps) => 
 		);
 	}
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.preventDefault(); e.stopPropagation(); };
+	const handleMenuClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.preventDefault(); e.stopPropagation(); };
 return (
 		<Link
 			href={href}
@@ -142,7 +142,7 @@ return (
 					)}
 				</div>
 				<Button
-					onClick={handleClick}
+					onClick={handleMenuClick}
 					className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[5px] text-t-4 transition-colors duration-100 hover:bg-surf-3 hover:text-t-2"
 					aria-label="Меню"
 				>

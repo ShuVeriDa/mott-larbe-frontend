@@ -1,7 +1,6 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
 import { ComponentProps, ReactNode, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
@@ -43,6 +42,126 @@ const MetaCell = ({ label, value, mono }: MetaCellProps) => (
 	</div>
 );
 
+// ── Sub-components ─────────────────────────────────────────────────────────────
+
+type VersionData = NonNullable<ReturnType<typeof useAdminTextVersionDetail>["data"]>;
+
+const OverviewTab = ({
+	version,
+	t,
+}: {
+	version: VersionData;
+	t: ReturnType<typeof useI18n>["t"];
+}) => (
+	<div className="p-4">
+		<div className="mb-3 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+			{t("admin.texts.versions.modal.overview")}
+		</div>
+		<div className="grid grid-cols-2 gap-2 max-sm:grid-cols-1">
+			<MetaCell
+				label={t("admin.texts.versions.modal.totalTokens")}
+				value={version.totalTokenCount.toLocaleString()}
+			/>
+			<MetaCell
+				label={t("admin.texts.versions.modal.totalWords")}
+				value={version.totalWordCount.toLocaleString()}
+			/>
+			<MetaCell
+				label={t("admin.texts.versions.modal.totalChars")}
+				value={version.totalCharCount.toLocaleString()}
+			/>
+			<MetaCell
+				label={t("admin.texts.versions.modal.duration")}
+				value={formatDuration(version.durationMs)}
+			/>
+			<MetaCell
+				label={t("admin.texts.versions.modal.trigger")}
+				value={t(`admin.texts.versions.trigger.${version.trigger}`)}
+			/>
+			<MetaCell
+				label={t("admin.texts.versions.modal.initiator")}
+				value={version.initiator?.name ?? "—"}
+				mono
+			/>
+		</div>
+
+		{version.errorMessage && (
+			<div className="mt-3 rounded-[8px] bg-red-bg px-3 py-2.5 font-mono text-[11px] leading-relaxed text-red-t">
+				{version.errorMessage}
+			</div>
+		)}
+	</div>
+);
+
+const PagesTab = ({
+	version,
+	t,
+}: {
+	version: VersionData;
+	t: ReturnType<typeof useI18n>["t"];
+}) => (
+	<table className="w-full border-collapse text-[12px]">
+		<thead>
+			<tr>
+				{[
+					t("admin.texts.versions.modal.colPage"),
+					t("admin.texts.versions.modal.colTokens"),
+					t("admin.texts.versions.modal.colWords"),
+					t("admin.texts.versions.modal.colChars"),
+					t("admin.texts.versions.modal.colStatus"),
+				].map((h) => (
+					<th
+						key={h}
+						className="border-b border-bd-1 bg-surf-2 px-2.5 py-1.5 text-left text-[10px] font-semibold uppercase tracking-[0.4px] text-t-3"
+					>
+						{h}
+					</th>
+				))}
+			</tr>
+		</thead>
+		<tbody>
+			{version.pages.map((page) => (
+				<tr key={page.pageId} className="hover:bg-surf-2">
+					<td className="border-b border-bd-1 px-2.5 py-2 text-t-2">{page.pageNumber}</td>
+					<td className="border-b border-bd-1 px-2.5 py-2 tabular-nums text-t-2">{page.tokenCount.toLocaleString()}</td>
+					<td className="border-b border-bd-1 px-2.5 py-2 tabular-nums text-t-2">{page.wordCount.toLocaleString()}</td>
+					<td className="border-b border-bd-1 px-2.5 py-2 tabular-nums text-t-2">{page.charCount.toLocaleString()}</td>
+					<td className={cn("border-b border-bd-1 px-2.5 py-2 font-medium", PageStatusClass[page.status])}>
+						{page.status}
+					</td>
+				</tr>
+			))}
+		</tbody>
+	</table>
+);
+
+const LogTab = ({
+	version,
+	t,
+}: {
+	version: VersionData;
+	t: ReturnType<typeof useI18n>["t"];
+}) => (
+	<div className="m-4 overflow-y-auto rounded-[8px] bg-surf-3 px-3 py-2.5 max-h-[300px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded [&::-webkit-scrollbar-thumb]:bg-surf-4">
+		{version.logs.length === 0 ? (
+			<Typography tag="span" className="text-[12px] text-t-3">{t("admin.texts.versions.modal.noLogs")}</Typography>
+		) : (
+			<div className="flex flex-col gap-1 font-mono text-[11px] leading-[1.7]">
+				{version.logs.map((log) => (
+					<div key={log.id} className="flex gap-2">
+						<Typography tag="span" className="shrink-0 text-t-3">
+							{new Date(log.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
+						</Typography>
+						<Typography tag="span" className={LogLevelClass[log.level]}>{log.message}</Typography>
+					</div>
+				))}
+			</div>
+		)}
+	</div>
+);
+
+// ── Main component ─────────────────────────────────────────────────────────────
+
 interface VersionDetailModalProps {
 	textId: string;
 	versionId: string;
@@ -78,13 +197,14 @@ export const VersionDetailModal = ({
 	const canRestore = version?.status === "COMPLETED" && !version.isCurrent;
 	const canRetry = version?.status === "ERROR";
 
-	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+	const handleDownloadClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 		if (!version) return;
 		onDownload(versionId, version.version);
 	};
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onRetry(versionId);
-	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => onRestore(versionId);
-return (
+	const handleRetryClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRetry(versionId);
+	const handleRestoreClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRestore(versionId);
+
+	return (
 		<>
 			{/* Backdrop */}
 			<div
@@ -120,21 +240,21 @@ return (
 					{/* Tabs */}
 					<div className="flex shrink-0 gap-0 border-b border-bd-1 px-4">
 						{tabs.map(({ key, label }) => {
-						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setTab(key);
-						  return (
-							<Button
-								key={key}
-								onClick={handleClick}
-								className={cn(
-									"-mb-px border-b-2 px-3 py-2.5 text-[12.5px] transition-colors",
-									tab === key
-										? "border-acc font-medium text-t-1"
-										: "border-transparent text-t-3 hover:text-t-2",
-								)}
-							>
-								{label}
-							</Button>
-						);
+							const handleTabClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setTab(key);
+							return (
+								<Button
+									key={key}
+									onClick={handleTabClick}
+									className={cn(
+										"-mb-px border-b-2 px-3 py-2.5 text-[12.5px] transition-colors",
+										tab === key
+											? "border-acc font-medium text-t-1"
+											: "border-transparent text-t-3 hover:text-t-2",
+									)}
+								>
+									{label}
+								</Button>
+							);
 						})}
 					</div>
 
@@ -150,101 +270,9 @@ return (
 							</div>
 						) : version ? (
 							<>
-								{tab === "overview" && (
-									<div className="p-4">
-										<div className="mb-3 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
-											{t("admin.texts.versions.modal.overview")}
-										</div>
-										<div className="grid grid-cols-2 gap-2 max-sm:grid-cols-1">
-											<MetaCell
-												label={t("admin.texts.versions.modal.totalTokens")}
-												value={version.totalTokenCount.toLocaleString()}
-											/>
-											<MetaCell
-												label={t("admin.texts.versions.modal.totalWords")}
-												value={version.totalWordCount.toLocaleString()}
-											/>
-											<MetaCell
-												label={t("admin.texts.versions.modal.totalChars")}
-												value={version.totalCharCount.toLocaleString()}
-											/>
-											<MetaCell
-												label={t("admin.texts.versions.modal.duration")}
-												value={formatDuration(version.durationMs)}
-											/>
-											<MetaCell
-												label={t("admin.texts.versions.modal.trigger")}
-												value={t(`admin.texts.versions.trigger.${version.trigger}`)}
-											/>
-											<MetaCell
-												label={t("admin.texts.versions.modal.initiator")}
-												value={version.initiator?.name ?? "—"}
-												mono
-											/>
-										</div>
-
-										{version.errorMessage && (
-											<div className="mt-3 rounded-[8px] bg-red-bg px-3 py-2.5 font-mono text-[11px] leading-relaxed text-red-t">
-												{version.errorMessage}
-											</div>
-										)}
-									</div>
-								)}
-
-								{tab === "pages" && (
-									<table className="w-full border-collapse text-[12px]">
-										<thead>
-											<tr>
-												{[
-													t("admin.texts.versions.modal.colPage"),
-													t("admin.texts.versions.modal.colTokens"),
-													t("admin.texts.versions.modal.colWords"),
-													t("admin.texts.versions.modal.colChars"),
-													t("admin.texts.versions.modal.colStatus"),
-												].map((h) => (
-													<th
-														key={h}
-														className="border-b border-bd-1 bg-surf-2 px-2.5 py-1.5 text-left text-[10px] font-semibold uppercase tracking-[0.4px] text-t-3"
-													>
-														{h}
-													</th>
-												))}
-											</tr>
-										</thead>
-										<tbody>
-											{version.pages.map((page) => (
-												<tr key={page.pageId} className="hover:bg-surf-2">
-													<td className="border-b border-bd-1 px-2.5 py-2 text-t-2">{page.pageNumber}</td>
-													<td className="border-b border-bd-1 px-2.5 py-2 tabular-nums text-t-2">{page.tokenCount.toLocaleString()}</td>
-													<td className="border-b border-bd-1 px-2.5 py-2 tabular-nums text-t-2">{page.wordCount.toLocaleString()}</td>
-													<td className="border-b border-bd-1 px-2.5 py-2 tabular-nums text-t-2">{page.charCount.toLocaleString()}</td>
-													<td className={cn("border-b border-bd-1 px-2.5 py-2 font-medium", PageStatusClass[page.status])}>
-														{page.status}
-													</td>
-												</tr>
-											))}
-										</tbody>
-									</table>
-								)}
-
-								{tab === "log" && (
-									<div className="m-4 overflow-y-auto rounded-[8px] bg-surf-3 px-3 py-2.5 max-h-[300px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded [&::-webkit-scrollbar-thumb]:bg-surf-4">
-										{version.logs.length === 0 ? (
-											<Typography tag="span" className="text-[12px] text-t-3">{t("admin.texts.versions.modal.noLogs")}</Typography>
-										) : (
-											<div className="flex flex-col gap-1 font-mono text-[11px] leading-[1.7]">
-												{version.logs.map((log) => (
-													<div key={log.id} className="flex gap-2">
-														<Typography tag="span" className="shrink-0 text-t-3">
-															{new Date(log.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
-														</Typography>
-														<Typography tag="span" className={LogLevelClass[log.level]}>{log.message}</Typography>
-													</div>
-												))}
-											</div>
-										)}
-									</div>
-								)}
+								{tab === "overview" && <OverviewTab version={version} t={t} />}
+								{tab === "pages" && <PagesTab version={version} t={t} />}
+								{tab === "log" && <LogTab version={version} t={t} />}
 							</>
 						) : null}
 					</div>
@@ -259,7 +287,7 @@ return (
 						</Button>
 						{version && (
 							<Button
-								onClick={handleClick}
+								onClick={handleDownloadClick}
 								className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							>
 								<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
@@ -271,7 +299,7 @@ return (
 						)}
 						{canRetry && (
 							<Button
-								onClick={handleClick2}
+								onClick={handleRetryClick}
 								disabled={isRetrying}
 								className="flex h-[30px] items-center gap-1.5 rounded-base bg-amb px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 							>
@@ -281,7 +309,7 @@ return (
 						)}
 						{canRestore && (
 							<Button
-								onClick={handleClick3}
+								onClick={handleRestoreClick}
 								disabled={isRestoring}
 								className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 							>

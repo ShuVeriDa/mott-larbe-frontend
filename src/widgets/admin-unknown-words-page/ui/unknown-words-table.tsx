@@ -116,10 +116,10 @@ export const UnknownWordsTable = ({
 				</thead>
 				<tbody>
 					{words.map((word) => {
-					  const handleClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onToggleRow(word.id);
-					  const handleClick2: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleClick3: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleCheckboxClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleToggleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onToggleRow(word.id);
+					  const handleCountClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleActionsClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
 					  const handleAddToDictionary: NonNullable<ComponentProps<typeof UnknownWordRowActions>["onAddToDictionary"]> = () => onAddToDictionary(word);
 					  const handleLinkToLemma: NonNullable<ComponentProps<typeof UnknownWordRowActions>["onLinkToLemma"]> = () => onLinkToLemma(word);
 					  const handleViewContexts: NonNullable<ComponentProps<typeof UnknownWordRowActions>["onViewContexts"]> = () => onViewContexts(word);
@@ -130,12 +130,12 @@ export const UnknownWordsTable = ({
 						>
 							<td
 								className="px-2.5 py-[10px] pl-3.5"
-								onClick={handleClick}
+								onClick={handleCheckboxClick}
 							>
 								<input
 									type="checkbox"
 									checked={selectedIds.has(word.id)}
-									onChange={handleChange}
+									onChange={handleToggleChange}
 									className="size-3.5 cursor-pointer accent-acc"
 								/>
 							</td>
@@ -169,7 +169,7 @@ export const UnknownWordsTable = ({
 							</td>
 
 							{/* Count */}
-							<td className="px-2.5 py-[10px] text-center" onClick={handleClick2}>
+							<td className="px-2.5 py-[10px] text-center" onClick={handleCountClick}>
 								<CountBadge count={word.seenCount} />
 							</td>
 
@@ -184,7 +184,7 @@ export const UnknownWordsTable = ({
 							</td>
 
 							{/* Actions */}
-							<td className="px-2.5 py-[10px]" onClick={handleClick3}>
+							<td className="px-2.5 py-[10px]" onClick={handleActionsClick}>
 								<UnknownWordRowActions
 									word={word}
 									mutations={mutations}

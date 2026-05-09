@@ -78,7 +78,7 @@ export const FeedbackListPanel = ({
 		return () => observer.disconnect();
 	}, [hasNextPage, isFetchingNextPage, onLoadMore]);
 
-		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
+		const handleSearchChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
 return (
 		<div
 			className={cn(
@@ -134,7 +134,7 @@ return (
 					</svg>
 					<input
 						value={search}
-						onChange={handleChange}
+						onChange={handleSearchChange}
 						placeholder={t("admin.feedback.searchPlaceholder")}
 						className="h-[30px] w-full rounded-base border border-bd-1 bg-surf-2 pl-[30px] pr-2.5 text-[12px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc"
 					/>

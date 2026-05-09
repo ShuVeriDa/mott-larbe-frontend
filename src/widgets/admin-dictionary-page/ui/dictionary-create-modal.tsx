@@ -88,25 +88,25 @@ export const DictionaryCreateModal = ({
 
 	const labelCls = "mb-1.5 block text-[11.5px] font-semibold text-t-2";
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
-				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
-			};
-	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => {
-								setWord(e.currentTarget.value);
-								setErrors(p => ({ ...p, word: "" }));
-							};
-	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => setNormalized(e.currentTarget.value);
-	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = e => {
-							setTranslation(e.currentTarget.value);
-							setErrors(p => ({ ...p, translation: "" }));
-						};
-	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = e => setPos(e.currentTarget.value);
-	const handleChange5: NonNullable<ComponentProps<"select">["onChange"]> = e => setLevel(e.currentTarget.value);
-	const handleChange6: NonNullable<ComponentProps<"textarea">["onChange"]> = e => setNotes(e.currentTarget.value);
+	const handleBackdropClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+			if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
+		};
+	const handleWordChange: NonNullable<ComponentProps<"input">["onChange"]> = e => {
+		setWord(e.currentTarget.value);
+		setErrors(p => ({ ...p, word: "" }));
+	};
+	const handleNormalizedChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setNormalized(e.currentTarget.value);
+	const handleTranslationChange: NonNullable<ComponentProps<"input">["onChange"]> = e => {
+		setTranslation(e.currentTarget.value);
+		setErrors(p => ({ ...p, translation: "" }));
+	};
+	const handlePosChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setPos(e.currentTarget.value);
+	const handleLevelChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setLevel(e.currentTarget.value);
+	const handleNotesChange: NonNullable<ComponentProps<"textarea">["onChange"]> = e => setNotes(e.currentTarget.value);
 return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={handleClick}
+			onClick={handleBackdropClick}
 		>
 			<div className="w-[500px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-h-[90vh] overflow-y-auto max-sm:w-full max-sm:max-h-[92vh] max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<Typography tag="h2" className="font-display text-[16px] text-t-1 mb-1">
@@ -154,7 +154,7 @@ return (
 							className={cn(inputCls, errors.word && "border-red-400")}
 							placeholder={t("admin.dictionary.createModal.wordPlaceholder")}
 							value={word}
-							onChange={handleChange}
+							onChange={handleWordChange}
 						/>
 						{errors.word && (
 							<Typography tag="p" className="mt-1 text-[11px] text-red-t">{errors.word}</Typography>
@@ -171,7 +171,7 @@ return (
 								t("admin.dictionary.createModal.normalizedPlaceholder")
 							}
 							value={normalized}
-							onChange={handleChange2}
+							onChange={handleNormalizedChange}
 						/>
 					</div>
 				</div>
@@ -187,7 +187,7 @@ return (
 							"admin.dictionary.createModal.translationPlaceholder",
 						)}
 						value={translation}
-						onChange={handleChange3}
+						onChange={handleTranslationChange}
 					/>
 					{errors.translation && (
 						<Typography tag="p" className="mt-1 text-[11px] text-red-t">{errors.translation}</Typography>
@@ -203,7 +203,7 @@ return (
 						<select
 							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 							value={pos}
-							onChange={handleChange4}
+							onChange={handlePosChange}
 						>
 							<option value="">
 								{t("admin.dictionary.createModal.posNone")}
@@ -222,7 +222,7 @@ return (
 						<select
 							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 							value={level}
-							onChange={handleChange5}
+							onChange={handleLevelChange}
 						>
 							<option value="">
 								{t("admin.dictionary.createModal.levelNone")}
@@ -245,7 +245,7 @@ return (
 						className="w-full min-h-[56px] resize-y rounded-[8px] border border-bd-2 bg-bg px-2.5 py-2 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 						placeholder={t("admin.dictionary.createModal.notesPlaceholder")}
 						value={notes}
-						onChange={handleChange6}
+						onChange={handleNotesChange}
 					/>
 				</div>
 

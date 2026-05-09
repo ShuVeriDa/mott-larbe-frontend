@@ -144,14 +144,14 @@ export const SubscriptionsTable = ({
 							const canExtend = !sub.isLifetime && (sub.status === "ACTIVE" || sub.status === "TRIALING" || sub.status === "EXPIRED");
 							const canCancel = sub.status === "ACTIVE" || sub.status === "TRIALING";
 
-														const handleClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onSelectRow(sub.id);
-							const handleClick2: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-							const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => onExtend(sub.id);
-							const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => onCancel(sub.id);
-return (
+								const handleRowClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onSelectRow(sub.id);
+							const handleActionsClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+							const handleExtendClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onExtend(sub.id);
+							const handleCancelClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onCancel(sub.id);
+							return (
 								<tr
 									key={sub.id}
-									onClick={handleClick}
+									onClick={handleRowClick}
 									className={cn(
 										"cursor-pointer border-b border-bd-1 transition-colors last:border-b-0",
 										isSelected ? "bg-acc-bg" : "hover:bg-surf-2",
@@ -224,12 +224,12 @@ return (
 									{/* Actions */}
 									<td
 										className="px-3.5 py-[9px] pr-3.5 text-right"
-										onClick={handleClick2}
+										onClick={handleActionsClick}
 									>
 										<div className="flex justify-end gap-1 opacity-0 transition-opacity group-hover:opacity-100 [tr:hover_&]:opacity-100">
 											{canExtend && (
 												<Button
-													onClick={handleClick3}
+													onClick={handleExtendClick}
 													className="h-6 rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 whitespace-nowrap"
 												>
 													{t("admin.subscriptions.actions.extend")}
@@ -237,7 +237,7 @@ return (
 											)}
 											{canCancel && (
 												<Button
-													onClick={handleClick4}
+													onClick={handleCancelClick}
 													className="h-6 rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg whitespace-nowrap"
 												>
 													{t("admin.subscriptions.actions.cancel")}

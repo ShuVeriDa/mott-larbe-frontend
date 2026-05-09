@@ -1,7 +1,6 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
@@ -35,6 +34,8 @@ interface FlagsTableProps {
 	onAddOverride: (flagId: string) => void;
 	t: (key: string, params?: Record<string, string | number>) => string;
 }
+
+// ── Sub-components ─────────────────────────────────────────────────────────────
 
 const SkeletonRow = () => (
 	<tr>
@@ -118,6 +119,122 @@ const ExpandedRow = ({
 	);
 };
 
+const FlagRow = ({
+	flag,
+	isExpanded,
+	onToggleExpand,
+	onToggle,
+	onEdit,
+	onDuplicate,
+	onDelete,
+	onAddOverride,
+	t,
+}: {
+	flag: FeatureFlagItem;
+	isExpanded: boolean;
+	onToggleExpand: (id: string) => void;
+	onToggle: (id: string, enabled: boolean) => void;
+	onEdit: (flag: FeatureFlagItem) => void;
+	onDuplicate: (flag: FeatureFlagItem) => void;
+	onDelete: (flag: FeatureFlagItem) => void;
+	onAddOverride: (flagId: string) => void;
+	t: (key: string, params?: Record<string, string | number>) => string;
+}) => {
+	const handleExpandClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onToggleExpand(flag.id);
+	const handleToggleChange: NonNullable<ComponentProps<typeof FlagToggle>["onChange"]> = (v) => onToggle(flag.id, v);
+
+	return (
+		<>
+			<tr className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2">
+				<td className="pl-3.5">
+					<Button
+						onClick={handleExpandClick}
+						aria-expanded={isExpanded}
+						className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
+					>
+						<svg
+							className={cn(
+								"size-3.5 transition-transform",
+								isExpanded && "rotate-90",
+							)}
+							viewBox="0 0 15 15"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="1.4"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						>
+							<path d="M6 4l4 4-4 4" />
+						</svg>
+					</Button>
+				</td>
+				<td className="py-3 pl-3.5">
+					<Typography tag="span" className="rounded-[5px] border border-bd-1 bg-surf-2 px-1.5 py-0.5 font-mono text-[11.5px] text-t-1">
+						{flag.key}
+					</Typography>
+					{flag.description && (
+						<Typography tag="p" className="mt-0.5 text-[11.5px] text-t-3 line-clamp-1">
+							{flag.description}
+						</Typography>
+					)}
+				</td>
+				<td className="py-3 pl-3.5">
+					<FlagToggle enabled={flag.isEnabled} onChange={handleToggleChange} />
+				</td>
+				<td className="py-3 pl-3.5">
+					<div className="flex flex-wrap gap-1">
+						{flag.environments.map((env) => (
+							<FlagEnvChip key={env} env={env} />
+						))}
+					</div>
+				</td>
+				<td className="py-3 pl-3.5">
+					<div className="flex items-center gap-2">
+						<div className="h-[5px] flex-1 overflow-hidden rounded-[3px] bg-surf-3">
+							<div
+								className="h-full rounded-[3px] bg-acc"
+								style={{ width: `${flag.rolloutPercent}%` }}
+							/>
+						</div>
+						<Typography tag="span" className="shrink-0 text-[11px] text-t-2">
+							{flag.rolloutPercent}%
+						</Typography>
+					</div>
+				</td>
+				<td className="py-3 pl-3.5">
+					{flag.overridesCount > 0 ? (
+						<Typography tag="span" className="inline-flex cursor-pointer items-center gap-[3px] rounded px-1.5 py-[1.5px] text-[10.5px] bg-pur-bg text-pur-t hover:opacity-80">
+							<svg className="size-2.5" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
+								<circle cx="7.5" cy="5" r="2" />
+								<path d="M2.5 13c0-2.5 2.5-4 5-4s5 1.5 5 4" strokeLinecap="round" />
+							</svg>
+							{flag.overridesCount}
+						</Typography>
+					) : (
+						<Typography tag="span" className="text-t-3">—</Typography>
+					)}
+				</td>
+				<td className="py-3 pl-3.5 text-[11.5px] text-t-3">
+					{formatDate(flag.updatedAt)}
+				</td>
+				<td className="py-3 pr-3.5">
+					<FlagRowActions
+						flag={flag}
+						onEdit={onEdit}
+						onDuplicate={onDuplicate}
+						onDelete={onDelete}
+						onAddOverride={onAddOverride}
+						t={t}
+					/>
+				</td>
+			</tr>
+			{isExpanded && <ExpandedRow key={`${flag.id}-exp`} flag={flag} t={t} />}
+		</>
+	);
+};
+
+// ── Main component ─────────────────────────────────────────────────────────────
+
 export const FlagsTable = ({
 	items,
 	isLoading,
@@ -130,7 +247,7 @@ export const FlagsTable = ({
 }: FlagsTableProps) => {
 	const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
-	const toggleExpand = (id: string) => {
+	const handleToggleExpand = (id: string) => {
 		setExpanded((prev) => {
 			const next = new Set(prev);
 			if (next.has(id)) next.delete(id);
@@ -172,120 +289,34 @@ export const FlagsTable = ({
 					{isLoading
 						? Array.from({ length: 5 }).map((_, i) => <SkeletonRow key={i} />)
 						: grouped.map(([category, flags]) => (
-								<>
-									<tr key={`cat-${category}`} className="bg-surf-2">
-										<td
-											colSpan={8}
-											className="border-b border-bd-1 px-3.5 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3"
-										>
-											<FlagCategoryBadge category={category} t={t} />
-											<Typography tag="span" className="ml-2 text-t-3">
-												{t("admin.featureFlags.table.categoryCount", { count: flags.length })}
-											</Typography>
-										</td>
-									</tr>
-									{flags.map((flag) => {
-									  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => toggleExpand(flag.id);
-									  const handleChange: NonNullable<ComponentProps<typeof FlagToggle>["onChange"]> = (v) => onToggle(flag.id, v);
-									  return (
-										<>
-											<tr
-												key={flag.id}
-												className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2"
-											>
-												<td className="pl-3.5">
-													<Button
-														onClick={handleClick}
-														aria-expanded={expanded.has(flag.id)}
-														className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
-													>
-														<svg
-															className={cn(
-																"size-3.5 transition-transform",
-																expanded.has(flag.id) && "rotate-90",
-															)}
-															viewBox="0 0 15 15"
-															fill="none"
-															stroke="currentColor"
-															strokeWidth="1.4"
-															strokeLinecap="round"
-															strokeLinejoin="round"
-														>
-															<path d="M6 4l4 4-4 4" />
-														</svg>
-													</Button>
-												</td>
-												<td className="py-3 pl-3.5">
-													<Typography tag="span" className="rounded-[5px] border border-bd-1 bg-surf-2 px-1.5 py-0.5 font-mono text-[11.5px] text-t-1">
-														{flag.key}
-													</Typography>
-													{flag.description && (
-														<Typography tag="p" className="mt-0.5 text-[11.5px] text-t-3 line-clamp-1">
-															{flag.description}
-														</Typography>
-													)}
-												</td>
-												<td className="py-3 pl-3.5">
-													<FlagToggle
-														enabled={flag.isEnabled}
-														onChange={handleChange}
-													/>
-												</td>
-												<td className="py-3 pl-3.5">
-													<div className="flex flex-wrap gap-1">
-														{flag.environments.map((env) => (
-															<FlagEnvChip key={env} env={env} />
-														))}
-													</div>
-												</td>
-												<td className="py-3 pl-3.5">
-													<div className="flex items-center gap-2">
-														<div className="h-[5px] flex-1 overflow-hidden rounded-[3px] bg-surf-3">
-															<div
-																className="h-full rounded-[3px] bg-acc"
-																style={{ width: `${flag.rolloutPercent}%` }}
-															/>
-														</div>
-														<Typography tag="span" className="shrink-0 text-[11px] text-t-2">
-															{flag.rolloutPercent}%
-														</Typography>
-													</div>
-												</td>
-												<td className="py-3 pl-3.5">
-													{flag.overridesCount > 0 ? (
-														<Typography tag="span" className="inline-flex cursor-pointer items-center gap-[3px] rounded px-1.5 py-[1.5px] text-[10.5px] bg-pur-bg text-pur-t hover:opacity-80">
-															<svg className="size-2.5" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-																<circle cx="7.5" cy="5" r="2" />
-																<path d="M2.5 13c0-2.5 2.5-4 5-4s5 1.5 5 4" strokeLinecap="round" />
-															</svg>
-															{flag.overridesCount}
-														</Typography>
-													) : (
-														<Typography tag="span" className="text-t-3">—</Typography>
-													)}
-												</td>
-												<td className="py-3 pl-3.5 text-[11.5px] text-t-3">
-													{formatDate(flag.updatedAt)}
-												</td>
-												<td className="py-3 pr-3.5">
-													<FlagRowActions
-														flag={flag}
-														onEdit={onEdit}
-														onDuplicate={onDuplicate}
-														onDelete={onDelete}
-														onAddOverride={onAddOverride}
-														t={t}
-													/>
-												</td>
-											</tr>
-											{expanded.has(flag.id) && (
-												<ExpandedRow key={`${flag.id}-exp`} flag={flag} t={t} />
-											)}
-										</>
-									);
-									})}
-								</>
-							))}
+							<>
+								<tr key={`cat-${category}`} className="bg-surf-2">
+									<td
+										colSpan={8}
+										className="border-b border-bd-1 px-3.5 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3"
+									>
+										<FlagCategoryBadge category={category} t={t} />
+										<Typography tag="span" className="ml-2 text-t-3">
+											{t("admin.featureFlags.table.categoryCount", { count: flags.length })}
+										</Typography>
+									</td>
+								</tr>
+								{flags.map((flag) => (
+									<FlagRow
+										key={flag.id}
+										flag={flag}
+										isExpanded={expanded.has(flag.id)}
+										onToggleExpand={handleToggleExpand}
+										onToggle={onToggle}
+										onEdit={onEdit}
+										onDuplicate={onDuplicate}
+										onDelete={onDelete}
+										onAddOverride={onAddOverride}
+										t={t}
+									/>
+								))}
+							</>
+						))}
 				</tbody>
 			</table>
 		</div>

@@ -151,13 +151,11 @@ export const DictionaryEntryTopbar = ({
 	const ghostBtn =
 		"flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:opacity-40";
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-						prev.data &&
-						router.push(`/${lang}/admin/dictionary/${prev.data.id}`);
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-						next.data &&
-						router.push(`/${lang}/admin/dictionary/${next.data.id}`);
-	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addLemma" });
+	const handlePrevClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		prev.data && router.push(`/${lang}/admin/dictionary/${prev.data.id}`);
+	const handleNextClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		next.data && router.push(`/${lang}/admin/dictionary/${next.data.id}`);
+	const handleAddLemmaClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addLemma" });
 return (
 		<header className=" flex items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-[14px] transition-colors max-sm:px-3.5 max-sm:py-3">
 			{/* Breadcrumb */}
@@ -190,8 +188,7 @@ return (
 						"max-sm:[&_.btn-label]:hidden max-sm:min-w-[34px] max-sm:justify-center max-sm:px-2",
 					)}
 					disabled={!prev.data}
-					onClick={handleClick
-					}
+					onClick={handlePrevClick}
 					title={prev.data?.baseForm}
 				>
 					<IconPrev />
@@ -205,8 +202,7 @@ return (
 						"max-sm:[&_.btn-label]:hidden max-sm:min-w-[34px] max-sm:justify-center max-sm:px-2",
 					)}
 					disabled={!next.data}
-					onClick={handleClick2
-					}
+					onClick={handleNextClick}
 					title={next.data?.baseForm}
 				>
 					<Typography tag="span" className="btn-label">{t("admin.dictionaryDetail.next")}</Typography>
@@ -225,7 +221,7 @@ return (
 						<div className="absolute right-0 top-[calc(100%+4px)] z-50 min-w-[180px] rounded-[10px] border border-bd-2 bg-surf p-1 shadow-md">
 							<Button
 								className="flex w-full items-center gap-2 rounded-md px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
-								onClick={handleClick3}
+								onClick={handleAddLemmaClick}
 							>
 								<IconPlus />
 								{t("admin.dictionaryDetail.addLemma")}

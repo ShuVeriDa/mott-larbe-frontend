@@ -90,13 +90,13 @@ export const BillingPlanModal = ({
 
 	if (!open) return null;
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
-	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("name", e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => set("type", e.currentTarget.value as PlanType);
-	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => set("interval", (e.currentTarget.value || null) as PlanInterval);
-	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("priceCents", e.currentTarget.value);
-	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("description", e.currentTarget.value);
-	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("isActive", e.currentTarget.checked);
+	const handleInnerClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+	const handleNameChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("name", e.currentTarget.value);
+	const handleTypeChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => set("type", e.currentTarget.value as PlanType);
+	const handleIntervalChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => set("interval", (e.currentTarget.value || null) as PlanInterval);
+	const handlePriceChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("priceCents", e.currentTarget.value);
+	const handleDescriptionChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("description", e.currentTarget.value);
+	const handleActiveChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => set("isActive", e.currentTarget.checked);
 return (
 		<div
 			className="fixed inset-0 z-400 flex items-end justify-center bg-black/35 sm:items-center sm:p-4"
@@ -104,7 +104,7 @@ return (
 		>
 			<div
 				className="w-full max-w-[500px] overflow-hidden rounded-t-[14px] bg-surf shadow-[0_20px_60px_rgba(0,0,0,0.18)] transition-transform sm:rounded-[14px]"
-				onClick={handleClick}
+				onClick={handleInnerClick}
 			>
 				{/* Header */}
 				<div className="flex items-center justify-between border-b border-bd-1 px-[18px] py-4">
@@ -132,7 +132,7 @@ return (
 							</Typography>
 							<input
 								value={form.name}
-								onChange={handleChange}
+								onChange={handleNameChange}
 								placeholder={t("admin.plans.planModal.namePlaceholder")}
 								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 							/>
@@ -146,7 +146,7 @@ return (
 									</Typography>
 									<select
 										value={form.type}
-										onChange={handleChange2}
+										onChange={handleTypeChange}
 										className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 									>
 										{PLAN_TYPES.map((pt) => (
@@ -160,7 +160,7 @@ return (
 									</Typography>
 									<select
 										value={form.interval ?? ""}
-										onChange={handleChange3}
+										onChange={handleIntervalChange}
 										className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 									>
 										{INTERVALS.map(({ value, label }) => (
@@ -180,7 +180,7 @@ return (
 								min={0}
 								step="0.01"
 								value={form.priceCents}
-								onChange={handleChange4}
+								onChange={handlePriceChange}
 								placeholder="690"
 								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 							/>
@@ -192,7 +192,7 @@ return (
 							</Typography>
 							<input
 								value={form.description}
-								onChange={handleChange5}
+								onChange={handleDescriptionChange}
 								placeholder={t("admin.plans.planModal.descriptionPlaceholder")}
 								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 							/>
@@ -207,7 +207,7 @@ return (
 									type="checkbox"
 									className="peer sr-only"
 									checked={form.isActive}
-									onChange={handleChange6}
+									onChange={handleActiveChange}
 								/>
 								<Typography tag="span" className="absolute inset-0 rounded-full border border-bd-2 bg-surf-3 transition-colors peer-checked:border-acc peer-checked:bg-acc" />
 								<Typography tag="span" className="absolute left-0.5 top-0.5 size-3 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-3.5" />

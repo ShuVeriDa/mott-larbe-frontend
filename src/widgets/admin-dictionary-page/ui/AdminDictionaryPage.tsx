@@ -80,21 +80,21 @@ export const AdminDictionaryPage = () => {
 	const hasSelection = selectedIds.size > 0;
 	const unknownWordsCount = statsQuery.data?.unknownWordsCount ?? 0;
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleBulkExport();
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => setCreateOpen(true);
-	const handleClose: NonNullable<ComponentProps<typeof DictionaryCreateModal>["onClose"]> = () => setCreateOpen(false);
-	const handleClose2: NonNullable<ComponentProps<typeof DictionaryDeleteModal>["onClose"]> = () => setDeleteEntry(null);
-	const handleConfirm: NonNullable<ComponentProps<typeof DictionaryAddSenseModal>["onConfirm"]> = def => {
-					handleAddSenseConfirm(def);
-					setAddSenseEntry(null);
-				};
-	const handleClose3: NonNullable<ComponentProps<typeof DictionaryAddSenseModal>["onClose"]> = () => setAddSenseEntry(null);
-	const handleConfirm2: NonNullable<ComponentProps<typeof DictionaryAddExampleModal>["onConfirm"]> = text => {
-					handleAddExampleConfirm(text);
-					setAddExampleEntry(null);
-				};
-	const handleClose4: NonNullable<ComponentProps<typeof DictionaryAddExampleModal>["onClose"]> = () => setAddExampleEntry(null);
-return (
+	const handleExportClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleBulkExport();
+	const handleCreateClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setCreateOpen(true);
+	const handleCreateModalClose: NonNullable<ComponentProps<typeof DictionaryCreateModal>["onClose"]> = () => setCreateOpen(false);
+	const handleDeleteModalClose: NonNullable<ComponentProps<typeof DictionaryDeleteModal>["onClose"]> = () => setDeleteEntry(null);
+	const handleAddSenseConfirmAndClose: NonNullable<ComponentProps<typeof DictionaryAddSenseModal>["onConfirm"]> = def => {
+		handleAddSenseConfirm(def);
+		setAddSenseEntry(null);
+	};
+	const handleAddSenseModalClose: NonNullable<ComponentProps<typeof DictionaryAddSenseModal>["onClose"]> = () => setAddSenseEntry(null);
+	const handleAddExampleConfirmAndClose: NonNullable<ComponentProps<typeof DictionaryAddExampleModal>["onConfirm"]> = text => {
+		handleAddExampleConfirm(text);
+		setAddExampleEntry(null);
+	};
+	const handleAddExampleModalClose: NonNullable<ComponentProps<typeof DictionaryAddExampleModal>["onClose"]> = () => setAddExampleEntry(null);
+	return (
 		<div className="flex min-h-screen flex-col">
 			<DictionaryTopbar
 				title={t("admin.dictionary.title")}
@@ -122,7 +122,7 @@ return (
 							{t("admin.dictionary.import")}
 						</Button>
 						<Button
-							onClick={handleClick}
+							onClick={handleExportClick}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
 							<svg
@@ -142,7 +142,7 @@ return (
 							{t("admin.dictionary.export")}
 						</Button>
 						<Button
-							onClick={handleClick2}
+							onClick={handleCreateClick}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 						>
 							<svg
@@ -254,7 +254,7 @@ return (
 				open={createOpen}
 				isSubmitting={isCreating}
 				onSubmit={handleCreate}
-				onClose={handleClose}
+				onClose={handleCreateModalClose}
 				t={t}
 			/>
 
@@ -271,23 +271,23 @@ return (
 				entry={deleteEntry}
 				isDeleting={isDeleting}
 				onConfirm={handleDeleteConfirm}
-				onClose={handleClose2}
+				onClose={handleDeleteModalClose}
 				t={t}
 			/>
 
 			<DictionaryAddSenseModal
 				entry={addSenseEntry}
 				isSubmitting={isAddingSense}
-				onConfirm={handleConfirm}
-				onClose={handleClose3}
+				onConfirm={handleAddSenseConfirmAndClose}
+				onClose={handleAddSenseModalClose}
 				t={t}
 			/>
 
 			<DictionaryAddExampleModal
 				entry={addExampleEntry}
 				isSubmitting={isAddingExample}
-				onConfirm={handleConfirm2}
-				onClose={handleClose4}
+				onConfirm={handleAddExampleConfirmAndClose}
+				onClose={handleAddExampleModalClose}
 				t={t}
 			/>
 		</div>

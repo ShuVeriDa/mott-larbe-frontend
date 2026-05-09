@@ -2,8 +2,8 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { ComponentProps } from "react";
 import { useAdminFeatureFlagsPage } from "../model/use-admin-feature-flags-page";
 import { FeatureFlagDeleteModal } from "./feature-flag-delete-modal";
 import { FeatureFlagDuplicateModal } from "./feature-flag-duplicate-modal";
@@ -101,14 +101,29 @@ export const AdminFeatureFlagsPage = () => {
 				? overrideItems.length === 0 && !isOverridesLoading
 				: historyItems.length === 0 && !isHistoryLoading;
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setImportModalOpen(true);
-	const handleAddOverride: NonNullable<ComponentProps<typeof OverridesToolbar>["onAddOverride"]> = () => openOverrideModal();
-	const handleClose: NonNullable<ComponentProps<typeof FeatureFlagModal>["onClose"]> = () => setModalOpen(false);
-	const handleClose2: NonNullable<ComponentProps<typeof FeatureFlagDeleteModal>["onClose"]> = () => setDeleteFlag(null);
-	const handleClose3: NonNullable<ComponentProps<typeof FeatureFlagDuplicateModal>["onClose"]> = () => setDuplicateFlag(null);
-	const handleClose4: NonNullable<ComponentProps<typeof FeatureFlagOverrideModal>["onClose"]> = () => setOverrideModalOpen(false);
-	const handleClose5: NonNullable<ComponentProps<typeof FeatureFlagImportModal>["onClose"]> = () => setImportModalOpen(false);
-return (
+	const handleImportClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => setImportModalOpen(true);
+	const handleAddOverride: NonNullable<
+		ComponentProps<typeof OverridesToolbar>["onAddOverride"]
+	> = () => openOverrideModal();
+	const handleFlagModalClose: NonNullable<
+		ComponentProps<typeof FeatureFlagModal>["onClose"]
+	> = () => setModalOpen(false);
+	const handleDeleteModalClose: NonNullable<
+		ComponentProps<typeof FeatureFlagDeleteModal>["onClose"]
+	> = () => setDeleteFlag(null);
+	const handleDuplicateModalClose: NonNullable<
+		ComponentProps<typeof FeatureFlagDuplicateModal>["onClose"]
+	> = () => setDuplicateFlag(null);
+	const handleOverrideModalClose: NonNullable<
+		ComponentProps<typeof FeatureFlagOverrideModal>["onClose"]
+	> = () => setOverrideModalOpen(false);
+	const handleImportModalClose: NonNullable<
+		ComponentProps<typeof FeatureFlagImportModal>["onClose"]
+	> = () => setImportModalOpen(false);
+
+	return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<FeatureFlagsTopbar
 				title={t("admin.featureFlags.title")}
@@ -116,7 +131,7 @@ return (
 				actions={
 					<>
 						<Button
-							onClick={handleClick}
+							onClick={handleImportClick}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
 							<svg
@@ -272,7 +287,7 @@ return (
 				editFlag={editFlag}
 				isSubmitting={isModalSubmitting}
 				onSubmit={handleModalSubmit}
-				onClose={handleClose}
+				onClose={handleFlagModalClose}
 				t={t}
 			/>
 
@@ -280,7 +295,7 @@ return (
 				flag={deleteFlag}
 				isDeleting={isDeleting}
 				onConfirm={handleDeleteConfirm}
-				onClose={handleClose2}
+				onClose={handleDeleteModalClose}
 				t={t}
 			/>
 
@@ -288,7 +303,7 @@ return (
 				flag={duplicateFlag}
 				isDuplicating={isDuplicating}
 				onConfirm={handleDuplicateConfirm}
-				onClose={handleClose3}
+				onClose={handleDuplicateModalClose}
 				t={t}
 			/>
 
@@ -297,14 +312,14 @@ return (
 				preselectedFlagId={overridePreselectedFlagId}
 				isSubmitting={isOverrideSubmitting}
 				onSubmit={handleOverrideSubmit}
-				onClose={handleClose4}
+				onClose={handleOverrideModalClose}
 				t={t}
 			/>
 
 			<FeatureFlagImportModal
 				open={importModalOpen}
 				onSubmit={handleImportSubmit}
-				onClose={handleClose5}
+				onClose={handleImportModalClose}
 				t={t}
 			/>
 		</div>

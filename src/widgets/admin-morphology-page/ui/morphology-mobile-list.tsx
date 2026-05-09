@@ -51,9 +51,9 @@ export const MorphologyMobileList = ({
 	return (
 		<div className="flex flex-col gap-2 sm:hidden">
 			{items.map(rule => {
-			  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onToggleActive(rule);
-			  const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onEdit(rule);
-			  const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => onDelete(rule.id);
+			  const handleToggleActiveClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onToggleActive(rule);
+			  const handleEditClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onEdit(rule);
+			  const handleDeleteClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onDelete(rule.id);
 			  return (
 				<div
 					key={rule.id}
@@ -178,14 +178,14 @@ export const MorphologyMobileList = ({
 						<div className="flex shrink-0 gap-1.5">
 							{!rule.isActive && (
 								<Button
-									onClick={handleClick}
+									onClick={handleToggleActiveClick}
 									className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf-2 px-2.5 text-[11.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 								>
 									{t("admin.morphology.row.activate")}
 								</Button>
 							)}
 							<Button
-								onClick={handleClick2}
+								onClick={handleEditClick}
 								className="flex size-[30px] items-center justify-center rounded-base border border-bd-2 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 							>
 								<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
@@ -199,7 +199,7 @@ export const MorphologyMobileList = ({
 								</svg>
 							</Button>
 							<Button
-								onClick={handleClick3}
+								onClick={handleDeleteClick}
 								className="flex size-[30px] items-center justify-center rounded-base border border-red/20 bg-surf-2 text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 							>
 								<svg width="13" height="13" viewBox="0 0 16 16" fill="none">

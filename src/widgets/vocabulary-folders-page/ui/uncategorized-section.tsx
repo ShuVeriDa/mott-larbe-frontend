@@ -34,7 +34,7 @@ const Chip = ({
 }) => {
 	const [open, setOpen] = useState(false);
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleFolderPickerToggle: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
 	const handleClose: NonNullable<ComponentProps<typeof FolderPickerPopover>["onClose"]> = () => setOpen(false);
 	const handlePick: NonNullable<ComponentProps<typeof FolderPickerPopover>["onPick"]> = (folderId) => {
 					onAssign(entry.id, folderId);
@@ -54,7 +54,7 @@ return (
 				<Typography tag="span" className="text-[11.5px] text-t-3">{entry.translation}</Typography>
 				<Button
 					aria-label={assignLabel}
-					onClick={handleClick}
+					onClick={handleFolderPickerToggle}
 					className={cn(
 						"ml-0.5 flex size-[18px] items-center justify-center rounded-[4px]",
 						"bg-acc-bg text-acc transition-colors hover:bg-acc hover:text-white",
@@ -121,7 +121,7 @@ const UncategorizedChips = ({
 		);
 	}
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setLimit((l) => l + PAGE_SIZE);
+		const handleShowMoreClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setLimit((l) => l + PAGE_SIZE);
 return (
 		<div className="flex flex-col gap-2.5">
 			<div className="flex flex-wrap gap-1.5">
@@ -139,7 +139,7 @@ return (
 			</div>
 			{hasMore && (
 				<Button
-					onClick={handleClick}
+					onClick={handleShowMoreClick}
 					className="self-start text-[12px] text-acc transition-colors hover:text-acc/70"
 				>
 					{t("vocabulary.foldersPage.uncategorized.showMore", {
@@ -163,8 +163,8 @@ export const UncategorizedSection = ({ count }: UncategorizedSectionProps) => {
 	const handleAssign = (entryId: string, folderId: string) =>
 		assign({ assignments: [{ id: entryId, folderId }] });
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => setDistributeOpen(true);
+		const handleExpandClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleDistributeClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setDistributeOpen(true);
 	const handleClose: NonNullable<ComponentProps<typeof DistributeAllModal>["onClose"]> = () => setDistributeOpen(false);
 return (
 		<>
@@ -176,7 +176,7 @@ return (
 					)}
 				>
 					<Button
-						onClick={handleClick}
+						onClick={handleExpandClick}
 						disabled={isPending}
 						className="flex flex-1 items-center gap-2.5 text-left transition-colors hover:opacity-75"
 					>
@@ -197,7 +197,7 @@ return (
 
 					{(folders?.length ?? 0) > 0 && (
 						<Button
-							onClick={handleClick2}
+							onClick={handleDistributeClick}
 							disabled={isPending}
 							className="shrink-0 text-[12px] text-acc transition-colors hover:text-acc/70"
 						>

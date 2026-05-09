@@ -48,18 +48,18 @@ export const MorphologyImportModal = ({
 		onSubmit(file, overwrite);
 	};
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleBackdropClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
 	const handleDragOver: NonNullable<ComponentProps<"div">["onDragOver"]> = e => {
-								e.preventDefault();
-								setDragging(true);
-							};
+		e.preventDefault();
+		setDragging(true);
+	};
 	const handleDragLeave: NonNullable<ComponentProps<"div">["onDragLeave"]> = () => setDragging(false);
-	const handleClick2: NonNullable<ComponentProps<"div">["onClick"]> = () => inputRef.current?.click();
-	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setOverwrite(e.currentTarget.checked);
+	const handleFilePickerClick: NonNullable<ComponentProps<"div">["onClick"]> = () => inputRef.current?.click();
+	const handleOverwriteChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setOverwrite(e.currentTarget.checked);
 return (
 		<div
 			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"
-			onClick={handleClick}
+			onClick={handleBackdropClick}
 		>
 			<div className="w-full max-w-[480px] overflow-y-auto rounded-[14px] border border-bd-2 bg-surf p-5 shadow-md max-sm:max-w-full max-sm:rounded-b-none max-sm:rounded-t-[16px] max-sm:pb-7">
 				<Typography tag="h2" className="font-display text-[15px] text-t-1 mb-1">
@@ -130,7 +130,7 @@ return (
 							onDragOver={handleDragOver}
 							onDragLeave={handleDragLeave}
 							onDrop={handleDrop}
-							onClick={handleClick2}
+							onClick={handleFilePickerClick}
 						>
 							<input
 								ref={inputRef}
@@ -182,7 +182,7 @@ return (
 							<input
 								type="checkbox"
 								checked={overwrite}
-								onChange={handleChange}
+								onChange={handleOverwriteChange}
 								className="accent-acc"
 							/>
 							<Typography tag="span" className="text-[12.5px] text-t-2">

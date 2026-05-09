@@ -56,10 +56,10 @@ export const AnalyticsTopbar = ({
 		setShowDatePicker(false);
 	};
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowDatePicker(v => !v);
-	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setLocalFrom(e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => setLocalTo(e.currentTarget.value);
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowExportMenu(v => !v);
+	const handleDatePickerToggle: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowDatePicker(v => !v);
+	const handleFromChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setLocalFrom(e.currentTarget.value);
+	const handleToChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setLocalTo(e.currentTarget.value);
+	const handleExportMenuToggle: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowExportMenu(v => !v);
 return (
 		<header className=" flex items-center gap-3 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors max-md:hidden">
 			<div>
@@ -96,7 +96,7 @@ return (
 				{/* Date-range chip */}
 				<div className="relative">
 					<Button
-						onClick={handleClick}
+						onClick={handleDatePickerToggle}
 						className={cn(
 							"flex h-[30px] items-center gap-1.5 rounded-base border px-2.5 text-[12px] font-medium transition-colors",
 							isCustomRange
@@ -143,7 +143,7 @@ return (
 										type="date"
 										value={localFrom}
 										max={localTo || undefined}
-										onChange={handleChange}
+										onChange={handleFromChange}
 										className="h-[28px] rounded-md border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1"
 									/>
 								</div>
@@ -155,7 +155,7 @@ return (
 										type="date"
 										value={localTo}
 										min={localFrom || undefined}
-										onChange={handleChange2}
+										onChange={handleToChange}
 										className="h-[28px] rounded-md border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1"
 									/>
 								</div>
@@ -182,7 +182,7 @@ return (
 				{/* Export with format dropdown */}
 				<div className="relative" ref={exportRef}>
 					<Button
-						onClick={handleClick2}
+						onClick={handleExportMenuToggle}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 					>
 						<svg

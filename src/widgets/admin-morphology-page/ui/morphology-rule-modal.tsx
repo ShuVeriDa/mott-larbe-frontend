@@ -83,29 +83,29 @@ export const MorphologyRuleModal = ({
 		});
 	};
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
-	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, suffix: e.currentTarget.value }));
-	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, add: e.currentTarget.value }));
-	const handleChange3: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, pos: e.currentTarget.value }));
-	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = e =>
-									setForm(p => ({
-										...p,
-										type: e.currentTarget.value as MorphRuleType,
-										isRegex: e.currentTarget.value === "REGEX",
-									}));
-	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = e =>
-									setForm(p => ({
-										...p,
-										priority: parseInt(e.currentTarget.value, 10) || 0,
-									}));
-	const handleChange6: NonNullable<ComponentProps<"input">["onChange"]> = e =>
-								setForm(p => ({ ...p, description: e.currentTarget.value }));
-	const handleChange7: NonNullable<ComponentProps<"input">["onChange"]> = e =>
-								setForm(p => ({ ...p, isActive: e.currentTarget.checked }));
+	const handleBackdropClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
+	const handleSuffixChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, suffix: e.currentTarget.value }));
+	const handleAddChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, add: e.currentTarget.value }));
+	const handlePosChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, pos: e.currentTarget.value }));
+	const handleTypeChange: NonNullable<ComponentProps<"select">["onChange"]> = e =>
+		setForm(p => ({
+			...p,
+			type: e.currentTarget.value as MorphRuleType,
+			isRegex: e.currentTarget.value === "REGEX",
+		}));
+	const handlePriorityChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+		setForm(p => ({
+			...p,
+			priority: parseInt(e.currentTarget.value, 10) || 0,
+		}));
+	const handleDescriptionChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+		setForm(p => ({ ...p, description: e.currentTarget.value }));
+	const handleActiveChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+		setForm(p => ({ ...p, isActive: e.currentTarget.checked }));
 return (
 		<div
 			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] sm:p-4 max-sm:items-end max-sm:p-0"
-			onClick={handleClick}
+			onClick={handleBackdropClick}
 		>
 			<div className="w-full max-w-[480px] overflow-y-auto rounded-[14px] border border-bd-2 bg-surf p-5 shadow-md max-sm:max-w-full max-sm:rounded-b-none max-sm:rounded-t-[16px] max-sm:pb-7">
 				<Typography tag="h2" className="font-display text-[15px] text-t-1 mb-1">
@@ -127,7 +127,7 @@ return (
 							required
 							type="text"
 							value={form.suffix}
-							onChange={handleChange}
+							onChange={handleSuffixChange}
 							placeholder={t("admin.morphology.ruleModal.suffixPlaceholder")}
 							className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] text-t-1 placeholder:font-sans placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
 						/>
@@ -145,7 +145,7 @@ return (
 							<input
 								type="text"
 								value={form.add ?? ""}
-								onChange={handleChange2}
+								onChange={handleAddChange}
 								placeholder="∅"
 								className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] text-t-1 placeholder:font-sans placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
 							/>
@@ -159,7 +159,7 @@ return (
 							<input
 								type="text"
 								value={form.pos ?? ""}
-								onChange={handleChange3}
+								onChange={handlePosChange}
 								placeholder="NOUN"
 								className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[12.5px] text-t-1 placeholder:text-t-3 focus:border-acc focus:outline-none"
 							/>
@@ -174,8 +174,7 @@ return (
 							</Typography>
 							<select
 								value={form.type}
-								onChange={handleChange4
-								}
+								onChange={handleTypeChange}
 								className="h-9 w-full appearance-none rounded-lg border border-bd-2 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2211%22%20height%3D%2211%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M4%206l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-position-[right_8px_center] bg-no-repeat px-2.5 pr-7 text-[12.5px] text-t-2 focus:border-acc focus:outline-none"
 							>
 								{TYPE_OPTIONS.map(tp => (
@@ -196,8 +195,7 @@ return (
 								min={0}
 								max={99}
 								value={form.priority ?? 1}
-								onChange={handleChange5
-								}
+								onChange={handlePriorityChange}
 								className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[12.5px] text-t-1 focus:border-acc focus:outline-none"
 							/>
 						</div>
@@ -211,8 +209,7 @@ return (
 						<input
 							type="text"
 							value={form.description ?? ""}
-							onChange={handleChange6
-							}
+							onChange={handleDescriptionChange}
 							placeholder={t(
 								"admin.morphology.ruleModal.descriptionPlaceholder",
 							)}
@@ -225,8 +222,7 @@ return (
 						<input
 							type="checkbox"
 							checked={form.isActive ?? true}
-							onChange={handleChange7
-							}
+							onChange={handleActiveChange}
 							className="accent-acc"
 						/>
 						<Typography tag="span" className="text-[12.5px] text-t-2">

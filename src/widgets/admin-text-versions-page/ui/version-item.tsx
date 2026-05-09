@@ -94,10 +94,10 @@ export const VersionItem = ({ item, isFirst, isLast, isActive, onClick, onRestor
 
 	const btnClass = "flex size-6 cursor-pointer items-center justify-center rounded-[5px] border-none bg-surf-3 text-t-2 transition-colors hover:bg-surf-4 hover:text-t-1 [&_svg]:size-3";
 
-		const handleKeyDown: NonNullable<ComponentProps<"div">["onKeyDown"]> = (e) => e.key === "Enter" && onClick();
-	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onRestore(); };
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onRetry(); };
-	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onDownload(item.version); };
+	const handleKeyDown: NonNullable<ComponentProps<"div">["onKeyDown"]> = (e) => e.key === "Enter" && onClick();
+	const handleRestoreClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onRestore(); };
+	const handleRetryClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onRetry(); };
+	const handleDownloadClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onDownload(item.version); };
 return (
 		<div
 			role="button"
@@ -216,7 +216,7 @@ return (
 				<div className="flex shrink-0 flex-col justify-start gap-1 pt-0.5 opacity-0 transition-opacity group-hover:opacity-100 max-sm:opacity-100">
 					{item.status === "COMPLETED" && !item.isCurrent && (
 						<Button
-							onClick={handleClick}
+							onClick={handleRestoreClick}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.restore")}
 						>
@@ -228,7 +228,7 @@ return (
 					)}
 					{item.status === "ERROR" && (
 						<Button
-							onClick={handleClick2}
+							onClick={handleRetryClick}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.retry")}
 						>
@@ -240,7 +240,7 @@ return (
 					)}
 					{item.status === "COMPLETED" && (
 						<Button
-							onClick={handleClick3}
+							onClick={handleDownloadClick}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.download")}
 						>

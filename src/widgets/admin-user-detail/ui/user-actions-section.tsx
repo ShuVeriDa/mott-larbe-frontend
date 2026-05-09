@@ -39,16 +39,16 @@ export const UserActionsSection = ({ user, mutations, sessions, onManageSubscrip
 		}
 	};
 
-		const handleClick: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => sessions.logoutAll.mutate();
-	const handleClick2: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => setShowCoupon((v) => !v);
-	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setCouponInput(e.currentTarget.value);
+		const handleResetSessionsClick: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => sessions.logoutAll.mutate();
+	const handleCouponToggleClick: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => setShowCoupon((v) => !v);
+	const handleCouponInputChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setCouponInput(e.currentTarget.value);
 	const handleKeyDown: NonNullable<ComponentProps<"input">["onKeyDown"]> = (e) => e.key === "Enter" && handleCouponSubmit();
-	const handleClick3: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () =>
+	const handleFreezeToggleClick: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () =>
 						isFrozen
 							? mutations.unfreeze.mutate(user.id)
 							: mutations.freeze.mutate(user.id);
-	const handleClick4: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => mutations.block.mutate(user.id);
-	const handleClick5: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => mutations.remove.mutate(user.id);
+	const handleBlockClick: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => mutations.block.mutate(user.id);
+	const handleDeleteClick: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => mutations.remove.mutate(user.id);
 return (
 		<div className="flex flex-col gap-1.5 px-4 py-3">
 			<div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
@@ -60,7 +60,7 @@ return (
 			<ActionButton
 				icon={<SessionsIcon />}
 				label={t("admin.userDetail.actions.resetSessions")}
-				onClick={handleClick}
+				onClick={handleResetSessionsClick}
 				disabled={sessions.logoutAll.isPending}
 			/>
 
@@ -68,13 +68,13 @@ return (
 				<ActionButton
 					icon={<CouponIcon />}
 					label={t("admin.userDetail.actions.applyCoupon")}
-					onClick={handleClick2}
+					onClick={handleCouponToggleClick}
 				/>
 				{showCoupon && (
 					<div className="mt-1.5 flex gap-1.5">
 						<input
 							value={couponInput}
-							onChange={handleChange}
+							onChange={handleCouponInputChange}
 							onKeyDown={handleKeyDown}
 							placeholder="PROMO_CODE"
 							className="h-7 flex-1 rounded-[6px] border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1 outline-none placeholder:text-t-4 focus:border-acc"
@@ -99,8 +99,7 @@ return (
 							: t("admin.users.actions.freeze")
 					}
 					variant="amber"
-					onClick={handleClick3
-					}
+					onClick={handleFreezeToggleClick}
 					disabled={mutations.freeze.isPending || mutations.unfreeze.isPending}
 				/>
 			)}
@@ -110,7 +109,7 @@ return (
 					icon={<BlockIcon />}
 					label={t("admin.users.actions.block")}
 					variant="danger"
-					onClick={handleClick4}
+					onClick={handleBlockClick}
 					disabled={mutations.block.isPending}
 				/>
 			)}
@@ -119,7 +118,7 @@ return (
 				icon={<DeleteIcon />}
 				label={t("admin.users.actions.delete")}
 				variant="danger"
-				onClick={handleClick5}
+				onClick={handleDeleteClick}
 				disabled={mutations.remove.isPending}
 			/>
 		</div>

@@ -42,13 +42,13 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 	const [extendDays, setExtendDays] = useState(30);
 	const [showExtend, setShowExtend] = useState(false);
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowExtend((v) => !v);
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		const handleExtendToggleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowExtend((v) => !v);
+	const handleCancelClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 		if (!currentSubscription) return;
 		cancel.mutate(currentSubscription.id);
 	};
-	const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setExtendDays(Number(e.currentTarget.value));
-	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+	const handleExtendDaysChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setExtendDays(Number(e.currentTarget.value));
+	const handleExtendConfirmClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 		if (!currentSubscription) return;
 		extend.mutate(
 			{ subId: currentSubscription.id, days: extendDays },
@@ -114,13 +114,13 @@ return (
 								<div className="flex flex-col gap-1">
 									<div className="flex gap-1">
 										<Button
-											onClick={handleClick}
+											onClick={handleExtendToggleClick}
 											className="flex h-[26px] items-center rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 										>
 											{t("admin.userDetail.subscription.extend")}
 										</Button>
 										<Button
-											onClick={handleClick2}
+											onClick={handleCancelClick}
 											disabled={cancel.isPending}
 											className="flex h-[26px] items-center rounded-base border border-red/25 bg-transparent px-2.5 text-[11.5px] font-medium text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
 										>
@@ -131,7 +131,7 @@ return (
 										<div className="flex items-center gap-1">
 											<select
 												value={extendDays}
-												onChange={handleChange}
+												onChange={handleExtendDaysChange}
 												className="h-[26px] flex-1 cursor-pointer appearance-none rounded-base border border-bd-2 bg-surf-2 px-2 text-[11.5px] text-t-1 outline-none focus:border-acc"
 											>
 												{EXTEND_OPTIONS.map(({ days, label }) => (
@@ -139,7 +139,7 @@ return (
 												))}
 											</select>
 											<Button
-												onClick={handleClick3}
+												onClick={handleExtendConfirmClick}
 												disabled={extend.isPending}
 												className="flex h-[26px] items-center rounded-base bg-acc px-2.5 text-[11.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 											>
