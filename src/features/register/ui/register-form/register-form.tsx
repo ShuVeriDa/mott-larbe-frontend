@@ -9,6 +9,7 @@ import { CEFR_LEVELS } from "@/shared/types/cefr";
 import { Typography } from "@/shared/ui/typography";
 import { useRegisterForm } from "../../model";
 import { PasswordStrengthMeter } from "../password-strength-meter";
+import { FormField } from "./form-field";
 
 interface RegisterFormProps {
 	successHref: string;
@@ -45,6 +46,8 @@ export const RegisterForm = ({
 		handleLevelClick,
 	} = useRegisterForm({ successHref });
 
+	const inputCls = "h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]";
+
 	return (
 		<form action={handleSubmit} noValidate autoComplete="on">
 			{error ? (
@@ -60,14 +63,7 @@ export const RegisterForm = ({
 			) : null}
 
 			<div className="mb-3.5 grid grid-cols-2 gap-3 max-[640px]:grid-cols-1">
-				<div>
-					<Typography
-						tag="label"
-						htmlFor="register-name"
-						className="mb-1.5 block text-[11.5px] font-medium text-t-2"
-					>
-						{t("auth.fields.name")}
-					</Typography>
+				<FormField label={t("auth.fields.name")} error={errors.name}>
 					<input
 						id="register-name"
 						type="text"
@@ -76,27 +72,11 @@ export const RegisterForm = ({
 						placeholder={t("auth.placeholders.name")}
 						value={name}
 						onChange={handleNameChange}
-						className={cn(
-							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
-							errors.name && "border-red",
-						)}
+						className={cn(inputCls, errors.name && "border-red")}
 						aria-invalid={Boolean(errors.name)}
 					/>
-					{errors.name ? (
-						<Typography className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
-							<AlertCircle size={12} strokeWidth={2} />
-							<Typography tag="span">{errors.name}</Typography>
-						</Typography>
-					) : null}
-				</div>
-				<div>
-					<Typography
-						tag="label"
-						htmlFor="register-surname"
-						className="mb-1.5 block text-[11.5px] font-medium text-t-2"
-					>
-						{t("auth.fields.surname")}
-					</Typography>
+				</FormField>
+				<FormField label={t("auth.fields.surname")} error={errors.surname}>
 					<input
 						id="register-surname"
 						type="text"
@@ -105,157 +85,86 @@ export const RegisterForm = ({
 						placeholder={t("auth.placeholders.surname")}
 						value={surname}
 						onChange={handleSurnameChange}
-						className={cn(
-							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
-							errors.surname && "border-red",
-						)}
+						className={cn(inputCls, errors.surname && "border-red")}
 						aria-invalid={Boolean(errors.surname)}
 					/>
-					{errors.surname ? (
-						<Typography className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
-							<AlertCircle size={12} strokeWidth={2} />
-							<Typography tag="span">{errors.surname}</Typography>
-						</Typography>
-					) : null}
-				</div>
+				</FormField>
 			</div>
 
 			<div className="mb-3.5">
-				<Typography
-					tag="label"
-					htmlFor="register-username"
-					className="mb-1.5 block text-[11.5px] font-medium text-t-2"
-				>
-					{t("auth.fields.username")}
-				</Typography>
-				<input
-					id="register-username"
-					type="text"
-					autoComplete="username"
-					required
-					placeholder={t("auth.placeholders.username")}
-					value={username}
-					onChange={handleUsernameChange}
-					className={cn(
-						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
-						errors.username && "border-red",
-					)}
-					aria-invalid={Boolean(errors.username)}
-				/>
-				{errors.username ? (
-					<Typography className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
-						<AlertCircle size={12} strokeWidth={2} />
-						<Typography tag="span">{errors.username}</Typography>
-					</Typography>
-				) : null}
-			</div>
-
-			<div className="mb-3.5">
-				<Typography
-					tag="label"
-					htmlFor="register-email"
-					className="mb-1.5 block text-[11.5px] font-medium text-t-2"
-				>
-					{t("auth.fields.email")}
-				</Typography>
-				<input
-					id="register-email"
-					type="email"
-					inputMode="email"
-					autoComplete="email"
-					required
-					placeholder="you@example.com"
-					value={email}
-					onChange={handleEmailChange}
-					className={cn(
-						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
-						errors.email && "border-red",
-					)}
-					aria-invalid={Boolean(errors.email)}
-				/>
-				{errors.email ? (
-					<Typography className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
-						<AlertCircle size={12} strokeWidth={2} />
-						<Typography tag="span">{errors.email}</Typography>
-					</Typography>
-				) : null}
-			</div>
-
-			<div className="mb-3.5">
-				<Typography
-					tag="label"
-					htmlFor="register-password"
-					className="mb-1.5 block text-[11.5px] font-medium text-t-2"
-				>
-					{t("auth.fields.password")}
-				</Typography>
-				<div className="relative flex items-center">
+				<FormField label={t("auth.fields.username")} error={errors.username}>
 					<input
-						id="register-password"
+						id="register-username"
+						type="text"
+						autoComplete="username"
+						required
+						placeholder={t("auth.placeholders.username")}
+						value={username}
+						onChange={handleUsernameChange}
+						className={cn(inputCls, errors.username && "border-red")}
+						aria-invalid={Boolean(errors.username)}
+					/>
+				</FormField>
+			</div>
+
+			<div className="mb-3.5">
+				<FormField label={t("auth.fields.email")} error={errors.email}>
+					<input
+						id="register-email"
+						type="email"
+						inputMode="email"
+						autoComplete="email"
+						required
+						placeholder="you@example.com"
+						value={email}
+						onChange={handleEmailChange}
+						className={cn(inputCls, errors.email && "border-red")}
+						aria-invalid={Boolean(errors.email)}
+					/>
+				</FormField>
+			</div>
+
+			<div className="mb-3.5">
+				<FormField label={t("auth.fields.password")} error={errors.password}>
+					<div className="relative flex items-center">
+						<input
+							id="register-password"
+							type={showPw ? "text" : "password"}
+							autoComplete="new-password"
+							required
+							placeholder="••••••••••"
+							value={password}
+							onChange={handlePasswordChange}
+							className={cn(inputCls, "pr-11", errors.password && "border-red")}
+							aria-invalid={Boolean(errors.password)}
+						/>
+						<Button
+							tabIndex={-1}
+							onClick={handleTogglePasswordVisibility}
+							aria-label={t(showPw ? "auth.password.hide" : "auth.password.show")}
+							className="absolute inset-y-1 right-1 inline-flex w-[34px] items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
+						>
+							{showPw ? <EyeOff size={16} strokeWidth={1.8} /> : <Eye size={16} strokeWidth={1.8} />}
+						</Button>
+					</div>
+					<PasswordStrengthMeter password={password} />
+				</FormField>
+			</div>
+
+			<div className="mb-5">
+				<FormField label={t("auth.fields.passwordConfirm")} error={errors.password2}>
+					<input
+						id="register-password2"
 						type={showPw ? "text" : "password"}
 						autoComplete="new-password"
 						required
 						placeholder="••••••••••"
-						value={password}
-						onChange={handlePasswordChange}
-						className={cn(
-							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 pr-11 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
-							errors.password && "border-red",
-						)}
-						aria-invalid={Boolean(errors.password)}
+						value={password2}
+						onChange={handlePasswordConfirmChange}
+						className={cn(inputCls, errors.password2 && "border-red")}
+						aria-invalid={Boolean(errors.password2)}
 					/>
-					<Button
-						tabIndex={-1}
-						onClick={handleTogglePasswordVisibility}
-						aria-label={t(
-							showPw ? "auth.password.hide" : "auth.password.show",
-						)}
-						className="absolute inset-y-1 right-1 inline-flex w-[34px] items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
-					>
-						{showPw ? (
-							<EyeOff size={16} strokeWidth={1.8} />
-						) : (
-							<Eye size={16} strokeWidth={1.8} />
-						)}
-					</Button>
-				</div>
-				<PasswordStrengthMeter password={password} />
-				{errors.password ? (
-					<Typography className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
-						<AlertCircle size={12} strokeWidth={2} />
-						<Typography tag="span">{errors.password}</Typography>
-					</Typography>
-				) : null}
-			</div>
-
-			<div className="mb-5">
-				<Typography
-					tag="label"
-					htmlFor="register-password2"
-					className="mb-1.5 block text-[11.5px] font-medium text-t-2"
-				>
-					{t("auth.fields.passwordConfirm")}
-				</Typography>
-				<input
-					id="register-password2"
-					type={showPw ? "text" : "password"}
-					autoComplete="new-password"
-					required
-					placeholder="••••••••••"
-					value={password2}
-					onChange={handlePasswordConfirmChange}
-					className={cn(
-						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
-						errors.password2 && "border-red",
-					)}
-					aria-invalid={Boolean(errors.password2)}
-				/>
-				{errors.password2 ? (
-					<Typography className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
-						<AlertCircle size={12} strokeWidth={2} />
-						<Typography tag="span">{errors.password2}</Typography>
-					</Typography>
-				) : null}
+				</FormField>
 			</div>
 
 			<div className="mb-5">
@@ -263,8 +172,7 @@ export const RegisterForm = ({
 					{t("auth.fields.level")}
 				</Typography>
 				<div className="grid grid-cols-3 gap-2">
-					{CEFR_LEVELS.map((cefrLevel) => {
-					  return (
+					{CEFR_LEVELS.map((cefrLevel) => (
 						<Button
 							key={cefrLevel}
 							data-level={cefrLevel}
@@ -279,8 +187,7 @@ export const RegisterForm = ({
 						>
 							{cefrLevel}
 						</Button>
-					);
-					})}
+					))}
 				</div>
 			</div>
 
