@@ -11,10 +11,12 @@ interface FlagToggleProps {
 	onToggle: (id: string, current: boolean) => void;
 }
 
-const FlagToggle = ({ flag, onToggle }: FlagToggleProps) => (
+const FlagToggle = ({ flag, onToggle }: FlagToggleProps) => {
+  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onToggle(flag.id, flag.isEnabled);
+  return (
 	<button
 		type="button"
-		onClick={() => onToggle(flag.id, flag.isEnabled)}
+		onClick={handleClick}
 		aria-label={flag.key}
 		aria-checked={flag.isEnabled}
 		role="switch"
@@ -31,6 +33,7 @@ const FlagToggle = ({ flag, onToggle }: FlagToggleProps) => (
 		/>
 	</button>
 );
+};
 
 interface DashboardFeatureFlagsCardProps {
 	flags: AdminDashboardFeatureFlag[];

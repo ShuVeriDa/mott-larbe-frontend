@@ -67,13 +67,19 @@ export const FeedbackAdminInput = ({
 
 	const isNote = inputMode === "note";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onModeChange("reply");
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onModeChange("note");
+	const handleChange: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => {
+						setValue(e.target.value);
+						autoResize();
+					};
+return (
 		<div className="shrink-0 border-t border-bd-1 bg-surf px-5 pb-[14px] pt-2.5">
 			{/* Mode toggle */}
 			<div className="mb-2 flex gap-0.5">
 				<button
 					type="button"
-					onClick={() => onModeChange("reply")}
+					onClick={handleClick}
 					className={cn(
 						"flex h-6 items-center gap-1 rounded-[5px] border px-2.5 text-[11px] font-medium transition-all",
 						!isNote
@@ -93,7 +99,7 @@ export const FeedbackAdminInput = ({
 				</button>
 				<button
 					type="button"
-					onClick={() => onModeChange("note")}
+					onClick={handleClick2}
 					className={cn(
 						"flex h-6 items-center gap-1 rounded-[5px] border px-2.5 text-[11px] font-medium transition-all",
 						isNote
@@ -125,10 +131,7 @@ export const FeedbackAdminInput = ({
 				<textarea
 					ref={textareaRef}
 					value={value}
-					onChange={e => {
-						setValue(e.target.value);
-						autoResize();
-					}}
+					onChange={handleChange}
 					onKeyDown={handleKeyDown}
 					placeholder={
 						isNote

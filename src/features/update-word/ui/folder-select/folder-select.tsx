@@ -18,18 +18,20 @@ export const FolderSelect = ({ wordId, currentFolderId }: FolderSelectProps) => 
 	const { mutate, isPending } = useUpdateWord();
 	const hasFolders = usage?.limits.dictionaryFolders ?? true;
 
-	return (
-		<Select
-			value={currentFolderId ?? ""}
-			disabled={isPending || !hasFolders}
-			onClick={(e) => e.stopPropagation()}
-			onChange={(e) => {
+		const handleClick: NonNullable<React.ComponentProps<typeof Select>["onClick"]> = (e) => e.stopPropagation();
+	const handleChange: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => {
 				const value = e.target.value;
 				mutate({
 					id: wordId,
 					body: { folderId: value === "" ? null : value },
 				});
-			}}
+			};
+return (
+		<Select
+			value={currentFolderId ?? ""}
+			disabled={isPending || !hasFolders}
+			onClick={handleClick}
+			onChange={handleChange}
 			aria-label={t("vocabulary.card.folder")}
 		>
 			<option value="">{t("vocabulary.card.noFolder")}</option>

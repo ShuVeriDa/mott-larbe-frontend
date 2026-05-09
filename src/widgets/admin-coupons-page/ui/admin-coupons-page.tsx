@@ -63,9 +63,40 @@ export const AdminCouponsPage = () => {
 		return () => document.removeEventListener("keydown", handler);
 	}, [closeModal, closeMobileSheet]);
 
-	return (
+	const handleCreate: NonNullable<React.ComponentProps<typeof CouponsTopbar>["onCreate"]> = () =>
+		openModal("create");
+	const handleTableEdit: NonNullable<React.ComponentProps<typeof CouponsTable>["onEdit"]> = id =>
+		openModal("edit", id);
+	const handleTableDelete: NonNullable<React.ComponentProps<typeof CouponsTable>["onDelete"]> = id =>
+		openModal("delete", id);
+	const handleDetailEdit: NonNullable<React.ComponentProps<typeof CouponDetailPanel>["onEdit"]> = id =>
+		openModal("edit", id);
+	const handleDetailDelete: NonNullable<React.ComponentProps<typeof CouponDetailPanel>["onDelete"]> = id =>
+		openModal("delete", id);
+	const handleMobileDetailEdit: NonNullable<React.ComponentProps<typeof CouponDetailPanel>["onEdit"]> = id => {
+		closeMobileSheet();
+		openModal("edit", id);
+	};
+	const handleMobileDetailDelete: NonNullable<React.ComponentProps<typeof CouponDetailPanel>["onDelete"]> = id => {
+		closeMobileSheet();
+		openModal("delete", id);
+	};
+	const handleMobileDetailDeactivate: NonNullable<React.ComponentProps<typeof CouponDetailPanel>["onDeactivate"]> = async id => {
+		closeMobileSheet();
+		await handleDeactivate(id);
+	};
+	const handleMobileDetailActivate: NonNullable<React.ComponentProps<typeof CouponDetailPanel>["onActivate"]> = async id => {
+		closeMobileSheet();
+		await handleActivate(id);
+	};
+	const handleModalOverlayClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
+		if (e.target === e.currentTarget) closeModal();
+	};
+	const handleModalContentClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e =>
+		e.stopPropagation();
+return (
 		<div className="flex min-h-0 flex-1 flex-col">
-			<CouponsTopbar onExport={handleExport} onCreate={() => openModal("create")} />
+			<CouponsTopbar onExport={handleExport} onCreate={handleCreate} />
 
 			<div className="overflow-y-auto px-[22px] py-4 pb-10 max-sm:px-3 max-sm:pb-20">
 				<CouponsKpiRow stats={stats} isLoading={statsLoading} />
@@ -92,8 +123,8 @@ export const AdminCouponsPage = () => {
 							sortBy={sortBy}
 							sortOrder={sortOrder}
 							onSelectRow={handleSelectRow}
-							onEdit={(id) => openModal("edit", id)}
-							onDelete={(id) => openModal("delete", id)}
+							onEdit={handleTableEdit}
+							onDelete={handleTableDelete}
 							onSortChange={handleSortChange}
 						/>
 						{!isLoading && data && data.total > data.limit && (
@@ -112,8 +143,8 @@ export const AdminCouponsPage = () => {
 							<CouponDetailPanel
 								coupon={detail!}
 								isLoading={detailLoading || !detail}
-								onEdit={(id) => openModal("edit", id)}
-								onDelete={(id) => openModal("delete", id)}
+								onEdit={handleDetailEdit}
+								onDelete={handleDetailDelete}
 								onDeactivate={handleDeactivate}
 								onActivate={handleActivate}
 							/>
@@ -149,10 +180,10 @@ export const AdminCouponsPage = () => {
 								<CouponDetailPanel
 									coupon={detail}
 									isLoading={false}
-									onEdit={(id) => { closeMobileSheet(); openModal("edit", id); }}
-									onDelete={(id) => { closeMobileSheet(); openModal("delete", id); }}
-									onDeactivate={async (id) => { closeMobileSheet(); await handleDeactivate(id); }}
-									onActivate={async (id) => { closeMobileSheet(); await handleActivate(id); }}
+									onEdit={handleMobileDetailEdit}
+									onDelete={handleMobileDetailDelete}
+									onDeactivate={handleMobileDetailDeactivate}
+									onActivate={handleMobileDetailActivate}
 								/>
 							) : (
 								<div className="space-y-3 py-4">
@@ -170,11 +201,11 @@ export const AdminCouponsPage = () => {
 			{modal && (
 				<div
 					className="fixed inset-0 z-400 flex items-end justify-center bg-black/35 sm:items-center sm:p-4"
-					onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
+					onClick={handleModalOverlayClick}
 				>
 					<div
 						className="w-full max-h-[90vh] overflow-y-auto rounded-t-[14px] bg-surf shadow-[0_20px_60px_rgba(0,0,0,0.18)] sm:w-[460px] sm:rounded-[14px]"
-						onClick={(e) => e.stopPropagation()}
+						onClick={handleModalContentClick}
 					>
 						{(modal === "create" || modal === "edit") && (
 							<CreateCouponModal

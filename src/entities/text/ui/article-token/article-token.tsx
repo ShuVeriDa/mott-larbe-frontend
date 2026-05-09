@@ -18,7 +18,13 @@ export const ArticleToken = forwardRef<HTMLSpanElement, ArticleTokenProps>(
 			onSelect(token, event);
 		};
 
-		return (
+				const handleKeyDown: NonNullable<React.ComponentProps<"span">["onKeyDown"]> = (event) => {
+					if (event.key === "Enter" || event.key === " ") {
+						event.preventDefault();
+						onSelect(token, event as unknown as MouseEvent<HTMLSpanElement>);
+					}
+				};
+return (
 			<span
 				ref={ref}
 				role="button"
@@ -26,12 +32,7 @@ export const ArticleToken = forwardRef<HTMLSpanElement, ArticleTokenProps>(
 				aria-label={token.text}
 				data-token-id={token.id}
 				onClick={handleClick}
-				onKeyDown={(event) => {
-					if (event.key === "Enter" || event.key === " ") {
-						event.preventDefault();
-						onSelect(token, event as unknown as MouseEvent<HTMLSpanElement>);
-					}
-				}}
+				onKeyDown={handleKeyDown}
 				className={cn(
 					"cursor-pointer rounded px-px transition-colors duration-100",
 					"hover:bg-acc-bg hover:text-acc-t",

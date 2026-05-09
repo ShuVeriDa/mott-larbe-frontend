@@ -35,10 +35,12 @@ export const FeedbackAssignModal = ({
 }: FeedbackAssignModalProps) => {
 	if (!isOpen) return null;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.target === e.currentTarget && onClose();
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onAssign(null);
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 px-5"
-			onClick={(e) => e.target === e.currentTarget && onClose()}
+			onClick={handleClick}
 		>
 			<div className="w-full max-w-[380px] animate-[fadeUp_0.18s_ease] rounded-2xl border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08),0_20px_60px_rgba(0,0,0,0.15)]">
 				{/* Header */}
@@ -61,7 +63,7 @@ export const FeedbackAssignModal = ({
 				{currentThread?.assignee && (
 					<button
 						type="button"
-						onClick={() => onAssign(null)}
+						onClick={handleClick2}
 						className="mb-1.5 flex w-full items-center gap-2.5 rounded-lg border border-bd-2 bg-surf-2 px-3 py-2 text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
 						<svg viewBox="0 0 16 16" fill="none" className="size-4 shrink-0 text-t-3">
@@ -83,11 +85,13 @@ export const FeedbackAssignModal = ({
 					</div>
 				) : (
 					<div className="flex flex-col gap-1.5">
-						{assignees.map((a) => (
+						{assignees.map((a) => {
+						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onAssign(a.id);
+						  return (
 							<button
 								key={a.id}
 								type="button"
-								onClick={() => onAssign(a.id)}
+								onClick={handleClick}
 								className={cn(
 									"flex items-center gap-2.5 rounded-lg border border-bd-2 bg-surf-2 px-3 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-3",
 									currentThread?.assigneeAdminId === a.id && "border-acc bg-acc-bg",
@@ -103,7 +107,8 @@ export const FeedbackAssignModal = ({
 								</div>
 								{a.name} {a.surname}
 							</button>
-						))}
+						);
+						})}
 					</div>
 				)}
 			</div>

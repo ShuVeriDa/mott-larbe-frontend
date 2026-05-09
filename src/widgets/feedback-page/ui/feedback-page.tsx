@@ -44,7 +44,8 @@ export const FeedbackPage = () => {
 
 	const userInitials = "У";
 
-	return (
+		const handleClose: NonNullable<React.ComponentProps<typeof FeedbackNewThreadModal>["onClose"]> = () => setIsModalOpen(false);
+return (
 		<>
 			{/* Topbar — mobile "New" button */}
 			<div className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-sm:px-4">
@@ -128,7 +129,7 @@ export const FeedbackPage = () => {
 			<FeedbackNewThreadModal
 				isOpen={isModalOpen}
 				t={t}
-				onClose={() => setIsModalOpen(false)}
+				onClose={handleClose}
 				onSuccess={handleModalSuccess}
 			/>
 		</>

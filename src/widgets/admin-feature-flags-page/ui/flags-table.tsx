@@ -181,7 +181,10 @@ export const FlagsTable = ({
 											</span>
 										</td>
 									</tr>
-									{flags.map((flag) => (
+									{flags.map((flag) => {
+									  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => toggleExpand(flag.id);
+									  const handleChange: NonNullable<React.ComponentProps<typeof FlagToggle>["onChange"]> = (v) => onToggle(flag.id, v);
+									  return (
 										<>
 											<tr
 												key={flag.id}
@@ -190,7 +193,7 @@ export const FlagsTable = ({
 												<td className="pl-3.5">
 													<button
 														type="button"
-														onClick={() => toggleExpand(flag.id)}
+														onClick={handleClick}
 														aria-expanded={expanded.has(flag.id)}
 														className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 													>
@@ -223,7 +226,7 @@ export const FlagsTable = ({
 												<td className="py-3 pl-3.5">
 													<FlagToggle
 														enabled={flag.isEnabled}
-														onChange={(v) => onToggle(flag.id, v)}
+														onChange={handleChange}
 													/>
 												</td>
 												<td className="py-3 pl-3.5">
@@ -277,7 +280,8 @@ export const FlagsTable = ({
 												<ExpandedRow key={`${flag.id}-exp`} flag={flag} t={t} />
 											)}
 										</>
-									))}
+									);
+									})}
 								</>
 							))}
 				</tbody>

@@ -56,12 +56,26 @@ export const AdminUnknownWordsPage = () => {
 	const handleOpenAdd = (word: UnknownWordListItem) => openAddModal(word, "new");
 	const handleOpenLink = (word: UnknownWordListItem) => openAddModal(word, "link");
 
-	return (
+	const handleOpenClearAllModal: NonNullable<React.ComponentProps<typeof UnknownWordsTopbar>["onClearAll"]> = () =>
+		setClearModalOpen(true);
+	const handleBulkAddToDictionary: NonNullable<React.ComponentProps<typeof UnknownWordsBulkBar>["onAddToDictionary"]> = () => {
+		if (selectedArray.length === 1 && data?.items) {
+			const word = data.items.find(w => w.id === selectedArray[0]);
+			if (word) handleOpenAdd(word);
+		}
+	};
+	const handleBulkDelete: NonNullable<React.ComponentProps<typeof UnknownWordsBulkBar>["onDelete"]> = () =>
+		mutations.bulkDelete.mutate(selectedArray, {
+			onSuccess: clearSelection,
+		});
+	const handleClearModalClose: NonNullable<React.ComponentProps<typeof UnknownWordsClearModal>["onClose"]> = () =>
+		setClearModalOpen(false);
+return (
 		<>
 			<div className="flex min-h-0 flex-1 flex-col">
 				<UnknownWordsTopbar
 					onExport={handleExport}
-					onClearAll={() => setClearModalOpen(true)}
+					onClearAll={handleOpenClearAllModal}
 				/>
 
 				<div className="overflow-y-auto px-[18px] py-4 pb-8 max-sm:px-3 max-sm:pb-6">
@@ -87,17 +101,8 @@ export const AdminUnknownWordsPage = () => {
 					<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 						<UnknownWordsBulkBar
 							selectedCount={selectedIds.size}
-							onAddToDictionary={() => {
-								if (selectedArray.length === 1 && data?.items) {
-									const word = data.items.find((w) => w.id === selectedArray[0]);
-									if (word) handleOpenAdd(word);
-								}
-							}}
-							onDelete={() =>
-								mutations.bulkDelete.mutate(selectedArray, {
-									onSuccess: clearSelection,
-								})
-							}
+							onAddToDictionary={handleBulkAddToDictionary}
+							onDelete={handleBulkDelete}
 							isPending={mutations.bulkDelete.isPending}
 						/>
 
@@ -149,7 +154,7 @@ export const AdminUnknownWordsPage = () => {
 				open={clearModalOpen}
 				totalPending={stats?.totalPending ?? 0}
 				isPending={mutations.clearAll.isPending}
-				onClose={() => setClearModalOpen(false)}
+				onClose={handleClearModalClose}
 				onConfirm={handleClearAll}
 			/>
 

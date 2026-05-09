@@ -54,11 +54,25 @@ export const AdminTokenizationPage = () => {
 
 	const items = data?.data ?? [];
 
-	return (
+	const handleOpenRunModal: NonNullable<React.ComponentProps<typeof TokenizationTopbar>["onRun"]> = () =>
+		setRunModalOpen(true);
+	const handleOpenBatchRunModal: NonNullable<React.ComponentProps<typeof TokenizationTopbar>["onBatchRun"]> = () =>
+		setRunModalOpen(true);
+	const handleOpenResetConfirm: NonNullable<React.ComponentProps<typeof TokenizationBulkBar>["onReset"]> = () =>
+		setConfirmResetOpen(true);
+	const handleOpenSideRunModal: NonNullable<React.ComponentProps<typeof TokenizationSidePanel>["onRun"]> = () =>
+		setRunModalOpen(true);
+	const handleRunModalClose: NonNullable<React.ComponentProps<typeof TokenizationRunModal>["onClose"]> = () =>
+		setRunModalOpen(false);
+	const handleConfirmDialogClose: NonNullable<React.ComponentProps<typeof TokenizationConfirmDialog>["onClose"]> = () =>
+		setConfirmResetOpen(false);
+	const handleDetailModalClose: NonNullable<React.ComponentProps<typeof TokenizationTextDetailModal>["onClose"]> = () =>
+		setDetailTextId(null);
+return (
 		<>
 			<TokenizationTopbar
-				onRun={() => setRunModalOpen(true)}
-				onBatchRun={() => setRunModalOpen(true)}
+				onRun={handleOpenRunModal}
+				onBatchRun={handleOpenBatchRunModal}
 			/>
 
 			<div className="px-5 py-5 pb-16">
@@ -83,7 +97,7 @@ export const AdminTokenizationPage = () => {
 							<TokenizationBulkBar
 								selectedCount={selectedIds.size}
 								onRun={handleBulkRun}
-								onReset={() => setConfirmResetOpen(true)}
+								onReset={handleOpenResetConfirm}
 								isLoading={mutations.bulkRun.isPending || mutations.bulkReset.isPending}
 							/>
 
@@ -117,7 +131,7 @@ export const AdminTokenizationPage = () => {
 						settings={settings}
 						queue={queue}
 						onToggleSetting={handleSettingToggle}
-						onRun={() => setRunModalOpen(true)}
+						onRun={handleOpenSideRunModal}
 					/>
 				</div>
 			</div>
@@ -126,7 +140,7 @@ export const AdminTokenizationPage = () => {
 				open={runModalOpen}
 				isLoading={mutations.run.isPending}
 				stats={stats}
-				onClose={() => setRunModalOpen(false)}
+				onClose={handleRunModalClose}
 				onRun={handleRun}
 			/>
 
@@ -135,12 +149,12 @@ export const AdminTokenizationPage = () => {
 				count={selectedIds.size}
 				isLoading={mutations.bulkReset.isPending}
 				onConfirm={handleBulkReset}
-				onClose={() => setConfirmResetOpen(false)}
+				onClose={handleConfirmDialogClose}
 			/>
 
 			<TokenizationTextDetailModal
 				textId={detailTextId}
-				onClose={() => setDetailTextId(null)}
+				onClose={handleDetailModalClose}
 				mutations={mutations}
 			/>
 		</>

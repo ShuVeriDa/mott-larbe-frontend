@@ -145,7 +145,18 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 		onClose();
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("code", e.target.value.toUpperCase());
+	const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => set("code", generateCode());
+	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("name", e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("amount", e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("maxRedemptions", e.target.value);
+	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("maxPerUser", e.target.value);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => set("applicablePlans", []);
+	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("validFrom", e.target.value);
+	const handleChange7: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("validUntil", e.target.value);
+	const handleChange8: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("newUsersOnly", e.target.checked);
+	const handleChange9: NonNullable<React.ComponentProps<"input">["onChange"]> = e => set("isStackable", e.target.checked);
+return (
 		<form onSubmit={handleSubmit}>
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
@@ -183,7 +194,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 					<div className="flex gap-1.5">
 						<input
 							value={form.code}
-							onChange={e => set("code", e.target.value.toUpperCase())}
+							onChange={handleChange}
 							placeholder={t("admin.coupons.modal.codePlaceholder")}
 							className={cn(
 								"h-[34px] flex-1 rounded-[8px] border bg-surf-2 px-2.5 font-mono text-[14px] font-bold uppercase tracking-[1px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf",
@@ -192,7 +203,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 						/>
 						<button
 							type="button"
-							onClick={() => set("code", generateCode())}
+							onClick={handleClick}
 							className="h-[34px] shrink-0 rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 						>
 							{t("admin.coupons.modal.random")}
@@ -210,7 +221,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 					</label>
 					<input
 						value={form.name}
-						onChange={e => set("name", e.target.value)}
+						onChange={handleChange2}
 						placeholder={t("admin.coupons.modal.namePlaceholder")}
 						className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 					/>
@@ -223,11 +234,13 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 							{t("admin.coupons.modal.type")}
 						</label>
 						<div className="flex gap-1">
-							{(["PERCENT", "FIXED"] as CouponType[]).map(tp => (
+							{(["PERCENT", "FIXED"] as CouponType[]).map(tp => {
+							  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => set("type", tp);
+							  return (
 								<button
 									key={tp}
 									type="button"
-									onClick={() => set("type", tp)}
+									onClick={handleClick}
 									className={cn(
 										"flex-1 h-[34px] rounded-[8px] border text-[12.5px] transition-colors",
 										form.type === tp
@@ -239,7 +252,8 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 										? t("admin.coupons.modal.typePercent")
 										: t("admin.coupons.modal.typeFixed")}
 								</button>
-							))}
+							);
+							})}
 						</div>
 					</div>
 					<div>
@@ -253,7 +267,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 							max={form.type === "PERCENT" ? 100 : undefined}
 							step="1"
 							value={form.amount}
-							onChange={e => set("amount", e.target.value)}
+							onChange={handleChange3}
 							className={cn(
 								"h-[34px] w-full rounded-[8px] border bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf",
 								errors.amount ? "border-red" : "border-bd-2",
@@ -278,7 +292,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 							type="number"
 							min="1"
 							value={form.maxRedemptions}
-							onChange={e => set("maxRedemptions", e.target.value)}
+							onChange={handleChange4}
 							placeholder="∞"
 							className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 						/>
@@ -291,7 +305,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 							type="number"
 							min="1"
 							value={form.maxPerUser}
-							onChange={e => set("maxPerUser", e.target.value)}
+							onChange={handleChange5}
 							className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 						/>
 					</div>
@@ -305,7 +319,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 					<div className="flex flex-wrap gap-1.5">
 						<button
 							type="button"
-							onClick={() => set("applicablePlans", [])}
+							onClick={handleClick2}
 							className={cn(
 								"h-7 rounded-[6px] border px-2.5 text-[11.5px] transition-colors",
 								form.applicablePlans.length === 0
@@ -315,11 +329,13 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 						>
 							{t("admin.coupons.modal.plansAll")}
 						</button>
-						{PLANS.map(p => (
+						{PLANS.map(p => {
+						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => togglePlan(p);
+						  return (
 							<button
 								key={p}
 								type="button"
-								onClick={() => togglePlan(p)}
+								onClick={handleClick}
 								className={cn(
 									"h-7 rounded-[6px] border px-2.5 text-[11.5px] font-semibold transition-colors",
 									form.applicablePlans.includes(p)
@@ -329,7 +345,8 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 							>
 								{p.charAt(0) + p.slice(1).toLowerCase()}
 							</button>
-						))}
+						);
+						})}
 					</div>
 				</div>
 
@@ -342,7 +359,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 						<input
 							type="date"
 							value={form.validFrom}
-							onChange={e => set("validFrom", e.target.value)}
+							onChange={handleChange6}
 							className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 						/>
 					</div>
@@ -353,7 +370,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 						<input
 							type="date"
 							value={form.validUntil}
-							onChange={e => set("validUntil", e.target.value)}
+							onChange={handleChange7}
 							className={cn(
 								"h-[34px] w-full rounded-[8px] border bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf",
 								errors.validUntil ? "border-red" : "border-bd-2",
@@ -371,7 +388,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 						<input
 							type="checkbox"
 							checked={form.newUsersOnly}
-							onChange={e => set("newUsersOnly", e.target.checked)}
+							onChange={handleChange8}
 							className="h-3.5 w-3.5 cursor-pointer accent-acc"
 						/>
 						<span className="text-[12.5px] text-t-2">
@@ -382,7 +399,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 						<input
 							type="checkbox"
 							checked={form.isStackable}
-							onChange={e => set("isStackable", e.target.checked)}
+							onChange={handleChange9}
 							className="h-3.5 w-3.5 cursor-pointer accent-acc"
 						/>
 						<span className="text-[12.5px] text-t-2">

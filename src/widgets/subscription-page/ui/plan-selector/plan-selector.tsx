@@ -79,13 +79,14 @@ export const PlanSelector = ({
 							if (!plan) return null;
 							const isCurrent = plan.id === currentPlanId;
 							const popular = tier.type === "PREMIUM" && !isCurrent;
-							return (
+														const handleChoose: NonNullable<React.ComponentProps<typeof PlanCard>["onChoose"]> = (chosen) => onChoosePlan(chosen, cycle);
+return (
 								<PlanCard
 									key={tier.key}
 									plan={plan}
 									popular={popular}
 									current={isCurrent}
-									onChoose={(chosen) => onChoosePlan(chosen, cycle)}
+									onChoose={handleChoose}
 								/>
 							);
 						})}

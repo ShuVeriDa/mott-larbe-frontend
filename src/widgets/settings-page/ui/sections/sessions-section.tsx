@@ -106,7 +106,8 @@ export const SessionsSection = () => {
 						const isTerminating =
 							terminateOne.isPending && terminateOne.variables === s.id;
 
-						return (
+												const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => handleTerminate(s.id);
+return (
 							<div
 								key={s.id}
 								className="flex items-center gap-3 border-hairline border-b border-bd-1 px-4 py-2.5 last:border-b-0"
@@ -137,7 +138,7 @@ export const SessionsSection = () => {
 									<Button
 										variant="outline"
 										className="h-7 px-2.5 text-[11.5px]"
-										onClick={() => handleTerminate(s.id)}
+										onClick={handleClick}
 										disabled={isTerminating}
 									>
 										{t("settings.sessions.terminate")}

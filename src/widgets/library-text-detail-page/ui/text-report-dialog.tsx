@@ -69,7 +69,9 @@ export const TextReportDialog = ({ id, open, onOpenChange, t }: TextReportDialog
 		mutation.mutate();
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => setReason(e.target.value as TextReportReason);
+	const handleChange2: NonNullable<React.ComponentProps<typeof Textarea>["onChange"]> = (e) => setComment(e.target.value);
+return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent>
 				<DialogHeader>
@@ -94,7 +96,7 @@ export const TextReportDialog = ({ id, open, onOpenChange, t }: TextReportDialog
 							</span>
 							<Select
 								value={reason}
-								onChange={(e) => setReason(e.target.value as TextReportReason)}
+								onChange={handleChange}
 							>
 								{REPORT_REASONS.map((r) => (
 									<option key={r} value={r}>
@@ -110,7 +112,7 @@ export const TextReportDialog = ({ id, open, onOpenChange, t }: TextReportDialog
 							</span>
 							<Textarea
 								value={comment}
-								onChange={(e) => setComment(e.target.value)}
+								onChange={handleChange2}
 								placeholder={t("library.textDetail.reportDialog.commentPlaceholder")}
 								rows={3}
 								className="resize-none text-sm"

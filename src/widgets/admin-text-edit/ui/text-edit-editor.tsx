@@ -24,14 +24,16 @@ const TbBtn = ({
 	active?: boolean;
 	onExec: () => void;
 	children: React.ReactNode;
-}) => (
+}) => {
+  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+			e.preventDefault();
+			onExec();
+		};
+  return (
 	<button
 		type="button"
 		title={title}
-		onMouseDown={e => {
-			e.preventDefault();
-			onExec();
-		}}
+		onMouseDown={handleMouseDown}
 		className={`flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-[5px] transition-all duration-100 ${
 			active
 				? "bg-[#2783de]/10 text-[#2783de]"
@@ -41,6 +43,7 @@ const TbBtn = ({
 		{children}
 	</button>
 );
+};
 
 const TbDivider = () => <div className="mx-0.5 h-4 w-px shrink-0 bg-bd-2" />;
 
@@ -67,7 +70,30 @@ const EditorToolbar = ({
 
 	const e = editor;
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = ev => {
+						if (!e) return;
+						const v = ev.target.value;
+						if (v === "p") e.chain().focus().setParagraph().run();
+						else if (v === "h2")
+							e.chain().focus().setHeading({ level: 2 }).run();
+						else if (v === "h3")
+							e.chain().focus().setHeading({ level: 3 }).run();
+						else if (v === "blockquote")
+							e.chain().focus().setBlockquote().run();
+					};
+	const handleExec: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleBold().run();
+	const handleExec2: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleItalic().run();
+	const handleExec3: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleUnderline().run();
+	const handleExec4: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleStrike().run();
+	const handleExec5: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleBulletList().run();
+	const handleExec6: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().toggleOrderedList().run();
+	const handleExec7: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("left").run();
+	const handleExec8: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("center").run();
+	const handleExec9: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("right").run();
+	const handleExec10: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().setTextAlign("justify").run();
+	const handleExec11: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().undo().run();
+	const handleExec12: NonNullable<React.ComponentProps<typeof TbBtn>["onExec"]> = () => e?.chain().focus().redo().run();
+return (
 		<div className="sticky top-[52px] z-10 flex items-center gap-px overflow-x-auto border-b border-bd-1 bg-surf px-2 py-[5px] transition-colors [scrollbar-width:none]">
 			<div className="shrink-0">
 				<select
@@ -81,17 +107,7 @@ const EditorToolbar = ({
 									? "blockquote"
 									: "p"
 					}
-					onChange={ev => {
-						if (!e) return;
-						const v = ev.target.value;
-						if (v === "p") e.chain().focus().setParagraph().run();
-						else if (v === "h2")
-							e.chain().focus().setHeading({ level: 2 }).run();
-						else if (v === "h3")
-							e.chain().focus().setHeading({ level: 3 }).run();
-						else if (v === "blockquote")
-							e.chain().focus().setBlockquote().run();
-					}}
+					onChange={handleChange}
 				>
 					<option value="p">{t("admin.texts.createPage.formatText")}</option>
 					<option value="h2">{t("admin.texts.createPage.formatH2")}</option>
@@ -107,7 +123,7 @@ const EditorToolbar = ({
 			<TbBtn
 				title={t("admin.texts.createPage.bold")}
 				active={e?.isActive("bold")}
-				onExec={() => e?.chain().focus().toggleBold().run()}
+				onExec={handleExec}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -122,7 +138,7 @@ const EditorToolbar = ({
 			<TbBtn
 				title={t("admin.texts.createPage.italic")}
 				active={e?.isActive("italic")}
-				onExec={() => e?.chain().focus().toggleItalic().run()}
+				onExec={handleExec2}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -136,7 +152,7 @@ const EditorToolbar = ({
 			<TbBtn
 				title={t("admin.texts.createPage.underline")}
 				active={e?.isActive("underline")}
-				onExec={() => e?.chain().focus().toggleUnderline().run()}
+				onExec={handleExec3}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -150,7 +166,7 @@ const EditorToolbar = ({
 			<TbBtn
 				title="Strike"
 				active={e?.isActive("strike")}
-				onExec={() => e?.chain().focus().toggleStrike().run()}
+				onExec={handleExec4}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -173,7 +189,7 @@ const EditorToolbar = ({
 			<TbBtn
 				title={t("admin.texts.createPage.bulletList")}
 				active={e?.isActive("bulletList")}
-				onExec={() => e?.chain().focus().toggleBulletList().run()}
+				onExec={handleExec5}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<circle cx="3" cy="5" r="1.2" fill="currentColor" />
@@ -190,7 +206,7 @@ const EditorToolbar = ({
 			<TbBtn
 				title={t("admin.texts.createPage.orderedList")}
 				active={e?.isActive("orderedList")}
-				onExec={() => e?.chain().focus().toggleOrderedList().run()}
+				onExec={handleExec6}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -214,7 +230,7 @@ const EditorToolbar = ({
 			<TbBtn
 				title="По левому краю"
 				active={e?.isActive({ textAlign: "left" })}
-				onExec={() => e?.chain().focus().setTextAlign("left").run()}
+				onExec={handleExec7}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -228,7 +244,7 @@ const EditorToolbar = ({
 			<TbBtn
 				title="По центру"
 				active={e?.isActive({ textAlign: "center" })}
-				onExec={() => e?.chain().focus().setTextAlign("center").run()}
+				onExec={handleExec8}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -242,7 +258,7 @@ const EditorToolbar = ({
 			<TbBtn
 				title="По правому краю"
 				active={e?.isActive({ textAlign: "right" })}
-				onExec={() => e?.chain().focus().setTextAlign("right").run()}
+				onExec={handleExec9}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -256,7 +272,7 @@ const EditorToolbar = ({
 			<TbBtn
 				title="По ширине"
 				active={e?.isActive({ textAlign: "justify" })}
-				onExec={() => e?.chain().focus().setTextAlign("justify").run()}
+				onExec={handleExec10}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -272,7 +288,7 @@ const EditorToolbar = ({
 
 			<TbBtn
 				title={t("admin.texts.createPage.undo")}
-				onExec={() => e?.chain().focus().undo().run()}
+				onExec={handleExec11}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -292,7 +308,7 @@ const EditorToolbar = ({
 			</TbBtn>
 			<TbBtn
 				title={t("admin.texts.createPage.redo")}
-				onExec={() => e?.chain().focus().redo().run()}
+				onExec={handleExec12}
 			>
 				<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 					<path
@@ -429,15 +445,16 @@ const CharsPopup = ({ onInsert }: { onInsert: (char: string) => void }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const { t } = useI18n();
 
-	return (
+		const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+					e.preventDefault();
+					setOpen(v => !v);
+				};
+return (
 		<div ref={ref} className="relative">
 			<button
 				type="button"
 				title={t("admin.texts.editPage.specialChars")}
-				onMouseDown={e => {
-					e.preventDefault();
-					setOpen(v => !v);
-				}}
+				onMouseDown={handleMouseDown}
 				className="flex h-7 items-center gap-1 rounded-[5px] px-1.5 text-[11px] font-semibold text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 			>
 				Ӏ
@@ -447,20 +464,23 @@ const CharsPopup = ({ onInsert }: { onInsert: (char: string) => void }) => {
 					className="absolute bottom-full left-0 z-30 mb-2 flex flex-wrap gap-1 rounded-[8px] border border-bd-2 bg-bg p-2 shadow-md"
 					style={{ width: "192px" }}
 				>
-					{CHECHEN_CHARS.map(ch => (
-						<button
-							key={ch}
-							type="button"
-							onMouseDown={e => {
+					{CHECHEN_CHARS.map(ch => {
+					  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
 								e.preventDefault();
 								onInsert(ch);
 								setOpen(false);
-							}}
+							};
+					  return (
+						<button
+							key={ch}
+							type="button"
+							onMouseDown={handleMouseDown}
 							className="flex h-7 min-w-[40px] items-center justify-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[12px] font-medium text-t-1 transition-colors hover:border-acc hover:bg-acc-muted hover:text-acc-strong"
 						>
 							{ch}
 						</button>
-					))}
+					);
+					})}
 				</div>
 			)}
 		</div>
@@ -557,13 +577,16 @@ export const TextEditEditor = ({
 	);
 
 	const extraToolbarItems = useMemo(
-		() => (
+		() => {
+		  const handleInsert: NonNullable<React.ComponentProps<typeof CharsPopup>["onInsert"]> = char =>
+					editorRef.current?.chain().focus().insertContent(char).run();
+		  return (
 			<CharsPopup
-				onInsert={char =>
-					editorRef.current?.chain().focus().insertContent(char).run()
+				onInsert={handleInsert
 				}
 			/>
-		),
+		);
+		},
 		[],
 	);
 
@@ -656,7 +679,11 @@ export const TextEditEditor = ({
 		return null;
 	};
 
-	return (
+		const handleEditorReady: NonNullable<React.ComponentProps<typeof NotionEditor>["onEditorReady"]> = ed => {
+						editorRef.current = ed;
+						setEditor(ed);
+					};
+return (
 		<div className="flex min-w-0 flex-col border-r border-bd-1 max-[900px]:border-r-0">
 			{renderTokenBar()}
 
@@ -720,7 +747,9 @@ export const TextEditEditor = ({
 
 			{/* ── Pages bar ── */}
 			<div className="sticky top-[52px] z-10 flex items-center overflow-x-auto border-b border-bd-1 bg-surf px-3.5 transition-colors [scrollbar-width:none]">
-				{pages.map((_, i) => (
+				{pages.map((_, i) => {
+				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onSelectPage(i);
+				  return (
 					<div
 						key={i}
 						className={`group/tab flex h-9 shrink-0 items-center gap-1 border-b-2 pl-3 pr-1.5 transition-colors ${
@@ -731,7 +760,7 @@ export const TextEditEditor = ({
 					>
 						<button
 							type="button"
-							onClick={() => onSelectPage(i)}
+							onClick={handleClick}
 							className="flex items-center gap-1.5 text-xs"
 						>
 							<span
@@ -746,7 +775,8 @@ export const TextEditEditor = ({
 							{t("admin.texts.createPage.pageN", { n: i + 1 })}
 						</button>
 					</div>
-				))}
+				);
+				})}
 
 				<button
 					type="button"
@@ -789,10 +819,7 @@ export const TextEditEditor = ({
 					extraToolbarItems={extraToolbarItems}
 					onUpdate={handleUpdate}
 					onKeyDown={handleKeyDown}
-					onEditorReady={ed => {
-						editorRef.current = ed;
-						setEditor(ed);
-					}}
+					onEditorReady={handleEditorReady}
 				/>
 			</div>
 

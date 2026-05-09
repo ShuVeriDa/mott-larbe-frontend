@@ -206,10 +206,19 @@ export const PaymentsTable = ({
 								item.user.surname,
 							);
 
-							return (
+														const handleClick: NonNullable<React.ComponentProps<"tr">["onClick"]> = () => onSelectRow(item.id);
+							const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+													e.stopPropagation();
+													onReceipt(item.id);
+												};
+							const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+														e.stopPropagation();
+														onRefund(item.id);
+													};
+return (
 								<tr
 									key={item.id}
-									onClick={() => onSelectRow(item.id)}
+									onClick={handleClick}
 									className={cn(
 										"group cursor-pointer border-b border-bd-1 transition-colors last:border-b-0",
 										isSelected
@@ -309,10 +318,7 @@ export const PaymentsTable = ({
 										<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100 group-[.selected]:opacity-100 [tr.bg-acc-bg_&]:opacity-100">
 											<button
 												type="button"
-												onClick={(e) => {
-													e.stopPropagation();
-													onReceipt(item.id);
-												}}
+												onClick={handleClick2}
 												className="flex h-[24px] items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 											>
 												{t("admin.payments.table.receipt")}
@@ -320,10 +326,7 @@ export const PaymentsTable = ({
 											{item.status === "SUCCEEDED" && (
 												<button
 													type="button"
-													onClick={(e) => {
-														e.stopPropagation();
-														onRefund(item.id);
-													}}
+													onClick={handleClick3}
 													className="flex h-[24px] items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 												>
 													{t("admin.payments.table.refund")}

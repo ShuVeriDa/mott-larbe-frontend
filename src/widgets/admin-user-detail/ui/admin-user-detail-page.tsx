@@ -35,7 +35,10 @@ export const AdminUserDetailPage = ({ userId }: AdminUserDetailPageProps) => {
 		handleEventsLoadMore,
 	} = useAdminUserDetailPage(userId);
 
-	return (
+		const handleClose: NonNullable<React.ComponentProps<typeof AddSubscriptionModal>["onClose"]> = () => setShowAddSubscription(false);
+	const handleManageSubscription: NonNullable<React.ComponentProps<typeof UserHeroCard>["onManageSubscription"]> = () => setShowAddSubscription(true);
+	const handleManage: NonNullable<React.ComponentProps<typeof UserSubscriptionCard>["onManage"]> = () => setShowAddSubscription(true);
+return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<UserDetailTopbar user={detail.data} mutations={mutations} />
 
@@ -45,7 +48,7 @@ export const AdminUserDetailPage = ({ userId }: AdminUserDetailPageProps) => {
 						<AddSubscriptionModal
 							mutations={subscriptionMutations}
 							initialEmail={detail.data?.email}
-							onClose={() => setShowAddSubscription(false)}
+							onClose={handleClose}
 						/>
 					</div>
 				</div>
@@ -61,7 +64,7 @@ export const AdminUserDetailPage = ({ userId }: AdminUserDetailPageProps) => {
 						mutations={mutations}
 						roleMutations={roles}
 						sessions={sessions}
-						onManageSubscription={() => setShowAddSubscription(true)}
+						onManageSubscription={handleManageSubscription}
 					/>
 
 					{/* ── Right column ── */}
@@ -71,7 +74,7 @@ export const AdminUserDetailPage = ({ userId }: AdminUserDetailPageProps) => {
 							isLoading={detail.isLoading}
 						/>
 
-						<UserSubscriptionCard subscription={subscription} onManage={() => setShowAddSubscription(true)} />
+						<UserSubscriptionCard subscription={subscription} onManage={handleManage} />
 
 						<UserEventsCard
 							eventsTab={eventsTab}

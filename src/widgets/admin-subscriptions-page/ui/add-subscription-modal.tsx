@@ -46,7 +46,12 @@ export const AddSubscriptionModal = ({
 		);
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setEmail(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setPlanId(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setDurationDays(e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setProvider(e.target.value as PaymentProvider);
+	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setReason(e.target.value);
+return (
 		<>
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
 				<span className="font-display text-[14px] font-semibold text-t-1">
@@ -77,7 +82,7 @@ export const AddSubscriptionModal = ({
 					</label>
 					<input
 						value={email}
-						onChange={e => setEmail(e.target.value)}
+						onChange={handleChange}
 						placeholder="zargan.d@gmail.com"
 						className="h-[34px] w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc focus:bg-surf"
 					/>
@@ -89,7 +94,7 @@ export const AddSubscriptionModal = ({
 					</label>
 					<select
 						value={planId}
-						onChange={e => setPlanId(e.target.value)}
+						onChange={handleChange2}
 						disabled={plansQuery.isLoading}
 						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf disabled:opacity-60"
 					>
@@ -108,7 +113,7 @@ export const AddSubscriptionModal = ({
 					</label>
 					<select
 						value={durationDays}
-						onChange={e => setDurationDays(e.target.value)}
+						onChange={handleChange3}
 						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf"
 					>
 						<option value="30">
@@ -132,7 +137,7 @@ export const AddSubscriptionModal = ({
 					</label>
 					<select
 						value={provider}
-						onChange={e => setProvider(e.target.value as PaymentProvider)}
+						onChange={handleChange4}
 						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf"
 					>
 						<option value="MANUAL">Manual</option>
@@ -149,7 +154,7 @@ export const AddSubscriptionModal = ({
 					</label>
 					<input
 						value={reason}
-						onChange={e => setReason(e.target.value)}
+						onChange={handleChange5}
 						placeholder={t("admin.subscriptions.modal.reasonPlaceholder")}
 						className="h-[34px] w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc focus:bg-surf"
 					/>

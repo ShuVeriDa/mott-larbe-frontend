@@ -55,7 +55,11 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setEmail(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setPassword(e.target.value);
+	const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowPw((v) => !v);
+	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setRemember(e.target.checked);
+return (
 		<form onSubmit={handleSubmit} noValidate autoComplete="on">
 			{error ? (
 				<div
@@ -81,7 +85,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 					required
 					placeholder={t("auth.placeholders.loginIdentifier")}
 					value={email}
-					onChange={(e) => setEmail(e.target.value)}
+					onChange={handleChange}
 					className={cn(
 						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 						errors.email && "border-red",
@@ -116,7 +120,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 						required
 						placeholder="••••••••••"
 						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={handleChange2}
 						className={cn(
 							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 pr-11 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 							errors.password && "border-red",
@@ -126,7 +130,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 					<button
 						type="button"
 						tabIndex={-1}
-						onClick={() => setShowPw((v) => !v)}
+						onClick={handleClick}
 						aria-label={t(
 							showPw ? "auth.password.hide" : "auth.password.show",
 						)}
@@ -156,7 +160,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 						type="checkbox"
 						className="peer sr-only"
 						checked={remember}
-						onChange={(e) => setRemember(e.target.checked)}
+						onChange={handleChange3}
 					/>
 					<Typography
 						tag="span"

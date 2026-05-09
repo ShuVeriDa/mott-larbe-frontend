@@ -74,12 +74,18 @@ export const FeatureFlagImportModal = ({
 		onClose();
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
+				if (e.target === e.currentTarget) handleClose();
+			};
+	const handleChange: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => {
+						setRaw(e.target.value);
+						setParseError("");
+						setPreview(null);
+					};
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={e => {
-				if (e.target === e.currentTarget) handleClose();
-			}}
+			onClick={handleClick}
 		>
 			<div className="w-[520px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:max-h-[92vh] max-sm:overflow-y-auto max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -96,11 +102,7 @@ export const FeatureFlagImportModal = ({
 					)}
 					placeholder={t("admin.featureFlags.importModal.placeholder")}
 					value={raw}
-					onChange={e => {
-						setRaw(e.target.value);
-						setParseError("");
-						setPreview(null);
-					}}
+					onChange={handleChange}
 				/>
 				{parseError && (
 					<p className="mt-1 text-[11px] text-red-t">{parseError}</p>

@@ -8,7 +8,9 @@ interface FlagToggleProps {
 	onChange: (v: boolean) => void;
 }
 
-export const FlagToggle = ({ enabled, disabled, onChange }: FlagToggleProps) => (
+export const FlagToggle = ({ enabled, disabled, onChange }: FlagToggleProps) => {
+  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => onChange(e.target.checked);
+  return (
 	<label
 		className={cn(
 			"relative inline-flex h-[19px] w-[34px] cursor-pointer items-center",
@@ -22,7 +24,7 @@ export const FlagToggle = ({ enabled, disabled, onChange }: FlagToggleProps) => 
 			className="absolute h-0 w-0 opacity-0"
 			checked={enabled}
 			disabled={disabled}
-			onChange={(e) => onChange(e.target.checked)}
+			onChange={handleChange}
 		/>
 		<span
 			className={cn(
@@ -41,3 +43,4 @@ export const FlagToggle = ({ enabled, disabled, onChange }: FlagToggleProps) => 
 		</span>
 	</label>
 );
+};

@@ -60,14 +60,21 @@ export const BillingCouponModal = ({
 
 	if (!open) return null;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("code", e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("name", e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => set("type", e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("amount", e.target.value);
+	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("maxRedemptions", e.target.value);
+	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("validUntil", e.target.value);
+return (
 		<div
 			className="fixed inset-0 z-400 flex items-end justify-center bg-black/35 sm:items-center sm:p-4"
 			onClick={onClose}
 		>
 			<div
 				className="w-full max-w-[440px] overflow-hidden rounded-t-[14px] bg-surf shadow-[0_20px_60px_rgba(0,0,0,0.18)] sm:rounded-[14px]"
-				onClick={(e) => e.stopPropagation()}
+				onClick={handleClick}
 			>
 				{/* Header */}
 				<div className="flex items-center justify-between border-b border-bd-1 px-[18px] py-4">
@@ -93,7 +100,7 @@ export const BillingCouponModal = ({
 							</label>
 							<input
 								value={form.code}
-								onChange={(e) => set("code", e.target.value)}
+								onChange={handleChange}
 								placeholder={t("admin.plans.couponModal.codePlaceholder")}
 								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] uppercase text-t-1 outline-none placeholder:normal-case placeholder:text-t-3 focus:border-acc focus:bg-surf"
 							/>
@@ -105,7 +112,7 @@ export const BillingCouponModal = ({
 							</label>
 							<input
 								value={form.name}
-								onChange={(e) => set("name", e.target.value)}
+								onChange={handleChange2}
 								placeholder={t("admin.plans.couponModal.namePlaceholder")}
 								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 							/>
@@ -118,7 +125,7 @@ export const BillingCouponModal = ({
 								</label>
 								<select
 									value={form.type}
-									onChange={(e) => set("type", e.target.value)}
+									onChange={handleChange3}
 									className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 								>
 									<option value="PERCENT">% скидка</option>
@@ -136,7 +143,7 @@ export const BillingCouponModal = ({
 										max={form.type === "PERCENT" ? 100 : undefined}
 										step={form.type === "PERCENT" ? 1 : 0.01}
 										value={form.amount}
-										onChange={(e) => set("amount", e.target.value)}
+										onChange={handleChange4}
 										placeholder={form.type === "PERCENT" ? "10" : "500"}
 										className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 pr-7 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 									/>
@@ -156,7 +163,7 @@ export const BillingCouponModal = ({
 									type="number"
 									min={1}
 									value={form.maxRedemptions}
-									onChange={(e) => set("maxRedemptions", e.target.value)}
+									onChange={handleChange5}
 									placeholder="∞"
 									className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 								/>
@@ -168,7 +175,7 @@ export const BillingCouponModal = ({
 								<input
 									type="date"
 									value={form.validUntil}
-									onChange={(e) => set("validUntil", e.target.value)}
+									onChange={handleChange6}
 									className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 								/>
 							</div>

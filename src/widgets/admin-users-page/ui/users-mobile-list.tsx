@@ -69,7 +69,9 @@ export const UsersMobileList = ({
 
 	return (
 		<div className="hidden max-sm:block">
-			{users.map((user) => (
+			{users.map((user) => {
+			  const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+			  return (
 				<div
 					key={user.id}
 					className="flex items-start gap-3 border-b border-bd-1 px-4 py-3.5 transition-colors last:border-b-0 active:bg-surf-2"
@@ -99,11 +101,12 @@ export const UsersMobileList = ({
 							)}
 						</div>
 					</div>
-					<div onClick={(e) => e.stopPropagation()}>
+					<div onClick={handleClick}>
 						<UserRowActions user={user} mutations={mutations} />
 					</div>
 				</div>
-			))}
+			);
+			})}
 		</div>
 	);
 };

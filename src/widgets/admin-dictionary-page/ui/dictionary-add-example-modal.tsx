@@ -41,12 +41,17 @@ export const DictionaryAddExampleModal = ({
 	const inputCls =
 		"w-full min-h-[72px] resize-y rounded-[8px] border border-bd-2 bg-bg px-2.5 py-2 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
+				if (e.target === e.currentTarget) onClose();
+			};
+	const handleChange: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => {
+							setText(e.target.value);
+							setError("");
+						};
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={e => {
-				if (e.target === e.currentTarget) onClose();
-			}}
+			onClick={handleClick}
 		>
 			<div className="w-[440px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -69,10 +74,7 @@ export const DictionaryAddExampleModal = ({
 						className={inputCls}
 						placeholder={t("admin.dictionary.addExampleModal.textPlaceholder")}
 						value={text}
-						onChange={e => {
-							setText(e.target.value);
-							setError("");
-						}}
+						onChange={handleChange}
 						autoFocus
 					/>
 					{error && <p className="mt-1 text-[11px] text-red-t">{error}</p>}

@@ -47,10 +47,18 @@ export const VocabularyFoldersPage = () => {
 		return t("vocabulary.foldersPage.section.limitUsed", { used, max });
 	})();
 
-	return (
+		const handleCreate: NonNullable<React.ComponentProps<typeof FoldersTopbar>["onCreate"]> = () => setCreateOpen(true);
+	const handleCreate2: NonNullable<React.ComponentProps<typeof FoldersGrid>["onCreate"]> = () => setCreateOpen(true);
+	const handleEdit: NonNullable<React.ComponentProps<typeof FoldersGrid>["onEdit"]> = (f) => setEditFolder(f);
+	const handleDelete: NonNullable<React.ComponentProps<typeof FoldersGrid>["onDelete"]> = (f) => setDeleteFolder(f);
+	const handleClose: NonNullable<React.ComponentProps<typeof CreateFolderModal>["onClose"]> = () => setCreateOpen(false);
+	const handleClose2: NonNullable<React.ComponentProps<typeof EditFolderModal>["onClose"]> = () => setEditFolder(null);
+	const handleClose3: NonNullable<React.ComponentProps<typeof DeleteFolderModal>["onClose"]> = () => setDeleteFolder(null);
+	const handleClose4: NonNullable<React.ComponentProps<typeof PremiumUpsellModal>["onClose"]> = () => setUpsellOpen(false);
+return (
 		<>
 			<FoldersTopbar
-				onCreate={() => setCreateOpen(true)}
+				onCreate={handleCreate}
 				createDisabled={folderCreationDisabled || limitReached}
 			/>
 
@@ -88,9 +96,9 @@ export const VocabularyFoldersPage = () => {
 					) : null}
 
 					<FoldersGrid
-						onCreate={() => setCreateOpen(true)}
-						onEdit={(f) => setEditFolder(f)}
-						onDelete={(f) => setDeleteFolder(f)}
+						onCreate={handleCreate2}
+						onEdit={handleEdit}
+						onDelete={handleDelete}
 						createDisabled={folderCreationDisabled || limitReached}
 						onForbidden={showUpsell}
 					/>
@@ -108,22 +116,22 @@ export const VocabularyFoldersPage = () => {
 
 			<CreateFolderModal
 				open={createOpen}
-				onClose={() => setCreateOpen(false)}
+				onClose={handleClose}
 				onForbidden={showUpsell}
 			/>
 			<EditFolderModal
 				open={!!editFolder}
 				folder={editFolder}
-				onClose={() => setEditFolder(null)}
+				onClose={handleClose2}
 			/>
 			<DeleteFolderModal
 				open={!!deleteFolder}
 				folder={deleteFolder}
-				onClose={() => setDeleteFolder(null)}
+				onClose={handleClose3}
 			/>
 			<PremiumUpsellModal
 				open={upsellOpen}
-				onClose={() => setUpsellOpen(false)}
+				onClose={handleClose4}
 			/>
 		</>
 	);

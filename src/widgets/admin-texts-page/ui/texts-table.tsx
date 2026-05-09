@@ -38,9 +38,11 @@ const TextTableRow = ({ text, selected, onToggle, mutations }: TextTableRowProps
 		: text.processingStatus;
 	const processingProgress = sseData?.progress ?? text.processingProgress;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+	const handleClick2: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+return (
 		<tr className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2">
-			<td className="px-2.5 py-[10px] pl-3.5" onClick={(e) => e.stopPropagation()}>
+			<td className="px-2.5 py-[10px] pl-3.5" onClick={handleClick}>
 				<input
 					type="checkbox"
 					checked={selected}
@@ -103,7 +105,7 @@ const TextTableRow = ({ text, selected, onToggle, mutations }: TextTableRowProps
 				{formatDate(text.createdAt)}
 			</td>
 
-			<td className="px-2.5 py-[10px]" onClick={(e) => e.stopPropagation()}>
+			<td className="px-2.5 py-[10px]" onClick={handleClick2}>
 				<TextRowActions text={text} mutations={mutations} />
 			</td>
 		</tr>
@@ -187,15 +189,18 @@ export const TextsTable = ({
 					</tr>
 				</thead>
 				<tbody>
-					{texts.map((text) => (
+					{texts.map((text) => {
+					  const handleToggle: NonNullable<React.ComponentProps<typeof TextTableRow>["onToggle"]> = () => onToggleRow(text.id);
+					  return (
 						<TextTableRow
 							key={text.id}
 							text={text}
 							selected={selectedIds.has(text.id)}
-							onToggle={() => onToggleRow(text.id)}
+							onToggle={handleToggle}
 							mutations={mutations}
 						/>
-					))}
+					);
+					})}
 				</tbody>
 			</table>
 		</div>

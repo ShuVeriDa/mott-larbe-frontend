@@ -57,7 +57,11 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setWord(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setTranslation(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => setFolderId(e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => setCefrLevel(e.target.value);
+return (
 		<Modal
 			open={open}
 			onClose={onClose}
@@ -70,7 +74,7 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 				<Input
 					id="add-word-input"
 					value={word}
-					onChange={(e) => setWord(e.target.value)}
+					onChange={handleChange}
 					placeholder={t("vocabulary.addModal.wordPlaceholder")}
 					className="mb-3"
 					required
@@ -82,7 +86,7 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 				<Input
 					id="add-word-translation"
 					value={translation}
-					onChange={(e) => setTranslation(e.target.value)}
+					onChange={handleChange2}
 					placeholder={t("vocabulary.addModal.translationPlaceholder")}
 					className="mb-3"
 					required
@@ -94,7 +98,7 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 				<Select
 					id="add-word-folder"
 					value={folderId}
-					onChange={(e) => setFolderId(e.target.value)}
+					onChange={handleChange3}
 					wrapperClassName="mb-3"
 				>
 					<option value="">{t("vocabulary.card.noFolder")}</option>
@@ -111,7 +115,7 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 				<Select
 					id="add-word-level"
 					value={cefrLevel}
-					onChange={(e) => setCefrLevel(e.target.value)}
+					onChange={handleChange4}
 					wrapperClassName="mb-3"
 				>
 					<option value="">—</option>

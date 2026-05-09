@@ -40,7 +40,11 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setName(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setSurname(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setUsername(e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setPhone(e.target.value);
+return (
 		<SettingCard title={t("profile.personalData.title")}>
 			<form onSubmit={handleSubmit} className="flex flex-col gap-3">
 				<div className="grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
@@ -49,7 +53,7 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 						<Input
 							id="profile-name"
 							value={name}
-							onChange={(e) => setName(e.target.value)}
+							onChange={handleChange}
 							placeholder={t("profile.personalData.firstNamePlaceholder")}
 						/>
 					</div>
@@ -58,7 +62,7 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 						<Input
 							id="profile-surname"
 							value={surname}
-							onChange={(e) => setSurname(e.target.value)}
+							onChange={handleChange2}
 							placeholder={t("profile.personalData.lastNamePlaceholder")}
 						/>
 					</div>
@@ -69,7 +73,7 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 					<Input
 						id="profile-username"
 						value={username}
-						onChange={(e) => setUsername(e.target.value)}
+						onChange={handleChange3}
 						placeholder="username"
 					/>
 				</div>
@@ -92,7 +96,7 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 						id="profile-phone"
 						type="tel"
 						value={phone}
-						onChange={(e) => setPhone(e.target.value)}
+						onChange={handleChange4}
 						placeholder="+7 900 000-00-00"
 					/>
 				</div>

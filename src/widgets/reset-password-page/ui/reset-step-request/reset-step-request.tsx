@@ -41,7 +41,11 @@ export const ResetStepRequest = ({
 		localError ??
 		(error ? t("auth.resetPassword.step1.errors.generic") : null);
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => {
+							setEmail(e.target.value);
+							if (localError) setLocalError(null);
+						};
+return (
 		<section aria-labelledby="reset-step-request-title">
 			<div className="mb-[18px] inline-flex h-[52px] w-[52px] items-center justify-center rounded-[13px] bg-acc-bg text-acc">
 				<Lock size={24} strokeWidth={1.7} />
@@ -76,10 +80,7 @@ export const ResetStepRequest = ({
 						autoComplete="email"
 						required
 						value={email}
-						onChange={(e) => {
-							setEmail(e.target.value);
-							if (localError) setLocalError(null);
-						}}
+						onChange={handleChange}
 						placeholder={t("auth.resetPassword.step1.emailPlaceholder")}
 						aria-invalid={Boolean(errorMessage)}
 						aria-describedby={errorMessage ? "reset-email-error" : undefined}

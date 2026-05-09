@@ -81,7 +81,8 @@ export const MorphFormsCard = ({
 		);
 	}
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addForm" });
+return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
 				<span className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
@@ -91,7 +92,7 @@ export const MorphFormsCard = ({
 					<span className="text-[11.5px] text-t-3">{forms.length} {t("admin.dictionaryDetail.formCount")}</span>
 					<button
 						className="flex h-[26px] items-center gap-1.5 rounded-md border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
-						onClick={() => onOpenModal({ type: "addForm" })}
+						onClick={handleClick}
 					>
 						<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
 							<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
@@ -108,7 +109,10 @@ export const MorphFormsCard = ({
 			) : (
 				<>
 					<div className="grid grid-cols-2">
-						{visible.map((form, i) => (
+						{visible.map((form, i) => {
+						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "editForm", form });
+						  const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDeleteForm(form.id);
+						  return (
 							<div
 								key={form.id}
 								className={`group flex items-center gap-2.5 border-b border-bd-1 px-3.5 py-2 transition-colors hover:bg-surf-2 ${i % 2 === 0 ? "border-r" : ""} ${i >= forms.length - (forms.length % 2 === 0 ? 2 : 1) ? "border-b-0" : ""}`}
@@ -122,19 +126,20 @@ export const MorphFormsCard = ({
 								<div className="flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100 max-sm:opacity-100">
 									<button
 										className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
-										onClick={() => onOpenModal({ type: "editForm", form })}
+										onClick={handleClick}
 									>
 										<IconEdit />
 									</button>
 									<button
 										className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
-										onClick={() => onDeleteForm(form.id)}
+										onClick={handleClick2}
 									>
 										<IconTrash />
 									</button>
 								</div>
 							</div>
-						))}
+						);
+						})}
 					</div>
 
 					{forms.length > INITIAL_COUNT && (

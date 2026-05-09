@@ -53,7 +53,27 @@ export const AdminFeedbackPage = () => {
 		setIsInfoDrawerOpen,
 	} = useAdminFeedbackPage();
 
-	return (
+	const handleInfoOpen: NonNullable<React.ComponentProps<typeof FeedbackChatPanel>["onInfoOpen"]> = () =>
+		setIsInfoDrawerOpen(true);
+	const handleAssignOpen: NonNullable<React.ComponentProps<typeof FeedbackChatPanel>["onAssignOpen"]> = () =>
+		setIsAssignModalOpen(true);
+	const handleTransferOpen: NonNullable<React.ComponentProps<typeof FeedbackChatPanel>["onTransferOpen"]> = () =>
+		setIsTransferModalOpen(true);
+	const handleInfoDrawerClose: NonNullable<React.ComponentProps<typeof FeedbackInfoDrawer>["onClose"]> = () =>
+		setIsInfoDrawerOpen(false);
+	const handleInfoDrawerAssignOpen: NonNullable<React.ComponentProps<typeof FeedbackInfoDrawer>["onAssignOpen"]> = () => {
+		setIsInfoDrawerOpen(false);
+		setIsAssignModalOpen(true);
+	};
+	const handleInfoDrawerTransferOpen: NonNullable<React.ComponentProps<typeof FeedbackInfoDrawer>["onTransferOpen"]> = () => {
+		setIsInfoDrawerOpen(false);
+		setIsTransferModalOpen(true);
+	};
+	const handleAssignModalClose: NonNullable<React.ComponentProps<typeof FeedbackAssignModal>["onClose"]> = () =>
+		setIsAssignModalOpen(false);
+	const handleTransferModalClose: NonNullable<React.ComponentProps<typeof FeedbackTransferModal>["onClose"]> = () =>
+		setIsTransferModalOpen(false);
+return (
 		<>
 			{/* Topbar */}
 			<header className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-[14px] max-sm:px-3.5">
@@ -126,7 +146,7 @@ export const AdminFeedbackPage = () => {
 						isMobileVisible={isMobileChat}
 						t={t}
 						onBack={handleBack}
-						onInfoOpen={() => setIsInfoDrawerOpen(true)}
+						onInfoOpen={handleInfoOpen}
 						onCopyLink={handleCopyLink}
 						onMoreMenu={handleMoreMenu}
 						onModeChange={setInputMode}
@@ -134,8 +154,8 @@ export const AdminFeedbackPage = () => {
 						onReopen={handleReopen}
 						onStatusChange={handleStatusChange}
 						onPriorityChange={handlePriorityChange}
-						onAssignOpen={() => setIsAssignModalOpen(true)}
-						onTransferOpen={() => setIsTransferModalOpen(true)}
+						onAssignOpen={handleAssignOpen}
+						onTransferOpen={handleTransferOpen}
 						onClose={handleClose}
 						onDelete={handleDelete}
 					/>
@@ -149,17 +169,11 @@ export const AdminFeedbackPage = () => {
 				isOpen={isInfoDrawerOpen}
 				thread={thread}
 				t={t}
-				onClose={() => setIsInfoDrawerOpen(false)}
+				onClose={handleInfoDrawerClose}
 				onStatusChange={handleStatusChange}
 				onPriorityChange={handlePriorityChange}
-				onAssignOpen={() => {
-					setIsInfoDrawerOpen(false);
-					setIsAssignModalOpen(true);
-				}}
-				onTransferOpen={() => {
-					setIsInfoDrawerOpen(false);
-					setIsTransferModalOpen(true);
-				}}
+				onAssignOpen={handleInfoDrawerAssignOpen}
+				onTransferOpen={handleInfoDrawerTransferOpen}
 				onClose2={handleClose}
 				onReopen={handleReopen}
 				onDelete={handleDelete}
@@ -173,7 +187,7 @@ export const AdminFeedbackPage = () => {
 				isLoading={isAssigneesLoading}
 				t={t}
 				onAssign={handleAssign}
-				onClose={() => setIsAssignModalOpen(false)}
+				onClose={handleAssignModalClose}
 			/>
 
 			{/* Transfer modal */}
@@ -184,7 +198,7 @@ export const AdminFeedbackPage = () => {
 				isLoading={isAssigneesLoading}
 				t={t}
 				onTransfer={handleTransfer}
-				onClose={() => setIsTransferModalOpen(false)}
+				onClose={handleTransferModalClose}
 			/>
 		</>
 	);

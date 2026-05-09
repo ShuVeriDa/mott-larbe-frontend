@@ -39,7 +39,8 @@ export const AppearanceSection = ({ preferences }: AppearanceSectionProps) => {
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => setUiLanguage(e.target.value as UiLanguage);
+return (
 		<div className="flex flex-col gap-3.5">
 			<SectionHeader
 				title={t("settings.appearance.title")}
@@ -55,7 +56,7 @@ export const AppearanceSection = ({ preferences }: AppearanceSectionProps) => {
 					<Select
 						aria-label={t("settings.appearance.language")}
 						value={uiLanguage}
-						onChange={(e) => setUiLanguage(e.target.value as UiLanguage)}
+						onChange={handleChange}
 						wrapperClassName="max-w-[280px]"
 					>
 						<option value="RU">{t("settings.appearance.langRu")}</option>

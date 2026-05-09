@@ -44,7 +44,12 @@ export const UnknownWordsMobileList = ({
 
 	return (
 		<div className="hidden max-sm:block">
-			{words.map((word) => (
+			{words.map((word) => {
+			  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onAddToDictionary(word);
+			  const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onLinkToLemma(word);
+			  const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onViewContexts(word);
+			  const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => mutations.remove.mutate(word.id);
+			  return (
 				<div key={word.id} className="border-b border-bd-1 px-3.5 py-3.5 last:border-b-0">
 					<div className="mb-2 flex items-start gap-2.5">
 						<div className="min-w-0 flex-1">
@@ -78,7 +83,7 @@ export const UnknownWordsMobileList = ({
 						<div className="flex gap-1">
 							<button
 								type="button"
-								onClick={() => onAddToDictionary(word)}
+								onClick={handleClick}
 								className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-acc-bg hover:text-acc-t"
 								title={t("admin.unknownWords.row.addToDictionary")}
 							>
@@ -88,7 +93,7 @@ export const UnknownWordsMobileList = ({
 							</button>
 							<button
 								type="button"
-								onClick={() => onLinkToLemma(word)}
+								onClick={handleClick2}
 								className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 								title={t("admin.unknownWords.row.linkToLemma")}
 							>
@@ -99,7 +104,7 @@ export const UnknownWordsMobileList = ({
 							</button>
 							<button
 								type="button"
-								onClick={() => onViewContexts(word)}
+								onClick={handleClick3}
 								className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 								title={t("admin.unknownWords.row.allContexts")}
 							>
@@ -110,7 +115,7 @@ export const UnknownWordsMobileList = ({
 							</button>
 							<button
 								type="button"
-								onClick={() => mutations.remove.mutate(word.id)}
+								onClick={handleClick4}
 								disabled={mutations.remove.isPending}
 								className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t disabled:opacity-50"
 								title={t("admin.unknownWords.row.delete")}
@@ -133,7 +138,8 @@ export const UnknownWordsMobileList = ({
 						</div>
 					</div>
 				</div>
-			))}
+			);
+			})}
 		</div>
 	);
 };

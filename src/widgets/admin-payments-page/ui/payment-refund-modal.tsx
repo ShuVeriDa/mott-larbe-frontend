@@ -48,7 +48,9 @@ export const PaymentRefundModal = ({
 		maximumFractionDigits: 0,
 	}).format(maxRub);
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setAmount(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setReason(e.target.value as RefundReason);
+return (
 		<div className="overflow-hidden rounded-t-[14px] bg-surf sm:rounded-[14px]">
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
@@ -97,7 +99,7 @@ export const PaymentRefundModal = ({
 							min="0.01"
 							max={maxRub}
 							value={amount}
-							onChange={e => setAmount(e.target.value)}
+							onChange={handleChange}
 							required
 							className="h-[34px] w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf"
 						/>
@@ -110,7 +112,7 @@ export const PaymentRefundModal = ({
 						</label>
 						<select
 							value={reason}
-							onChange={e => setReason(e.target.value as RefundReason)}
+							onChange={handleChange2}
 							className="h-[34px] w-full appearance-none rounded-lg border border-bd-2 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%226%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M1%201l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_10px_center] pl-2.5 pr-7 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 						>
 							{REASONS.map(r => (

@@ -223,7 +223,12 @@ export const MorphologyTable = ({
           <tbody>
             {isLoading
               ? Array.from({ length: 8 }).map((_, i) => <SkeletonRow key={i} />)
-              : items.map((rule, idx) => (
+              : items.map((rule, idx) => {
+                const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = () => onToggleId(rule.id);
+                const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onToggleActive(rule);
+                const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onEdit(rule);
+                const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDelete(rule.id);
+                return (
                   <tr
                     key={rule.id}
                     className={cn(
@@ -235,7 +240,7 @@ export const MorphologyTable = ({
                       <input
                         type="checkbox"
                         checked={selectedIds.has(rule.id)}
-                        onChange={() => onToggleId(rule.id)}
+                        onChange={handleChange}
                         className="size-[15px] cursor-pointer appearance-none rounded border border-bd-2 bg-surf accent-acc checked:bg-acc"
                       />
                     </td>
@@ -267,7 +272,7 @@ export const MorphologyTable = ({
                       <div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
                         {!rule.isActive && (
                           <button
-                            onClick={() => onToggleActive(rule)}
+                            onClick={handleClick}
                             title={t("admin.morphology.row.activate")}
                             className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
                           >
@@ -288,7 +293,7 @@ export const MorphologyTable = ({
                           </button>
                         )}
                         <button
-                          onClick={() => onEdit(rule)}
+                          onClick={handleClick2}
                           title={t("admin.morphology.row.edit")}
                           className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
                         >
@@ -303,7 +308,7 @@ export const MorphologyTable = ({
                           </svg>
                         </button>
                         <button
-                          onClick={() => onDelete(rule.id)}
+                          onClick={handleClick3}
                           title={t("admin.morphology.row.delete")}
                           className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
                         >
@@ -325,7 +330,8 @@ export const MorphologyTable = ({
                       </div>
                     </td>
                   </tr>
-                ))}
+                );
+              })}
           </tbody>
         </table>
       </div>

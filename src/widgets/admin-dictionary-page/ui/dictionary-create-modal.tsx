@@ -84,12 +84,25 @@ export const DictionaryCreateModal = ({
 
 	const labelCls = "mb-1.5 block text-[11.5px] font-semibold text-t-2";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
+				if (e.target === e.currentTarget) onClose();
+			};
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => {
+								setWord(e.target.value);
+								setErrors(p => ({ ...p, word: "" }));
+							};
+	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setNormalized(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = e => {
+							setTranslation(e.target.value);
+							setErrors(p => ({ ...p, translation: "" }));
+						};
+	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setPos(e.target.value);
+	const handleChange5: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setLevel(e.target.value);
+	const handleChange6: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => setNotes(e.target.value);
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={e => {
-				if (e.target === e.currentTarget) onClose();
-			}}
+			onClick={handleClick}
 		>
 			<div className="w-[500px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-h-[90vh] overflow-y-auto max-sm:w-full max-sm:max-h-[92vh] max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -105,11 +118,13 @@ export const DictionaryCreateModal = ({
 						{t("admin.dictionary.createModal.languageLabel")}
 					</label>
 					<div className="flex gap-2">
-						{(["CHE", "RU"] as AdminDictLanguage[]).map(l => (
+						{(["CHE", "RU"] as AdminDictLanguage[]).map(l => {
+						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setLanguage(l);
+						  return (
 							<button
 								key={l}
 								type="button"
-								onClick={() => setLanguage(l)}
+								onClick={handleClick}
 								className={cn(
 									"flex h-[34px] cursor-pointer items-center gap-1.5 rounded-[8px] border px-3 text-[12.5px] transition-colors select-none",
 									language === l
@@ -121,7 +136,8 @@ export const DictionaryCreateModal = ({
 									? t("admin.dictionary.createModal.langChe")
 									: t("admin.dictionary.createModal.langRu")}
 							</button>
-						))}
+						);
+						})}
 					</div>
 				</div>
 
@@ -135,10 +151,7 @@ export const DictionaryCreateModal = ({
 							className={cn(inputCls, errors.word && "border-red-400")}
 							placeholder={t("admin.dictionary.createModal.wordPlaceholder")}
 							value={word}
-							onChange={e => {
-								setWord(e.target.value);
-								setErrors(p => ({ ...p, word: "" }));
-							}}
+							onChange={handleChange}
 						/>
 						{errors.word && (
 							<p className="mt-1 text-[11px] text-red-t">{errors.word}</p>
@@ -155,7 +168,7 @@ export const DictionaryCreateModal = ({
 								t("admin.dictionary.createModal.normalizedPlaceholder")
 							}
 							value={normalized}
-							onChange={e => setNormalized(e.target.value)}
+							onChange={handleChange2}
 						/>
 					</div>
 				</div>
@@ -171,10 +184,7 @@ export const DictionaryCreateModal = ({
 							"admin.dictionary.createModal.translationPlaceholder",
 						)}
 						value={translation}
-						onChange={e => {
-							setTranslation(e.target.value);
-							setErrors(p => ({ ...p, translation: "" }));
-						}}
+						onChange={handleChange3}
 					/>
 					{errors.translation && (
 						<p className="mt-1 text-[11px] text-red-t">{errors.translation}</p>
@@ -190,7 +200,7 @@ export const DictionaryCreateModal = ({
 						<select
 							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 							value={pos}
-							onChange={e => setPos(e.target.value)}
+							onChange={handleChange4}
 						>
 							<option value="">
 								{t("admin.dictionary.createModal.posNone")}
@@ -209,7 +219,7 @@ export const DictionaryCreateModal = ({
 						<select
 							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 							value={level}
-							onChange={e => setLevel(e.target.value)}
+							onChange={handleChange5}
 						>
 							<option value="">
 								{t("admin.dictionary.createModal.levelNone")}
@@ -232,7 +242,7 @@ export const DictionaryCreateModal = ({
 						className="w-full min-h-[56px] resize-y rounded-[8px] border border-bd-2 bg-bg px-2.5 py-2 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 						placeholder={t("admin.dictionary.createModal.notesPlaceholder")}
 						value={notes}
-						onChange={e => setNotes(e.target.value)}
+						onChange={handleChange6}
 					/>
 				</div>
 

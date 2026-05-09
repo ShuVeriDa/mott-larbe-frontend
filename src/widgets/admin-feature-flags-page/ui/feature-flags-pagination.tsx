@@ -23,7 +23,9 @@ export const FeatureFlagsPagination = ({
 	const btn =
 		"flex size-7 cursor-pointer items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-40";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(page - 1);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(page + 1);
+return (
 		<div className="flex items-center justify-between border-t border-bd-1 px-3.5 py-3">
 			<span className="text-[12px] text-t-3">
 				{t("admin.featureFlags.pagination.showing", { from, to, total })}
@@ -32,7 +34,7 @@ export const FeatureFlagsPagination = ({
 				<button
 					type="button"
 					className={btn}
-					onClick={() => onChange(page - 1)}
+					onClick={handleClick}
 					disabled={page <= 1}
 				>
 					<svg className="size-3" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -49,11 +51,12 @@ export const FeatureFlagsPagination = ({
 								: page >= totalPages - 2
 									? totalPages - 4 + i
 									: page - 2 + i;
-					return (
+										const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(pg);
+return (
 						<button
 							key={pg}
 							type="button"
-							onClick={() => onChange(pg)}
+							onClick={handleClick}
 							className={cn(
 								"flex size-7 cursor-pointer items-center justify-center rounded-[6px] border text-[12px] transition-colors",
 								pg === page
@@ -69,7 +72,7 @@ export const FeatureFlagsPagination = ({
 				<button
 					type="button"
 					className={btn}
-					onClick={() => onChange(page + 1)}
+					onClick={handleClick2}
 					disabled={page >= totalPages}
 				>
 					<svg className="size-3" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.5">

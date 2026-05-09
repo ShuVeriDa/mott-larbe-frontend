@@ -99,14 +99,15 @@ export const BillingLimitsModal = ({
 
 	if (!open || !plan) return null;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+return (
 		<div
 			className="fixed inset-0 z-400 flex items-end justify-center bg-black/35 sm:items-center sm:p-4"
 			onClick={onClose}
 		>
 			<div
 				className="flex max-h-[90vh] w-full max-w-[520px] flex-col overflow-hidden rounded-t-[14px] bg-surf shadow-[0_20px_60px_rgba(0,0,0,0.18)] sm:rounded-[14px]"
-				onClick={(e) => e.stopPropagation()}
+				onClick={handleClick}
 			>
 				{/* Header */}
 				<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-[18px] py-4">
@@ -138,20 +139,23 @@ export const BillingLimitsModal = ({
 							{t("admin.plans.limitsModal.unlimitedHint")}
 						</p>
 						<div className="space-y-2.5">
-							{NUMERIC_FIELDS.map(({ key, label }) => (
+							{NUMERIC_FIELDS.map(({ key, label }) => {
+							  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) =>
+											setNumeric((prev) => ({ ...prev, [key as string]: e.target.value }));
+							  return (
 								<div key={key as string} className="flex items-center gap-3">
 									<label className="w-40 shrink-0 text-[12.5px] text-t-1">{label}</label>
 									<input
 										type="number"
 										min={-1}
 										value={numeric[key as string] ?? "-1"}
-										onChange={(e) =>
-											setNumeric((prev) => ({ ...prev, [key as string]: e.target.value }))
+										onChange={handleChange
 										}
 										className="h-[32px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 									/>
 								</div>
-							))}
+							);
+							})}
 						</div>
 					</div>
 
@@ -161,7 +165,10 @@ export const BillingLimitsModal = ({
 							{t("admin.plans.limitsModal.featuresSection")}
 						</div>
 						<div className="space-y-2">
-							{BOOL_FIELDS.map(({ key, label }) => (
+							{BOOL_FIELDS.map(({ key, label }) => {
+							  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) =>
+												setBools((prev) => ({ ...prev, [key as string]: e.target.checked }));
+							  return (
 								<div key={key as string} className="flex items-center justify-between">
 									<span className="text-[12.5px] text-t-1">{label}</span>
 									<label className="relative h-[18px] w-8 cursor-pointer">
@@ -169,15 +176,15 @@ export const BillingLimitsModal = ({
 											type="checkbox"
 											className="peer sr-only"
 											checked={bools[key as string] ?? false}
-											onChange={(e) =>
-												setBools((prev) => ({ ...prev, [key as string]: e.target.checked }))
+											onChange={handleChange
 											}
 										/>
 										<span className="absolute inset-0 rounded-full border border-bd-2 bg-surf-3 transition-colors peer-checked:border-acc peer-checked:bg-acc" />
 										<span className="absolute left-0.5 top-0.5 size-3 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-3.5" />
 									</label>
 								</div>
-							))}
+							);
+							})}
 						</div>
 					</div>
 				</form>

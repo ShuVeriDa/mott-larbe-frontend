@@ -19,7 +19,9 @@ export const CouponsPagination = ({ page, limit, total, onPageChange }: Props) =
 		return page - 3 + i;
 	});
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(page - 1);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(page + 1);
+return (
 		<div className="flex items-center justify-between border-t border-bd-1 px-3.5 py-2.5">
 			<span className="text-[11.5px] text-t-3">
 				{from}–{to} из {total}
@@ -28,16 +30,18 @@ export const CouponsPagination = ({ page, limit, total, onPageChange }: Props) =
 				<button
 					type="button"
 					disabled={page === 1}
-					onClick={() => onPageChange(page - 1)}
+					onClick={handleClick}
 					className="flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border border-bd-1 bg-surf-2 px-1.5 text-[12px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 disabled:pointer-events-none disabled:opacity-40"
 				>
 					‹
 				</button>
-				{pages.map((p) => (
+				{pages.map((p) => {
+				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(p);
+				  return (
 					<button
 						key={p}
 						type="button"
-						onClick={() => onPageChange(p)}
+						onClick={handleClick}
 						className={cn(
 							"flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border px-1.5 text-[12px] transition-colors",
 							p === page
@@ -47,11 +51,12 @@ export const CouponsPagination = ({ page, limit, total, onPageChange }: Props) =
 					>
 						{p}
 					</button>
-				))}
+				);
+				})}
 				<button
 					type="button"
 					disabled={page === totalPages}
-					onClick={() => onPageChange(page + 1)}
+					onClick={handleClick2}
 					className="flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border border-bd-1 bg-surf-2 px-1.5 text-[12px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 disabled:pointer-events-none disabled:opacity-40"
 				>
 					›

@@ -102,12 +102,20 @@ export const FeatureFlagOverrideModal = ({
 	const inputCls =
 		"h-[34px] w-full rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
+				if (e.target === e.currentTarget) onClose();
+			};
+	const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setFlagId(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => {
+								setUserInput(e.target.value);
+								setShowSuggestions(true);
+							};
+	const handleFocus: NonNullable<React.ComponentProps<"input">["onFocus"]> = () => suggestions.length > 0 && setShowSuggestions(true);
+	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setReason(e.target.value);
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={e => {
-				if (e.target === e.currentTarget) onClose();
-			}}
+			onClick={handleClick}
 		>
 			<div className="w-[440px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -125,7 +133,7 @@ export const FeatureFlagOverrideModal = ({
 					<select
 						className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 						value={flagId}
-						onChange={e => setFlagId(e.target.value)}
+						onChange={handleChange}
 					>
 						<option value="">
 							{t("admin.featureFlags.overrideModal.selectFlag")}
@@ -150,30 +158,30 @@ export const FeatureFlagOverrideModal = ({
 								"admin.featureFlags.overrideModal.userPlaceholder",
 							)}
 							value={userInput}
-							onChange={e => {
-								setUserInput(e.target.value);
-								setShowSuggestions(true);
-							}}
-							onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
+							onChange={handleChange2}
+							onFocus={handleFocus}
 						/>
 						{showSuggestions && suggestions.length > 0 && (
 							<div className="absolute left-0 top-[calc(100%+4px)] z-50 w-full rounded-[9px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
-								{suggestions.map(u => (
+								{suggestions.map(u => {
+								  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+											setUserInput(u.email);
+											setShowSuggestions(false);
+										};
+								  return (
 									<button
 										key={u.id}
 										type="button"
 										className="flex w-full flex-col rounded-[6px] px-2.5 py-1.5 text-left transition-colors hover:bg-surf-2"
-										onClick={() => {
-											setUserInput(u.email);
-											setShowSuggestions(false);
-										}}
+										onClick={handleClick}
 									>
 										<span className="text-[12.5px] text-t-1">
 											{u.name} {u.surname}
 										</span>
 										<span className="text-[11px] text-t-3">{u.email}</span>
 									</button>
-								))}
+								);
+								})}
 							</div>
 						)}
 					</div>
@@ -198,7 +206,7 @@ export const FeatureFlagOverrideModal = ({
 							"admin.featureFlags.overrideModal.reasonPlaceholder",
 						)}
 						value={reason}
-						onChange={e => setReason(e.target.value)}
+						onChange={handleChange3}
 					/>
 				</div>
 

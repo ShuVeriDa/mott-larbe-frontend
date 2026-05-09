@@ -76,7 +76,8 @@ const SenseBlock = ({
 	onDeleteExample,
 }: SenseBlockProps) => {
 	const { t } = useI18n();
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onAddExample(sense.id);
+return (
 		<div className="group relative border-b border-bd-1 px-4 py-3.5 transition-colors hover:bg-surf-2 last:border-b-0">
 			<div className="mb-2.5 flex items-start gap-2.5">
 				<div className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md bg-surf-3 text-[10px] font-bold text-t-3">
@@ -107,14 +108,18 @@ const SenseBlock = ({
 			{/* Examples */}
 			{sense.examples.length > 0 && (
 				<div className="ml-[30px] flex flex-col gap-2 mb-2.5">
-					{sense.examples.map((ex) => (
+					{sense.examples.map((ex) => {
+					  const handleEdit: NonNullable<React.ComponentProps<typeof ExampleItem>["onEdit"]> = () => onEditExample(ex);
+					  const handleDelete: NonNullable<React.ComponentProps<typeof ExampleItem>["onDelete"]> = () => onDeleteExample(ex.id);
+					  return (
 						<ExampleItem
 							key={ex.id}
 							example={ex}
-							onEdit={() => onEditExample(ex)}
-							onDelete={() => onDeleteExample(ex.id)}
+							onEdit={handleEdit}
+							onDelete={handleDelete}
 						/>
-					))}
+					);
+					})}
 				</div>
 			)}
 
@@ -122,7 +127,7 @@ const SenseBlock = ({
 			<div className="ml-[30px]">
 				<button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-dashed border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-3 transition-colors hover:border-solid hover:border-acc hover:bg-acc-bg hover:text-acc-t"
-					onClick={() => onAddExample(sense.id)}
+					onClick={handleClick}
 				>
 					<IconPlus />
 					{t("admin.dictionaryDetail.addExample")}
@@ -178,7 +183,9 @@ export const LemmasSensesCard = ({
 
 	const tabs = relatedLemmas && relatedLemmas.length > 1 ? relatedLemmas : null;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addSense" });
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addSense" });
+return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			{/* Header */}
 			<div className="flex items-center justify-between border-b-0 px-4 py-3">
@@ -187,7 +194,7 @@ export const LemmasSensesCard = ({
 				</span>
 				<button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
-					onClick={() => onOpenModal({ type: "addSense" })}
+					onClick={handleClick}
 				>
 					<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
 						<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
@@ -200,7 +207,11 @@ export const LemmasSensesCard = ({
 			{tabs && (
 				<div className="mx-4 mb-0 mt-0">
 					<div className="flex w-fit gap-0 rounded-[9px] bg-surf-2 p-0.5">
-						{tabs.map((lemma) => (
+						{tabs.map((lemma) => {
+						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+									if (!lemma.isCurrent) router.push(`/${lang}/admin/dictionary/${lemma.id}`);
+								};
+						  return (
 							<button
 								key={lemma.id}
 								className={cn(
@@ -209,16 +220,15 @@ export const LemmasSensesCard = ({
 										? "bg-surf text-t-1 shadow-[0_1px_3px_rgba(0,0,0,0.07)]"
 										: "bg-transparent text-t-3 hover:text-t-2",
 								)}
-								onClick={() => {
-									if (!lemma.isCurrent) router.push(`/${lang}/admin/dictionary/${lemma.id}`);
-								}}
+								onClick={handleClick}
 							>
 								{lemma.baseForm}{" "}
 								{lemma.partOfSpeech && (
 									<span className="font-sans text-[10px] opacity-50">{lemma.partOfSpeech}</span>
 								)}
 							</button>
-						))}
+						);
+						})}
 					</div>
 				</div>
 			)}
@@ -230,18 +240,24 @@ export const LemmasSensesCard = ({
 						{t("admin.dictionaryDetail.noSenses")}
 					</div>
 				) : (
-					data.senses.map((sense, i) => (
+					data.senses.map((sense, i) => {
+					  const handleEditSense: NonNullable<React.ComponentProps<typeof SenseBlock>["onEditSense"]> = () => onOpenModal({ type: "editSense", sense });
+					  const handleDeleteSense: NonNullable<React.ComponentProps<typeof SenseBlock>["onDeleteSense"]> = () => onDeleteSense(sense.id);
+					  const handleAddExample: NonNullable<React.ComponentProps<typeof SenseBlock>["onAddExample"]> = (senseId) => onOpenModal({ type: "addExample", senseId });
+					  const handleEditExample: NonNullable<React.ComponentProps<typeof SenseBlock>["onEditExample"]> = (ex) => onOpenModal({ type: "editExample", example: ex });
+					  return (
 						<SenseBlock
 							key={sense.id}
 							sense={sense}
 							idx={i + 1}
-							onEditSense={() => onOpenModal({ type: "editSense", sense })}
-							onDeleteSense={() => onDeleteSense(sense.id)}
-							onAddExample={(senseId) => onOpenModal({ type: "addExample", senseId })}
-							onEditExample={(ex) => onOpenModal({ type: "editExample", example: ex })}
+							onEditSense={handleEditSense}
+							onDeleteSense={handleDeleteSense}
+							onAddExample={handleAddExample}
+							onEditExample={handleEditExample}
 							onDeleteExample={onDeleteExample}
 						/>
-					))
+					);
+					})
 				)}
 			</div>
 
@@ -249,7 +265,7 @@ export const LemmasSensesCard = ({
 			<div className="flex items-center border-t border-bd-1 px-4 py-2.5">
 				<button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-dashed border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-3 transition-colors hover:border-solid hover:border-acc hover:bg-acc-bg hover:text-acc-t"
-					onClick={() => onOpenModal({ type: "addSense" })}
+					onClick={handleClick2}
 				>
 					<IconPlus />
 					{t("admin.dictionaryDetail.addSense")}

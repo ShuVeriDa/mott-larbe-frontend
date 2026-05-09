@@ -36,7 +36,9 @@ export const TextsPagination = ({ page, limit, total, onPageChange }: TextsPagin
 			active && "border-acc/20 bg-acc-bg font-semibold text-acc-t",
 		);
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(page - 1);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(page + 1);
+return (
 		<div className="flex flex-wrap items-center justify-between gap-2 border-t border-bd-1 px-3.5 py-2.5">
 			<span className="text-[12px] text-t-3">
 				{t("admin.texts.pagination.showing", { from, to, total })}
@@ -46,7 +48,7 @@ export const TextsPagination = ({ page, limit, total, onPageChange }: TextsPagin
 				<button
 					type="button"
 					disabled={page <= 1}
-					onClick={() => onPageChange(page - 1)}
+					onClick={handleClick}
 					className={btnClass()}
 				>
 					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
@@ -54,25 +56,29 @@ export const TextsPagination = ({ page, limit, total, onPageChange }: TextsPagin
 					</svg>
 				</button>
 
-				{pages.map((p, i) =>
-					p === "ellipsis" ? (
-						<span key={`ellipsis-${i}`} className="px-0.5 text-[12px] text-t-3">…</span>
-					) : (
+				{pages.map((p, i) => {
+					if (p === "ellipsis") {
+						return <span key={`ellipsis-${i}`} className="px-0.5 text-[12px] text-t-3">…</span>;
+					}
+
+					const handlePageClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(p);
+
+					return (
 						<button
 							key={p}
 							type="button"
-							onClick={() => onPageChange(p)}
+							onClick={handlePageClick}
 							className={btnClass(p === page)}
 						>
 							{p}
 						</button>
-					),
-				)}
+					);
+				})}
 
 				<button
 					type="button"
 					disabled={page >= totalPages}
-					onClick={() => onPageChange(page + 1)}
+					onClick={handleClick2}
 					className={btnClass()}
 				>
 					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">

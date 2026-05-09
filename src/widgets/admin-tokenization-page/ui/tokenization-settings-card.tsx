@@ -74,19 +74,22 @@ export const TokenizationSettingsCard = ({
 			</div>
 
 			<div className="flex flex-col gap-2.5 px-3.5 py-3">
-				{SETTINGS.map(({ key, labelKey, subKey }) => (
+				{SETTINGS.map(({ key, labelKey, subKey }) => {
+				  const handleChange: NonNullable<React.ComponentProps<typeof Toggle>["onChange"]> = () => onToggle(key);
+				  return (
 					<div key={key} className="flex items-start justify-between gap-2">
 						<div>
 							<div className="text-[12px] font-medium text-t-1">{t(labelKey)}</div>
 							<div className="text-[10.5px] text-t-3">{t(subKey)}</div>
 						</div>
 						{settings ? (
-							<Toggle on={settings[key] as boolean} onChange={() => onToggle(key)} />
+							<Toggle on={settings[key] as boolean} onChange={handleChange} />
 						) : (
 							<div className="mt-0.5 h-4 w-[30px] animate-pulse rounded-full bg-surf-3" />
 						)}
 					</div>
-				))}
+				);
+				})}
 			</div>
 		</div>
 	);

@@ -60,7 +60,9 @@ export const FeedbackNewThreadModal = ({
 		if (e.target === e.currentTarget) onClose();
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setTitle(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"textarea">["onChange"]> = (e) => setBody(e.target.value);
+return (
 		<div
 			onClick={handleOverlayClick}
 			className={cn(
@@ -107,11 +109,13 @@ export const FeedbackNewThreadModal = ({
 						{t("feedback.modal.typeLabel")}
 					</label>
 					<div className="grid grid-cols-2 gap-[7px]">
-						{TYPE_OPTIONS.map((opt) => (
+						{TYPE_OPTIONS.map((opt) => {
+						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setType(opt.value);
+						  return (
 							<button
 								key={opt.value}
 								type="button"
-								onClick={() => setType(opt.value)}
+								onClick={handleClick}
 								className={cn(
 									"flex cursor-pointer items-center gap-[9px] rounded-[9px] border px-2.5 py-[9px] text-left transition-all",
 									type === opt.value
@@ -136,7 +140,8 @@ export const FeedbackNewThreadModal = ({
 									</div>
 								</div>
 							</button>
-						))}
+						);
+						})}
 					</div>
 				</div>
 
@@ -148,7 +153,7 @@ export const FeedbackNewThreadModal = ({
 					<input
 						type="text"
 						value={title}
-						onChange={(e) => setTitle(e.target.value)}
+						onChange={handleChange}
 						placeholder={t("feedback.modal.titlePlaceholder")}
 						maxLength={200}
 						className="w-full rounded-[9px] border border-bd-2 bg-surf-2 px-3 py-2.5 font-[inherit] text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
@@ -162,7 +167,7 @@ export const FeedbackNewThreadModal = ({
 					</label>
 					<textarea
 						value={body}
-						onChange={(e) => setBody(e.target.value)}
+						onChange={handleChange2}
 						placeholder={t("feedback.modal.messagePlaceholder")}
 						className="min-h-[86px] w-full resize-none rounded-[9px] border border-bd-2 bg-surf-2 px-3 py-2.5 font-[inherit] text-[13px] leading-[1.55] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 					/>

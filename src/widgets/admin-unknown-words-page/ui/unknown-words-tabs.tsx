@@ -25,11 +25,12 @@ export const UnknownWordsTabs = ({
 				{TABS.map((tab) => {
 					const count = counts?.[tab];
 					const isFrequent = tab === "frequent";
-					return (
+										const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab);
+return (
 						<button
 							key={tab}
 							type="button"
-							onClick={() => onChange(tab)}
+							onClick={handleClick}
 							className={cn(
 								"flex h-7 cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-base border-none px-[11px] font-sans text-[12.5px] transition-colors",
 								active === tab

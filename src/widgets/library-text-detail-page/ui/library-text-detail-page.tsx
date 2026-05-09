@@ -79,12 +79,13 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 	if (detail.isPending) return <DetailSkeleton />;
 
 	if (detail.isError) {
-		return (
+				const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => detail.refetch();
+return (
 			<div className="flex flex-1 flex-col items-center justify-center gap-3 py-20 text-t-3">
 				<p className="text-sm text-t-2">{t("library.textDetail.error")}</p>
 				<button
 					type="button"
-					onClick={() => detail.refetch()}
+					onClick={handleClick}
 					className="text-xs text-acc-t hover:underline"
 				>
 					{t("library.textDetail.retry")}
@@ -95,7 +96,9 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 
 	const text = detail.data;
 
-	return (
+		const handleSelect: NonNullable<React.ComponentProps<typeof DropdownMenuItem>["onSelect"]> = () => bookmarkMutation.mutate();
+	const handleSelect2: NonNullable<React.ComponentProps<typeof DropdownMenuItem>["onSelect"]> = () => setReportOpen(true);
+return (
 		<div className="flex flex-1 flex-col overflow-hidden">
 			{/* Topbar */}
 			<div className="h-12 bg-panel border-b border-bd-1 flex items-center gap-2.5 px-5 shrink-0 max-sm:h-11 max-sm:px-3.5">
@@ -189,7 +192,7 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end" className="min-w-[168px]">
 							<DropdownMenuItem
-								onSelect={() => bookmarkMutation.mutate()}
+								onSelect={handleSelect}
 								disabled={bookmarkMutation.isPending}
 							>
 								<BookmarkMenuIcon filled={text.isFavorite} />
@@ -199,7 +202,7 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem
-								onSelect={() => setReportOpen(true)}
+								onSelect={handleSelect2}
 								variant="destructive"
 							>
 								<FlagIcon />

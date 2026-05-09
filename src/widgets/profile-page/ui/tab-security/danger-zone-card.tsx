@@ -11,7 +11,9 @@ export const DangerZoneCard = () => {
 	const { t } = useI18n();
 	const [deleteOpen, setDeleteOpen] = useState(false);
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => setDeleteOpen(true);
+	const handleClose: NonNullable<React.ComponentProps<typeof DeleteAccountModal>["onClose"]> = () => setDeleteOpen(false);
+return (
 		<>
 			<SettingCard
 				title={t("settings.data.dangerZone")}
@@ -31,7 +33,7 @@ export const DangerZoneCard = () => {
 						<Button
 							variant="danger"
 							className="h-7 px-2.5 text-[11.5px] shrink-0"
-							onClick={() => setDeleteOpen(true)}
+							onClick={handleClick}
 						>
 							{t("settings.data.deleteButton")}
 						</Button>
@@ -41,7 +43,7 @@ export const DangerZoneCard = () => {
 
 			<DeleteAccountModal
 				open={deleteOpen}
-				onClose={() => setDeleteOpen(false)}
+				onClose={handleClose}
 			/>
 		</>
 	);

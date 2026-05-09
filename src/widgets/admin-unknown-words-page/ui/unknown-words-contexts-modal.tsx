@@ -18,10 +18,11 @@ export const UnknownWordsContextsModal = ({
 
 	if (!state) return null;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.target === e.currentTarget && onClose();
+return (
 		<div
 			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 p-4 backdrop-blur-sm max-sm:items-end max-sm:p-0"
-			onClick={(e) => e.target === e.currentTarget && onClose()}
+			onClick={handleClick}
 		>
 			<div className="flex w-full max-w-[600px] max-h-[calc(100vh-32px)] flex-col rounded-[14px] border border-bd-2 bg-surf shadow-[0_4px_12px_rgba(0,0,0,0.08)] animate-[modal-in_0.15s_ease] max-sm:max-w-full max-sm:rounded-t-[18px] max-sm:rounded-b-none max-sm:max-h-[92vh]">
 				{/* Header */}

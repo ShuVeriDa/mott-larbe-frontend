@@ -40,7 +40,12 @@ export const PaymentsToolbar = ({
 }: Props) => {
 	const { t } = useI18n();
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onSearchChange(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onPlanChange(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onProviderChange(e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onDateFromChange(e.target.value);
+	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onDateToChange(e.target.value);
+return (
 		<div className="flex flex-wrap items-center gap-2 border-b border-bd-1 px-3.5 py-2.5">
 			{/* Search */}
 			<div className="relative max-w-[240px] flex-1 max-sm:max-w-none max-sm:basis-full">
@@ -58,7 +63,7 @@ export const PaymentsToolbar = ({
 				</svg>
 				<input
 					value={search}
-					onChange={e => onSearchChange(e.target.value)}
+					onChange={handleChange}
 					placeholder={t("admin.payments.toolbar.searchPlaceholder")}
 					className="h-[30px] w-full rounded-base border border-bd-1 bg-surf-2 pl-7 pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc focus:bg-surf"
 				/>
@@ -67,7 +72,7 @@ export const PaymentsToolbar = ({
 			{/* Plan select */}
 			<select
 				value={planId}
-				onChange={e => onPlanChange(e.target.value)}
+				onChange={handleChange2}
 				className={SELECT_CLS}
 			>
 				<option value="">{t("admin.payments.toolbar.allPlans")}</option>
@@ -81,7 +86,7 @@ export const PaymentsToolbar = ({
 			{/* Provider select */}
 			<select
 				value={provider}
-				onChange={e => onProviderChange(e.target.value)}
+				onChange={handleChange3}
 				className={SELECT_CLS}
 			>
 				<option value="">{t("admin.payments.toolbar.allProviders")}</option>
@@ -97,14 +102,14 @@ export const PaymentsToolbar = ({
 				<input
 					type="date"
 					value={dateFrom}
-					onChange={e => onDateFromChange(e.target.value)}
+					onChange={handleChange4}
 					className="h-[30px] rounded-base border border-bd-1 bg-surf-2 px-2 text-[11.5px] text-t-2 outline-none transition-colors focus:border-acc focus:text-t-1"
 				/>
 				<span className="text-[11px] text-t-4">—</span>
 				<input
 					type="date"
 					value={dateTo}
-					onChange={e => onDateToChange(e.target.value)}
+					onChange={handleChange5}
 					className="h-[30px] rounded-base border border-bd-1 bg-surf-2 px-2 text-[11.5px] text-t-2 outline-none transition-colors focus:border-acc focus:text-t-1"
 				/>
 			</div>

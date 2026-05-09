@@ -54,7 +54,12 @@ export const DictionaryToolbar = ({
 	const selectCls =
 		"h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3";
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onSearchChange(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onLanguageChange(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onPosChange(e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onLevelChange(e.target.value);
+	const handleChange5: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onSortChange(e.target.value as AdminDictSort);
+return (
 		<div className="mb-3.5 flex flex-wrap items-center gap-2">
 			<div className="relative min-w-[200px] flex-1 max-w-[320px]">
 				<svg
@@ -70,7 +75,7 @@ export const DictionaryToolbar = ({
 				<input
 					type="text"
 					value={search}
-					onChange={e => onSearchChange(e.target.value)}
+					onChange={handleChange}
 					placeholder={t("admin.dictionary.toolbar.searchPlaceholder")}
 					className="h-[30px] w-full rounded-base border border-bd-2 bg-surf pl-[30px] pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 				/>
@@ -78,7 +83,7 @@ export const DictionaryToolbar = ({
 
 			<select
 				value={language}
-				onChange={e => onLanguageChange(e.target.value)}
+				onChange={handleChange2}
 				className={selectCls}
 			>
 				<option value="">{t("admin.dictionary.toolbar.allLanguages")}</option>
@@ -91,7 +96,7 @@ export const DictionaryToolbar = ({
 
 			<select
 				value={pos}
-				onChange={e => onPosChange(e.target.value)}
+				onChange={handleChange3}
 				className={selectCls}
 			>
 				<option value="">{t("admin.dictionary.toolbar.allPos")}</option>
@@ -104,7 +109,7 @@ export const DictionaryToolbar = ({
 
 			<select
 				value={level}
-				onChange={e => onLevelChange(e.target.value)}
+				onChange={handleChange4}
 				className={selectCls}
 			>
 				<option value="">{t("admin.dictionary.toolbar.allLevels")}</option>
@@ -117,7 +122,7 @@ export const DictionaryToolbar = ({
 
 			<select
 				value={sort}
-				onChange={e => onSortChange(e.target.value as AdminDictSort)}
+				onChange={handleChange5}
 				className={selectCls}
 			>
 				{SORT_OPTIONS.map(({ value, key }) => (

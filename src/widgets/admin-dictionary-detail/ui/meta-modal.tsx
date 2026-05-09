@@ -81,10 +81,16 @@ export const MetaModal = ({
 		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[12.5px] text-t-2 outline-none transition-colors focus:border-acc appearance-none cursor-pointer";
 	const labelCls = "mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setBaseForm(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setPartOfSpeech(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setLevel(e.target.value as CefrLevel | "");
+	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setFrequency(e.target.value);
+	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setNotes(e.target.value);
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
-			onClick={e => e.target === e.currentTarget && onClose()}
+			onClick={handleClick}
 		>
 			<div className="w-[480px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
 				<div className="mb-1 font-display text-[15px] text-t-1">
@@ -103,7 +109,7 @@ export const MetaModal = ({
 							className={`${inputCls} font-display text-[14px]`}
 							type="text"
 							value={baseForm}
-							onChange={e => setBaseForm(e.target.value)}
+							onChange={handleChange}
 							placeholder={t("admin.dictionaryDetail.baseFormPlaceholder")}
 						/>
 					</div>
@@ -114,7 +120,7 @@ export const MetaModal = ({
 							<select
 								className={selectCls}
 								value={partOfSpeech}
-								onChange={e => setPartOfSpeech(e.target.value)}
+								onChange={handleChange2}
 							>
 								<option value="">
 									— {t("admin.dictionaryDetail.selectPos")} —
@@ -133,7 +139,7 @@ export const MetaModal = ({
 							<select
 								className={selectCls}
 								value={level}
-								onChange={e => setLevel(e.target.value as CefrLevel | "")}
+								onChange={handleChange3}
 							>
 								<option value="">
 									— {t("admin.dictionaryDetail.selectLevel")} —
@@ -156,7 +162,7 @@ export const MetaModal = ({
 							type="number"
 							min={0}
 							value={frequency}
-							onChange={e => setFrequency(e.target.value)}
+							onChange={handleChange4}
 							placeholder="0"
 						/>
 					</div>
@@ -167,7 +173,7 @@ export const MetaModal = ({
 							className={inputCls}
 							type="text"
 							value={notes}
-							onChange={e => setNotes(e.target.value)}
+							onChange={handleChange5}
 							placeholder={t("admin.dictionaryDetail.notesPlaceholder")}
 						/>
 					</div>

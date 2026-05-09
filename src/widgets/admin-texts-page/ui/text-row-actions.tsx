@@ -36,7 +36,16 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 	const dropItemClass =
 		"flex w-full cursor-pointer items-center gap-2 rounded-[6px] px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => mutations.tokenize.mutate(text.id);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => mutations.tokenize.mutate(text.id);
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleClick4: NonNullable<React.ComponentProps<typeof Link>["onClick"]> = () => setOpen(false);
+	const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { mutations.tokenize.mutate(text.id); setOpen(false); };
+	const handleClick6: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { mutations.unpublish.mutate(text.id); setOpen(false); };
+	const handleClick7: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { mutations.publish.mutate(text.id); setOpen(false); };
+	const handleClick8: NonNullable<React.ComponentProps<typeof Link>["onClick"]> = () => setOpen(false);
+	const handleClick9: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { mutations.remove.mutate(text.id); setOpen(false); };
+return (
 		<div className="flex items-center gap-1">
 			{/* Edit */}
 			<Link
@@ -59,7 +68,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 			{notProcessed && !isRunning && (
 				<button
 					type="button"
-					onClick={() => mutations.tokenize.mutate(text.id)}
+					onClick={handleClick}
 					disabled={mutations.tokenize.isPending}
 					className={`${btnClass} text-acc`}
 					title={t("admin.texts.actions.tokenize")}
@@ -80,7 +89,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 			{isError && !isRunning && (
 				<button
 					type="button"
-					onClick={() => mutations.tokenize.mutate(text.id)}
+					onClick={handleClick2}
 					disabled={mutations.tokenize.isPending}
 					className={`${btnClass} text-amb`}
 					title={t("admin.texts.actions.retry")}
@@ -121,7 +130,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 			<div ref={ref} className="relative">
 				<button
 					type="button"
-					onClick={() => setOpen((v) => !v)}
+					onClick={handleClick3}
 					className={btnClass}
 				>
 					<svg viewBox="0 0 16 16" fill="none">
@@ -136,14 +145,14 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 						<Link
 							href={`/${lang}/admin/texts/${text.id}/versions`}
 							className={dropItemClass}
-							onClick={() => setOpen(false)}
+							onClick={handleClick4}
 						>
 							{t("admin.texts.actions.versions")}
 						</Link>
 
 						<button
 							type="button"
-							onClick={() => { mutations.tokenize.mutate(text.id); setOpen(false); }}
+							onClick={handleClick5}
 							className={dropItemClass}
 						>
 							{t("admin.texts.actions.tokenize")}
@@ -154,7 +163,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 						{isPublished ? (
 							<button
 								type="button"
-								onClick={() => { mutations.unpublish.mutate(text.id); setOpen(false); }}
+								onClick={handleClick6}
 								className={dropItemClass}
 							>
 								{t("admin.texts.actions.unpublish")}
@@ -162,7 +171,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 						) : (
 							<button
 								type="button"
-								onClick={() => { mutations.publish.mutate(text.id); setOpen(false); }}
+								onClick={handleClick7}
 								className={dropItemClass}
 							>
 								{t("admin.texts.actions.publish")}
@@ -172,7 +181,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 						<Link
 							href={`/${lang}/admin/texts/${text.id}/unknown-words`}
 							className={dropItemClass}
-							onClick={() => setOpen(false)}
+							onClick={handleClick8}
 						>
 							{t("admin.texts.actions.unknownWords")}
 						</Link>
@@ -181,7 +190,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 
 						<button
 							type="button"
-							onClick={() => { mutations.remove.mutate(text.id); setOpen(false); }}
+							onClick={handleClick9}
 							className="flex w-full cursor-pointer items-center gap-2 rounded-[6px] px-2.5 py-[7px] text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg"
 						>
 							{t("admin.texts.actions.delete")}

@@ -23,7 +23,8 @@ export const ResetStepEmailSent = ({
 }: ResetStepEmailSentProps) => {
 	const { t } = useI18n();
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => void onResend();
+return (
 		<section aria-labelledby="reset-step-email-sent-title">
 			<div className="mb-[18px] inline-flex h-[52px] w-[52px] items-center justify-center rounded-[13px] bg-acc-bg text-acc">
 				<Mail size={24} strokeWidth={1.7} />
@@ -69,7 +70,7 @@ export const ResetStepEmailSent = ({
 				</Typography>
 				<button
 					type="button"
-					onClick={() => void onResend()}
+					onClick={handleClick}
 					disabled={resendActive || resendPending}
 					className="bg-transparent font-semibold text-acc-t transition-opacity hover:underline disabled:cursor-not-allowed disabled:font-medium disabled:text-t-3 disabled:no-underline"
 				>

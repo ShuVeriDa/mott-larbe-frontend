@@ -31,7 +31,11 @@ export const TextsToolbar = ({
 	const selClass =
 		"h-8 cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf px-2.5 pr-7 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3 focus:border-acc [background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23a5a39a' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")] [background-position:right_8px_center] [background-repeat:no-repeat]";
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onLevelChange(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onTagChange(e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.target.value as TextSortBy);
+return (
 		<div className="mb-3.5 flex flex-wrap items-center gap-2">
 			{/* Search */}
 			<div className="relative min-w-[180px] flex-1">
@@ -48,7 +52,7 @@ export const TextsToolbar = ({
 				<input
 					type="text"
 					value={search}
-					onChange={(e) => onSearchChange(e.target.value)}
+					onChange={handleChange}
 					placeholder={t("admin.texts.toolbar.searchPlaceholder")}
 					className="h-8 w-full rounded-lg border border-bd-2 bg-surf pl-8 pr-3 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc max-sm:min-w-full max-sm:order-first"
 				/>
@@ -58,7 +62,7 @@ export const TextsToolbar = ({
 			<div className="flex flex-wrap gap-1.5">
 				<select
 					value={level}
-					onChange={(e) => onLevelChange(e.target.value)}
+					onChange={handleChange2}
 					className={selClass}
 				>
 					<option value="">{t("admin.texts.toolbar.allLevels")}</option>
@@ -70,7 +74,7 @@ export const TextsToolbar = ({
 				{tags && tags.length > 0 && (
 					<select
 						value={tagId}
-						onChange={(e) => onTagChange(e.target.value)}
+						onChange={handleChange3}
 						className={selClass}
 					>
 						<option value="">{t("admin.texts.toolbar.allTags")}</option>
@@ -84,7 +88,7 @@ export const TextsToolbar = ({
 
 				<select
 					value={sortBy}
-					onChange={(e) => onSortChange(e.target.value as TextSortBy)}
+					onChange={handleChange4}
 					className={selClass}
 				>
 					<option value="createdAt">{t("admin.texts.toolbar.sortDate")}</option>

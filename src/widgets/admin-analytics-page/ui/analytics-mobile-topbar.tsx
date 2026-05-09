@@ -44,7 +44,10 @@ export const AnalyticsMobileTopbar = ({
 		setShowDatePicker(false);
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowDatePicker((v) => !v);
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setLocalFrom(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setLocalTo(e.target.value);
+return (
 		<header className=" border-b border-bd-1 bg-surf transition-colors md:hidden">
 			<div className="flex items-center justify-between px-4 py-2.5">
 				<span className="font-display text-[13px] font-medium text-t-1">
@@ -52,11 +55,13 @@ export const AnalyticsMobileTopbar = ({
 				</span>
 				<div className="flex items-center gap-1">
 					<div className="flex items-center gap-0.5 rounded-lg border border-bd-2 bg-surf-2 p-0.5">
-						{RANGES.map((r) => (
+						{RANGES.map((r) => {
+						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRangeChange(r);
+						  return (
 							<button
 								key={r}
 								type="button"
-								onClick={() => onRangeChange(r)}
+								onClick={handleClick}
 								className={cn(
 									"h-6 rounded-md px-2 text-[11px] font-medium transition-all",
 									r === range && !isCustomRange
@@ -66,11 +71,12 @@ export const AnalyticsMobileTopbar = ({
 							>
 								{t(`admin.analytics.range.${r}`)}
 							</button>
-						))}
+						);
+						})}
 					</div>
 					<button
 						type="button"
-						onClick={() => setShowDatePicker((v) => !v)}
+						onClick={handleClick}
 						className={cn(
 							"flex size-6 items-center justify-center rounded-md border transition-colors",
 							isCustomRange
@@ -95,7 +101,7 @@ export const AnalyticsMobileTopbar = ({
 								type="date"
 								value={localFrom}
 								max={localTo || undefined}
-								onChange={(e) => setLocalFrom(e.target.value)}
+								onChange={handleChange}
 								className="h-[28px] w-full rounded-md border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1"
 							/>
 						</div>
@@ -105,7 +111,7 @@ export const AnalyticsMobileTopbar = ({
 								type="date"
 								value={localTo}
 								min={localFrom || undefined}
-								onChange={(e) => setLocalTo(e.target.value)}
+								onChange={handleChange2}
 								className="h-[28px] w-full rounded-md border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1"
 							/>
 						</div>

@@ -35,10 +35,24 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 	const { t } = useI18n();
 	const { query, cancel, extend } = subscription;
 	const data = query.data;
+	const currentSubscription = data?.current;
 	const [extendDays, setExtendDays] = useState(30);
 	const [showExtend, setShowExtend] = useState(false);
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowExtend((v) => !v);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+		if (!currentSubscription) return;
+		cancel.mutate(currentSubscription.id);
+	};
+	const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => setExtendDays(Number(e.target.value));
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+		if (!currentSubscription) return;
+		extend.mutate(
+			{ subId: currentSubscription.id, days: extendDays },
+			{ onSuccess: () => setShowExtend(false) },
+		);
+	};
+return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 			<div className="flex items-center justify-between border-b border-bd-1 px-3.5 py-3">
 				<span className="text-[13px] font-semibold text-t-1">
@@ -97,13 +111,13 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 								<div className="flex flex-col gap-1">
 									<div className="flex gap-1">
 										<button
-											onClick={() => setShowExtend((v) => !v)}
+											onClick={handleClick}
 											className="flex h-[26px] items-center rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 										>
 											{t("admin.userDetail.subscription.extend")}
 										</button>
 										<button
-											onClick={() => cancel.mutate(data.current!.id)}
+											onClick={handleClick2}
 											disabled={cancel.isPending}
 											className="flex h-[26px] items-center rounded-base border border-red/25 bg-transparent px-2.5 text-[11.5px] font-medium text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
 										>
@@ -114,7 +128,7 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 										<div className="flex items-center gap-1">
 											<select
 												value={extendDays}
-												onChange={(e) => setExtendDays(Number(e.target.value))}
+												onChange={handleChange}
 												className="h-[26px] flex-1 cursor-pointer appearance-none rounded-base border border-bd-2 bg-surf-2 px-2 text-[11.5px] text-t-1 outline-none focus:border-acc"
 											>
 												{EXTEND_OPTIONS.map(({ days, label }) => (
@@ -122,12 +136,7 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 												))}
 											</select>
 											<button
-												onClick={() => {
-													extend.mutate(
-														{ subId: data.current!.id, days: extendDays },
-														{ onSuccess: () => setShowExtend(false) },
-													);
-												}}
+												onClick={handleClick3}
 												disabled={extend.isPending}
 												className="flex h-[26px] items-center rounded-base bg-acc px-2.5 text-[11.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 											>

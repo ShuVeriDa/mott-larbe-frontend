@@ -87,14 +87,21 @@ export const BillingPlanModal = ({
 
 	if (!open) return null;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("name", e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => set("type", e.target.value as PlanType);
+	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => set("interval", (e.target.value || null) as PlanInterval);
+	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("priceCents", e.target.value);
+	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("description", e.target.value);
+	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => set("isActive", e.target.checked);
+return (
 		<div
 			className="fixed inset-0 z-400 flex items-end justify-center bg-black/35 sm:items-center sm:p-4"
 			onClick={onClose}
 		>
 			<div
 				className="w-full max-w-[500px] overflow-hidden rounded-t-[14px] bg-surf shadow-[0_20px_60px_rgba(0,0,0,0.18)] transition-transform sm:rounded-[14px]"
-				onClick={(e) => e.stopPropagation()}
+				onClick={handleClick}
 			>
 				{/* Header */}
 				<div className="flex items-center justify-between border-b border-bd-1 px-[18px] py-4">
@@ -122,7 +129,7 @@ export const BillingPlanModal = ({
 							</label>
 							<input
 								value={form.name}
-								onChange={(e) => set("name", e.target.value)}
+								onChange={handleChange}
 								placeholder={t("admin.plans.planModal.namePlaceholder")}
 								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 							/>
@@ -136,7 +143,7 @@ export const BillingPlanModal = ({
 									</label>
 									<select
 										value={form.type}
-										onChange={(e) => set("type", e.target.value as PlanType)}
+										onChange={handleChange2}
 										className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 									>
 										{PLAN_TYPES.map((pt) => (
@@ -150,7 +157,7 @@ export const BillingPlanModal = ({
 									</label>
 									<select
 										value={form.interval ?? ""}
-										onChange={(e) => set("interval", (e.target.value || null) as PlanInterval)}
+										onChange={handleChange3}
 										className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 									>
 										{INTERVALS.map(({ value, label }) => (
@@ -170,7 +177,7 @@ export const BillingPlanModal = ({
 								min={0}
 								step="0.01"
 								value={form.priceCents}
-								onChange={(e) => set("priceCents", e.target.value)}
+								onChange={handleChange4}
 								placeholder="690"
 								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 							/>
@@ -182,7 +189,7 @@ export const BillingPlanModal = ({
 							</label>
 							<input
 								value={form.description}
-								onChange={(e) => set("description", e.target.value)}
+								onChange={handleChange5}
 								placeholder={t("admin.plans.planModal.descriptionPlaceholder")}
 								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 							/>
@@ -197,7 +204,7 @@ export const BillingPlanModal = ({
 									type="checkbox"
 									className="peer sr-only"
 									checked={form.isActive}
-									onChange={(e) => set("isActive", e.target.checked)}
+									onChange={handleChange6}
 								/>
 								<span className="absolute inset-0 rounded-full border border-bd-2 bg-surf-3 transition-colors peer-checked:border-acc peer-checked:bg-acc" />
 								<span className="absolute left-0.5 top-0.5 size-3 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-3.5" />

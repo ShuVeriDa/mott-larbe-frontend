@@ -41,7 +41,9 @@ export const MorphologyPagination = ({
     pages.push(totalPages);
   }
 
-  return (
+    const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(page - 1);
+  const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(page + 1);
+return (
     <div className="flex flex-wrap items-center justify-between gap-2 border-t border-bd-1 px-4 py-3">
       <span className="text-[12px] text-t-3">
         {t("admin.morphology.pagination.showing", { from, to, total })}
@@ -49,7 +51,7 @@ export const MorphologyPagination = ({
       <div className="flex gap-1">
         <button
           disabled={page === 1}
-          onClick={() => onChange(page - 1)}
+          onClick={handleClick}
           className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
         >
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
@@ -63,18 +65,24 @@ export const MorphologyPagination = ({
           </svg>
         </button>
 
-        {pages.map((p, i) =>
-          p === "…" ? (
-            <span
-              key={`ellipsis-${i}`}
-              className="flex size-7 items-center justify-center text-[12px] text-t-3"
-            >
-              …
-            </span>
-          ) : (
+        {pages.map((p, i) => {
+          if (p === "…") {
+            return (
+              <span
+                key={`ellipsis-${i}`}
+                className="flex size-7 items-center justify-center text-[12px] text-t-3"
+              >
+                …
+              </span>
+            );
+          }
+
+          const handlePageClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(p);
+
+          return (
             <button
               key={p}
-              onClick={() => onChange(p)}
+              onClick={handlePageClick}
               className={cn(
                 "flex size-7 items-center justify-center rounded-[6px] border text-[12px] font-medium transition-colors",
                 page === p
@@ -84,12 +92,12 @@ export const MorphologyPagination = ({
             >
               {p}
             </button>
-          ),
-        )}
+          );
+        })}
 
         <button
           disabled={page === totalPages}
-          onClick={() => onChange(page + 1)}
+          onClick={handleClick2}
           className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
         >
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none">

@@ -104,7 +104,9 @@ export const CouponDetailPanel = ({
 	const maxR = coupon.maxRedemptions;
 	const pct = maxR ? Math.min(coupon.redeemedCount / maxR, 1) : 0;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onEdit(coupon.id);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDelete(coupon.id);
+return (
 		<div className="flex flex-col gap-0 overflow-hidden rounded-[11px] border border-bd-1 bg-surf">
 			{/* Hero */}
 			<div className="border-b border-bd-1 px-[15px] py-4">
@@ -334,7 +336,7 @@ export const CouponDetailPanel = ({
 			<div className="flex flex-col gap-1.5 px-[15px] py-2.5">
 				<button
 					type="button"
-					onClick={() => onEdit(coupon.id)}
+					onClick={handleClick}
 					className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
 					<svg
@@ -397,7 +399,7 @@ export const CouponDetailPanel = ({
 
 				<button
 					type="button"
-					onClick={() => onDelete(coupon.id)}
+					onClick={handleClick2}
 					className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[11.5px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 				>
 					<svg

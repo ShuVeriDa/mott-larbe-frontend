@@ -60,18 +60,19 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 	const example = entry.lemma?.headwords?.[0]?.entry?.senses?.[0]?.examples?.[0];
 	const forms = entry.lemma?.morphForms ?? [];
 
-	return (
+		const handleKeyDown: NonNullable<React.ComponentProps<"article">["onKeyDown"]> = (e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					onToggle();
+				}
+			};
+return (
 		<article
 			role="button"
 			tabIndex={0}
 			aria-expanded={expanded}
 			onClick={onToggle}
-			onKeyDown={(e) => {
-				if (e.key === "Enter" || e.key === " ") {
-					e.preventDefault();
-					onToggle();
-				}
-			}}
+			onKeyDown={handleKeyDown}
 			className={cn(
 				"flex cursor-pointer items-center gap-3 rounded-card border-hairline border-bd-1 bg-surf p-[11px_14px]",
 				"transition-[border-color,box-shadow] duration-100",

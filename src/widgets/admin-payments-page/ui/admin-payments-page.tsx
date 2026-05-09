@@ -80,7 +80,34 @@ export const AdminPaymentsPage = () => {
 		success(t("admin.payments.toast.receiptSent"));
 	};
 
-	return (
+	const handleProviderChange: NonNullable<React.ComponentProps<typeof PaymentsToolbar>["onProviderChange"]> = v =>
+		setProvider(v as Parameters<typeof setProvider>[0]);
+	const handleTableReceipt: NonNullable<React.ComponentProps<typeof PaymentsTable>["onReceipt"]> = id =>
+		openModal("receipt", id);
+	const handleTableRefund: NonNullable<React.ComponentProps<typeof PaymentsTable>["onRefund"]> = id =>
+		openModal("refund", id);
+	const handleDetailReceipt: NonNullable<React.ComponentProps<typeof PaymentDetailPanel>["onReceipt"]> = id =>
+		openModal("receipt", id);
+	const handleDetailRefund: NonNullable<React.ComponentProps<typeof PaymentDetailPanel>["onRefund"]> = id =>
+		openModal("refund", id);
+	const handleMobileDetailReceipt: NonNullable<React.ComponentProps<typeof PaymentDetailPanel>["onReceipt"]> = id => {
+		closeMobileSheet();
+		openModal("receipt", id);
+	};
+	const handleMobileDetailSendReceipt: NonNullable<React.ComponentProps<typeof PaymentDetailPanel>["onSendReceipt"]> = id => {
+		closeMobileSheet();
+		handleSendReceiptWithToast(id);
+	};
+	const handleMobileDetailRefund: NonNullable<React.ComponentProps<typeof PaymentDetailPanel>["onRefund"]> = id => {
+		closeMobileSheet();
+		openModal("refund", id);
+	};
+	const handleModalOverlayClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
+		if (e.target === e.currentTarget) closeModal();
+	};
+	const handleModalContentClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e =>
+		e.stopPropagation();
+return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<PaymentsTopbar onExportCsv={handleExportCsv} />
 
@@ -117,11 +144,7 @@ export const AdminPaymentsPage = () => {
 							plans={plans}
 							onSearchChange={setSearch}
 							onPlanChange={setPlanId}
-							onProviderChange={(v) =>
-								setProvider(
-									v as Parameters<typeof setProvider>[0],
-								)
-							}
+							onProviderChange={handleProviderChange}
 							onDateFromChange={setDateFrom}
 							onDateToChange={setDateTo}
 						/>
@@ -130,8 +153,8 @@ export const AdminPaymentsPage = () => {
 							selectedId={selectedId}
 							isLoading={paymentsLoading}
 							onSelectRow={handleSelectRow}
-							onReceipt={(id) => openModal("receipt", id)}
-							onRefund={(id) => openModal("refund", id)}
+							onReceipt={handleTableReceipt}
+							onRefund={handleTableRefund}
 						/>
 						{!paymentsLoading &&
 							payments &&
@@ -152,9 +175,9 @@ export const AdminPaymentsPage = () => {
 								payment={detail}
 								lang={lang}
 								isLoading={detailLoading}
-								onReceipt={(id) => openModal("receipt", id)}
+								onReceipt={handleDetailReceipt}
 								onSendReceipt={handleSendReceiptWithToast}
-								onRefund={(id) => openModal("refund", id)}
+								onRefund={handleDetailRefund}
 							/>
 						) : selectedId && detailLoading ? (
 							<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
@@ -206,18 +229,9 @@ export const AdminPaymentsPage = () => {
 							<PaymentDetailPanel
 								payment={detail}
 								lang={lang}
-								onReceipt={(id) => {
-									closeMobileSheet();
-									openModal("receipt", id);
-								}}
-								onSendReceipt={(id) => {
-									closeMobileSheet();
-									handleSendReceiptWithToast(id);
-								}}
-								onRefund={(id) => {
-									closeMobileSheet();
-									openModal("refund", id);
-								}}
+								onReceipt={handleMobileDetailReceipt}
+								onSendReceipt={handleMobileDetailSendReceipt}
+								onRefund={handleMobileDetailRefund}
 							/>
 						</div>
 					</div>
@@ -228,13 +242,11 @@ export const AdminPaymentsPage = () => {
 			{modal && modalPayment && (
 				<div
 					className="fixed inset-0 z-[400] flex items-end justify-center bg-black/35 p-0 sm:items-center sm:p-4"
-					onClick={(e) => {
-						if (e.target === e.currentTarget) closeModal();
-					}}
+					onClick={handleModalOverlayClick}
 				>
 					<div
 						className="w-full max-h-[90vh] overflow-y-auto sm:w-[420px]"
-						onClick={(e) => e.stopPropagation()}
+						onClick={handleModalContentClick}
 					>
 						{modal === "receipt" && (
 							<PaymentReceiptModal

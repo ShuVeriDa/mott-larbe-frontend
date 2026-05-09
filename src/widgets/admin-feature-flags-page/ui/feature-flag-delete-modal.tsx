@@ -19,12 +19,13 @@ export const FeatureFlagDeleteModal = ({
 }: FeatureFlagDeleteModalProps) => {
 	if (!flag) return null;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
+				if (e.target === e.currentTarget) onClose();
+			};
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px]"
-			onClick={e => {
-				if (e.target === e.currentTarget) onClose();
-			}}
+			onClick={handleClick}
 		>
 			<div className="w-[400px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">

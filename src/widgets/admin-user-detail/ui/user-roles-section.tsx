@@ -41,7 +41,8 @@ export const UserRolesSection = ({ roles, roleMutations }: UserRolesSectionProps
 		setShowDropdown(false);
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowDropdown((v) => !v);
+return (
 		<div className="border-b border-bd-1 px-4 py-3">
 			<div className="mb-2 flex items-center justify-between">
 				<span className="text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
@@ -50,7 +51,7 @@ export const UserRolesSection = ({ roles, roleMutations }: UserRolesSectionProps
 				{availableRoles.length > 0 && (
 					<div className="relative">
 						<button
-							onClick={() => setShowDropdown((v) => !v)}
+							onClick={handleClick}
 							className="flex h-[22px] items-center gap-1 rounded-[5px] bg-acc-bg px-2 text-[11px] font-semibold text-acc-t transition-colors hover:bg-acc-bg/80"
 						>
 							<svg width="10" height="10" viewBox="0 0 12 12" fill="none">
@@ -65,10 +66,12 @@ export const UserRolesSection = ({ roles, roleMutations }: UserRolesSectionProps
 						</button>
 						{showDropdown && (
 							<div className="absolute right-0 top-full z-20 mt-1 min-w-[130px] overflow-hidden rounded-lg border border-bd-2 bg-surf shadow-md">
-								{availableRoles.map((role) => (
+								{availableRoles.map((role) => {
+								  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => handleAssign(role);
+								  return (
 									<button
 										key={role}
-										onClick={() => handleAssign(role)}
+										onClick={handleClick}
 										disabled={roleMutations.assign.isPending}
 										className="flex w-full items-center px-3 py-1.5 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2 disabled:opacity-50"
 									>
@@ -81,7 +84,8 @@ export const UserRolesSection = ({ roles, roleMutations }: UserRolesSectionProps
 											{t(`admin.users.roles.${role}`)}
 										</span>
 									</button>
-								))}
+								);
+								})}
 							</div>
 						)}
 					</div>
@@ -96,7 +100,8 @@ export const UserRolesSection = ({ roles, roleMutations }: UserRolesSectionProps
 						year: "numeric",
 					});
 					const isLearner = role.name === "learner";
-					return (
+										const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => roleMutations.revoke.mutate(role.id);
+return (
 						<div
 							key={role.id}
 							className="flex items-center justify-between py-1.5 last:pb-0 first:pt-0"
@@ -113,7 +118,7 @@ export const UserRolesSection = ({ roles, roleMutations }: UserRolesSectionProps
 								<span className="text-[10.5px] text-t-3">{sinceDate}</span>
 							</div>
 							<button
-								onClick={() => roleMutations.revoke.mutate(role.id)}
+								onClick={handleClick}
 								disabled={isLearner || roleMutations.revoke.isPending}
 								title={t("admin.userDetail.revokeRole")}
 								className={cn(

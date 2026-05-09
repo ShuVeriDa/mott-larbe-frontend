@@ -101,12 +101,14 @@ const Toggle = ({
 }: {
 	checked: boolean;
 	onChange: (v: boolean) => void;
-}) => (
+}) => {
+  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(!checked);
+  return (
 	<button
 		type="button"
 		role="switch"
 		aria-checked={checked}
-		onClick={() => onChange(!checked)}
+		onClick={handleClick}
 		className={`relative h-[18px] w-[34px] shrink-0 rounded-full border-none p-0 transition-colors ${checked ? "bg-acc" : "bg-surf-3"}`}
 	>
 		<span
@@ -114,6 +116,7 @@ const Toggle = ({
 		/>
 	</button>
 );
+};
 
 const formatVersionDate = (iso: string): string => {
 	try {
@@ -198,12 +201,25 @@ export const TextEditMetaPanel = ({
 		}
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setMetaOpen(v => !v);
+	const handleChange: NonNullable<React.ComponentProps<typeof FieldSelect>["onChange"]> = e => onStatusChange(e.target.value as TextStatus);
+	const handleChange2: NonNullable<React.ComponentProps<typeof FieldSelect>["onChange"]> = e => onLanguageChange(e.target.value as TextLanguage);
+	const handleChange3: NonNullable<React.ComponentProps<typeof FieldInput>["onChange"]> = e => onAuthorChange(e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<typeof FieldInput>["onChange"]> = e => onSourceChange(e.target.value);
+	const handleClick2: NonNullable<React.ComponentProps<"div">["onClick"]> = () => tagInputRef.current?.focus();
+	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setTagInputValue(e.target.value);
+	const handleChange6: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => onDescriptionChange(e.target.value);
+	const handleChange7: NonNullable<React.ComponentProps<"input">["onChange"]> = e => {
+							const f = e.target.files?.[0];
+							if (f) onCoverSelect(f);
+						};
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => fileInputRef.current?.click();
+return (
 		<div className="flex flex-col overflow-y-auto [&::-webkit-scrollbar]:w-0">
 			{/* Mobile toggle header */}
 			<button
 				type="button"
-				onClick={() => setMetaOpen(v => !v)}
+				onClick={handleClick}
 				className="hidden items-center justify-between border-t border-bd-1 bg-surf-2 px-4 py-[13px] transition-colors hover:bg-surf-3 max-[900px]:flex"
 			>
 				<span className="flex items-center gap-2 text-[13px] font-medium text-t-1">
@@ -241,7 +257,7 @@ export const TextEditMetaPanel = ({
 				<MetaSection title={t("admin.texts.createPage.sections.status")}>
 					<FieldSelect
 						value={status}
-						onChange={e => onStatusChange(e.target.value as TextStatus)}
+						onChange={handleChange}
 					>
 						<option value="draft">
 							{t("admin.texts.createPage.statusOptions.draft")}
@@ -261,7 +277,7 @@ export const TextEditMetaPanel = ({
 						<FieldLabel>{t("admin.texts.createPage.langLabel")}</FieldLabel>
 						<FieldSelect
 							value={language}
-							onChange={e => onLanguageChange(e.target.value as TextLanguage)}
+							onChange={handleChange2}
 						>
 							<option value="CHE">{t("admin.texts.createPage.langChe")}</option>
 							<option value="RU">{t("admin.texts.createPage.langRu")}</option>
@@ -271,11 +287,13 @@ export const TextEditMetaPanel = ({
 					<div className="mb-[11px]">
 						<FieldLabel>{t("admin.texts.createPage.levelLabel")}</FieldLabel>
 						<div className="grid grid-cols-6 gap-1.5">
-							{LEVELS.map(lvl => (
+							{LEVELS.map(lvl => {
+							  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onLevelChange(level === lvl ? null : lvl);
+							  return (
 								<button
 									key={lvl}
 									type="button"
-									onClick={() => onLevelChange(level === lvl ? null : lvl)}
+									onClick={handleClick}
 									className={`flex h-[30px] items-center justify-center rounded-[6px] border text-[11.5px] font-semibold transition-colors ${
 										level === lvl
 											? levelColorMap[lvl]
@@ -284,7 +302,8 @@ export const TextEditMetaPanel = ({
 								>
 									{lvl}
 								</button>
-							))}
+							);
+							})}
 						</div>
 					</div>
 
@@ -293,7 +312,7 @@ export const TextEditMetaPanel = ({
 						<FieldInput
 							type="text"
 							value={author}
-							onChange={e => onAuthorChange(e.target.value)}
+							onChange={handleChange3}
 							placeholder={t("admin.texts.createPage.authorPlaceholder")}
 						/>
 					</div>
@@ -303,7 +322,7 @@ export const TextEditMetaPanel = ({
 						<FieldInput
 							type="url"
 							value={source}
-							onChange={e => onSourceChange(e.target.value)}
+							onChange={handleChange4}
 							placeholder={t("admin.texts.createPage.sourcePlaceholder")}
 						/>
 					</div>
@@ -313,9 +332,14 @@ export const TextEditMetaPanel = ({
 				<MetaSection title={t("admin.texts.createPage.sections.tags")}>
 					<div
 						className="flex min-h-[38px] cursor-text flex-wrap gap-1.5 rounded-base border border-bd-2 bg-surf px-2 py-1.5 transition-colors focus-within:border-acc"
-						onClick={() => tagInputRef.current?.focus()}
+						onClick={handleClick2}
 					>
-						{tags.map(tag => (
+						{tags.map(tag => {
+						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = e => {
+										e.stopPropagation();
+										onTagRemove(tag);
+									};
+						  return (
 							<span
 								key={tag}
 								className="inline-flex items-center gap-1 rounded-[4px] bg-acc-muted px-2 py-[3px] text-[11.5px] font-medium text-acc-strong"
@@ -323,20 +347,18 @@ export const TextEditMetaPanel = ({
 								{tag}
 								<button
 									type="button"
-									onClick={e => {
-										e.stopPropagation();
-										onTagRemove(tag);
-									}}
+									onClick={handleClick}
 									className="flex items-center text-[13px] leading-none opacity-60 hover:opacity-100"
 								>
 									×
 								</button>
 							</span>
-						))}
+						);
+						})}
 						<input
 							ref={tagInputRef}
 							value={tagInputValue}
-							onChange={e => setTagInputValue(e.target.value)}
+							onChange={handleChange5}
 							onKeyDown={handleTagKeyDown}
 							placeholder={
 								tags.length === 0
@@ -355,7 +377,7 @@ export const TextEditMetaPanel = ({
 				<MetaSection title={t("admin.texts.createPage.sections.description")}>
 					<textarea
 						value={description}
-						onChange={e => onDescriptionChange(e.target.value)}
+						onChange={handleChange6}
 						placeholder={t("admin.texts.createPage.descriptionPlaceholder")}
 						rows={3}
 						className="w-full resize-y rounded-base border border-bd-2 bg-surf px-2.5 py-2 text-[13px] leading-relaxed text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
@@ -370,14 +392,11 @@ export const TextEditMetaPanel = ({
 						type="file"
 						accept="image/jpeg,image/png,image/webp"
 						className="hidden"
-						onChange={e => {
-							const f = e.target.files?.[0];
-							if (f) onCoverSelect(f);
-						}}
+						onChange={handleChange7}
 					/>
 					<button
 						type="button"
-						onClick={() => fileInputRef.current?.click()}
+						onClick={handleClick3}
 						className="flex h-[82px] w-full flex-col items-center justify-center gap-1.5 overflow-hidden rounded-[8px] border border-dashed border-bd-2 bg-surf transition-colors hover:border-acc hover:bg-acc-muted"
 					>
 						{coverPreviewUrl ? (

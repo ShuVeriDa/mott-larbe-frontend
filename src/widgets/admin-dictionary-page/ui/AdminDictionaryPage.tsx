@@ -77,7 +77,21 @@ export const AdminDictionaryPage = () => {
 	const hasSelection = selectedIds.size > 0;
 	const unknownWordsCount = statsQuery.data?.unknownWordsCount ?? 0;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => handleBulkExport();
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setCreateOpen(true);
+	const handleClose: NonNullable<React.ComponentProps<typeof DictionaryCreateModal>["onClose"]> = () => setCreateOpen(false);
+	const handleClose2: NonNullable<React.ComponentProps<typeof DictionaryDeleteModal>["onClose"]> = () => setDeleteEntry(null);
+	const handleConfirm: NonNullable<React.ComponentProps<typeof DictionaryAddSenseModal>["onConfirm"]> = def => {
+					handleAddSenseConfirm(def);
+					setAddSenseEntry(null);
+				};
+	const handleClose3: NonNullable<React.ComponentProps<typeof DictionaryAddSenseModal>["onClose"]> = () => setAddSenseEntry(null);
+	const handleConfirm2: NonNullable<React.ComponentProps<typeof DictionaryAddExampleModal>["onConfirm"]> = text => {
+					handleAddExampleConfirm(text);
+					setAddExampleEntry(null);
+				};
+	const handleClose4: NonNullable<React.ComponentProps<typeof DictionaryAddExampleModal>["onClose"]> = () => setAddExampleEntry(null);
+return (
 		<div className="flex min-h-screen flex-col">
 			<DictionaryTopbar
 				title={t("admin.dictionary.title")}
@@ -107,7 +121,7 @@ export const AdminDictionaryPage = () => {
 						</button>
 						<button
 							type="button"
-							onClick={() => handleBulkExport()}
+							onClick={handleClick}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
 							<svg
@@ -128,7 +142,7 @@ export const AdminDictionaryPage = () => {
 						</button>
 						<button
 							type="button"
-							onClick={() => setCreateOpen(true)}
+							onClick={handleClick2}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 						>
 							<svg
@@ -240,7 +254,7 @@ export const AdminDictionaryPage = () => {
 				open={createOpen}
 				isSubmitting={isCreating}
 				onSubmit={handleCreate}
-				onClose={() => setCreateOpen(false)}
+				onClose={handleClose}
 				t={t}
 			/>
 
@@ -257,29 +271,23 @@ export const AdminDictionaryPage = () => {
 				entry={deleteEntry}
 				isDeleting={isDeleting}
 				onConfirm={handleDeleteConfirm}
-				onClose={() => setDeleteEntry(null)}
+				onClose={handleClose2}
 				t={t}
 			/>
 
 			<DictionaryAddSenseModal
 				entry={addSenseEntry}
 				isSubmitting={isAddingSense}
-				onConfirm={def => {
-					handleAddSenseConfirm(def);
-					setAddSenseEntry(null);
-				}}
-				onClose={() => setAddSenseEntry(null)}
+				onConfirm={handleConfirm}
+				onClose={handleClose3}
 				t={t}
 			/>
 
 			<DictionaryAddExampleModal
 				entry={addExampleEntry}
 				isSubmitting={isAddingExample}
-				onConfirm={text => {
-					handleAddExampleConfirm(text);
-					setAddExampleEntry(null);
-				}}
-				onClose={() => setAddExampleEntry(null)}
+				onConfirm={handleConfirm2}
+				onClose={handleClose4}
 				t={t}
 			/>
 		</div>

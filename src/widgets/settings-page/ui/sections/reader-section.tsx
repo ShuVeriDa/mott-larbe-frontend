@@ -65,7 +65,10 @@ export const ReaderSection = ({ preferences }: ReaderSectionProps) => {
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ highlightKnown: v });
+	const handleChange2: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ showProgress: v });
+	const handleChange3: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ autoNextPage: v });
+return (
 		<div className="flex flex-col gap-3.5">
 			<SectionHeader
 				title={t("settings.reader.title")}
@@ -80,11 +83,12 @@ export const ReaderSection = ({ preferences }: ReaderSectionProps) => {
 				<div className="flex flex-col">
 					{POPUP_OPTIONS.map((opt) => {
 						const selected = preferences.popupMode === opt.value;
-						return (
+												const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => updatePopup(opt.value);
+return (
 							<button
 								key={opt.value}
 								type="button"
-								onClick={() => updatePopup(opt.value)}
+								onClick={handleClick}
 								aria-pressed={selected}
 								className={cn(
 									"flex items-center gap-2.5 border-hairline border-b border-bd-1 px-4 py-2.5 text-left transition-colors last:border-b-0",
@@ -126,19 +130,19 @@ export const ReaderSection = ({ preferences }: ReaderSectionProps) => {
 					label={t("settings.reader.highlightKnown")}
 					description={t("settings.reader.highlightKnownDesc")}
 					checked={preferences.highlightKnown}
-					onChange={(v) => togglePref({ highlightKnown: v })}
+					onChange={handleChange}
 				/>
 				<ToggleRow
 					label={t("settings.reader.showProgress")}
 					description={t("settings.reader.showProgressDesc")}
 					checked={preferences.showProgress}
-					onChange={(v) => togglePref({ showProgress: v })}
+					onChange={handleChange2}
 				/>
 				<ToggleRow
 					label={t("settings.reader.autoNext")}
 					description={t("settings.reader.autoNextDesc")}
 					checked={preferences.autoNextPage}
-					onChange={(v) => togglePref({ autoNextPage: v })}
+					onChange={handleChange3}
 				/>
 			</SettingCard>
 		</div>

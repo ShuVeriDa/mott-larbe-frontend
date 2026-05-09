@@ -65,7 +65,8 @@ export const BillingCouponsList = ({
 						const badgeClass =
 							STATUS_BADGE[coupon.computedStatus] ?? "bg-surf-3 text-t-2";
 
-						return (
+												const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDelete(coupon.id);
+return (
 							<div
 								key={coupon.id}
 								className="flex items-center gap-3 border-b border-bd-1 px-4 py-2.5 last:border-b-0"
@@ -89,7 +90,7 @@ export const BillingCouponsList = ({
 								</span>
 								<div className="flex shrink-0 gap-1">
 									<button
-										onClick={() => onDelete(coupon.id)}
+										onClick={handleClick}
 										className="flex h-[26px] items-center rounded-[6px] border border-bd-2 bg-surf-2 px-2.5 text-[11.5px] font-medium text-red-t transition-colors hover:border-red-bg hover:bg-red-bg"
 									>
 										{t("admin.plans.coupons.delete")}

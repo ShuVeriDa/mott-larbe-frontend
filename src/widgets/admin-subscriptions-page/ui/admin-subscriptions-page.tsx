@@ -47,10 +47,22 @@ export const AdminSubscriptionsPage = () => {
 		handleExport,
 	} = state;
 
-	return (
+		const handleAdd: NonNullable<React.ComponentProps<typeof AdminSubscriptionsTopbar>["onAdd"]> = () => openModal("add");
+	const handleExtend: NonNullable<React.ComponentProps<typeof SubscriptionsTable>["onExtend"]> = (id) => openModal("extend", id);
+	const handleCancel: NonNullable<React.ComponentProps<typeof SubscriptionsTable>["onCancel"]> = (id) => openModal("cancel", id);
+	const handleExtend2: NonNullable<React.ComponentProps<typeof SubscriptionDetailPanel>["onExtend"]> = (id) => openModal("extend", id);
+	const handleCancel2: NonNullable<React.ComponentProps<typeof SubscriptionDetailPanel>["onCancel"]> = (id) => openModal("cancel", id);
+	const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+	const handleExtend3: NonNullable<React.ComponentProps<typeof SubscriptionDetailPanel>["onExtend"]> = (id) => openModal("extend", id);
+	const handleCancel3: NonNullable<React.ComponentProps<typeof SubscriptionDetailPanel>["onCancel"]> = (id) => openModal("cancel", id);
+	const handleClick2: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => {
+						if (e.target === e.currentTarget) closeModal();
+					};
+	const handleClick3: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<AdminSubscriptionsTopbar
-				onAdd={() => openModal("add")}
+				onAdd={handleAdd}
 				onExport={handleExport}
 			/>
 
@@ -84,8 +96,8 @@ export const AdminSubscriptionsPage = () => {
 							selectedId={selectedId}
 							isLoading={isLoading}
 							onSelectRow={handleSelectRow}
-							onExtend={(id) => openModal("extend", id)}
-							onCancel={(id) => openModal("cancel", id)}
+							onExtend={handleExtend}
+							onCancel={handleCancel}
 						/>
 						{!isLoading && data && data.total > data.limit && (
 							<SubscriptionsPagination
@@ -104,8 +116,8 @@ export const AdminSubscriptionsPage = () => {
 								sub={selectedSub ?? null}
 								isLoading={detailLoading}
 								userId={selectedSub?.userId ?? selectedId}
-								onExtend={(id) => openModal("extend", id)}
-								onCancel={(id) => openModal("cancel", id)}
+								onExtend={handleExtend2}
+								onCancel={handleCancel2}
 							/>
 						) : (
 							<SubscriptionEmptyPanel />
@@ -122,7 +134,7 @@ export const AdminSubscriptionsPage = () => {
 				>
 					<div
 						className="absolute bottom-0 left-0 right-0 max-h-[85dvh] overflow-y-auto rounded-t-[14px] bg-surf pb-safe"
-						onClick={(e) => e.stopPropagation()}
+						onClick={handleClick}
 					>
 						<div className="flex justify-center pb-2 pt-3">
 							<div className="h-1 w-9 rounded-full bg-bd-2" />
@@ -132,8 +144,8 @@ export const AdminSubscriptionsPage = () => {
 								sub={selectedSub ?? null}
 								isLoading={detailLoading}
 								userId={selectedSub?.userId ?? selectedId}
-								onExtend={(id) => openModal("extend", id)}
-								onCancel={(id) => openModal("cancel", id)}
+								onExtend={handleExtend3}
+								onCancel={handleCancel3}
 							/>
 						</div>
 					</div>
@@ -144,13 +156,11 @@ export const AdminSubscriptionsPage = () => {
 			{modal && (
 				<div
 					className="fixed inset-0 z-400 flex items-end justify-center bg-black/35 sm:items-center sm:p-4"
-					onClick={(e) => {
-						if (e.target === e.currentTarget) closeModal();
-					}}
+					onClick={handleClick2}
 				>
 					<div
 						className="w-full max-h-[90vh] overflow-y-auto rounded-t-[14px] bg-surf shadow-[0_20px_60px_rgba(0,0,0,0.18)] sm:w-[420px] sm:rounded-[14px]"
-						onClick={(e) => e.stopPropagation()}
+						onClick={handleClick3}
 					>
 						{modal === "add" && (
 							<AddSubscriptionModal mutations={mutations} onClose={closeModal} />

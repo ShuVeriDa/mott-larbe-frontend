@@ -15,7 +15,10 @@ export const PremiumUpsellModal = ({
 }: PremiumUpsellModalProps) => {
 	const { t, lang } = useI18n();
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => {
+						window.location.href = `/${lang}/plans`;
+					};
+return (
 		<Modal
 			open={open}
 			onClose={onClose}
@@ -37,9 +40,7 @@ export const PremiumUpsellModal = ({
 					variant="action"
 					size="lg"
 					className="flex-1"
-					onClick={() => {
-						window.location.href = `/${lang}/plans`;
-					}}
+					onClick={handleClick}
 				>
 					{t("vocabulary.foldersPage.upsell.upgrade")}
 				</Button>

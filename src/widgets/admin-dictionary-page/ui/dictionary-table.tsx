@@ -69,11 +69,16 @@ const RowDropdown = ({ item, lang, onDelete, onAddSense, onAddExample, t }: RowD
 		return () => document.removeEventListener("mousedown", handler);
 	}, [open]);
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setOpen((p) => !p);
+	const handleClick2: NonNullable<React.ComponentProps<typeof Link>["onClick"]> = () => setOpen(false);
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { setOpen(false); onAddSense(item); };
+	const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { setOpen(false); onAddExample(item); };
+	const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { setOpen(false); onDelete(item); };
+return (
 		<div ref={ref} className="relative">
 			<button
 				type="button"
-				onClick={() => setOpen((p) => !p)}
+				onClick={handleClick}
 				className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 				title={t("admin.dictionary.row.more")}
 			>
@@ -84,20 +89,20 @@ const RowDropdown = ({ item, lang, onDelete, onAddSense, onAddExample, t }: RowD
 					<Link
 						href={`/${lang}/admin/dictionary/${item.id}`}
 						className="flex items-center gap-2 px-3 py-1.5 text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
-						onClick={() => setOpen(false)}
+						onClick={handleClick2}
 					>
 						{t("admin.dictionary.row.openEntry")}
 					</Link>
 					<button
 						type="button"
-						onClick={() => { setOpen(false); onAddSense(item); }}
+						onClick={handleClick3}
 						className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						{t("admin.dictionary.row.addSense")}
 					</button>
 					<button
 						type="button"
-						onClick={() => { setOpen(false); onAddExample(item); }}
+						onClick={handleClick4}
 						className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						{t("admin.dictionary.row.addExample")}
@@ -105,7 +110,7 @@ const RowDropdown = ({ item, lang, onDelete, onAddSense, onAddExample, t }: RowD
 					<div className="my-1 h-px bg-bd-1" />
 					<button
 						type="button"
-						onClick={() => { setOpen(false); onDelete(item); }}
+						onClick={handleClick5}
 						className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg"
 					>
 						{t("admin.dictionary.row.delete")}
@@ -228,7 +233,9 @@ export const DictionaryTable = ({
 				<tbody>
 					{isLoading
 						? Array.from({ length: 8 }).map((_, i) => <SkeletonRow key={i} />)
-						: items.map((item) => (
+						: items.map((item) => {
+						  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = () => onSelectId(item.id);
+						  return (
 							<tr
 								key={item.id}
 								className={cn(
@@ -240,7 +247,7 @@ export const DictionaryTable = ({
 									<input
 										type="checkbox"
 										checked={selectedIds.has(item.id)}
-										onChange={() => onSelectId(item.id)}
+										onChange={handleChange}
 										className="size-[13px] cursor-pointer accent-acc"
 									/>
 								</td>
@@ -318,7 +325,8 @@ export const DictionaryTable = ({
 									</div>
 								</td>
 							</tr>
-						))}
+						);
+						})}
 				</tbody>
 			</table>
 		</div>

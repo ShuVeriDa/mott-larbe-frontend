@@ -23,11 +23,13 @@ export const CouponsTabs = ({ active, counts, onChange }: Props) => {
 	return (
 		<div className="overflow-x-auto border-b border-bd-1 px-3.5 pb-0 pt-2.5 [&::-webkit-scrollbar]:h-0">
 			<div className="flex w-fit gap-0.5 rounded-[9px] border border-bd-1 bg-surf-2 p-[3px]">
-				{TABS.map(tab => (
+				{TABS.map(tab => {
+				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab);
+				  return (
 					<button
 						key={tab}
 						type="button"
-						onClick={() => onChange(tab)}
+						onClick={handleClick}
 						className={cn(
 							"flex h-[26px] items-center gap-1 whitespace-nowrap rounded-base px-2.5 text-[12px] transition-colors",
 							active === tab
@@ -45,7 +47,8 @@ export const CouponsTabs = ({ active, counts, onChange }: Props) => {
 							{counts[tab]}
 						</span>
 					</button>
-				))}
+				);
+				})}
 			</div>
 		</div>
 	);

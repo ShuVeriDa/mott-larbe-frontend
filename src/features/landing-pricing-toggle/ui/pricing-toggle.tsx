@@ -13,11 +13,13 @@ interface PricingToggleProps {
 export const PricingToggle = ({ value, onChange }: PricingToggleProps) => {
 	const { t } = useI18n();
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange("monthly");
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange("yearly");
+return (
 		<div className="mx-auto mt-[22px] inline-flex items-center gap-1 rounded-full border-hairline border-bd-2 bg-surf p-1">
 			<button
 				type="button"
-				onClick={() => onChange("monthly")}
+				onClick={handleClick}
 				className={cn(
 					"inline-flex h-[30px] items-center gap-1.5 rounded-full border-0 px-4 text-[12.5px] font-semibold transition-all",
 					value === "monthly"
@@ -29,7 +31,7 @@ export const PricingToggle = ({ value, onChange }: PricingToggleProps) => {
 			</button>
 			<button
 				type="button"
-				onClick={() => onChange("yearly")}
+				onClick={handleClick2}
 				className={cn(
 					"inline-flex h-[30px] items-center gap-1.5 rounded-full border-0 px-4 text-[12.5px] font-semibold transition-all",
 					value === "yearly"

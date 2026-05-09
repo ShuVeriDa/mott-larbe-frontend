@@ -34,11 +34,12 @@ export const TextsTabs = ({ active, stats, onChange }: TextsTabsProps) => {
 					const isActive = active === key;
 					const cnt = stats ? count(stats) : undefined;
 
-					return (
+										const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(key);
+return (
 						<button
 							key={key}
 							type="button"
-							onClick={() => onChange(key)}
+							onClick={handleClick}
 							className={cn(
 								"flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-[6px] px-3 py-1 text-[12px] font-medium transition-colors",
 								isActive

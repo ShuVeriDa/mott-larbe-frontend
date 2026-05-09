@@ -126,10 +126,12 @@ export const CouponsTable = ({
 		{ key: "createdAt", label: t("admin.coupons.table.name") },
 	];
 
-	const renderSortableTh = (key: CouponSortBy, label: string, extraClass?: string) => (
+	const renderSortableTh = (key: CouponSortBy, label: string, extraClass?: string) => {
+	  const handleClick: NonNullable<React.ComponentProps<"th">["onClick"]> = () => onSortChange(key);
+	  return (
 		<th
 			key={key}
-			onClick={() => onSortChange(key)}
+			onClick={handleClick}
 			className={cn(
 				"cursor-pointer select-none whitespace-nowrap px-3.5 py-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 hover:text-t-1",
 				extraClass,
@@ -139,6 +141,7 @@ export const CouponsTable = ({
 			<SortIcon active={sortBy === key} order={sortOrder} />
 		</th>
 	);
+	};
 
 	const renderStaticTh = (label: string, extraClass?: string) => (
 		<th
@@ -183,10 +186,13 @@ export const CouponsTable = ({
 							const pct = maxR ? Math.min((item.redeemedCount / maxR) * 100, 100) : 0;
 							const isSelected = item.id === selectedId;
 
-							return (
+														const handleClick: NonNullable<React.ComponentProps<"tr">["onClick"]> = () => onSelectRow(item.id);
+							const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onEdit(item.id); };
+							const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onDelete(item.id); };
+return (
 								<tr
 									key={item.id}
-									onClick={() => onSelectRow(item.id)}
+									onClick={handleClick}
 									className={cn(
 										"cursor-pointer border-b border-bd-1 transition-colors last:border-b-0",
 										isSelected ? "bg-acc-bg" : "hover:bg-surf-2",
@@ -275,14 +281,14 @@ export const CouponsTable = ({
 										<div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100 [tr:hover_&]:opacity-100 [tr.bg-acc-bg_&]:opacity-100">
 											<button
 												type="button"
-												onClick={(e) => { e.stopPropagation(); onEdit(item.id); }}
+												onClick={handleClick2}
 												className="flex h-6 items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 											>
 												{t("admin.coupons.table.edit")}
 											</button>
 											<button
 												type="button"
-												onClick={(e) => { e.stopPropagation(); onDelete(item.id); }}
+												onClick={handleClick3}
 												className="flex h-6 items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 											>
 												{t("admin.coupons.table.delete")}

@@ -26,7 +26,8 @@ export const HeadwordsSideCard = ({
 }: HeadwordsSideCardProps) => {
 	const { t } = useI18n();
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "addHeadword" });
+return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
 				<span className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
@@ -34,7 +35,7 @@ export const HeadwordsSideCard = ({
 				</span>
 				<button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
-					onClick={() => onOpenModal({ type: "addHeadword" })}
+					onClick={handleClick}
 				>
 					<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
 						<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
@@ -53,7 +54,9 @@ export const HeadwordsSideCard = ({
 				</div>
 			) : (
 				<div>
-					{headwords.map((hw) => (
+					{headwords.map((hw) => {
+					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDeleteHeadword(hw.id);
+					  return (
 						<div
 							key={hw.id}
 							className="group flex items-center gap-2.5 border-b border-bd-1 px-4 py-2.5 transition-colors hover:bg-surf-2 last:border-b-0"
@@ -69,13 +72,14 @@ export const HeadwordsSideCard = ({
 							<div className="flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100 max-sm:opacity-100">
 								<button
 									className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
-									onClick={() => onDeleteHeadword(hw.id)}
+									onClick={handleClick}
 								>
 									<IconTrash />
 								</button>
 							</div>
 						</div>
-					))}
+					);
+					})}
 				</div>
 			)}
 		</div>

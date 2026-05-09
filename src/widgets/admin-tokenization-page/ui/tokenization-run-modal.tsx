@@ -47,14 +47,16 @@ export const TokenizationRunModal = ({
 			},
 		];
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRun(scope);
+return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"
 			onClick={onClose}
 		>
 			<div
 				className="w-full max-w-[400px] overflow-hidden rounded-[14px] border border-bd-2 bg-surf shadow-md max-sm:rounded-b-none"
-				onClick={(e) => e.stopPropagation()}
+				onClick={handleClick}
 			>
 				<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
 					<span className="font-display text-[15px] text-t-1">
@@ -80,7 +82,9 @@ export const TokenizationRunModal = ({
 						{t("admin.tokenization.runModal.subtitle")}
 					</p>
 					<div className="flex flex-col gap-2">
-						{options.map((opt) => (
+						{options.map((opt) => {
+						  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = () => setScope(opt.value);
+						  return (
 							<label
 								key={opt.value}
 								className={cn(
@@ -95,7 +99,7 @@ export const TokenizationRunModal = ({
 									name="scope"
 									value={opt.value}
 									checked={scope === opt.value}
-									onChange={() => setScope(opt.value)}
+									onChange={handleChange}
 									className="mt-0.5 size-[15px] shrink-0 accent-acc"
 								/>
 								<div className="min-w-0 flex-1">
@@ -112,7 +116,8 @@ export const TokenizationRunModal = ({
 									<div className="mt-0.5 text-[11px] text-t-3">{t(opt.subKey)}</div>
 								</div>
 							</label>
-						))}
+						);
+						})}
 					</div>
 				</div>
 
@@ -124,7 +129,7 @@ export const TokenizationRunModal = ({
 						{t("admin.tokenization.runModal.cancelBtn")}
 					</button>
 					<button
-						onClick={() => onRun(scope)}
+						onClick={handleClick2}
 						disabled={isLoading}
 						className="flex h-[34px] flex-1 items-center justify-center gap-1.5 rounded-base bg-acc text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>

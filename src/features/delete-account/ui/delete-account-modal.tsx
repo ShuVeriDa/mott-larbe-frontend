@@ -38,7 +38,8 @@ export const DeleteAccountModal = ({
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setEmail(e.target.value);
+return (
 		<Modal open={open} onClose={onClose} title={t("settings.deleteAccountModal.title")}>
 			<Typography tag="p" className="mb-4 text-[12px] text-t-3 leading-[1.55]">
 				{t("settings.deleteAccountModal.desc")}
@@ -51,7 +52,7 @@ export const DeleteAccountModal = ({
 					id="delete-account-email"
 					type="email"
 					value={email}
-					onChange={(e) => setEmail(e.target.value)}
+					onChange={handleChange}
 					placeholder={t("settings.deleteAccountModal.emailPlaceholder")}
 					className="mb-4"
 					required

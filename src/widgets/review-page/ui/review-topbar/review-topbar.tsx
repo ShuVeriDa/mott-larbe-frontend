@@ -21,7 +21,9 @@ export const ReviewTopbar = ({
 }: ReviewTopbarProps) => {
 	const { t } = useI18n();
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof TabButton>["onClick"]> = () => onChange("sm2");
+	const handleClick2: NonNullable<React.ComponentProps<typeof TabButton>["onClick"]> = () => onChange("deck");
+return (
 		<header className="flex shrink-0 items-center gap-2.5 border-hairline border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-3.5 max-md:py-2.5">
 			<svg
 				viewBox="0 0 15 15"
@@ -61,13 +63,13 @@ export const ReviewTopbar = ({
 					label={t("review.tabs.sm2")}
 					count={dueCount}
 					active={system === "sm2"}
-					onClick={() => onChange("sm2")}
+					onClick={handleClick}
 				/>
 				<TabButton
 					label={t("review.tabs.deck")}
 					count={deckCount}
 					active={system === "deck"}
-					onClick={() => onChange("deck")}
+					onClick={handleClick2}
 				/>
 			</div>
 

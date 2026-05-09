@@ -135,7 +135,10 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 
 	const recentVersions = versionsData?.data ?? [];
 
-	return (
+		const handleDismissRetokenize: NonNullable<React.ComponentProps<typeof TextEditEditor>["onDismissRetokenize"]> = () => setShowRetokenizeBar(false);
+	const handleDeleteRequest: NonNullable<React.ComponentProps<typeof TextEditMetaPanel>["onDeleteRequest"]> = () => setShowDeleteModal(true);
+	const handleCancel: NonNullable<React.ComponentProps<typeof TextEditDeleteModal>["onCancel"]> = () => setShowDeleteModal(false);
+return (
 		<div className="flex min-h-screen flex-col text-t-1 transition-colors">
 			<TextEditTopbar
 				textId={textId}
@@ -164,7 +167,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					onSelectPage={handleSelectPage}
 					onSaveDraft={handleSaveDraft}
 					onSaveAndUpdate={handleSaveAndUpdate}
-					onDismissRetokenize={() => setShowRetokenizeBar(false)}
+					onDismissRetokenize={handleDismissRetokenize}
 				/>
 
 				<TextEditMetaPanel
@@ -200,7 +203,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					onMorphAnalysisChange={setUseMorphAnalysis}
 					onSaveDraft={handleSaveDraft}
 					onSaveAndUpdate={handleSaveAndUpdate}
-					onDeleteRequest={() => setShowDeleteModal(true)}
+					onDeleteRequest={handleDeleteRequest}
 					onTokenize={handleTokenize}
 				/>
 			</div>
@@ -259,7 +262,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					textTitle={textData.title}
 					isDeleting={isDeleting}
 					onConfirm={handleDelete}
-					onCancel={() => setShowDeleteModal(false)}
+					onCancel={handleCancel}
 				/>
 			)}
 		</div>

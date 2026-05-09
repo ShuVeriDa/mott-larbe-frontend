@@ -14,7 +14,9 @@ export const FontSizeControl = ({ initialValue }: FontSizeControlProps) => {
 	const { value, change, reset, save, fillPercent, isSaving } =
 		useFontSize(initialValue);
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => change(-1);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => change(1);
+return (
 		<>
 			<div className="border-hairline border-b border-bd-1 px-4 py-3.5">
 				<Typography
@@ -33,7 +35,7 @@ export const FontSizeControl = ({ initialValue }: FontSizeControlProps) => {
 				<div className="mt-2.5 flex items-center gap-2">
 					<button
 						type="button"
-						onClick={() => change(-1)}
+						onClick={handleClick}
 						aria-label="-"
 						className="flex size-7 cursor-pointer items-center justify-center rounded-md border-hairline border-bd-2 bg-surf-2 text-sm font-semibold text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
 					>
@@ -53,7 +55,7 @@ export const FontSizeControl = ({ initialValue }: FontSizeControlProps) => {
 					</div>
 					<button
 						type="button"
-						onClick={() => change(1)}
+						onClick={handleClick2}
 						aria-label="+"
 						className="flex size-7 cursor-pointer items-center justify-center rounded-md border-hairline border-bd-2 bg-surf-2 text-sm font-semibold text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
 					>

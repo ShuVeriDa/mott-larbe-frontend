@@ -46,7 +46,10 @@ export const AdminUsersPage = () => {
 		mutations.bulkBlock.isPending ||
 		mutations.bulkResetRoles.isPending;
 
-	return (
+		const handleFreeze: NonNullable<React.ComponentProps<typeof UsersBulkBar>["onFreeze"]> = () => mutations.bulkFreeze.mutate(selectedArray, { onSuccess: clearSelection });
+	const handleResetRoles: NonNullable<React.ComponentProps<typeof UsersBulkBar>["onResetRoles"]> = () => mutations.bulkResetRoles.mutate(selectedArray, { onSuccess: clearSelection });
+	const handleBlock: NonNullable<React.ComponentProps<typeof UsersBulkBar>["onBlock"]> = () => mutations.bulkBlock.mutate(selectedArray, { onSuccess: clearSelection });
+return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<AdminUsersTopbar onExport={handleExport} />
 
@@ -74,9 +77,9 @@ export const AdminUsersPage = () => {
 				<div className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf">
 					<UsersBulkBar
 						selectedCount={selectedIds.size}
-						onFreeze={() => mutations.bulkFreeze.mutate(selectedArray, { onSuccess: clearSelection })}
-						onResetRoles={() => mutations.bulkResetRoles.mutate(selectedArray, { onSuccess: clearSelection })}
-						onBlock={() => mutations.bulkBlock.mutate(selectedArray, { onSuccess: clearSelection })}
+						onFreeze={handleFreeze}
+						onResetRoles={handleResetRoles}
+						onBlock={handleBlock}
 						isPending={bulkPending}
 					/>
 

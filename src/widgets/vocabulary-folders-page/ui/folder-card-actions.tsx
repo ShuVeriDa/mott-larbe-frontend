@@ -63,11 +63,12 @@ export const FolderCardActions = ({
 		onClose();
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+return (
 		<div
 			ref={ref}
 			role="menu"
-			onClick={(e) => e.stopPropagation()}
+			onClick={handleClick}
 			className={cn(
 				"absolute right-2.5 top-9 z-30 min-w-[170px] overflow-hidden rounded-card",
 				"border-hairline border-bd-2 bg-surf shadow-md",

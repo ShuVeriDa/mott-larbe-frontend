@@ -23,11 +23,13 @@ export const PaymentsTabs = ({ active, counts, onChange }: Props) => {
 	return (
 		<div className="overflow-x-auto border-b border-bd-1 px-3.5 pt-2.5 pb-0 [&::-webkit-scrollbar]:h-0">
 			<div className="flex w-fit gap-0.5 rounded-[9px] border border-bd-1 bg-surf-2 p-[3px]">
-				{TABS.map(({ key, i18nKey }) => (
+				{TABS.map(({ key, i18nKey }) => {
+				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(key);
+				  return (
 					<button
 						key={key}
 						type="button"
-						onClick={() => onChange(key)}
+						onClick={handleClick}
 						className={cn(
 							"flex h-[26px] items-center gap-1 whitespace-nowrap rounded-base px-2.5 text-[12px] transition-colors",
 							active === key
@@ -45,7 +47,8 @@ export const PaymentsTabs = ({ active, counts, onChange }: Props) => {
 							{counts[key].toLocaleString("ru-RU")}
 						</span>
 					</button>
-				))}
+				);
+				})}
 			</div>
 		</div>
 	);

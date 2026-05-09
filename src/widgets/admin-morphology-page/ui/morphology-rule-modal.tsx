@@ -82,10 +82,29 @@ export const MorphologyRuleModal = ({
 		});
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, suffix: e.target.value }));
+	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, add: e.target.value }));
+	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, pos: e.target.value }));
+	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = e =>
+									setForm(p => ({
+										...p,
+										type: e.target.value as MorphRuleType,
+										isRegex: e.target.value === "REGEX",
+									}));
+	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = e =>
+									setForm(p => ({
+										...p,
+										priority: parseInt(e.target.value, 10) || 0,
+									}));
+	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = e =>
+								setForm(p => ({ ...p, description: e.target.value }));
+	const handleChange7: NonNullable<React.ComponentProps<"input">["onChange"]> = e =>
+								setForm(p => ({ ...p, isActive: e.target.checked }));
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] sm:p-4 max-sm:items-end max-sm:p-0"
-			onClick={e => e.target === e.currentTarget && onClose()}
+			onClick={handleClick}
 		>
 			<div className="w-full max-w-[480px] overflow-y-auto rounded-[14px] border border-bd-2 bg-surf p-5 shadow-md max-sm:max-w-full max-sm:rounded-b-none max-sm:rounded-t-[16px] max-sm:pb-7">
 				<h2 className="font-display text-[15px] text-t-1 mb-1">
@@ -107,7 +126,7 @@ export const MorphologyRuleModal = ({
 							required
 							type="text"
 							value={form.suffix}
-							onChange={e => setForm(p => ({ ...p, suffix: e.target.value }))}
+							onChange={handleChange}
 							placeholder={t("admin.morphology.ruleModal.suffixPlaceholder")}
 							className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] text-t-1 placeholder:font-sans placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
 						/>
@@ -125,7 +144,7 @@ export const MorphologyRuleModal = ({
 							<input
 								type="text"
 								value={form.add ?? ""}
-								onChange={e => setForm(p => ({ ...p, add: e.target.value }))}
+								onChange={handleChange2}
 								placeholder="∅"
 								className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] text-t-1 placeholder:font-sans placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
 							/>
@@ -139,7 +158,7 @@ export const MorphologyRuleModal = ({
 							<input
 								type="text"
 								value={form.pos ?? ""}
-								onChange={e => setForm(p => ({ ...p, pos: e.target.value }))}
+								onChange={handleChange3}
 								placeholder="NOUN"
 								className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[12.5px] text-t-1 placeholder:text-t-3 focus:border-acc focus:outline-none"
 							/>
@@ -154,12 +173,7 @@ export const MorphologyRuleModal = ({
 							</label>
 							<select
 								value={form.type}
-								onChange={e =>
-									setForm(p => ({
-										...p,
-										type: e.target.value as MorphRuleType,
-										isRegex: e.target.value === "REGEX",
-									}))
+								onChange={handleChange4
 								}
 								className="h-9 w-full appearance-none rounded-lg border border-bd-2 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2211%22%20height%3D%2211%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M4%206l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[right_8px_center] bg-no-repeat px-2.5 pr-7 text-[12.5px] text-t-2 focus:border-acc focus:outline-none"
 							>
@@ -181,11 +195,7 @@ export const MorphologyRuleModal = ({
 								min={0}
 								max={99}
 								value={form.priority ?? 1}
-								onChange={e =>
-									setForm(p => ({
-										...p,
-										priority: parseInt(e.target.value, 10) || 0,
-									}))
+								onChange={handleChange5
 								}
 								className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[12.5px] text-t-1 focus:border-acc focus:outline-none"
 							/>
@@ -200,8 +210,7 @@ export const MorphologyRuleModal = ({
 						<input
 							type="text"
 							value={form.description ?? ""}
-							onChange={e =>
-								setForm(p => ({ ...p, description: e.target.value }))
+							onChange={handleChange6
 							}
 							placeholder={t(
 								"admin.morphology.ruleModal.descriptionPlaceholder",
@@ -215,8 +224,7 @@ export const MorphologyRuleModal = ({
 						<input
 							type="checkbox"
 							checked={form.isActive ?? true}
-							onChange={e =>
-								setForm(p => ({ ...p, isActive: e.target.checked }))
+							onChange={handleChange7
 							}
 							className="accent-acc"
 						/>

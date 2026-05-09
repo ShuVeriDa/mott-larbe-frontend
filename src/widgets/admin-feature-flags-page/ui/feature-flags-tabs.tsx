@@ -11,11 +11,13 @@ const TABS: FeatureFlagsTab[] = ["flags", "overrides", "history"];
 
 export const FeatureFlagsTabs = ({ active, onChange, t }: FeatureFlagsTabsProps) => (
 	<div className="mb-4 flex w-fit items-center gap-0.5 rounded-[9px] border border-bd-1 bg-surf-2 p-[3px]">
-		{TABS.map((tab) => (
+		{TABS.map((tab) => {
+		  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab);
+		  return (
 			<button
 				key={tab}
 				type="button"
-				onClick={() => onChange(tab)}
+				onClick={handleClick}
 				className={cn(
 					"rounded-[6px] px-3.5 py-[5px] text-[12.5px] font-medium transition-all",
 					active === tab
@@ -25,6 +27,7 @@ export const FeatureFlagsTabs = ({ active, onChange, t }: FeatureFlagsTabsProps)
 			>
 				{t(`admin.featureFlags.tabs.${tab}`)}
 			</button>
-		))}
+		);
+		})}
 	</div>
 );

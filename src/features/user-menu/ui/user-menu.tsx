@@ -52,7 +52,8 @@ export const UserMenu = () => {
 		router.push(newPath);
 	};
 
-	return (
+		const handleSelect: NonNullable<React.ComponentProps<typeof DropdownMenuPrimitive.Item>["onSelect"]> = (e) => e.preventDefault();
+return (
 		<DropdownMenuPrimitive.Root open={open} onOpenChange={setOpen}>
 			<DropdownMenuPrimitive.Trigger asChild>
 				<button
@@ -134,7 +135,7 @@ export const UserMenu = () => {
 					{/* Language switcher */}
 					<div className="border-t border-bd-1">
 						<DropdownMenuPrimitive.Item
-							onSelect={(e) => e.preventDefault()}
+							onSelect={handleSelect}
 							className="flex items-center justify-between gap-3 px-3 py-2 focus-visible:outline-none cursor-default"
 						>
 							<div className="flex items-center gap-2.5 text-[12.5px] text-t-2 shrink-0">
@@ -148,16 +149,17 @@ export const UserMenu = () => {
 							>
 								{LOCALES.map((locale) => {
 									const active = locale === lang;
-									return (
+																		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+												e.preventDefault();
+												switchLang(locale);
+											};
+return (
 										<button
 											key={locale}
 											type="button"
 											role="radio"
 											aria-checked={active}
-											onClick={(e) => {
-												e.preventDefault();
-												switchLang(locale);
-											}}
+											onClick={handleClick}
 											className={cn(
 												"px-2 py-0.5 min-w-[28px] text-[10.5px] font-medium rounded-full transition-colors",
 												active

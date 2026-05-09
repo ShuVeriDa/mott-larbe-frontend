@@ -75,11 +75,19 @@ export const AdminMorphologyPage = () => {
 		setImportResult(null);
 	};
 
-	return (
+	const handleOpenImport: NonNullable<React.ComponentProps<typeof MorphologyTopbar>["onImport"]> = () =>
+		setImportModalOpen(true);
+	const handleBulkActivate: NonNullable<React.ComponentProps<typeof MorphologyBulkBar>["onActivate"]> = () =>
+		bulkActivateMutation.mutate();
+	const handleBulkDeactivate: NonNullable<React.ComponentProps<typeof MorphologyBulkBar>["onDeactivate"]> = () =>
+		bulkDeactivateMutation.mutate();
+	const handleBulkDelete: NonNullable<React.ComponentProps<typeof MorphologyBulkBar>["onDelete"]> = () =>
+		bulkDeleteMutation.mutate();
+return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<MorphologyTopbar
 				onAdd={openAddModal}
-				onImport={() => setImportModalOpen(true)}
+				onImport={handleOpenImport}
 			/>
 
 			<div className="overflow-y-auto px-5 py-5 pb-10">
@@ -108,9 +116,9 @@ export const AdminMorphologyPage = () => {
 					activatingLoading={bulkActivateMutation.isPending}
 					deactivatingLoading={bulkDeactivateMutation.isPending}
 					deletingLoading={bulkDeleteMutation.isPending}
-					onActivate={() => bulkActivateMutation.mutate()}
-					onDeactivate={() => bulkDeactivateMutation.mutate()}
-					onDelete={() => bulkDeleteMutation.mutate()}
+					onActivate={handleBulkActivate}
+					onDeactivate={handleBulkDeactivate}
+					onDelete={handleBulkDelete}
 					onClear={clearSelection}
 				/>
 

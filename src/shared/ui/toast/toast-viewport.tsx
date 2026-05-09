@@ -23,11 +23,13 @@ export const ToastViewport = () => {
 			aria-label="Notifications"
 			className="pointer-events-none fixed inset-x-0 bottom-6 z-[300] flex flex-col items-center gap-2 px-4"
 		>
-			{items.map((item) => (
+			{items.map((item) => {
+			  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => dismiss(item.id);
+			  return (
 				<button
 					key={item.id}
 					type="button"
-					onClick={() => dismiss(item.id)}
+					onClick={handleClick}
 					className={cn(
 						"pointer-events-auto min-w-[240px] max-w-[420px] rounded-base px-4 py-2 text-[12.5px] font-medium",
 						"animate-[fadeUp_0.18s_ease] shadow-md",
@@ -40,7 +42,8 @@ export const ToastViewport = () => {
 				>
 					{item.message}
 				</button>
-			))}
+			);
+			})}
 		</div>,
 		document.body,
 	);

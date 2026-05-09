@@ -56,7 +56,14 @@ export const NotificationsSection = ({
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ repeatReminder: v });
+	const handleChange2: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ weeklyReport: v });
+	const handleChange3: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ newTexts: v });
+	const handleChange4: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ supportReplies: v });
+	const handleChange5: NonNullable<React.ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ marketing: v });
+	const handleChange6: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setReminderTime(e.target.value);
+	const handleChange7: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => setTimezone(e.target.value);
+return (
 		<div className="flex flex-col gap-3.5">
 			<SectionHeader
 				title={t("settings.notifications.title")}
@@ -68,31 +75,31 @@ export const NotificationsSection = ({
 					label={t("settings.notifications.repeatReminder")}
 					description={t("settings.notifications.repeatReminderDesc")}
 					checked={notifications.repeatReminder}
-					onChange={(v) => toggle({ repeatReminder: v })}
+					onChange={handleChange}
 				/>
 				<ToggleRow
 					label={t("settings.notifications.weeklyReport")}
 					description={t("settings.notifications.weeklyReportDesc")}
 					checked={notifications.weeklyReport}
-					onChange={(v) => toggle({ weeklyReport: v })}
+					onChange={handleChange2}
 				/>
 				<ToggleRow
 					label={t("settings.notifications.newTexts")}
 					description={t("settings.notifications.newTextsDesc")}
 					checked={notifications.newTexts}
-					onChange={(v) => toggle({ newTexts: v })}
+					onChange={handleChange3}
 				/>
 				<ToggleRow
 					label={t("settings.notifications.supportReplies")}
 					description={t("settings.notifications.supportRepliesDesc")}
 					checked={notifications.supportReplies}
-					onChange={(v) => toggle({ supportReplies: v })}
+					onChange={handleChange4}
 				/>
 				<ToggleRow
 					label={t("settings.notifications.marketing")}
 					description={t("settings.notifications.marketingDesc")}
 					checked={notifications.marketing}
-					onChange={(v) => toggle({ marketing: v })}
+					onChange={handleChange5}
 				/>
 			</SettingCard>
 
@@ -107,7 +114,7 @@ export const NotificationsSection = ({
 								id="reminder-time"
 								type="time"
 								value={reminderTime}
-								onChange={(e) => setReminderTime(e.target.value)}
+								onChange={handleChange6}
 								className="max-w-[140px]"
 							/>
 						</div>
@@ -118,7 +125,7 @@ export const NotificationsSection = ({
 							<Select
 								id="timezone"
 								value={timezone}
-								onChange={(e) => setTimezone(e.target.value)}
+								onChange={handleChange7}
 							>
 								{TIMEZONE_OPTIONS.map((opt) => (
 									<option key={opt.value} value={opt.value}>

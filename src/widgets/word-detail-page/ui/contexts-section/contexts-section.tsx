@@ -91,14 +91,15 @@ export const ContextsSection = ({
 		);
 	}
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setExpanded(true);
+return (
 		<CardSection
 			title={t("vocabulary.wordDetail.sections.contexts")}
 			rightSlot={
 				lemmaId && !expanded ? (
 					<button
 						type="button"
-						onClick={() => setExpanded(true)}
+						onClick={handleClick}
 						className="border-0 bg-transparent p-0 text-[11.5px] text-acc font-[inherit] hover:underline"
 					>
 						{isFetching

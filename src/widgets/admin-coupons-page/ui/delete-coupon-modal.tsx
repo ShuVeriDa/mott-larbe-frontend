@@ -24,7 +24,9 @@ export const DeleteCouponModal = ({
 
 	if (!couponId) return null;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDeactivate(couponId);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDelete(couponId);
+return (
 		<>
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
@@ -74,7 +76,7 @@ export const DeleteCouponModal = ({
 					<button
 						type="button"
 						disabled={isPending}
-						onClick={() => onDeactivate(couponId)}
+						onClick={handleClick}
 						className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						{t("admin.coupons.deleteModal.deactivate")}
@@ -83,7 +85,7 @@ export const DeleteCouponModal = ({
 					<button
 						type="button"
 						disabled={isPending}
-						onClick={() => onDelete(couponId)}
+						onClick={handleClick2}
 						className="h-8 rounded-[8px] bg-red px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						{t("admin.coupons.deleteModal.confirm")}

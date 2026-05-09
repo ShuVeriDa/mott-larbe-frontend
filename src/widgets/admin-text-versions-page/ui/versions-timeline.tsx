@@ -93,11 +93,13 @@ export const VersionsTimeline = ({
 					{t("admin.texts.versions.pageTitle")}
 				</span>
 				<div className="flex rounded-[8px] bg-surf-2 p-[3px]">
-					{tabs.map(({ key, label }) => (
+					{tabs.map(({ key, label }) => {
+					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onStatusFilterChange(key);
+					  return (
 						<button
 							key={key}
 							type="button"
-							onClick={() => onStatusFilterChange(key)}
+							onClick={handleClick}
 							className={cn(
 								"rounded-[5px] px-3 py-1 text-[12px] font-medium transition-colors",
 								statusFilter === key
@@ -107,7 +109,8 @@ export const VersionsTimeline = ({
 						>
 							{label}
 						</button>
-					))}
+					);
+					})}
 				</div>
 			</div>
 
@@ -151,19 +154,25 @@ export const VersionsTimeline = ({
 						<div className="sticky top-0 z-10 border-b border-t border-bd-1 bg-surf-2 px-4 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 							{resolveLabel(group.label)}
 						</div>
-						{allItems.map((item, idx) => (
+						{allItems.map((item, idx) => {
+						  const handleClick: NonNullable<React.ComponentProps<typeof VersionItem>["onClick"]> = () => onVersionClick(item.id);
+						  const handleRestore: NonNullable<React.ComponentProps<typeof VersionItem>["onRestore"]> = () => onRestore(item.id);
+						  const handleRetry: NonNullable<React.ComponentProps<typeof VersionItem>["onRetry"]> = () => onRetry(item.id);
+						  const handleDownload: NonNullable<React.ComponentProps<typeof VersionItem>["onDownload"]> = () => onDownload(item.id, item.version);
+						  return (
 							<VersionItem
 								key={item.id}
 								item={item}
 								isFirst={idx === 0}
 								isLast={idx === allItems.length - 1}
 								isActive={selectedVersionId === item.id}
-								onClick={() => onVersionClick(item.id)}
-								onRestore={() => onRestore(item.id)}
-								onRetry={() => onRetry(item.id)}
-								onDownload={() => onDownload(item.id, item.version)}
+								onClick={handleClick}
+								onRestore={handleRestore}
+								onRetry={handleRetry}
+								onDownload={handleDownload}
 							/>
-						))}
+						);
+						})}
 					</div>
 				);
 			})}

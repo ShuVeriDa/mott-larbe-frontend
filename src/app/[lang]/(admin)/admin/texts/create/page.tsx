@@ -1,7 +1,12 @@
+import {
+	DEFAULT_LOCALE,
+	LOCALES,
+	getDictionary,
+	hasLocale,
+} from "@/i18n/locales";
+import { AdminTextCreatePage } from "@/widgets/admin-text-create";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { DEFAULT_LOCALE, LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
-import { AdminTextCreatePage } from "@/widgets/admin-text-create";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
 
@@ -12,8 +17,13 @@ export const generateMetadata = async (props: {
 	if (!hasLocale(lang)) return {};
 
 	const dict = await getDictionary(lang);
-	const meta = (dict as Record<string, unknown> & { admin?: { meta?: { textsCreate?: { title?: string; description?: string } } } })
-		?.admin?.meta?.textsCreate;
+	const meta = (
+		dict as Record<string, unknown> & {
+			admin?: {
+				meta?: { textsCreate?: { title?: string; description?: string } };
+			};
+		}
+	)?.admin?.meta?.textsCreate;
 
 	const title = meta?.title ?? "New text — Admin | Mott Larbe";
 	const description = meta?.description ?? "Create a new text for the library";
@@ -47,11 +57,13 @@ export const generateMetadata = async (props: {
 	};
 };
 
-interface PageProps {
+interface AdminTextCreateRoutePageProps {
 	params: Promise<{ lang: string }>;
 }
 
-const AdminTextCreateRoutePage = async ({ params }: PageProps) => {
+const AdminTextCreateRoutePage = async ({
+	params,
+}: AdminTextCreateRoutePageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 

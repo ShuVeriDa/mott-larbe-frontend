@@ -30,7 +30,8 @@ export const PasswordField = ({
 		onChange(e.target.value);
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setVisible((prev) => !prev);
+return (
 		<>
 			<Typography
 				tag="label"
@@ -58,7 +59,7 @@ export const PasswordField = ({
 				<button
 					type="button"
 					tabIndex={-1}
-					onClick={() => setVisible((prev) => !prev)}
+					onClick={handleClick}
 					aria-label={t(
 						visible
 							? "auth.resetPassword.step3.hidePassword"

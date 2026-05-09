@@ -27,7 +27,8 @@ export const CancelSubscriptionModal = ({
 		);
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setReason(e.target.value);
+return (
 		<>
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
 				<span className="font-display text-[14px] font-semibold text-t-1">
@@ -61,7 +62,7 @@ export const CancelSubscriptionModal = ({
 					</label>
 					<input
 						value={reason}
-						onChange={e => setReason(e.target.value)}
+						onChange={handleChange}
 						placeholder={t("admin.subscriptions.modal.cancelReasonPlaceholder")}
 						className="h-[34px] w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc focus:bg-surf"
 					/>

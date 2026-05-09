@@ -61,13 +61,15 @@ export const LandingLevels = () => {
 					role="tablist"
 					aria-label="CEFR levels"
 				>
-					{LEVEL_KEYS.map((key) => (
+					{LEVEL_KEYS.map((key) => {
+					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setActive(key);
+					  return (
 						<button
 							key={key}
 							type="button"
 							role="tab"
 							aria-selected={active === key}
-							onClick={() => setActive(key)}
+							onClick={handleClick}
 							className={cn(
 								"rounded-full border-hairline px-4 py-1.5 text-[13px] font-semibold transition-colors",
 								active === key
@@ -80,7 +82,8 @@ export const LandingLevels = () => {
 								{t(`landing.levels.tabs.${key}.name`)}
 							</span>
 						</button>
-					))}
+					);
+					})}
 				</div>
 
 				<div className="grid grid-cols-2 gap-5 max-[640px]:grid-cols-1">

@@ -35,7 +35,9 @@ export const DictionaryMobileList = ({
 	<div className="hidden max-sm:block">
 		{isLoading
 			? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
-			: items.map((item) => (
+			: items.map((item) => {
+			  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDelete(item);
+			  return (
 				<div
 					key={item.id}
 					className="flex items-start gap-2.5 border-b border-bd-1 px-3.5 py-3 last:border-b-0"
@@ -71,7 +73,7 @@ export const DictionaryMobileList = ({
 					</div>
 					<button
 						type="button"
-						onClick={() => onDelete(item)}
+						onClick={handleClick}
 						className="shrink-0 mt-0.5 flex size-[30px] cursor-pointer items-center justify-center rounded-base border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 					>
 						<svg className="size-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3">
@@ -80,6 +82,7 @@ export const DictionaryMobileList = ({
 						</svg>
 					</button>
 				</div>
-			))}
+			);
+			})}
 	</div>
 );

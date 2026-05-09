@@ -98,7 +98,14 @@ export const AdminFeatureFlagsPage = () => {
 				? overrideItems.length === 0 && !isOverridesLoading
 				: historyItems.length === 0 && !isHistoryLoading;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setImportModalOpen(true);
+	const handleAddOverride: NonNullable<React.ComponentProps<typeof OverridesToolbar>["onAddOverride"]> = () => openOverrideModal();
+	const handleClose: NonNullable<React.ComponentProps<typeof FeatureFlagModal>["onClose"]> = () => setModalOpen(false);
+	const handleClose2: NonNullable<React.ComponentProps<typeof FeatureFlagDeleteModal>["onClose"]> = () => setDeleteFlag(null);
+	const handleClose3: NonNullable<React.ComponentProps<typeof FeatureFlagDuplicateModal>["onClose"]> = () => setDuplicateFlag(null);
+	const handleClose4: NonNullable<React.ComponentProps<typeof FeatureFlagOverrideModal>["onClose"]> = () => setOverrideModalOpen(false);
+	const handleClose5: NonNullable<React.ComponentProps<typeof FeatureFlagImportModal>["onClose"]> = () => setImportModalOpen(false);
+return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<FeatureFlagsTopbar
 				title={t("admin.featureFlags.title")}
@@ -107,7 +114,7 @@ export const AdminFeatureFlagsPage = () => {
 					<>
 						<button
 							type="button"
-							onClick={() => setImportModalOpen(true)}
+							onClick={handleClick}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
 							<svg
@@ -177,7 +184,7 @@ export const AdminFeatureFlagsPage = () => {
 						onSearchChange={handleSearchChange}
 						onFlagIdChange={handleOverrideFlagIdChange}
 						onIsEnabledChange={handleOverrideIsEnabledChange}
-						onAddOverride={() => openOverrideModal()}
+						onAddOverride={handleAddOverride}
 						t={t}
 					/>
 				)}
@@ -264,7 +271,7 @@ export const AdminFeatureFlagsPage = () => {
 				editFlag={editFlag}
 				isSubmitting={isModalSubmitting}
 				onSubmit={handleModalSubmit}
-				onClose={() => setModalOpen(false)}
+				onClose={handleClose}
 				t={t}
 			/>
 
@@ -272,7 +279,7 @@ export const AdminFeatureFlagsPage = () => {
 				flag={deleteFlag}
 				isDeleting={isDeleting}
 				onConfirm={handleDeleteConfirm}
-				onClose={() => setDeleteFlag(null)}
+				onClose={handleClose2}
 				t={t}
 			/>
 
@@ -280,7 +287,7 @@ export const AdminFeatureFlagsPage = () => {
 				flag={duplicateFlag}
 				isDuplicating={isDuplicating}
 				onConfirm={handleDuplicateConfirm}
-				onClose={() => setDuplicateFlag(null)}
+				onClose={handleClose3}
 				t={t}
 			/>
 
@@ -289,14 +296,14 @@ export const AdminFeatureFlagsPage = () => {
 				preselectedFlagId={overridePreselectedFlagId}
 				isSubmitting={isOverrideSubmitting}
 				onSubmit={handleOverrideSubmit}
-				onClose={() => setOverrideModalOpen(false)}
+				onClose={handleClose4}
 				t={t}
 			/>
 
 			<FeatureFlagImportModal
 				open={importModalOpen}
 				onSubmit={handleImportSubmit}
-				onClose={() => setImportModalOpen(false)}
+				onClose={handleClose5}
 				t={t}
 			/>
 		</div>

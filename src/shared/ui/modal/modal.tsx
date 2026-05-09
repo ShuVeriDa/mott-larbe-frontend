@@ -35,14 +35,15 @@ export const Modal = ({
 
 	if (!open || typeof window === "undefined") return null;
 
-	return createPortal(
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => {
+				if (e.target === e.currentTarget) onClose();
+			};
+return createPortal(
 		<div
 			role="dialog"
 			aria-modal="true"
 			className="fixed inset-0 z-[200] flex items-end justify-center bg-black/25 backdrop-blur-[2px] sm:items-center"
-			onClick={(e) => {
-				if (e.target === e.currentTarget) onClose();
-			}}
+			onClick={handleClick}
 		>
 			<div
 				className={cn(

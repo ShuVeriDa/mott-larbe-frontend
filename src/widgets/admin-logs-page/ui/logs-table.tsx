@@ -57,10 +57,15 @@ export const LogsTable = ({ items, isLoading, onRowClick }: LogsTableProps) => {
 				<tbody>
 					{items.map((item) => {
 						const { time, ms } = formatTime(item.timestamp);
-						return (
+												const handleClick: NonNullable<React.ComponentProps<"tr">["onClick"]> = () => onRowClick(item.id);
+						const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+												e.stopPropagation();
+												onRowClick(item.id);
+											};
+return (
 							<tr
 								key={item.id}
-								onClick={() => onRowClick(item.id)}
+								onClick={handleClick}
 								className="cursor-pointer border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2"
 							>
 								<td className="px-3 py-2">
@@ -99,10 +104,7 @@ export const LogsTable = ({ items, isLoading, onRowClick }: LogsTableProps) => {
 									<div className="flex items-center justify-end">
 										<button
 											type="button"
-											onClick={(e) => {
-												e.stopPropagation();
-												onRowClick(item.id);
-											}}
+											onClick={handleClick2}
 											className="flex size-[26px] items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 										>
 											<svg width="13" height="13" viewBox="0 0 16 16" fill="none">

@@ -84,7 +84,14 @@ export const RegisterForm = ({
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setName(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setSurname(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setUsername(e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setEmail(e.target.value);
+	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setPassword(e.target.value);
+	const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowPw((v) => !v);
+	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setPassword2(e.target.value);
+return (
 		<form onSubmit={handleSubmit} noValidate autoComplete="on">
 			{error ? (
 				<div
@@ -114,7 +121,7 @@ export const RegisterForm = ({
 						required
 						placeholder={t("auth.placeholders.name")}
 						value={name}
-						onChange={(e) => setName(e.target.value)}
+						onChange={handleChange}
 						className={cn(
 							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 							errors.name && "border-red",
@@ -143,7 +150,7 @@ export const RegisterForm = ({
 						required
 						placeholder={t("auth.placeholders.surname")}
 						value={surname}
-						onChange={(e) => setSurname(e.target.value)}
+						onChange={handleChange2}
 						className={cn(
 							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 							errors.surname && "border-red",
@@ -174,7 +181,7 @@ export const RegisterForm = ({
 					required
 					placeholder={t("auth.placeholders.username")}
 					value={username}
-					onChange={(e) => setUsername(e.target.value)}
+					onChange={handleChange3}
 					className={cn(
 						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 						errors.username && "border-red",
@@ -205,7 +212,7 @@ export const RegisterForm = ({
 					required
 					placeholder="you@example.com"
 					value={email}
-					onChange={(e) => setEmail(e.target.value)}
+					onChange={handleChange4}
 					className={cn(
 						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 						errors.email && "border-red",
@@ -236,7 +243,7 @@ export const RegisterForm = ({
 						required
 						placeholder="••••••••••"
 						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={handleChange5}
 						className={cn(
 							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 pr-11 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 							errors.password && "border-red",
@@ -246,7 +253,7 @@ export const RegisterForm = ({
 					<button
 						type="button"
 						tabIndex={-1}
-						onClick={() => setShowPw((v) => !v)}
+						onClick={handleClick}
 						aria-label={t(
 							showPw ? "auth.password.hide" : "auth.password.show",
 						)}
@@ -283,7 +290,7 @@ export const RegisterForm = ({
 					required
 					placeholder="••••••••••"
 					value={password2}
-					onChange={(e) => setPassword2(e.target.value)}
+					onChange={handleChange6}
 					className={cn(
 						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
 						errors.password2 && "border-red",
@@ -303,11 +310,13 @@ export const RegisterForm = ({
 					{t("auth.fields.level")}
 				</Typography>
 				<div className="grid grid-cols-3 gap-2">
-					{CEFR_LEVELS.map((cefrLevel) => (
+					{CEFR_LEVELS.map((cefrLevel) => {
+					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setLevel(cefrLevel);
+					  return (
 						<button
 							key={cefrLevel}
 							type="button"
-							onClick={() => setLevel(cefrLevel)}
+							onClick={handleClick}
 							className={cn(
 								"h-9 rounded-[9px] border-[0.5px] text-[12.5px] font-semibold transition-colors",
 								level === cefrLevel
@@ -318,7 +327,8 @@ export const RegisterForm = ({
 						>
 							{cefrLevel}
 						</button>
-					))}
+					);
+					})}
 				</div>
 			</div>
 

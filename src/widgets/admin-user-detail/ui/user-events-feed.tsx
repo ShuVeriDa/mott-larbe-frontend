@@ -101,12 +101,15 @@ export const UserEventsFeed = ({
 	const shown = events.length;
 	const hasMore = shown < total;
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onTypeChange(e.target.value as UserEventType | "");
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) =>
+						onPeriodChange(e.target.value as FetchUserEventsQuery["period"]);
+return (
 		<>
 			<div className="flex items-center gap-1.5 border-b border-bd-1 px-3.5 py-2.5">
 				<select
 					value={filter.type ?? ""}
-					onChange={(e) => onTypeChange(e.target.value as UserEventType | "")}
+					onChange={handleChange}
 					className="h-[26px] appearance-none rounded-[6px] border border-bd-2 bg-surf px-2 pr-5 text-[11.5px] text-t-2 outline-none focus:border-acc"
 				>
 					<option value="">{t("admin.userDetail.events.allTypes")}</option>
@@ -118,8 +121,7 @@ export const UserEventsFeed = ({
 				</select>
 				<select
 					value={filter.period ?? "all"}
-					onChange={(e) =>
-						onPeriodChange(e.target.value as FetchUserEventsQuery["period"])
+					onChange={handleChange2
 					}
 					className="h-[26px] appearance-none rounded-[6px] border border-bd-2 bg-surf px-2 pr-5 text-[11.5px] text-t-2 outline-none focus:border-acc"
 				>

@@ -25,13 +25,14 @@ export const AuthTabs = ({ mode, onChange }: AuthTabsProps) => {
 		>
 			{tabs.map((tab) => {
 				const isActive = tab.key === mode;
-				return (
+								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab.key);
+return (
 					<button
 						key={tab.key}
 						type="button"
 						role="tab"
 						aria-selected={isActive}
-						onClick={() => onChange(tab.key)}
+						onClick={handleClick}
 						className={cn(
 							"flex h-[34px] flex-1 items-center justify-center rounded-base text-[12.5px] font-semibold transition-colors",
 							isActive

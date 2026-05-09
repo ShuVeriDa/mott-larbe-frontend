@@ -38,7 +38,8 @@ export const FeedbackChat = ({
 
 	const isClosed = thread?.status === "RESOLVED";
 
-	return (
+		const handleSend: NonNullable<React.ComponentProps<typeof FeedbackChatInput>["onSend"]> = (text) => sendMessage.mutate(text);
+return (
 		<div
 			className={[
 				"flex flex-1 min-w-0 flex-col bg-bg transition-transform duration-[280ms]",
@@ -65,7 +66,7 @@ export const FeedbackChat = ({
 						isClosed={isClosed}
 						isPending={sendMessage.isPending}
 						t={t}
-						onSend={(text) => sendMessage.mutate(text)}
+						onSend={handleSend}
 					/>
 				</>
 			)}

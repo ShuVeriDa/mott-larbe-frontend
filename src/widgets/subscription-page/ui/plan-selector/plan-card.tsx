@@ -120,7 +120,8 @@ export const PlanCard = ({
 		const baseClass =
 			"h-[30px] w-full text-[11.5px] font-semibold border-0 text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] hover:opacity-[0.88]";
 		if (colorScheme.button === "pro") {
-			return (
+						const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => onChoose?.(plan);
+return (
 				<Button
 					variant="action"
 					size="default"
@@ -128,25 +129,29 @@ export const PlanCard = ({
 						baseClass,
 						"bg-pur shadow-[0_1px_4px_rgba(109,78,212,0.3)]",
 					)}
-					onClick={() => onChoose?.(plan)}
+					onClick={handleClick}
 				>
 					{t("subscription.planCard.choose")}
 				</Button>
 			);
 		}
-		return (
+				const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => onChoose?.(plan);
+return (
 			<Button
 				variant="action"
 				size="default"
 				className={cn(baseClass, "bg-acc")}
-				onClick={() => onChoose?.(plan)}
+				onClick={handleClick}
 			>
 				{t("subscription.planCard.choose")}
 			</Button>
 		);
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"article">["onClick"]> = () => {
+				if (!current) onChoose?.(plan);
+			};
+return (
 		<article
 			className={cn(
 				"group/plan-card relative flex flex-col gap-3 overflow-hidden rounded-[10px] border-hairline border-bd-2 bg-surf-2 p-3.5 transition-[border-color,box-shadow] duration-150 max-md:min-w-[155px] max-md:flex-none max-md:snap-start max-md:p-3",
@@ -154,9 +159,7 @@ export const PlanCard = ({
 				current && "bg-surf",
 				!current && "hover:border-bd-3 hover:shadow-sm cursor-pointer",
 			)}
-			onClick={() => {
-				if (!current) onChoose?.(plan);
-			}}
+			onClick={handleClick}
 		>
 			{popular ? (
 				<span className="absolute right-0 top-0 rounded-bl-[7px] rounded-tr-[10px] bg-acc px-2.5 py-[3px] text-[9px] font-bold uppercase tracking-[0.3px] text-white">

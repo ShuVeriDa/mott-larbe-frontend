@@ -17,14 +17,15 @@ export const TextEditDeleteModal = ({
 }: TextEditDeleteModalProps) => {
 	const { t } = useI18n();
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.stopPropagation();
+return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
 			onClick={onCancel}
 		>
 			<div
 				className="w-full max-w-[360px] rounded-xl bg-surf p-6 shadow-lg"
-				onClick={e => e.stopPropagation()}
+				onClick={handleClick}
 			>
 				<h2 className="mb-2 text-[15px] font-semibold text-t-1">
 					{t("admin.texts.editPage.deleteConfirmTitle")}

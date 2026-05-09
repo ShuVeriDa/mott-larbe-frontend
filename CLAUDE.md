@@ -99,6 +99,154 @@ features/search/model/
 
 ---
 
+## Separation of Concerns
+
+### Custom Hooks — primary approach
+
+All logic (state, effects, derived data, async calls, event handlers) lives in a custom hook. The component is a pure render function: it calls the hook and returns JSX.
+
+```ts
+// features/auth/model/use-login-form.ts
+export const useLoginForm = () => {
+  const [email, setEmail] = useState('')
+  const { mutate, isPending } = useMutation({ ... })
+  const handleSubmit = (e: SyntheticEvent) => { ... }
+  return { email, setEmail, isPending, handleSubmit }
+}
+
+// features/auth/ui/LoginForm.tsx
+const LoginForm = () => {
+  const { email, setEmail, isPending, handleSubmit } = useLoginForm()
+  return <form onSubmit={handleSubmit}>...</form>
+}
+```
+
+This is the **default pattern** for all Client Components.
+
+### Component Decomposition — extract when there is a reason
+
+Keep components small and focused. Extract a part into a separate component when **any** of the following is true:
+
+- **Size** — the file exceeds ~100–150 lines.
+- **Reuse** — the same JSX block appears in more than one place (DRY).
+- **Responsibility** — the block has its own distinct meaning and can be reasoned about independently (SRP).
+- **Readability** — the JSX nesting is deep enough that the parent becomes hard to scan.
+
+This project follows **Atomic Design**:
+
+```
+atoms      → shared/ui/button, shared/ui/input, shared/ui/badge …
+molecules  → shared/ui/input-group, shared/ui/modal …
+organisms  → entities/*/ui/*, features/*/ui/* (assembled from atoms + molecules)
+templates  → widgets/* (page sections assembled from organisms)
+pages      → app/* (thin orchestrators)
+```
+
+Place extracted components at the appropriate Atomic Design level inside the FSD layer they belong to. Do **not** extract prematurely — three similar lines are better than a premature abstraction.
+
+```tsx
+// ❌ one giant component
+const ProfilePage = () => (
+  <div>
+    {/* 50 lines of avatar + bio JSX */}
+    {/* 60 lines of stats JSX */}
+    {/* 40 lines of activity feed JSX */}
+  </div>
+)
+
+// ✅ decomposed
+const ProfilePage = () => (
+  <div>
+    <ProfileHeader />
+    <ProfileStats />
+    <ActivityFeed />
+  </div>
+)
+```
+
+### Handler Extraction — always extract event handlers
+
+Never pass anonymous functions directly in JSX for any event (`onClick`, `onChange`, `onSubmit`, `onKeyDown`, etc.). Always extract event handlers into named `handle*` functions inside the hook or component body.
+
+```tsx
+// ❌ inline handlers
+<button onClick={() => setOpen(true)}>Open</button>
+<input onChange={e => setValue(e.target.value)} />
+<form onSubmit={e => { e.preventDefault(); save() }}>
+
+// ✅ extracted handlers
+const handleOpen = () => setOpen(true)
+const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)
+const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); save() }
+
+<button onClick={handleOpen}>Open</button>
+<input onChange={handleValueChange} />
+<form onSubmit={handleSubmit}>
+```
+
+This keeps JSX readable and gives a named location to add logic later without restructuring.
+
+### Container/Presentational (Smart/Dumb) — use only when justified
+
+Use this pattern only when there is a clear reason: the same presentational component is reused with different data sources, or the component needs to be tested in Storybook in isolation without any data-fetching context.
+
+```ts
+// ✅ justified: ProductCard is reused in search results, recommendations, and cart
+const ProductCardContainer = ({ id }: { id: string }) => {
+  const product = useProduct(id)
+  return <ProductCard product={product} />
+}
+
+const ProductCard = ({ product }: { product: Product }) => (
+  <div>...</div>
+)
+```
+
+Do **not** split a component into container + presentational just because it fetches data — a custom hook already solves that.
+
+---
+
+## React Imports
+
+Always use named imports from `react`. Never use the `React.*` namespace.
+
+```tsx
+// ❌ wrong
+React.ComponentProps
+React.ReactNode
+React.FC
+React.useState
+React.useRef
+React.MouseEvent
+React.CSSProperties
+React.HTMLAttributes
+
+// ✅ correct
+import { ComponentProps, ReactNode, FC, useState, useRef, MouseEvent, CSSProperties, HTMLAttributes } from 'react'
+```
+
+---
+
+## Event Handlers
+
+Always use `e.currentTarget` instead of `e.target` in event handlers.
+
+```tsx
+// ❌ wrong
+const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+  e.target.value
+}
+
+// ✅ correct
+const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+  e.currentTarget.value
+}
+```
+
+`e.currentTarget` always refers to the element the handler is attached to and is correctly typed by TypeScript. `e.target` can be any descendant element and loses type safety.
+
+---
+
 ## SEO Best Practices (Next.js App Router)
 
 - **Every page must export metadata** — either a static object or a dynamic async function. Check the exact API shape in `node_modules/next/dist/docs/` (it may differ from earlier versions). The metadata must include at minimum: title, description, openGraph, and `alternates` with canonical URL and `hreflang` for all `[lang]` routes (che / ru / en).

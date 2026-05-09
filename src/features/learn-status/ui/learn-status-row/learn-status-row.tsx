@@ -40,12 +40,13 @@ export const LearnStatusRow = ({
 		<div className="flex gap-1.5">
 			{LEVELS.map((level) => {
 				const isActive = level === active;
-				return (
+								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => handleSelect(level);
+return (
 					<button
 						key={level}
 						type="button"
 						disabled={isPending}
-						onClick={() => handleSelect(level)}
+						onClick={handleClick}
 						className={cn(
 							"flex h-[30px] flex-1 items-center justify-center rounded-base",
 							"border-hairline border-bd-1 bg-surf-2 text-[11px] font-semibold",

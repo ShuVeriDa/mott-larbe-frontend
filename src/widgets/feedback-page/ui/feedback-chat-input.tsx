@@ -50,12 +50,13 @@ export const FeedbackChatInput = ({
 	};
 
 	if (isClosed && !isReopening) {
-		return (
+				const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setIsReopening(true);
+return (
 			<div className="flex flex-col items-center gap-2 border-t border-bd-1 px-4 pb-3.5 pt-3">
 				<p className="text-[12px] text-t-3">{t("feedback.chat.closed")}</p>
 				<button
 					type="button"
-					onClick={() => setIsReopening(true)}
+					onClick={handleClick}
 					className="flex h-[28px] items-center rounded-[8px] border border-acc px-3 text-[12px] font-medium text-acc transition-colors hover:bg-acc-bg"
 				>
 					{t("feedback.chat.reopen")}
@@ -64,16 +65,17 @@ export const FeedbackChatInput = ({
 		);
 	}
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"textarea">["onChange"]> = (e) => {
+						setValue(e.target.value);
+						autoResize();
+					};
+return (
 		<div className="shrink-0 border-t border-bd-1 bg-surf px-4 pb-[13px] pt-2.5 transition-colors max-sm:pb-[calc(12px+env(safe-area-inset-bottom,0))]">
 			<div className="flex items-end gap-2 rounded-xl border border-bd-2 bg-surf-2 px-2.5 py-2 focus-within:border-acc">
 				<textarea
 					ref={textareaRef}
 					value={value}
-					onChange={(e) => {
-						setValue(e.target.value);
-						autoResize();
-					}}
+					onChange={handleChange}
 					onKeyDown={handleKeyDown}
 					placeholder={t("feedback.chat.placeholder")}
 					rows={1}

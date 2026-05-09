@@ -33,7 +33,9 @@ export const DashboardPage = () => {
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setSearchQuery(e.target.value);
+	const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => refetch();
+return (
 		<>
 			<header className="flex shrink-0 items-center gap-3 border-hairline border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-md:px-4 max-sm:px-3.5 max-sm:py-2.5">
 				<Typography
@@ -61,7 +63,7 @@ export const DashboardPage = () => {
 					<input
 						type="search"
 						value={searchQuery}
-						onChange={(e) => setSearchQuery(e.target.value)}
+						onChange={handleChange}
 						placeholder={t("dashboard.searchPlaceholder")}
 						className="flex-1 border-none bg-transparent text-[12.5px] text-t-1 outline-none placeholder:text-t-3"
 					/>
@@ -77,7 +79,7 @@ export const DashboardPage = () => {
 					</Typography>
 					<button
 						type="button"
-						onClick={() => refetch()}
+						onClick={handleClick}
 						className="rounded-md bg-acc px-4 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
 					>
 						{t("dashboard.retry")}

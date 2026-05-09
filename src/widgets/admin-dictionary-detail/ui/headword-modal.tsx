@@ -39,10 +39,13 @@ export const HeadwordModal = ({
 
 	if (!isOpen) return null;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setWord(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setIsPrimary(e.target.checked);
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
-			onClick={e => e.target === e.currentTarget && onClose()}
+			onClick={handleClick}
 		>
 			<div className="w-[440px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
 				<div className="mb-1 font-display text-[15px] text-t-1">
@@ -62,7 +65,7 @@ export const HeadwordModal = ({
 							type="text"
 							placeholder={t("admin.dictionaryDetail.headwordPlaceholder")}
 							value={word}
-							onChange={e => setWord(e.target.value)}
+							onChange={handleChange}
 						/>
 					</div>
 					<label className="flex cursor-pointer items-center gap-2.5">
@@ -70,7 +73,7 @@ export const HeadwordModal = ({
 							type="checkbox"
 							className="size-4 cursor-pointer rounded"
 							checked={isPrimary}
-							onChange={e => setIsPrimary(e.target.checked)}
+							onChange={handleChange2}
 						/>
 						<span className="text-[13px] text-t-2">
 							{t("admin.dictionaryDetail.markAsPrimary")}

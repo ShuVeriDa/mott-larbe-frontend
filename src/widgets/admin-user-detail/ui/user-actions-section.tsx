@@ -36,7 +36,17 @@ export const UserActionsSection = ({ user, mutations, sessions, onManageSubscrip
 		}
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof ActionButton>["onClick"]> = () => sessions.logoutAll.mutate();
+	const handleClick2: NonNullable<React.ComponentProps<typeof ActionButton>["onClick"]> = () => setShowCoupon((v) => !v);
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setCouponInput(e.target.value);
+	const handleKeyDown: NonNullable<React.ComponentProps<"input">["onKeyDown"]> = (e) => e.key === "Enter" && handleCouponSubmit();
+	const handleClick3: NonNullable<React.ComponentProps<typeof ActionButton>["onClick"]> = () =>
+						isFrozen
+							? mutations.unfreeze.mutate(user.id)
+							: mutations.freeze.mutate(user.id);
+	const handleClick4: NonNullable<React.ComponentProps<typeof ActionButton>["onClick"]> = () => mutations.block.mutate(user.id);
+	const handleClick5: NonNullable<React.ComponentProps<typeof ActionButton>["onClick"]> = () => mutations.remove.mutate(user.id);
+return (
 		<div className="flex flex-col gap-1.5 px-4 py-3">
 			<div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
 				{t("admin.userDetail.actions.title")}
@@ -47,7 +57,7 @@ export const UserActionsSection = ({ user, mutations, sessions, onManageSubscrip
 			<ActionButton
 				icon={<SessionsIcon />}
 				label={t("admin.userDetail.actions.resetSessions")}
-				onClick={() => sessions.logoutAll.mutate()}
+				onClick={handleClick}
 				disabled={sessions.logoutAll.isPending}
 			/>
 
@@ -55,14 +65,14 @@ export const UserActionsSection = ({ user, mutations, sessions, onManageSubscrip
 				<ActionButton
 					icon={<CouponIcon />}
 					label={t("admin.userDetail.actions.applyCoupon")}
-					onClick={() => setShowCoupon((v) => !v)}
+					onClick={handleClick2}
 				/>
 				{showCoupon && (
 					<div className="mt-1.5 flex gap-1.5">
 						<input
 							value={couponInput}
-							onChange={(e) => setCouponInput(e.target.value)}
-							onKeyDown={(e) => e.key === "Enter" && handleCouponSubmit()}
+							onChange={handleChange}
+							onKeyDown={handleKeyDown}
 							placeholder="PROMO_CODE"
 							className="h-7 flex-1 rounded-[6px] border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1 outline-none placeholder:text-t-4 focus:border-acc"
 						/>
@@ -86,10 +96,7 @@ export const UserActionsSection = ({ user, mutations, sessions, onManageSubscrip
 							: t("admin.users.actions.freeze")
 					}
 					variant="amber"
-					onClick={() =>
-						isFrozen
-							? mutations.unfreeze.mutate(user.id)
-							: mutations.freeze.mutate(user.id)
+					onClick={handleClick3
 					}
 					disabled={mutations.freeze.isPending || mutations.unfreeze.isPending}
 				/>
@@ -100,7 +107,7 @@ export const UserActionsSection = ({ user, mutations, sessions, onManageSubscrip
 					icon={<BlockIcon />}
 					label={t("admin.users.actions.block")}
 					variant="danger"
-					onClick={() => mutations.block.mutate(user.id)}
+					onClick={handleClick4}
 					disabled={mutations.block.isPending}
 				/>
 			)}
@@ -109,7 +116,7 @@ export const UserActionsSection = ({ user, mutations, sessions, onManageSubscrip
 				icon={<DeleteIcon />}
 				label={t("admin.users.actions.delete")}
 				variant="danger"
-				onClick={() => mutations.remove.mutate(user.id)}
+				onClick={handleClick5}
 				disabled={mutations.remove.isPending}
 			/>
 		</div>

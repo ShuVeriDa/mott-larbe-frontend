@@ -179,7 +179,9 @@ export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 		return `/${lang}/texts${qs ? `?${qs}` : ""}`;
 	})();
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof FilterButton>["onClick"]> = () => setFilterLang(undefined);
+	const handleClick2: NonNullable<React.ComponentProps<typeof FilterButton>["onClick"]> = () => setFilterLevel(undefined);
+return (
 		<section>
 			<div className="mb-2.5 flex items-center justify-between gap-2">
 				<span className="text-[13px] font-semibold text-t-1">
@@ -197,21 +199,24 @@ export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 				<div className="flex items-center gap-[3px]">
 					<FilterButton
 						active={filterLang === undefined}
-						onClick={() => setFilterLang(undefined)}
+						onClick={handleClick}
 					>
 						{t("dashboard.library.langAll")}
 					</FilterButton>
-					{LANG_FILTERS.map((l) => (
+					{LANG_FILTERS.map((l) => {
+					  const handleClick: NonNullable<React.ComponentProps<typeof FilterButton>["onClick"]> = () =>
+								setFilterLang(filterLang === l ? undefined : l);
+					  return (
 						<FilterButton
 							key={l}
 							active={filterLang === l}
-							onClick={() =>
-								setFilterLang(filterLang === l ? undefined : l)
+							onClick={handleClick
 							}
 						>
 							{LANG_TAG[l]}
 						</FilterButton>
-					))}
+					);
+					})}
 				</div>
 
 				<div className="h-3 w-px bg-bd-2" />
@@ -219,21 +224,24 @@ export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 				<div className="flex items-center gap-[3px]">
 					<FilterButton
 						active={filterLevel === undefined}
-						onClick={() => setFilterLevel(undefined)}
+						onClick={handleClick2}
 					>
 						{t("dashboard.library.levelAll")}
 					</FilterButton>
-					{LEVEL_FILTERS.map((lvl) => (
+					{LEVEL_FILTERS.map((lvl) => {
+					  const handleClick: NonNullable<React.ComponentProps<typeof FilterButton>["onClick"]> = () =>
+								setFilterLevel(filterLevel === lvl ? undefined : lvl);
+					  return (
 						<FilterButton
 							key={lvl}
 							active={filterLevel === lvl}
-							onClick={() =>
-								setFilterLevel(filterLevel === lvl ? undefined : lvl)
+							onClick={handleClick
 							}
 						>
 							{lvl}
 						</FilterButton>
-					))}
+					);
+					})}
 				</div>
 			</div>
 

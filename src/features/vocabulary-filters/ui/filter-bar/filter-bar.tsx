@@ -32,7 +32,10 @@ export const FilterBar = () => {
 	const setCefrLevel = useVocabularyFilters((s) => s.setCefrLevel);
 	const setSort = useVocabularyFilters((s) => s.setSort);
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof Chip>["onClick"]> = () => setStatus(null);
+	const handleClick2: NonNullable<React.ComponentProps<typeof Chip>["onClick"]> = () => setCefrLevel(null);
+	const handleChange: NonNullable<React.ComponentProps<typeof Select>["onChange"]> = (e) => setSort(e.target.value as DictionarySort);
+return (
 		<div
 			className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-hairline border-b border-bd-1 bg-surf px-[18px] py-2.5 transition-colors duration-200 [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden max-md:px-[14px]"
 			role="toolbar"
@@ -44,18 +47,21 @@ export const FilterBar = () => {
 			>
 				{t("vocabulary.filterByStatus")}
 			</Typography>
-			<Chip active={status === null} onClick={() => setStatus(null)}>
+			<Chip active={status === null} onClick={handleClick}>
 				{t("vocabulary.all")}
 			</Chip>
-			{LEARNING_LEVELS.map((level) => (
+			{LEARNING_LEVELS.map((level) => {
+			  const handleClick: NonNullable<React.ComponentProps<typeof Chip>["onClick"]> = () => setStatus(level);
+			  return (
 				<Chip
 					key={level}
 					active={status === level}
-					onClick={() => setStatus(level)}
+					onClick={handleClick}
 				>
 					{t(STATUS_LABELS[level])}
 				</Chip>
-			))}
+			);
+			})}
 
 			<span
 				aria-hidden="true"
@@ -70,25 +76,28 @@ export const FilterBar = () => {
 			</Typography>
 			<Chip
 				active={cefrLevel === null}
-				onClick={() => setCefrLevel(null)}
+				onClick={handleClick2}
 			>
 				{t("vocabulary.all")}
 			</Chip>
-			{CEFR_LEVELS.map((level) => (
+			{CEFR_LEVELS.map((level) => {
+			  const handleClick: NonNullable<React.ComponentProps<typeof Chip>["onClick"]> = () => setCefrLevel(level);
+			  return (
 				<Chip
 					key={level}
 					active={cefrLevel === level}
-					onClick={() => setCefrLevel(level)}
+					onClick={handleClick}
 				>
 					{level}
 				</Chip>
-			))}
+			);
+			})}
 
 			<Select
 				wrapperClassName="ml-auto w-auto shrink-0"
 				className="!h-[26px] !text-[11px]"
 				value={sort}
-				onChange={(e) => setSort(e.target.value as DictionarySort)}
+				onChange={handleChange}
 				aria-label={t("vocabulary.sort.added")}
 			>
 				{SORT_OPTIONS.map((opt) => (

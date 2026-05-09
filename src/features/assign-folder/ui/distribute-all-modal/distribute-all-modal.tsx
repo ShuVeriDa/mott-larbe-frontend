@@ -65,11 +65,13 @@ export const DistributeAllModal = ({
 			</p>
 
 			<ul className="mb-4 max-h-[240px] overflow-y-auto rounded-card border-hairline border-bd-1">
-				{folders.map((f) => (
+				{folders.map((f) => {
+				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setSelectedId(f.id);
+				  return (
 					<li key={f.id}>
 						<button
 							type="button"
-							onClick={() => setSelectedId(f.id)}
+							onClick={handleClick}
 							className={cn(
 								"flex w-full items-center gap-2.5 px-3 py-2.5 text-left",
 								"text-[13px] transition-colors",
@@ -93,7 +95,8 @@ export const DistributeAllModal = ({
 							)}
 						</button>
 					</li>
-				))}
+				);
+				})}
 			</ul>
 
 			<ModalActions>

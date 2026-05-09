@@ -39,7 +39,8 @@ const SessionRow = ({
 	const { t } = useI18n();
 	const locationLabel = session.location?.city ?? t("profile.security.unknownLocation");
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => onTerminate(session.id);
+return (
 		<div className="flex items-center gap-3 border-b border-hairline border-bd-1 px-4 py-2.5 last:border-b-0">
 			<span
 				className={`flex size-8 shrink-0 items-center justify-center rounded-[8px] ${
@@ -65,7 +66,7 @@ const SessionRow = ({
 					variant="outline"
 					className="h-7 px-2.5 text-[11.5px] shrink-0"
 					disabled={isTerminating}
-					onClick={() => onTerminate(session.id)}
+					onClick={handleClick}
 				>
 					{t("settings.sessions.terminate")}
 				</Button>

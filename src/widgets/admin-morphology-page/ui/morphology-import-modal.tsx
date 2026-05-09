@@ -48,10 +48,18 @@ export const MorphologyImportModal = ({
 		onSubmit(file, overwrite);
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
+	const handleDragOver: NonNullable<React.ComponentProps<"div">["onDragOver"]> = e => {
+								e.preventDefault();
+								setDragging(true);
+							};
+	const handleDragLeave: NonNullable<React.ComponentProps<"div">["onDragLeave"]> = () => setDragging(false);
+	const handleClick2: NonNullable<React.ComponentProps<"div">["onClick"]> = () => inputRef.current?.click();
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setOverwrite(e.target.checked);
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"
-			onClick={e => e.target === e.currentTarget && onClose()}
+			onClick={handleClick}
 		>
 			<div className="w-full max-w-[480px] overflow-y-auto rounded-[14px] border border-bd-2 bg-surf p-5 shadow-md max-sm:max-w-full max-sm:rounded-b-none max-sm:rounded-t-[16px] max-sm:pb-7">
 				<h2 className="font-display text-[15px] text-t-1 mb-1">
@@ -119,13 +127,10 @@ export const MorphologyImportModal = ({
 									? "border-acc bg-acc-bg"
 									: "hover:border-acc hover:bg-acc-bg",
 							)}
-							onDragOver={e => {
-								e.preventDefault();
-								setDragging(true);
-							}}
-							onDragLeave={() => setDragging(false)}
+							onDragOver={handleDragOver}
+							onDragLeave={handleDragLeave}
 							onDrop={handleDrop}
-							onClick={() => inputRef.current?.click()}
+							onClick={handleClick2}
 						>
 							<input
 								ref={inputRef}
@@ -177,7 +182,7 @@ export const MorphologyImportModal = ({
 							<input
 								type="checkbox"
 								checked={overwrite}
-								onChange={e => setOverwrite(e.target.checked)}
+								onChange={handleChange}
 								className="accent-acc"
 							/>
 							<span className="text-[12.5px] text-t-2">

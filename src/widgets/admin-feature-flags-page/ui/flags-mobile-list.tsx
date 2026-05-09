@@ -49,7 +49,9 @@ export const FlagsMobileList = ({
 
 	return (
 		<div className="hidden max-sm:block">
-			{items.map((flag) => (
+			{items.map((flag) => {
+			  const handleChange: NonNullable<React.ComponentProps<typeof FlagToggle>["onChange"]> = (v) => onToggle(flag.id, v);
+			  return (
 				<div
 					key={flag.id}
 					className="mb-2 overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors"
@@ -75,7 +77,7 @@ export const FlagsMobileList = ({
 							</div>
 						</div>
 						<div className="flex shrink-0 flex-col items-end gap-2">
-							<FlagToggle enabled={flag.isEnabled} onChange={(v) => onToggle(flag.id, v)} />
+							<FlagToggle enabled={flag.isEnabled} onChange={handleChange} />
 							<FlagRowActions
 								flag={flag}
 								onEdit={onEdit}
@@ -87,7 +89,8 @@ export const FlagsMobileList = ({
 						</div>
 					</div>
 				</div>
-			))}
+			);
+			})}
 		</div>
 	);
 };

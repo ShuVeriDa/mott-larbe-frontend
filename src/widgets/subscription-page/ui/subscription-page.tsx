@@ -36,7 +36,10 @@ export const SubscriptionPage = () => {
 		setUpgradeOpen(true);
 	};
 
-	return (
+		const handleCancel: NonNullable<React.ComponentProps<typeof ManageCard>["onCancel"]> = () => setCancelOpen(true);
+	const handleClose: NonNullable<React.ComponentProps<typeof UpgradeModal>["onClose"]> = () => setUpgradeOpen(false);
+	const handleClose2: NonNullable<React.ComponentProps<typeof CancelModal>["onClose"]> = () => setCancelOpen(false);
+return (
 		<>
 			<SubscriptionTopbar />
 
@@ -57,7 +60,7 @@ export const SubscriptionPage = () => {
 							<PaymentHistory />
 							<PromoCard />
 							{hasActivePaid ? (
-								<ManageCard onCancel={() => setCancelOpen(true)} />
+								<ManageCard onCancel={handleCancel} />
 							) : null}
 						</div>
 					</div>
@@ -68,12 +71,12 @@ export const SubscriptionPage = () => {
 				plan={pendingPlan}
 				cycle={pendingCycle}
 				open={upgradeOpen}
-				onClose={() => setUpgradeOpen(false)}
+				onClose={handleClose}
 			/>
 
 			<CancelModal
 				open={cancelOpen}
-				onClose={() => setCancelOpen(false)}
+				onClose={handleClose2}
 			/>
 		</>
 	);

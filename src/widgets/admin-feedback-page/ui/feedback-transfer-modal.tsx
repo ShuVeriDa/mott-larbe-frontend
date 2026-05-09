@@ -52,7 +52,8 @@ export const FeedbackTransferModal = ({
 		if (e.target === e.currentTarget) onClose();
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"textarea">["onChange"]> = (e) => setNote(e.target.value);
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 px-5"
 			onClick={handleBackdrop}
@@ -90,11 +91,13 @@ export const FeedbackTransferModal = ({
 					</p>
 				) : (
 					<div className="mb-3 flex flex-col gap-1.5">
-						{candidates.map((a) => (
+						{candidates.map((a) => {
+						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setSelectedId(a.id);
+						  return (
 							<button
 								key={a.id}
 								type="button"
-								onClick={() => setSelectedId(a.id)}
+								onClick={handleClick}
 								className={cn(
 									"flex items-center gap-2.5 rounded-lg border border-bd-2 bg-surf-2 px-3 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-3",
 									selectedId === a.id && "border-acc bg-acc-bg",
@@ -110,14 +113,15 @@ export const FeedbackTransferModal = ({
 								</div>
 								{a.name} {a.surname}
 							</button>
-						))}
+						);
+						})}
 					</div>
 				)}
 
 				{/* Optional note */}
 				<textarea
 					value={note}
-					onChange={(e) => setNote(e.target.value)}
+					onChange={handleChange}
 					placeholder={t("admin.feedback.transfer.notePlaceholder")}
 					rows={2}
 					className="mb-3 w-full resize-none rounded-base border border-bd-2 bg-surf-2 px-3 py-2 text-[12px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc"

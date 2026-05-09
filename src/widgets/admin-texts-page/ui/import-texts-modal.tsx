@@ -77,12 +77,17 @@ export const ImportTextsModal = ({ onClose }: ImportTextsModalProps) => {
 		if (fileRef.current) fileRef.current.value = "";
 	};
 
-	return (
+		const handleMouseDown: NonNullable<React.ComponentProps<"div">["onMouseDown"]> = e => {
+				if (e.target === e.currentTarget) onClose();
+			};
+	const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = () => fileRef.current?.click();
+	const handleKeyDown: NonNullable<React.ComponentProps<"div">["onKeyDown"]> = e => {
+									if (e.key === "Enter") fileRef.current?.click();
+								};
+return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
-			onMouseDown={e => {
-				if (e.target === e.currentTarget) onClose();
-			}}
+			onMouseDown={handleMouseDown}
 		>
 			<div className="flex w-full max-w-[560px] flex-col rounded-[12px] border border-bd-2 bg-surf shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
 				{/* Header */}
@@ -190,10 +195,8 @@ export const ImportTextsModal = ({ onClose }: ImportTextsModalProps) => {
 							{/* File picker */}
 							<div
 								className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[8px] border border-dashed border-bd-3 bg-surf-2 px-4 py-8 transition-colors hover:border-acc hover:bg-surf-3"
-								onClick={() => fileRef.current?.click()}
-								onKeyDown={e => {
-									if (e.key === "Enter") fileRef.current?.click();
-								}}
+								onClick={handleClick}
+								onKeyDown={handleKeyDown}
 								role="button"
 								tabIndex={0}
 							>

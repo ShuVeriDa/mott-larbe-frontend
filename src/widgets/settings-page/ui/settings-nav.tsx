@@ -24,11 +24,12 @@ export const SettingsNav = ({ active, onChange }: SettingsNavProps) => {
 		>
 			{SECTIONS.map(section => {
 				const isActive = section.id === active;
-				return (
+								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(section.id);
+return (
 					<button
 						key={section.id}
 						type="button"
-						onClick={() => onChange(section.id)}
+						onClick={handleClick}
 						aria-current={isActive ? "page" : undefined}
 						className={cn(
 							"flex items-center gap-2.5 rounded-base px-2.5 py-1.5 text-left font-[inherit] transition-colors duration-100",

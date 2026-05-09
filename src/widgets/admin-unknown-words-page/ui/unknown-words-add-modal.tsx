@@ -49,16 +49,18 @@ const LemmaAutocomplete = ({
 		return () => document.removeEventListener("mousedown", handler);
 	}, []);
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => {
+					setQ(e.target.value);
+					setOpen(true);
+				};
+	const handleFocus: NonNullable<React.ComponentProps<"input">["onFocus"]> = () => q && setOpen(true);
+return (
 		<div ref={ref} className="relative">
 			<input
 				type="text"
 				value={q}
-				onChange={(e) => {
-					setQ(e.target.value);
-					setOpen(true);
-				}}
-				onFocus={() => q && setOpen(true)}
+				onChange={handleChange}
+				onFocus={handleFocus}
 				placeholder={placeholder}
 				className={inputCls}
 				autoComplete="off"
@@ -68,11 +70,8 @@ const LemmaAutocomplete = ({
 					{isFetching && !data?.length ? (
 						<div className="px-3 py-2.5 text-[12px] text-t-3">…</div>
 					) : data?.length ? (
-						data.map((item) => (
-							<button
-								key={item.id}
-								type="button"
-								onMouseDown={(e) => {
+						data.map((item) => {
+						  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = (e) => {
 									e.preventDefault();
 									onSelect(item.id, item.headword);
 									setQ(
@@ -81,7 +80,12 @@ const LemmaAutocomplete = ({
 											: item.headword,
 									);
 									setOpen(false);
-								}}
+								};
+						  return (
+							<button
+								key={item.id}
+								type="button"
+								onMouseDown={handleMouseDown}
 								className="flex w-full flex-col gap-0.5 px-3 py-2 text-left transition-colors hover:bg-surf-2"
 							>
 								<span className="text-[13px] font-medium text-t-1">{item.headword}</span>
@@ -89,7 +93,8 @@ const LemmaAutocomplete = ({
 									<span className="text-[11px] text-t-3">{item.translation}</span>
 								)}
 							</button>
-						))
+						);
+						})
 					) : (
 						<div className="px-3 py-2.5 text-[12px] text-t-3">—</div>
 					)}
@@ -160,10 +165,18 @@ export const UnknownWordsAddModal = ({
 	const canSubmit =
 		action === "new" ? !!translation && !isPending : !!selectedLemma && !isPending;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setHeadword(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => setPartOfSpeech(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setTranslation(e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => setLevel(e.target.value);
+	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setDomain(e.target.value);
+	const handleChange6: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => setFormsRaw(e.target.value);
+	const handleSelect: NonNullable<React.ComponentProps<typeof LemmaAutocomplete>["onSelect"]> = (id, label) => setSelectedLemma({ id, label });
+return (
 		<div
 			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 p-4 backdrop-blur-sm max-sm:items-end max-sm:p-0"
-			onClick={(e) => e.target === e.currentTarget && onClose()}
+			onClick={handleClick}
 		>
 			<div className="w-full max-w-[520px] max-h-[calc(100vh-32px)] overflow-y-auto [&::-webkit-scrollbar]:w-0 rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] animate-[modal-in_0.15s_ease] max-sm:max-w-full max-sm:rounded-t-[18px] max-sm:rounded-b-none max-sm:max-h-[94vh]">
 				{/* Header */}
@@ -210,7 +223,9 @@ export const UnknownWordsAddModal = ({
 						{t("admin.unknownWords.addModal.actionLabel")}
 					</div>
 					<div className="flex flex-col gap-1.5">
-						{(["new", "link"] as ActionType[]).map((type) => (
+						{(["new", "link"] as ActionType[]).map((type) => {
+						  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = () => setAction(type);
+						  return (
 							<label
 								key={type}
 								className={cn(
@@ -225,7 +240,7 @@ export const UnknownWordsAddModal = ({
 									name="dictAction"
 									value={type}
 									checked={action === type}
-									onChange={() => setAction(type)}
+									onChange={handleChange}
 									className="accent-acc shrink-0"
 								/>
 								<div>
@@ -245,7 +260,8 @@ export const UnknownWordsAddModal = ({
 									</div>
 								</div>
 							</label>
-						))}
+						);
+						})}
 					</div>
 				</div>
 
@@ -260,7 +276,7 @@ export const UnknownWordsAddModal = ({
 								<input
 									type="text"
 									value={headword}
-									onChange={(e) => setHeadword(e.target.value)}
+									onChange={handleChange}
 									placeholder={state.word}
 									className={inputCls}
 								/>
@@ -271,7 +287,7 @@ export const UnknownWordsAddModal = ({
 								</label>
 								<select
 									value={partOfSpeech}
-									onChange={(e) => setPartOfSpeech(e.target.value)}
+									onChange={handleChange2}
 									className={selectCls}
 									style={{
 										backgroundImage: CHEVRON_BG,
@@ -296,7 +312,7 @@ export const UnknownWordsAddModal = ({
 							<input
 								type="text"
 								value={translation}
-								onChange={(e) => setTranslation(e.target.value)}
+								onChange={handleChange3}
 								placeholder={t("admin.unknownWords.addModal.translationPlaceholder")}
 								className={inputCls}
 							/>
@@ -309,7 +325,7 @@ export const UnknownWordsAddModal = ({
 								</label>
 								<select
 									value={level}
-									onChange={(e) => setLevel(e.target.value)}
+									onChange={handleChange4}
 									className={selectCls}
 									style={{
 										backgroundImage: CHEVRON_BG,
@@ -330,7 +346,7 @@ export const UnknownWordsAddModal = ({
 								<input
 									type="text"
 									value={domain}
-									onChange={(e) => setDomain(e.target.value)}
+									onChange={handleChange5}
 									placeholder={t("admin.unknownWords.addModal.domainPlaceholder")}
 									className={inputCls}
 								/>
@@ -344,7 +360,7 @@ export const UnknownWordsAddModal = ({
 							<input
 								type="text"
 								value={formsRaw}
-								onChange={(e) => setFormsRaw(e.target.value)}
+								onChange={handleChange6}
 								placeholder={t("admin.unknownWords.addModal.formsPlaceholder")}
 								className={inputCls}
 							/>
@@ -363,7 +379,7 @@ export const UnknownWordsAddModal = ({
 						</label>
 						<LemmaAutocomplete
 							value={selectedLemma}
-							onSelect={(id, label) => setSelectedLemma({ id, label })}
+							onSelect={handleSelect}
 							placeholder={t("admin.unknownWords.addModal.findLemmaPlaceholder")}
 						/>
 					</div>

@@ -45,10 +45,13 @@ export const ExampleModal = ({
 	const taCls =
 		"w-full resize-y rounded-lg border border-bd-2 bg-surf-2 px-2.5 py-2 text-[12.5px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => setText(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => setTranslation(e.target.value);
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
-			onClick={e => e.target === e.currentTarget && onClose()}
+			onClick={handleClick}
 		>
 			<div className="w-[440px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
 				<div className="mb-1 font-display text-[15px] text-t-1">
@@ -69,7 +72,7 @@ export const ExampleModal = ({
 							className={`${taCls} min-h-[68px]`}
 							placeholder={t("admin.dictionaryDetail.exampleSrcPlaceholder")}
 							value={text}
-							onChange={e => setText(e.target.value)}
+							onChange={handleChange}
 						/>
 					</div>
 					<div className="mb-0">
@@ -82,7 +85,7 @@ export const ExampleModal = ({
 								"admin.dictionaryDetail.exampleTranslationPlaceholder",
 							)}
 							value={translation}
-							onChange={e => setTranslation(e.target.value)}
+							onChange={handleChange2}
 						/>
 					</div>
 					<div className="mt-5 flex justify-end gap-2">

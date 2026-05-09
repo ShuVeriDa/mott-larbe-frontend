@@ -39,7 +39,9 @@ export const ChangeEmailModal = ({ open, onClose }: ChangeEmailModalProps) => {
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setNewEmail(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setPassword(e.target.value);
+return (
 		<Modal open={open} onClose={handleClose} title={t("profile.security.changeEmailTitle")}>
 			<Typography tag="p" className="mb-4 text-[12.5px] text-t-2 leading-[1.55]">
 				{t("profile.security.changeEmailDesc")}
@@ -51,7 +53,7 @@ export const ChangeEmailModal = ({ open, onClose }: ChangeEmailModalProps) => {
 						id="ce-email"
 						type="email"
 						value={newEmail}
-						onChange={(e) => setNewEmail(e.target.value)}
+						onChange={handleChange}
 						required
 					/>
 				</div>
@@ -61,7 +63,7 @@ export const ChangeEmailModal = ({ open, onClose }: ChangeEmailModalProps) => {
 						id="ce-password"
 						type="password"
 						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={handleChange2}
 						required
 					/>
 				</div>

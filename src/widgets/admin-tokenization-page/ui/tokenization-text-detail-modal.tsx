@@ -59,14 +59,17 @@ export const TokenizationTextDetailModal = ({
 		ERROR: t("admin.tokenization.status.ERROR"),
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.stopPropagation();
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => textId && mutations.runText.mutate(textId);
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => textId && mutations.resetText.mutate(textId);
+return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"
 			onClick={onClose}
 		>
 			<div
 				className="flex max-h-[90vh] w-full max-w-[580px] flex-col overflow-hidden rounded-[14px] border border-bd-2 bg-surf shadow-md max-sm:max-h-[92vh] max-sm:rounded-b-none"
-				onClick={e => e.stopPropagation()}
+				onClick={handleClick}
 			>
 				{/* Header */}
 				<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-4 py-3.5">
@@ -266,7 +269,7 @@ export const TokenizationTextDetailModal = ({
 				{/* Footer actions */}
 				<div className="flex shrink-0 gap-2 border-t border-bd-1 px-4 py-3.5">
 					<button
-						onClick={() => textId && mutations.runText.mutate(textId)}
+						onClick={handleClick2}
 						disabled={
 							mutations.runText.isPending ||
 							detail?.processingStatus === "RUNNING"
@@ -279,7 +282,7 @@ export const TokenizationTextDetailModal = ({
 						{t("admin.tokenization.detail.runBtn")}
 					</button>
 					<button
-						onClick={() => textId && mutations.resetText.mutate(textId)}
+						onClick={handleClick3}
 						disabled={mutations.resetText.isPending}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 disabled:opacity-50"
 					>

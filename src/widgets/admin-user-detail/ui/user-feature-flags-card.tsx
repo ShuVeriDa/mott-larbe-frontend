@@ -46,7 +46,8 @@ export const UserFeatureFlagsCard = ({ featureFlags }: UserFeatureFlagsCardProps
 					{flags.map((flag) => {
 						const isOn = flag.effectiveValue;
 						const hasOverride = flag.userOverride !== null;
-						return (
+												const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => handleToggle(flag.flagId, isOn, hasOverride);
+return (
 							<div
 								key={flag.flagId}
 								className="flex items-center justify-between gap-2 border-b border-bd-1 px-3.5 py-2 last:border-b-0"
@@ -65,7 +66,7 @@ export const UserFeatureFlagsCard = ({ featureFlags }: UserFeatureFlagsCardProps
 									)}
 								</div>
 								<button
-									onClick={() => handleToggle(flag.flagId, isOn, hasOverride)}
+									onClick={handleClick}
 									disabled={setOverride.isPending}
 									className={cn(
 										"relative h-[18px] w-8 shrink-0 rounded-full border-none transition-colors disabled:opacity-60",

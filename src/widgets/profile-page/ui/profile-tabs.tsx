@@ -21,11 +21,13 @@ export const ProfileTabs = ({ active, onChange }: ProfileTabsProps) => {
 
 	return (
 		<div className="flex gap-px rounded-[9px] bg-surf-3 p-[3px] w-fit max-sm:w-full">
-			{tabs.map(({ id, label }) => (
+			{tabs.map(({ id, label }) => {
+			  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(id);
+			  return (
 				<button
 					key={id}
 					type="button"
-					onClick={() => onChange(id)}
+					onClick={handleClick}
 					className={cn(
 						"h-7 px-3.5 rounded-base text-[12.5px] font-medium font-[inherit] cursor-pointer transition-all duration-100 whitespace-nowrap",
 						"max-sm:flex-1 max-sm:h-[34px] max-sm:text-[12px] max-sm:px-1.5",
@@ -36,7 +38,8 @@ export const ProfileTabs = ({ active, onChange }: ProfileTabsProps) => {
 				>
 					{label}
 				</button>
-			))}
+			);
+			})}
 		</div>
 	);
 };

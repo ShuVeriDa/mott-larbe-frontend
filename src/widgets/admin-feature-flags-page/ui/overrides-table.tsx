@@ -63,7 +63,8 @@ export const OverridesTable = ({ items, isLoading, onDelete, t }: OverridesTable
 							const initials = (
 								(item.user.name?.[0] ?? "") + (item.user.surname?.[0] ?? "")
 							).toUpperCase() || item.user.email[0].toUpperCase();
-							return (
+														const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDelete(item.id);
+return (
 								<tr
 									key={item.id}
 									className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2"
@@ -128,7 +129,7 @@ export const OverridesTable = ({ items, isLoading, onDelete, t }: OverridesTable
 									<td className="py-3 pr-3.5">
 										<button
 											type="button"
-											onClick={() => onDelete(item.id)}
+											onClick={handleClick}
 											className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 											title={t("admin.featureFlags.overrides.remove")}
 										>

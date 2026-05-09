@@ -22,7 +22,10 @@ export const CouponsToolbar = ({
 }: Props) => {
 	const { t } = useI18n();
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onSearchChange(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onTypeChange(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onPlanChange(e.target.value);
+return (
 		<div className="flex flex-wrap items-center gap-2 border-b border-bd-1 px-3.5 py-2.5">
 			{/* Search */}
 			<div className="relative max-w-[240px] flex-1">
@@ -38,7 +41,7 @@ export const CouponsToolbar = ({
 				</svg>
 				<input
 					value={search}
-					onChange={e => onSearchChange(e.target.value)}
+					onChange={handleChange}
 					placeholder={t("admin.coupons.toolbar.searchPlaceholder")}
 					className="h-[30px] w-full rounded-base border border-bd-1 bg-surf-2 pl-7 pr-2.5 text-[12.5px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 				/>
@@ -47,7 +50,7 @@ export const CouponsToolbar = ({
 			{/* Type select */}
 			<select
 				value={type}
-				onChange={e => onTypeChange(e.target.value)}
+				onChange={handleChange2}
 				className="h-[30px] appearance-none rounded-base border border-bd-1 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2710%27 height=%276%27 fill=%27none%27%3E%3Cpath d=%27M1 1l4 4 4-4%27 stroke=%27%23a5a39a%27 stroke-width=%271.3%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E')] bg-[position:right_7px_center] bg-no-repeat pl-2.5 pr-6 text-[12px] text-t-2 outline-none focus:border-acc focus:text-t-1"
 			>
 				<option value="">{t("admin.coupons.toolbar.allTypes")}</option>
@@ -60,7 +63,7 @@ export const CouponsToolbar = ({
 			{/* Plan select */}
 			<select
 				value={plan}
-				onChange={e => onPlanChange(e.target.value)}
+				onChange={handleChange3}
 				className="h-[30px] appearance-none rounded-base border border-bd-1 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2710%27 height=%276%27 fill=%27none%27%3E%3Cpath d=%27M1 1l4 4 4-4%27 stroke=%27%23a5a39a%27 stroke-width=%271.3%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E')] bg-[position:right_7px_center] bg-no-repeat pl-2.5 pr-6 text-[12px] text-t-2 outline-none focus:border-acc focus:text-t-1"
 			>
 				<option value="">{t("admin.coupons.toolbar.allPlans")}</option>

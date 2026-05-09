@@ -52,11 +52,13 @@ export const AnalyticsDifficultTexts = ({
 
 			{/* Tab strip */}
 			<div className="-mb-px flex gap-px overflow-x-auto border-b border-bd-1 px-4">
-				{TABS.map((tb) => (
+				{TABS.map((tb) => {
+				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onTabChange(tb);
+				  return (
 					<button
 						key={tb}
 						type="button"
-						onClick={() => onTabChange(tb)}
+						onClick={handleClick}
 						className={cn(
 							"whitespace-nowrap border-b-2 px-2.5 py-2 text-[12px] font-medium transition-colors",
 							tb === tab
@@ -66,7 +68,8 @@ export const AnalyticsDifficultTexts = ({
 					>
 						{t(`admin.analytics.difficultTexts.tab${tb.charAt(0).toUpperCase() + tb.slice(1)}`)}
 					</button>
-				))}
+				);
+				})}
 			</div>
 
 			{/* Rows */}

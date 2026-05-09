@@ -110,12 +110,23 @@ export const FeatureFlagModal = ({
 	const inputCls =
 		"h-[34px] w-full rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => {
+				if (e.target === e.currentTarget) onClose();
+			};
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => {
+							setKey(e.target.value);
+							setKeyError("");
+						};
+	const handleChange2: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => setDescription(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setCategory(e.target.value as FeatureFlagCategory);
+	const handleChange4: NonNullable<React.ComponentProps<"input">["onChange"]> = e =>
+								setRolloutPercent(
+									Math.max(0, Math.min(100, Number(e.target.value))),
+								);
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={e => {
-				if (e.target === e.currentTarget) onClose();
-			}}
+			onClick={handleClick}
 		>
 			<div className="w-[480px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08),0_2px_4px_rgba(0,0,0,0.04)] max-sm:w-full max-sm:max-h-[92vh] max-sm:overflow-y-auto max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -138,10 +149,7 @@ export const FeatureFlagModal = ({
 						className={cn(inputCls, keyError && "border-red-400")}
 						placeholder="category.feature_name"
 						value={key}
-						onChange={e => {
-							setKey(e.target.value);
-							setKeyError("");
-						}}
+						onChange={handleChange}
 						disabled={isEdit}
 					/>
 					{keyError ? (
@@ -162,7 +170,7 @@ export const FeatureFlagModal = ({
 						className="w-full min-h-[64px] resize-y rounded-[8px] border border-bd-2 bg-bg px-2.5 py-2 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 						placeholder={t("admin.featureFlags.modal.descPlaceholder")}
 						value={description}
-						onChange={e => setDescription(e.target.value)}
+						onChange={handleChange2}
 					/>
 				</div>
 
@@ -175,7 +183,7 @@ export const FeatureFlagModal = ({
 						<select
 							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 							value={category}
-							onChange={e => setCategory(e.target.value as FeatureFlagCategory)}
+							onChange={handleChange3}
 						>
 							{CATEGORIES.map(c => (
 								<option key={c} value={c}>
@@ -194,10 +202,7 @@ export const FeatureFlagModal = ({
 							max={100}
 							className={inputCls}
 							value={rolloutPercent}
-							onChange={e =>
-								setRolloutPercent(
-									Math.max(0, Math.min(100, Number(e.target.value))),
-								)
+							onChange={handleChange4
 							}
 						/>
 					</div>
@@ -211,11 +216,12 @@ export const FeatureFlagModal = ({
 					<div className="flex flex-wrap gap-1.5">
 						{ENVIRONMENTS.map(env => {
 							const selected = environments.includes(env);
-							return (
+														const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => toggleEnv(env);
+return (
 								<button
 									key={env}
 									type="button"
-									onClick={() => toggleEnv(env)}
+									onClick={handleClick}
 									className={cn(
 										"flex cursor-pointer items-center gap-1.5 rounded-[6px] border px-2.5 py-[5px] text-[12px] transition-all select-none",
 										selected

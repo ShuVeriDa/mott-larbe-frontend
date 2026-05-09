@@ -115,7 +115,12 @@ export const ReviewPage = () => {
 	const panelSm2Counts = screen === "done" ? sm2Counts : liveSm2Counts;
 	const panelDeckCounts = screen === "done" ? deckCounts : liveDeckCounts;
 
-	return (
+		const handleTryDeck: NonNullable<React.ComponentProps<typeof ReviewDone>["onTryDeck"]> = () => switchSystem("deck");
+	const handleUpgrade: NonNullable<React.ComponentProps<typeof ReviewDeckIntro>["onUpgrade"]> = () => {
+								window.location.assign("/subscription");
+							};
+	const handleGoSm2: NonNullable<React.ComponentProps<typeof ReviewDeckDone>["onGoSm2"]> = () => switchSystem("sm2");
+return (
 		<>
 			<ReviewTopbar
 				system={system}
@@ -150,7 +155,7 @@ export const ReviewPage = () => {
 							good={sm2Counts.good}
 							hard={sm2Counts.hard}
 							onBackToIntro={goToIntro}
-							onTryDeck={() => switchSystem("deck")}
+							onTryDeck={handleTryDeck}
 						/>
 					) : null}
 
@@ -162,9 +167,7 @@ export const ReviewPage = () => {
 							premiumLocked={premiumLocked}
 							hasDue={(deckStats?.total ?? 0) > 0}
 							onStart={handleStartDeck}
-							onUpgrade={() => {
-								window.location.assign("/subscription");
-							}}
+							onUpgrade={handleUpgrade}
 						/>
 					) : null}
 
@@ -182,7 +185,7 @@ export const ReviewPage = () => {
 							know={deckCounts.know}
 							again={deckCounts.again}
 							onBack={goToIntro}
-							onGoSm2={() => switchSystem("sm2")}
+							onGoSm2={handleGoSm2}
 						/>
 					) : null}
 				</div>

@@ -123,11 +123,13 @@ const Btn = ({
 	title: string;
 	children: React.ReactNode;
 	wide?: boolean;
-}) => (
+}) => {
+  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); onExec(); };
+  return (
 	<button
 		type="button"
 		title={title}
-		onMouseDown={(e) => { e.preventDefault(); onExec(); }}
+		onMouseDown={handleMouseDown}
 		className={`flex shrink-0 items-center justify-center gap-1 rounded-[6px] text-[12px] font-medium transition-all duration-100 select-none
 			${wide ? "h-7 px-2" : "h-7 w-7"}
 			${active
@@ -138,6 +140,7 @@ const Btn = ({
 		{children}
 	</button>
 );
+};
 
 // ── Block type dropdown ───────────────────────────────────────────────────────
 
@@ -173,15 +176,17 @@ const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 		setAnchor(null);
 	};
 
-	return (
-		<div className="relative">
-			<button
-				type="button"
-				onMouseDown={(e) => {
+		const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = (e) => {
 					e.preventDefault();
 					const rect = e.currentTarget.getBoundingClientRect();
 					setAnchor(prev => prev ? null : rect);
-				}}
+				};
+	const handleMouseDown2: NonNullable<React.ComponentProps<"div">["onMouseDown"]> = () => setAnchor(null);
+return (
+		<div className="relative">
+			<button
+				type="button"
+				onMouseDown={handleMouseDown}
 				className="flex h-7 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 select-none"
 			>
 				{currentLabel}
@@ -191,7 +196,7 @@ const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 			</button>
 			{open && anchor && createPortal(
 				<>
-					<div className="fixed inset-0 z-[9998]" onMouseDown={() => setAnchor(null)} />
+					<div className="fixed inset-0 z-[9998]" onMouseDown={handleMouseDown2} />
 					<div
 						className="fixed z-[9999] min-w-[140px] overflow-hidden rounded-[10px] border border-bd-2 bg-surf p-1 shadow-lg"
 						style={{
@@ -199,11 +204,13 @@ const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 							left: anchor.left,
 						}}
 					>
-						{BLOCK_TYPES.map(b => (
+						{BLOCK_TYPES.map(b => {
+						  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); apply(b.value); };
+						  return (
 							<button
 								key={b.value}
 								type="button"
-								onMouseDown={(e) => { e.preventDefault(); apply(b.value); }}
+								onMouseDown={handleMouseDown}
 								className={`flex w-full items-center gap-2.5 rounded-[6px] px-2.5 py-1.5 text-left text-[12.5px] transition-colors
 									${current === b.value ? "bg-acc-muted text-acc-strong font-medium" : "text-t-1 hover:bg-surf-2"}`}
 							>
@@ -217,7 +224,8 @@ const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 									</svg>
 								)}
 							</button>
-						))}
+						);
+						})}
 					</div>
 				</>,
 				document.body,
@@ -242,24 +250,28 @@ const ColorPanel = ({
 	const activeHighlight =
 		BG_COLORS.find(c => c.value && editor.isActive("highlight", { color: c.value }))?.value ?? null;
 
-	return (
+		const handleMouseDown: NonNullable<React.ComponentProps<"div">["onMouseDown"]> = (e) => e.preventDefault();
+return (
 		<div
 			className="w-[212px] overflow-hidden rounded-[12px] border border-bd-2 bg-surf shadow-lg"
-			onMouseDown={(e) => e.preventDefault()}
+			onMouseDown={handleMouseDown}
 		>
 			{/* Tabs */}
 			<div className="flex border-b border-bd-1">
-				{(["text", "bg"] as const).map(t => (
+				{(["text", "bg"] as const).map(t => {
+				  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); setTab(t); };
+				  return (
 					<button
 						key={t}
 						type="button"
-						onMouseDown={(e) => { e.preventDefault(); setTab(t); }}
+						onMouseDown={handleMouseDown}
 						className={`flex-1 py-2 text-[11.5px] font-medium transition-colors
 							${tab === t ? "text-t-1 border-b-2 border-acc -mb-px" : "text-t-3 hover:text-t-2"}`}
 					>
 						{t === "text" ? "Text color" : "Background"}
 					</button>
-				))}
+				);
+				})}
 			</div>
 
 			<div className="p-2.5">
@@ -267,18 +279,21 @@ const ColorPanel = ({
 					<div className="grid grid-cols-5 gap-1.5">
 						{TEXT_COLORS.map(c => {
 							const isActive = c.value === null ? activeTextColor === null : activeTextColor === c.value;
-							return (
+							const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+								e.preventDefault();
+								if (c.value === null) {
+									editor.chain().focus().unsetColor().run();
+								} else {
+									editor.chain().focus().setColor(c.value).run();
+								}
+								onClose();
+							};
+return (
 								<button
 									key={c.label}
 									type="button"
 									title={c.label}
-									onMouseDown={(e) => {
-										e.preventDefault();
-										c.value === null
-											? editor.chain().focus().unsetColor().run()
-											: editor.chain().focus().setColor(c.value).run();
-										onClose();
-									}}
+									onMouseDown={handleMouseDown}
 									className={`relative flex h-[34px] w-full flex-col items-center justify-center gap-0.5 rounded-[7px] transition-all
 										${isActive ? "bg-surf-3 ring-1.5 ring-acc" : "hover:bg-surf-2"}`}
 								>
@@ -307,18 +322,21 @@ const ColorPanel = ({
 					<div className="grid grid-cols-5 gap-1.5">
 						{BG_COLORS.map(c => {
 							const isActive = c.value === null ? activeHighlight === null : activeHighlight === c.value;
-							return (
+							const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+								e.preventDefault();
+								if (c.value === null) {
+									editor.chain().focus().unsetHighlight().run();
+								} else {
+									editor.chain().focus().setHighlight({ color: c.value }).run();
+								}
+								onClose();
+							};
+return (
 								<button
 									key={c.label}
 									type="button"
 									title={c.label}
-									onMouseDown={(e) => {
-										e.preventDefault();
-										c.value === null
-											? editor.chain().focus().unsetHighlight().run()
-											: editor.chain().focus().setHighlight({ color: c.value }).run();
-										onClose();
-									}}
+									onMouseDown={handleMouseDown}
 									className={`relative flex h-[34px] w-full items-center justify-center rounded-[7px] border transition-all
 										${isActive ? "border-acc ring-1.5 ring-acc" : "border-bd-1 hover:border-bd-2 hover:bg-surf-2"}`}
 									style={{ background: c.value ?? undefined }}
@@ -379,34 +397,42 @@ const BubbleMenuContent = ({
 		setColorOpen(v => !v);
 	};
 
-	return (
+		const handleExec: NonNullable<React.ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleBold().run();
+	const handleExec2: NonNullable<React.ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleItalic().run();
+	const handleExec3: NonNullable<React.ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleUnderline().run();
+	const handleExec4: NonNullable<React.ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleStrike().run();
+	const handleExec5: NonNullable<React.ComponentProps<typeof Btn>["onExec"]> = () => editor.chain().focus().toggleCode().run();
+	const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); toggleColor(); };
+	const handleMouseDown2: NonNullable<React.ComponentProps<"div">["onMouseDown"]> = () => setColorOpen(false);
+	const handleClose: NonNullable<React.ComponentProps<typeof ColorPanel>["onClose"]> = () => setColorOpen(false);
+return (
 		<>
 			{/* ── Main toolbar ── */}
 			<div className="flex items-center gap-0.5 rounded-[11px] border border-bd-2 bg-surf px-1.5 py-1.5 shadow-lg backdrop-blur-sm">
 				<BlockTypeDropdown editor={editor} />
 				<Sep />
-				<Btn title="Bold" active={editor.isActive("bold")} onExec={() => editor.chain().focus().toggleBold().run()}>
+				<Btn title="Bold" active={editor.isActive("bold")} onExec={handleExec}>
 					<svg width="13" height="14" viewBox="0 0 14 16" fill="none">
 						<path d="M3.5 8h5a2.5 2.5 0 000-5h-5v5zM3.5 8h5.5a2.5 2.5 0 010 5H3.5V8z" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
 					</svg>
 				</Btn>
-				<Btn title="Italic" active={editor.isActive("italic")} onExec={() => editor.chain().focus().toggleItalic().run()}>
+				<Btn title="Italic" active={editor.isActive("italic")} onExec={handleExec2}>
 					<svg width="11" height="14" viewBox="0 0 11 16" fill="none">
 						<path d="M9 2H5.5M5.5 14H2M7 2L4 14" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
 					</svg>
 				</Btn>
-				<Btn title="Underline" active={editor.isActive("underline")} onExec={() => editor.chain().focus().toggleUnderline().run()}>
+				<Btn title="Underline" active={editor.isActive("underline")} onExec={handleExec3}>
 					<svg width="13" height="14" viewBox="0 0 14 16" fill="none">
 						<path d="M2 14h10M3.5 2v5.5a3.5 3.5 0 007 0V2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
 					</svg>
 				</Btn>
-				<Btn title="Strikethrough" active={editor.isActive("strike")} onExec={() => editor.chain().focus().toggleStrike().run()}>
+				<Btn title="Strikethrough" active={editor.isActive("strike")} onExec={handleExec4}>
 					<svg width="13" height="13" viewBox="0 0 14 14" fill="none">
 						<path d="M1 7h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
 						<path d="M4.5 4.5C4.5 3.12 5.62 2 7 2s2.5 1.12 2.5 2.5M4.5 9.5C4.5 10.88 5.62 12 7 12s2.5-1.12 2.5-2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
 					</svg>
 				</Btn>
-				<Btn title="Code" active={editor.isActive("code")} onExec={() => editor.chain().focus().toggleCode().run()}>
+				<Btn title="Code" active={editor.isActive("code")} onExec={handleExec5}>
 					<svg width="14" height="13" viewBox="0 0 16 14" fill="none">
 						<path d="M5 1.5L1 7l4 5.5M11 1.5L15 7l-4 5.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
 					</svg>
@@ -417,7 +443,7 @@ const BubbleMenuContent = ({
 					ref={colorBtnRef}
 					type="button"
 					title="Color"
-					onMouseDown={(e) => { e.preventDefault(); toggleColor(); }}
+					onMouseDown={handleMouseDown}
 					className={`flex h-7 w-8 shrink-0 flex-col items-center justify-center gap-px rounded-[6px] transition-all select-none
 						${colorOpen ? "bg-acc text-white" : "text-t-2 hover:bg-surf-3 hover:text-t-1 active:scale-95"}`}
 				>
@@ -442,12 +468,12 @@ const BubbleMenuContent = ({
 			{/* ── Color picker portal ── */}
 			{colorOpen && colorAnchor && createPortal(
 				<>
-					<div className="fixed inset-0 z-[9998]" onMouseDown={() => setColorOpen(false)} />
+					<div className="fixed inset-0 z-[9998]" onMouseDown={handleMouseDown2} />
 					<div
 						className="fixed z-[9999]"
 						style={{ top: colorAnchor.bottom + 6, left: colorAnchor.left }}
 					>
-						<ColorPanel editor={editor} onClose={() => setColorOpen(false)} />
+						<ColorPanel editor={editor} onClose={handleClose} />
 					</div>
 				</>,
 				document.body,
@@ -577,7 +603,12 @@ export const NotionEditor = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [editor]);
 
-	return (
+	const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+		e.preventDefault();
+		if (!editor) return;
+		editor.chain().focus().insertContent("/").run();
+	};
+return (
 		<div className="relative">
 			{/* ── Bubble menu ── */}
 			{editor && (
@@ -604,10 +635,7 @@ export const NotionEditor = ({
 					<button
 						type="button"
 						title="Insert block (/)"
-						onMouseDown={e => {
-							e.preventDefault();
-							editor.chain().focus().insertContent("/").run();
-						}}
+						onMouseDown={handleMouseDown}
 						className="flex h-6 w-6 items-center justify-center rounded-[5px] text-t-4 transition-colors hover:bg-surf-2 hover:text-t-2"
 					>
 						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">

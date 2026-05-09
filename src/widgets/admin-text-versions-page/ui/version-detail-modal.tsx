@@ -75,7 +75,13 @@ export const VersionDetailModal = ({
 	const canRestore = version?.status === "COMPLETED" && !version.isCurrent;
 	const canRetry = version?.status === "ERROR";
 
-	return (
+	const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+		if (!version) return;
+		onDownload(versionId, version.version);
+	};
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRetry(versionId);
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRestore(versionId);
+return (
 		<>
 			{/* Backdrop */}
 			<div
@@ -111,11 +117,13 @@ export const VersionDetailModal = ({
 
 					{/* Tabs */}
 					<div className="flex shrink-0 gap-0 border-b border-bd-1 px-4">
-						{tabs.map(({ key, label }) => (
+						{tabs.map(({ key, label }) => {
+						  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setTab(key);
+						  return (
 							<button
 								key={key}
 								type="button"
-								onClick={() => setTab(key)}
+								onClick={handleClick}
 								className={cn(
 									"-mb-px border-b-2 px-3 py-2.5 text-[12.5px] transition-colors",
 									tab === key
@@ -125,7 +133,8 @@ export const VersionDetailModal = ({
 							>
 								{label}
 							</button>
-						))}
+						);
+						})}
 					</div>
 
 					{/* Body */}
@@ -251,7 +260,7 @@ export const VersionDetailModal = ({
 						{version && (
 							<button
 								type="button"
-								onClick={() => onDownload(versionId, version.version)}
+								onClick={handleClick}
 								className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							>
 								<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
@@ -264,7 +273,7 @@ export const VersionDetailModal = ({
 						{canRetry && (
 							<button
 								type="button"
-								onClick={() => onRetry(versionId)}
+								onClick={handleClick2}
 								disabled={isRetrying}
 								className="flex h-[30px] items-center gap-1.5 rounded-base bg-amb px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 							>
@@ -275,7 +284,7 @@ export const VersionDetailModal = ({
 						{canRestore && (
 							<button
 								type="button"
-								onClick={() => onRestore(versionId)}
+								onClick={handleClick3}
 								disabled={isRestoring}
 								className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 							>

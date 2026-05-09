@@ -31,7 +31,13 @@ const Chip = ({
 }) => {
 	const [open, setOpen] = useState(false);
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleClose: NonNullable<React.ComponentProps<typeof FolderPickerPopover>["onClose"]> = () => setOpen(false);
+	const handlePick: NonNullable<React.ComponentProps<typeof FolderPickerPopover>["onPick"]> = (folderId) => {
+					onAssign(entry.id, folderId);
+					setOpen(false);
+				};
+return (
 		<div className="relative">
 			<div
 				className={cn(
@@ -46,7 +52,7 @@ const Chip = ({
 				<button
 					type="button"
 					aria-label={assignLabel}
-					onClick={() => setOpen((v) => !v)}
+					onClick={handleClick}
 					className={cn(
 						"ml-0.5 flex size-[18px] items-center justify-center rounded-[4px]",
 						"bg-acc-bg text-acc transition-colors hover:bg-acc hover:text-white",
@@ -57,12 +63,9 @@ const Chip = ({
 			</div>
 			<FolderPickerPopover
 				open={open}
-				onClose={() => setOpen(false)}
+				onClose={handleClose}
 				folders={folders}
-				onPick={(folderId) => {
-					onAssign(entry.id, folderId);
-					setOpen(false);
-				}}
+				onPick={handlePick}
 				className="left-0 top-[calc(100%+4px)]"
 			/>
 		</div>
@@ -116,7 +119,8 @@ const UncategorizedChips = ({
 		);
 	}
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setLimit((l) => l + PAGE_SIZE);
+return (
 		<div className="flex flex-col gap-2.5">
 			<div className="flex flex-wrap gap-1.5">
 				{items.map((entry) => (
@@ -134,7 +138,7 @@ const UncategorizedChips = ({
 			{hasMore && (
 				<button
 					type="button"
-					onClick={() => setLimit((l) => l + PAGE_SIZE)}
+					onClick={handleClick}
 					className="self-start text-[12px] text-acc transition-colors hover:text-acc/70"
 				>
 					{t("vocabulary.foldersPage.uncategorized.showMore", {
@@ -158,7 +162,10 @@ export const UncategorizedSection = ({ count }: UncategorizedSectionProps) => {
 	const handleAssign = (entryId: string, folderId: string) =>
 		assign({ assignments: [{ id: entryId, folderId }] });
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setDistributeOpen(true);
+	const handleClose: NonNullable<React.ComponentProps<typeof DistributeAllModal>["onClose"]> = () => setDistributeOpen(false);
+return (
 		<>
 			<div className="overflow-hidden rounded-card border-hairline border-bd-1 bg-surf">
 				<div
@@ -169,7 +176,7 @@ export const UncategorizedSection = ({ count }: UncategorizedSectionProps) => {
 				>
 					<button
 						type="button"
-						onClick={() => setOpen((v) => !v)}
+						onClick={handleClick}
 						disabled={isPending}
 						className="flex flex-1 items-center gap-2.5 text-left transition-colors hover:opacity-75"
 					>
@@ -191,7 +198,7 @@ export const UncategorizedSection = ({ count }: UncategorizedSectionProps) => {
 					{(folders?.length ?? 0) > 0 && (
 						<button
 							type="button"
-							onClick={() => setDistributeOpen(true)}
+							onClick={handleClick2}
 							disabled={isPending}
 							className="shrink-0 text-[12px] text-acc transition-colors hover:text-acc/70"
 						>
@@ -212,7 +219,7 @@ export const UncategorizedSection = ({ count }: UncategorizedSectionProps) => {
 
 			<DistributeAllModal
 				open={distributeOpen}
-				onClose={() => setDistributeOpen(false)}
+				onClose={handleClose}
 				folders={folders ?? []}
 				uncatCount={count}
 			/>

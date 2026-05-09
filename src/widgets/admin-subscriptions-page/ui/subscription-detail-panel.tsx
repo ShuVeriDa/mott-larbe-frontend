@@ -141,7 +141,16 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 	const canCancel = sub.status === "ACTIVE" || sub.status === "TRIALING";
 	const initials = (sub.user.name[0] ?? "") + (sub.user.surname[0] ?? "");
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onExtend(sub.id);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+								const code = window.prompt(t("admin.subscriptions.detail.coupon"));
+								if (code?.trim()) applyCoupon.mutate(code.trim());
+							};
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onCancel(sub.id);
+	const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => router.push(`/admin/users/${userId}`);
+	const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => logoutAll.mutate();
+	const handleClick6: NonNullable<React.ComponentProps<"button">["onClick"]> = () => freeze.mutate();
+return (
 		<div className="flex flex-col gap-2.5">
 			<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 
@@ -192,7 +201,8 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 						<div className="flex flex-wrap gap-1">
 							{sub.user.roles.map((r) => {
 								const isLearner = r.role.name === LEARNER_ROLE;
-								return (
+																const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => revokeRole.mutate({ roleId: r.id });
+return (
 									<span
 										key={r.id}
 										className="flex items-center gap-1 rounded-[5px] border border-bd-2 bg-surf-2 px-1.5 py-0.5 text-[11px] text-t-2"
@@ -201,7 +211,7 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 										{!isLearner && (
 											<button
 												type="button"
-												onClick={() => revokeRole.mutate({ roleId: r.id })}
+												onClick={handleClick}
 												disabled={revokeRole.isPending}
 												className="ml-0.5 text-[10px] text-t-3 transition-colors hover:text-red-t disabled:opacity-40"
 												aria-label={`Remove ${r.role.name}`}
@@ -269,7 +279,7 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 						{canExtend && (
 							<button
 								type="button"
-								onClick={() => onExtend(sub.id)}
+								onClick={handleClick}
 								className="flex h-[28px] items-center gap-1 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							>
 								{t("admin.subscriptions.actions.extend")}
@@ -277,10 +287,7 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 						)}
 						<button
 							type="button"
-							onClick={() => {
-								const code = window.prompt(t("admin.subscriptions.detail.coupon"));
-								if (code?.trim()) applyCoupon.mutate(code.trim());
-							}}
+							onClick={handleClick2}
 							disabled={applyCoupon.isPending}
 							className="flex h-[28px] items-center gap-1 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-60"
 						>
@@ -289,7 +296,7 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 						{canCancel && (
 							<button
 								type="button"
-								onClick={() => onCancel(sub.id)}
+								onClick={handleClick3}
 								className="flex h-[28px] items-center gap-1 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[11.5px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 							>
 								{t("admin.subscriptions.actions.cancel")}
@@ -352,7 +359,7 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 				<div className="flex flex-col gap-1.5 px-[15px] py-2.5">
 					<button
 						type="button"
-						onClick={() => router.push(`/admin/users/${userId}`)}
+						onClick={handleClick4}
 						className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						<svg className="size-3 shrink-0 text-t-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -363,7 +370,7 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 					</button>
 					<button
 						type="button"
-						onClick={() => logoutAll.mutate()}
+						onClick={handleClick5}
 						disabled={logoutAll.isPending}
 						className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-60"
 					>
@@ -375,7 +382,7 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 					</button>
 					<button
 						type="button"
-						onClick={() => freeze.mutate()}
+						onClick={handleClick6}
 						disabled={freeze.isPending}
 						className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[12px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg disabled:opacity-60"
 					>

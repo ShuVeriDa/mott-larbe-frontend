@@ -42,7 +42,9 @@ export const ContextsCard = ({ items, total, lang, isLoading }: ContextsCardProp
 				</div>
 			) : (
 				<div>
-					{items.map((ctx) => (
+					{items.map((ctx) => {
+					  const handleClick: NonNullable<React.ComponentProps<typeof Link>["onClick"]> = (e) => e.stopPropagation();
+					  return (
 						<div
 							key={ctx.id}
 							className="cursor-pointer border-b border-bd-1 px-4 py-[11px] transition-colors hover:bg-surf-2 last:border-b-0"
@@ -58,13 +60,14 @@ export const ContextsCard = ({ items, total, lang, isLoading }: ContextsCardProp
 								<Link
 									href={`/${lang}/texts/${ctx.textId}`}
 									className="text-acc-t hover:underline"
-									onClick={(e) => e.stopPropagation()}
+									onClick={handleClick}
 								>
 									{ctx.textTitle}
 								</Link>
 							</div>
 						</div>
-					))}
+					);
+					})}
 				</div>
 			)}
 

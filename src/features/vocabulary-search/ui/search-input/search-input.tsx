@@ -13,10 +13,11 @@ export const SearchInput = ({ className }: SearchInputProps) => {
 	const search = useVocabularyFilters((s) => s.search);
 	const setSearch = useVocabularyFilters((s) => s.setSearch);
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<typeof SearchBox>["onChange"]> = (e) => setSearch(e.target.value);
+return (
 		<SearchBox
 			value={search}
-			onChange={(e) => setSearch(e.target.value)}
+			onChange={handleChange}
 			placeholder={t("vocabulary.searchPlaceholder")}
 			wrapperClassName={className}
 			aria-label={t("vocabulary.searchPlaceholder")}

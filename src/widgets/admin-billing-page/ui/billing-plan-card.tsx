@@ -44,7 +44,10 @@ export const BillingPlanCard = ({
 	const colorClass = PLAN_COLORS[plan.type] ?? "bg-surf-3 text-t-2";
 	const barColor = PLAN_BAR_COLORS[plan.type] ?? "bg-surf-3";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onEdit(plan);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onEditLimits(plan);
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onDeactivate(plan.id);
+return (
 		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-[box-shadow,border-color] hover:border-bd-2 hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
 			{/* Top */}
 			<div className="border-b border-bd-1 p-3.5">
@@ -110,20 +113,20 @@ export const BillingPlanCard = ({
 			{/* Actions */}
 			<div className="flex gap-1.5 border-t border-bd-1 px-3.5 py-2.5">
 				<button
-					onClick={() => onEdit(plan)}
+					onClick={handleClick}
 					className="flex h-[26px] flex-1 items-center justify-center rounded-base bg-surf-2 text-[11.5px] font-medium text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 				>
 					{t("admin.plans.plansSection.edit")}
 				</button>
 				<button
-					onClick={() => onEditLimits(plan)}
+					onClick={handleClick2}
 					className="flex h-[26px] flex-1 items-center justify-center rounded-base bg-surf-2 text-[11.5px] font-medium text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 				>
 					{t("admin.plans.plansSection.limits")}
 				</button>
 				{plan.isActive && (
 					<button
-						onClick={() => onDeactivate(plan.id)}
+						onClick={handleClick3}
 						className="flex h-[26px] items-center justify-center rounded-base border border-bd-2 px-2 text-[11.5px] font-medium text-red-t transition-colors hover:bg-red-bg"
 					>
 						{t("admin.plans.plansSection.deactivate")}

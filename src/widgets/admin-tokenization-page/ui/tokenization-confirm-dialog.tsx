@@ -26,14 +26,15 @@ export const TokenizationConfirmDialog = ({
 		String(count),
 	);
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
+return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"
 			onClick={onClose}
 		>
 			<div
 				className="w-full max-w-[360px] overflow-hidden rounded-[14px] border border-bd-2 bg-surf shadow-md max-sm:rounded-b-none"
-				onClick={(e) => e.stopPropagation()}
+				onClick={handleClick}
 			>
 				<div className="px-5 pb-4 pt-5">
 					<p className="text-[14.5px] font-semibold text-t-1">

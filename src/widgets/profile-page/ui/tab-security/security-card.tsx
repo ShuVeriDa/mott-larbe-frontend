@@ -50,7 +50,9 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 		});
 	};
 
-	const rows = [
+		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => setPasswordModalOpen(true);
+	const handleClick2: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => setEmailModalOpen(true);
+const rows = [
 		{
 			id: "password",
 			Icon: LockIcon,
@@ -61,7 +63,7 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 				<Button
 					variant="outline"
 					className="h-7 px-2.5 text-[11.5px] shrink-0"
-					onClick={() => setPasswordModalOpen(true)}
+					onClick={handleClick}
 				>
 					{t("profile.security.change")}
 				</Button>
@@ -77,7 +79,7 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 				<Button
 					variant="outline"
 					className="h-7 px-2.5 text-[11.5px] shrink-0"
-					onClick={() => setEmailModalOpen(true)}
+					onClick={handleClick2}
 				>
 					{t("profile.security.change")}
 				</Button>
@@ -102,7 +104,9 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 		},
 	];
 
-	return (
+		const handleClose: NonNullable<React.ComponentProps<typeof ChangePasswordModal>["onClose"]> = () => setPasswordModalOpen(false);
+	const handleClose2: NonNullable<React.ComponentProps<typeof ChangeEmailModal>["onClose"]> = () => setEmailModalOpen(false);
+return (
 		<>
 			<SettingCard title={t("profile.security.title")} noBody>
 				{rows.map((row) => (
@@ -128,11 +132,11 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 
 			<ChangePasswordModal
 				open={passwordModalOpen}
-				onClose={() => setPasswordModalOpen(false)}
+				onClose={handleClose}
 			/>
 			<ChangeEmailModal
 				open={emailModalOpen}
-				onClose={() => setEmailModalOpen(false)}
+				onClose={handleClose2}
 			/>
 		</>
 	);

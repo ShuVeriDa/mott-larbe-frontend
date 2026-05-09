@@ -19,7 +19,8 @@ export const DashboardTopbar = ({
 }: DashboardTopbarProps) => {
 	const { t } = useI18n();
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onPeriodChange(e.target.value as DashboardPeriod);
+return (
 		<header className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors max-sm:px-3 max-sm:py-2.5">
 			<div className="min-w-0 flex-1">
 				<div className="font-display text-base font-medium text-t-1">
@@ -32,11 +33,13 @@ export const DashboardTopbar = ({
 
 			<div className="ml-auto flex items-center gap-2">
 				<div className="hidden items-center gap-0.5 rounded-base border border-bd-1 bg-surf p-0.5 sm:flex">
-					{PERIODS.map(p => (
+					{PERIODS.map(p => {
+					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPeriodChange(p);
+					  return (
 						<button
 							key={p}
 							type="button"
-							onClick={() => onPeriodChange(p)}
+							onClick={handleClick}
 							className={cn(
 								"h-[26px] rounded-[5px] px-3 text-[11.5px] font-medium transition-colors",
 								period === p
@@ -46,12 +49,13 @@ export const DashboardTopbar = ({
 						>
 							{t(`admin.dashboard.period.${p}` as Parameters<typeof t>[0])}
 						</button>
-					))}
+					);
+					})}
 				</div>
 
 				<select
 					value={period}
-					onChange={e => onPeriodChange(e.target.value as DashboardPeriod)}
+					onChange={handleChange}
 					className="flex h-[30px] items-center rounded-base border border-bd-2 bg-surf px-2 text-[12px] text-t-2 transition-colors hover:border-bd-3 sm:hidden"
 				>
 					{PERIODS.map(p => (

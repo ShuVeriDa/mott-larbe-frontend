@@ -28,11 +28,12 @@ export const LogsTabs = ({ active, counts, onChange }: LogsTabsProps) => {
 				{TABS.map(({ key, danger, warn }) => {
 					const isActive = active === key;
 					const count = counts?.[key];
-					return (
+										const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(key);
+return (
 						<button
 							key={key}
 							type="button"
-							onClick={() => onChange(key)}
+							onClick={handleClick}
 							className={cn(
 								"flex h-7 items-center gap-1.5 whitespace-nowrap rounded-base border border-transparent px-3 text-[12.5px] transition-colors",
 								isActive

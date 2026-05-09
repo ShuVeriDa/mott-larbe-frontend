@@ -52,12 +52,14 @@ export const DeckRatingButtons = ({
 			</Typography>
 
 			<div className="grid grid-cols-2 gap-2">
-				{OPTIONS.map((option) => (
+				{OPTIONS.map((option) => {
+				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRate(option.key);
+				  return (
 					<button
 						key={option.key}
 						type="button"
 						disabled={disabled || !visible}
-						onClick={() => onRate(option.key)}
+						onClick={handleClick}
 						className={cn(
 							"flex flex-col items-center gap-1 rounded-card border-hairline border-bd-2 bg-surf py-3.5 px-2.5",
 							"shadow-sm transition-[background-color,border-color,transform,box-shadow] duration-150",
@@ -74,7 +76,8 @@ export const DeckRatingButtons = ({
 							{t(`review.deck.card.rate.${option.key}.sub`)}
 						</span>
 					</button>
-				))}
+				);
+				})}
 			</div>
 
 			<div className="mt-2 flex items-center justify-center gap-3.5 max-md:hidden">

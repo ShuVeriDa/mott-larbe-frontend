@@ -54,7 +54,11 @@ export const UsersToolbar = ({
 }: UsersToolbarProps) => {
 	const { t } = useI18n();
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onRoleChange(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onPlanChange(e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.target.value as UsersSort);
+return (
 		<div className="mb-2.5 flex flex-wrap items-center gap-2">
 			{/* Search */}
 			<div className="relative min-w-[180px] flex-1">
@@ -74,7 +78,7 @@ export const UsersToolbar = ({
 				<input
 					type="text"
 					value={search}
-					onChange={(e) => onSearchChange(e.target.value)}
+					onChange={handleChange}
 					placeholder={t("admin.users.toolbar.searchPlaceholder")}
 					className="h-8 w-full rounded-lg border border-bd-2 bg-surf pl-8 pr-2.5 font-sans text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 				/>
@@ -84,7 +88,7 @@ export const UsersToolbar = ({
 			<div className="flex flex-wrap items-center gap-1.5">
 				<select
 					value={role ?? ""}
-					onChange={(e) => onRoleChange(e.target.value)}
+					onChange={handleChange2}
 					className={selectClass}
 				>
 					{ROLES.map((r) => (
@@ -96,7 +100,7 @@ export const UsersToolbar = ({
 
 				<select
 					value={plan}
-					onChange={(e) => onPlanChange(e.target.value)}
+					onChange={handleChange3}
 					className={selectClass}
 				>
 					{PLANS.map((p) => (
@@ -108,7 +112,7 @@ export const UsersToolbar = ({
 
 				<select
 					value={sort}
-					onChange={(e) => onSortChange(e.target.value as UsersSort)}
+					onChange={handleChange4}
 					className={selectClass}
 				>
 					{SORTS.map((s) => (

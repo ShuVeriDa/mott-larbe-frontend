@@ -34,11 +34,12 @@ export const AuthLanguageSwitcher = () => {
 		>
 			{LOCALES.map(code => {
 				const active = code === lang;
-				return (
+								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => switchTo(code);
+return (
 					<button
 						key={code}
 						type="button"
-						onClick={() => switchTo(code)}
+						onClick={handleClick}
 						aria-pressed={active}
 						disabled={isPending}
 						className={cn(

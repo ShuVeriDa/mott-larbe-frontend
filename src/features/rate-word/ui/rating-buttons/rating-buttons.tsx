@@ -69,12 +69,14 @@ export const RatingButtons = ({
 			</Typography>
 
 			<div className="grid grid-cols-4 gap-1.5 max-md:grid-cols-2 max-md:gap-2">
-				{RATINGS.map((rating) => (
+				{RATINGS.map((rating) => {
+				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRate(rating.quality);
+				  return (
 					<button
 						key={rating.key}
 						type="button"
 						disabled={disabled || !visible}
-						onClick={() => onRate(rating.quality)}
+						onClick={handleClick}
 						className={cn(
 							"flex flex-col items-center gap-1 rounded-card border-hairline border-bd-2 bg-surf py-2.5 px-1.5",
 							"shadow-sm transition-[background-color,border-color,color,transform,box-shadow] duration-150",
@@ -91,7 +93,8 @@ export const RatingButtons = ({
 							{t(`review.sm2.card.rate.${rating.key}.sub`)}
 						</span>
 					</button>
-				))}
+				);
+				})}
 			</div>
 
 			<div className="mt-2 flex items-center justify-center gap-3.5 max-md:hidden">

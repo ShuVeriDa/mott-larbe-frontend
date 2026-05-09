@@ -26,13 +26,14 @@ export const PeriodTabs = ({ value, onChange, className }: PeriodTabsProps) => {
 		>
 			{PERIODS.map((period) => {
 				const active = value === period;
-				return (
+								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(period);
+return (
 					<button
 						key={period}
 						type="button"
 						role="tab"
 						aria-selected={active}
-						onClick={() => onChange(period)}
+						onClick={handleClick}
 						className={cn(
 							"rounded-md px-3 py-1 text-xs font-medium transition-colors duration-100 max-md:flex-1",
 							active

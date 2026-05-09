@@ -47,7 +47,13 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setCurrentPassword(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setNewPassword(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => {
+							setConfirmPassword(e.target.value);
+							setMismatch(false);
+						};
+return (
 		<Modal open={open} onClose={handleClose} title={t("profile.security.changePassword")}>
 			<form onSubmit={handleSubmit} className="flex flex-col gap-3">
 				<div>
@@ -56,7 +62,7 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 						id="cp-current"
 						type="password"
 						value={currentPassword}
-						onChange={(e) => setCurrentPassword(e.target.value)}
+						onChange={handleChange}
 						required
 					/>
 				</div>
@@ -66,7 +72,7 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 						id="cp-new"
 						type="password"
 						value={newPassword}
-						onChange={(e) => setNewPassword(e.target.value)}
+						onChange={handleChange2}
 						required
 					/>
 				</div>
@@ -76,10 +82,7 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 						id="cp-confirm"
 						type="password"
 						value={confirmPassword}
-						onChange={(e) => {
-							setConfirmPassword(e.target.value);
-							setMismatch(false);
-						}}
+						onChange={handleChange3}
 						required
 					/>
 					{mismatch && (

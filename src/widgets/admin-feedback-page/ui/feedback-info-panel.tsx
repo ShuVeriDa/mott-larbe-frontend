@@ -54,7 +54,9 @@ export const FeedbackInfoPanel = ({
 }: FeedbackInfoPanelProps & { className?: string }) => {
 	const isResolved = thread.status === "RESOLVED";
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onStatusChange(e.target.value as FeedbackStatus);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onPriorityChange(e.target.value as FeedbackPriority);
+return (
 		<div className={cn("flex w-[220px] shrink-0 flex-col overflow-y-auto border-l border-bd-1 bg-surf [&::-webkit-scrollbar]:w-0", className)}>
 			{/* User */}
 			<InfoSection title={t("admin.feedback.user.title")}>
@@ -82,7 +84,7 @@ export const FeedbackInfoPanel = ({
 				<InfoRow label={t("admin.feedback.ticket.status")}>
 					<select
 						value={thread.status}
-						onChange={(e) => onStatusChange(e.target.value as FeedbackStatus)}
+						onChange={handleChange}
 						className={selectStyles}
 					>
 						{STATUSES.map((s) => (
@@ -95,7 +97,7 @@ export const FeedbackInfoPanel = ({
 				<InfoRow label={t("admin.feedback.ticket.priority")}>
 					<select
 						value={thread.priority}
-						onChange={(e) => onPriorityChange(e.target.value as FeedbackPriority)}
+						onChange={handleChange2}
 						className={selectStyles}
 					>
 						{PRIORITIES.map((p) => (

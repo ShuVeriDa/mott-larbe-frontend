@@ -134,7 +134,9 @@ const CheckboxRow = ({
 	checked,
 	disabled,
 	onChange,
-}: CheckboxRowProps) => (
+}: CheckboxRowProps) => {
+  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onChange?.(e.target.checked);
+  return (
 	<label
 		className={cn(
 			"flex cursor-pointer items-start gap-3 rounded-[10px] border border-bd-1 bg-surf-2 px-3.5 py-3 transition-colors",
@@ -171,8 +173,9 @@ const CheckboxRow = ({
 				type="checkbox"
 				className="sr-only"
 				checked={checked}
-				onChange={e => onChange?.(e.target.checked)}
+				onChange={handleChange}
 			/>
 		)}
 	</label>
 );
+};

@@ -21,16 +21,27 @@ export const DeleteWordButton = ({
 	const { mutate, isPending } = useDeleteWord();
 	const [confirmOpen, setConfirmOpen] = useState(false);
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = (e) => {
+					e.stopPropagation();
+					setConfirmOpen(true);
+				};
+	const handleClose: NonNullable<React.ComponentProps<typeof Modal>["onClose"]> = () => setConfirmOpen(false);
+	const handleClick2: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = (e) => {
+							e.stopPropagation();
+							setConfirmOpen(false);
+						};
+	const handleClick3: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = (e) => {
+							e.stopPropagation();
+							mutate(wordId);
+							setConfirmOpen(false);
+						};
+return (
 		<>
 			<Button
 				variant="danger"
 				size="default"
 				disabled={isPending}
-				onClick={(e) => {
-					e.stopPropagation();
-					setConfirmOpen(true);
-				}}
+				onClick={handleClick}
 				className={className}
 			>
 				{t("vocabulary.card.delete")}
@@ -38,7 +49,7 @@ export const DeleteWordButton = ({
 
 			<Modal
 				open={confirmOpen}
-				onClose={() => setConfirmOpen(false)}
+				onClose={handleClose}
 				title={t("vocabulary.card.delete")}
 			>
 				<p className="mb-4 text-[14px] text-t-2">
@@ -49,10 +60,7 @@ export const DeleteWordButton = ({
 						variant="ghost"
 						size="lg"
 						className="flex-1"
-						onClick={(e) => {
-							e.stopPropagation();
-							setConfirmOpen(false);
-						}}
+						onClick={handleClick2}
 					>
 						{t("vocabulary.addModal.cancel")}
 					</Button>
@@ -61,11 +69,7 @@ export const DeleteWordButton = ({
 						size="lg"
 						className="flex-1"
 						disabled={isPending}
-						onClick={(e) => {
-							e.stopPropagation();
-							mutate(wordId);
-							setConfirmOpen(false);
-						}}
+						onClick={handleClick3}
 					>
 						{t("vocabulary.folderModal.delete")}
 					</Button>

@@ -25,19 +25,20 @@ export const DemoToken = ({
 		onSelect(word, e.currentTarget);
 	};
 
-	return (
+		const handleKeyDown: NonNullable<React.ComponentProps<"span">["onKeyDown"]> = (e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					onSelect(word, e.currentTarget as HTMLElement);
+				}
+			};
+return (
 		<span
 			data-demo-token
 			data-word={word}
 			role="button"
 			tabIndex={0}
 			onClick={handle}
-			onKeyDown={(e) => {
-				if (e.key === "Enter" || e.key === " ") {
-					e.preventDefault();
-					onSelect(word, e.currentTarget as HTMLElement);
-				}
-			}}
+			onKeyDown={handleKeyDown}
 			className={cn(
 				"inline cursor-pointer rounded-[3px] px-[2px] py-[1px] transition-colors hover:bg-acc/10",
 				status === "studied" &&

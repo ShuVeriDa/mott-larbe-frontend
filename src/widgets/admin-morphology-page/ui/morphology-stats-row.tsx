@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
+import type { ReactNode } from "react";
 import type { MorphRuleStats } from "@/entities/morph-rule";
 
 interface Props {
@@ -16,7 +17,7 @@ const StatCard = ({
 }: {
   label: string;
   value: React.ReactNode;
-  sub?: string;
+  sub?: ReactNode;
   valueClass?: string;
 }) => (
   <div className="rounded-[11px] border border-bd-1 bg-surf px-3.5 py-3 transition-colors">

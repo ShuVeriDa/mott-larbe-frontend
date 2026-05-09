@@ -64,7 +64,9 @@ export const FolderForm = ({
 		onChange(next);
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => update({ name: e.target.value });
+	const handleChange2: NonNullable<React.ComponentProps<"textarea">["onChange"]> = (e) => update({ description: e.target.value });
+return (
 		<div className="flex flex-col gap-3">
 			<div>
 				<InputLabel htmlFor="folder-form-name">{labels.nameLabel}</InputLabel>
@@ -72,7 +74,7 @@ export const FolderForm = ({
 					id="folder-form-name"
 					autoFocus={autoFocusName}
 					value={internal.name}
-					onChange={(e) => update({ name: e.target.value })}
+					onChange={handleChange}
 					placeholder={labels.namePlaceholder}
 					maxLength={64}
 					required
@@ -86,7 +88,7 @@ export const FolderForm = ({
 				<textarea
 					id="folder-form-desc"
 					value={internal.description}
-					onChange={(e) => update({ description: e.target.value })}
+					onChange={handleChange2}
 					placeholder={labels.descriptionPlaceholder}
 					maxLength={256}
 					rows={3}
@@ -105,11 +107,13 @@ export const FolderForm = ({
 					{labels.iconLabel}
 				</div>
 				<div className="flex flex-wrap gap-1.5">
-					{FOLDER_ICON_KEYS.map((iconKey) => (
+					{FOLDER_ICON_KEYS.map((iconKey) => {
+					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => update({ icon: iconKey });
+					  return (
 						<button
 							key={iconKey}
 							type="button"
-							onClick={() => update({ icon: iconKey })}
+							onClick={handleClick}
 							aria-pressed={internal.icon === iconKey}
 							className={cn(
 								"flex size-9 items-center justify-center rounded-[8px]",
@@ -121,7 +125,8 @@ export const FolderForm = ({
 						>
 							<FolderIcon icon={iconKey} className="size-[15px]" />
 						</button>
-					))}
+					);
+					})}
 				</div>
 			</div>
 
@@ -132,11 +137,12 @@ export const FolderForm = ({
 				<div className="flex flex-wrap gap-[7px]">
 					{FOLDER_COLORS.map((c) => {
 						const selected = internal.color === c;
-						return (
+												const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => update({ color: c });
+return (
 							<button
 								key={c}
 								type="button"
-								onClick={() => update({ color: c })}
+								onClick={handleClick}
 								aria-label={c}
 								aria-pressed={selected}
 								className={cn(

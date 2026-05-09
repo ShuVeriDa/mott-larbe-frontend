@@ -34,11 +34,12 @@ export const FontSizeGroup = ({
 		>
 			{SIZES.map((item) => {
 				const active = item.value === size;
-				return (
+								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setSize(item.value);
+return (
 					<button
 						key={item.value}
 						type="button"
-						onClick={() => setSize(item.value)}
+						onClick={handleClick}
 						aria-pressed={active}
 						className={cn(
 							"h-[26px] rounded-[5px] border-hairline border-bd-1 px-[9px]",

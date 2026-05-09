@@ -45,10 +45,13 @@ export const SenseModal = ({
 	const inputCls =
 		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 py-0 h-[34px] text-[13px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setDefinition(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setNotes(e.target.value);
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
-			onClick={e => e.target === e.currentTarget && onClose()}
+			onClick={handleClick}
 		>
 			<div className="w-[440px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
 				<div className="mb-1 font-display text-[15px] text-t-1">
@@ -70,7 +73,7 @@ export const SenseModal = ({
 							type="text"
 							placeholder={t("admin.dictionaryDetail.translationPlaceholder")}
 							value={definition}
-							onChange={e => setDefinition(e.target.value)}
+							onChange={handleChange}
 						/>
 					</div>
 					<div className="mb-0">
@@ -82,7 +85,7 @@ export const SenseModal = ({
 							type="text"
 							placeholder={t("admin.dictionaryDetail.glossPlaceholder")}
 							value={notes}
-							onChange={e => setNotes(e.target.value)}
+							onChange={handleChange2}
 						/>
 					</div>
 					<div className="mt-5 flex justify-end gap-2">

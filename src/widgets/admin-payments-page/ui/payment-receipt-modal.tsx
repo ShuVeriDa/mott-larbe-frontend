@@ -69,7 +69,6 @@ interface Props {
 
 export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 	const { t } = useI18n();
-	const { success } = useToast();
 
 	const sc = STATUS_CFG[payment.status] ?? STATUS_CFG.PENDING;
 	const provColor = PROVIDER_COLORS[payment.provider] ?? "#a5a39a";

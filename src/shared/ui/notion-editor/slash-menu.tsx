@@ -47,14 +47,16 @@ export const SlashMenu = forwardRef<SlashMenuHandle, SlashMenuProps>(
 
 		return (
 			<div className="z-50 min-w-[220px] overflow-hidden rounded-[10px] border border-bd-2 bg-bg p-1 shadow-lg">
-				{items.map((item, i) => (
+				{items.map((item, i) => {
+				  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => {
+							e.preventDefault();
+							command(item);
+						};
+				  return (
 					<button
 						key={i}
 						type="button"
-						onMouseDown={e => {
-							e.preventDefault();
-							command(item);
-						}}
+						onMouseDown={handleMouseDown}
 						className={`flex w-full items-center gap-3 rounded-base px-2.5 py-2 text-left transition-colors ${
 							i === selectedIndex ? "bg-surf-2" : "hover:bg-surf-2"
 						}`}
@@ -71,7 +73,8 @@ export const SlashMenu = forwardRef<SlashMenuHandle, SlashMenuProps>(
 							</div>
 						</div>
 					</button>
-				))}
+				);
+				})}
 			</div>
 		);
 	},

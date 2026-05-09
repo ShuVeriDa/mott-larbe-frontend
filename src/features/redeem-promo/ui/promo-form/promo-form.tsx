@@ -45,7 +45,8 @@ export const PromoForm = () => {
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<typeof Input>["onChange"]> = (e) => setCode(e.target.value.toUpperCase());
+return (
 		<form
 			onSubmit={handleSubmit}
 			className="flex flex-col gap-2 px-4 py-3.5 max-md:px-3"
@@ -53,7 +54,7 @@ export const PromoForm = () => {
 			<div className="flex gap-2">
 				<Input
 					value={code}
-					onChange={(e) => setCode(e.target.value.toUpperCase())}
+					onChange={handleChange}
 					placeholder={t("subscription.promo.placeholder")}
 					autoComplete="off"
 					autoCorrect="off"

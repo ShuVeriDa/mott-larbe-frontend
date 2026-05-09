@@ -34,15 +34,27 @@ export const UnknownWordRowActions = ({
 
 	const isDeleting = mutations.remove.isPending;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+					e.stopPropagation();
+					onAddToDictionary();
+				};
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+						e.stopPropagation();
+						setOpen((v) => !v);
+					};
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { setOpen(false); onAddToDictionary(); };
+	const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { setOpen(false); onLinkToLemma(); };
+	const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { setOpen(false); onViewContexts(); };
+	const handleClick6: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+								setOpen(false);
+								mutations.remove.mutate(word.id);
+							};
+return (
 		<div className="flex items-center justify-end gap-0.5">
 			{/* Quick add */}
 			<button
 				type="button"
-				onClick={(e) => {
-					e.stopPropagation();
-					onAddToDictionary();
-				}}
+				onClick={handleClick}
 				className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-acc-bg hover:text-acc-t"
 				title={t("admin.unknownWords.row.addToDictionary")}
 			>
@@ -55,10 +67,7 @@ export const UnknownWordRowActions = ({
 			<div ref={ref} className="relative">
 				<button
 					type="button"
-					onClick={(e) => {
-						e.stopPropagation();
-						setOpen((v) => !v);
-					}}
+					onClick={handleClick2}
 					className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2"
 				>
 					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
@@ -72,7 +81,7 @@ export const UnknownWordRowActions = ({
 					<div className="absolute right-0 top-[calc(100%+4px)] z-20 min-w-[190px] rounded-[9px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
 						<button
 							type="button"
-							onClick={() => { setOpen(false); onAddToDictionary(); }}
+							onClick={handleClick3}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
 							<svg className="size-3.5 shrink-0 text-t-3" viewBox="0 0 16 16" fill="none">
@@ -82,7 +91,7 @@ export const UnknownWordRowActions = ({
 						</button>
 						<button
 							type="button"
-							onClick={() => { setOpen(false); onLinkToLemma(); }}
+							onClick={handleClick4}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
 							<svg className="size-3.5 shrink-0 text-t-3" viewBox="0 0 16 16" fill="none">
@@ -93,7 +102,7 @@ export const UnknownWordRowActions = ({
 						</button>
 						<button
 							type="button"
-							onClick={() => { setOpen(false); onViewContexts(); }}
+							onClick={handleClick5}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
 							<svg className="size-3.5 shrink-0 text-t-3" viewBox="0 0 16 16" fill="none">
@@ -106,10 +115,7 @@ export const UnknownWordRowActions = ({
 						<button
 							type="button"
 							disabled={isDeleting}
-							onClick={() => {
-								setOpen(false);
-								mutations.remove.mutate(word.id);
-							}}
+							onClick={handleClick6}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
 						>
 							<svg className="size-3.5 shrink-0 text-red-t" viewBox="0 0 16 16" fill="none">

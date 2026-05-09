@@ -25,7 +25,9 @@ export const LogsPagination = ({
 
 	const pages = buildPages(page, totalPages);
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof PgBtn>["onClick"]> = () => onChange(page - 1);
+	const handleClick2: NonNullable<React.ComponentProps<typeof PgBtn>["onClick"]> = () => onChange(page + 1);
+return (
 		<div className="flex flex-wrap items-center justify-between gap-2 border-t border-bd-1 px-3.5 py-2.5">
 			<span className="text-[12px] text-t-3">
 				{t("admin.logs.pagination.showing", { from, to, total })}
@@ -33,7 +35,7 @@ export const LogsPagination = ({
 			<div className="flex items-center gap-1">
 				<PgBtn
 					disabled={page <= 1}
-					onClick={() => onChange(page - 1)}
+					onClick={handleClick}
 					aria-label={t("admin.logs.pagination.prev")}
 				>
 					<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
@@ -48,7 +50,9 @@ export const LogsPagination = ({
 				</PgBtn>
 
 				{pages.map((p, i) =>
-					p === "…" ? (
+					{
+				  const handleClick: NonNullable<React.ComponentProps<typeof PgBtn>["onClick"]> = () => onChange(p as number);
+				  return p === "…" ? (
 						<span
 							key={`ellipsis-${i}`}
 							className="px-0.5 text-[12px] text-t-3"
@@ -59,16 +63,17 @@ export const LogsPagination = ({
 						<PgBtn
 							key={p}
 							active={p === page}
-							onClick={() => onChange(p as number)}
+							onClick={handleClick}
 						>
 							{p}
 						</PgBtn>
-					),
+					);
+				},
 				)}
 
 				<PgBtn
 					disabled={page >= totalPages}
-					onClick={() => onChange(page + 1)}
+					onClick={handleClick2}
 					aria-label={t("admin.logs.pagination.next")}
 				>
 					<svg width="11" height="11" viewBox="0 0 16 16" fill="none">

@@ -36,7 +36,9 @@ export const TokenizationPagination = ({
 		pages.push(totalPages);
 	}
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(page - 1);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(page + 1);
+return (
 		<div className="flex items-center justify-between border-t border-bd-1 px-4 py-3">
 			<span className="text-[12px] text-t-3 max-sm:hidden">
 				{t("admin.tokenization.pagination.showing")
@@ -46,7 +48,7 @@ export const TokenizationPagination = ({
 			</span>
 			<div className="flex gap-1">
 				<button
-					onClick={() => onPageChange(page - 1)}
+					onClick={handleClick}
 					disabled={page === 1}
 					className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
 				>
@@ -54,15 +56,21 @@ export const TokenizationPagination = ({
 						<path d="M10 4l-4 4 4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
 					</svg>
 				</button>
-				{pages.map((p, i) =>
-					p === "…" ? (
-						<span key={`ellipsis-${i}`} className="flex size-7 items-center justify-center text-[12px] text-t-3">
-							…
-						</span>
-					) : (
+				{pages.map((p, i) => {
+					if (p === "…") {
+						return (
+							<span key={`ellipsis-${i}`} className="flex size-7 items-center justify-center text-[12px] text-t-3">
+								…
+							</span>
+						);
+					}
+
+					const handlePageClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPageChange(p);
+
+					return (
 						<button
 							key={p}
-							onClick={() => onPageChange(p)}
+							onClick={handlePageClick}
 							className={`flex size-7 items-center justify-center rounded-[6px] border text-[12px] font-medium transition-colors ${
 								p === page
 									? "border-acc bg-acc text-white"
@@ -71,10 +79,10 @@ export const TokenizationPagination = ({
 						>
 							{p}
 						</button>
-					),
-				)}
+					);
+				})}
 				<button
-					onClick={() => onPageChange(page + 1)}
+					onClick={handleClick2}
 					disabled={page === totalPages}
 					className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
 				>

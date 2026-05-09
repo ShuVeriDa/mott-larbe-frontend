@@ -35,10 +35,12 @@ export const MorphologyTabs = ({ active, stats, onChange }: Props) => {
   return (
     <div className="mb-3.5 overflow-x-auto [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:h-0">
       <div className="inline-flex min-w-full gap-0 rounded-[9px] bg-surf-2 p-[3px]">
-        {tabs.map((tab) => (
+        {tabs.map((tab) => {
+          const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab.key);
+          return (
           <button
             key={tab.key}
-            onClick={() => onChange(tab.key)}
+            onClick={handleClick}
             className={cn(
               "flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-[6px] px-3 py-1 text-[12px] font-medium transition-colors",
               active === tab.key
@@ -60,7 +62,8 @@ export const MorphologyTabs = ({ active, stats, onChange }: Props) => {
               </span>
             )}
           </button>
-        ))}
+        );
+        })}
       </div>
     </div>
   );

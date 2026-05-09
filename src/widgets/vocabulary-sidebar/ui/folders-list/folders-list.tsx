@@ -55,7 +55,8 @@ export const FoldersList = ({
 		onSelect?.();
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof FolderItem>["onClick"]> = () => handleSelect(null);
+return (
 		<div className="flex flex-col">
 			<div className="flex flex-col gap-0.5">
 				<FolderItem
@@ -63,18 +64,21 @@ export const FoldersList = ({
 					count={totalAllWords}
 					active={folderId === null}
 					icon={<AllWordsIcon />}
-					onClick={() => handleSelect(null)}
+					onClick={handleClick}
 				/>
-				{folders?.map((f) => (
+				{folders?.map((f) => {
+				  const handleClick: NonNullable<React.ComponentProps<typeof FolderItem>["onClick"]> = () => handleSelect(f.id);
+				  return (
 					<FolderItem
 						key={f.id}
 						name={f.name}
 						count={f.total}
 						active={folderId === f.id}
 						icon={<FolderIcon />}
-						onClick={() => handleSelect(f.id)}
+						onClick={handleClick}
 					/>
-				))}
+				);
+				})}
 			</div>
 			<button
 				type="button"

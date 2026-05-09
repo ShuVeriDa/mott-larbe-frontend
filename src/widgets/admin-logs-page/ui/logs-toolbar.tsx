@@ -37,7 +37,10 @@ export const LogsToolbar = ({
 }: LogsToolbarProps) => {
 	const { t } = useI18n();
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onServiceChange(e.target.value);
+	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => onRangeChange(e.target.value as AdminLogRange);
+return (
 		<div className="mb-2.5 flex flex-wrap items-center gap-2">
 			{/* Search */}
 			<div className="relative min-w-[160px] flex-1">
@@ -59,7 +62,7 @@ export const LogsToolbar = ({
 				<input
 					type="text"
 					value={search}
-					onChange={(e) => onSearchChange(e.target.value)}
+					onChange={handleChange}
 					placeholder={t("admin.logs.toolbar.searchPlaceholder")}
 					className={cn(inputCls, "w-full pl-8 pr-3")}
 				/>
@@ -68,7 +71,7 @@ export const LogsToolbar = ({
 			{/* Service filter */}
 			<select
 				value={service}
-				onChange={(e) => onServiceChange(e.target.value)}
+				onChange={handleChange2}
 				className={cn(
 					inputCls,
 					"cursor-pointer appearance-none bg-no-repeat pr-7 pl-3",
@@ -88,7 +91,7 @@ export const LogsToolbar = ({
 				<div className="relative">
 					<select
 						value={range}
-						onChange={(e) => onRangeChange(e.target.value as AdminLogRange)}
+						onChange={handleChange3}
 						className={cn(
 							inputCls,
 							"cursor-pointer appearance-none bg-no-repeat pl-8 pr-7",

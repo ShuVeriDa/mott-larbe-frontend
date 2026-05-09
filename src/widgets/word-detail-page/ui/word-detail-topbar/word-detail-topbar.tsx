@@ -43,7 +43,9 @@ export const WordDetailTopbar = ({ entry }: WordDetailTopbarProps) => {
 
 	const buildHref = (id: string) => `/${lang}/vocabulary/${id}`;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setReviewOpen(true);
+	const handleClose: NonNullable<React.ComponentProps<typeof ReviewWordModal>["onClose"]> = () => setReviewOpen(false);
+return (
 		<>
 			<header className="flex shrink-0 items-center gap-2.5 border-b border-hairline border-bd-1 bg-surf px-[22px] py-3 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
 				<Link
@@ -86,7 +88,7 @@ export const WordDetailTopbar = ({ entry }: WordDetailTopbarProps) => {
 					) : null}
 					<button
 						type="button"
-						onClick={() => setReviewOpen(true)}
+						onClick={handleClick}
 						disabled={!entry.lemma}
 						className={cn(tbBtnClass, "ml-0.5")}
 					>
@@ -110,7 +112,7 @@ export const WordDetailTopbar = ({ entry }: WordDetailTopbarProps) => {
 			{entry.lemma ? (
 				<ReviewWordModal
 					open={reviewOpen}
-					onClose={() => setReviewOpen(false)}
+					onClose={handleClose}
 					entry={entry}
 				/>
 			) : null}

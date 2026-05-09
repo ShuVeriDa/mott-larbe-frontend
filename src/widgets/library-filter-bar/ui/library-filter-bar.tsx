@@ -44,7 +44,13 @@ export const LibraryFilterBar = () => {
 		setView,
 	} = useLibraryFilters();
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof Pill>["onClick"]> = () => setLevel("all");
+	const handleClick2: NonNullable<React.ComponentProps<typeof Pill>["onClick"]> = () => setLang("all");
+	const handleClick3: NonNullable<React.ComponentProps<typeof Pill>["onClick"]> = () => setStatus("all");
+	const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = e => setSort(e.target.value as LibrarySortOption);
+	const handleClick4: NonNullable<React.ComponentProps<typeof ViewBtn>["onClick"]> = () => setView("grid");
+	const handleClick5: NonNullable<React.ComponentProps<typeof ViewBtn>["onClick"]> = () => setView("list");
+return (
 		<div className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-b border-bd-1 bg-surf px-5 py-2 [scrollbar-width:none] max-sm:px-3 max-sm:gap-1 [&::-webkit-scrollbar]:hidden">
 			<span className="shrink-0 text-[11px] font-medium text-t-3 max-sm:hidden">
 				{t("library.filterLevel")}
@@ -52,7 +58,7 @@ export const LibraryFilterBar = () => {
 
 			<Pill
 				active={level === "all"}
-				onClick={() => setLevel("all")}
+				onClick={handleClick}
 				className={
 					level === "all"
 						? "bg-acc-bg border-acc/25 text-acc-t"
@@ -62,16 +68,19 @@ export const LibraryFilterBar = () => {
 				{t("library.all")}
 			</Pill>
 
-			{CEFR_LEVELS.map(l => (
+			{CEFR_LEVELS.map(l => {
+			  const handleClick: NonNullable<React.ComponentProps<typeof Pill>["onClick"]> = () => setLevel(l);
+			  return (
 				<Pill
 					key={l}
 					active={level === l}
-					onClick={() => setLevel(l)}
+					onClick={handleClick}
 					className={levelPillClass(l, level === l)}
 				>
 					{l}
 				</Pill>
-			))}
+			);
+			})}
 
 			<Divider />
 
@@ -81,7 +90,7 @@ export const LibraryFilterBar = () => {
 
 			<Pill
 				active={lang === "all"}
-				onClick={() => setLang("all")}
+				onClick={handleClick2}
 				className={
 					lang === "all"
 						? "bg-acc-bg border-acc/25 text-acc-t"
@@ -91,11 +100,13 @@ export const LibraryFilterBar = () => {
 				{t("library.all")}
 			</Pill>
 
-			{LANGUAGES.map(l => (
+			{LANGUAGES.map(l => {
+			  const handleClick: NonNullable<React.ComponentProps<typeof Pill>["onClick"]> = () => setLang(l);
+			  return (
 				<Pill
 					key={l}
 					active={lang === l}
-					onClick={() => setLang(l)}
+					onClick={handleClick}
 					className={
 						lang === l
 							? "bg-acc-bg border-acc/25 text-acc-t"
@@ -104,7 +115,8 @@ export const LibraryFilterBar = () => {
 				>
 					{t(`library.lang.${l}`)}
 				</Pill>
-			))}
+			);
+			})}
 
 			<Divider />
 
@@ -114,7 +126,7 @@ export const LibraryFilterBar = () => {
 
 			<Pill
 				active={status === "all"}
-				onClick={() => setStatus("all")}
+				onClick={handleClick3}
 				className={
 					status === "all"
 						? "bg-acc-bg border-acc/25 text-acc-t"
@@ -124,11 +136,13 @@ export const LibraryFilterBar = () => {
 				{t("library.all")}
 			</Pill>
 
-			{PROGRESS_STATUSES.map(s => (
+			{PROGRESS_STATUSES.map(s => {
+			  const handleClick: NonNullable<React.ComponentProps<typeof Pill>["onClick"]> = () => setStatus(s);
+			  return (
 				<Pill
 					key={s}
 					active={status === s}
-					onClick={() => setStatus(s)}
+					onClick={handleClick}
 					className={
 						status === s
 							? "bg-acc-bg border-acc/25 text-acc-t"
@@ -137,13 +151,14 @@ export const LibraryFilterBar = () => {
 				>
 					{t(`library.progress.${s.toLowerCase().replace("_", "")}`)}
 				</Pill>
-			))}
+			);
+			})}
 
 			<Divider />
 
 			<select
 				value={sort}
-				onChange={e => setSort(e.target.value as LibrarySortOption)}
+				onChange={handleChange}
 				aria-label={t("library.sort.label")}
 				className="h-[26px] shrink-0 cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[11px] text-t-2 outline-none"
 			>
@@ -160,14 +175,14 @@ export const LibraryFilterBar = () => {
 			<div className="flex shrink-0 overflow-hidden rounded-base border border-bd-2 max-sm:hidden">
 				<ViewBtn
 					active={view === "grid"}
-					onClick={() => setView("grid")}
+					onClick={handleClick4}
 					aria-label={t("library.view.grid")}
 				>
 					<GridIcon />
 				</ViewBtn>
 				<ViewBtn
 					active={view === "list"}
-					onClick={() => setView("list")}
+					onClick={handleClick5}
 					aria-label={t("library.view.list")}
 				>
 					<ListIcon />

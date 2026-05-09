@@ -44,13 +44,14 @@ export const AuthLanguageSwitcher = () => {
 		>
 			{LOCALES.map(locale => {
 				const isActive = locale === lang;
-				return (
+								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => handleSelect(locale);
+return (
 					<button
 						key={locale}
 						type="button"
 						role="tab"
 						aria-selected={isActive}
-						onClick={() => handleSelect(locale)}
+						onClick={handleClick}
 						className={cn(
 							"h-[26px] rounded-[6px] px-2.5 text-[11.5px] font-semibold tracking-[0.3px] transition-colors",
 							isActive ? "bg-surf-3 text-t-1" : "text-t-3 hover:text-t-1",

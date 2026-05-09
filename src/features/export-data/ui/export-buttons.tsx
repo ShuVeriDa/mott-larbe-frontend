@@ -44,7 +44,9 @@ export const ExportButtons = () => {
 		}
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => handleVocab("csv");
+	const handleClick2: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => handleVocab("json");
+return (
 		<>
 			<ExportRow
 				label={t("settings.data.exportVocab")}
@@ -53,14 +55,14 @@ export const ExportButtons = () => {
 					<>
 						<Button
 							variant="outline"
-							onClick={() => handleVocab("csv")}
+							onClick={handleClick}
 							disabled={exportVocab.isPending}
 						>
 							{t("settings.data.csv")}
 						</Button>
 						<Button
 							variant="outline"
-							onClick={() => handleVocab("json")}
+							onClick={handleClick2}
 							disabled={exportVocab.isPending}
 						>
 							{t("settings.data.json")}

@@ -112,19 +112,27 @@ export const UnknownWordsTable = ({
 					</tr>
 				</thead>
 				<tbody>
-					{words.map((word) => (
+					{words.map((word) => {
+					  const handleClick: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = () => onToggleRow(word.id);
+					  const handleClick2: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleClick3: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleAddToDictionary: NonNullable<React.ComponentProps<typeof UnknownWordRowActions>["onAddToDictionary"]> = () => onAddToDictionary(word);
+					  const handleLinkToLemma: NonNullable<React.ComponentProps<typeof UnknownWordRowActions>["onLinkToLemma"]> = () => onLinkToLemma(word);
+					  const handleViewContexts: NonNullable<React.ComponentProps<typeof UnknownWordRowActions>["onViewContexts"]> = () => onViewContexts(word);
+					  return (
 						<tr
 							key={word.id}
 							className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2"
 						>
 							<td
 								className="px-2.5 py-[10px] pl-3.5"
-								onClick={(e) => e.stopPropagation()}
+								onClick={handleClick}
 							>
 								<input
 									type="checkbox"
 									checked={selectedIds.has(word.id)}
-									onChange={() => onToggleRow(word.id)}
+									onChange={handleChange}
 									className="size-3.5 cursor-pointer accent-acc"
 								/>
 							</td>
@@ -158,7 +166,7 @@ export const UnknownWordsTable = ({
 							</td>
 
 							{/* Count */}
-							<td className="px-2.5 py-[10px] text-center" onClick={(e) => e.stopPropagation()}>
+							<td className="px-2.5 py-[10px] text-center" onClick={handleClick2}>
 								<CountBadge count={word.seenCount} />
 							</td>
 
@@ -173,17 +181,18 @@ export const UnknownWordsTable = ({
 							</td>
 
 							{/* Actions */}
-							<td className="px-2.5 py-[10px]" onClick={(e) => e.stopPropagation()}>
+							<td className="px-2.5 py-[10px]" onClick={handleClick3}>
 								<UnknownWordRowActions
 									word={word}
 									mutations={mutations}
-									onAddToDictionary={() => onAddToDictionary(word)}
-									onLinkToLemma={() => onLinkToLemma(word)}
-									onViewContexts={() => onViewContexts(word)}
+									onAddToDictionary={handleAddToDictionary}
+									onLinkToLemma={handleLinkToLemma}
+									onViewContexts={handleViewContexts}
 								/>
 							</td>
 						</tr>
-					))}
+					);
+					})}
 				</tbody>
 			</table>
 		</div>

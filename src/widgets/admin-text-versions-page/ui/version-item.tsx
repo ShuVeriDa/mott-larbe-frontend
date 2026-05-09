@@ -89,12 +89,16 @@ export const VersionItem = ({ item, isFirst, isLast, isActive, onClick, onRestor
 
 	const btnClass = "flex size-6 cursor-pointer items-center justify-center rounded-[5px] border-none bg-surf-3 text-t-2 transition-colors hover:bg-surf-4 hover:text-t-1 [&_svg]:size-3";
 
-	return (
+		const handleKeyDown: NonNullable<React.ComponentProps<"div">["onKeyDown"]> = (e) => e.key === "Enter" && onClick();
+	const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onRestore(); };
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onRetry(); };
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onDownload(item.version); };
+return (
 		<div
 			role="button"
 			tabIndex={0}
 			onClick={onClick}
-			onKeyDown={(e) => e.key === "Enter" && onClick()}
+			onKeyDown={handleKeyDown}
 			className={cn(
 				"group relative flex cursor-pointer gap-0 px-4 transition-colors max-sm:px-3",
 				isActive ? "bg-acc-bg" : "hover:bg-surf-2",
@@ -208,7 +212,7 @@ export const VersionItem = ({ item, isFirst, isLast, isActive, onClick, onRestor
 					{item.status === "COMPLETED" && !item.isCurrent && (
 						<button
 							type="button"
-							onClick={(e) => { e.stopPropagation(); onRestore(); }}
+							onClick={handleClick}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.restore")}
 						>
@@ -221,7 +225,7 @@ export const VersionItem = ({ item, isFirst, isLast, isActive, onClick, onRestor
 					{item.status === "ERROR" && (
 						<button
 							type="button"
-							onClick={(e) => { e.stopPropagation(); onRetry(); }}
+							onClick={handleClick2}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.retry")}
 						>
@@ -234,7 +238,7 @@ export const VersionItem = ({ item, isFirst, isLast, isActive, onClick, onRestor
 					{item.status === "COMPLETED" && (
 						<button
 							type="button"
-							onClick={(e) => { e.stopPropagation(); onDownload(item.version); }}
+							onClick={handleClick3}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.download")}
 						>

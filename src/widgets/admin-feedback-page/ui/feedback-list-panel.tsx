@@ -75,7 +75,8 @@ export const FeedbackListPanel = ({
 		return () => observer.disconnect();
 	}, [hasNextPage, isFetchingNextPage, onLoadMore]);
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.target.value);
+return (
 		<div
 			className={cn(
 				"flex w-[300px] shrink-0 flex-col border-r border-bd-1 bg-surf transition-colors",
@@ -87,11 +88,13 @@ export const FeedbackListPanel = ({
 			<div className="shrink-0 border-b border-bd-1 px-3.5 pb-2.5 pt-3">
 				{/* Tabs */}
 				<div className="mb-2.5 flex gap-0.5 rounded-lg border border-bd-1 bg-surf-2 p-0.5">
-					{TAB_KEYS.map(({ key, label }) => (
+					{TAB_KEYS.map(({ key, label }) => {
+					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onTabChange(key);
+					  return (
 						<button
 							key={key}
 							type="button"
-							onClick={() => onTabChange(key)}
+							onClick={handleClick}
 							className={cn(
 								"flex flex-1 items-center justify-center gap-1 rounded-md py-[5px] text-[11.5px] font-medium transition-all",
 								tab === key
@@ -113,7 +116,8 @@ export const FeedbackListPanel = ({
 								</span>
 							)}
 						</button>
-					))}
+					);
+					})}
 				</div>
 
 				{/* Search */}
@@ -128,7 +132,7 @@ export const FeedbackListPanel = ({
 					</svg>
 					<input
 						value={search}
-						onChange={(e) => onSearchChange(e.target.value)}
+						onChange={handleChange}
 						placeholder={t("admin.feedback.searchPlaceholder")}
 						className="h-[30px] w-full rounded-base border border-bd-1 bg-surf-2 pl-[30px] pr-2.5 text-[12px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc"
 					/>
@@ -137,11 +141,13 @@ export const FeedbackListPanel = ({
 
 			{/* Type filters */}
 			<div className="scrollbar-none flex shrink-0 gap-1.5 overflow-x-auto border-b border-bd-1 px-3.5 py-2">
-				{TYPE_FILTERS.map(({ key, label }) => (
+				{TYPE_FILTERS.map(({ key, label }) => {
+				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onTypeChange(key);
+				  return (
 					<button
 						key={key}
 						type="button"
-						onClick={() => onTypeChange(key)}
+						onClick={handleClick}
 						className={cn(
 							"h-6 shrink-0 rounded-[5px] border px-2 text-[11px] font-medium transition-all",
 							typeFilter === key
@@ -151,7 +157,8 @@ export const FeedbackListPanel = ({
 					>
 						{t(label)}
 					</button>
-				))}
+				);
+				})}
 			</div>
 
 			{/* List */}
@@ -164,15 +171,18 @@ export const FeedbackListPanel = ({
 					</div>
 				) : (
 					<>
-						{threads.map((thread) => (
+						{threads.map((thread) => {
+						  const handleClick: NonNullable<React.ComponentProps<typeof FeedbackListItem>["onClick"]> = () => onSelect(thread);
+						  return (
 							<FeedbackListItem
 								key={thread.id}
 								thread={thread}
 								isActive={thread.id === activeId}
 								t={t}
-								onClick={() => onSelect(thread)}
+								onClick={handleClick}
 							/>
-						))}
+						);
+						})}
 						{/* Infinite scroll sentinel */}
 						<div ref={sentinelRef} className="h-px" />
 						{isFetchingNextPage && (

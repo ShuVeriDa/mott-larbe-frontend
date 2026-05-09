@@ -68,10 +68,19 @@ export const DictionaryImportModal = ({
 
 	if (!open) return null;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = (e) => { if (e.target === e.currentTarget) handleClose(); };
+	const handleDragOver: NonNullable<React.ComponentProps<"div">["onDragOver"]> = (e) => { e.preventDefault(); setDragging(true); };
+	const handleDragLeave: NonNullable<React.ComponentProps<"div">["onDragLeave"]> = () => setDragging(false);
+	const handleClick2: NonNullable<React.ComponentProps<"div">["onClick"]> = () => inputRef.current?.click();
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = (e) => {
+									const f = e.target.files?.[0];
+									if (f) pick(f);
+								};
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { if (file) onSubmit(file); };
+return (
 		<div
 			className="fixed inset-0 z-200 flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
+			onClick={handleClick}
 		>
 			<div className="w-[460px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
 				<h2 className="font-display text-[16px] text-t-1 mb-1">
@@ -108,10 +117,10 @@ export const DictionaryImportModal = ({
 								"mb-3 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[10px] border-2 border-dashed px-4 py-8 transition-colors",
 								dragging ? "border-acc bg-acc-bg" : "border-bd-2 hover:border-bd-3",
 							)}
-							onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
-							onDragLeave={() => setDragging(false)}
+							onDragOver={handleDragOver}
+							onDragLeave={handleDragLeave}
 							onDrop={handleDrop}
-							onClick={() => inputRef.current?.click()}
+							onClick={handleClick2}
 						>
 							<svg className="size-8 text-t-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
 								<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" strokeLinecap="round" strokeLinejoin="round" />
@@ -135,10 +144,7 @@ export const DictionaryImportModal = ({
 								type="file"
 								accept=".json"
 								className="hidden"
-								onChange={(e) => {
-									const f = e.target.files?.[0];
-									if (f) pick(f);
-								}}
+								onChange={handleChange}
 							/>
 						</div>
 						{error && (
@@ -162,7 +168,7 @@ export const DictionaryImportModal = ({
 					{!result && (
 						<button
 							type="button"
-							onClick={() => { if (file) onSubmit(file); }}
+							onClick={handleClick3}
 							disabled={!file || isSubmitting}
 							className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
 						>

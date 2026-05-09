@@ -96,12 +96,14 @@ const Toggle = ({
 }: {
 	checked: boolean;
 	onChange: (v: boolean) => void;
-}) => (
+}) => {
+  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(!checked);
+  return (
 	<button
 		type="button"
 		role="switch"
 		aria-checked={checked}
-		onClick={() => onChange(!checked)}
+		onClick={handleClick}
 		className={`relative h-[18px] w-[34px] shrink-0 rounded-full border-none p-0 transition-colors ${
 			checked ? "bg-acc" : "bg-surf-3"
 		}`}
@@ -113,6 +115,7 @@ const Toggle = ({
 		/>
 	</button>
 );
+};
 
 export const TextCreateMetaPanel = ({
 	status,
@@ -195,12 +198,32 @@ export const TextCreateMetaPanel = ({
 		}
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setMetaOpen(v => !v);
+	const handleChange: NonNullable<React.ComponentProps<typeof FieldSelect>["onChange"]> = e => onStatusChange(e.target.value as TextStatus);
+	const handleChange2: NonNullable<React.ComponentProps<typeof FieldSelect>["onChange"]> = e => onLanguageChange(e.target.value as TextLanguage);
+	const handleChange3: NonNullable<React.ComponentProps<typeof FieldInput>["onChange"]> = e => onAuthorChange(e.target.value);
+	const handleChange4: NonNullable<React.ComponentProps<typeof FieldInput>["onChange"]> = e => onSourceChange(e.target.value);
+	const handleBlur: NonNullable<React.ComponentProps<"div">["onBlur"]> = e => {
+							if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+								setTagInputValue("");
+							}
+						};
+	const handleClick2: NonNullable<React.ComponentProps<"div">["onClick"]> = () => tagInputRef.current?.focus();
+	const handleChange5: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setTagInputValue(e.target.value);
+	const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => e.preventDefault();
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => commitTag(tagInputValue.trim());
+	const handleChange6: NonNullable<React.ComponentProps<"textarea">["onChange"]> = e => onDescriptionChange(e.target.value);
+	const handleChange7: NonNullable<React.ComponentProps<"input">["onChange"]> = e => {
+							const file = e.target.files?.[0];
+							if (file) onCoverSelect(file);
+						};
+	const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => fileInputRef.current?.click();
+return (
 		<div className="flex flex-col overflow-y-auto [&::-webkit-scrollbar]:w-0">
 			{/* Mobile toggle header */}
 			<button
 				type="button"
-				onClick={() => setMetaOpen(v => !v)}
+				onClick={handleClick}
 				className="hidden items-center justify-between border-t border-bd-1 bg-surf-2 px-4 py-[13px] transition-colors hover:bg-surf-3 max-[900px]:flex"
 			>
 				<span className="flex items-center gap-2 text-[13px] font-medium text-t-1">
@@ -238,7 +261,7 @@ export const TextCreateMetaPanel = ({
 				<MetaSection title={t("admin.texts.createPage.sections.status")}>
 					<FieldSelect
 						value={status}
-						onChange={e => onStatusChange(e.target.value as TextStatus)}
+						onChange={handleChange}
 					>
 						<option value="draft">
 							{t("admin.texts.createPage.statusOptions.draft")}
@@ -258,7 +281,7 @@ export const TextCreateMetaPanel = ({
 						<FieldLabel>{t("admin.texts.createPage.langLabel")}</FieldLabel>
 						<FieldSelect
 							value={language}
-							onChange={e => onLanguageChange(e.target.value as TextLanguage)}
+							onChange={handleChange2}
 						>
 							<option value="CHE">{t("admin.texts.createPage.langChe")}</option>
 							<option value="RU">{t("admin.texts.createPage.langRu")}</option>
@@ -268,11 +291,13 @@ export const TextCreateMetaPanel = ({
 					<div className="mb-[11px]">
 						<FieldLabel>{t("admin.texts.createPage.levelLabel")}</FieldLabel>
 						<div className="grid grid-cols-6 gap-1.5">
-							{LEVELS.map(lvl => (
+							{LEVELS.map(lvl => {
+							  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onLevelChange(level === lvl ? null : lvl);
+							  return (
 								<button
 									key={lvl}
 									type="button"
-									onClick={() => onLevelChange(level === lvl ? null : lvl)}
+									onClick={handleClick}
 									className={`flex h-[30px] items-center justify-center rounded-[6px] border text-[11.5px] font-semibold transition-colors ${
 										level === lvl
 											? levelColorMap[lvl]
@@ -281,7 +306,8 @@ export const TextCreateMetaPanel = ({
 								>
 									{lvl}
 								</button>
-							))}
+							);
+							})}
 						</div>
 					</div>
 
@@ -291,7 +317,7 @@ export const TextCreateMetaPanel = ({
 							type="text"
 							value={author}
 							maxLength={50}
-							onChange={e => onAuthorChange(e.target.value)}
+							onChange={handleChange3}
 							placeholder={t("admin.texts.createPage.authorPlaceholder")}
 						/>
 					</div>
@@ -301,7 +327,7 @@ export const TextCreateMetaPanel = ({
 						<FieldInput
 							type="url"
 							value={source}
-							onChange={e => onSourceChange(e.target.value)}
+							onChange={handleChange4}
 							placeholder={t("admin.texts.createPage.sourcePlaceholder")}
 						/>
 					</div>
@@ -314,18 +340,19 @@ export const TextCreateMetaPanel = ({
 						onMouseDown on dropdown items prevents blur from firing before onClick.
 					*/}
 					<div
-						onBlur={e => {
-							if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-								setTagInputValue("");
-							}
-						}}
+						onBlur={handleBlur}
 						className="relative"
 					>
 						<div
 							className="flex min-h-[38px] cursor-text flex-wrap gap-1.5 rounded-base border border-bd-2 bg-surf px-2 py-1.5 transition-colors focus-within:border-acc"
-							onClick={() => tagInputRef.current?.focus()}
+							onClick={handleClick2}
 						>
-							{tags.map((tag, index) => (
+							{tags.map((tag, index) => {
+							  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = e => {
+											e.stopPropagation();
+											onTagRemove(index);
+										};
+							  return (
 								<span
 									key={index}
 									className="inline-flex items-center gap-1 rounded-[4px] bg-acc-muted px-2 py-[3px] text-[11.5px] font-medium text-acc-strong"
@@ -333,20 +360,18 @@ export const TextCreateMetaPanel = ({
 									{tag.name}
 									<button
 										type="button"
-										onClick={e => {
-											e.stopPropagation();
-											onTagRemove(index);
-										}}
+										onClick={handleClick}
 										className="flex items-center text-[13px] leading-none opacity-60 hover:opacity-100"
 									>
 										×
 									</button>
 								</span>
-							))}
+							);
+							})}
 							<input
 								ref={tagInputRef}
 								value={tagInputValue}
-								onChange={e => setTagInputValue(e.target.value)}
+								onChange={handleChange5}
 								onKeyDown={handleTagKeyDown}
 								placeholder={
 									tags.length === 0
@@ -361,12 +386,15 @@ export const TextCreateMetaPanel = ({
 						{tagInputValue &&
 							(filteredSuggestions.length > 0 || canCreateNew) && (
 								<div className="absolute left-0 right-0 top-full z-30 mt-1 overflow-hidden rounded-[8px] border border-bd-2 bg-bg shadow-lg">
-									{filteredSuggestions.map(tag => (
+									{filteredSuggestions.map(tag => {
+									  const handleMouseDown: NonNullable<React.ComponentProps<"button">["onMouseDown"]> = e => e.preventDefault();
+									  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => commitTag(tag.name, tag.id);
+									  return (
 										<button
 											key={tag.id}
 											type="button"
-											onMouseDown={e => e.preventDefault()}
-											onClick={() => commitTag(tag.name, tag.id)}
+											onMouseDown={handleMouseDown}
+											onClick={handleClick}
 											className="flex w-full items-center gap-2 px-3 py-[9px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 										>
 											<span className="flex-1">{tag.name}</span>
@@ -374,12 +402,13 @@ export const TextCreateMetaPanel = ({
 												{tag._count.texts}
 											</span>
 										</button>
-									))}
+									);
+									})}
 									{canCreateNew && (
 										<button
 											type="button"
-											onMouseDown={e => e.preventDefault()}
-											onClick={() => commitTag(tagInputValue.trim())}
+											onMouseDown={handleMouseDown}
+											onClick={handleClick3}
 											className={`flex w-full items-center gap-2 px-3 py-[9px] text-left text-[12.5px] transition-colors hover:bg-acc-muted ${filteredSuggestions.length > 0 ? "border-t border-bd-1" : ""}`}
 										>
 											<span className="text-[10px] font-semibold uppercase tracking-wide text-t-3">
@@ -402,7 +431,7 @@ export const TextCreateMetaPanel = ({
 				<MetaSection title={t("admin.texts.createPage.sections.description")}>
 					<textarea
 						value={description}
-						onChange={e => onDescriptionChange(e.target.value)}
+						onChange={handleChange6}
 						placeholder={t("admin.texts.createPage.descriptionPlaceholder")}
 						rows={3}
 						maxLength={1000}
@@ -418,14 +447,11 @@ export const TextCreateMetaPanel = ({
 						type="file"
 						accept="image/jpeg,image/png,image/webp"
 						className="hidden"
-						onChange={e => {
-							const file = e.target.files?.[0];
-							if (file) onCoverSelect(file);
-						}}
+						onChange={handleChange7}
 					/>
 					<button
 						type="button"
-						onClick={() => fileInputRef.current?.click()}
+						onClick={handleClick4}
 						className="flex h-[82px] w-full flex-col items-center justify-center gap-1.5 rounded-[8px] border border-dashed border-bd-2 bg-surf transition-colors hover:border-acc hover:bg-acc-muted"
 					>
 						{coverPreviewUrl ? (

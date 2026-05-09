@@ -46,10 +46,12 @@ export const LogsMobileList = ({
 
 	return (
 		<div className="md:hidden">
-			{items.map((item) => (
+			{items.map((item) => {
+			  const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = () => onItemClick(item.id);
+			  return (
 				<div
 					key={item.id}
-					onClick={() => onItemClick(item.id)}
+					onClick={handleClick}
 					className="cursor-pointer border-b border-bd-1 px-4 py-3 transition-colors last:border-b-0 active:bg-surf-2"
 				>
 					<div className="mb-1.5 flex items-center gap-1.5">
@@ -71,7 +73,8 @@ export const LogsMobileList = ({
 						</span>
 					</div>
 				</div>
-			))}
+			);
+			})}
 		</div>
 	);
 };

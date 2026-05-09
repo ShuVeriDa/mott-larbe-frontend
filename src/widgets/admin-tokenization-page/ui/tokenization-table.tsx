@@ -123,17 +123,25 @@ export const TokenizationTable = ({
 					</tr>
 				</thead>
 				<tbody>
-					{items.map((item) => (
+					{items.map((item) => {
+					  const handleClick: NonNullable<React.ComponentProps<"tr">["onClick"]> = () => onRowClick(item.id);
+					  const handleClick2: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = () => onToggleRow(item.id);
+					  const handleClick3: NonNullable<React.ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
+					  const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => mutations.cancelText.mutate(item.id);
+					  const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => mutations.runText.mutate(item.id);
+					  const handleClick6: NonNullable<React.ComponentProps<"button">["onClick"]> = () => mutations.resetText.mutate(item.id);
+					  return (
 						<tr
 							key={item.id}
-							onClick={() => onRowClick(item.id)}
+							onClick={handleClick}
 							className="cursor-pointer border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2 group"
 						>
-							<td className="py-2.5 pl-3.5 pr-2" onClick={(e) => e.stopPropagation()}>
+							<td className="py-2.5 pl-3.5 pr-2" onClick={handleClick2}>
 								<input
 									type="checkbox"
 									checked={selectedIds.has(item.id)}
-									onChange={() => onToggleRow(item.id)}
+									onChange={handleChange}
 									className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
 								/>
 							</td>
@@ -183,11 +191,11 @@ export const TokenizationTable = ({
 									<span className="text-t-4">—</span>
 								)}
 							</td>
-							<td className="px-2 py-2.5" onClick={(e) => e.stopPropagation()}>
+							<td className="px-2 py-2.5" onClick={handleClick3}>
 								<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
 									{item.processingStatus === "RUNNING" ? (
 										<button
-											onClick={() => mutations.cancelText.mutate(item.id)}
+											onClick={handleClick4}
 											disabled={mutations.cancelText.isPending}
 											title={t("admin.tokenization.row.cancel")}
 											className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
@@ -198,7 +206,7 @@ export const TokenizationTable = ({
 										</button>
 									) : (
 										<button
-											onClick={() => mutations.runText.mutate(item.id)}
+											onClick={handleClick5}
 											disabled={mutations.runText.isPending}
 											title={t("admin.tokenization.row.run")}
 											className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
@@ -209,7 +217,7 @@ export const TokenizationTable = ({
 										</button>
 									)}
 									<button
-										onClick={() => mutations.resetText.mutate(item.id)}
+										onClick={handleClick6}
 										disabled={mutations.resetText.isPending}
 										title={t("admin.tokenization.row.reset")}
 										className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
@@ -222,7 +230,8 @@ export const TokenizationTable = ({
 								</div>
 							</td>
 						</tr>
-					))}
+					);
+					})}
 				</tbody>
 			</table>
 		</div>

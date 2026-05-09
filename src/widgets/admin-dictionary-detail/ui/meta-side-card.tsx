@@ -74,7 +74,8 @@ export const MetaSideCard = ({ data, isLoading, onOpenModal }: MetaSideCardProps
 		},
 	];
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onOpenModal({ type: "editMeta" });
+return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
 				<span className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
@@ -82,7 +83,7 @@ export const MetaSideCard = ({ data, isLoading, onOpenModal }: MetaSideCardProps
 				</span>
 				<button
 					className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
-					onClick={() => onOpenModal({ type: "editMeta" })}
+					onClick={handleClick}
 					title={t("admin.dictionaryDetail.edit")}
 				>
 					<IconEdit />

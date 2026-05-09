@@ -16,10 +16,11 @@ export const AuthThemeToggle = () => {
 
 	const dark = mounted && resolvedTheme === "dark";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setTheme(dark ? "light" : "dark");
+return (
 		<button
 			type="button"
-			onClick={() => setTheme(dark ? "light" : "dark")}
+			onClick={handleClick}
 			aria-label={t("landing.nav.theme")}
 			className="inline-flex size-8 items-center justify-center rounded-[8px] border-[0.5px] border-bd-2 bg-surf text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 		>

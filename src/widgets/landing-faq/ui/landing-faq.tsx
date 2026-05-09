@@ -44,16 +44,19 @@ export const LandingFaq = () => {
 				</header>
 
 				<div className="mx-auto max-w-[760px]">
-					{items.map((item, idx) => (
+					{items.map((item, idx) => {
+					  const handleToggle: NonNullable<React.ComponentProps<typeof FaqItem>["onToggle"]> = () => toggle(idx);
+					  return (
 						<FaqItem
 							key={`faq-${idx}`}
 							id={`faq-${idx}`}
 							question={item.q}
 							answer={item.a}
 							open={openIndex === idx}
-							onToggle={() => toggle(idx)}
+							onToggle={handleToggle}
 						/>
-					))}
+					);
+					})}
 				</div>
 			</div>
 		</section>

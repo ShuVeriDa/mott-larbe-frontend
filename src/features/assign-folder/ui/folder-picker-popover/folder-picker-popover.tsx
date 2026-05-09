@@ -61,11 +61,13 @@ export const FolderPickerPopover = ({
 				</div>
 			) : (
 				<ul className="max-h-[240px] overflow-y-auto py-1">
-					{folders.map((f) => (
+					{folders.map((f) => {
+					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onPick(f.id);
+					  return (
 						<li key={f.id}>
 							<button
 								type="button"
-								onClick={() => onPick(f.id)}
+								onClick={handleClick}
 								className={cn(
 									"flex w-full items-center gap-2 px-3 py-2",
 									"text-left text-[13px] text-t-2",
@@ -84,7 +86,8 @@ export const FolderPickerPopover = ({
 								<span className="truncate">{f.name}</span>
 							</button>
 						</li>
-					))}
+					);
+					})}
 				</ul>
 			)}
 		</div>

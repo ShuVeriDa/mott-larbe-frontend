@@ -53,7 +53,11 @@ export const AnalyticsTopbar = ({
 		setShowDatePicker(false);
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowDatePicker(v => !v);
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setLocalFrom(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setLocalTo(e.target.value);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setShowExportMenu(v => !v);
+return (
 		<header className=" flex items-center gap-3 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors max-md:hidden">
 			<div>
 				<h1 className="font-display text-base font-medium text-t-1">
@@ -67,11 +71,13 @@ export const AnalyticsTopbar = ({
 			<div className="ml-auto flex items-center gap-2">
 				{/* Preset range segment */}
 				<div className="flex items-center gap-0.5 rounded-lg border border-bd-2 bg-surf-2 p-0.5">
-					{RANGES.map(r => (
+					{RANGES.map(r => {
+					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRangeChange(r);
+					  return (
 						<button
 							key={r}
 							type="button"
-							onClick={() => onRangeChange(r)}
+							onClick={handleClick}
 							className={cn(
 								"h-[26px] rounded-md px-2.5 text-[11.5px] font-medium transition-all",
 								r === range && !isCustomRange
@@ -81,14 +87,15 @@ export const AnalyticsTopbar = ({
 						>
 							{t(`admin.analytics.range.${r}`)}
 						</button>
-					))}
+					);
+					})}
 				</div>
 
 				{/* Date-range chip */}
 				<div className="relative">
 					<button
 						type="button"
-						onClick={() => setShowDatePicker(v => !v)}
+						onClick={handleClick}
 						className={cn(
 							"flex h-[30px] items-center gap-1.5 rounded-base border px-2.5 text-[12px] font-medium transition-colors",
 							isCustomRange
@@ -135,7 +142,7 @@ export const AnalyticsTopbar = ({
 										type="date"
 										value={localFrom}
 										max={localTo || undefined}
-										onChange={e => setLocalFrom(e.target.value)}
+										onChange={handleChange}
 										className="h-[28px] rounded-md border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1"
 									/>
 								</div>
@@ -147,7 +154,7 @@ export const AnalyticsTopbar = ({
 										type="date"
 										value={localTo}
 										min={localFrom || undefined}
-										onChange={e => setLocalTo(e.target.value)}
+										onChange={handleChange2}
 										className="h-[28px] rounded-md border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1"
 									/>
 								</div>
@@ -177,7 +184,7 @@ export const AnalyticsTopbar = ({
 				<div className="relative" ref={exportRef}>
 					<button
 						type="button"
-						onClick={() => setShowExportMenu(v => !v)}
+						onClick={handleClick2}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 					>
 						<svg
@@ -200,19 +207,22 @@ export const AnalyticsTopbar = ({
 
 					{showExportMenu && (
 						<div className="absolute top-full right-0 z-20 mt-1.5 flex flex-col overflow-hidden rounded-xl border border-bd-2 bg-surf shadow-lg">
-							{(["csv", "json"] as const).map(fmt => (
+							{(["csv", "json"] as const).map(fmt => {
+							  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+										onExport(fmt);
+										setShowExportMenu(false);
+									};
+							  return (
 								<button
 									key={fmt}
 									type="button"
-									onClick={() => {
-										onExport(fmt);
-										setShowExportMenu(false);
-									}}
+									onClick={handleClick}
 									className="px-4 py-2 text-left text-[12px] text-t-1 hover:bg-surf-2"
 								>
 									{fmt.toUpperCase()}
 								</button>
-							))}
+							);
+							})}
 						</div>
 					)}
 				</div>

@@ -35,7 +35,12 @@ export const FeatureFlagsToolbar = ({
 	onEnvironmentChange,
 	onStatusChange,
 	t,
-}: FeatureFlagsToolbarProps) => (
+}: FeatureFlagsToolbarProps) => {
+  const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => onSearchChange(e.target.value);
+  const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onCategoryChange(e.target.value);
+  const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onEnvironmentChange(e.target.value);
+  const handleChange4: NonNullable<React.ComponentProps<"select">["onChange"]> = e => onStatusChange(e.target.value);
+  return (
 	<div className="mb-3.5 flex flex-wrap items-center gap-2">
 		<div className="relative max-w-[280px] flex-1">
 			<svg
@@ -51,7 +56,7 @@ export const FeatureFlagsToolbar = ({
 			<input
 				type="text"
 				value={search}
-				onChange={e => onSearchChange(e.target.value)}
+				onChange={handleChange}
 				placeholder={t("admin.featureFlags.toolbar.searchPlaceholder")}
 				className="h-[30px] w-full rounded-base border border-bd-2 bg-surf pl-[30px] pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 			/>
@@ -59,7 +64,7 @@ export const FeatureFlagsToolbar = ({
 
 		<select
 			value={category}
-			onChange={e => onCategoryChange(e.target.value)}
+			onChange={handleChange2}
 			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
 		>
 			<option value="">{t("admin.featureFlags.toolbar.allCategories")}</option>
@@ -72,7 +77,7 @@ export const FeatureFlagsToolbar = ({
 
 		<select
 			value={environment}
-			onChange={e => onEnvironmentChange(e.target.value)}
+			onChange={handleChange3}
 			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
 		>
 			<option value="">{t("admin.featureFlags.toolbar.allEnvs")}</option>
@@ -85,7 +90,7 @@ export const FeatureFlagsToolbar = ({
 
 		<select
 			value={status}
-			onChange={e => onStatusChange(e.target.value)}
+			onChange={handleChange4}
 			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
 		>
 			<option value="">{t("admin.featureFlags.toolbar.allStatuses")}</option>
@@ -97,3 +102,4 @@ export const FeatureFlagsToolbar = ({
 		</select>
 	</div>
 );
+};

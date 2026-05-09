@@ -43,14 +43,16 @@ export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
 		);
 	}
 
-	return (
+		const handleOpenSettings: NonNullable<React.ComponentProps<typeof ReaderTopbar>["onOpenSettings"]> = () => setSettingsOpen(true);
+	const handleClose: NonNullable<React.ComponentProps<typeof ReaderSettingsSheet>["onClose"]> = () => setSettingsOpen(false);
+return (
 		<>
 			<ReaderTopbar
 				textId={textId}
 				lang={lang}
 				currentPage={pageNumber}
 				data={data}
-				onOpenSettings={() => setSettingsOpen(true)}
+				onOpenSettings={handleOpenSettings}
 			/>
 			<div className="flex flex-1 overflow-hidden max-md:overflow-visible">
 				<ReaderBody data={data} currentPage={pageNumber} />
@@ -61,7 +63,7 @@ export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
 			<WordBottomSheet textId={textId} />
 			<ReaderSettingsSheet
 				open={settingsOpen}
-				onClose={() => setSettingsOpen(false)}
+				onClose={handleClose}
 			/>
 		</>
 	);

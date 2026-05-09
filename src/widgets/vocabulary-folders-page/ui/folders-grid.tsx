@@ -231,25 +231,32 @@ export const FoldersGrid = ({
 				strategy={rectSortingStrategy}
 			>
 				<div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-					{list.map((folder) => (
+					{list.map((folder) => {
+					  const handleOpen: NonNullable<React.ComponentProps<typeof SortableCard>["onOpen"]> = () => open(folder);
+					  const handleMenuToggle: NonNullable<React.ComponentProps<typeof SortableCard>["onMenuToggle"]> = () =>
+								setOpenMenuId((cur) =>
+									cur === folder.id ? null : folder.id,
+								);
+					  const handleMenuClose: NonNullable<React.ComponentProps<typeof SortableCard>["onMenuClose"]> = () => setOpenMenuId(null);
+					  const handleEdit: NonNullable<React.ComponentProps<typeof SortableCard>["onEdit"]> = () => onEdit(folder);
+					  const handleDelete: NonNullable<React.ComponentProps<typeof SortableCard>["onDelete"]> = () => onDelete(folder);
+					  return (
 						<SortableCard
 							key={folder.id}
 							folder={folder}
 							cardLabels={cardLabels}
 							menuLabel={t("vocabulary.foldersPage.card.menu")}
 							openMenuId={openMenuId}
-							onOpen={() => open(folder)}
-							onMenuToggle={() =>
-								setOpenMenuId((cur) =>
-									cur === folder.id ? null : folder.id,
-								)
+							onOpen={handleOpen}
+							onMenuToggle={handleMenuToggle
 							}
-							onMenuClose={() => setOpenMenuId(null)}
-							onEdit={() => onEdit(folder)}
-							onDelete={() => onDelete(folder)}
+							onMenuClose={handleMenuClose}
+							onEdit={handleEdit}
+							onDelete={handleDelete}
 							menuLabels={menuLabels}
 						/>
-					))}
+					);
+					})}
 					<FolderNewCard onClick={onCreate} disabled={createDisabled} />
 				</div>
 			</SortableContext>

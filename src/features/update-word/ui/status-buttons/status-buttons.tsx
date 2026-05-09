@@ -30,15 +30,16 @@ export const StatusButtons = ({ wordId, current }: StatusButtonsProps) => {
 		<div className="mb-2 flex gap-1">
 			{LEARNING_LEVELS.map((level) => {
 				const active = current === level;
-				return (
+								const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => {
+							e.stopPropagation();
+							mutate({ id: wordId, body: { learningLevel: level }, previousLevel: current });
+						};
+return (
 					<button
 						key={level}
 						type="button"
 						disabled={isPending || active}
-						onClick={(e) => {
-							e.stopPropagation();
-							mutate({ id: wordId, body: { learningLevel: level }, previousLevel: current });
-						}}
+						onClick={handleClick}
 						className={cn(
 							"flex-1 rounded-md px-1.5 py-1 text-[10.5px] font-semibold transition-all duration-100",
 							"border-hairline cursor-pointer text-center font-[inherit]",

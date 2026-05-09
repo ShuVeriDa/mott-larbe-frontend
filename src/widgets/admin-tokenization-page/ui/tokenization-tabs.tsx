@@ -30,10 +30,12 @@ export const TokenizationTabs = ({ activeTab, stats, onChange }: TokenizationTab
 	return (
 		<div className="mb-3.5 overflow-x-auto [&::-webkit-scrollbar]:h-0">
 			<div className="flex w-fit gap-0 rounded-[9px] bg-surf-2 p-[3px]">
-				{TABS.map(({ key, labelKey }) => (
+				{TABS.map(({ key, labelKey }) => {
+				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(key);
+				  return (
 					<button
 						key={key}
-						onClick={() => onChange(key)}
+						onClick={handleClick}
 						className={cn(
 							"flex items-center gap-1.5 whitespace-nowrap rounded-[6px] px-3 py-1 text-[12px] font-medium transition-colors",
 							activeTab === key
@@ -53,7 +55,8 @@ export const TokenizationTabs = ({ activeTab, stats, onChange }: TokenizationTab
 							</span>
 						)}
 					</button>
-				))}
+				);
+				})}
 			</div>
 		</div>
 	);

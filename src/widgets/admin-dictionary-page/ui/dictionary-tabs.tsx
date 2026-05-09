@@ -12,11 +12,13 @@ interface DictionaryTabsProps {
 
 export const DictionaryTabs = ({ active, counts, onChange, t }: DictionaryTabsProps) => (
 	<div className="mb-3.5 flex gap-1 border-b border-bd-1">
-		{TABS.map((tab) => (
+		{TABS.map((tab) => {
+		  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(tab);
+		  return (
 			<button
 				key={tab}
 				type="button"
-				onClick={() => onChange(tab)}
+				onClick={handleClick}
 				className={cn(
 					"flex cursor-pointer items-center gap-1.5 border-b-2 pb-2 pt-1 text-[12.5px] transition-colors",
 					active === tab
@@ -38,6 +40,7 @@ export const DictionaryTabs = ({ active, counts, onChange, t }: DictionaryTabsPr
 					</span>
 				)}
 			</button>
-		))}
+		);
+		})}
 	</div>
 );

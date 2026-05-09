@@ -63,16 +63,19 @@ export const VocabularyList = () => {
 								{t("vocabulary.wordsCount", { count: sec.total })}
 							</Typography>
 						</header>
-						{sec.items.map((entry) => (
+						{sec.items.map((entry) => {
+						  const handleToggle: NonNullable<React.ComponentProps<typeof WordCard>["onToggle"]> = () =>
+									setExpandedId((prev) => (prev === entry.id ? null : entry.id));
+						  return (
 							<WordCard
 								key={entry.id}
 								entry={entry}
 								expanded={expandedId === entry.id}
-								onToggle={() =>
-									setExpandedId((prev) => (prev === entry.id ? null : entry.id))
+								onToggle={handleToggle
 								}
 							/>
-						))}
+						);
+						})}
 					</section>
 				),
 			)}

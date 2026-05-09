@@ -99,7 +99,8 @@ export const LibraryTextCard = ({ item, view, index }: LibraryTextCardProps) => 
 		);
 	}
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = (e) => { e.preventDefault(); e.stopPropagation(); };
+return (
 		<Link
 			href={href}
 			className="animate-in fade-in slide-in-from-bottom-2 group relative flex flex-col gap-2.5 overflow-hidden rounded-card border border-bd-1 bg-surf px-4 py-3.5 transition-[border-color,background-color,transform,box-shadow] duration-150 hover:-translate-y-px hover:border-bd-2 hover:bg-surf-2 hover:shadow-md active:translate-y-0 [@media(hover:none)]:hover:translate-y-0 [@media(hover:none)]:hover:shadow-none [@media(hover:none)]:active:bg-surf-2"
@@ -137,7 +138,7 @@ export const LibraryTextCard = ({ item, view, index }: LibraryTextCardProps) => 
 				</div>
 				<button
 					type="button"
-					onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+					onClick={handleClick}
 					className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[5px] text-t-4 transition-colors duration-100 hover:bg-surf-3 hover:text-t-2"
 					aria-label="Меню"
 				>

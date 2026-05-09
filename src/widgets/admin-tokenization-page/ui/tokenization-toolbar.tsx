@@ -45,6 +45,18 @@ export const TokenizationToolbar = ({
 }: TokenizationToolbarProps) => {
 	const { t } = useI18n();
 
+	const handleChange: NonNullable<
+		React.ComponentProps<"input">["onChange"]
+	> = e => onSearchChange(e.target.value);
+	const handleChange2: NonNullable<
+		React.ComponentProps<"select">["onChange"]
+	> = e => onLevelChange(e.target.value);
+	const handleChange3: NonNullable<
+		React.ComponentProps<"select">["onChange"]
+	> = e => onStatusChange(e.target.value);
+	const handleChange4: NonNullable<
+		React.ComponentProps<"select">["onChange"]
+	> = e => onSortChange(e.target.value);
 	return (
 		<div className="mb-3.5 flex flex-wrap items-center gap-2">
 			<div className="relative min-w-[160px] flex-1">
@@ -70,18 +82,14 @@ export const TokenizationToolbar = ({
 				<input
 					type="text"
 					value={search}
-					onChange={e => onSearchChange(e.target.value)}
+					onChange={handleChange}
 					placeholder={t("admin.tokenization.toolbar.searchPlaceholder")}
 					className="h-8 w-full rounded-base border border-bd-2 bg-surf pl-8 pr-3 text-[12.5px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc"
 				/>
 			</div>
 
 			<div className="relative">
-				<select
-					value={level}
-					onChange={e => onLevelChange(e.target.value)}
-					className={selectCls}
-				>
+				<select value={level} onChange={handleChange2} className={selectCls}>
 					<option value="">{t("admin.tokenization.toolbar.allLevels")}</option>
 					{(["A1", "A2", "B1", "B2", "C1", "C2"] as CefrLevel[]).map(l => (
 						<option key={l} value={l}>
@@ -93,11 +101,7 @@ export const TokenizationToolbar = ({
 			</div>
 
 			<div className="relative">
-				<select
-					value={status}
-					onChange={e => onStatusChange(e.target.value)}
-					className={selectCls}
-				>
+				<select value={status} onChange={handleChange3} className={selectCls}>
 					<option value="">
 						{t("admin.tokenization.toolbar.allStatuses")}
 					</option>
@@ -109,11 +113,7 @@ export const TokenizationToolbar = ({
 			</div>
 
 			<div className="relative">
-				<select
-					value={sort}
-					onChange={e => onSortChange(e.target.value)}
-					className={selectCls}
-				>
+				<select value={sort} onChange={handleChange4} className={selectCls}>
 					<option value="errors">
 						{t("admin.tokenization.toolbar.sortErrors")}
 					</option>

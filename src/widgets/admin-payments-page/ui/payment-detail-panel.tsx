@@ -170,7 +170,10 @@ export const PaymentDetailPanel = ({
 		);
 	}
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onReceipt(payment.id);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onSendReceipt(payment.id);
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onRefund(payment.id);
+return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 			{/* Hero */}
 			<div className="border-b border-bd-1 px-[15px] py-4">
@@ -411,7 +414,7 @@ export const PaymentDetailPanel = ({
 				</div>
 				<button
 					type="button"
-					onClick={() => onReceipt(payment.id)}
+					onClick={handleClick}
 					className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
 					<svg
@@ -428,7 +431,7 @@ export const PaymentDetailPanel = ({
 				</button>
 				<button
 					type="button"
-					onClick={() => onSendReceipt(payment.id)}
+					onClick={handleClick2}
 					className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
 					<svg
@@ -464,7 +467,7 @@ export const PaymentDetailPanel = ({
 				{payment.status === "SUCCEEDED" && (
 					<button
 						type="button"
-						onClick={() => onRefund(payment.id)}
+						onClick={handleClick3}
 						className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[12px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 					>
 						<svg

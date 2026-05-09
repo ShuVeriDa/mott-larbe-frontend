@@ -29,7 +29,11 @@ export const DataSection = () => {
 		}
 	};
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => setClearOpen(true);
+	const handleClick2: NonNullable<React.ComponentProps<typeof Button>["onClick"]> = () => setDeleteOpen(true);
+	const handleClose: NonNullable<React.ComponentProps<typeof ClearVocabModal>["onClose"]> = () => setClearOpen(false);
+	const handleClose2: NonNullable<React.ComponentProps<typeof DeleteAccountModal>["onClose"]> = () => setDeleteOpen(false);
+return (
 		<div className="flex flex-col gap-3.5">
 			<SectionHeader
 				title={t("settings.data.title")}
@@ -58,7 +62,7 @@ export const DataSection = () => {
 					label={t("settings.data.clearVocab")}
 					description={t("settings.data.clearVocabDesc")}
 					actions={
-						<Button variant="danger" onClick={() => setClearOpen(true)}>
+						<Button variant="danger" onClick={handleClick}>
 							{t("settings.data.clearButton")}
 						</Button>
 					}
@@ -78,17 +82,17 @@ export const DataSection = () => {
 					label={t("settings.data.deleteAccount")}
 					description={t("settings.data.deleteAccountDesc")}
 					actions={
-						<Button variant="danger" onClick={() => setDeleteOpen(true)}>
+						<Button variant="danger" onClick={handleClick2}>
 							{t("settings.data.deleteButton")}
 						</Button>
 					}
 				/>
 			</section>
 
-			<ClearVocabModal open={clearOpen} onClose={() => setClearOpen(false)} />
+			<ClearVocabModal open={clearOpen} onClose={handleClose} />
 			<DeleteAccountModal
 				open={deleteOpen}
-				onClose={() => setDeleteOpen(false)}
+				onClose={handleClose2}
 			/>
 		</div>
 	);

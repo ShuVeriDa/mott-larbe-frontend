@@ -29,9 +29,14 @@ export const FlagRowActions = ({ flag, onEdit, onDuplicate, onDelete, onAddOverr
 	const btn =
 		"flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onEdit(flag);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { onAddOverride(flag.id); setOpen(false); };
+	const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { onDuplicate(flag); setOpen(false); };
+	const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => { onDelete(flag); setOpen(false); };
+return (
 		<div ref={ref} className="relative flex items-center gap-0.5">
-			<button type="button" className={btn} title={t("admin.featureFlags.actions.edit")} onClick={() => onEdit(flag)}>
+			<button type="button" className={btn} title={t("admin.featureFlags.actions.edit")} onClick={handleClick}>
 				<svg className="size-3.5" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
 					<path d="M10.5 2.5l2 2-7 7H3.5v-2l7-7z" strokeLinejoin="round" />
 				</svg>
@@ -42,7 +47,7 @@ export const FlagRowActions = ({ flag, onEdit, onDuplicate, onDelete, onAddOverr
 					type="button"
 					className={btn}
 					title={t("admin.featureFlags.actions.more")}
-					onClick={() => setOpen((v) => !v)}
+					onClick={handleClick2}
 				>
 					<svg className="size-3.5" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
 						<circle cx="7.5" cy="3.5" r="0.8" fill="currentColor" />
@@ -56,7 +61,7 @@ export const FlagRowActions = ({ flag, onEdit, onDuplicate, onDelete, onAddOverr
 						<button
 							type="button"
 							className="flex w-full items-center gap-2 rounded-[6px] border-none bg-transparent px-2.5 py-[7px] text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
-							onClick={() => { onAddOverride(flag.id); setOpen(false); }}
+							onClick={handleClick3}
 						>
 							<svg className="size-[13px] shrink-0 text-t-3" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
 								<circle cx="6.5" cy="5" r="2" />
@@ -68,7 +73,7 @@ export const FlagRowActions = ({ flag, onEdit, onDuplicate, onDelete, onAddOverr
 						<button
 							type="button"
 							className="flex w-full items-center gap-2 rounded-[6px] border-none bg-transparent px-2.5 py-[7px] text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
-							onClick={() => { onDuplicate(flag); setOpen(false); }}
+							onClick={handleClick4}
 						>
 							<svg className="size-[13px] shrink-0 text-t-3" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
 								<rect x="4.5" y="4.5" width="8" height="8" rx="1.2" />
@@ -83,7 +88,7 @@ export const FlagRowActions = ({ flag, onEdit, onDuplicate, onDelete, onAddOverr
 								"flex w-full items-center gap-2 rounded-[6px] border-none bg-transparent px-2.5 py-[7px] text-left text-[12.5px] transition-colors",
 								"text-red-t hover:bg-red-bg",
 							)}
-							onClick={() => { onDelete(flag); setOpen(false); }}
+							onClick={handleClick5}
 						>
 							<svg className="size-[13px] shrink-0 text-red-400" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
 								<path d="M2.5 4.5h10M5 4.5V3h5v1.5M6 7v4M9 7v4" strokeLinecap="round" />

@@ -76,10 +76,16 @@ export const MorphFormModal = ({
 	const selectCls =
 		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[12.5px] text-t-2 outline-none transition-colors focus:border-acc appearance-none cursor-pointer";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = e => e.target === e.currentTarget && onClose();
+	const handleChange: NonNullable<React.ComponentProps<"input">["onChange"]> = e => setForm(e.target.value);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = e =>
+									setGramCase(e.target.value as AdminDictGramCase | "");
+	const handleChange3: NonNullable<React.ComponentProps<"select">["onChange"]> = e =>
+									setGramNumber(e.target.value as AdminDictGramNumber | "");
+return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
-			onClick={e => e.target === e.currentTarget && onClose()}
+			onClick={handleClick}
 		>
 			<div className="w-[440px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
 				<div className="mb-1 font-display text-[15px] text-t-1">
@@ -101,7 +107,7 @@ export const MorphFormModal = ({
 							type="text"
 							placeholder={t("admin.dictionaryDetail.wordFormPlaceholder")}
 							value={form}
-							onChange={e => setForm(e.target.value)}
+							onChange={handleChange}
 						/>
 					</div>
 					<div className="mb-0 flex gap-2.5 max-sm:flex-col">
@@ -112,8 +118,7 @@ export const MorphFormModal = ({
 							<select
 								className={selectCls}
 								value={gramCase}
-								onChange={e =>
-									setGramCase(e.target.value as AdminDictGramCase | "")
+								onChange={handleChange2
 								}
 							>
 								<option value="">
@@ -133,8 +138,7 @@ export const MorphFormModal = ({
 							<select
 								className={selectCls}
 								value={gramNumber}
-								onChange={e =>
-									setGramNumber(e.target.value as AdminDictGramNumber | "")
+								onChange={handleChange3
 								}
 							>
 								<option value="">

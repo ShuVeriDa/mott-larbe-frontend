@@ -83,15 +83,18 @@ export const FeedbackThreadList = ({
 					<FeedbackEmpty t={t} onNewThread={onNewThread} />
 				) : (
 					<>
-						{threads.map((thread) => (
+						{threads.map((thread) => {
+						  const handleClick: NonNullable<React.ComponentProps<typeof FeedbackThreadItem>["onClick"]> = () => onSelect(thread);
+						  return (
 							<FeedbackThreadItem
 								key={thread.id}
 								thread={thread}
 								isActive={thread.id === activeId}
 								t={t}
-								onClick={() => onSelect(thread)}
+								onClick={handleClick}
 							/>
-						))}
+						);
+						})}
 						{hasNextPage && (
 							<div ref={sentinelRef} className="flex justify-center py-3">
 								{isFetchingNextPage && (

@@ -13,7 +13,8 @@ export const UserSessionsTab = ({ sessions }: UserSessionsTabProps) => {
 	const items = sessions.query.data ?? [];
 	const isLoading = sessions.query.isLoading;
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => sessions.logoutAll.mutate();
+return (
 		<>
 			<div className="overflow-x-auto [&::-webkit-scrollbar]:h-0">
 				<table className="w-full border-collapse text-[12.5px]">
@@ -101,7 +102,7 @@ export const UserSessionsTab = ({ sessions }: UserSessionsTabProps) => {
 
 			<div className="flex justify-end border-t border-bd-1 px-3.5 py-2.5">
 				<button
-					onClick={() => sessions.logoutAll.mutate()}
+					onClick={handleClick}
 					disabled={sessions.logoutAll.isPending}
 					className={cn(
 						"flex h-7 items-center gap-1.5 rounded-base border border-red/25 bg-transparent px-2.5 text-[12px] font-medium text-red-t transition-colors hover:bg-red-bg disabled:opacity-50",

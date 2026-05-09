@@ -43,13 +43,39 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 	const menuDangerClass =
 		"flex w-full cursor-pointer items-center gap-2 rounded-md border-none bg-transparent px-2.5 py-2 text-left font-sans text-[13px] text-red-t transition-colors hover:bg-red-bg";
 
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => router.push(`/${lang}/admin/users/${user.id}`);
+	const handleClick2: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
+	const handleClick3: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+								setOpen(false);
+								router.push(`/${lang}/admin/users/${user.id}`);
+							};
+	const handleClick4: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+									setOpen(false);
+									mutations.freeze.mutate(user.id);
+								};
+	const handleClick5: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+									setOpen(false);
+									mutations.unfreeze.mutate(user.id);
+								};
+	const handleClick6: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+									setOpen(false);
+									mutations.unblock.mutate(user.id);
+								};
+	const handleClick7: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+									setOpen(false);
+									mutations.block.mutate(user.id);
+								};
+	const handleClick8: NonNullable<React.ComponentProps<"button">["onClick"]> = () => {
+									setOpen(false);
+									mutations.remove.mutate(user.id);
+								};
+return (
 		<div className="flex items-center justify-end gap-0.5">
 			<button
 				type="button"
 				aria-label={t("admin.users.actions.openProfile")}
 				className={btnClass}
-				onClick={() => router.push(`/${lang}/admin/users/${user.id}`)}
+				onClick={handleClick}
 			>
 				<svg className="size-3.5" viewBox="0 0 16 16" fill="none">
 					<path
@@ -66,7 +92,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 				<button
 					type="button"
 					className={btnClass}
-					onClick={() => setOpen((v) => !v)}
+					onClick={handleClick2}
 					disabled={isPending}
 				>
 					<svg className="size-3.5" viewBox="0 0 16 16" fill="none">
@@ -81,10 +107,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 						<button
 							type="button"
 							className={menuItemClass}
-							onClick={() => {
-								setOpen(false);
-								router.push(`/${lang}/admin/users/${user.id}`);
-							}}
+							onClick={handleClick3}
 						>
 							<svg
 								className="size-3.5 shrink-0 text-t-3"
@@ -108,10 +131,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 							<button
 								type="button"
 								className={menuItemClass}
-								onClick={() => {
-									setOpen(false);
-									mutations.freeze.mutate(user.id);
-								}}
+								onClick={handleClick4}
 							>
 								<svg
 									className="size-3.5 shrink-0 text-t-3"
@@ -133,10 +153,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 							<button
 								type="button"
 								className={menuItemClass}
-								onClick={() => {
-									setOpen(false);
-									mutations.unfreeze.mutate(user.id);
-								}}
+								onClick={handleClick5}
 							>
 								<svg
 									className="size-3.5 shrink-0 text-t-3"
@@ -159,10 +176,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 							<button
 								type="button"
 								className={menuItemClass}
-								onClick={() => {
-									setOpen(false);
-									mutations.unblock.mutate(user.id);
-								}}
+								onClick={handleClick6}
 							>
 								<svg
 									className="size-3.5 shrink-0 text-t-3"
@@ -185,10 +199,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 							<button
 								type="button"
 								className={menuDangerClass}
-								onClick={() => {
-									setOpen(false);
-									mutations.block.mutate(user.id);
-								}}
+								onClick={handleClick7}
 							>
 								<svg
 									className="size-3.5 shrink-0 text-red-t"
@@ -211,10 +222,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 							<button
 								type="button"
 								className={menuDangerClass}
-								onClick={() => {
-									setOpen(false);
-									mutations.remove.mutate(user.id);
-								}}
+								onClick={handleClick8}
 							>
 								<svg
 									className="size-3.5 shrink-0 text-red-t"

@@ -107,16 +107,18 @@ export const ReaderMock = () => {
 							if (!tok.trim()) return tok;
 							const clean = tok.replace(/[.,!?;:«»]/g, "");
 							const isHl = clean === hl && highlighted === hl;
-							return (
+														const handleClick: NonNullable<React.ComponentProps<typeof Typography>["onClick"]> = () => setHighlighted(clean);
+							const handleKeyDown: NonNullable<React.ComponentProps<typeof Typography>["onKeyDown"]> = (e) => {
+										if (e.key === "Enter") setHighlighted(clean);
+									};
+return (
 								<Typography
 									tag="span"
 									key={`${tok}-${i}`}
 									role="button"
 									tabIndex={0}
-									onClick={() => setHighlighted(clean)}
-									onKeyDown={(e) => {
-										if (e.key === "Enter") setHighlighted(clean);
-									}}
+									onClick={handleClick}
+									onKeyDown={handleKeyDown}
 									className={cn(
 										"inline cursor-pointer rounded-[3px] px-[2px] py-[1px] transition-colors hover:bg-acc/10",
 										isHl &&

@@ -113,7 +113,11 @@ export const AdminDictionaryDetailPage = ({ lemmaId }: AdminDictionaryDetailPage
 		mutations.addHeadword.mutate(data, { onSuccess: closeModal });
 	};
 
-	return (
+		const handleDeleteSense: NonNullable<React.ComponentProps<typeof LemmasSensesCard>["onDeleteSense"]> = (senseId) => mutations.deleteSense.mutate(senseId);
+	const handleDeleteExample: NonNullable<React.ComponentProps<typeof LemmasSensesCard>["onDeleteExample"]> = (exId) => mutations.deleteExample.mutate(exId);
+	const handleDeleteForm: NonNullable<React.ComponentProps<typeof MorphFormsCard>["onDeleteForm"]> = (formId) => mutations.deleteForm.mutate(formId);
+	const handleDeleteHeadword: NonNullable<React.ComponentProps<typeof HeadwordsSideCard>["onDeleteHeadword"]> = (hwId) => mutations.deleteHeadword.mutate(hwId);
+return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<DictionaryEntryTopbar
 				lang={lang}
@@ -138,8 +142,8 @@ export const AdminDictionaryDetailPage = ({ lemmaId }: AdminDictionaryDetailPage
 						lang={lang}
 						isLoading={detail.isLoading}
 						onOpenModal={openModal}
-						onDeleteSense={(senseId) => mutations.deleteSense.mutate(senseId)}
-						onDeleteExample={(exId) => mutations.deleteExample.mutate(exId)}
+						onDeleteSense={handleDeleteSense}
+						onDeleteExample={handleDeleteExample}
 					/>
 
 					<MorphFormsCard
@@ -148,7 +152,7 @@ export const AdminDictionaryDetailPage = ({ lemmaId }: AdminDictionaryDetailPage
 						showAll={showAllForms}
 						onToggleAll={toggleForms}
 						onOpenModal={openModal}
-						onDeleteForm={(formId) => mutations.deleteForm.mutate(formId)}
+						onDeleteForm={handleDeleteForm}
 					/>
 
 					<ContextsCard
@@ -176,7 +180,7 @@ export const AdminDictionaryDetailPage = ({ lemmaId }: AdminDictionaryDetailPage
 						headwords={detail.data?.headwords}
 						isLoading={detail.isLoading}
 						onOpenModal={openModal}
-						onDeleteHeadword={(hwId) => mutations.deleteHeadword.mutate(hwId)}
+						onDeleteHeadword={handleDeleteHeadword}
 					/>
 
 					<UserStatsSideCard

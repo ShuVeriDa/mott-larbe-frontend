@@ -29,10 +29,12 @@ export const TokenizationMobileList = ({
 
 	return (
 		<div className="hidden max-sm:block">
-			{items.map(item => (
+			{items.map(item => {
+			  const handleClick: NonNullable<React.ComponentProps<"div">["onClick"]> = () => onRowClick(item.id);
+			  return (
 				<div
 					key={item.id}
-					onClick={() => onRowClick(item.id)}
+					onClick={handleClick}
 					className="cursor-pointer border-b border-bd-1 px-3.5 py-3 last:border-b-0 active:bg-surf-2"
 				>
 					<div className="mb-2 flex items-start gap-2.5">
@@ -80,7 +82,8 @@ export const TokenizationMobileList = ({
 						)}
 					</div>
 				</div>
-			))}
+			);
+			})}
 		</div>
 	);
 };

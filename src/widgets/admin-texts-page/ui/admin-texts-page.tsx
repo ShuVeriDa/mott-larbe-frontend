@@ -48,9 +48,23 @@ export const AdminTextsPage = () => {
 		mutations.bulkTokenize.isPending ||
 		mutations.bulkDelete.isPending;
 
-	return (
+		const handleImportClick: NonNullable<React.ComponentProps<typeof TextsTopbar>["onImportClick"]> = () => setImportOpen(true);
+	const handlePublish: NonNullable<React.ComponentProps<typeof TextsBulkBar>["onPublish"]> = () =>
+							mutations.bulkPublish.mutate(selectedArray, {
+								onSuccess: clearSelection,
+							});
+	const handleTokenize: NonNullable<React.ComponentProps<typeof TextsBulkBar>["onTokenize"]> = () =>
+							mutations.bulkTokenize.mutate(selectedArray, {
+								onSuccess: clearSelection,
+							});
+	const handleDelete: NonNullable<React.ComponentProps<typeof TextsBulkBar>["onDelete"]> = () =>
+							mutations.bulkDelete.mutate(selectedArray, {
+								onSuccess: clearSelection,
+							});
+	const handleClose: NonNullable<React.ComponentProps<typeof ImportTextsModal>["onClose"]> = () => setImportOpen(false);
+return (
 		<div className="flex min-h-0 flex-1 flex-col">
-			<TextsTopbar onImportClick={() => setImportOpen(true)} />
+			<TextsTopbar onImportClick={handleImportClick} />
 
 			<div className="overflow-y-auto px-[22px] py-4 pb-8 max-sm:px-3.5 max-sm:pb-6">
 				<TextsStatsRow stats={stats} isLoading={statsLoading} />
@@ -72,20 +86,11 @@ export const AdminTextsPage = () => {
 				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 					<TextsBulkBar
 						selectedCount={selectedIds.size}
-						onPublish={() =>
-							mutations.bulkPublish.mutate(selectedArray, {
-								onSuccess: clearSelection,
-							})
+						onPublish={handlePublish
 						}
-						onTokenize={() =>
-							mutations.bulkTokenize.mutate(selectedArray, {
-								onSuccess: clearSelection,
-							})
+						onTokenize={handleTokenize
 						}
-						onDelete={() =>
-							mutations.bulkDelete.mutate(selectedArray, {
-								onSuccess: clearSelection,
-							})
+						onDelete={handleDelete
 						}
 						isPending={bulkPending}
 					/>
@@ -117,7 +122,7 @@ export const AdminTextsPage = () => {
 				</div>
 			</div>
 
-			{importOpen && <ImportTextsModal onClose={() => setImportOpen(false)} />}
+			{importOpen && <ImportTextsModal onClose={handleClose} />}
 		</div>
 	);
 };

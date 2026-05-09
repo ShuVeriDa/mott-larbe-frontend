@@ -50,7 +50,9 @@ export const LearningSettingsCard = ({ profile }: LearningSettingsCardProps) => 
 		}
 	};
 
-	return (
+		const handleChange: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => setLanguage(e.target.value as UserLanguage);
+	const handleChange2: NonNullable<React.ComponentProps<"select">["onChange"]> = (e) => setLevel(e.target.value as UserLevel);
+return (
 		<SettingCard title={t("profile.learningSettings.title")}>
 			<form onSubmit={handleSubmit} className="flex flex-col gap-3">
 				<div className="grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
@@ -61,7 +63,7 @@ export const LearningSettingsCard = ({ profile }: LearningSettingsCardProps) => 
 						<select
 							id="profile-language"
 							value={language}
-							onChange={(e) => setLanguage(e.target.value as UserLanguage)}
+							onChange={handleChange}
 							className={SELECT_CLS}
 						>
 							{LANGUAGES.map(({ value, label }) => (
@@ -78,7 +80,7 @@ export const LearningSettingsCard = ({ profile }: LearningSettingsCardProps) => 
 						<select
 							id="profile-level"
 							value={level}
-							onChange={(e) => setLevel(e.target.value as UserLevel)}
+							onChange={handleChange2}
 							className={SELECT_CLS}
 						>
 							{LEVELS.map(({ value, label }) => (

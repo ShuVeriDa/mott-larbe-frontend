@@ -30,11 +30,13 @@ export const SubscriptionsTabs = ({ active, counts, onChange }: Props) => {
 	return (
 		<div className="border-b border-bd-1 px-3.5 pt-2.5">
 			<div className="flex gap-0.5 rounded-[9px] border border-bd-1 bg-surf-2 p-[3px] w-fit overflow-x-auto [&::-webkit-scrollbar]:h-0">
-				{tabs.map(({ key, label }) => (
+				{tabs.map(({ key, label }) => {
+				  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onChange(key);
+				  return (
 					<button
 						key={key}
 						type="button"
-						onClick={() => onChange(key)}
+						onClick={handleClick}
 						className={cn(
 							"flex h-[26px] shrink-0 items-center gap-1 rounded-base px-3 text-[12px] transition-colors",
 							active === key
@@ -52,7 +54,8 @@ export const SubscriptionsTabs = ({ active, counts, onChange }: Props) => {
 							{counts[key]}
 						</span>
 					</button>
-				))}
+				);
+				})}
 			</div>
 		</div>
 	);

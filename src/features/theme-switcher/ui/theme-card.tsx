@@ -39,11 +39,12 @@ const previews: Record<
 
 export const ThemeCard = ({ id, name, selected, onSelect }: ThemeCardProps) => {
 	const p = previews[id];
-	return (
+		const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onSelect(id);
+return (
 		<button
 			type="button"
 			aria-pressed={selected}
-			onClick={() => onSelect(id)}
+			onClick={handleClick}
 			className={cn(
 				"relative shrink-0 cursor-pointer overflow-hidden rounded-[9px] border-[1.5px] transition-colors",
 				selected ? "border-acc" : "border-bd-2 hover:border-bd-3",

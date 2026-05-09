@@ -47,10 +47,12 @@ export const UserEventsCard = ({
 					{t("admin.userDetail.events.title")}
 				</span>
 				<div className="flex gap-0.5 ml-auto max-sm:order-2 max-sm:w-full">
-					{tabs.map(({ key, label }) => (
+					{tabs.map(({ key, label }) => {
+					  const handleClick: NonNullable<React.ComponentProps<"button">["onClick"]> = () => setEventsTab(key);
+					  return (
 						<button
 							key={key}
-							onClick={() => setEventsTab(key)}
+							onClick={handleClick}
 							className={cn(
 								"h-[26px] rounded-[6px] border-none px-2.5 text-[12px] transition-colors",
 								eventsTab === key
@@ -60,7 +62,8 @@ export const UserEventsCard = ({
 						>
 							{label}
 						</button>
-					))}
+					);
+					})}
 				</div>
 			</div>
 
