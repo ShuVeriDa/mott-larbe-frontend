@@ -18,6 +18,8 @@ export const FolderNewCard = ({ onClick, disabled }: FolderNewCardProps) => {
 
 	return (
 		<Button
+			variant="bare"
+			size={null}
 			onClick={onClick}
 			disabled={disabled}
 			className={cn(

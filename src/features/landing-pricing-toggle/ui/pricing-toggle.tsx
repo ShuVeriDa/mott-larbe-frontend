@@ -21,6 +21,8 @@ export const PricingToggle = ({ value, onChange }: PricingToggleProps) => {
 return (
 		<div className="mx-auto mt-[22px] inline-flex items-center gap-1 rounded-full border-hairline border-bd-2 bg-surf p-1">
 			<Button
+				variant="bare"
+				size={null}
 				onClick={handleClick}
 				className={cn(
 					"inline-flex h-[30px] items-center gap-1.5 rounded-full border-0 px-4 text-[12.5px] font-semibold transition-all",
@@ -32,6 +34,8 @@ return (
 				{t("landing.pricing.monthly")}
 			</Button>
 			<Button
+				variant="bare"
+				size={null}
 				onClick={handleClick2}
 				className={cn(
 					"inline-flex h-[30px] items-center gap-1.5 rounded-full border-0 px-4 text-[12.5px] font-semibold transition-all",

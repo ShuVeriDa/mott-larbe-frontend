@@ -2,10 +2,10 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
-import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
+import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 import { useLoginForm } from "../../model";
 
 interface LoginFormProps {
@@ -100,10 +100,9 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 					/>
 					<Button
 						tabIndex={-1}
+						variant="bare"
 						onClick={handleTogglePasswordVisibility}
-						aria-label={t(
-							showPw ? "auth.password.hide" : "auth.password.show",
-						)}
+						aria-label={t(showPw ? "auth.password.hide" : "auth.password.show")}
 						className="absolute inset-y-1 right-1 inline-flex w-[34px] items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						{showPw ? (

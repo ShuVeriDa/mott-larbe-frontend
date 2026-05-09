@@ -84,6 +84,8 @@ return (
 				})}
 			</div>
 			<Button
+				variant="bare"
+				size={null}
 				disabled={!hasFolders}
 				onClick={hasFolders ? onCreateFolder : undefined}
 				title={

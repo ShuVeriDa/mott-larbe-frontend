@@ -41,6 +41,8 @@ export const FontSizeGroup = ({
 return (
 					<Button
 						key={item.value}
+						variant="bare"
+						size={null}
 						onClick={handleClick}
 						aria-pressed={active}
 						className={cn(

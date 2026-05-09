@@ -35,6 +35,8 @@ return (
 				</Typography>
 				<div className="mt-2.5 flex items-center gap-2">
 					<Button
+						variant="bare"
+						size={null}
 						onClick={handleClick}
 						aria-label="-"
 						className="flex size-7 cursor-pointer items-center justify-center rounded-md border-hairline border-bd-2 bg-surf-2 text-sm font-semibold text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
@@ -54,6 +56,8 @@ return (
 						/>
 					</div>
 					<Button
+						variant="bare"
+						size={null}
 						onClick={handleClick2}
 						aria-label="+"
 						className="flex size-7 cursor-pointer items-center justify-center rounded-md border-hairline border-bd-2 bg-surf-2 text-sm font-semibold text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"

@@ -81,7 +81,7 @@ export const TokenizationDistributionCard = ({
 	const total = distribution?.total ?? 0;
 	const offsets = segments.reduce<number[]>((acc, seg, i) => {
 		if (i === 0) return [0];
-		const prev = acc[i - 1] + (distribution ? segments[i - 1].value / total : 0);
+		const prev = acc[i - 1] + (total > 0 ? segments[i - 1].value / total : 0);
 		return [...acc, prev];
 	}, []);
 

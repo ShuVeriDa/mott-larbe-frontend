@@ -18,6 +18,8 @@ export const LandingThemeToggle = () => {
 		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setTheme(dark ? "light" : "dark");
 return (
 		<Button
+			variant="bare"
+			size={null}
 			onClick={handleClick}
 			aria-label={t("landing.nav.theme")}
 			className="flex h-[34px] w-[34px] items-center justify-center rounded-base border-hairline border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"

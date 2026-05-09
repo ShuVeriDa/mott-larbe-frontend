@@ -14,6 +14,7 @@ export const AuthPage = ({ initialMode = "login" }: AuthPageProps) => {
 	const { lang } = useI18n();
 	const [mode, setMode] = useState<AuthMode>(initialMode);
 
+
 	const homeHref = `/${lang}`;
 	const forgotHref = `/${lang}/reset-password`;
 	const successHref = `/${lang}/dashboard`;

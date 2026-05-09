@@ -2,11 +2,11 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
-import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
 import { CEFR_LEVELS } from "@/shared/types/cefr";
 import { Typography } from "@/shared/ui/typography";
+import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 import { useRegisterForm } from "../../model";
 import { PasswordStrengthMeter } from "../password-strength-meter";
 import { FormField } from "./form-field";
@@ -46,7 +46,8 @@ export const RegisterForm = ({
 		handleLevelClick,
 	} = useRegisterForm({ successHref });
 
-	const inputCls = "h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]";
+	const inputCls =
+		"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]";
 
 	return (
 		<form action={handleSubmit} noValidate autoComplete="on">
@@ -56,9 +57,7 @@ export const RegisterForm = ({
 					className="mb-4 flex items-start gap-2.5 rounded-[8px] border-[0.5px] border-amb/25 bg-amb-bg px-3 py-2.5 text-[12px] text-amb-t"
 				>
 					<AlertCircle size={14} className="mt-px shrink-0" strokeWidth={2} />
-					<Typography tag="span">
-						{t("auth.errors.registerFailed")}
-					</Typography>
+					<Typography tag="span">{t("auth.errors.registerFailed")}</Typography>
 				</div>
 			) : null}
 
@@ -140,11 +139,18 @@ export const RegisterForm = ({
 						/>
 						<Button
 							tabIndex={-1}
+							variant="bare"
 							onClick={handleTogglePasswordVisibility}
-							aria-label={t(showPw ? "auth.password.hide" : "auth.password.show")}
+							aria-label={t(
+								showPw ? "auth.password.hide" : "auth.password.show",
+							)}
 							className="absolute inset-y-1 right-1 inline-flex w-[34px] items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 						>
-							{showPw ? <EyeOff size={16} strokeWidth={1.8} /> : <Eye size={16} strokeWidth={1.8} />}
+							{showPw ? (
+								<EyeOff size={16} strokeWidth={1.8} />
+							) : (
+								<Eye size={16} strokeWidth={1.8} />
+							)}
 						</Button>
 					</div>
 					<PasswordStrengthMeter password={password} />
@@ -152,7 +158,10 @@ export const RegisterForm = ({
 			</div>
 
 			<div className="mb-5">
-				<FormField label={t("auth.fields.passwordConfirm")} error={errors.password2}>
+				<FormField
+					label={t("auth.fields.passwordConfirm")}
+					error={errors.password2}
+				>
 					<input
 						id="register-password2"
 						type={showPw ? "text" : "password"}
@@ -172,10 +181,12 @@ export const RegisterForm = ({
 					{t("auth.fields.level")}
 				</Typography>
 				<div className="grid grid-cols-3 gap-2">
-					{CEFR_LEVELS.map((cefrLevel) => (
+					{CEFR_LEVELS.map(cefrLevel => (
 						<Button
 							key={cefrLevel}
 							data-level={cefrLevel}
+							variant="bare"
+							size={null}
 							onClick={handleLevelClick}
 							className={cn(
 								"h-9 rounded-[9px] border-[0.5px] text-[12.5px] font-semibold transition-colors",
@@ -194,6 +205,7 @@ export const RegisterForm = ({
 			<Button
 				type="submit"
 				disabled={isPending}
+				variant="bare"
 				className={cn(
 					"inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-[9px] bg-acc text-[13.5px] font-semibold text-white transition-opacity hover:opacity-[0.92] active:translate-y-px max-[640px]:h-[46px] max-[640px]:text-[14px]",
 					isPending && "cursor-wait opacity-[0.85]",

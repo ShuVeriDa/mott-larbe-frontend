@@ -2,11 +2,11 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
 import { LoginForm } from "@/features/login";
 import { RegisterForm } from "@/features/register";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { ComponentProps } from "react";
 import type { AuthMode } from "../../model";
 import { AuthTabs } from "./auth-tabs";
 import { TopControls } from "./top-controls";
@@ -31,9 +31,11 @@ export const FormPanel = ({
 	const { t } = useI18n();
 	const isLogin = mode === "login";
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onModeChange("register");
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onModeChange("login");
-return (
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		onModeChange("register");
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		onModeChange("login");
+	return (
 		<section className="relative flex flex-col bg-panel px-12 py-10 max-[900px]:px-8 max-[900px]:pb-12 max-[900px]:pt-8 max-[640px]:px-5 max-[640px]:pb-9 max-[640px]:pt-[22px]">
 			<TopControls />
 
@@ -47,9 +49,7 @@ return (
 					</Typography>
 					<Typography className="mb-7 text-[13px] text-t-2 max-[640px]:mb-[22px] max-[640px]:text-[12.5px]">
 						{t(
-							isLogin
-								? "auth.headings.loginSub"
-								: "auth.headings.registerSub",
+							isLogin ? "auth.headings.loginSub" : "auth.headings.registerSub",
 						)}
 					</Typography>
 
@@ -72,6 +72,7 @@ return (
 								<Button
 									onClick={handleClick}
 									className="font-semibold text-acc-t hover:underline"
+									variant="bare"
 								>
 									{t("auth.crosslink.signup")}
 								</Button>
@@ -82,6 +83,7 @@ return (
 								<Button
 									onClick={handleClick2}
 									className="font-semibold text-acc-t hover:underline"
+									variant="bare"
 								>
 									{t("auth.crosslink.signin")}
 								</Button>

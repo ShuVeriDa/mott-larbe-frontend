@@ -60,6 +60,8 @@ export const DeckRatingButtons = ({
 				  return (
 					<Button
 						key={option.key}
+						variant="bare"
+						size={null}
 						disabled={disabled || !visible}
 						onClick={handleClick}
 						className={cn(

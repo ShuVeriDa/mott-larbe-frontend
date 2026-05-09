@@ -1,6 +1,6 @@
-import { cva, type VariantProps } from "class-variance-authority";
-import type { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
+import { cva, type VariantProps } from "class-variance-authority";
+import type { ComponentProps } from "react";
 
 export const buttonVariants = cva(
 	[
@@ -21,6 +21,7 @@ export const buttonVariants = cva(
 				save: "bg-grn text-white font-semibold border-0 hover:opacity-[0.88]",
 				danger:
 					"bg-transparent border-hairline border-red/30 text-red font-medium hover:bg-red-bg",
+				bare: "",
 			},
 			size: {
 				default: "h-[30px] px-3 text-[12px]",
@@ -44,11 +45,15 @@ export const Button = ({
 	size,
 	type = "button",
 	...props
-}: ButtonProps) => (
-	<button
-		data-slot="button"
-		type={type}
-		className={cn(buttonVariants({ variant, size }), className)}
-		{...props}
-	/>
-);
+}: ButtonProps) => {
+	const resolvedVariant = variant ?? (className ? "bare" : undefined);
+
+	return (
+		<button
+			data-slot="button"
+			type={type}
+			className={cn(buttonVariants({ variant: resolvedVariant, size }), className)}
+			{...props}
+		/>
+	);
+};

@@ -28,6 +28,8 @@ export const FaqItem = ({
 		)}
 	>
 		<Button
+			variant="bare"
+			size={null}
 			onClick={onToggle}
 			aria-expanded={open}
 			aria-controls={`${id}-content`}

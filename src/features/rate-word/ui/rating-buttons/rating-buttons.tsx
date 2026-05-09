@@ -77,6 +77,8 @@ export const RatingButtons = ({
 				  return (
 					<Button
 						key={rating.key}
+						variant="bare"
+						size={null}
 						disabled={disabled || !visible}
 						onClick={handleClick}
 						className={cn(

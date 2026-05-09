@@ -2,9 +2,9 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import { ComponentProps } from "react";
 import type { AuthMode } from "../../model";
 
 interface AuthTabsProps {
@@ -26,13 +26,16 @@ export const AuthTabs = ({ mode, onChange }: AuthTabsProps) => {
 			aria-label={t("auth.tabs.aria")}
 			className="mb-6 flex gap-0 rounded-[9px] border-[0.5px] border-bd-1 bg-surf-2 p-[3px]"
 		>
-			{tabs.map((tab) => {
+			{tabs.map(tab => {
 				const isActive = tab.key === mode;
-								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab.key);
-return (
+				const handleClick: NonNullable<
+					ComponentProps<"button">["onClick"]
+				> = () => onChange(tab.key);
+				return (
 					<Button
 						key={tab.key}
 						role="tab"
+						variant="bare"
 						aria-selected={isActive}
 						onClick={handleClick}
 						className={cn(

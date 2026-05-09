@@ -27,6 +27,8 @@ export const BillingCycleToggle = ({
 				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(cycle);
 return (
 			<Button
+				variant="bare"
+				size={null}
 				onClick={handleClick}
 				className={cn(
 					"flex h-7 items-center justify-center gap-1.5 rounded-md px-3 text-[11.5px] font-medium transition-colors duration-100 max-md:flex-1",

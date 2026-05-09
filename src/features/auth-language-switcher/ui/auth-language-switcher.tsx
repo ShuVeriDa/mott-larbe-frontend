@@ -6,7 +6,7 @@ import { LOCALES, type Locale } from "@/i18n/locale-list";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { usePathname, useRouter } from "next/navigation";
-import { ComponentProps, useTransition } from 'react';
+import { ComponentProps, useTransition } from "react";
 const LABELS: Record<Locale, string> = {
 	ru: "РУ",
 	che: "НАХ",
@@ -30,7 +30,8 @@ export const AuthLanguageSwitcher = () => {
 
 	const handleSelect = (next: Locale) => {
 		if (next === lang) return;
-		const target = replaceLocaleInPath(pathname ?? `/${lang}`, next);
+		if (!pathname) return;
+		const target = replaceLocaleInPath(pathname, next);
 		startTransition(() => {
 			router.replace(target);
 			router.refresh();
@@ -45,10 +46,14 @@ export const AuthLanguageSwitcher = () => {
 		>
 			{LOCALES.map(locale => {
 				const isActive = locale === lang;
-								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleSelect(locale);
-return (
+				const handleClick: NonNullable<
+					ComponentProps<"button">["onClick"]
+				> = () => handleSelect(locale);
+				return (
 					<Button
 						key={locale}
+						variant="bare"
+						size={null}
 						role="tab"
 						aria-selected={isActive}
 						onClick={handleClick}
