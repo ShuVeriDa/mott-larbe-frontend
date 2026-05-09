@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type { AdminLogDetail } from "@/entities/admin-log";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -65,8 +69,7 @@ export const LogsDetailPanel = ({
 
 				{/* Header */}
 				<div className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 px-4 py-3.5">
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						className="flex size-7 items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
@@ -78,12 +81,12 @@ export const LogsDetailPanel = ({
 								strokeLinecap="round"
 							/>
 						</svg>
-					</button>
-					<span className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-[13.5px] font-semibold text-t-1">
+					</Button>
+					<Typography tag="span" className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-[13.5px] font-semibold text-t-1">
 						{detail
 							? `${detail.service}: ${detail.levelLabel}`
 							: t("admin.logs.detail.title")}
-					</span>
+					</Typography>
 					{detail && (
 						<div className="shrink-0">
 							<LevelBadge level={detail.level} label={detail.levelLabel} />
@@ -105,31 +108,31 @@ export const LogsDetailPanel = ({
 						<>
 							<Section label={t("admin.logs.detail.main")}>
 								<Row label={t("admin.logs.detail.time")}>
-									<span className="font-mono text-[11.5px]">
+									<Typography tag="span" className="font-mono text-[11.5px]">
 										{new Date(detail.timestamp).toLocaleString("ru-RU")}
-									</span>
+									</Typography>
 								</Row>
 								<Row label={t("admin.logs.detail.service")}>
-									<span className="rounded border border-bd-2 bg-surf-2 px-1.5 py-px font-mono text-[11.5px] text-t-1">
+									<Typography tag="span" className="rounded border border-bd-2 bg-surf-2 px-1.5 py-px font-mono text-[11.5px] text-t-1">
 										{detail.service}
-									</span>
+									</Typography>
 								</Row>
 								<Row label={t("admin.logs.detail.user")}>
-									<span className="font-mono text-[11.5px]">
+									<Typography tag="span" className="font-mono text-[11.5px]">
 										{detail.user?.id ?? t("admin.logs.detail.anonymous")}
-									</span>
+									</Typography>
 								</Row>
 								<Row label={t("admin.logs.detail.host")}>
-									<span className="font-mono text-[11.5px]">
+									<Typography tag="span" className="font-mono text-[11.5px]">
 										{detail.host ?? t("admin.logs.detail.noHost")}
-									</span>
+									</Typography>
 								</Row>
 								<Row label={t("admin.logs.detail.duration")}>
-									<span className="font-mono text-[11.5px]">
+									<Typography tag="span" className="font-mono text-[11.5px]">
 										{detail.durationMs != null
 											? `${detail.durationMs} ms`
 											: t("admin.logs.detail.noDuration")}
-									</span>
+									</Typography>
 								</Row>
 							</Section>
 
@@ -154,11 +157,11 @@ export const LogsDetailPanel = ({
 									<Section label={t("admin.logs.detail.context")}>
 										{Object.entries(detail.context).map(([k, v]) => (
 											<Row key={k} label={k}>
-												<span className="break-all font-mono text-[11.5px]">
+												<Typography tag="span" className="break-all font-mono text-[11.5px]">
 													{typeof v === "object"
 														? JSON.stringify(v)
 														: String(v ?? "—")}
-												</span>
+												</Typography>
 											</Row>
 										))}
 									</Section>
@@ -201,10 +204,10 @@ const Row = ({
 	children: ReactNode;
 }) => (
 	<div className="mb-2 flex items-start gap-2.5">
-		<span className="w-[110px] shrink-0 pt-px text-[12px] text-t-3">
+		<Typography tag="span" className="w-[110px] shrink-0 pt-px text-[12px] text-t-3">
 			{label}
-		</span>
-		<span className="flex-1 text-[12.5px] text-t-1">{children}</span>
+		</Typography>
+		<Typography tag="span" className="flex-1 text-[12.5px] text-t-1">{children}</Typography>
 	</div>
 );
 

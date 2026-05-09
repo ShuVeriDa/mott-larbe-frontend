@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminPlan, PlanType } from "@/entities/admin-billing";
@@ -64,18 +68,18 @@ return (
 			{/* Mid */}
 			<div className="border-b border-bd-1 px-3.5 py-3">
 				<div className="mb-2 flex items-baseline gap-1">
-					<span className="text-[18px] font-semibold text-t-1">
+					<Typography tag="span" className="text-[18px] font-semibold text-t-1">
 						{fmtPrice(plan.priceCents)}
-					</span>
-					<span className="text-[11px] text-t-3">/мес</span>
+					</Typography>
+					<Typography tag="span" className="text-[11px] text-t-3">/мес</Typography>
 				</div>
 				<div className="flex items-center gap-1.5">
-					<span className="text-[13px] font-semibold text-t-1">
+					<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 						{plan.subscriberCount.toLocaleString("ru-RU")}
-					</span>
-					<span className="text-[11px] text-t-3">
+					</Typography>
+					<Typography tag="span" className="text-[11px] text-t-3">
 						{t("admin.plans.plansSection.subscribers")}
-					</span>
+					</Typography>
 				</div>
 				<div className="mt-2 h-1 overflow-hidden rounded-full bg-surf-3">
 					<div
@@ -105,7 +109,7 @@ return (
 									strokeLinejoin="round"
 								/>
 							</svg>
-							<span className="text-[11px] text-t-2">{feat}</span>
+							<Typography tag="span" className="text-[11px] text-t-2">{feat}</Typography>
 						</div>
 					))}
 				</div>
@@ -113,25 +117,25 @@ return (
 
 			{/* Actions */}
 			<div className="flex gap-1.5 border-t border-bd-1 px-3.5 py-2.5">
-				<button
+				<Button
 					onClick={handleClick}
 					className="flex h-[26px] flex-1 items-center justify-center rounded-base bg-surf-2 text-[11.5px] font-medium text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 				>
 					{t("admin.plans.plansSection.edit")}
-				</button>
-				<button
+				</Button>
+				<Button
 					onClick={handleClick2}
 					className="flex h-[26px] flex-1 items-center justify-center rounded-base bg-surf-2 text-[11.5px] font-medium text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 				>
 					{t("admin.plans.plansSection.limits")}
-				</button>
+				</Button>
 				{plan.isActive && (
-					<button
+					<Button
 						onClick={handleClick3}
 						className="flex h-[26px] items-center justify-center rounded-base border border-bd-2 px-2 text-[11.5px] font-medium text-red-t transition-colors hover:bg-red-bg"
 					>
 						{t("admin.plans.plansSection.deactivate")}
-					</button>
+					</Button>
 				)}
 			</div>
 		</div>

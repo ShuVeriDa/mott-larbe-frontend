@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
@@ -18,13 +20,13 @@ export const ContextsCard = ({ items, total, lang, isLoading }: ContextsCardProp
 	return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
-				<span className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
+				<Typography tag="span" className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
 					{t("admin.dictionaryDetail.contexts")}
-				</span>
+				</Typography>
 				{!isLoading && (
-					<span className="text-[11.5px] text-t-3">
+					<Typography tag="span" className="text-[11.5px] text-t-3">
 						{total} {t("admin.dictionaryDetail.usages")}
-					</span>
+					</Typography>
 				)}
 			</div>
 
@@ -73,9 +75,9 @@ export const ContextsCard = ({ items, total, lang, isLoading }: ContextsCardProp
 			)}
 
 			<div className="border-t border-bd-1 px-4 py-2.5">
-				<span className="text-[11.5px] text-t-3">
+				<Typography tag="span" className="text-[11.5px] text-t-3">
 					{t("admin.dictionaryDetail.contextsNote")}
-				</span>
+				</Typography>
 			</div>
 		</div>
 	);

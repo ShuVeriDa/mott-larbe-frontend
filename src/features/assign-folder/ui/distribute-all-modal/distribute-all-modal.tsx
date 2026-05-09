@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
@@ -37,18 +39,17 @@ export const DistributeAllModal = ({
 			onClose={handleClose}
 			title={t("vocabulary.foldersPage.distributeAllModal.title")}
 		>
-			<p className="mb-4 text-[13px] text-t-3">
+			<Typography tag="p" className="mb-4 text-[13px] text-t-3">
 				{t("vocabulary.foldersPage.distributeAllModal.description", {
 					count: uncatCount,
 				})}
-			</p>
+			</Typography>
 
 			<ul className="mb-4 max-h-[240px] overflow-y-auto rounded-card border-hairline border-bd-1">
 				{folders.map((f) => {
 				  return (
 					<li key={f.id}>
-						<button
-							type="button"
+						<Button
 							data-folder-id={f.id}
 							onClick={handleFolderSelectClick}
 							className={cn(
@@ -59,7 +60,7 @@ export const DistributeAllModal = ({
 									: "text-t-2 hover:bg-surf-2 hover:text-t-1",
 							)}
 						>
-							<span
+							<Typography tag="span"
 								className="flex size-5 shrink-0 items-center justify-center rounded-[5px]"
 								style={{
 									background: `${f.color ?? "#2254d3"}1F`,
@@ -67,12 +68,12 @@ export const DistributeAllModal = ({
 								}}
 							>
 								<FolderIcon icon={f.icon} className="size-3" />
-							</span>
-							<span className="truncate">{f.name}</span>
+							</Typography>
+							<Typography tag="span" className="truncate">{f.name}</Typography>
 							{selectedId === f.id && (
-								<span className="ml-auto shrink-0 text-[11px]">✓</span>
+								<Typography tag="span" className="ml-auto shrink-0 text-[11px]">✓</Typography>
 							)}
-						</button>
+						</Button>
 					</li>
 				);
 				})}

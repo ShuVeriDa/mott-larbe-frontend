@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import {
 	ResponsiveContainer,
@@ -42,9 +44,9 @@ export const DashboardRegistrationsCard = ({ chart }: DashboardRegistrationsCard
 	return (
 		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.registrations.title")}
-				</span>
+				</Typography>
 				<Link
 					href={`/${params.lang}/admin/analytics`}
 					className="shrink-0 text-[11.5px] text-acc hover:underline"
@@ -54,14 +56,14 @@ export const DashboardRegistrationsCard = ({ chart }: DashboardRegistrationsCard
 			</div>
 
 			<div className="flex items-center gap-4 px-4 pt-2">
-				<span className="flex items-center gap-1.5 text-[11px] text-t-3">
-					<span className="inline-block size-2.5 rounded-sm bg-acc" />
+				<Typography tag="span" className="flex items-center gap-1.5 text-[11px] text-t-3">
+					<Typography tag="span" className="inline-block size-2.5 rounded-sm bg-acc" />
 					{t("admin.dashboard.registrations.newUsers")}
-				</span>
-				<span className="flex items-center gap-1.5 text-[11px] text-t-3">
-					<span className="inline-block size-2.5 rounded-full bg-grn" />
+				</Typography>
+				<Typography tag="span" className="flex items-center gap-1.5 text-[11px] text-t-3">
+					<Typography tag="span" className="inline-block size-2.5 rounded-full bg-grn" />
 					{t("admin.dashboard.registrations.activeUsers")}
-				</span>
+				</Typography>
 			</div>
 
 			<div className="px-3 pb-3.5 pt-1">

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -17,20 +21,20 @@ const Toggle = ({
 	on: boolean;
 	onChange: () => void;
 }) => (
-	<button
+	<Button
 		onClick={onChange}
 		className={cn(
 			"relative mt-px h-[17px] w-[30px] shrink-0 rounded-full border-none transition-colors",
 			on ? "bg-acc" : "bg-surf-3",
 		)}
 	>
-		<span
+		<Typography tag="span"
 			className={cn(
 				"absolute top-[2px] size-[13px] rounded-full transition-all",
 				on ? "left-[15px] bg-white" : "left-[2px] bg-t-3",
 			)}
 		/>
-	</button>
+	</Button>
 );
 
 const SETTINGS: {
@@ -69,9 +73,9 @@ export const TokenizationSettingsCard = ({
 	return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 			<div className="flex items-center border-b border-bd-1 px-3.5 py-[11px]">
-				<span className="text-[11px] font-semibold uppercase tracking-[0.4px] text-t-2">
+				<Typography tag="span" className="text-[11px] font-semibold uppercase tracking-[0.4px] text-t-2">
 					{t("admin.tokenization.sidePanel.settings")}
-				</span>
+				</Typography>
 			</div>
 
 			<div className="flex flex-col gap-2.5 px-3.5 py-3">

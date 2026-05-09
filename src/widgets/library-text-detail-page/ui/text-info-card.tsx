@@ -1,6 +1,7 @@
 import type { CefrLevel } from "@/shared/types";
 import type { LibraryTextLanguage } from "@/entities/library-text";
 
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string, vars?: Record<string, string | number>) => string;
 
 interface TextInfoCardProps {
@@ -63,14 +64,14 @@ export const TextInfoCard = ({
 
 	return (
 		<div className="bg-surf border border-bd-1 rounded-card px-[17px] py-[15px]">
-			<p className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-3">
+			<Typography tag="p" className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-3">
 				{t("library.textDetail.info.label")}
-			</p>
+			</Typography>
 			<div className="grid grid-cols-2 gap-x-3 gap-y-2.5">
 				{rows.map(({ label, value }) => (
 					<div key={label} className="flex flex-col gap-0.5">
-						<span className="text-[11px] text-t-3">{label}</span>
-						<span className="text-[13px] font-medium text-t-1 truncate">{value}</span>
+						<Typography tag="span" className="text-[11px] text-t-3">{label}</Typography>
+						<Typography tag="span" className="text-[13px] font-medium text-t-1 truncate">{value}</Typography>
 					</div>
 				))}
 			</div>

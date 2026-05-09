@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import type { AnalyticsInsight } from "@/entities/admin-analytics";
 
 interface AnalyticsInsightStripProps {
@@ -35,10 +37,10 @@ export const AnalyticsInsightStrip = ({
 					strokeLinecap="round"
 				/>
 			</svg>
-			<p className="text-[12.5px] leading-relaxed text-acc-t">
-				<strong className="font-semibold">{insight.title}: </strong>
+			<Typography tag="p" className="text-[12.5px] leading-relaxed text-acc-t">
+				<Typography tag="strong" className="font-semibold">{insight.title}: </Typography>
 				{insight.message}
-			</p>
+			</Typography>
 		</div>
 	);
 };

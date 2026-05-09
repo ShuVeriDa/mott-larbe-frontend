@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
@@ -26,11 +28,11 @@ export const DashboardAlertStrip = ({ unknownWordsCount }: DashboardAlertStripPr
 				<circle cx="8" cy="11.5" r="0.75" fill="currentColor" />
 			</svg>
 			<div className="flex-1">
-				<p className="text-[12.5px] text-amb-t">
-					<strong className="font-semibold">
+				<Typography tag="p" className="text-[12.5px] text-amb-t">
+					<Typography tag="strong" className="font-semibold">
 						{t("admin.dashboard.alert.unknownWords").replace("{count}", String(unknownWordsCount))}
-					</strong>
-				</p>
+					</Typography>
+				</Typography>
 				<Link
 					href={`/${params.lang}/admin/unknown-words`}
 					className="mt-1 block text-[12px] text-amb-t underline"

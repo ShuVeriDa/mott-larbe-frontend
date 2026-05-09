@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { DeckType } from "@/entities/deck";
 
@@ -22,10 +24,10 @@ export const DeckBadge = ({ type, deckNumber }: DeckBadgeProps) => {
 	});
 
 	return (
-		<span
+		<Typography tag="span"
 			className={`inline-flex h-[18px] items-center gap-1 rounded-[4px] px-1.5 text-[10px] font-bold tracking-[0.3px] ${styles[type]}`}
 		>
 			{label}
-		</span>
+		</Typography>
 	);
 };

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type { ImportMorphRulesResult } from "@/entities/morph-rule";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -58,12 +62,12 @@ return (
 			onClick={handleClick}
 		>
 			<div className="w-full max-w-[480px] overflow-y-auto rounded-[14px] border border-bd-2 bg-surf p-5 shadow-md max-sm:max-w-full max-sm:rounded-b-none max-sm:rounded-t-[16px] max-sm:pb-7">
-				<h2 className="font-display text-[15px] text-t-1 mb-1">
+				<Typography tag="h2" className="font-display text-[15px] text-t-1 mb-1">
 					{t("admin.morphology.importModal.title")}
-				</h2>
-				<p className="mb-4 text-[12px] text-t-3">
+				</Typography>
+				<Typography tag="p" className="mb-4 text-[12px] text-t-3">
 					{t("admin.morphology.importModal.subtitle")}
-				</p>
+				</Typography>
 
 				{result ? (
 					<div className="mb-4 rounded-[10px] border border-bd-1 bg-surf-2 p-4">
@@ -72,32 +76,32 @@ return (
 						</div>
 						<div className="grid grid-cols-2 gap-2 text-[12px]">
 							<div className="flex justify-between">
-								<span className="text-t-3">
+								<Typography tag="span" className="text-t-3">
 									{t("admin.morphology.importModal.created")}
-								</span>
-								<span className="font-semibold text-grn-t">
+								</Typography>
+								<Typography tag="span" className="font-semibold text-grn-t">
 									{result.created}
-								</span>
+								</Typography>
 							</div>
 							<div className="flex justify-between">
-								<span className="text-t-3">
+								<Typography tag="span" className="text-t-3">
 									{t("admin.morphology.importModal.updated")}
-								</span>
-								<span className="font-semibold text-acc-t">
+								</Typography>
+								<Typography tag="span" className="font-semibold text-acc-t">
 									{result.updated}
-								</span>
+								</Typography>
 							</div>
 							<div className="flex justify-between">
-								<span className="text-t-3">
+								<Typography tag="span" className="text-t-3">
 									{t("admin.morphology.importModal.skipped")}
-								</span>
-								<span className="font-semibold text-t-2">{result.skipped}</span>
+								</Typography>
+								<Typography tag="span" className="font-semibold text-t-2">{result.skipped}</Typography>
 							</div>
 							<div className="flex justify-between">
-								<span className="text-t-3">
+								<Typography tag="span" className="text-t-3">
 									{t("admin.morphology.importModal.total")}
-								</span>
-								<span className="font-semibold text-t-1">{result.total}</span>
+								</Typography>
+								<Typography tag="span" className="font-semibold text-t-1">{result.total}</Typography>
 							</div>
 						</div>
 						{result.errors.length > 0 && (
@@ -174,45 +178,44 @@ return (
 							)}
 						</div>
 
-						<label className="flex cursor-pointer items-center gap-2.5">
+						<Typography tag="label" className="flex cursor-pointer items-center gap-2.5">
 							<input
 								type="checkbox"
 								checked={overwrite}
 								onChange={handleChange}
 								className="accent-acc"
 							/>
-							<span className="text-[12.5px] text-t-2">
+							<Typography tag="span" className="text-[12.5px] text-t-2">
 								{t("admin.morphology.importModal.overwrite")}
-							</span>
-						</label>
+							</Typography>
+						</Typography>
 
 						<div className="flex justify-end gap-2 max-sm:flex-col-reverse">
-							<button
-								type="button"
+							<Button
 								onClick={onClose}
 								className="flex h-[30px] items-center justify-center rounded-base border border-bd-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
 							>
 								{t("admin.morphology.importModal.cancel")}
-							</button>
-							<button
+							</Button>
+							<Button
 								type="submit"
 								disabled={isLoading || !file}
 								className="flex h-[30px] items-center justify-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
 							>
 								{isLoading ? "…" : t("admin.morphology.importModal.submit")}
-							</button>
+							</Button>
 						</div>
 					</form>
 				)}
 
 				{result && (
 					<div className="flex justify-end">
-						<button
+						<Button
 							onClick={onClose}
 							className="flex h-[30px] items-center justify-center rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 						>
 							{t("admin.morphology.importModal.close")}
-						</button>
+						</Button>
 					</div>
 				)}
 			</div>

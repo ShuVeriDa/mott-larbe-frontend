@@ -27,7 +27,7 @@ export const ReviewBanner = ({ lang }: ReviewBannerProps) => {
 			aria-label={t("vocabulary.review.title")}
 			className="relative mx-[18px] mt-[14px] flex shrink-0 items-center gap-[14px] overflow-hidden rounded-card border-hairline border-bd-1 bg-surf p-3 max-md:mx-[14px] max-md:mt-3"
 		>
-			<span
+			<Typography tag="span"
 				aria-hidden="true"
 				className="absolute inset-y-0 left-0 w-[3px] rounded-r-[2px] bg-amb"
 			/>

@@ -47,9 +47,9 @@ const GROUPS: ShortcutGroup[] = [
 ];
 
 const KbdKey = ({ children }: { children: string }) => (
-	<span className="inline-flex h-5 min-w-[22px] items-center justify-center rounded-[4px] border-hairline border-bd-2 bg-surf-2 px-1.5 text-[11px] font-medium text-t-2 shadow-[0_1px_0_var(--bd-2)]">
+	<Typography tag="span" className="inline-flex h-5 min-w-[22px] items-center justify-center rounded-[4px] border-hairline border-bd-2 bg-surf-2 px-1.5 text-[11px] font-medium text-t-2 shadow-[0_1px_0_var(--bd-2)]">
 		{children}
-	</span>
+	</Typography>
 );
 
 export const ShortcutsSection = () => {
@@ -71,11 +71,11 @@ export const ShortcutsSection = () => {
 							<Typography tag="span" className="text-[12.5px] text-t-2">
 								{t(item.labelKey)}
 							</Typography>
-							<span className="inline-flex items-center gap-1">
+							<Typography tag="span" className="inline-flex items-center gap-1">
 								{item.keys.map((k, i) => (
 									<KbdKey key={`${item.labelKey}-${i}`}>{k}</KbdKey>
 								))}
-							</span>
+							</Typography>
 						</div>
 					))}
 				</SettingCard>

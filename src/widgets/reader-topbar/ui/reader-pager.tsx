@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
@@ -43,9 +45,9 @@ export const ReaderPager = ({
 			>
 				<ChevronLeft className="size-3" strokeWidth={1.6} />
 			</Link>
-			<span className="min-w-[42px] px-2 text-center text-[11.5px] font-medium tabular-nums text-t-2">
+			<Typography tag="span" className="min-w-[42px] px-2 text-center text-[11.5px] font-medium tabular-nums text-t-2">
 				{currentPage} / {totalPages}
-			</span>
+			</Typography>
 			<Link
 				href={hasNext ? nextHref : "#"}
 				aria-label={t("reader.topbar.next")}

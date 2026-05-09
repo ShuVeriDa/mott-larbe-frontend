@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { DashboardStats } from "@/entities/dashboard";
 import type { UserProfile } from "@/entities/user";
@@ -34,25 +36,25 @@ export const GreetingSection = ({ user, stats, lang }: GreetingSectionProps) => 
 	return (
 		<div className="flex items-start justify-between gap-4 max-sm:flex-col max-sm:gap-2.5">
 			<div>
-				<h1 className="mb-1 font-display text-[21px] font-normal tracking-[-0.3px] text-t-1 max-sm:text-[19px]">
+				<Typography tag="h1" className="mb-1 font-display text-[21px] font-normal tracking-[-0.3px] text-t-1 max-sm:text-[19px]">
 					{displayName}
-				</h1>
+				</Typography>
 				<div className="flex flex-wrap items-center gap-1.5 text-[12.5px] text-t-2">
-					<span>{formatDate(lang)}</span>
+					<Typography tag="span">{formatDate(lang)}</Typography>
 					{user?.level ? (
 						<>
-							<span className="size-[3px] rounded-full bg-t-4" />
-							<span>{t("dashboard.greeting.level")} {user.level}</span>
+							<Typography tag="span" className="size-[3px] rounded-full bg-t-4" />
+							<Typography tag="span">{t("dashboard.greeting.level")} {user.level}</Typography>
 						</>
 					) : null}
 					{user?.language ? (
 						<>
-							<span className="size-[3px] rounded-full bg-t-4" />
-							<span>
+							<Typography tag="span" className="size-[3px] rounded-full bg-t-4" />
+							<Typography tag="span">
 								{user.language === "CHE"
 									? t("dashboard.greeting.langChe")
 									: t("dashboard.greeting.langRu")}
-							</span>
+							</Typography>
 						</>
 					) : null}
 				</div>

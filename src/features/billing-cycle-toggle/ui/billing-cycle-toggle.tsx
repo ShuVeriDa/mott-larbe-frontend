@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -22,8 +26,7 @@ export const BillingCycleToggle = ({
 		const active = value === cycle;
 				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(cycle);
 return (
-			<button
-				type="button"
+			<Button
 				onClick={handleClick}
 				className={cn(
 					"flex h-7 items-center justify-center gap-1.5 rounded-md px-3 text-[11.5px] font-medium transition-colors duration-100 max-md:flex-1",
@@ -33,13 +36,13 @@ return (
 				)}
 				aria-pressed={active}
 			>
-				<span>{label}</span>
+				<Typography tag="span">{label}</Typography>
 				{badge ? (
-					<span className="rounded-[4px] bg-grn-bg px-[5px] py-[1px] text-[9.5px] font-semibold text-grn-t">
+					<Typography tag="span" className="rounded-[4px] bg-grn-bg px-[5px] py-[1px] text-[9.5px] font-semibold text-grn-t">
 						{badge}
-					</span>
+					</Typography>
 				) : null}
-			</button>
+			</Button>
 		);
 	};
 

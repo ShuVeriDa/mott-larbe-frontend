@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { cn } from "@/shared/lib/cn";
 
 export interface WordFormsChipsProps {
@@ -14,7 +16,7 @@ export const WordFormsChips = ({ forms, current }: WordFormsChipsProps) => {
 			{forms.map((form) => {
 				const isCurrent = form === current;
 				return (
-					<span
+					<Typography tag="span"
 						key={form}
 						className={cn(
 							"rounded-[5px] border-hairline px-2 py-[2.5px] text-[11px]",
@@ -24,7 +26,7 @@ export const WordFormsChips = ({ forms, current }: WordFormsChipsProps) => {
 						)}
 					>
 						{form}
-					</span>
+					</Typography>
 				);
 			})}
 		</div>

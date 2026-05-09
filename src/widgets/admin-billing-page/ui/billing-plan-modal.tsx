@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminPlan, CreatePlanDto, PlanInterval, PlanType, UpdatePlanDto } from "@/entities/admin-billing";
@@ -104,28 +108,28 @@ return (
 			>
 				{/* Header */}
 				<div className="flex items-center justify-between border-b border-bd-1 px-[18px] py-4">
-					<span className="font-display text-[14px] font-semibold text-t-1">
+					<Typography tag="span" className="font-display text-[14px] font-semibold text-t-1">
 						{mode === "create"
 							? t("admin.plans.planModal.titleNew")
 							: t("admin.plans.planModal.titleEdit")}
-					</span>
-					<button
+					</Typography>
+					<Button
 						onClick={onClose}
 						className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
 						<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
 							<path d="M1 1l10 10M11 1 1 11" />
 						</svg>
-					</button>
+					</Button>
 				</div>
 
 				{/* Body */}
 				<form action={handleSubmit} id="plan-form">
 					<div className="space-y-3.5 px-[18px] py-4">
 						<div>
-							<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+							<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 								{t("admin.plans.planModal.name")}
-							</label>
+							</Typography>
 							<input
 								value={form.name}
 								onChange={handleChange}
@@ -137,9 +141,9 @@ return (
 						{mode === "create" && (
 							<div className="grid grid-cols-2 gap-2.5">
 								<div>
-									<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+									<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 										{t("admin.plans.planModal.type")}
-									</label>
+									</Typography>
 									<select
 										value={form.type}
 										onChange={handleChange2}
@@ -151,9 +155,9 @@ return (
 									</select>
 								</div>
 								<div>
-									<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+									<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 										{t("admin.plans.planModal.interval")}
-									</label>
+									</Typography>
 									<select
 										value={form.interval ?? ""}
 										onChange={handleChange3}
@@ -168,9 +172,9 @@ return (
 						)}
 
 						<div>
-							<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+							<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 								{t("admin.plans.planModal.price")} ₽
-							</label>
+							</Typography>
 							<input
 								type="number"
 								min={0}
@@ -183,9 +187,9 @@ return (
 						</div>
 
 						<div>
-							<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+							<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 								{t("admin.plans.planModal.description")}
-							</label>
+							</Typography>
 							<input
 								value={form.description}
 								onChange={handleChange5}
@@ -195,40 +199,39 @@ return (
 						</div>
 
 						<div className="flex items-center justify-between">
-							<span className="text-[11.5px] font-medium text-t-2">
+							<Typography tag="span" className="text-[11.5px] font-medium text-t-2">
 								{t("admin.plans.planModal.showToUsers")}
-							</span>
-							<label className="relative h-[18px] w-8 cursor-pointer">
+							</Typography>
+							<Typography tag="label" className="relative h-[18px] w-8 cursor-pointer">
 								<input
 									type="checkbox"
 									className="peer sr-only"
 									checked={form.isActive}
 									onChange={handleChange6}
 								/>
-								<span className="absolute inset-0 rounded-full border border-bd-2 bg-surf-3 transition-colors peer-checked:border-acc peer-checked:bg-acc" />
-								<span className="absolute left-0.5 top-0.5 size-3 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-3.5" />
-							</label>
+								<Typography tag="span" className="absolute inset-0 rounded-full border border-bd-2 bg-surf-3 transition-colors peer-checked:border-acc peer-checked:bg-acc" />
+								<Typography tag="span" className="absolute left-0.5 top-0.5 size-3 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-3.5" />
+							</Typography>
 						</div>
 					</div>
 				</form>
 
 				{/* Footer */}
 				<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-[18px] py-3">
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						className="h-8 rounded-[8px] border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 					>
 						{t("admin.plans.planModal.cancel")}
-					</button>
-					<button
+					</Button>
+					<Button
 						type="submit"
 						form="plan-form"
 						disabled={isPending || !form.name.trim()}
 						className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 					>
 						{t("admin.plans.planModal.save")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

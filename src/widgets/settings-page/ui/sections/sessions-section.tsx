@@ -113,9 +113,9 @@ return (
 								key={s.id}
 								className="flex items-center gap-3 border-hairline border-b border-bd-1 px-4 py-2.5 last:border-b-0"
 							>
-								<span className="flex size-8 shrink-0 items-center justify-center rounded-[8px] border-hairline border-bd-1 bg-surf-2">
+								<Typography tag="span" className="flex size-8 shrink-0 items-center justify-center rounded-[8px] border-hairline border-bd-1 bg-surf-2">
 									{renderIcon(icon)}
-								</span>
+								</Typography>
 								<div className="min-w-0 flex-1">
 									<Typography
 										tag="p"
@@ -132,9 +132,9 @@ return (
 									</Typography>
 								</div>
 								{s.isCurrent ? (
-									<span className="rounded bg-grn-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-grn-t">
+									<Typography tag="span" className="rounded bg-grn-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-grn-t">
 										{t("settings.sessions.current")}
-									</span>
+									</Typography>
 								) : (
 									<Button
 										variant="outline"

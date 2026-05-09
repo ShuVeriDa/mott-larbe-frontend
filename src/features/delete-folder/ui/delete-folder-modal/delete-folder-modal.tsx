@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
 import type { Folder } from "@/entities/folder";
@@ -31,14 +33,14 @@ export const DeleteFolderModal = ({
 			onClose={onClose}
 			title={t("vocabulary.folderModal.deleteTitle")}
 		>
-			<p className="mb-4 text-[13px] leading-[1.55] text-t-2">
+			<Typography tag="p" className="mb-4 text-[13px] leading-[1.55] text-t-2">
 				{t("vocabulary.folderModal.deleteConfirm", { name: folder.name })}
-			</p>
+			</Typography>
 
 			{error ? (
-				<p className="mb-3 text-[12px] text-red" role="alert">
+				<Typography tag="p" className="mb-3 text-[12px] text-red" role="alert">
 					{error}
-				</p>
+				</Typography>
 			) : null}
 
 			<ModalActions>

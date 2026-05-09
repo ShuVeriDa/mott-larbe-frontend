@@ -1,5 +1,6 @@
 import type { LibraryTextWordStats } from "@/entities/library-text";
 
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string, vars?: Record<string, string | number>) => string;
 
 interface TextVocabCardProps {
@@ -14,9 +15,9 @@ export const TextVocabCard = ({ wordStats, t }: TextVocabCardProps) => {
 
 	return (
 		<div className="bg-surf border border-bd-1 rounded-card px-[17px] py-[15px]">
-			<p className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-3">
+			<Typography tag="p" className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-3">
 				{t("library.textDetail.vocab.label")}
-			</p>
+			</Typography>
 
 			<div className="flex gap-2 mb-2.5">
 				<VocabStat
@@ -36,9 +37,9 @@ export const TextVocabCard = ({ wordStats, t }: TextVocabCardProps) => {
 				/>
 			</div>
 
-			<p className="text-[11px] text-t-3 mb-2">
+			<Typography tag="p" className="text-[11px] text-t-3 mb-2">
 				{t("library.textDetail.vocab.unique", { count: total })}
-			</p>
+			</Typography>
 
 			<div className="h-1 bg-surf-3 rounded-full overflow-hidden flex">
 				<div
@@ -64,10 +65,10 @@ const VocabStat = ({
 	label: string;
 }) => (
 	<div className="flex-1 flex flex-col items-center px-1 py-2.5 bg-surf-2 rounded-base">
-		<span className={`w-1.5 h-1.5 rounded-full mb-1.5 ${dotClass}`} />
-		<span className="font-display text-[20px] font-normal text-t-1 leading-none">
+		<Typography tag="span" className={`w-1.5 h-1.5 rounded-full mb-1.5 ${dotClass}`} />
+		<Typography tag="span" className="font-display text-[20px] font-normal text-t-1 leading-none">
 			{value}
-		</span>
-		<span className="text-[10px] text-t-3 mt-0.5">{label}</span>
+		</Typography>
+		<Typography tag="span" className="text-[10px] text-t-3 mt-0.5">{label}</Typography>
 	</div>
 );

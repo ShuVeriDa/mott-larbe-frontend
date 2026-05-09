@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, MouseEvent, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -76,7 +80,7 @@ const CouponCodeChip = ({ code }: { code: string }) => {
 	};
 
 	return (
-		<span
+		<Typography tag="span"
 			onClick={handleCopy}
 			title={copied ? t("admin.coupons.table.copied") : t("admin.coupons.detail.copy")}
 			className={cn(
@@ -91,7 +95,7 @@ const CouponCodeChip = ({ code }: { code: string }) => {
 				<rect x="4" y="1" width="7" height="7" rx="1.2" />
 				<path d="M1 4v6a1 1 0 001 1h6" strokeLinecap="round" />
 			</svg>
-		</span>
+		</Typography>
 	);
 };
 
@@ -197,39 +201,39 @@ return (
 
 									{/* Name */}
 									<td className="max-w-[140px] px-3.5 py-2.5">
-										<span className="block truncate text-t-2">{item.name ?? "—"}</span>
+										<Typography tag="span" className="block truncate text-t-2">{item.name ?? "—"}</Typography>
 									</td>
 
 									{/* Discount */}
 									<td className="px-3.5 py-2.5">
-										<span className="text-[13.5px] font-bold text-t-1">
+										<Typography tag="span" className="text-[13.5px] font-bold text-t-1">
 											{item.amount}
-										</span>
-										<span className="ml-0.5 text-[10.5px] text-t-3">
+										</Typography>
+										<Typography tag="span" className="ml-0.5 text-[10.5px] text-t-3">
 											{item.type === "PERCENT" ? "%" : "₽"}
-										</span>
+										</Typography>
 									</td>
 
 									{/* Plans */}
 									<td className="px-3.5 py-2.5 max-md:hidden">
 										{item.applicablePlans.length === 0 ? (
-											<span className="rounded bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
+											<Typography tag="span" className="rounded bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
 												{t("admin.coupons.table.planAll")}
-											</span>
+											</Typography>
 										) : (
 											<div className="flex flex-wrap gap-1">
 												{item.applicablePlans.slice(0, 3).map((p) => (
-													<span
+													<Typography tag="span"
 														key={p}
 														className={cn("rounded px-1.5 py-0.5 text-[10px] font-semibold", PLAN_STYLES[p] ?? "bg-surf-3 text-t-2")}
 													>
 														{p.charAt(0) + p.slice(1).toLowerCase()}
-													</span>
+													</Typography>
 												))}
 												{item.applicablePlans.length > 3 && (
-													<span className="rounded bg-surf-3 px-1.5 py-0.5 text-[10px] text-t-3">
+													<Typography tag="span" className="rounded bg-surf-3 px-1.5 py-0.5 text-[10px] text-t-3">
 														+{item.applicablePlans.length - 3}
-													</span>
+													</Typography>
 												)}
 											</div>
 										)}
@@ -246,10 +250,10 @@ return (
 													/>
 												</div>
 											)}
-											<span className="whitespace-nowrap text-[11.5px] font-medium text-t-2">
+											<Typography tag="span" className="whitespace-nowrap text-[11.5px] font-medium text-t-2">
 												{item.redeemedCount}
 												{maxR ? ` / ${maxR}` : ""}
-											</span>
+											</Typography>
 										</div>
 									</td>
 
@@ -260,31 +264,29 @@ return (
 
 									{/* Status */}
 									<td className="px-3.5 py-2.5">
-										<span className={cn("inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold", STATUS_STYLES[item.computedStatus])}>
+										<Typography tag="span" className={cn("inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold", STATUS_STYLES[item.computedStatus])}>
 											{item.computedStatus === "active" && (
-												<span className="size-[5px] rounded-full bg-grn" />
+												<Typography tag="span" className="size-[5px] rounded-full bg-grn" />
 											)}
 											{t(`admin.coupons.status.${item.computedStatus}`)}
-										</span>
+										</Typography>
 									</td>
 
 									{/* Actions */}
 									<td className="px-3.5 py-2.5">
 										<div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100 [tr:hover_&]:opacity-100 [tr.bg-acc-bg_&]:opacity-100">
-											<button
-												type="button"
+											<Button
 												onClick={handleClick2}
 												className="flex h-6 items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 											>
 												{t("admin.coupons.table.edit")}
-											</button>
-											<button
-												type="button"
+											</Button>
+											<Button
 												onClick={handleClick3}
 												className="flex h-6 items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 											>
 												{t("admin.coupons.table.delete")}
-											</button>
+											</Button>
 										</div>
 									</td>
 								</tr>

@@ -1,4 +1,5 @@
 import { ComponentProps } from 'react';
+import { Typography } from "@/shared/ui/typography";
 import { cn } from "@/shared/lib/cn"
 import { Button } from "@/shared/ui/button-base"
 import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
@@ -73,7 +74,7 @@ function PaginationPrevious({
       {...props}
     >
       <ChevronLeftIcon data-icon="inline-start" />
-      <span className="hidden sm:block">{text}</span>
+      <Typography tag="span" className="hidden sm:block">{text}</Typography>
     </PaginationLink>
   )
 }
@@ -90,7 +91,7 @@ function PaginationNext({
       className={cn("pr-2!", className)}
       {...props}
     >
-      <span className="hidden sm:block">{text}</span>
+      <Typography tag="span" className="hidden sm:block">{text}</Typography>
       <ChevronRightIcon data-icon="inline-end" />
     </PaginationLink>
   )
@@ -101,7 +102,7 @@ function PaginationEllipsis({
   ...props
 }: ComponentProps<"span">) {
   return (
-    <span
+    <Typography tag="span"
       aria-hidden
       data-slot="pagination-ellipsis"
       className={cn(
@@ -112,8 +113,8 @@ function PaginationEllipsis({
     >
       <MoreHorizontalIcon
       />
-      <span className="sr-only">More pages</span>
-    </span>
+      <Typography tag="span" className="sr-only">More pages</Typography>
+    </Typography>
   )
 }
 

@@ -1,4 +1,7 @@
-"use client"
+"use client";
+
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import { Dialog as SheetPrimitive } from "radix-ui"
 
@@ -73,10 +76,10 @@ function SheetContent({
               variant="ghost"
               className="absolute top-4 right-4"
               size="icon-sm"
-            >
+             type="button">
               <XIcon
               />
-              <span className="sr-only">Close</span>
+              <Typography tag="span" className="sr-only">Close</Typography>
             </Button>
           </SheetPrimitive.Close>
         )}

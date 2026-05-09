@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -46,11 +50,11 @@ export const MorphologyPagination = ({
   const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(page + 1);
 return (
     <div className="flex flex-wrap items-center justify-between gap-2 border-t border-bd-1 px-4 py-3">
-      <span className="text-[12px] text-t-3">
+      <Typography tag="span" className="text-[12px] text-t-3">
         {t("admin.morphology.pagination.showing", { from, to, total })}
-      </span>
+      </Typography>
       <div className="flex gap-1">
-        <button
+        <Button
           disabled={page === 1}
           onClick={handleClick}
           className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
@@ -64,24 +68,24 @@ return (
               strokeLinejoin="round"
             />
           </svg>
-        </button>
+        </Button>
 
         {pages.map((p, i) => {
           if (p === "…") {
             return (
-              <span
+              <Typography tag="span"
                 key={`ellipsis-${i}`}
                 className="flex size-7 items-center justify-center text-[12px] text-t-3"
               >
                 …
-              </span>
+              </Typography>
             );
           }
 
           const handlePageClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(p);
 
           return (
-            <button
+            <Button
               key={p}
               onClick={handlePageClick}
               className={cn(
@@ -92,11 +96,11 @@ return (
               )}
             >
               {p}
-            </button>
+            </Button>
           );
         })}
 
-        <button
+        <Button
           disabled={page === totalPages}
           onClick={handleClick2}
           className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
@@ -110,7 +114,7 @@ return (
               strokeLinejoin="round"
             />
           </svg>
-        </button>
+        </Button>
       </div>
     </div>
   );

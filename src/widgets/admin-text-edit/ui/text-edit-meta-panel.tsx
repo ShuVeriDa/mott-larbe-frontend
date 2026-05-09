@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type {
 	ProcessingStatus,
 	TextLanguage,
@@ -76,9 +80,9 @@ const MetaSection = ({
 );
 
 const FieldLabel = ({ children }: { children: ReactNode }) => (
-	<label className="mb-1.5 block text-[11px] font-medium text-t-3">
+	<Typography tag="label" className="mb-1.5 block text-[11px] font-medium text-t-3">
 		{children}
-	</label>
+	</Typography>
 );
 
 const FieldInput = (props: InputHTMLAttributes<HTMLInputElement>) => (
@@ -104,17 +108,16 @@ const Toggle = ({
 }) => {
   const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(!checked);
   return (
-	<button
-		type="button"
+	<Button
 		role="switch"
 		aria-checked={checked}
 		onClick={handleClick}
 		className={`relative h-[18px] w-[34px] shrink-0 rounded-full border-none p-0 transition-colors ${checked ? "bg-acc" : "bg-surf-3"}`}
 	>
-		<span
+		<Typography tag="span"
 			className={`absolute top-[2px] h-[14px] w-[14px] rounded-full bg-white shadow-sm transition-transform ${checked ? "translate-x-[16px] left-[2px]" : "translate-x-0 left-[2px]"}`}
 		/>
-	</button>
+	</Button>
 );
 };
 
@@ -217,12 +220,11 @@ export const TextEditMetaPanel = ({
 return (
 		<div className="flex flex-col overflow-y-auto [&::-webkit-scrollbar]:w-0">
 			{/* Mobile toggle header */}
-			<button
-				type="button"
+			<Button
 				onClick={handleClick}
 				className="hidden items-center justify-between border-t border-bd-1 bg-surf-2 px-4 py-[13px] transition-colors hover:bg-surf-3 max-[900px]:flex"
 			>
-				<span className="flex items-center gap-2 text-[13px] font-medium text-t-1">
+				<Typography tag="span" className="flex items-center gap-2 text-[13px] font-medium text-t-1">
 					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
 						<path
 							d="M2 4.5h12M2 8.5h8M2 12.5h5"
@@ -232,7 +234,7 @@ return (
 						/>
 					</svg>
 					{t("admin.texts.createPage.sections.settings")}
-				</span>
+				</Typography>
 				<svg
 					width="14"
 					height="14"
@@ -248,7 +250,7 @@ return (
 						strokeLinejoin="round"
 					/>
 				</svg>
-			</button>
+			</Button>
 
 			<div
 				className={`flex flex-col max-[900px]:${metaOpen ? "flex" : "hidden"}`}
@@ -290,9 +292,8 @@ return (
 							{LEVELS.map(lvl => {
 							  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onLevelChange(level === lvl ? null : lvl);
 							  return (
-								<button
+								<Button
 									key={lvl}
-									type="button"
 									onClick={handleClick}
 									className={`flex h-[30px] items-center justify-center rounded-[6px] border text-[11.5px] font-semibold transition-colors ${
 										level === lvl
@@ -301,7 +302,7 @@ return (
 									}`}
 								>
 									{lvl}
-								</button>
+								</Button>
 							);
 							})}
 						</div>
@@ -340,19 +341,18 @@ return (
 										onTagRemove(tag);
 									};
 						  return (
-							<span
+							<Typography tag="span"
 								key={tag}
 								className="inline-flex items-center gap-1 rounded-[4px] bg-acc-muted px-2 py-[3px] text-[11.5px] font-medium text-acc-strong"
 							>
 								{tag}
-								<button
-									type="button"
+								<Button
 									onClick={handleClick}
 									className="flex items-center text-[13px] leading-none opacity-60 hover:opacity-100"
 								>
 									×
-								</button>
-							</span>
+								</Button>
+							</Typography>
 						);
 						})}
 						<input
@@ -368,9 +368,9 @@ return (
 							className="min-w-[70px] flex-1 border-none bg-transparent text-[12.5px] text-t-1 outline-none placeholder:text-t-3"
 						/>
 					</div>
-					<p className="mt-1.5 text-[10.5px] text-t-3">
+					<Typography tag="p" className="mt-1.5 text-[10.5px] text-t-3">
 						{t("admin.texts.createPage.tagsHint")}
-					</p>
+					</Typography>
 				</MetaSection>
 
 				{/* ── Description ── */}
@@ -394,8 +394,7 @@ return (
 						className="hidden"
 						onChange={handleChange7}
 					/>
-					<button
-						type="button"
+					<Button
 						onClick={handleClick3}
 						className="flex h-[82px] w-full flex-col items-center justify-center gap-1.5 overflow-hidden rounded-[8px] border border-dashed border-bd-2 bg-surf transition-colors hover:border-acc hover:bg-acc-muted"
 					>
@@ -439,40 +438,39 @@ return (
 										strokeLinejoin="round"
 									/>
 								</svg>
-								<span className="text-[11px] text-t-3">
+								<Typography tag="span" className="text-[11px] text-t-3">
 									{t("admin.texts.createPage.coverUploadLabel")}
-								</span>
-								<span className="text-[10px] text-t-4">
+								</Typography>
+								<Typography tag="span" className="text-[10px] text-t-4">
 									{t("admin.texts.createPage.coverUploadSub")}
-								</span>
+								</Typography>
 							</>
 						)}
-					</button>
+					</Button>
 				</MetaSection>
 
 				{/* ── Tokenization ── */}
 				<MetaSection title={t("admin.texts.editPage.sections.tokenization")}>
 					<div className="mb-2 flex items-center justify-between">
-						<span className="text-xs text-t-2">
+						<Typography tag="span" className="text-xs text-t-2">
 							{t("admin.texts.editPage.tokenStatusLabel")}
-						</span>
-						<span
+						</Typography>
+						<Typography tag="span"
 							className={`rounded-[4px] px-2 py-0.5 text-[10.5px] font-semibold ${tokenStatusClass()}`}
 						>
 							{tokenStatusLabel()}
-						</span>
+						</Typography>
 					</div>
 
 					{tokenCount > 0 && (
-						<p className="mb-2 text-[11.5px] leading-relaxed text-t-3">
-							<strong className="text-t-2">{tokenCount}</strong>{" "}
+						<Typography tag="p" className="mb-2 text-[11.5px] leading-relaxed text-t-3">
+							<Typography tag="strong" className="text-t-2">{tokenCount}</Typography>{" "}
 							{t("admin.texts.editPage.tokenCountSuffix")}
-						</p>
+						</Typography>
 					)}
 
 					{processingStatus !== "RUNNING" && (
-						<button
-							type="button"
+						<Button
 							onClick={onTokenize}
 							className="mb-3 flex w-full items-center justify-center gap-1.5 rounded-base border border-acc/25 bg-acc-muted px-3 py-[7px] text-[11.5px] font-medium text-acc transition-opacity hover:opacity-80"
 						>
@@ -492,7 +490,7 @@ return (
 								/>
 							</svg>
 							{t("admin.texts.editPage.tokenizeNow")}
-						</button>
+						</Button>
 					)}
 
 					<Link
@@ -568,14 +566,14 @@ return (
 						return (
 							<div key={i} className={i > 0 ? "mt-2" : ""}>
 								<div className="mb-1 flex justify-between text-[11px]">
-									<span className="text-t-3">
+									<Typography tag="span" className="text-t-3">
 										{t("admin.texts.createPage.pageN", { n: i + 1 })}
-									</span>
-									<span className="font-medium text-t-2">
+									</Typography>
+									<Typography tag="span" className="font-medium text-t-2">
 										{tc > 0
 											? `${tc} ${t("admin.texts.editPage.tokenCountSuffix")} · ${page.wordCount} ${t("admin.texts.createPage.wordsSuffix")}`
 											: `${page.wordCount} ${t("admin.texts.createPage.wordsSuffix")}`}
-									</span>
+									</Typography>
 								</div>
 								<div className="h-1 overflow-hidden rounded-full bg-surf-3">
 									<div
@@ -656,8 +654,7 @@ return (
 
 				{/* ── Action buttons ── */}
 				<div className="flex flex-col gap-1.5 border-t border-bd-1 bg-surf-2 px-4 py-[14px] transition-colors max-[900px]:hidden">
-					<button
-						type="button"
+					<Button
 						onClick={onSaveAndUpdate}
 						disabled={isSaving}
 						className="flex h-9 w-full items-center justify-center gap-1.5 rounded-[8px] bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50"
@@ -674,9 +671,8 @@ return (
 						{isSaving
 							? t("admin.texts.editPage.saving")
 							: t("admin.texts.editPage.saveUpdate")}
-					</button>
-					<button
-						type="button"
+					</Button>
+					<Button
 						onClick={onSaveDraft}
 						disabled={isSaving}
 						className="relative flex h-[34px] w-full items-center justify-center gap-1.5 rounded-[8px] border border-bd-2 bg-transparent text-[12.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-3 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50"
@@ -703,7 +699,7 @@ return (
 						{isSaving
 							? t("admin.texts.editPage.saving")
 							: t("admin.texts.editPage.saveDraft")}
-					</button>
+					</Button>
 				</div>
 
 				{/* ── Danger zone ── */}
@@ -711,8 +707,7 @@ return (
 					<div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.6px] text-red opacity-60">
 						{t("admin.texts.editPage.dangerZone")}
 					</div>
-					<button
-						type="button"
+					<Button
 						onClick={onDeleteRequest}
 						className="flex w-full items-center justify-center gap-1.5 rounded-[6px] border border-red/25 bg-transparent py-[7px] text-[11.5px] text-red transition-colors hover:border-red/40 hover:bg-red-muted"
 					>
@@ -726,7 +721,7 @@ return (
 							/>
 						</svg>
 						{t("admin.texts.editPage.deleteText")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

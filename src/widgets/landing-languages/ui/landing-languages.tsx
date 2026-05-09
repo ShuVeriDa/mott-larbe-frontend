@@ -70,9 +70,9 @@ export const LandingLanguages = () => {
 										{item.native}
 									</Typography>
 								</div>
-								<span className="rounded-base border-hairline border-bd-2 bg-surf-2 px-2.5 py-1 font-mono text-[12px] font-semibold text-t-2">
+								<Typography tag="span" className="rounded-base border-hairline border-bd-2 bg-surf-2 px-2.5 py-1 font-mono text-[12px] font-semibold text-t-2">
 									{item.tag}
-								</span>
+								</Typography>
 							</div>
 							<Typography className="mb-6 text-[14px] leading-[1.6] text-t-2">
 								{item.desc}

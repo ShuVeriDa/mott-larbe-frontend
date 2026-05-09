@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { cn } from "@/shared/lib/cn";
 
 interface CountBadgeProps {
@@ -7,7 +9,7 @@ interface CountBadgeProps {
 }
 
 export const CountBadge = ({ count }: CountBadgeProps) => (
-	<span
+	<Typography tag="span"
 		className={cn(
 			"inline-flex min-w-[24px] items-center justify-center rounded-[5px] px-1.5 py-px text-[11px] font-semibold",
 			count >= 10
@@ -18,5 +20,5 @@ export const CountBadge = ({ count }: CountBadgeProps) => (
 		)}
 	>
 		{count}
-	</span>
+	</Typography>
 );

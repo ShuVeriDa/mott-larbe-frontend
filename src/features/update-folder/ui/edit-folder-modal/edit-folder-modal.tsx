@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
 import {
@@ -50,9 +52,9 @@ export const EditFolderModal = ({
 				/>
 
 				{error ? (
-					<p className="text-[12px] text-red" role="alert">
+					<Typography tag="p" className="text-[12px] text-red" role="alert">
 						{error}
-					</p>
+					</Typography>
 				) : null}
 
 				<ModalActions>

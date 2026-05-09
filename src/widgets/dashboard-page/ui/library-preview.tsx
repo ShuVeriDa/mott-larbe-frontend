@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import Link from "next/link";
 import { ReactNode } from "react";
 import type { LibraryTextListItem } from "@/entities/library-text";
@@ -79,15 +83,15 @@ const LibraryCard = ({ item, lang }: LibraryCardProps) => {
 			<div className="p-[10px_13px_12px]">
 				<div className="mb-1.5 flex items-center gap-[5px]">
 					{item.level ? (
-						<span
+						<Typography tag="span"
 							className={`inline-flex items-center rounded-[4px] px-1.5 py-[2px] text-[10px] font-bold ${colors.badge}`}
 						>
 							{item.level}
-						</span>
+						</Typography>
 					) : null}
-					<span className="text-[10px] font-medium text-t-3">
+					<Typography tag="span" className="text-[10px] font-medium text-t-3">
 						{LANG_TAG[item.language] ?? item.language}
-					</span>
+					</Typography>
 				</div>
 
 				<div className="mb-0.5 line-clamp-2 text-[12.5px] font-semibold leading-[1.35] text-t-1">
@@ -107,20 +111,20 @@ const LibraryCard = ({ item, lang }: LibraryCardProps) => {
 				</div>
 
 				<div className="flex items-center justify-between">
-					<span className="text-[11px] text-t-3">
+					<Typography tag="span" className="text-[11px] text-t-3">
 						{t("dashboard.library.words", { count: item.wordCount.toLocaleString() })}
-					</span>
+					</Typography>
 					{pct > 0 ? (
-						<span
+						<Typography tag="span"
 							className="text-[11px] font-semibold"
 							style={{ color: pct >= 80 ? "var(--grn)" : "var(--acc)" }}
 						>
 							{pct}%
-						</span>
+						</Typography>
 					) : (
-						<span className="text-[11px] font-medium text-t-3">
+						<Typography tag="span" className="text-[11px] font-medium text-t-3">
 							{t("dashboard.library.newText")}
-						</span>
+						</Typography>
 					)}
 				</div>
 			</div>
@@ -135,8 +139,7 @@ interface FilterButtonProps {
 }
 
 const FilterButton = ({ active, onClick, children }: FilterButtonProps) => (
-	<button
-		type="button"
+	<Button
 		onClick={onClick}
 		className={cn(
 			"h-[22px] rounded-[5px] px-2 text-[10.5px] font-medium transition-colors",
@@ -146,7 +149,7 @@ const FilterButton = ({ active, onClick, children }: FilterButtonProps) => (
 		)}
 	>
 		{children}
-	</button>
+	</Button>
 );
 
 interface LibraryPreviewProps {
@@ -171,9 +174,9 @@ export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 	return (
 		<section>
 			<div className="mb-2.5 flex items-center justify-between gap-2">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("dashboard.library.title")}
-				</span>
+				</Typography>
 				<Link
 					href={viewAllHref}
 					className="shrink-0 text-[11.5px] text-acc transition-colors hover:underline"
@@ -240,9 +243,9 @@ export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 				</div>
 			) : (
 				<div className="flex h-[120px] items-center justify-center rounded-card border-hairline border border-bd-1 bg-surf-2">
-					<span className="text-[12.5px] text-t-3">
+					<Typography tag="span" className="text-[12.5px] text-t-3">
 						{t("dashboard.library.newText")}
-					</span>
+					</Typography>
 				</div>
 			)}
 		</section>

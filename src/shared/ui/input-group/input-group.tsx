@@ -1,4 +1,7 @@
-"use client"
+"use client";
+
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import { cva, type VariantProps } from "class-variance-authority"
 
@@ -85,7 +88,6 @@ const inputGroupButtonVariants = cva(
 
 function InputGroupButton({
   className,
-  type = "button",
   variant = "ghost",
   size = "xs",
   ...props
@@ -93,7 +95,7 @@ function InputGroupButton({
   VariantProps<typeof inputGroupButtonVariants>) {
   return (
     <Button
-      type={type}
+      type="button"
       data-size={size}
       variant={variant}
       className={cn(inputGroupButtonVariants({ size }), className)}
@@ -104,7 +106,7 @@ function InputGroupButton({
 
 function InputGroupText({ className, ...props }: ComponentProps<"span">) {
   return (
-    <span
+    <Typography tag="span"
       className={cn(
         "flex items-center gap-2 text-sm text-muted-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className

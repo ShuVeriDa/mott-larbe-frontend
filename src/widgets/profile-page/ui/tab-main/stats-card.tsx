@@ -19,7 +19,7 @@ const WordBar = ({ words, t }: WordBarProps) => {
 
 	return (
 		<div className="px-4 pb-3.5">
-			<p className="text-[11px] text-t-3 mb-2">{t("profile.stats.wordDistribution")}</p>
+			<Typography tag="p" className="text-[11px] text-t-3 mb-2">{t("profile.stats.wordDistribution")}</Typography>
 			<div className="flex h-1.5 rounded-[4px] overflow-hidden gap-px">
 				<div className="bg-amb rounded-l-[4px]" style={{ flex: `0 0 ${newPct}%` }} />
 				<div className="bg-acc" style={{ flex: `0 0 ${learningPct}%` }} />
@@ -32,11 +32,11 @@ const WordBar = ({ words, t }: WordBarProps) => {
 					{ color: "bg-grn", label: t("profile.stats.known"), count: words.known },
 				].map(({ color, label, count }) => (
 					<div key={label} className="flex items-center gap-1">
-						<span className={`size-[7px] rounded-[2px] shrink-0 ${color}`} />
-						<span className="text-[10.5px] text-t-2">
+						<Typography tag="span" className={`size-[7px] rounded-[2px] shrink-0 ${color}`} />
+						<Typography tag="span" className="text-[10.5px] text-t-2">
 							{label}{" "}
-							<strong className="text-t-1">{count}</strong>
-						</span>
+							<Typography tag="strong" className="text-t-1">{count}</Typography>
+						</Typography>
 					</div>
 				))}
 			</div>
@@ -83,7 +83,7 @@ export const StatsCard = ({ summary, lang }: StatsCardProps) => {
 						>
 							{value}
 						</Typography>
-						<span className="text-[10px] text-t-3 text-center leading-[1.3]">{label}</span>
+						<Typography tag="span" className="text-[10px] text-t-3 text-center leading-[1.3]">{label}</Typography>
 					</div>
 				))}
 			</div>

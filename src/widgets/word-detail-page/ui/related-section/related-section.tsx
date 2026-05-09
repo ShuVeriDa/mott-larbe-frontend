@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import { CefrBadge } from "@/entities/dictionary";
 import type { DetailRelated } from "@/entities/dictionary";
@@ -30,13 +32,13 @@ export const RelatedSection = ({ related, lang }: RelatedSectionProps) => {
 								className="flex items-center gap-1.5 rounded-[8px] border-hairline border-bd-1 bg-surf-2 px-2.5 py-1.5 transition-colors duration-150 hover:border-bd-2"
 								title={typeLabel}
 							>
-								<span className="font-display text-[13px] italic text-t-1">
+								<Typography tag="span" className="font-display text-[13px] italic text-t-1">
 									{rel.baseForm}
-								</span>
+								</Typography>
 								{rel.translation ? (
-									<span className="text-[11.5px] text-t-3">
+									<Typography tag="span" className="text-[11.5px] text-t-3">
 										{rel.translation}
-									</span>
+									</Typography>
 								) : null}
 								{rel.level ? <CefrBadge level={rel.level} /> : null}
 							</Link>

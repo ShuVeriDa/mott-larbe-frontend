@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -39,13 +43,12 @@ export const PaymentsPagination = ({
 	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(page + 1);
 return (
 		<div className="flex flex-wrap items-center justify-between gap-2 border-t border-bd-1 px-3.5 py-2.5">
-			<span className="text-[11.5px] text-t-3">
+			<Typography tag="span" className="text-[11.5px] text-t-3">
 				{from}–{to} {t("admin.payments.pagination.of")} {total}
-			</span>
+			</Typography>
 
 			<div className="flex items-center gap-[3px]">
-				<button
-					type="button"
+				<Button
 					disabled={page <= 1}
 					onClick={handleClick}
 					className="flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 disabled:pointer-events-none disabled:opacity-40"
@@ -64,22 +67,21 @@ return (
 							strokeLinejoin="round"
 						/>
 					</svg>
-				</button>
+				</Button>
 
 				{getPages().map((p, i) =>
 					{
 				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(p as number);
 				  return p === "…" ? (
-						<span
+						<Typography tag="span"
 							key={`ellipsis-${i}`}
 							className="px-1 text-[12px] text-t-4 self-center"
 						>
 							…
-						</span>
+						</Typography>
 					) : (
-						<button
+						<Button
 							key={p}
-							type="button"
 							onClick={handleClick}
 							className={cn(
 								"flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border px-1.5 text-[12px] transition-colors",
@@ -89,13 +91,12 @@ return (
 							)}
 						>
 							{p}
-						</button>
+						</Button>
 					);
 				},
 				)}
 
-				<button
-					type="button"
+				<Button
 					disabled={page >= totalPages}
 					onClick={handleClick2}
 					className="flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 disabled:pointer-events-none disabled:opacity-40"
@@ -114,7 +115,7 @@ return (
 							strokeLinejoin="round"
 						/>
 					</svg>
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

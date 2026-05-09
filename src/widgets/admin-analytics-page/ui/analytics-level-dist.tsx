@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { LevelDistItem } from "@/entities/admin-analytics";
@@ -37,12 +39,12 @@ export const AnalyticsLevelDist = ({
 	return (
 		<div className="rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between px-4 py-3.5 pb-3">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.analytics.levelDist.title")}
-				</span>
-				<span className="text-[11px] text-t-3">
+				</Typography>
+				<Typography tag="span" className="text-[11px] text-t-3">
 					{t("admin.analytics.levelDist.subtitle")}
-				</span>
+				</Typography>
 			</div>
 
 			<div className="px-4 pb-4">
@@ -60,19 +62,19 @@ export const AnalyticsLevelDist = ({
 							<div key={item.level} className="mb-3 last:mb-0">
 								<div className="mb-1 flex items-center justify-between">
 									<div className="flex items-center gap-1.5 text-[12px] font-medium text-t-1">
-										<span
+										<Typography tag="span"
 											className={cn(
 												"inline-flex h-5 w-8 items-center justify-center rounded-[5px] text-[10.5px] font-bold tracking-[0.3px]",
 												LEVEL_BADGE_CLASS[item.level],
 											)}
 										>
 											{item.level}
-										</span>
+										</Typography>
 										{t(`admin.analytics.levelDist.${item.level.toLowerCase()}`)}
 									</div>
-									<span className="text-[11px] text-t-3">
+									<Typography tag="span" className="text-[11px] text-t-3">
 										{item.usersCount} · {item.percent}%
-									</span>
+									</Typography>
 								</div>
 								<div className="h-1.5 overflow-hidden rounded-full bg-surf-3">
 									<div

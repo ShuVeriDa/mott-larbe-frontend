@@ -1,4 +1,7 @@
-"use client"
+"use client";
+
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import { Popover as PopoverPrimitive } from "radix-ui"
 
@@ -69,7 +72,7 @@ function PopoverDescription({
   ...props
 }: ComponentProps<"p">) {
   return (
-    <p
+    <Typography tag="p"
       data-slot="popover-description"
       className={cn("text-muted-foreground", className)}
       {...props}

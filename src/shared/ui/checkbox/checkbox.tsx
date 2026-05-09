@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { ComponentProps } from 'react';
 import { Checkbox as CheckboxPrimitive } from "radix-ui"
 

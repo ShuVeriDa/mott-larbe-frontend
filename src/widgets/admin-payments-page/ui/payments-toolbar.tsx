@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import type { AdminPlan } from "@/entities/admin-billing";
 import type { PaymentProvider } from "@/entities/admin-payment";
@@ -106,7 +108,7 @@ return (
 					onChange={handleChange4}
 					className="h-[30px] rounded-base border border-bd-1 bg-surf-2 px-2 text-[11.5px] text-t-2 outline-none transition-colors focus:border-acc focus:text-t-1"
 				/>
-				<span className="text-[11px] text-t-4">—</span>
+				<Typography tag="span" className="text-[11px] text-t-4">—</Typography>
 				<input
 					type="date"
 					value={dateTo}

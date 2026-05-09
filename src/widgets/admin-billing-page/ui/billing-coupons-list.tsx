@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminCoupon } from "@/entities/admin-billing";
@@ -29,15 +33,15 @@ export const BillingCouponsList = ({
 	return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
-				<span className="text-[12.5px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("admin.plans.coupons.title")}
-				</span>
-				<button
+				</Typography>
+				<Button
 					onClick={onAdd}
 					className="bg-transparent text-[11.5px] text-acc-t transition-opacity hover:opacity-75"
 				>
 					{t("admin.plans.coupons.add")}
-				</button>
+				</Button>
 			</div>
 
 			{isLoading ? (
@@ -81,21 +85,21 @@ return (
 									</div>
 									<div className="mt-0.5 text-[11px] text-t-3">{usesLabel}</div>
 								</div>
-								<span className="shrink-0 text-[13px] font-semibold text-grn-t">
+								<Typography tag="span" className="shrink-0 text-[13px] font-semibold text-grn-t">
 									{discountLabel}
-								</span>
-								<span
+								</Typography>
+								<Typography tag="span"
 									className={`shrink-0 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold ${badgeClass}`}
 								>
 									{coupon.computedStatus}
-								</span>
+								</Typography>
 								<div className="flex shrink-0 gap-1">
-									<button
+									<Button
 										onClick={handleClick}
 										className="flex h-[26px] items-center rounded-[6px] border border-bd-2 bg-surf-2 px-2.5 text-[11.5px] font-medium text-red-t transition-colors hover:border-red-bg hover:bg-red-bg"
 									>
 										{t("admin.plans.coupons.delete")}
-									</button>
+									</Button>
 								</div>
 							</div>
 						);

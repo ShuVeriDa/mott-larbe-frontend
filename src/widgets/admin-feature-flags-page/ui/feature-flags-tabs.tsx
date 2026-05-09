@@ -2,6 +2,7 @@ import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagsTab } from "../model/use-admin-feature-flags-page";
 
+import { Button } from "@/shared/ui/button";
 interface FeatureFlagsTabsProps {
 	active: FeatureFlagsTab;
 	onChange: (tab: FeatureFlagsTab) => void;
@@ -15,9 +16,8 @@ export const FeatureFlagsTabs = ({ active, onChange, t }: FeatureFlagsTabsProps)
 		{TABS.map((tab) => {
 		  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab);
 		  return (
-			<button
+			<Button
 				key={tab}
-				type="button"
 				onClick={handleClick}
 				className={cn(
 					"rounded-[6px] px-3.5 py-[5px] text-[12.5px] font-medium transition-all",
@@ -27,7 +27,7 @@ export const FeatureFlagsTabs = ({ active, onChange, t }: FeatureFlagsTabsProps)
 				)}
 			>
 				{t(`admin.featureFlags.tabs.${tab}`)}
-			</button>
+			</Button>
 		);
 		})}
 	</div>

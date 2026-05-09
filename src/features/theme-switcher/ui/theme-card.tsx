@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { Check } from "lucide-react";
@@ -42,8 +46,7 @@ export const ThemeCard = ({ id, name, selected, onSelect }: ThemeCardProps) => {
 	const p = previews[id];
 		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onSelect(id);
 return (
-		<button
-			type="button"
+		<Button
 			aria-pressed={selected}
 			onClick={handleClick}
 			className={cn(
@@ -84,9 +87,9 @@ return (
 				</div>
 			</div>
 			{selected ? (
-				<span className="absolute right-[5px] top-[5px] flex size-4 items-center justify-center rounded-full bg-acc">
+				<Typography tag="span" className="absolute right-[5px] top-[5px] flex size-4 items-center justify-center rounded-full bg-acc">
 					<Check className="size-[9px] text-white" strokeWidth={2.5} />
-				</span>
+				</Typography>
 			) : null}
 			<div
 				className={cn(
@@ -96,6 +99,6 @@ return (
 			>
 				{name}
 			</div>
-		</button>
+		</Button>
 	);
 };

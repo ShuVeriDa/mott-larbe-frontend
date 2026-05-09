@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { BillingStats } from "@/entities/admin-billing";
@@ -69,8 +71,8 @@ export const BillingKpiRow = ({ stats, isLoading }: BillingKpiRowProps) => {
 				value={fmtNum(stats.payingCount)}
 				sub={
 					<>
-						<span className="text-grn-t">+{stats.payingDeltaLast30}</span>
-						<span>{t("admin.plans.kpi.payingMonth")}</span>
+						<Typography tag="span" className="text-grn-t">+{stats.payingDeltaLast30}</Typography>
+						<Typography tag="span">{t("admin.plans.kpi.payingMonth")}</Typography>
 					</>
 				}
 			/>
@@ -80,10 +82,10 @@ export const BillingKpiRow = ({ stats, isLoading }: BillingKpiRowProps) => {
 				sub={
 					stats.mrrGrowthPct !== null ? (
 						<>
-							<span className={stats.mrrGrowthPct >= 0 ? "text-grn-t" : "text-red-t"}>
+							<Typography tag="span" className={stats.mrrGrowthPct >= 0 ? "text-grn-t" : "text-red-t"}>
 								{mrrGrowthSign}{stats.mrrGrowthPct.toFixed(1)}%
-							</span>
-							<span>{t("admin.plans.kpi.mrrMoM")}</span>
+							</Typography>
+							<Typography tag="span">{t("admin.plans.kpi.mrrMoM")}</Typography>
 						</>
 					) : undefined
 				}
@@ -91,17 +93,17 @@ export const BillingKpiRow = ({ stats, isLoading }: BillingKpiRowProps) => {
 			<KpiCard
 				label={t("admin.plans.kpi.arr")}
 				value={`${fmtMoney(stats.arrCents)} ₽`}
-				sub={<span>{t("admin.plans.kpi.arrForecast")}</span>}
+				sub={<Typography tag="span">{t("admin.plans.kpi.arrForecast")}</Typography>}
 			/>
 			<KpiCard
 				label={t("admin.plans.kpi.conversion")}
 				value={`${stats.conversionRate.toFixed(1)}%`}
 				sub={
 					<>
-						<span className={stats.conversionDeltaPp >= 0 ? "text-grn-t" : "text-red-t"}>
+						<Typography tag="span" className={stats.conversionDeltaPp >= 0 ? "text-grn-t" : "text-red-t"}>
 							{convSign}{stats.conversionDeltaPp.toFixed(1)} пп
-						</span>
-						<span>{t("admin.plans.kpi.vsLastMonth")}</span>
+						</Typography>
+						<Typography tag="span">{t("admin.plans.kpi.vsLastMonth")}</Typography>
 					</>
 				}
 			/>
@@ -110,10 +112,10 @@ export const BillingKpiRow = ({ stats, isLoading }: BillingKpiRowProps) => {
 				value={`${stats.churnRate.toFixed(1)}%`}
 				sub={
 					<>
-						<span className={stats.churnDeltaPp <= 0 ? "text-grn-t" : "text-red-t"}>
+						<Typography tag="span" className={stats.churnDeltaPp <= 0 ? "text-grn-t" : "text-red-t"}>
 							{churnSign}{stats.churnDeltaPp.toFixed(1)} пп
-						</span>
-						<span>{t("admin.plans.kpi.vsLastMonth")}</span>
+						</Typography>
+						<Typography tag="span">{t("admin.plans.kpi.vsLastMonth")}</Typography>
 					</>
 				}
 			/>

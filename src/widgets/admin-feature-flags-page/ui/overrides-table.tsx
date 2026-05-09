@@ -2,6 +2,8 @@ import { ComponentProps } from 'react';
 import type { FeatureFlagOverrideItem } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 const formatDate = (iso: string) =>
 	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" });
 
@@ -81,42 +83,42 @@ return (
 												{initials}
 											</div>
 											<div>
-												<p className="text-[12.5px] text-t-1">
+												<Typography tag="p" className="text-[12.5px] text-t-1">
 													{item.user.name} {item.user.surname}
-												</p>
-												<p className="text-[11px] text-t-3">{item.user.email}</p>
+												</Typography>
+												<Typography tag="p" className="text-[11px] text-t-3">{item.user.email}</Typography>
 											</div>
 										</div>
 									</td>
 									<td className="py-3 pl-3.5">
-										<span className="max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap rounded-[5px] border border-bd-1 bg-surf-2 px-1.5 py-0.5 font-mono text-[11px] text-t-2 block">
+										<Typography tag="span" className="max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap rounded-[5px] border border-bd-1 bg-surf-2 px-1.5 py-0.5 font-mono text-[11px] text-t-2 block">
 											{item.featureFlag.key}
-										</span>
+										</Typography>
 									</td>
 									<td className="py-3 pl-3.5">
 										{item.isEnabled ? (
-											<span className="rounded px-1.5 py-[2px] text-[11px] font-semibold bg-grn-bg text-grn-t">
+											<Typography tag="span" className="rounded px-1.5 py-[2px] text-[11px] font-semibold bg-grn-bg text-grn-t">
 												{t("admin.featureFlags.overrides.on")}
-											</span>
+											</Typography>
 										) : (
-											<span className="rounded px-1.5 py-[2px] text-[11px] font-semibold bg-red-bg text-red-t">
+											<Typography tag="span" className="rounded px-1.5 py-[2px] text-[11px] font-semibold bg-red-bg text-red-t">
 												{t("admin.featureFlags.overrides.off")}
-											</span>
+											</Typography>
 										)}
 									</td>
 									<td className="py-3 pl-3.5">
 										{item.featureFlag.isEnabled === false ? (
-											<span className="rounded px-1.5 py-[2px] text-[10.5px] font-medium bg-red-bg text-red-t">
+											<Typography tag="span" className="rounded px-1.5 py-[2px] text-[10.5px] font-medium bg-red-bg text-red-t">
 												{t("admin.featureFlags.overrides.globalOff")}
-											</span>
+											</Typography>
 										) : item.featureFlag.rolloutPercent === 100 ? (
-											<span className="rounded px-1.5 py-[2px] text-[10.5px] font-medium bg-grn-bg text-grn-t">
+											<Typography tag="span" className="rounded px-1.5 py-[2px] text-[10.5px] font-medium bg-grn-bg text-grn-t">
 												{t("admin.featureFlags.overrides.globalOn", { pct: item.featureFlag.rolloutPercent })}
-											</span>
+											</Typography>
 										) : (
-											<span className="rounded px-1.5 py-[2px] text-[10.5px] font-medium bg-amb-bg text-amb-t">
+											<Typography tag="span" className="rounded px-1.5 py-[2px] text-[10.5px] font-medium bg-amb-bg text-amb-t">
 												{t("admin.featureFlags.overrides.globalOn", { pct: item.featureFlag.rolloutPercent })}
-											</span>
+											</Typography>
 										)}
 									</td>
 									<td className="py-3 pl-3.5 text-[11.5px] text-t-3">
@@ -128,8 +130,7 @@ return (
 										{formatDate(item.updatedAt)}
 									</td>
 									<td className="py-3 pr-3.5">
-										<button
-											type="button"
+										<Button
 											onClick={handleClick}
 											className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 											title={t("admin.featureFlags.overrides.remove")}
@@ -138,7 +139,7 @@ return (
 												<path d="M2.5 4.5h10M5 4.5V3h5v1.5M6 7v4M9 7v4" strokeLinecap="round" />
 												<path d="M3.5 4.5l.7 7.5h6.6l.7-7.5" />
 											</svg>
-										</button>
+										</Button>
 									</td>
 								</tr>
 							);

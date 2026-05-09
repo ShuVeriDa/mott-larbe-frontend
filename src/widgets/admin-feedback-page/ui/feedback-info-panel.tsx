@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps, ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackThread, FeedbackStatus, FeedbackPriority } from "@/entities/feedback";
@@ -26,14 +30,14 @@ interface FeedbackInfoPanelProps {
 
 const InfoSection = ({ title, children }: { title: string; children: ReactNode }) => (
 	<div className="border-b border-bd-1 px-4 py-3.5">
-		<p className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">{title}</p>
+		<Typography tag="p" className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">{title}</Typography>
 		{children}
 	</div>
 );
 
 const InfoRow = ({ label, children }: { label: string; children: ReactNode }) => (
 	<div className="mb-2.5 flex flex-col gap-[3px] last:mb-0">
-		<span className="text-[10.5px] text-t-3">{label}</span>
+		<Typography tag="span" className="text-[10.5px] text-t-3">{label}</Typography>
 		<div className="text-[12px] font-medium text-t-1">{children}</div>
 	</div>
 );
@@ -66,10 +70,10 @@ return (
 						{(thread.user.name?.[0] ?? "U").toUpperCase()}
 					</div>
 					<div>
-						<p className="text-[12.5px] font-semibold text-t-1">
+						<Typography tag="p" className="text-[12.5px] font-semibold text-t-1">
 							{thread.user.name} {thread.user.surname}
-						</p>
-						<p className="text-[11px] text-t-3">{thread.user.email}</p>
+						</Typography>
+						<Typography tag="p" className="text-[11px] text-t-3">{thread.user.email}</Typography>
 					</div>
 				</div>
 				<InfoRow label={t("admin.feedback.user.plan")}>
@@ -109,8 +113,7 @@ return (
 					</select>
 				</InfoRow>
 				<InfoRow label={t("admin.feedback.ticket.assignee")}>
-					<button
-						type="button"
+					<Button
 						onClick={onAssignOpen}
 						className="flex h-7 w-full items-center gap-1.5 rounded-[6px] border border-bd-2 bg-surf-2 px-2 text-[11.5px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
@@ -119,9 +122,9 @@ return (
 								<div className="flex size-5 shrink-0 items-center justify-center rounded-full bg-acc-bg text-[8px] font-bold text-acc-t">
 									{thread.assignee.name?.[0]?.toUpperCase() ?? "A"}
 								</div>
-								<span className="truncate text-t-1">
+								<Typography tag="span" className="truncate text-t-1">
 									{thread.assignee.name} {thread.assignee.surname?.[0]}.
-								</span>
+								</Typography>
 							</>
 						) : (
 							<>
@@ -132,7 +135,7 @@ return (
 								{t("admin.feedback.ticket.assign")}
 							</>
 						)}
-					</button>
+					</Button>
 				</InfoRow>
 				<InfoRow label={t("admin.feedback.ticket.createdAt")}>
 					{formatDate(thread.createdAt)}
@@ -141,9 +144,9 @@ return (
 
 			{/* Actions */}
 			<div className="px-4 py-3.5">
-				<p className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+				<Typography tag="p" className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
 					{t("admin.feedback.actions.title")}
-				</p>
+				</Typography>
 				<div className="flex flex-col gap-1.5">
 					{isResolved ? (
 						<ActionBtn
@@ -210,12 +213,11 @@ const ActionBtn = ({
 	onClick: () => void;
 	className: string;
 }) => (
-	<button
-		type="button"
+	<Button
 		onClick={onClick}
 		className={cn("flex h-[30px] w-full items-center justify-center gap-1.5 rounded-base border text-[12px] font-semibold transition-opacity", className)}
 	>
 		{icon}
 		{children}
-	</button>
+	</Button>
 );

@@ -60,7 +60,7 @@ export const BrandPanel = ({
 					tag="span"
 					className="mb-3.5 inline-flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[1.2px] text-acc-t max-[640px]:mb-2.5 max-[640px]:text-[10px]"
 				>
-					<span className="block h-px w-[18px] bg-acc opacity-55" />
+					<Typography tag="span" className="block h-px w-[18px] bg-acc opacity-55" />
 					{t("auth.brand.eyebrow")}
 				</Typography>
 
@@ -99,14 +99,14 @@ export const BrandPanel = ({
 
 			<footer className="relative z-1 mt-10 flex items-center gap-3.5 text-[11.5px] text-t-3 max-[900px]:mt-6 max-[640px]:mt-5 max-[640px]:flex-wrap max-[640px]:gap-2 max-[640px]:text-[11px]">
 				<Typography tag="span">{t("auth.brand.copyright")}</Typography>
-				<span className="size-[3px] rounded-full bg-t-4" />
+				<Typography tag="span" className="size-[3px] rounded-full bg-t-4" />
 				<Link
 					href={termsHref}
 					className="text-t-2 transition-colors hover:text-t-1"
 				>
 					{t("auth.brand.terms")}
 				</Link>
-				<span className="size-[3px] rounded-full bg-t-4" />
+				<Typography tag="span" className="size-[3px] rounded-full bg-t-4" />
 				<Link
 					href={privacyHref}
 					className="text-t-2 transition-colors hover:text-t-1"

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import type { AdminLogTab, AdminLogsTabs } from "@/entities/admin-log";
 import { cn } from "@/shared/lib/cn";
@@ -31,9 +35,8 @@ export const LogsTabs = ({ active, counts, onChange }: LogsTabsProps) => {
 					const count = counts?.[key];
 										const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(key);
 return (
-						<button
+						<Button
 							key={key}
-							type="button"
 							onClick={handleClick}
 							className={cn(
 								"flex h-7 items-center gap-1.5 whitespace-nowrap rounded-base border border-transparent px-3 text-[12.5px] transition-colors",
@@ -44,7 +47,7 @@ return (
 						>
 							{t(`admin.logs.tabs.${key}`)}
 							{count !== undefined && (
-								<span
+								<Typography tag="span"
 									className={cn(
 										"min-w-[18px] rounded px-1 py-px text-center text-[10.5px] font-semibold",
 										isActive ? "bg-surf-2 text-t-3" : "bg-surf-3 text-t-3",
@@ -53,9 +56,9 @@ return (
 									)}
 								>
 									{count.toLocaleString()}
-								</span>
+								</Typography>
 							)}
-						</button>
+						</Button>
 					);
 				})}
 			</div>

@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/shared/lib/cn";
@@ -20,9 +22,8 @@ export const ToastViewport = () => {
 				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
 					handleDismiss(item.id);
 			  return (
-				<button
+				<Button
 					key={item.id}
-					type="button"
 					onClick={handleClick}
 					className={cn(
 						"pointer-events-auto min-w-[240px] max-w-[420px] rounded-base px-4 py-2 text-[12.5px] font-medium",
@@ -35,7 +36,7 @@ export const ToastViewport = () => {
 					)}
 				>
 					{item.message}
-				</button>
+				</Button>
 			);
 			})}
 		</div>,

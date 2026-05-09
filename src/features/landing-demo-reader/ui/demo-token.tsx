@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import { type ComponentProps, type MouseEvent, type ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 
@@ -31,7 +33,7 @@ export const DemoToken = ({
 				}
 			};
 return (
-		<span
+		<Typography tag="span"
 			data-demo-token
 			data-word={word}
 			role="button"
@@ -51,6 +53,6 @@ return (
 			)}
 		>
 			{children}
-		</span>
+		</Typography>
 	);
 };

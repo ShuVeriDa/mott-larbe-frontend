@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import Link from "next/link";
 import { X } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
@@ -58,14 +60,13 @@ export const MobileMenu = ({
 							{t("landing.brand.name")}
 						</Typography>
 					</div>
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						aria-label={t("landing.nav.close")}
 						className="flex h-8 w-8 items-center justify-center rounded-base border-hairline border-bd-2 bg-transparent text-t-1 transition-colors hover:bg-surf-2"
 					>
 						<X size={14} strokeWidth={1.8} />
-					</button>
+					</Button>
 				</div>
 
 				<nav className="flex-1 py-3">

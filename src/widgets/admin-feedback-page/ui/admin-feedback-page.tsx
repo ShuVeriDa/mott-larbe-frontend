@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useAdminFeedbackPage } from "../model/use-admin-feedback-page";
 import { FeedbackAssignModal } from "./feedback-assign-modal";
@@ -79,10 +83,10 @@ return (
 			{/* Topbar */}
 			<header className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-[14px] max-sm:px-3.5">
 				<div>
-					<p className="font-display text-[16px] text-t-1">
+					<Typography tag="p" className="font-display text-[16px] text-t-1">
 						{t("admin.feedback.title")}
-					</p>
-					<p className="text-[12px] text-t-3">{t("admin.feedback.subtitle")}</p>
+					</Typography>
+					<Typography tag="p" className="text-[12px] text-t-3">{t("admin.feedback.subtitle")}</Typography>
 				</div>
 				<div className="ml-auto flex items-center gap-2">
 					{stats && (
@@ -98,8 +102,7 @@ return (
 							/>
 						</>
 					)}
-					<button
-						type="button"
+					<Button
 						disabled={isExporting}
 						onClick={handleExport}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-50"
@@ -114,7 +117,7 @@ return (
 							/>
 						</svg>
 						{t("admin.feedback.export")}
-					</button>
+					</Button>
 				</div>
 			</header>
 
@@ -215,11 +218,11 @@ const StatChip = ({
 	highlight?: boolean;
 }) => (
 	<div className="flex items-center gap-1 rounded-[6px] border border-bd-1 bg-surf px-2 py-[3px]">
-		<span className="text-[10.5px] text-t-3">{label}</span>
-		<span
+		<Typography tag="span" className="text-[10.5px] text-t-3">{label}</Typography>
+		<Typography tag="span"
 			className={`text-[12px] font-semibold ${highlight ? "text-acc-t" : "text-t-1"}`}
 		>
 			{value}
-		</span>
+		</Typography>
 	</div>
 );

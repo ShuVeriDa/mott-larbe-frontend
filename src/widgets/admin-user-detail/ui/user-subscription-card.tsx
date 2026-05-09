@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { useAdminUserSubscription } from "@/entities/admin-user/model/use-admin-user-subscription";
@@ -54,12 +58,12 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 			<div className="flex items-center justify-between border-b border-bd-1 px-3.5 py-3">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.userDetail.subscription.title")}
-				</span>
-				<button onClick={onManage} className="border-none bg-transparent p-0 text-[11.5px] text-acc-t transition-opacity hover:opacity-70">
+				</Typography>
+				<Button onClick={onManage} className="border-none bg-transparent p-0 text-[11.5px] text-acc-t transition-opacity hover:opacity-70">
 					{t("admin.userDetail.subscription.manage")}
-				</button>
+				</Button>
 			</div>
 
 			<div className="p-3.5">
@@ -109,19 +113,19 @@ return (
 								</div>
 								<div className="flex flex-col gap-1">
 									<div className="flex gap-1">
-										<button
+										<Button
 											onClick={handleClick}
 											className="flex h-[26px] items-center rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 										>
 											{t("admin.userDetail.subscription.extend")}
-										</button>
-										<button
+										</Button>
+										<Button
 											onClick={handleClick2}
 											disabled={cancel.isPending}
 											className="flex h-[26px] items-center rounded-base border border-red/25 bg-transparent px-2.5 text-[11.5px] font-medium text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
 										>
 											{t("admin.userDetail.subscription.cancel")}
-										</button>
+										</Button>
 									</div>
 									{showExtend && (
 										<div className="flex items-center gap-1">
@@ -134,21 +138,21 @@ return (
 													<option key={days} value={days}>{label}</option>
 												))}
 											</select>
-											<button
+											<Button
 												onClick={handleClick3}
 												disabled={extend.isPending}
 												className="flex h-[26px] items-center rounded-base bg-acc px-2.5 text-[11.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 											>
 												OK
-											</button>
+											</Button>
 										</div>
 									)}
 								</div>
 							</div>
 						) : (
-							<p className="mb-3 text-[12.5px] text-t-3">
+							<Typography tag="p" className="mb-3 text-[12.5px] text-t-3">
 								{t("admin.userDetail.subscription.noSubscription")}
-							</p>
+							</Typography>
 						)}
 
 						{data?.paymentHistory && data.paymentHistory.length > 0 && (
@@ -162,18 +166,18 @@ return (
 											key={payment.id}
 											className="flex items-center gap-2 border-b border-bd-1 py-1.5 text-[12.5px] last:border-b-0 last:pb-0 first:pt-0"
 										>
-											<span
+											<Typography tag="span"
 												className={cn(
 													"rounded-[5px] px-1.5 py-0.5 text-[10px] font-semibold",
 													paymentStatusStyle[payment.status],
 												)}
 											>
 												{payment.status}
-											</span>
-											<span className="flex-1 font-medium text-t-1">
+											</Typography>
+											<Typography tag="span" className="flex-1 font-medium text-t-1">
 												{payment.planName ?? "—"}
-											</span>
-											<span
+											</Typography>
+											<Typography tag="span"
 												className={cn(
 													"text-[12px] font-medium",
 													payment.status === "REFUNDED"
@@ -182,14 +186,14 @@ return (
 												)}
 											>
 												{formatAmount(payment.amountCents, payment.currency)}
-											</span>
-											<span className="text-[11px] text-t-3">
+											</Typography>
+											<Typography tag="span" className="text-[11px] text-t-3">
 												{new Date(payment.createdAt).toLocaleDateString("ru-RU", {
 													day: "numeric",
 													month: "short",
 													year: "numeric",
 												})}
-											</span>
+											</Typography>
 										</div>
 									))}
 								</div>

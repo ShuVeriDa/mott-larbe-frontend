@@ -2,6 +2,8 @@ import type { FeedbackThread } from "@/entities/feedback";
 import { FeedbackTypeBadge } from "./feedback-type-badge";
 import { FeedbackStatusDot } from "./feedback-status-dot";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string) => string;
 
 interface FeedbackChatHeaderProps {
@@ -26,8 +28,7 @@ export const FeedbackChatHeader = ({
 }: FeedbackChatHeaderProps) => (
 	<div className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-5 py-3 transition-colors max-sm:px-3.5">
 		{/* Back button — mobile only */}
-		<button
-			type="button"
+		<Button
 			onClick={onBack}
 			aria-label={t("feedback.back")}
 			className="hidden size-[30px] shrink-0 items-center justify-center rounded-lg border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 max-sm:flex"
@@ -43,17 +44,17 @@ export const FeedbackChatHeader = ({
 			>
 				<path d="M10 3L5 8l5 5" />
 			</svg>
-		</button>
+		</Button>
 
 		<div className="min-w-0 flex-1">
-			<p className="truncate text-[13px] font-semibold text-t-1">
+			<Typography tag="p" className="truncate text-[13px] font-semibold text-t-1">
 				{thread.title ?? thread.body.slice(0, 60)}
-			</p>
+			</Typography>
 			<div className="mt-0.5 flex items-center gap-1.5">
 				<FeedbackTypeBadge type={thread.type} t={t} />
-				<span className="text-[11px] text-t-3">
+				<Typography tag="span" className="text-[11px] text-t-3">
 					{formatFullDate(thread.createdAt)}
-				</span>
+				</Typography>
 			</div>
 		</div>
 

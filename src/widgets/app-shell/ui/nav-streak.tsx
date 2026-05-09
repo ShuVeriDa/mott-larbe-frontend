@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { DashboardStats } from "@/entities/dashboard";
@@ -14,12 +16,12 @@ export const NavStreak = ({ stats }: NavStreakProps) => {
 	return (
 		<div className="px-3.5 pb-2.5 pt-1.5">
 			<div className="mb-2 flex items-center justify-between">
-				<span className="text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
+				<Typography tag="span" className="text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
 					{t("nav.streak")}
-				</span>
-				<span className="font-display text-[17px] font-normal leading-none text-amb">
+				</Typography>
+				<Typography tag="span" className="font-display text-[17px] font-normal leading-none text-amb">
 					{stats.streak}
-				</span>
+				</Typography>
 			</div>
 
 			<div className="mb-1.5 flex items-end gap-[3px]">
@@ -37,14 +39,14 @@ export const NavStreak = ({ stats }: NavStreakProps) => {
 									: "",
 							)}
 						/>
-						<span
+						<Typography tag="span"
 							className={cn(
 								"text-[8.5px] leading-none",
 								day.isToday ? "text-amb" : "text-t-3",
 							)}
 						>
 							{day.label}
-						</span>
+						</Typography>
 					</div>
 				))}
 			</div>

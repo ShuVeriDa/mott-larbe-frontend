@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -18,8 +20,7 @@ export const PricingToggle = ({ value, onChange }: PricingToggleProps) => {
 	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange("yearly");
 return (
 		<div className="mx-auto mt-[22px] inline-flex items-center gap-1 rounded-full border-hairline border-bd-2 bg-surf p-1">
-			<button
-				type="button"
+			<Button
 				onClick={handleClick}
 				className={cn(
 					"inline-flex h-[30px] items-center gap-1.5 rounded-full border-0 px-4 text-[12.5px] font-semibold transition-all",
@@ -29,9 +30,8 @@ return (
 				)}
 			>
 				{t("landing.pricing.monthly")}
-			</button>
-			<button
-				type="button"
+			</Button>
+			<Button
 				onClick={handleClick2}
 				className={cn(
 					"inline-flex h-[30px] items-center gap-1.5 rounded-full border-0 px-4 text-[12.5px] font-semibold transition-all",
@@ -52,7 +52,7 @@ return (
 				>
 					{t("landing.pricing.save")}
 				</Typography>
-			</button>
+			</Button>
 		</div>
 	);
 };

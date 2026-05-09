@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { BookOpen } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
 
@@ -13,9 +15,9 @@ export const WordPanelEmpty = () => {
 			<div className="text-[13px] font-semibold text-t-2">
 				{t("reader.panel.emptyTitle")}
 			</div>
-			<p className="max-w-[200px] text-[11.5px] leading-[1.5] text-t-3">
+			<Typography tag="p" className="max-w-[200px] text-[11.5px] leading-[1.5] text-t-3">
 				{t("reader.panel.emptyDesc")}
-			</p>
+			</Typography>
 		</div>
 	);
 };

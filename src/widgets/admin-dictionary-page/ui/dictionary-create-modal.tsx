@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type {
 	AdminDictLanguage,
 	CreateAdminEntryDto,
@@ -105,25 +109,24 @@ return (
 			onClick={handleClick}
 		>
 			<div className="w-[500px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-h-[90vh] overflow-y-auto max-sm:w-full max-sm:max-h-[92vh] max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
-				<h2 className="font-display text-[16px] text-t-1 mb-1">
+				<Typography tag="h2" className="font-display text-[16px] text-t-1 mb-1">
 					{t("admin.dictionary.createModal.title")}
-				</h2>
-				<p className="mb-4 text-[12.5px] text-t-3">
+				</Typography>
+				<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
 					{t("admin.dictionary.createModal.subtitle")}
-				</p>
+				</Typography>
 
 				{/* Language */}
 				<div className="mb-3.5">
-					<label className={labelCls}>
+					<Typography tag="label" className={labelCls}>
 						{t("admin.dictionary.createModal.languageLabel")}
-					</label>
+					</Typography>
 					<div className="flex gap-2">
 						{(["CHE", "RU"] as AdminDictLanguage[]).map(l => {
 						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setLanguage(l);
 						  return (
-							<button
+							<Button
 								key={l}
-								type="button"
 								onClick={handleClick}
 								className={cn(
 									"flex h-[34px] cursor-pointer items-center gap-1.5 rounded-[8px] border px-3 text-[12.5px] transition-colors select-none",
@@ -135,7 +138,7 @@ return (
 								{l === "CHE"
 									? t("admin.dictionary.createModal.langChe")
 									: t("admin.dictionary.createModal.langRu")}
-							</button>
+							</Button>
 						);
 						})}
 					</div>
@@ -144,9 +147,9 @@ return (
 				{/* Word + Normalized */}
 				<div className="mb-3.5 grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
 					<div>
-						<label className={labelCls}>
+						<Typography tag="label" className={labelCls}>
 							{t("admin.dictionary.createModal.wordLabel")} *
-						</label>
+						</Typography>
 						<input
 							className={cn(inputCls, errors.word && "border-red-400")}
 							placeholder={t("admin.dictionary.createModal.wordPlaceholder")}
@@ -154,13 +157,13 @@ return (
 							onChange={handleChange}
 						/>
 						{errors.word && (
-							<p className="mt-1 text-[11px] text-red-t">{errors.word}</p>
+							<Typography tag="p" className="mt-1 text-[11px] text-red-t">{errors.word}</Typography>
 						)}
 					</div>
 					<div>
-						<label className={labelCls}>
+						<Typography tag="label" className={labelCls}>
 							{t("admin.dictionary.createModal.normalizedLabel")}
-						</label>
+						</Typography>
 						<input
 							className={inputCls}
 							placeholder={
@@ -175,9 +178,9 @@ return (
 
 				{/* Translation */}
 				<div className="mb-3.5">
-					<label className={labelCls}>
+					<Typography tag="label" className={labelCls}>
 						{t("admin.dictionary.createModal.translationLabel")} *
-					</label>
+					</Typography>
 					<input
 						className={cn(inputCls, errors.translation && "border-red-400")}
 						placeholder={t(
@@ -187,16 +190,16 @@ return (
 						onChange={handleChange3}
 					/>
 					{errors.translation && (
-						<p className="mt-1 text-[11px] text-red-t">{errors.translation}</p>
+						<Typography tag="p" className="mt-1 text-[11px] text-red-t">{errors.translation}</Typography>
 					)}
 				</div>
 
 				{/* POS + Level */}
 				<div className="mb-3.5 grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
 					<div>
-						<label className={labelCls}>
+						<Typography tag="label" className={labelCls}>
 							{t("admin.dictionary.createModal.posLabel")}
-						</label>
+						</Typography>
 						<select
 							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 							value={pos}
@@ -213,9 +216,9 @@ return (
 						</select>
 					</div>
 					<div>
-						<label className={labelCls}>
+						<Typography tag="label" className={labelCls}>
 							{t("admin.dictionary.createModal.levelLabel")}
-						</label>
+						</Typography>
 						<select
 							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 							value={level}
@@ -235,9 +238,9 @@ return (
 
 				{/* Notes */}
 				<div className="mb-4">
-					<label className={labelCls}>
+					<Typography tag="label" className={labelCls}>
 						{t("admin.dictionary.createModal.notesLabel")}
-					</label>
+					</Typography>
 					<textarea
 						className="w-full min-h-[56px] resize-y rounded-[8px] border border-bd-2 bg-bg px-2.5 py-2 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 						placeholder={t("admin.dictionary.createModal.notesPlaceholder")}
@@ -247,16 +250,14 @@ return (
 				</div>
 
 				<div className="flex justify-end gap-2 max-sm:flex-col-reverse">
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						disabled={isSubmitting}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
 					>
 						{t("admin.dictionary.createModal.cancel")}
-					</button>
-					<button
-						type="button"
+					</Button>
+					<Button
 						onClick={handleSubmit}
 						disabled={isSubmitting}
 						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
@@ -264,7 +265,7 @@ return (
 						{isSubmitting
 							? t("admin.dictionary.createModal.creating")
 							: t("admin.dictionary.createModal.create")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

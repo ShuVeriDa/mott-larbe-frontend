@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { LOCALES, type Locale } from "@/i18n/locale-list";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -45,9 +47,8 @@ export const AuthLanguageSwitcher = () => {
 				const isActive = locale === lang;
 								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleSelect(locale);
 return (
-					<button
+					<Button
 						key={locale}
-						type="button"
 						role="tab"
 						aria-selected={isActive}
 						onClick={handleClick}
@@ -57,7 +58,7 @@ return (
 						)}
 					>
 						{LABELS[locale]}
-					</button>
+					</Button>
 				);
 			})}
 		</div>

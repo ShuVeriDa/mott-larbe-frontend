@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { UnknownWordItem } from "@/entities/admin-unknown-word";
@@ -141,11 +143,11 @@ export const UnknownWordsTable = ({
 							{/* Word */}
 							<td className="px-2.5 py-[10px]">
 								<div className="flex flex-col gap-0.5">
-									<span className="font-display text-[13.5px] font-semibold text-t-1">
+									<Typography tag="span" className="font-display text-[13.5px] font-semibold text-t-1">
 										{word.word}
-									</span>
+									</Typography>
 									{word.normalized !== word.word && (
-										<span className="text-[11px] text-t-3">{word.normalized}</span>
+										<Typography tag="span" className="text-[11px] text-t-3">{word.normalized}</Typography>
 									)}
 								</div>
 							</td>
@@ -157,7 +159,7 @@ export const UnknownWordsTable = ({
 										{word.firstContext.snippet}
 									</div>
 								) : (
-									<span className="text-[11px] text-t-4">—</span>
+									<Typography tag="span" className="text-[11px] text-t-4">—</Typography>
 								)}
 								{word.firstContext?.textTitle && (
 									<div className="mt-0.5 text-[11px] text-t-3">

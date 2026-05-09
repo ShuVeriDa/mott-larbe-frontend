@@ -1,4 +1,7 @@
-"use client"
+"use client";
+
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import { RadioGroup as RadioGroupPrimitive } from "radix-ui"
 
@@ -34,7 +37,7 @@ function RadioGroupItem({
         data-slot="radio-group-indicator"
         className="flex size-4 items-center justify-center"
       >
-        <span className="absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-foreground" />
+        <Typography tag="span" className="absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-foreground" />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   )

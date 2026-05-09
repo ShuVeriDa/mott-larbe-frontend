@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useWordExamples, type WordLookupExample } from "@/entities/word";
 import { useI18n } from "@/shared/lib/i18n";
 
@@ -26,7 +28,7 @@ export const WordExamplesList = ({
 	return (
 		<div className="space-y-2.5">
 			{isLoading && examples.length === 0 ? (
-				<p className="text-[12px] text-t-3">{t("reader.panel.examplesLoading")}</p>
+				<Typography tag="p" className="text-[12px] text-t-3">{t("reader.panel.examplesLoading")}</Typography>
 			) : null}
 			{examples.map((example, idx) => (
 				<div key={idx}>
@@ -36,7 +38,7 @@ export const WordExamplesList = ({
 							__html: example.text.replace(
 								new RegExp(escapeRegExp(highlight), "gi"),
 								(match) =>
-									`<span class="text-acc font-medium">${match}</span>`,
+									`<Typography tag="span" class="text-acc font-medium">${match}</Typography>`,
 							),
 						}}
 					/>

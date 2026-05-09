@@ -1,3 +1,4 @@
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string) => string;
 
 export const FeedbackEmptyState = ({ t }: { t: Translator }) => (
@@ -16,6 +17,6 @@ export const FeedbackEmptyState = ({ t }: { t: Translator }) => (
 				/>
 			</svg>
 		</div>
-		<p className="text-[13px] text-t-3">{t("admin.feedback.selectTicket")}</p>
+		<Typography tag="p" className="text-[13px] text-t-3">{t("admin.feedback.selectTicket")}</Typography>
 	</div>
 );

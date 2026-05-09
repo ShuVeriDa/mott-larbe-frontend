@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { HeatmapHour } from "@/entities/admin-analytics";
@@ -29,12 +31,12 @@ export const AnalyticsHeatmap = ({
 	return (
 		<div className="rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between px-4 py-3.5 pb-2.5">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.analytics.heatmap.title")}
-				</span>
-				<span className="text-[11px] text-t-3">
+				</Typography>
+				<Typography tag="span" className="text-[11px] text-t-3">
 					{t("admin.analytics.heatmap.subtitle")}
-				</span>
+				</Typography>
 			</div>
 
 			<div className="overflow-x-auto px-4 pb-4">
@@ -83,18 +85,18 @@ export const AnalyticsHeatmap = ({
 
 						{/* Legend */}
 						<div className="mt-2 flex items-center gap-1" style={{ marginLeft: 32 }}>
-							<span className="mr-0.5 text-[9.5px] text-t-3">
+							<Typography tag="span" className="mr-0.5 text-[9.5px] text-t-3">
 								{t("admin.analytics.heatmap.less")}
-							</span>
+							</Typography>
 							{CELL_COLORS.map((cls, i) => (
 								<div
 									key={i}
 									className={cn("size-[11px] shrink-0 rounded-[2px]", cls)}
 								/>
 							))}
-							<span className="ml-0.5 text-[9.5px] text-t-3">
+							<Typography tag="span" className="ml-0.5 text-[9.5px] text-t-3">
 								{t("admin.analytics.heatmap.more")}
-							</span>
+							</Typography>
 						</div>
 					</div>
 				)}

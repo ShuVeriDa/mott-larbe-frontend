@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
@@ -36,9 +38,9 @@ export const DashboardActivityCard = ({ events }: DashboardActivityCardProps) =>
 	return (
 		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.activity.title")}
-				</span>
+				</Typography>
 				<Link
 					href={`/${params.lang}/admin/logs`}
 					className="shrink-0 text-[11.5px] text-acc hover:underline"

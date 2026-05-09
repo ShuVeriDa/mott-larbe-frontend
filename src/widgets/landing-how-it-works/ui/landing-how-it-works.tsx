@@ -35,7 +35,7 @@ export const LandingHowItWorks = () => {
 				</header>
 
 				<ol className="relative grid grid-cols-3 gap-6 max-[900px]:grid-cols-1 max-[900px]:gap-8">
-					<span
+					<Typography tag="span"
 						aria-hidden="true"
 						className="pointer-events-none absolute left-[12%] right-[12%] top-7 h-px max-[900px]:hidden"
 						style={{

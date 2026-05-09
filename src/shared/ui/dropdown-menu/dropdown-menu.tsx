@@ -1,4 +1,7 @@
-"use client"
+"use client";
+
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui"
 
@@ -100,7 +103,7 @@ function DropdownMenuCheckboxItem({
       checked={checked}
       {...props}
     >
-      <span
+      <Typography tag="span"
         className="pointer-events-none absolute right-2 flex items-center justify-center"
         data-slot="dropdown-menu-checkbox-item-indicator"
       >
@@ -108,7 +111,7 @@ function DropdownMenuCheckboxItem({
           <CheckIcon
           />
         </DropdownMenuPrimitive.ItemIndicator>
-      </span>
+      </Typography>
       {children}
     </DropdownMenuPrimitive.CheckboxItem>
   )
@@ -143,7 +146,7 @@ function DropdownMenuRadioItem({
       )}
       {...props}
     >
-      <span
+      <Typography tag="span"
         className="pointer-events-none absolute right-2 flex items-center justify-center"
         data-slot="dropdown-menu-radio-item-indicator"
       >
@@ -151,7 +154,7 @@ function DropdownMenuRadioItem({
           <CheckIcon
           />
         </DropdownMenuPrimitive.ItemIndicator>
-      </span>
+      </Typography>
       {children}
     </DropdownMenuPrimitive.RadioItem>
   )
@@ -195,7 +198,7 @@ function DropdownMenuShortcut({
   ...props
 }: ComponentProps<"span">) {
   return (
-    <span
+    <Typography tag="span"
       data-slot="dropdown-menu-shortcut"
       className={cn(
         "ml-auto text-xs tracking-widest text-muted-foreground group-focus/dropdown-menu-item:text-accent-foreground",

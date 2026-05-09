@@ -4,6 +4,8 @@ import { cn } from "@/shared/lib/cn";
 import { FeedbackStatusBadge } from "./feedback-status-badge";
 import { FeedbackTypeBadge } from "./feedback-type-badge";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string) => string;
 
 const formatDate = (iso: string) =>
@@ -32,8 +34,7 @@ export const FeedbackChatHeader = ({
 }: FeedbackChatHeaderProps) => (
 	<div className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-5 py-3">
 		{/* Mobile back button */}
-		<button
-			type="button"
+		<Button
 			onClick={onBack}
 			className="hidden h-[30px] items-center gap-1.5 rounded-base border border-acc bg-acc-bg px-2.5 text-[12px] font-semibold text-acc-t max-sm:flex"
 		>
@@ -47,36 +48,35 @@ export const FeedbackChatHeader = ({
 				/>
 			</svg>
 			{t("admin.feedback.back")}
-		</button>
+		</Button>
 
 		{/* Info */}
 		<div className="min-w-0 flex-1">
 			<div className="mb-[3px] flex flex-wrap items-center gap-1.5">
-				<span className="text-[10px] font-semibold tracking-[0.4px] text-t-3">
+				<Typography tag="span" className="text-[10px] font-semibold tracking-[0.4px] text-t-3">
 					#{thread.ticketNumber}
-				</span>
+				</Typography>
 				<FeedbackTypeBadge type={thread.type} t={t} />
 				<FeedbackStatusBadge status={thread.status} t={t} />
 			</div>
-			<p className="truncate text-[13px] font-semibold text-t-1">
+			<Typography tag="p" className="truncate text-[13px] font-semibold text-t-1">
 				{thread.title ?? `#${thread.ticketNumber}`}
-			</p>
+			</Typography>
 			<div className={cn("mt-[3px] flex items-center gap-1.5 max-sm:hidden")}>
-				<span className="text-[11px] text-t-2">
+				<Typography tag="span" className="text-[11px] text-t-2">
 					{thread.user.name} {thread.user.surname}
-				</span>
-				<span className="text-[10px] text-t-4">·</span>
-				<span className="text-[11px] text-t-3">
+				</Typography>
+				<Typography tag="span" className="text-[10px] text-t-4">·</Typography>
+				<Typography tag="span" className="text-[11px] text-t-3">
 					{formatDate(thread.createdAt)}
-				</span>
+				</Typography>
 			</div>
 		</div>
 
 		{/* Actions */}
 		<div className="flex shrink-0 items-center gap-1.5">
 			{/* Info toggle — shown on tablet/mobile */}
-			<button
-				type="button"
+			<Button
 				onClick={onInfoOpen}
 				className="hidden h-[30px] items-center gap-1.5 rounded-base border border-acc bg-acc-bg px-2.5 text-[11.5px] font-semibold text-acc-t max-[960px]:flex"
 			>
@@ -96,11 +96,10 @@ export const FeedbackChatHeader = ({
 					/>
 				</svg>
 				Info
-			</button>
+			</Button>
 
 			{/* Copy link */}
-			<button
-				type="button"
+			<Button
 				onClick={onCopyLink}
 				title={t("admin.feedback.actions.copyLink")}
 				className="flex size-[30px] items-center justify-center rounded-base border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
@@ -113,11 +112,10 @@ export const FeedbackChatHeader = ({
 						strokeLinecap="round"
 					/>
 				</svg>
-			</button>
+			</Button>
 
 			{/* More */}
-			<button
-				type="button"
+			<Button
 				onClick={onMoreMenu}
 				className="flex size-[30px] items-center justify-center rounded-base border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 			>
@@ -126,7 +124,7 @@ export const FeedbackChatHeader = ({
 					<circle cx="8" cy="8" r="1" fill="currentColor" />
 					<circle cx="8" cy="12" r="1" fill="currentColor" />
 				</svg>
-			</button>
+			</Button>
 		</div>
 	</div>
 );

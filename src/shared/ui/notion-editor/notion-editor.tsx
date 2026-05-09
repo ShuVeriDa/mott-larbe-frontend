@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import Color from "@tiptap/extension-color";
 import { DragHandle } from "@tiptap/extension-drag-handle-react";
 import Highlight from "@tiptap/extension-highlight";
@@ -126,8 +130,7 @@ const Btn = ({
 }) => {
   const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); onExec(); };
   return (
-	<button
-		type="button"
+	<Button
 		title={title}
 		onMouseDown={handleMouseDown}
 		className={`flex shrink-0 items-center justify-center gap-1 rounded-[6px] text-[12px] font-medium transition-all duration-100 select-none
@@ -138,7 +141,7 @@ const Btn = ({
 			}`}
 	>
 		{children}
-	</button>
+	</Button>
 );
 };
 
@@ -184,8 +187,7 @@ const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 	const handleMouseDown2: NonNullable<ComponentProps<"div">["onMouseDown"]> = () => setAnchor(null);
 return (
 		<div className="relative">
-			<button
-				type="button"
+			<Button
 				onMouseDown={handleMouseDown}
 				className="flex h-7 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 select-none"
 			>
@@ -193,7 +195,7 @@ return (
 				<svg width="10" height="6" viewBox="0 0 10 6" fill="none" className="opacity-50">
 					<path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
 				</svg>
-			</button>
+			</Button>
 			{open && anchor && createPortal(
 				<>
 					<div className="fixed inset-0 z-[9998]" onMouseDown={handleMouseDown2} />
@@ -207,23 +209,22 @@ return (
 						{BLOCK_TYPES.map(b => {
 						  const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); apply(b.value); };
 						  return (
-							<button
+							<Button
 								key={b.value}
-								type="button"
 								onMouseDown={handleMouseDown}
 								className={`flex w-full items-center gap-2.5 rounded-[6px] px-2.5 py-1.5 text-left text-[12.5px] transition-colors
 									${current === b.value ? "bg-acc-muted text-acc-strong font-medium" : "text-t-1 hover:bg-surf-2"}`}
 							>
-								<span className="w-6 text-center text-[11px] font-semibold text-t-3">
+								<Typography tag="span" className="w-6 text-center text-[11px] font-semibold text-t-3">
 									{b.shortLabel}
-								</span>
+								</Typography>
 								{b.label}
 								{current === b.value && (
 									<svg className="ml-auto" width="12" height="12" viewBox="0 0 12 12" fill="none">
 										<path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 									</svg>
 								)}
-							</button>
+							</Button>
 						);
 						})}
 					</div>
@@ -261,15 +262,14 @@ return (
 				{(["text", "bg"] as const).map(t => {
 				  const handleMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = (e) => { e.preventDefault(); setTab(t); };
 				  return (
-					<button
+					<Button
 						key={t}
-						type="button"
 						onMouseDown={handleMouseDown}
 						className={`flex-1 py-2 text-[11.5px] font-medium transition-colors
 							${tab === t ? "text-t-1 border-b-2 border-acc -mb-px" : "text-t-3 hover:text-t-2"}`}
 					>
 						{t === "text" ? "Text color" : "Background"}
-					</button>
+					</Button>
 				);
 				})}
 			</div>
@@ -289,32 +289,31 @@ return (
 								onClose();
 							};
 return (
-								<button
+								<Button
 									key={c.label}
-									type="button"
 									title={c.label}
 									onMouseDown={handleMouseDown}
 									className={`relative flex h-[34px] w-full flex-col items-center justify-center gap-0.5 rounded-[7px] transition-all
 										${isActive ? "bg-surf-3 ring-1.5 ring-acc" : "hover:bg-surf-2"}`}
 								>
-									<span
+									<Typography tag="span"
 										className="text-[13px] font-bold leading-none"
 										style={{ color: c.value ?? "var(--t-1)" }}
 									>
 										A
-									</span>
-									<span
+									</Typography>
+									<Typography tag="span"
 										className="h-[3px] w-[14px] rounded-full"
 										style={{ background: c.value ?? "var(--t-1)" }}
 									/>
 									{isActive && (
-										<span className="absolute right-0.5 top-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-acc">
+										<Typography tag="span" className="absolute right-0.5 top-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-acc">
 											<svg width="6" height="5" viewBox="0 0 6 5" fill="none">
 												<path d="M1 2.5l1.5 1.5 2.5-3" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
 											</svg>
-										</span>
+										</Typography>
 									)}
-								</button>
+								</Button>
 							);
 						})}
 					</div>
@@ -332,9 +331,8 @@ return (
 								onClose();
 							};
 return (
-								<button
+								<Button
 									key={c.label}
-									type="button"
 									title={c.label}
 									onMouseDown={handleMouseDown}
 									className={`relative flex h-[34px] w-full items-center justify-center rounded-[7px] border transition-all
@@ -347,13 +345,13 @@ return (
 										</svg>
 									)}
 									{isActive && (
-										<span className="absolute right-0.5 top-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-acc">
+										<Typography tag="span" className="absolute right-0.5 top-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-acc">
 											<svg width="6" height="5" viewBox="0 0 6 5" fill="none">
 												<path d="M1 2.5l1.5 1.5 2.5-3" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
 											</svg>
-										</span>
+										</Typography>
 									)}
-								</button>
+								</Button>
 							);
 						})}
 					</div>
@@ -439,16 +437,15 @@ return (
 				</Btn>
 				<Sep />
 				{/* Color button — shows colored underbar like Notion */}
-				<button
+				<Button
 					ref={colorBtnRef}
-					type="button"
 					title="Color"
 					onMouseDown={handleMouseDown}
 					className={`flex h-7 w-8 shrink-0 flex-col items-center justify-center gap-px rounded-[6px] transition-all select-none
 						${colorOpen ? "bg-acc text-white" : "text-t-2 hover:bg-surf-3 hover:text-t-1 active:scale-95"}`}
 				>
-					<span className="text-[13px] font-bold leading-none">A</span>
-					<span
+					<Typography tag="span" className="text-[13px] font-bold leading-none">A</Typography>
+					<Typography tag="span"
 						className="h-[3px] w-[14px] rounded-full transition-colors"
 						style={{
 							background: colorOpen
@@ -456,7 +453,7 @@ return (
 								: activeTextColor?.value ?? activeHighlight?.value ?? "var(--t-3)",
 						}}
 					/>
-				</button>
+				</Button>
 				{extraToolbarItems && (
 					<>
 						<Sep />
@@ -640,8 +637,7 @@ export const NotionEditor = ({
 					options={{ placement: "left" }}
 					className="flex items-center"
 				>
-					<button
-						type="button"
+					<Button
 						title="Insert block (/)"
 						onMouseDown={handleMouseDown}
 						className="flex h-6 w-6 items-center justify-center rounded-[5px] text-t-4 transition-colors hover:bg-surf-2 hover:text-t-2"
@@ -654,7 +650,7 @@ export const NotionEditor = ({
 								strokeLinecap="round"
 							/>
 						</svg>
-					</button>
+					</Button>
 				</FloatingMenu>
 			)}
 

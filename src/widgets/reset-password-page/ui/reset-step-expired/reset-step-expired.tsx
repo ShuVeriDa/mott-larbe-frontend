@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { AlertCircle, ArrowLeft, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
@@ -35,8 +37,7 @@ export const ResetStepExpired = ({
 				{t("auth.resetPassword.expired.sub")}
 			</Typography>
 
-			<button
-				type="button"
+			<Button
 				onClick={onRequestReset}
 				className="inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-[9px] bg-acc text-[13.5px] font-semibold text-white transition-opacity hover:opacity-[0.92] active:translate-y-px"
 			>
@@ -44,7 +45,7 @@ export const ResetStepExpired = ({
 				<Typography tag="span">
 					{t("auth.resetPassword.expired.request")}
 				</Typography>
-			</button>
+			</Button>
 
 			<Link
 				href={loginHref}

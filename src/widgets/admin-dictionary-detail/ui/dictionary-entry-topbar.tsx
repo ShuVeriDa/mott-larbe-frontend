@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import type { AdminDictNavEntry } from "@/entities/dictionary";
 import { ACCESS_TOKEN_STORAGE_KEY, API_URL } from "@/shared/config";
@@ -164,23 +168,23 @@ return (
 				>
 					Admin
 				</Link>
-				<span className="text-[13px] text-t-4">/</span>
+				<Typography tag="span" className="text-[13px] text-t-4">/</Typography>
 				<Link
 					href={`/${lang}/admin/dictionary`}
 					className="shrink-0 text-[13px] text-t-3 transition-colors hover:text-t-2"
 				>
 					{t("admin.nav.dictionary")}
 				</Link>
-				<span className="text-[13px] text-t-4">/</span>
-				<span className="truncate font-display text-[15px] text-t-1">
+				<Typography tag="span" className="text-[13px] text-t-4">/</Typography>
+				<Typography tag="span" className="truncate font-display text-[15px] text-t-1">
 					{baseForm || "…"}
-				</span>
+				</Typography>
 			</div>
 
 			{/* Actions */}
 			<div className="ml-auto flex shrink-0 items-center gap-2">
 				{/* Prev */}
-				<button
+				<Button
 					className={cn(
 						ghostBtn,
 						"max-sm:[&_.btn-label]:hidden max-sm:min-w-[34px] max-sm:justify-center max-sm:px-2",
@@ -191,11 +195,11 @@ return (
 					title={prev.data?.baseForm}
 				>
 					<IconPrev />
-					<span className="btn-label">{t("admin.dictionaryDetail.prev")}</span>
-				</button>
+					<Typography tag="span" className="btn-label">{t("admin.dictionaryDetail.prev")}</Typography>
+				</Button>
 
 				{/* Next */}
-				<button
+				<Button
 					className={cn(
 						ghostBtn,
 						"max-sm:[&_.btn-label]:hidden max-sm:min-w-[34px] max-sm:justify-center max-sm:px-2",
@@ -205,9 +209,9 @@ return (
 					}
 					title={next.data?.baseForm}
 				>
-					<span className="btn-label">{t("admin.dictionaryDetail.next")}</span>
+					<Typography tag="span" className="btn-label">{t("admin.dictionaryDetail.next")}</Typography>
 					<IconNext />
-				</button>
+				</Button>
 
 				<div className="h-[18px] w-px bg-bd-2" />
 
@@ -216,32 +220,32 @@ return (
 					<details className="group">
 						<summary className={cn(ghostBtn, "cursor-pointer list-none")}>
 							<IconDots />
-							<span>{t("admin.dictionaryDetail.actions")}</span>
+							<Typography tag="span">{t("admin.dictionaryDetail.actions")}</Typography>
 						</summary>
 						<div className="absolute right-0 top-[calc(100%+4px)] z-50 min-w-[180px] rounded-[10px] border border-bd-2 bg-surf p-1 shadow-md">
-							<button
+							<Button
 								className="flex w-full items-center gap-2 rounded-md px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 								onClick={handleClick3}
 							>
 								<IconPlus />
 								{t("admin.dictionaryDetail.addLemma")}
-							</button>
-							<button
+							</Button>
+							<Button
 								className="flex w-full items-center gap-2 rounded-md px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 								onClick={handleExport}
 							>
 								<IconExport />
 								{t("admin.dictionaryDetail.export")}
-							</button>
+							</Button>
 							<div className="my-0.5 h-px bg-bd-1" />
-							<button
+							<Button
 								className="flex w-full items-center gap-2 rounded-md px-2.5 py-[7px] text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
 								onClick={onDelete}
 								disabled={isDeleting}
 							>
 								<IconTrash />
 								{t("admin.dictionaryDetail.deleteEntry")}
-							</button>
+							</Button>
 						</div>
 					</details>
 				</div>

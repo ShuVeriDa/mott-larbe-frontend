@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import { ComponentProps, type MouseEvent, type Ref } from "react";
 import { cn } from "@/shared/lib/cn";
 import { tokenStatusClass } from "../../lib/status-class";
@@ -25,7 +27,7 @@ export const ArticleToken = ({ token, active, onSelect, ref }: ArticleTokenProps
 	};
 
 	return (
-		<span
+		<Typography tag="span"
 			ref={ref}
 			role="button"
 			tabIndex={0}
@@ -41,7 +43,7 @@ export const ArticleToken = ({ token, active, onSelect, ref }: ArticleTokenProps
 			)}
 		>
 			{token.text}
-		</span>
+		</Typography>
 	);
 };
 

@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect, useRef, useState } from 'react';
 import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
@@ -68,14 +72,13 @@ const RowDropdown = ({ item, lang, onDelete, onAddSense, onAddExample, t }: RowD
 	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => { setOpen(false); onDelete(item); };
 return (
 		<div ref={ref} className="relative">
-			<button
-				type="button"
+			<Button
 				onClick={handleClick}
 				className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 				title={t("admin.dictionary.row.more")}
 			>
 				<IconChevronDown />
-			</button>
+			</Button>
 			{open && (
 				<div className="absolute right-0 top-full z-50 mt-1 w-[160px] rounded-[9px] border border-bd-2 bg-surf py-1 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
 					<Link
@@ -85,28 +88,25 @@ return (
 					>
 						{t("admin.dictionary.row.openEntry")}
 					</Link>
-					<button
-						type="button"
+					<Button
 						onClick={handleClick3}
 						className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						{t("admin.dictionary.row.addSense")}
-					</button>
-					<button
-						type="button"
+					</Button>
+					<Button
 						onClick={handleClick4}
 						className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						{t("admin.dictionary.row.addExample")}
-					</button>
+					</Button>
 					<div className="my-1 h-px bg-bd-1" />
-					<button
-						type="button"
+					<Button
 						onClick={handleClick5}
 						className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg"
 					>
 						{t("admin.dictionary.row.delete")}
-					</button>
+					</Button>
 				</div>
 			)}
 		</div>
@@ -151,10 +151,10 @@ const SortableHeaderCell = ({
 		)}
 		onClick={onClick}
 	>
-		<span className="inline-flex items-center">
+		<Typography tag="span" className="inline-flex items-center">
 			{label}
 			<IconSortable active={isActive} dir={dir} />
-		</span>
+		</Typography>
 	</th>
 );
 
@@ -261,9 +261,9 @@ export const DictionaryTable = ({
 										{item.baseForm}
 									</Link>
 									{item.translation && (
-										<p className="mt-0.5 text-[11.5px] text-t-3 line-clamp-1">
+										<Typography tag="p" className="mt-0.5 text-[11.5px] text-t-3 line-clamp-1">
 											{item.translation}
-										</p>
+										</Typography>
 									)}
 								</td>
 								<td className="py-3 pl-3.5">
@@ -276,22 +276,22 @@ export const DictionaryTable = ({
 								</td>
 								<td className="py-3 pl-3.5">
 									{item.sensesCount > 0 ? (
-										<span className="text-t-1">{item.sensesCount}</span>
+										<Typography tag="span" className="text-t-1">{item.sensesCount}</Typography>
 									) : (
-										<span className="text-red-t text-[11.5px]">0</span>
+										<Typography tag="span" className="text-red-t text-[11.5px]">0</Typography>
 									)}
 								</td>
 								<td className="py-3 pl-3.5">
 									{item.level ? (
 										<CefrBadge level={item.level as import("@/shared/types").CefrLevel} />
 									) : (
-										<span className="text-[11px] text-t-4">—</span>
+										<Typography tag="span" className="text-[11px] text-t-4">—</Typography>
 									)}
 								</td>
 								<td className="py-3 pl-3.5">
 									{item.frequency != null ? (
 										<div className="flex flex-col gap-0.5">
-											<span className="text-[12px] text-t-2">{item.frequency.toLocaleString()}</span>
+											<Typography tag="span" className="text-[12px] text-t-2">{item.frequency.toLocaleString()}</Typography>
 											<div className="h-[3px] w-full rounded-full bg-surf-3">
 												<div
 													className="h-full rounded-full bg-acc/60"
@@ -300,7 +300,7 @@ export const DictionaryTable = ({
 											</div>
 										</div>
 									) : (
-										<span className="text-t-4">—</span>
+										<Typography tag="span" className="text-t-4">—</Typography>
 									)}
 								</td>
 								<td className="py-3 pl-3.5 text-[12px] text-t-2">{item.formsCount}</td>

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { useAdminUserSessions } from "@/entities/admin-user/model/use-admin-user-sessions";
@@ -84,14 +88,14 @@ return (
 											<td className="px-2.5 py-2 text-[11px] text-t-3">{lastActive}</td>
 											<td className="px-3.5 py-2 text-right">
 												{session.isActive ? (
-													<span className="inline-flex items-center gap-1 rounded-[5px] bg-grn-bg px-1.5 py-0.5 text-[10px] font-semibold text-grn-t">
-														<span className="size-[5px] shrink-0 rounded-full bg-grn" />
+													<Typography tag="span" className="inline-flex items-center gap-1 rounded-[5px] bg-grn-bg px-1.5 py-0.5 text-[10px] font-semibold text-grn-t">
+														<Typography tag="span" className="size-[5px] shrink-0 rounded-full bg-grn" />
 														{t("admin.userDetail.events.sessionActive")}
-													</span>
+													</Typography>
 												) : (
-													<span className="inline-flex items-center rounded-[5px] bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
+													<Typography tag="span" className="inline-flex items-center rounded-[5px] bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
 														{t("admin.userDetail.events.sessionExpired")}
-													</span>
+													</Typography>
 												)}
 											</td>
 										</tr>
@@ -102,7 +106,7 @@ return (
 			</div>
 
 			<div className="flex justify-end border-t border-bd-1 px-3.5 py-2.5">
-				<button
+				<Button
 					onClick={handleClick}
 					disabled={sessions.logoutAll.isPending}
 					className={cn(
@@ -125,7 +129,7 @@ return (
 						/>
 					</svg>
 					{t("admin.userDetail.actions.resetSessions")}
-				</button>
+				</Button>
 			</div>
 		</>
 	);

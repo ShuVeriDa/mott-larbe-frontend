@@ -24,13 +24,13 @@ export const FlashcardFront = ({
 		<>
 			{badge ? <div className="absolute left-3.5 top-3">{badge}</div> : null}
 			{modeLabel ? (
-				<span className="absolute left-3.5 top-3 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+				<Typography tag="span" className="absolute left-3.5 top-3 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
 					{modeLabel}
-				</span>
+				</Typography>
 			) : null}
-			<span className="absolute right-3.5 top-3 text-[10.5px] text-t-3">
+			<Typography tag="span" className="absolute right-3.5 top-3 text-[10.5px] text-t-3">
 				#{cardNumber}
-			</span>
+			</Typography>
 
 			<Typography
 				tag="h2"

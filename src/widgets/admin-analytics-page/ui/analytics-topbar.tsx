@@ -1,8 +1,13 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type { AnalyticsRange } from "@/entities/admin-analytics";
 import { cn } from "@/shared/lib/cn";
-import { useI18n } from "@/shared/lib/i18n";import { ComponentProps, useRef, useState } from 'react';
+import { useI18n } from "@/shared/lib/i18n";
+import { ComponentProps, useRef, useState } from 'react';
 const RANGES: AnalyticsRange[] = ["7d", "30d", "90d", "all"];
 
 interface AnalyticsTopbarProps {
@@ -58,12 +63,12 @@ export const AnalyticsTopbar = ({
 return (
 		<header className=" flex items-center gap-3 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors max-md:hidden">
 			<div>
-				<h1 className="font-display text-base font-medium text-t-1">
+				<Typography tag="h1" className="font-display text-base font-medium text-t-1">
 					{t("admin.analytics.title")}
-				</h1>
-				<p className="mt-0.5 text-[12px] text-t-3">
+				</Typography>
+				<Typography tag="p" className="mt-0.5 text-[12px] text-t-3">
 					{t("admin.analytics.subtitle")}
-				</p>
+				</Typography>
 			</div>
 
 			<div className="ml-auto flex items-center gap-2">
@@ -72,9 +77,8 @@ return (
 					{RANGES.map(r => {
 					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRangeChange(r);
 					  return (
-						<button
+						<Button
 							key={r}
-							type="button"
 							onClick={handleClick}
 							className={cn(
 								"h-[26px] rounded-md px-2.5 text-[11.5px] font-medium transition-all",
@@ -84,15 +88,14 @@ return (
 							)}
 						>
 							{t(`admin.analytics.range.${r}`)}
-						</button>
+						</Button>
 					);
 					})}
 				</div>
 
 				{/* Date-range chip */}
 				<div className="relative">
-					<button
-						type="button"
+					<Button
 						onClick={handleClick}
 						className={cn(
 							"flex h-[30px] items-center gap-1.5 rounded-base border px-2.5 text-[12px] font-medium transition-colors",
@@ -127,15 +130,15 @@ return (
 						{isCustomRange && dateFrom && dateTo
 							? `${dateFrom.slice(0, 10)} — ${dateTo.slice(0, 10)}`
 							: t("admin.analytics.dateRange")}
-					</button>
+					</Button>
 
 					{showDatePicker && (
 						<div className="absolute top-full right-0 z-20 mt-1.5 flex flex-col gap-2 rounded-xl border border-bd-2 bg-surf p-3 shadow-lg">
 							<div className="flex gap-2">
 								<div className="flex flex-col gap-1">
-									<label className="text-[10px] text-t-3">
+									<Typography tag="label" className="text-[10px] text-t-3">
 										{t("admin.analytics.dateFrom")}
-									</label>
+									</Typography>
 									<input
 										type="date"
 										value={localFrom}
@@ -145,9 +148,9 @@ return (
 									/>
 								</div>
 								<div className="flex flex-col gap-1">
-									<label className="text-[10px] text-t-3">
+									<Typography tag="label" className="text-[10px] text-t-3">
 										{t("admin.analytics.dateTo")}
-									</label>
+									</Typography>
 									<input
 										type="date"
 										value={localTo}
@@ -158,21 +161,19 @@ return (
 								</div>
 							</div>
 							<div className="flex justify-end gap-1.5">
-								<button
-									type="button"
+								<Button
 									onClick={handleDateClear}
 									className="h-[26px] rounded-md px-2.5 text-[11.5px] text-t-2 hover:text-t-1"
 								>
 									{t("admin.analytics.clear")}
-								</button>
-								<button
-									type="button"
+								</Button>
+								<Button
 									onClick={handleDateApply}
 									disabled={!localFrom || !localTo}
 									className="h-[26px] rounded-md bg-acc px-2.5 text-[11.5px] font-medium text-white disabled:opacity-40"
 								>
 									{t("admin.analytics.apply")}
-								</button>
+								</Button>
 							</div>
 						</div>
 					)}
@@ -180,8 +181,7 @@ return (
 
 				{/* Export with format dropdown */}
 				<div className="relative" ref={exportRef}>
-					<button
-						type="button"
+					<Button
 						onClick={handleClick2}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 					>
@@ -201,7 +201,7 @@ return (
 							/>
 						</svg>
 						{t("admin.analytics.export")}
-					</button>
+					</Button>
 
 					{showExportMenu && (
 						<div className="absolute top-full right-0 z-20 mt-1.5 flex flex-col overflow-hidden rounded-xl border border-bd-2 bg-surf shadow-lg">
@@ -211,14 +211,13 @@ return (
 										setShowExportMenu(false);
 									};
 							  return (
-								<button
+								<Button
 									key={fmt}
-									type="button"
 									onClick={handleClick}
 									className="px-4 py-2 text-left text-[12px] text-t-1 hover:bg-surf-2"
 								>
 									{fmt.toUpperCase()}
-								</button>
+								</Button>
 							);
 							})}
 						</div>

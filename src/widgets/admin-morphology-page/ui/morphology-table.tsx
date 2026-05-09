@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -15,22 +19,22 @@ const PatternCell = ({ rule }: { rule: MorphRule }) => {
     <div className="flex flex-col gap-[3px]">
       <div className="font-mono text-[13.5px] font-semibold text-t-1">
         {isRegex ? (
-          <span>{suffix}</span>
+          <Typography tag="span">{suffix}</Typography>
         ) : (
           <>
-            <span className="text-t-3">.*</span>
-            <span className="rounded bg-acc-bg px-[3px] font-bold text-acc-t">
+            <Typography tag="span" className="text-t-3">.*</Typography>
+            <Typography tag="span" className="rounded bg-acc-bg px-[3px] font-bold text-acc-t">
               {suffix}
-            </span>
+            </Typography>
           </>
         )}
       </div>
       <div className="flex items-center gap-1 text-[11px] text-t-3">
         {rule.description}
         {isRegex && (
-          <span className="rounded bg-pur-bg px-1 py-px text-[9.5px] font-bold uppercase tracking-[0.3px] text-pur-t">
+          <Typography tag="span" className="rounded bg-pur-bg px-1 py-px text-[9.5px] font-bold uppercase tracking-[0.3px] text-pur-t">
             Regex
-          </span>
+          </Typography>
         )}
       </div>
     </div>
@@ -39,9 +43,9 @@ const PatternCell = ({ rule }: { rule: MorphRule }) => {
 
 const ReplaceCell = ({ rule }: { rule: MorphRule }) => (
   <div className="flex items-center gap-1.5">
-    <span className="rounded bg-red-bg px-1.5 py-px font-mono text-[12px] font-semibold text-red-t">
+    <Typography tag="span" className="rounded bg-red-bg px-1.5 py-px font-mono text-[12px] font-semibold text-red-t">
       {rule.suffix}
-    </span>
+    </Typography>
     <svg
       className="shrink-0 text-t-3"
       width="12"
@@ -57,14 +61,14 @@ const ReplaceCell = ({ rule }: { rule: MorphRule }) => (
         strokeLinejoin="round"
       />
     </svg>
-    <span className="rounded bg-grn-bg px-1.5 py-px font-mono text-[12px] font-semibold text-grn-t">
+    <Typography tag="span" className="rounded bg-grn-bg px-1.5 py-px font-mono text-[12px] font-semibold text-grn-t">
       {rule.add || "∅"}
-    </span>
+    </Typography>
   </div>
 );
 
 const PosCell = ({ pos }: { pos: string | null }) => {
-  if (!pos) return <span className="text-[12px] text-t-3">—</span>;
+  if (!pos) return <Typography tag="span" className="text-[12px] text-t-3">—</Typography>;
   const lower = pos.toLowerCase();
   const cls =
     lower === "noun"
@@ -75,9 +79,9 @@ const PosCell = ({ pos }: { pos: string | null }) => {
           ? "bg-pur-bg text-pur-t"
           : "bg-surf-3 text-t-2";
   return (
-    <span className={cn("inline-flex items-center rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold italic", cls)}>
+    <Typography tag="span" className={cn("inline-flex items-center rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold italic", cls)}>
       {pos.toLowerCase()}
-    </span>
+    </Typography>
   );
 };
 
@@ -89,14 +93,14 @@ const PriorityCell = ({ priority }: { priority: number }) => {
         ? "bg-amb-bg text-amb-t"
         : "bg-grn-bg text-grn-t";
   return (
-    <span
+    <Typography tag="span"
       className={cn(
         "inline-flex size-5 items-center justify-center rounded-[5px] text-[11px] font-bold",
         cls,
       )}
     >
       {priority}
-    </span>
+    </Typography>
   );
 };
 
@@ -116,24 +120,24 @@ const MatchBar = ({
           style={{ width: `${pct}%` }}
         />
       </div>
-      <span className="min-w-[32px] text-right font-[tabular-nums] text-[11px] text-t-3">
+      <Typography tag="span" className="min-w-[32px] text-right font-[tabular-nums] text-[11px] text-t-3">
         {count.toLocaleString()}
-      </span>
+      </Typography>
     </div>
   );
 };
 
 const StatusBadge = ({ isActive }: { isActive: boolean }) =>
   isActive ? (
-    <span className="inline-flex items-center gap-1 rounded-[5px] bg-grn-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-grn-t">
-      <span className="size-1.5 rounded-full bg-current opacity-70" />
+    <Typography tag="span" className="inline-flex items-center gap-1 rounded-[5px] bg-grn-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-grn-t">
+      <Typography tag="span" className="size-1.5 rounded-full bg-current opacity-70" />
       Active
-    </span>
+    </Typography>
   ) : (
-    <span className="inline-flex items-center gap-1 rounded-[5px] bg-surf-3 px-1.5 py-0.5 text-[10.5px] font-semibold text-t-2">
-      <span className="size-1.5 rounded-full bg-current opacity-70" />
+    <Typography tag="span" className="inline-flex items-center gap-1 rounded-[5px] bg-surf-3 px-1.5 py-0.5 text-[10.5px] font-semibold text-t-2">
+      <Typography tag="span" className="size-1.5 rounded-full bg-current opacity-70" />
       Inactive
-    </span>
+    </Typography>
   );
 
 const SkeletonRow = () => (
@@ -272,7 +276,7 @@ export const MorphologyTable = ({
                     <td className="px-3.5 py-2.5">
                       <div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
                         {!rule.isActive && (
-                          <button
+                          <Button
                             onClick={handleClick}
                             title={t("admin.morphology.row.activate")}
                             className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
@@ -291,9 +295,9 @@ export const MorphologyTable = ({
                                 strokeLinejoin="round"
                               />
                             </svg>
-                          </button>
+                          </Button>
                         )}
-                        <button
+                        <Button
                           onClick={handleClick2}
                           title={t("admin.morphology.row.edit")}
                           className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
@@ -307,8 +311,8 @@ export const MorphologyTable = ({
                               strokeLinejoin="round"
                             />
                           </svg>
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                           onClick={handleClick3}
                           title={t("admin.morphology.row.delete")}
                           className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
@@ -327,7 +331,7 @@ export const MorphologyTable = ({
                               strokeLinecap="round"
                             />
                           </svg>
-                        </button>
+                        </Button>
                       </div>
                     </td>
                   </tr>

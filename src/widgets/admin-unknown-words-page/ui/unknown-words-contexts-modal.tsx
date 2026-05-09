@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminUnknownWordContexts } from "@/entities/admin-unknown-word";
@@ -33,21 +37,20 @@ return (
 							{t("admin.unknownWords.contextsModal.title")}
 						</div>
 						<div className="mt-0.5 flex items-center gap-1.5 text-[11.5px] text-t-3">
-							<span className="font-display font-semibold text-t-2">{state.word}</span>
+							<Typography tag="span" className="font-display font-semibold text-t-2">{state.word}</Typography>
 							{data && (
 								<>
-									<span>·</span>
-									<span>
+									<Typography tag="span">·</Typography>
+									<Typography tag="span">
 										{t("admin.unknownWords.contextsModal.occurrences", {
 											count: data.total,
 										})}
-									</span>
+									</Typography>
 								</>
 							)}
 						</div>
 					</div>
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						className="flex size-7 cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 					>
@@ -59,7 +62,7 @@ return (
 								strokeLinecap="round"
 							/>
 						</svg>
-					</button>
+					</Button>
 				</div>
 
 				{/* Body */}
@@ -81,19 +84,19 @@ return (
 								key={`${ctx.tokenId}-${i}`}
 								className="rounded-lg border border-bd-1 bg-surf-2 p-3"
 							>
-								<p className="text-[13px] leading-[1.65] text-t-2">
+								<Typography tag="p" className="text-[13px] leading-[1.65] text-t-2">
 									{ctx.snippet}
-								</p>
+								</Typography>
 								<div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-t-3">
-									<span>«{ctx.textTitle}»</span>
+									<Typography tag="span">«{ctx.textTitle}»</Typography>
 									{ctx.pageNumber != null && (
 										<>
-											<span>·</span>
-											<span>
+											<Typography tag="span">·</Typography>
+											<Typography tag="span">
 												{t("admin.unknownWords.contextsModal.page", {
 													n: ctx.pageNumber,
 												})}
-											</span>
+											</Typography>
 										</>
 									)}
 								</div>

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -37,9 +41,8 @@ export const TextsTabs = ({ active, stats, onChange }: TextsTabsProps) => {
 
 										const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(key);
 return (
-						<button
+						<Button
 							key={key}
-							type="button"
 							onClick={handleClick}
 							className={cn(
 								"flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-[6px] px-3 py-1 text-[12px] font-medium transition-colors",
@@ -50,16 +53,16 @@ return (
 						>
 							{t(labelKey)}
 							{cnt !== undefined && (
-								<span
+								<Typography tag="span"
 									className={cn(
 										"rounded px-1.5 py-px text-[10px] font-semibold",
 										isActive ? "bg-surf-3 text-t-2" : "bg-surf-3 text-t-3",
 									)}
 								>
 									{cnt}
-								</span>
+								</Typography>
 							)}
-						</button>
+						</Button>
 					);
 				})}
 			</div>

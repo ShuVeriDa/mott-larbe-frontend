@@ -33,7 +33,7 @@ export const LandingHero = ({ startHref }: LandingHeroProps) => {
 						tag="span"
 						className="mb-[22px] inline-flex items-center gap-1.5 rounded-full border-hairline border-acc/25 bg-acc-bg px-[11px] py-[5px] text-[11.5px] font-semibold text-acc-t"
 					>
-						<span className="h-1.5 w-1.5 rounded-full bg-acc" />
+						<Typography tag="span" className="h-1.5 w-1.5 rounded-full bg-acc" />
 						{t("landing.hero.eyebrow")}
 					</Typography>
 

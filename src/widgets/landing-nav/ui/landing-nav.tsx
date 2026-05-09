@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import {
 	MobileMenu,
 	useMobileMenu,
@@ -80,14 +82,13 @@ export const LandingNav = ({ loginHref, startHref }: LandingNavProps) => {
 						>
 							{t("landing.nav.start")}
 						</Link>
-						<button
-							type="button"
+						<Button
 							onClick={openMenu}
 							aria-label={t("landing.nav.menu")}
 							className="hidden h-[34px] w-[34px] items-center justify-center rounded-base border-hairline border-bd-2 bg-surf text-t-1 transition-colors hover:bg-surf-2 max-[900px]:inline-flex"
 						>
 							<Menu size={18} strokeWidth={1.8} />
-						</button>
+						</Button>
 					</div>
 				</div>
 			</div>

@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
@@ -35,14 +37,14 @@ const subTypeBadge = (
 	};
 	const def = map[type] ?? { cls: "bg-grn-bg text-grn-t", key: "admin.dashboard.recentUsers.active" };
 	return (
-		<span
+		<Typography tag="span"
 			className={cn(
 				"inline-flex items-center rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold",
 				def.cls,
 			)}
 		>
 			{t(def.key)}
-		</span>
+		</Typography>
 	);
 };
 
@@ -57,9 +59,9 @@ export const DashboardRecentUsersCard = ({ users }: DashboardRecentUsersCardProp
 	return (
 		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.recentUsers.title")}
-				</span>
+				</Typography>
 				<Link
 					href={`/${params.lang}/admin/users`}
 					className="shrink-0 text-[11.5px] text-acc hover:underline"

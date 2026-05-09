@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import {
 	ComposedChart,
 	Bar,
@@ -46,20 +48,20 @@ export const AnalyticsEventsChart = ({
 	return (
 		<div className="rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="flex flex-wrap items-center justify-between gap-1 px-4 pt-3.5">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.analytics.eventsChart.title")}
-				</span>
+				</Typography>
 				<div className="flex flex-wrap items-center gap-2.5">
 					<div className="flex items-center gap-1.5 text-[11px] text-t-3">
-						<span className="inline-block size-2 rounded-[2px] bg-acc/70" />
+						<Typography tag="span" className="inline-block size-2 rounded-[2px] bg-acc/70" />
 						{t("admin.analytics.eventsChart.openText")}
 					</div>
 					<div className="flex items-center gap-1.5 text-[11px] text-t-3">
-						<span className="inline-block size-2 rounded-full bg-grn" />
+						<Typography tag="span" className="inline-block size-2 rounded-full bg-grn" />
 						{t("admin.analytics.eventsChart.addToDict")}
 					</div>
 					<div className="flex items-center gap-1.5 text-[11px] text-t-3">
-						<span className="inline-block size-2 rounded-full bg-red" />
+						<Typography tag="span" className="inline-block size-2 rounded-full bg-red" />
 						{t("admin.analytics.eventsChart.failLookup")}
 					</div>
 				</div>

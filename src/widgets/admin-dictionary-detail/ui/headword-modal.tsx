@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { useI18n } from "@/shared/lib/i18n";
 import { ComponentProps, useEffect, useRef, useState } from "react";
 interface HeadwordModalProps {
@@ -65,32 +69,31 @@ return (
 							onChange={handleChange}
 						/>
 					</div>
-					<label className="flex cursor-pointer items-center gap-2.5">
+					<Typography tag="label" className="flex cursor-pointer items-center gap-2.5">
 						<input
 							type="checkbox"
 							className="size-4 cursor-pointer rounded"
 							checked={isPrimary}
 							onChange={handleChange2}
 						/>
-						<span className="text-[13px] text-t-2">
+						<Typography tag="span" className="text-[13px] text-t-2">
 							{t("admin.dictionaryDetail.markAsPrimary")}
-						</span>
-					</label>
+						</Typography>
+					</Typography>
 					<div className="mt-5 flex justify-end gap-2">
-						<button
-							type="button"
+						<Button
 							className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
 							onClick={onClose}
 						>
 							{t("admin.dictionaryDetail.cancel")}
-						</button>
-						<button
+						</Button>
+						<Button
 							type="submit"
 							disabled={isPending || !word.trim()}
 							className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
 						>
 							{t("admin.dictionaryDetail.add")}
-						</button>
+						</Button>
 					</div>
 				</form>
 			</div>

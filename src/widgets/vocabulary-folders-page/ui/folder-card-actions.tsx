@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, type MouseEvent as ReactMouseEvent, useEffect, useRef } from "react";
 import { ArrowRight, PaintBucket, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
@@ -74,24 +76,24 @@ return (
 				"animate-[fadeUp_0.14s_ease]",
 			)}
 		>
-			<button type="button" className={item} onClick={handle(onRename)}>
+			<Button className={item} onClick={handle(onRename)}>
 				<Pencil className="size-[13px]" strokeWidth={1.6} />
 				{labels.rename}
-			</button>
-			<button type="button" className={item} onClick={handle(onRecolor)}>
+			</Button>
+			<Button className={item} onClick={handle(onRecolor)}>
 				<PaintBucket className="size-[13px]" strokeWidth={1.6} />
 				{labels.recolor}
-			</button>
+			</Button>
 			<div className="h-px bg-bd-1" />
-			<button type="button" className={item} onClick={handle(onOpen)}>
+			<Button className={item} onClick={handle(onOpen)}>
 				<ArrowRight className="size-[13px]" strokeWidth={1.6} />
 				{labels.open}
-			</button>
+			</Button>
 			<div className="h-px bg-bd-1" />
-			<button type="button" className={danger} onClick={handle(onDelete)}>
+			<Button className={danger} onClick={handle(onDelete)}>
 				<Trash2 className="size-[13px]" strokeWidth={1.6} />
 				{labels.delete}
-			</button>
+			</Button>
 		</div>
 	);
 };

@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ChevronLeft } from "lucide-react";
 import { useRef } from 'react';
 import {
@@ -124,13 +126,12 @@ export const LandingDemo = ({ wordsDict }: LandingDemoProps) => {
 					className="relative overflow-hidden rounded-[14px] border-hairline border-bd-2 bg-surf shadow-md max-[640px]:rounded-[12px]"
 				>
 					<div className="flex items-center gap-2.5 border-hairline border-b border-bd-1 bg-surf-2 px-5 py-3.5 max-[640px]:px-3.5 max-[640px]:py-3">
-						<button
-							type="button"
+						<Button
 							aria-hidden="true"
 							className="flex h-7 w-7 items-center justify-center rounded-md border-hairline border-bd-2 bg-transparent text-t-2 max-[640px]:h-[26px] max-[640px]:w-[26px]"
 						>
 							<ChevronLeft size={13} strokeWidth={2} />
-						</button>
+						</Button>
 						<div className="min-w-0 flex-1">
 							<div className="truncate font-display text-[14px] font-medium text-t-1 max-[640px]:text-[13px]">
 								{t("landing.demo.textTitle")}
@@ -188,15 +189,15 @@ export const LandingDemo = ({ wordsDict }: LandingDemoProps) => {
 
 				<div className="mt-[18px] flex flex-wrap justify-center gap-3.5 text-[11.5px] text-t-3">
 					<Typography tag="span" className="flex items-center gap-1.5">
-						<span className="block h-[10px] w-[10px] rounded-[3px] border-hairline border-acc/25 bg-acc-bg" />
+						<Typography tag="span" className="block h-[10px] w-[10px] rounded-[3px] border-hairline border-acc/25 bg-acc-bg" />
 						{t("landing.demo.legendCurrent")}
 					</Typography>
 					<Typography tag="span" className="flex items-center gap-1.5">
-						<span className="block h-0 w-4 border-b-[1.5px] border-dotted border-grn" />
+						<Typography tag="span" className="block h-0 w-4 border-b-[1.5px] border-dotted border-grn" />
 						{t("landing.demo.legendKnown")}
 					</Typography>
 					<Typography tag="span" className="flex items-center gap-1.5">
-						<span
+						<Typography tag="span"
 							className="block h-[10px] w-[10px] rounded-[3px] bg-amb-bg"
 							style={{ borderColor: "rgba(217,119,6,0.3)", borderWidth: 0.5 }}
 						/>

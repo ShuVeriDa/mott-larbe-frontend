@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import type { FeatureFlagItem } from "@/entities/feature-flag";
 
@@ -29,26 +33,24 @@ return (
 			onClick={handleClick}
 		>
 			<div className="w-[400px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
-				<h2 className="font-display text-[16px] text-t-1 mb-1">
+				<Typography tag="h2" className="font-display text-[16px] text-t-1 mb-1">
 					{t("admin.featureFlags.deleteModal.title")}
-				</h2>
-				<p className="mb-4 text-[12.5px] text-t-3">
+				</Typography>
+				<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
 					{t("admin.featureFlags.deleteModal.subtitle")}
-				</p>
+				</Typography>
 				<div className="mb-4 rounded-[8px] border border-bd-1 bg-surf-2 px-3 py-2">
-					<span className="font-mono text-[12px] text-t-1">{flag.key}</span>
+					<Typography tag="span" className="font-mono text-[12px] text-t-1">{flag.key}</Typography>
 				</div>
 				<div className="flex justify-end gap-2">
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						disabled={isDeleting}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50"
 					>
 						{t("admin.featureFlags.deleteModal.cancel")}
-					</button>
-					<button
-						type="button"
+					</Button>
+					<Button
 						onClick={onConfirm}
 						disabled={isDeleting}
 						className="h-8 cursor-pointer rounded-base bg-red-500 px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50"
@@ -56,7 +58,7 @@ return (
 						{isDeleting
 							? t("admin.featureFlags.deleteModal.deleting")
 							: t("admin.featureFlags.deleteModal.confirm")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

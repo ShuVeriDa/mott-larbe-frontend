@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import type { HeatmapLevel, HeatmapMonth } from "@/entities/statistics";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -48,7 +50,7 @@ export const Heatmap = ({ months }: HeatmapProps) => {
 			</div>
 
 			<div className="mt-2 flex items-center gap-1.5">
-				<span className="text-[10px] text-t-3">{t("statistics.streak.less")}</span>
+				<Typography tag="span" className="text-[10px] text-t-3">{t("statistics.streak.less")}</Typography>
 				<div className="flex gap-[3px]">
 					{([0, 1, 2, 3, 4] as HeatmapLevel[]).map((lvl) => (
 						<div
@@ -60,7 +62,7 @@ export const Heatmap = ({ months }: HeatmapProps) => {
 						/>
 					))}
 				</div>
-				<span className="text-[10px] text-t-3">{t("statistics.streak.more")}</span>
+				<Typography tag="span" className="text-[10px] text-t-3">{t("statistics.streak.more")}</Typography>
 			</div>
 		</div>
 	);

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { useI18n } from "@/shared/lib/i18n";
 
 interface TokenizationBulkBarProps {
@@ -21,24 +25,24 @@ export const TokenizationBulkBar = ({
 
 	return (
 		<div className="flex items-center gap-2.5 border-b border-bd-1 bg-acc-bg px-4 py-2">
-			<span className="text-[12px] font-semibold text-acc-t whitespace-nowrap">
+			<Typography tag="span" className="text-[12px] font-semibold text-acc-t whitespace-nowrap">
 				{t("admin.tokenization.bulk.selected").replace("{count}", String(selectedCount))}
-			</span>
+			</Typography>
 			<div className="ml-auto flex gap-1.5">
-				<button
+				<Button
 					onClick={onRun}
 					disabled={isLoading}
 					className="h-[26px] rounded-[6px] bg-acc px-2.5 text-[11.5px] font-medium text-white disabled:opacity-50"
 				>
 					{t("admin.tokenization.bulk.run")}
-				</button>
-				<button
+				</Button>
+				<Button
 					onClick={onReset}
 					disabled={isLoading}
 					className="h-[26px] rounded-[6px] border border-bd-2 bg-surf px-2.5 text-[11.5px] text-t-2 hover:bg-surf-2 hover:text-t-1 disabled:opacity-50"
 				>
 					{t("admin.tokenization.bulk.reset")}
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

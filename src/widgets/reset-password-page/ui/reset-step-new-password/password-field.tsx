@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { Eye, EyeOff } from "lucide-react";
 import { type ChangeEvent, ComponentProps, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
@@ -56,8 +58,7 @@ return (
 						hasError && "border-red focus:border-red",
 					)}
 				/>
-				<button
-					type="button"
+				<Button
 					tabIndex={-1}
 					onClick={handleClick}
 					aria-label={t(
@@ -72,7 +73,7 @@ return (
 					) : (
 						<Eye size={16} strokeWidth={1.8} />
 					)}
-				</button>
+				</Button>
 			</div>
 		</>
 	);

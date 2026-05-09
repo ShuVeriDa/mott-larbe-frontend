@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, ReactNode, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { adminUserApi } from "@/entities/admin-user";
@@ -75,13 +79,13 @@ return (
 							placeholder="PROMO_CODE"
 							className="h-7 flex-1 rounded-[6px] border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1 outline-none placeholder:text-t-4 focus:border-acc"
 						/>
-						<button
+						<Button
 							onClick={handleCouponSubmit}
 							disabled={couponPending || !couponInput.trim()}
 							className="h-7 rounded-[6px] bg-acc-bg px-2.5 text-[12px] font-semibold text-acc-t transition-colors hover:bg-acc-bg/80 disabled:opacity-50"
 						>
 							OK
-						</button>
+						</Button>
 					</div>
 				)}
 			</div>
@@ -146,14 +150,14 @@ const ActionButton = ({
 	}[variant];
 
 	return (
-		<button
+		<Button
 			onClick={onClick}
 			disabled={disabled}
 			className={`flex h-8 w-full items-center gap-2 rounded-base border px-2.5 text-[12.5px] transition-colors disabled:opacity-50 ${variantClass}`}
 		>
-			<span className="size-[13px] shrink-0 [&>svg]:h-full [&>svg]:w-full">{icon}</span>
+			<Typography tag="span" className="size-[13px] shrink-0 [&>svg]:h-full [&>svg]:w-full">{icon}</Typography>
 			{label}
-		</button>
+		</Button>
 	);
 };
 

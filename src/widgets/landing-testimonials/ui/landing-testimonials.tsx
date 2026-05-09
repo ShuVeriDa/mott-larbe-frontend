@@ -67,9 +67,9 @@ export const LandingTestimonials = () => {
 									</div>
 									<div className="text-[12.5px] text-t-3">{item.role}</div>
 								</div>
-								<span className="rounded-full bg-acc-bg px-2.5 py-0.5 text-[11.5px] font-semibold text-acc-t">
+								<Typography tag="span" className="rounded-full bg-acc-bg px-2.5 py-0.5 text-[11.5px] font-semibold text-acc-t">
 									{item.level}
-								</span>
+								</Typography>
 							</div>
 						</article>
 					))}

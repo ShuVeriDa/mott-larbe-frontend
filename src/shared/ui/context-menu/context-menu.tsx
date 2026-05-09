@@ -1,4 +1,7 @@
-"use client"
+"use client";
+
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import { ContextMenu as ContextMenuPrimitive } from "radix-ui"
 
@@ -154,12 +157,12 @@ function ContextMenuCheckboxItem({
       checked={checked}
       {...props}
     >
-      <span className="pointer-events-none absolute right-2">
+      <Typography tag="span" className="pointer-events-none absolute right-2">
         <ContextMenuPrimitive.ItemIndicator>
           <CheckIcon
           />
         </ContextMenuPrimitive.ItemIndicator>
-      </span>
+      </Typography>
       {children}
     </ContextMenuPrimitive.CheckboxItem>
   )
@@ -183,12 +186,12 @@ function ContextMenuRadioItem({
       )}
       {...props}
     >
-      <span className="pointer-events-none absolute right-2">
+      <Typography tag="span" className="pointer-events-none absolute right-2">
         <ContextMenuPrimitive.ItemIndicator>
           <CheckIcon
           />
         </ContextMenuPrimitive.ItemIndicator>
-      </span>
+      </Typography>
       {children}
     </ContextMenuPrimitive.RadioItem>
   )
@@ -232,7 +235,7 @@ function ContextMenuShortcut({
   ...props
 }: ComponentProps<"span">) {
   return (
-    <span
+    <Typography tag="span"
       data-slot="context-menu-shortcut"
       className={cn(
         "ml-auto text-xs tracking-widest text-muted-foreground group-focus/context-menu-item:text-accent-foreground",

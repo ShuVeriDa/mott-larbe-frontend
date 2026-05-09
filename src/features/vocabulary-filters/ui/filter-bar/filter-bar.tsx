@@ -64,7 +64,7 @@ return (
 			);
 			})}
 
-			<span
+			<Typography tag="span"
 				aria-hidden="true"
 				className="h-4 w-px shrink-0 bg-bd-2 max-md:hidden"
 			/>

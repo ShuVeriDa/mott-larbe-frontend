@@ -1,4 +1,7 @@
-"use client"
+"use client";
+
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import { Command as CommandPrimitive } from "cmdk"
 
@@ -170,7 +173,7 @@ function CommandShortcut({
   ...props
 }: ComponentProps<"span">) {
   return (
-    <span
+    <Typography tag="span"
       data-slot="command-shortcut"
       className={cn(
         "ml-auto text-xs tracking-widest text-muted-foreground group-data-selected/command-item:text-foreground",

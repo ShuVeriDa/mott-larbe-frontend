@@ -1,6 +1,7 @@
 import { useI18n } from "@/shared/lib/i18n";
 import type { UserEventsSummary } from "@/entities/admin-user";
 
+import { Typography } from "@/shared/ui/typography";
 interface UserEventsSummaryTabProps {
 	summary: UserEventsSummary | undefined;
 	isLoading: boolean;
@@ -62,10 +63,10 @@ export const UserEventsSummaryTab = ({
 			{summary.topFailLookups.length > 0 && (
 				<div className="overflow-hidden rounded-lg border border-bd-1">
 					<div className="flex items-center justify-between border-b border-bd-1 px-3 py-2.5">
-						<span className="text-[11.5px] font-semibold text-t-1">
+						<Typography tag="span" className="text-[11.5px] font-semibold text-t-1">
 							{t("admin.userDetail.events.topUnknown")}
-						</span>
-						<span className="text-[10.5px] text-t-3">topFailLookups</span>
+						</Typography>
+						<Typography tag="span" className="text-[10.5px] text-t-3">topFailLookups</Typography>
 					</div>
 					<div>
 						{summary.topFailLookups.map((item, i) => (
@@ -73,12 +74,12 @@ export const UserEventsSummaryTab = ({
 								key={item.normalized}
 								className="flex items-center gap-2 border-b border-bd-1 px-3 py-1.5 text-[12.5px] last:border-b-0"
 							>
-								<span className="w-4 shrink-0 text-right text-[11px] font-semibold text-t-3">
+								<Typography tag="span" className="w-4 shrink-0 text-right text-[11px] font-semibold text-t-3">
 									{i + 1}
-								</span>
-								<span className="flex-1 font-medium text-t-1" style={{ fontFamily: "'Playfair Display', serif" }}>
+								</Typography>
+								<Typography tag="span" className="flex-1 font-medium text-t-1" style={{ fontFamily: "'Playfair Display', serif" }}>
 									{item.normalized}
-								</span>
+								</Typography>
 								<div className="w-14 shrink-0">
 									<div className="h-1 rounded-full bg-surf-3">
 										<div
@@ -87,7 +88,7 @@ export const UserEventsSummaryTab = ({
 										/>
 									</div>
 								</div>
-								<span className="text-[11px] text-t-3">{item.count}×</span>
+								<Typography tag="span" className="text-[11px] text-t-3">{item.count}×</Typography>
 							</div>
 						))}
 					</div>

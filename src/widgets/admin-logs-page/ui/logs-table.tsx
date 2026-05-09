@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminLogItem } from "@/entities/admin-log";
@@ -70,18 +74,18 @@ return (
 								className="cursor-pointer border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2"
 							>
 								<td className="px-3 py-2">
-									<span className="tabular-nums text-[11.5px] text-t-3 whitespace-nowrap">
+									<Typography tag="span" className="tabular-nums text-[11.5px] text-t-3 whitespace-nowrap">
 										{time}
-										<span className="text-t-4">{ms}</span>
-									</span>
+										<Typography tag="span" className="text-t-4">{ms}</Typography>
+									</Typography>
 								</td>
 								<td className="px-3 py-2">
 									<LevelBadge level={item.level} />
 								</td>
 								<td className="px-3 py-2">
-									<span className="rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[10.5px] font-medium text-t-2 whitespace-nowrap">
+									<Typography tag="span" className="rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[10.5px] font-medium text-t-2 whitespace-nowrap">
 										{item.service}
-									</span>
+									</Typography>
 								</td>
 								<td className="px-3 py-2">
 									<div className="max-w-[340px] overflow-hidden text-ellipsis whitespace-nowrap font-mono text-[12.5px] text-t-1 tracking-[-0.01em] max-lg:max-w-[200px]">
@@ -97,14 +101,13 @@ return (
 									<DurationBadge durationMs={item.durationMs} />
 								</td>
 								<td className="px-3 py-2 max-[900px]:hidden">
-									<span className="tabular-nums text-[11.5px] text-t-3">
+									<Typography tag="span" className="tabular-nums text-[11.5px] text-t-3">
 										{shortTrace(item.traceId)}
-									</span>
+									</Typography>
 								</td>
 								<td className="px-3 py-2">
 									<div className="flex items-center justify-end">
-										<button
-											type="button"
+										<Button
 											onClick={handleClick2}
 											className="flex size-[26px] items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 										>
@@ -113,7 +116,7 @@ return (
 												<circle cx="8" cy="8" r="1" fill="currentColor" />
 												<circle cx="8" cy="12" r="1" fill="currentColor" />
 											</svg>
-										</button>
+										</Button>
 									</div>
 								</td>
 							</tr>

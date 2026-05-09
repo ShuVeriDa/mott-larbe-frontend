@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import type { DashboardDueToday } from "@/entities/dashboard";
@@ -16,7 +18,7 @@ export const ReviewBanner = ({ dueToday, lang }: ReviewBannerProps) => {
 
 	return (
 		<div className="relative flex items-center gap-4 overflow-hidden rounded-card border-hairline border border-bd-1 bg-surf p-[14px_16px] max-sm:gap-3 max-sm:p-[13px_14px]">
-			<span
+			<Typography tag="span"
 				aria-hidden="true"
 				className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r-[2px] bg-amb"
 			/>
@@ -34,14 +36,14 @@ export const ReviewBanner = ({ dueToday, lang }: ReviewBannerProps) => {
 				</div>
 				<div className="flex flex-wrap gap-[5px]">
 					{dueToday.new > 0 ? (
-						<span className="rounded-[5px] bg-acc-bg px-2 py-[2.5px] text-[11px] font-medium text-acc-t">
+						<Typography tag="span" className="rounded-[5px] bg-acc-bg px-2 py-[2.5px] text-[11px] font-medium text-acc-t">
 							{t("dashboard.reviewBanner.newWords", { count: dueToday.new })}
-						</span>
+						</Typography>
 					) : null}
 					{dueToday.learning > 0 ? (
-						<span className="rounded-[5px] bg-amb-bg px-2 py-[2.5px] text-[11px] font-medium text-amb-t">
+						<Typography tag="span" className="rounded-[5px] bg-amb-bg px-2 py-[2.5px] text-[11px] font-medium text-amb-t">
 							{t("dashboard.reviewBanner.learning", { count: dueToday.learning })}
-						</span>
+						</Typography>
 					) : null}
 				</div>
 			</div>

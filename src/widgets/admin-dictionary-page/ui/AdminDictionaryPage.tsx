@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminDictionaryPage } from "../model/use-admin-dictionary-page";
@@ -99,8 +101,7 @@ return (
 				subtitle={t("admin.dictionary.subtitle")}
 				actions={
 					<>
-						<button
-							type="button"
+						<Button
 							onClick={handleImportOpen}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
@@ -119,9 +120,8 @@ return (
 								<path d="M2 12h11" strokeLinecap="round" />
 							</svg>
 							{t("admin.dictionary.import")}
-						</button>
-						<button
-							type="button"
+						</Button>
+						<Button
 							onClick={handleClick}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
@@ -140,9 +140,8 @@ return (
 								<path d="M2 12h11" strokeLinecap="round" />
 							</svg>
 							{t("admin.dictionary.export")}
-						</button>
-						<button
-							type="button"
+						</Button>
+						<Button
 							onClick={handleClick2}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 						>
@@ -157,7 +156,7 @@ return (
 								<path d="M7.5 2v11M2 7.5h11" />
 							</svg>
 							{t("admin.dictionary.create")}
-						</button>
+						</Button>
 					</>
 				}
 			/>

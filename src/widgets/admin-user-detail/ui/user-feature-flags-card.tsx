@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { useAdminUserFeatureFlags } from "@/entities/admin-user/model/use-admin-user-feature-flags";
@@ -22,12 +26,12 @@ export const UserFeatureFlagsCard = ({ featureFlags }: UserFeatureFlagsCardProps
 	return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 			<div className="flex items-center justify-between border-b border-bd-1 px-3.5 py-3">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.userDetail.featureFlags.title")}
-				</span>
-				<span className="text-[11px] text-t-3">
+				</Typography>
+				<Typography tag="span" className="text-[11px] text-t-3">
 					{t("admin.userDetail.featureFlags.subtitle")}
-				</span>
+				</Typography>
 			</div>
 
 			{query.isLoading ? (
@@ -66,7 +70,7 @@ return (
 										<div className="text-[11px] text-t-3">{flag.description}</div>
 									)}
 								</div>
-								<button
+								<Button
 									onClick={handleClick}
 									disabled={setOverride.isPending}
 									className={cn(
@@ -75,13 +79,13 @@ return (
 									)}
 									aria-pressed={isOn}
 								>
-									<span
+									<Typography tag="span"
 										className={cn(
 											"absolute top-0.5 size-3.5 rounded-full bg-white shadow-sm transition-transform",
 											isOn ? "left-[calc(100%-2px)] -translate-x-full" : "left-0.5",
 										)}
 									/>
-								</button>
+								</Button>
 							</div>
 						);
 					})}

@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminCouponStats } from "@/entities/admin-coupon";
 
+import { Typography } from "@/shared/ui/typography";
 interface Props {
 	stats: AdminCouponStats | undefined;
 	isLoading: boolean;
@@ -58,9 +59,9 @@ export const CouponsKpiRow = ({ stats, isLoading }: Props) => {
 				value={stats?.usagesThisMonth ?? 0}
 				sub={
 					<>
-						<span className={growth >= 0 ? "text-grn-t" : "text-red-t"}>
+						<Typography tag="span" className={growth >= 0 ? "text-grn-t" : "text-red-t"}>
 							{growth >= 0 ? "+" : ""}{growth}
-						</span>{" "}
+						</Typography>{" "}
 						{t("admin.coupons.kpi.usageGrowthSuffix")}
 					</>
 				}
@@ -77,9 +78,9 @@ export const CouponsKpiRow = ({ stats, isLoading }: Props) => {
 				value={stats ? `${Math.round(stats.conversionRate * 1000) / 10}%` : "0%"}
 				sub={
 					<>
-						<span className={convDelta >= 0 ? "text-grn-t" : "text-red-t"}>
+						<Typography tag="span" className={convDelta >= 0 ? "text-grn-t" : "text-red-t"}>
 							{convDelta >= 0 ? "+" : ""}{convDelta} пп
-						</span>{" "}
+						</Typography>{" "}
 						{t("admin.coupons.kpi.conversionSuffix")}
 					</>
 				}

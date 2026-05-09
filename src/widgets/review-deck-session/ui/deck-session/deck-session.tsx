@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { useEffect } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useSwipe } from "@/shared/lib/swipe";
@@ -138,8 +140,7 @@ export const DeckSession = ({ due, onFinish, onBack, onProgress }: DeckSessionPr
 			<DeckRatingButtons visible={flipped} onRate={rate} />
 
 			<div className="mt-2.5 flex w-full max-w-[520px] items-center gap-2">
-				<button
-					type="button"
+				<Button
 					onClick={onBack}
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-hairline border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 				>
@@ -153,7 +154,7 @@ export const DeckSession = ({ due, onFinish, onBack, onProgress }: DeckSessionPr
 						/>
 					</svg>
 					{t("review.deck.card.backToDecks")}
-				</button>
+				</Button>
 				<Typography tag="span" className="ml-2 text-[12px] text-t-3">
 					{t("review.deck.card.currentDeck", { name: deckTypeName })}
 				</Typography>
@@ -184,9 +185,9 @@ const DeckCardFront = ({
 			<div className="absolute left-3 top-2.5">
 				<DeckBadge type={type} deckNumber={deckNumber} />
 			</div>
-			<span className="absolute right-3.5 top-3 text-[10.5px] text-t-3">
+			<Typography tag="span" className="absolute right-3.5 top-3 text-[10.5px] text-t-3">
 				#{cardNumber}
-			</span>
+			</Typography>
 
 			<Typography
 				tag="h2"

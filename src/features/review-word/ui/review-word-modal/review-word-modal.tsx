@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { Check } from "lucide-react";
 import { RatingButtons } from "@/features/rate-word";
 import type { DictionaryEntryDetail } from "@/entities/dictionary";
@@ -29,33 +33,32 @@ export const ReviewWordModal = ({
 		>
 			{done ? (
 				<div className="flex flex-col items-center gap-2 py-3">
-					<span className="flex size-10 items-center justify-center rounded-full bg-grn-bg text-grn">
+					<Typography tag="span" className="flex size-10 items-center justify-center rounded-full bg-grn-bg text-grn">
 						<Check className="size-5" strokeWidth={2} />
-					</span>
-					<p className="text-center text-[13px] text-t-2">
+					</Typography>
+					<Typography tag="p" className="text-center text-[13px] text-t-2">
 						{t("vocabulary.wordDetail.reviewModal.done")}
-					</p>
-					<button
-						type="button"
+					</Typography>
+					<Button
 						onClick={handleClose}
 						className="mt-1 text-[12px] text-acc hover:underline"
 					>
 						{t("vocabulary.wordDetail.reviewModal.close")}
-					</button>
+					</Button>
 				</div>
 			) : (
 				<>
-					<p className="mb-1 text-center font-display text-[30px] italic leading-none text-t-1">
+					<Typography tag="p" className="mb-1 text-center font-display text-[30px] italic leading-none text-t-1">
 						{entry.word}
-					</p>
+					</Typography>
 					{entry.lemma?.transliteration ? (
-						<p className="mb-1 text-center text-[13px] italic text-t-3">
+						<Typography tag="p" className="mb-1 text-center text-[13px] italic text-t-3">
 							{entry.lemma.transliteration}
-						</p>
+						</Typography>
 					) : null}
-					<p className="mb-5 text-center text-[14px] text-t-2">
+					<Typography tag="p" className="mb-5 text-center text-[14px] text-t-2">
 						{entry.translation}
-					</p>
+					</Typography>
 					<RatingButtons visible onRate={handleRate} disabled={isPending} />
 				</>
 			)}

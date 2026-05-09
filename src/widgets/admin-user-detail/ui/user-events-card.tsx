@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -44,14 +48,14 @@ export const UserEventsCard = ({
 	return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 			<div className="flex flex-wrap items-center gap-1.5 border-b border-bd-1 px-3.5 py-3">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.userDetail.events.title")}
-				</span>
+				</Typography>
 				<div className="flex gap-0.5 ml-auto max-sm:order-2 max-sm:w-full">
 					{tabs.map(({ key, label }) => {
 					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setEventsTab(key);
 					  return (
-						<button
+						<Button
 							key={key}
 							onClick={handleClick}
 							className={cn(
@@ -62,7 +66,7 @@ export const UserEventsCard = ({
 							)}
 						>
 							{label}
-						</button>
+						</Button>
 					);
 					})}
 				</div>

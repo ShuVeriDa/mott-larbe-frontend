@@ -109,7 +109,7 @@ return (
 						</Typography>
 					) : null}
 					{sourceTitle ? (
-						<span aria-hidden="true" className="size-[2px] rounded-full bg-t-4" />
+						<Typography tag="span" aria-hidden="true" className="size-[2px] rounded-full bg-t-4" />
 					) : null}
 					<Typography tag="span" className="text-[11px] text-t-3">
 						{getMetaSecondary(entry, t)}

@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminDashboardContent } from "@/entities/admin-dashboard";
 
@@ -57,9 +59,9 @@ export const DashboardContentCard = ({ content }: DashboardContentCardProps) => 
 	return (
 		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
 			<div className="px-4 pt-3.5">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.content.title")}
-				</span>
+				</Typography>
 			</div>
 			<div className="px-4 py-3">
 				<div className="mb-3 grid grid-cols-2 gap-2.5">
@@ -79,10 +81,10 @@ export const DashboardContentCard = ({ content }: DashboardContentCardProps) => 
 						return (
 							<div key={lvl.level}>
 								<div className="flex items-center justify-between gap-2">
-									<span className="text-[11.5px] text-t-2">{lvl.level ?? "—"}</span>
-									<span className="shrink-0 text-[11px] text-t-3">
+									<Typography tag="span" className="text-[11.5px] text-t-2">{lvl.level ?? "—"}</Typography>
+									<Typography tag="span" className="shrink-0 text-[11px] text-t-3">
 										{lvl.count} {t("admin.dashboard.content.texts").toLowerCase()}
-									</span>
+									</Typography>
 								</div>
 								<div className="my-1.5 h-1 overflow-hidden rounded-full bg-surf-3">
 									<div

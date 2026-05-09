@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import { ChevronRight, Plus } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
@@ -44,12 +48,11 @@ return (
 					"transition-colors hover:border-bd-2",
 				)}
 			>
-				<span className="font-display text-[13px] italic text-t-1">
+				<Typography tag="span" className="font-display text-[13px] italic text-t-1">
 					{entry.word}
-				</span>
-				<span className="text-[11.5px] text-t-3">{entry.translation}</span>
-				<button
-					type="button"
+				</Typography>
+				<Typography tag="span" className="text-[11.5px] text-t-3">{entry.translation}</Typography>
+				<Button
 					aria-label={assignLabel}
 					onClick={handleClick}
 					className={cn(
@@ -58,7 +61,7 @@ return (
 					)}
 				>
 					<Plus className="size-[9px]" strokeWidth={2.5} />
-				</button>
+				</Button>
 			</div>
 			<FolderPickerPopover
 				open={open}
@@ -135,15 +138,14 @@ return (
 				))}
 			</div>
 			{hasMore && (
-				<button
-					type="button"
+				<Button
 					onClick={handleClick}
 					className="self-start text-[12px] text-acc transition-colors hover:text-acc/70"
 				>
 					{t("vocabulary.foldersPage.uncategorized.showMore", {
 						count: total - items.length,
 					})}
-				</button>
+				</Button>
 			)}
 		</div>
 	);
@@ -173,8 +175,7 @@ return (
 						isPending && "opacity-60",
 					)}
 				>
-					<button
-						type="button"
+					<Button
 						onClick={handleClick}
 						disabled={isPending}
 						className="flex flex-1 items-center gap-2.5 text-left transition-colors hover:opacity-75"
@@ -186,23 +187,22 @@ return (
 							)}
 							strokeWidth={1.6}
 						/>
-						<span className="flex-1 text-[13px] font-semibold text-t-2">
+						<Typography tag="span" className="flex-1 text-[13px] font-semibold text-t-2">
 							{t("vocabulary.foldersPage.uncategorized.title")}
-						</span>
-						<span className="text-[12px] text-t-3">
+						</Typography>
+						<Typography tag="span" className="text-[12px] text-t-3">
 							{t("vocabulary.foldersPage.uncategorized.count", { count })}
-						</span>
-					</button>
+						</Typography>
+					</Button>
 
 					{(folders?.length ?? 0) > 0 && (
-						<button
-							type="button"
+						<Button
 							onClick={handleClick2}
 							disabled={isPending}
 							className="shrink-0 text-[12px] text-acc transition-colors hover:text-acc/70"
 						>
 							{t("vocabulary.foldersPage.uncategorized.distributeAll")} →
-						</button>
+						</Button>
 					)}
 				</div>
 

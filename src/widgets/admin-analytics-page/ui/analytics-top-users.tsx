@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -30,9 +32,9 @@ export const AnalyticsTopUsers = ({
 	return (
 		<div className="rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between px-4 pt-3.5 pb-3">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.analytics.topUsers.title")}
-				</span>
+				</Typography>
 				<Link
 					href={`/${lang}/admin/users`}
 					className="text-[11.5px] text-acc hover:underline"

@@ -1,4 +1,9 @@
-"use client";import { ComponentProps, useState } from 'react';
+"use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AnalyticsRange } from "@/entities/admin-analytics";
@@ -48,17 +53,16 @@ export const AnalyticsMobileTopbar = ({
 return (
 		<header className=" border-b border-bd-1 bg-surf transition-colors md:hidden">
 			<div className="flex items-center justify-between px-4 py-2.5">
-				<span className="font-display text-[13px] font-medium text-t-1">
+				<Typography tag="span" className="font-display text-[13px] font-medium text-t-1">
 					{t("admin.analytics.title")}
-				</span>
+				</Typography>
 				<div className="flex items-center gap-1">
 					<div className="flex items-center gap-0.5 rounded-lg border border-bd-2 bg-surf-2 p-0.5">
 						{RANGES.map((r) => {
 						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRangeChange(r);
 						  return (
-							<button
+							<Button
 								key={r}
-								type="button"
 								onClick={handleClick}
 								className={cn(
 									"h-6 rounded-md px-2 text-[11px] font-medium transition-all",
@@ -68,12 +72,11 @@ return (
 								)}
 							>
 								{t(`admin.analytics.range.${r}`)}
-							</button>
+							</Button>
 						);
 						})}
 					</div>
-					<button
-						type="button"
+					<Button
 						onClick={handleClick}
 						className={cn(
 							"flex size-6 items-center justify-center rounded-md border transition-colors",
@@ -86,7 +89,7 @@ return (
 							<rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" />
 							<path d="M5 1v3M11 1v3M2 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
 						</svg>
-					</button>
+					</Button>
 				</div>
 			</div>
 
@@ -94,7 +97,7 @@ return (
 				<div className="border-t border-bd-1 px-4 py-3">
 					<div className="flex gap-2">
 						<div className="flex flex-1 flex-col gap-1">
-							<label className="text-[10px] text-t-3">{t("admin.analytics.dateFrom")}</label>
+							<Typography tag="label" className="text-[10px] text-t-3">{t("admin.analytics.dateFrom")}</Typography>
 							<input
 								type="date"
 								value={localFrom}
@@ -104,7 +107,7 @@ return (
 							/>
 						</div>
 						<div className="flex flex-1 flex-col gap-1">
-							<label className="text-[10px] text-t-3">{t("admin.analytics.dateTo")}</label>
+							<Typography tag="label" className="text-[10px] text-t-3">{t("admin.analytics.dateTo")}</Typography>
 							<input
 								type="date"
 								value={localTo}
@@ -115,17 +118,16 @@ return (
 						</div>
 					</div>
 					<div className="mt-2 flex justify-end gap-1.5">
-						<button type="button" onClick={handleClear} className="h-[26px] rounded-md px-2.5 text-[11.5px] text-t-2">
+						<Button onClick={handleClear} className="h-[26px] rounded-md px-2.5 text-[11.5px] text-t-2">
 							{t("admin.analytics.clear")}
-						</button>
-						<button
-							type="button"
+						</Button>
+						<Button
 							onClick={handleApply}
 							disabled={!localFrom || !localTo}
 							className="h-[26px] rounded-md bg-acc px-2.5 text-[11.5px] font-medium text-white disabled:opacity-40"
 						>
 							{t("admin.analytics.apply")}
-						</button>
+						</Button>
 					</div>
 				</div>
 			)}

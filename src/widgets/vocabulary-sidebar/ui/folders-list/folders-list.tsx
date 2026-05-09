@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { Lock, Plus } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
@@ -81,8 +83,7 @@ return (
 				);
 				})}
 			</div>
-			<button
-				type="button"
+			<Button
 				disabled={!hasFolders}
 				onClick={hasFolders ? onCreateFolder : undefined}
 				title={
@@ -101,7 +102,7 @@ return (
 					<Lock className="size-[11px]" strokeWidth={2} />
 				)}
 				{t("vocabulary.newFolder")}
-			</button>
+			</Button>
 		</div>
 	);
 };

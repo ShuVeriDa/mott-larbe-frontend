@@ -58,13 +58,13 @@ export const FlashcardBack = ({
 			{morphForms.length > 0 ? (
 				<div className="flex w-full flex-wrap gap-1 mb-1">
 					{morphForms.slice(0, 8).map((form) => (
-						<span
+						<Typography tag="span"
 							key={`${form.form}-${form.grammarTag ?? ""}`}
 							className="rounded-[4px] border-hairline border-bd-2 bg-surf-3 px-1.5 py-0.5 text-[11px] text-t-2"
 							title={form.grammarTag ?? undefined}
 						>
 							{form.form}
-						</span>
+						</Typography>
 					))}
 				</div>
 			) : null}

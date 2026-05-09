@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import { ComponentProps, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -79,19 +81,19 @@ return (
 				</DialogHeader>
 
 				{submitted === "success" ? (
-					<p className="text-sm text-t-2">
+					<Typography tag="p" className="text-sm text-t-2">
 						{t("library.textDetail.reportDialog.success")}
-					</p>
+					</Typography>
 				) : submitted === "duplicate" ? (
-					<p className="text-sm text-t-2">
+					<Typography tag="p" className="text-sm text-t-2">
 						{t("library.textDetail.reportDialog.alreadyReported")}
-					</p>
+					</Typography>
 				) : (
 					<form action={handleSubmit} className="flex flex-col gap-4">
 						<div className="flex flex-col gap-1.5">
-							<span className="text-xs text-t-3">
+							<Typography tag="span" className="text-xs text-t-3">
 								{t("library.textDetail.reportDialog.reason")}
-							</span>
+							</Typography>
 							<Select
 								value={reason}
 								onChange={handleChange}
@@ -105,9 +107,9 @@ return (
 						</div>
 
 						<div className="flex flex-col gap-1.5">
-							<span className="text-xs text-t-3">
+							<Typography tag="span" className="text-xs text-t-3">
 								{t("library.textDetail.reportDialog.comment")}
-							</span>
+							</Typography>
 							<Textarea
 								value={comment}
 								onChange={handleChange2}

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps, ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -30,9 +34,9 @@ export const LogsPagination = ({
 	const handleClick2: NonNullable<ComponentProps<typeof PgBtn>["onClick"]> = () => onChange(page + 1);
 return (
 		<div className="flex flex-wrap items-center justify-between gap-2 border-t border-bd-1 px-3.5 py-2.5">
-			<span className="text-[12px] text-t-3">
+			<Typography tag="span" className="text-[12px] text-t-3">
 				{t("admin.logs.pagination.showing", { from, to, total })}
-			</span>
+			</Typography>
 			<div className="flex items-center gap-1">
 				<PgBtn
 					disabled={page <= 1}
@@ -54,12 +58,12 @@ return (
 					{
 				  const handleClick: NonNullable<ComponentProps<typeof PgBtn>["onClick"]> = () => onChange(p as number);
 				  return p === "…" ? (
-						<span
+						<Typography tag="span"
 							key={`ellipsis-${i}`}
 							className="px-0.5 text-[12px] text-t-3"
 						>
 							…
-						</span>
+						</Typography>
 					) : (
 						<PgBtn
 							key={p}
@@ -105,8 +109,7 @@ const PgBtn = ({
 	onClick?: () => void;
 	"aria-label"?: string;
 }) => (
-	<button
-		type="button"
+	<Button
 		disabled={disabled}
 		onClick={onClick}
 		aria-label={ariaLabel}
@@ -118,7 +121,7 @@ const PgBtn = ({
 		)}
 	>
 		{children}
-	</button>
+	</Button>
 );
 
 const buildPages = (page: number, total: number): Array<number | "…"> => {

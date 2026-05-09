@@ -1,6 +1,8 @@
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 interface FeatureFlagsPaginationProps {
 	page: number;
 	totalPages: number;
@@ -28,12 +30,11 @@ export const FeatureFlagsPagination = ({
 	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(page + 1);
 return (
 		<div className="flex items-center justify-between border-t border-bd-1 px-3.5 py-3">
-			<span className="text-[12px] text-t-3">
+			<Typography tag="span" className="text-[12px] text-t-3">
 				{t("admin.featureFlags.pagination.showing", { from, to, total })}
-			</span>
+			</Typography>
 			<div className="flex items-center gap-1">
-				<button
-					type="button"
+				<Button
 					className={btn}
 					onClick={handleClick}
 					disabled={page <= 1}
@@ -41,7 +42,7 @@ return (
 					<svg className="size-3" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.5">
 						<path d="M9 11L5 7.5 9 4" strokeLinecap="round" strokeLinejoin="round" />
 					</svg>
-				</button>
+				</Button>
 
 				{Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
 					const pg =
@@ -54,9 +55,8 @@ return (
 									: page - 2 + i;
 										const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(pg);
 return (
-						<button
+						<Button
 							key={pg}
-							type="button"
 							onClick={handleClick}
 							className={cn(
 								"flex size-7 cursor-pointer items-center justify-center rounded-[6px] border text-[12px] transition-colors",
@@ -66,12 +66,11 @@ return (
 							)}
 						>
 							{pg}
-						</button>
+						</Button>
 					);
 				})}
 
-				<button
-					type="button"
+				<Button
 					className={btn}
 					onClick={handleClick2}
 					disabled={page >= totalPages}
@@ -79,7 +78,7 @@ return (
 					<svg className="size-3" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.5">
 						<path d="M6 4l4 3.5L6 11" strokeLinecap="round" strokeLinejoin="round" />
 					</svg>
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

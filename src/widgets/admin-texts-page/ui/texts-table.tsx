@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminTextSSE } from "@/entities/admin-text";
@@ -54,33 +56,33 @@ return (
 
 			<td className="px-2.5 py-[10px]">
 				<div className="flex flex-col gap-0.5">
-					<span className="line-clamp-1 text-[13px] font-medium leading-[1.3] text-t-1">
+					<Typography tag="span" className="line-clamp-1 text-[13px] font-medium leading-[1.3] text-t-1">
 						{text.title}
-					</span>
-					<span className="flex flex-wrap items-center gap-1.5 text-[11px] text-t-3">
+					</Typography>
+					<Typography tag="span" className="flex flex-wrap items-center gap-1.5 text-[11px] text-t-3">
 						{text.processingStatus === "ERROR" ? (
-							<span className="flex items-center gap-1 text-red-t">
+							<Typography tag="span" className="flex items-center gap-1 text-red-t">
 								<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
 									<circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.3" />
 									<path d="M8 5v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
 									<circle cx="8" cy="11.5" r="0.75" fill="currentColor" />
 								</svg>
 								{t("admin.texts.table.errorMeta")}
-							</span>
+							</Typography>
 						) : (
-							<span className="flex items-center gap-1">
+							<Typography tag="span" className="flex items-center gap-1">
 								<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
 									<path d="M2 12l4-4.5 2.5 2.5L12 5l2 2.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
 								</svg>
 								{text.tokenCount > 0
 									? t("admin.texts.table.tokens", { count: text.tokenCount })
 									: t("admin.texts.table.notProcessed")}
-							</span>
+							</Typography>
 						)}
 						{text.tags.length > 0 && (
-							<span>{text.tags.map((tag) => tag.name).join(", ")}</span>
+							<Typography tag="span">{text.tags.map((tag) => tag.name).join(", ")}</Typography>
 						)}
-					</span>
+					</Typography>
 				</div>
 			</td>
 
@@ -98,7 +100,7 @@ return (
 
 			<td className="px-2.5 py-[10px] text-[12px] text-t-2">
 				{text.readCount > 0 ? text.readCount.toLocaleString("ru-RU") : (
-					<span className="text-t-3">—</span>
+					<Typography tag="span" className="text-t-3">—</Typography>
 				)}
 			</td>
 

@@ -21,11 +21,11 @@ export const WordsPerDayChart = ({ points, period }: WordsPerDayChartProps) => {
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.perDay.title")}
 				</Typography>
-				<span className="text-[11px] text-t-3">
+				<Typography tag="span" className="text-[11px] text-t-3">
 				{period === "all"
 					? t("statistics.perDay.metaAll")
 					: t("statistics.perDay.meta")}
-			</span>
+			</Typography>
 			</header>
 
 			{points.length === 0 ? (
@@ -52,9 +52,9 @@ export const WordsPerDayChart = ({ points, period }: WordsPerDayChartProps) => {
 										title={`${p.date}: ${p.count}`}
 									/>
 								</div>
-								<span className="h-[12px] text-[9.5px] font-medium text-t-3">
+								<Typography tag="span" className="h-[12px] text-[9.5px] font-medium text-t-3">
 									{isMajor ? idx + 1 : ""}
-								</span>
+								</Typography>
 							</div>
 						);
 					})}

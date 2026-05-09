@@ -33,7 +33,7 @@ export const SectionCard = ({
 						{title}
 					</Typography>
 				) : (
-					<span />
+					<Typography tag="span" />
 				)}
 				{headerExtra}
 			</header>

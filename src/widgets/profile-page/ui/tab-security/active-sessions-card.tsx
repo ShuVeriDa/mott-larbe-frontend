@@ -43,13 +43,13 @@ const SessionRow = ({
 		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => onTerminate(session.id);
 return (
 		<div className="flex items-center gap-3 border-b border-hairline border-bd-1 px-4 py-2.5 last:border-b-0">
-			<span
+			<Typography tag="span"
 				className={`flex size-8 shrink-0 items-center justify-center rounded-[8px] ${
 					session.isCurrent ? "bg-acc-bg text-acc-t" : "bg-surf-2 text-t-2"
 				}`}
 			>
 				{isPhone(session.device) ? <PhoneIcon /> : <DesktopIcon />}
-			</span>
+			</Typography>
 			<div className="flex-1 min-w-0">
 				<Typography tag="p" className="text-[12.5px] font-medium text-t-1 truncate">
 					{session.device}
@@ -59,9 +59,9 @@ return (
 				</Typography>
 			</div>
 			{session.isCurrent ? (
-				<span className="rounded bg-grn-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-grn-t shrink-0">
+				<Typography tag="span" className="rounded bg-grn-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-grn-t shrink-0">
 					{t("settings.sessions.current")}
-				</span>
+				</Typography>
 			) : (
 				<Button
 					variant="outline"

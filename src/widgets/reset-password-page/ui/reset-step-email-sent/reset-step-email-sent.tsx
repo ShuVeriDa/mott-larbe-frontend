@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { ArrowLeft, Clock, ExternalLink, Mail } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
@@ -69,8 +71,7 @@ return (
 				<Typography tag="span">
 					{t("auth.resetPassword.step2.notReceived")}
 				</Typography>
-				<button
-					type="button"
+				<Button
 					onClick={handleClick}
 					disabled={resendActive || resendPending}
 					className="bg-transparent font-semibold text-acc-t transition-opacity hover:underline disabled:cursor-not-allowed disabled:font-medium disabled:text-t-3 disabled:no-underline"
@@ -80,11 +81,10 @@ return (
 								seconds: resendSecondsLeft,
 							})
 						: t("auth.resetPassword.step2.resend")}
-				</button>
+				</Button>
 			</div>
 
-			<button
-				type="button"
+			<Button
 				onClick={onChangeEmail}
 				className="mt-[18px] inline-flex items-center gap-1.5 bg-transparent text-[12.5px] font-medium text-t-2 transition-colors hover:text-t-1"
 			>
@@ -92,7 +92,7 @@ return (
 				<Typography tag="span">
 					{t("auth.resetPassword.step2.changeEmail")}
 				</Typography>
-			</button>
+			</Button>
 		</section>
 	);
 };

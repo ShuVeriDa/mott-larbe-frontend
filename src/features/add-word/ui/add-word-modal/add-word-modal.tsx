@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { Modal, ModalActions } from "@/shared/ui/modal";
@@ -95,9 +97,9 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 				</Select>
 
 				{error ? (
-					<p className="mb-2 text-[12px] text-red" role="alert">
+					<Typography tag="p" className="mb-2 text-[12px] text-red" role="alert">
 						{error}
-					</p>
+					</Typography>
 				) : null}
 
 				<ModalActions>

@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
@@ -52,16 +54,16 @@ export const BillingSubscriptionsTable = ({
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
 				<div className="flex items-center gap-2">
-					<span className="text-[12.5px] font-semibold text-t-1">
+					<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 						{t("admin.plans.subscriptions.title")}
-					</span>
-					<span className="rounded-[5px] bg-surf-2 px-1.5 py-px text-[10.5px] font-medium text-t-3">
+					</Typography>
+					<Typography tag="span" className="rounded-[5px] bg-surf-2 px-1.5 py-px text-[10.5px] font-medium text-t-3">
 						{total.toLocaleString("ru-RU")}
-					</span>
+					</Typography>
 					{activeCount > 0 && (
-						<span className="rounded-[5px] bg-grn-bg px-1.5 py-px text-[10.5px] font-semibold text-grn-t">
+						<Typography tag="span" className="rounded-[5px] bg-grn-bg px-1.5 py-px text-[10.5px] font-semibold text-grn-t">
 							{activeCount.toLocaleString("ru-RU")} {t("admin.plans.subscriptions.active")}
-						</span>
+						</Typography>
 					)}
 				</div>
 				<Link
@@ -123,9 +125,9 @@ export const BillingSubscriptionsTable = ({
 									className="border-b border-bd-1 last:border-b-0"
 								>
 									<td className="px-4 py-2.5">
-										<span className="font-mono text-[11px] text-t-3">
+										<Typography tag="span" className="font-mono text-[11px] text-t-3">
 											{item.id.slice(0, 8)}…
-										</span>
+										</Typography>
 									</td>
 									<td className="px-4 py-2.5">
 										<div className="text-t-1">{item.user.name}</div>
@@ -134,26 +136,26 @@ export const BillingSubscriptionsTable = ({
 									<td className="px-4 py-2.5 text-t-1">{item.plan.name}</td>
 									<td className="hidden px-4 py-2.5 lg:table-cell">
 										{item.provider ? (
-											<span className="inline-flex items-center gap-1 rounded-[5px] border border-bd-2 bg-surf-2 px-1.5 py-0.5 text-[11px] font-medium text-t-2">
-												<span className="size-1.5 rounded-full bg-acc" />
+											<Typography tag="span" className="inline-flex items-center gap-1 rounded-[5px] border border-bd-2 bg-surf-2 px-1.5 py-0.5 text-[11px] font-medium text-t-2">
+												<Typography tag="span" className="size-1.5 rounded-full bg-acc" />
 												{item.provider}
-											</span>
+											</Typography>
 										) : (
-											<span className="text-t-3">—</span>
+											<Typography tag="span" className="text-t-3">—</Typography>
 										)}
 									</td>
 									<td className="px-4 py-2.5 font-medium text-t-1">
 										{fmtAmount(item.amountCents, item.currency)}
 									</td>
 									<td className="px-4 py-2.5">
-										<span
+										<Typography tag="span"
 											className={cn(
 												"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold",
 												STATUS_CLASS[item.status],
 											)}
 										>
 											{t(`admin.plans.status.${item.status.toLowerCase()}`)}
-										</span>
+										</Typography>
 									</td>
 									<td className="hidden px-4 py-2.5 text-right text-[11.5px] text-t-3 lg:table-cell">
 										{fmtDate(item.createdAt)}

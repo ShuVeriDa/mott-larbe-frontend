@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ReactNode } from 'react';
 import type {
 	AdminPaymentListItem,
@@ -85,9 +89,9 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 		{
 			key: t("admin.payments.receipt.txId"),
 			value: (
-				<span className="font-mono text-[11px] text-t-2">
+				<Typography tag="span" className="font-mono text-[11px] text-t-2">
 					{payment.providerPaymentId}
-				</span>
+				</Typography>
 			),
 		},
 		{
@@ -106,27 +110,27 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 		{
 			key: t("admin.payments.receipt.provider"),
 			value: (
-				<span className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[11px] font-medium text-t-2">
-					<span
+				<Typography tag="span" className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[11px] font-medium text-t-2">
+					<Typography tag="span"
 						className="size-1.5 rounded-full"
 						style={{ background: provColor }}
 					/>
 					{payment.provider}
-				</span>
+				</Typography>
 			),
 		},
 		{
 			key: t("admin.payments.receipt.status"),
 			value: (
-				<span
+				<Typography tag="span"
 					className={cn(
 						"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-px text-[10.5px] font-semibold",
 						sc.cls,
 					)}
 				>
-					<span className={cn("size-[5px] rounded-full", sc.dotCls)} />
+					<Typography tag="span" className={cn("size-[5px] rounded-full", sc.dotCls)} />
 					{t(sc.i18nKey)}
-				</span>
+				</Typography>
 			),
 		},
 	];
@@ -135,11 +139,10 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 		<div className="overflow-hidden rounded-t-[14px] bg-surf sm:rounded-[14px]">
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
-				<span className="font-display text-[14px] font-semibold text-t-1">
+				<Typography tag="span" className="font-display text-[14px] font-semibold text-t-1">
 					{t("admin.payments.receipt.title")}
-				</span>
-				<button
-					type="button"
+				</Typography>
+				<Button
 					onClick={onClose}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
@@ -154,7 +157,7 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 					>
 						<path d="M1 1l10 10M11 1 1 11" />
 					</svg>
-				</button>
+				</Button>
 			</div>
 
 			{/* Body */}
@@ -165,38 +168,36 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 							key={i}
 							className="flex items-center justify-between border-b border-bd-1 px-3 py-2 text-[12.5px] last:border-b-0"
 						>
-							<span className="text-t-3">{key}</span>
-							<span className="font-medium text-t-1">{value}</span>
+							<Typography tag="span" className="text-t-3">{key}</Typography>
+							<Typography tag="span" className="font-medium text-t-1">{value}</Typography>
 						</div>
 					))}
 				</div>
 
 				<div className="flex items-center justify-between px-1 text-[13px] font-semibold text-t-1">
-					<span>{t("admin.payments.receipt.total")}</span>
-					<span className={amtColor}>
+					<Typography tag="span">{t("admin.payments.receipt.total")}</Typography>
+					<Typography tag="span" className={amtColor}>
 						{payment.status === "REFUNDED" ? "−" : ""}
 						{amtStr}
-					</span>
+					</Typography>
 				</div>
 			</div>
 
 			{/* Footer */}
 			<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-4 py-3">
-				<button
-					type="button"
+				<Button
 					onClick={onClose}
 					className="flex h-[32px] items-center rounded-lg border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 				>
 					{t("admin.payments.receipt.close")}
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
 					disabled
 					title={t("admin.payments.receipt.copyLinkUnavailable")}
 					className="flex h-[32px] cursor-not-allowed items-center rounded-lg bg-acc px-4 text-[12.5px] font-semibold text-white opacity-40"
 				>
 					{t("admin.payments.receipt.copyLink")}
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

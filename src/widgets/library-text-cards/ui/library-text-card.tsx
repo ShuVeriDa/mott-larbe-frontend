@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
@@ -46,7 +50,7 @@ export const LibraryTextCard = ({ item, view, index }: LibraryTextCardProps) => 
 				className="animate-in fade-in slide-in-from-bottom-1 group relative flex items-center gap-3 overflow-hidden rounded-base border border-bd-1 bg-surf px-3.5 py-2.5 transition-colors duration-150 hover:border-bd-2 hover:bg-surf-2"
 				style={{ animationDelay: `${delay}ms`, animationFillMode: "both", animationDuration: "220ms" }}
 			>
-				<span
+				<Typography tag="span"
 					aria-hidden="true"
 					className={cn(
 						"absolute left-0 bottom-[5px] top-[5px] w-[2px] rounded-r-[2px] opacity-0 transition-opacity duration-150 group-hover:opacity-100 bg-gradient-to-b",
@@ -55,29 +59,29 @@ export const LibraryTextCard = ({ item, view, index }: LibraryTextCardProps) => 
 					)}
 				/>
 				<div className="min-w-0 flex-1">
-					<p className="truncate text-[13px] font-medium leading-[1.4] tracking-[-0.12px] text-t-1">
+					<Typography tag="p" className="truncate text-[13px] font-medium leading-[1.4] tracking-[-0.12px] text-t-1">
 						{item.title}
-					</p>
+					</Typography>
 					<div className="mt-0.5 flex items-center gap-1 text-[11px] text-t-3">
 						{item.level && (
-							<span className={cn("rounded px-1.5 py-0.5 text-[10px] font-bold", levelConfig.badge)}>
+							<Typography tag="span" className={cn("rounded px-1.5 py-0.5 text-[10px] font-bold", levelConfig.badge)}>
 								{item.level}
-							</span>
+							</Typography>
 						)}
-						<span className="h-[2px] w-[2px] rounded-full bg-t-4" />
-						<span>{t(`library.lang.${item.language}`)}</span>
-						<span className="h-[2px] w-[2px] rounded-full bg-t-4" />
-						<span>{formatWords(item.wordCount)}&nbsp;{t("library.card.wordsUnit")}</span>
-						<span className="h-[2px] w-[2px] rounded-full bg-t-4" />
-						<span>≈{item.readingTime}&nbsp;{t("library.card.minUnit")}</span>
+						<Typography tag="span" className="h-[2px] w-[2px] rounded-full bg-t-4" />
+						<Typography tag="span">{t(`library.lang.${item.language}`)}</Typography>
+						<Typography tag="span" className="h-[2px] w-[2px] rounded-full bg-t-4" />
+						<Typography tag="span">{formatWords(item.wordCount)}&nbsp;{t("library.card.wordsUnit")}</Typography>
+						<Typography tag="span" className="h-[2px] w-[2px] rounded-full bg-t-4" />
+						<Typography tag="span">≈{item.readingTime}&nbsp;{t("library.card.minUnit")}</Typography>
 					</div>
 				</div>
 
 				{item.progressPercent > 0 && (
 					<div className="w-[140px] shrink-0">
 						<div className="mb-1 flex justify-between text-[10px] text-t-3">
-							<span>{t("library.card.progress")}</span>
-							<span>{item.progressPercent}%</span>
+							<Typography tag="span">{t("library.card.progress")}</Typography>
+							<Typography tag="span">{item.progressPercent}%</Typography>
 						</div>
 						<div className="h-[3px] overflow-hidden rounded-full bg-surf-3">
 							<div
@@ -91,9 +95,9 @@ export const LibraryTextCard = ({ item, view, index }: LibraryTextCardProps) => 
 				<div className="flex shrink-0 flex-col items-end gap-1.5">
 					<ActionButton status={item.progressStatus} t={t} />
 					{item.isNew && (
-						<span className="rounded px-1 py-px text-[9px] font-bold uppercase tracking-wide bg-acc-bg text-acc-t">
+						<Typography tag="span" className="rounded px-1 py-px text-[9px] font-bold uppercase tracking-wide bg-acc-bg text-acc-t">
 							{t("library.card.badgeNew")}
-						</span>
+						</Typography>
 					)}
 				</div>
 			</Link>
@@ -107,7 +111,7 @@ return (
 			className="animate-in fade-in slide-in-from-bottom-2 group relative flex flex-col gap-2.5 overflow-hidden rounded-card border border-bd-1 bg-surf px-4 py-3.5 transition-[border-color,background-color,transform,box-shadow] duration-150 hover:-translate-y-px hover:border-bd-2 hover:bg-surf-2 hover:shadow-md active:translate-y-0 [@media(hover:none)]:hover:translate-y-0 [@media(hover:none)]:hover:shadow-none [@media(hover:none)]:active:bg-surf-2"
 			style={{ animationDelay: `${delay}ms`, animationFillMode: "both", animationDuration: "250ms" }}
 		>
-			<span
+			<Typography tag="span"
 				aria-hidden="true"
 				className={cn(
 					"absolute left-0 right-0 top-0 h-[2px] opacity-0 transition-opacity duration-150 group-hover:opacity-100 bg-gradient-to-r",
@@ -119,52 +123,51 @@ return (
 			<div className="flex items-start justify-between gap-2">
 				<div className="flex flex-wrap items-center gap-1">
 					{item.level && (
-						<span className={cn("rounded px-[7px] py-[2px] text-[10px] font-bold tracking-[0.04em]", levelConfig.badge)}>
+						<Typography tag="span" className={cn("rounded px-[7px] py-[2px] text-[10px] font-bold tracking-[0.04em]", levelConfig.badge)}>
 							{item.level}
-						</span>
+						</Typography>
 					)}
-					<span className="rounded border border-bd-1 bg-surf-2 px-[7px] py-[2px] text-[10px] text-t-3">
+					<Typography tag="span" className="rounded border border-bd-1 bg-surf-2 px-[7px] py-[2px] text-[10px] text-t-3">
 						{t(`library.lang.${item.language}`)}
-					</span>
+					</Typography>
 					{item.tags[0] && (
-						<span className="rounded border border-bd-1 bg-surf-3 px-[7px] py-[2px] text-[10px] text-t-3 max-sm:hidden">
+						<Typography tag="span" className="rounded border border-bd-1 bg-surf-3 px-[7px] py-[2px] text-[10px] text-t-3 max-sm:hidden">
 							{item.tags[0].name}
-						</span>
+						</Typography>
 					)}
 					{item.isNew && (
-						<span className="rounded bg-acc-bg px-[5px] py-[1px] text-[9px] font-bold uppercase tracking-[0.05em] text-acc-t">
+						<Typography tag="span" className="rounded bg-acc-bg px-[5px] py-[1px] text-[9px] font-bold uppercase tracking-[0.05em] text-acc-t">
 							{t("library.card.badgeNew")}
-						</span>
+						</Typography>
 					)}
 				</div>
-				<button
-					type="button"
+				<Button
 					onClick={handleClick}
 					className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[5px] text-t-4 transition-colors duration-100 hover:bg-surf-3 hover:text-t-2"
 					aria-label="Меню"
 				>
 					<DotsIcon />
-				</button>
+				</Button>
 			</div>
 
 			<div>
-				<p className="text-[14px] font-medium leading-[1.4] tracking-[-0.15px] text-t-1">
+				<Typography tag="p" className="text-[14px] font-medium leading-[1.4] tracking-[-0.15px] text-t-1">
 					{item.title}
-				</p>
+				</Typography>
 				<div className="mt-1 flex flex-wrap items-center gap-1 text-[11px] text-t-3">
-					<span>{formatWords(item.wordCount)}&nbsp;{t("library.card.wordsUnit")}</span>
-					<span className="h-[2px] w-[2px] shrink-0 rounded-full bg-t-4" />
-					<span>≈{item.readingTime}&nbsp;{t("library.card.minUnit")}</span>
-					<span className="h-[2px] w-[2px] shrink-0 rounded-full bg-t-4" />
-					<span>{item.language}</span>
+					<Typography tag="span">{formatWords(item.wordCount)}&nbsp;{t("library.card.wordsUnit")}</Typography>
+					<Typography tag="span" className="h-[2px] w-[2px] shrink-0 rounded-full bg-t-4" />
+					<Typography tag="span">≈{item.readingTime}&nbsp;{t("library.card.minUnit")}</Typography>
+					<Typography tag="span" className="h-[2px] w-[2px] shrink-0 rounded-full bg-t-4" />
+					<Typography tag="span">{item.language}</Typography>
 				</div>
 			</div>
 
 			{item.progressPercent > 0 && (
 				<div>
 					<div className="mb-1 flex justify-between text-[10px] text-t-3">
-						<span>{t("library.card.progress")}</span>
-						<span>{item.progressPercent}%</span>
+						<Typography tag="span">{t("library.card.progress")}</Typography>
+						<Typography tag="span">{item.progressPercent}%</Typography>
 					</div>
 					<div className="h-[3px] overflow-hidden rounded-full bg-surf-3">
 						<div
@@ -177,9 +180,9 @@ return (
 
 			<div className="mt-0.5 flex items-center justify-between">
 				<ActionButton status={item.progressStatus} t={t} />
-				<span className="text-[10px] text-t-4 max-sm:hidden">
+				<Typography tag="span" className="text-[10px] text-t-4 max-sm:hidden">
 					{item.wordCount.toLocaleString()}&nbsp;{t("library.card.tokens")}
-				</span>
+				</Typography>
 			</div>
 		</Link>
 	);
@@ -194,22 +197,22 @@ const ActionButton = ({
 }) => {
 	if (status === "COMPLETED") {
 		return (
-			<span className="inline-flex h-7 items-center rounded-base border border-grn/20 bg-grn-bg px-3 text-[11px] font-medium text-grn-t">
+			<Typography tag="span" className="inline-flex h-7 items-center rounded-base border border-grn/20 bg-grn-bg px-3 text-[11px] font-medium text-grn-t">
 				✓&nbsp;{t("library.card.done")}
-			</span>
+			</Typography>
 		);
 	}
 	if (status === "IN_PROGRESS") {
 		return (
-			<span className="inline-flex h-7 items-center rounded-base border border-bd-2 bg-surf-2 px-3 text-[11px] font-medium text-t-2">
+			<Typography tag="span" className="inline-flex h-7 items-center rounded-base border border-bd-2 bg-surf-2 px-3 text-[11px] font-medium text-t-2">
 				{t("library.card.continue")}
-			</span>
+			</Typography>
 		);
 	}
 	return (
-		<span className="inline-flex h-7 items-center rounded-base border border-acc/22 bg-acc-bg px-3 text-[11px] font-medium text-acc-t">
+		<Typography tag="span" className="inline-flex h-7 items-center rounded-base border border-acc/22 bg-acc-bg px-3 text-[11px] font-medium text-acc-t">
 			{t("library.card.start")}
-		</span>
+		</Typography>
 	);
 };
 

@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { useEffect } from 'react';
 import { createPortal } from "react-dom";
 import { ExternalLink, Plus } from "lucide-react";
@@ -77,7 +81,7 @@ const PopupBody = ({
 				</div>
 				<div className="text-[11.5px] text-t-3">
 					{t("reader.panel.baseForm")}:{" "}
-					<strong className="font-medium text-t-2">{lookup.baseForm}</strong>
+					<Typography tag="strong" className="font-medium text-t-2">{lookup.baseForm}</Typography>
 				</div>
 			</div>
 			<div className="border-b border-hairline border-bd-1 px-3.5 py-2.5">
@@ -93,18 +97,17 @@ const PopupBody = ({
 			{lookup.tags.length > 0 ? (
 				<div className="flex flex-wrap gap-1 border-b border-hairline border-bd-1 px-3.5 py-2">
 					{lookup.tags.slice(0, 3).map((tag) => (
-						<span
+						<Typography tag="span"
 							key={tag}
 							className="rounded-[4px] border-hairline border-bd-1 bg-surf-2 px-[7px] py-0.5 text-[10.5px] font-medium text-t-2"
 						>
 							{tag}
-						</span>
+						</Typography>
 					))}
 				</div>
 			) : null}
 			<div className="flex gap-1.5 p-2.5">
-				<button
-					type="button"
+				<Button
 					onClick={onPrimary}
 					disabled={isPending}
 					className={cn(
@@ -116,15 +119,14 @@ const PopupBody = ({
 					{lookup.inDictionary
 						? t("reader.popup.inDictionary")
 						: t("reader.popup.addToDictionary")}
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
 					onClick={onOpenInPanel}
 					aria-label={t("reader.popup.openPanel")}
 					className="inline-flex h-[30px] w-[30px] items-center justify-center rounded-base border-hairline border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
 				>
 					<ExternalLink className="size-3.5" strokeWidth={1.4} />
-				</button>
+				</Button>
 			</div>
 		</>
 	);

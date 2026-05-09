@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
@@ -25,8 +27,7 @@ export const FaqItem = ({
 			open ? "border-bd-3" : "border-bd-2",
 		)}
 	>
-		<button
-			type="button"
+		<Button
 			onClick={onToggle}
 			aria-expanded={open}
 			aria-controls={`${id}-content`}
@@ -44,7 +45,7 @@ export const FaqItem = ({
 			>
 				<ChevronDown size={12} strokeWidth={2} />
 			</Typography>
-		</button>
+		</Button>
 		<div
 			id={`${id}-content`}
 			role="region"

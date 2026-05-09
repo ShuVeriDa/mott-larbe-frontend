@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { PlanType } from "@/entities/admin-subscription";
 
+import { Typography } from "@/shared/ui/typography";
 interface Props {
 	plan: PlanType;
 	label: string;
@@ -15,15 +16,15 @@ const styles: Record<NonNullable<PlanType>, string> = {
 };
 
 export const SubscriptionPlanChip = ({ plan, label }: Props) => {
-	if (!plan) return <span className="text-[12px] text-t-3">—</span>;
+	if (!plan) return <Typography tag="span" className="text-[12px] text-t-3">—</Typography>;
 	return (
-		<span
+		<Typography tag="span"
 			className={cn(
 				"inline-flex items-center rounded px-[7px] py-[2px] text-[10px] font-semibold whitespace-nowrap",
 				styles[plan] ?? "bg-surf-3 text-t-3",
 			)}
 		>
 			{label}
-		</span>
+		</Typography>
 	);
 };

@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect } from 'react';
 import { useAdminCouponsPage } from "../model/use-admin-coupons-page";
 import { CouponsTopbar } from "./coupons-topbar";
@@ -164,15 +166,14 @@ return (
 					<div className="fixed bottom-0 left-0 right-0 z-310 max-h-[85vh] overflow-y-auto rounded-t-[18px] bg-surf shadow-[0_-4px_24px_rgba(0,0,0,0.14)] md:hidden [&::-webkit-scrollbar]:w-0">
 						<div className="mx-auto mt-3 h-1 w-9 rounded-full bg-bd-3" />
 						<div className="flex justify-end px-3.5 pt-2">
-							<button
-								type="button"
+							<Button
 								onClick={closeMobileSheet}
 								className="flex size-7 items-center justify-center rounded-lg bg-surf-2 text-t-2"
 							>
 								<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
 									<path d="M2 2l10 10M12 2L2 12" />
 								</svg>
-							</button>
+							</Button>
 						</div>
 						<div className="px-3.5 pb-6 pt-1">
 							{detail ? (

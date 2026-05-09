@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 
@@ -38,30 +42,30 @@ return (
 				onClick={handleClick}
 			>
 				<div className="px-5 pb-4 pt-5">
-					<p className="text-[14.5px] font-semibold text-t-1">
+					<Typography tag="p" className="text-[14.5px] font-semibold text-t-1">
 						{t("admin.tokenization.bulk.resetConfirmTitle")}
-					</p>
-					<p className="mt-1.5 text-[12.5px] leading-relaxed text-t-3">{message}</p>
+					</Typography>
+					<Typography tag="p" className="mt-1.5 text-[12.5px] leading-relaxed text-t-3">{message}</Typography>
 				</div>
 
 				<div className="flex gap-2 border-t border-bd-1 px-4 py-3.5">
-					<button
+					<Button
 						onClick={onClose}
 						disabled={isLoading}
 						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-bd-2 text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 disabled:opacity-50"
 					>
 						{t("admin.tokenization.bulk.resetCancelBtn")}
-					</button>
-					<button
+					</Button>
+					<Button
 						onClick={onConfirm}
 						disabled={isLoading}
 						className="flex h-[34px] flex-1 items-center justify-center gap-1.5 rounded-base bg-red-500 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						{isLoading && (
-							<span className="size-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+							<Typography tag="span" className="size-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
 						)}
 						{t("admin.tokenization.bulk.resetConfirmBtn")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

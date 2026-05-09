@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Typography } from "@/shared/ui/typography";
 interface DictionaryUnknownWordsNoticeProps {
 	count: number;
 	lang: string;
@@ -18,10 +19,10 @@ export const DictionaryUnknownWordsNotice = ({
 			<svg className="size-4 shrink-0 text-amber-500" viewBox="0 0 16 16" fill="currentColor">
 				<path d="M8 1.333A6.667 6.667 0 1 0 8 14.667 6.667 6.667 0 0 0 8 1.333Zm.667 10H7.333V9.333h1.334V11.333Zm0-4H7.333v-4h1.334v4Z"/>
 			</svg>
-			<p className="flex-1 text-[12.5px] text-t-2">
-				<span className="font-semibold text-t-1">{count}</span>{" "}
+			<Typography tag="p" className="flex-1 text-[12.5px] text-t-2">
+				<Typography tag="span" className="font-semibold text-t-1">{count}</Typography>{" "}
 				{t("admin.dictionary.notice.unknownWords")}
-			</p>
+			</Typography>
 			<Link
 				href={`/${lang}/admin/unknown-words`}
 				className="shrink-0 text-[12px] font-medium text-acc hover:underline"

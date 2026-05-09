@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, ReactNode, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -98,20 +102,19 @@ return (
 				<div className="flex max-h-[80vh] w-[560px] max-w-full flex-col overflow-hidden rounded-[14px] border border-bd-2 bg-surf shadow-lg max-sm:max-h-[88vh] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[16px]">
 					{/* Header */}
 					<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-4.5 py-3.5 max-sm:px-4 max-sm:py-3">
-						<span className="font-display text-[15px] text-t-1">
+						<Typography tag="span" className="font-display text-[15px] text-t-1">
 							{version
 								? t("admin.texts.versions.modal.title").replace("{n}", String(version.version))
 								: t("admin.texts.versions.modal.title").replace("{n}", "…")}
-						</span>
-						<button
-							type="button"
+						</Typography>
+						<Button
 							onClick={onClose}
 							className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 						>
 							<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
 								<path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
 							</svg>
-						</button>
+						</Button>
 					</div>
 
 					{/* Tabs */}
@@ -119,9 +122,8 @@ return (
 						{tabs.map(({ key, label }) => {
 						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setTab(key);
 						  return (
-							<button
+							<Button
 								key={key}
-								type="button"
 								onClick={handleClick}
 								className={cn(
 									"-mb-px border-b-2 px-3 py-2.5 text-[12.5px] transition-colors",
@@ -131,7 +133,7 @@ return (
 								)}
 							>
 								{label}
-							</button>
+							</Button>
 						);
 						})}
 					</div>
@@ -228,15 +230,15 @@ return (
 								{tab === "log" && (
 									<div className="m-4 overflow-y-auto rounded-[8px] bg-surf-3 px-3 py-2.5 max-h-[300px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded [&::-webkit-scrollbar-thumb]:bg-surf-4">
 										{version.logs.length === 0 ? (
-											<span className="text-[12px] text-t-3">{t("admin.texts.versions.modal.noLogs")}</span>
+											<Typography tag="span" className="text-[12px] text-t-3">{t("admin.texts.versions.modal.noLogs")}</Typography>
 										) : (
 											<div className="flex flex-col gap-1 font-mono text-[11px] leading-[1.7]">
 												{version.logs.map((log) => (
 													<div key={log.id} className="flex gap-2">
-														<span className="shrink-0 text-t-3">
+														<Typography tag="span" className="shrink-0 text-t-3">
 															{new Date(log.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
-														</span>
-														<span className={LogLevelClass[log.level]}>{log.message}</span>
+														</Typography>
+														<Typography tag="span" className={LogLevelClass[log.level]}>{log.message}</Typography>
 													</div>
 												))}
 											</div>
@@ -249,16 +251,14 @@ return (
 
 					{/* Footer */}
 					<div className="flex shrink-0 items-center justify-end gap-2 border-t border-bd-1 px-4 py-3 max-sm:px-4 max-sm:pb-5">
-						<button
-							type="button"
+						<Button
 							onClick={onClose}
 							className="flex h-[30px] items-center rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 						>
 							{t("admin.texts.versions.modal.close")}
-						</button>
+						</Button>
 						{version && (
-							<button
-								type="button"
+							<Button
 								onClick={handleClick}
 								className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							>
@@ -267,29 +267,27 @@ return (
 									<path d="M3 13h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
 								</svg>
 								{t("admin.texts.versions.modal.download")}
-							</button>
+							</Button>
 						)}
 						{canRetry && (
-							<button
-								type="button"
+							<Button
 								onClick={handleClick2}
 								disabled={isRetrying}
 								className="flex h-[30px] items-center gap-1.5 rounded-base bg-amb px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 							>
-								{isRetrying && <span className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
+								{isRetrying && <Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
 								{isRetrying ? t("admin.texts.versions.modal.retrying") : t("admin.texts.versions.modal.retry")}
-							</button>
+							</Button>
 						)}
 						{canRestore && (
-							<button
-								type="button"
+							<Button
 								onClick={handleClick3}
 								disabled={isRestoring}
 								className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 							>
-								{isRestoring && <span className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
+								{isRestoring && <Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
 								{isRestoring ? t("admin.texts.versions.modal.restoring") : t("admin.texts.versions.modal.restore")}
-							</button>
+							</Button>
 						)}
 					</div>
 				</div>

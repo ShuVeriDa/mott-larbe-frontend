@@ -1,6 +1,7 @@
 import type { FeatureFlagHistoryItem, FeatureFlagHistoryEventType } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
 
+import { Typography } from "@/shared/ui/typography";
 const formatDate = (iso: string) =>
 	new Date(iso).toLocaleString("ru-RU", {
 		day: "numeric",
@@ -69,7 +70,7 @@ export const HistoryTable = ({ items, isLoading, t }: HistoryTableProps) => (
 								className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2"
 							>
 								<td className="pl-3.5">
-									<span
+									<Typography tag="span"
 										className={cn(
 											"block size-[7px] rounded-full",
 											EVENT_DOT[item.eventType] ?? "bg-acc",
@@ -80,17 +81,17 @@ export const HistoryTable = ({ items, isLoading, t }: HistoryTableProps) => (
 									{t(`admin.featureFlags.history.eventType.${item.eventType}`)}
 								</td>
 								<td className="py-3 pl-3.5">
-									<span className="rounded-[5px] border border-bd-1 bg-surf-2 px-1.5 py-0.5 font-mono text-[11px] text-t-2">
+									<Typography tag="span" className="rounded-[5px] border border-bd-1 bg-surf-2 px-1.5 py-0.5 font-mono text-[11px] text-t-2">
 										{item.flagKey}
-									</span>
+									</Typography>
 								</td>
 								<td className="py-3 pl-3.5 text-[11.5px]">
 									{item.actor ? (
-										<span className="text-acc-t font-medium">
+										<Typography tag="span" className="text-acc-t font-medium">
 											{item.actor.name} {item.actor.surname}
-										</span>
+										</Typography>
 									) : (
-										<span className="text-t-3">{t("admin.featureFlags.history.system")}</span>
+										<Typography tag="span" className="text-t-3">{t("admin.featureFlags.history.system")}</Typography>
 									)}
 								</td>
 								<td className="py-3 pl-3.5 pr-3.5 text-right text-[11px] text-t-3">

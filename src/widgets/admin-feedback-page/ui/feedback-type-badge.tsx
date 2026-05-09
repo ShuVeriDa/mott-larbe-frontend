@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { FeedbackType } from "@/entities/feedback";
 
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string) => string;
 
 const TYPE_CLASSES: Record<FeedbackType, string> = {
@@ -17,7 +18,7 @@ interface FeedbackTypeBadgeProps {
 }
 
 export const FeedbackTypeBadge = ({ type, t, className }: FeedbackTypeBadgeProps) => (
-	<span
+	<Typography tag="span"
 		className={cn(
 			"inline-flex items-center rounded-[5px] px-[7px] py-[2px] text-[10px] font-semibold",
 			TYPE_CLASSES[type],
@@ -25,5 +26,5 @@ export const FeedbackTypeBadge = ({ type, t, className }: FeedbackTypeBadgeProps
 		)}
 	>
 		{t(`admin.feedback.type.${type}`)}
-	</span>
+	</Typography>
 );

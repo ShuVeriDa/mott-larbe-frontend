@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { Check, Plus } from "lucide-react";
 import {
 	useAddToVocabulary,
@@ -50,8 +52,7 @@ export const AddToDictionaryButton = ({
 	};
 
 	return (
-		<button
-			type="button"
+		<Button
 			onClick={onClick}
 			disabled={isPending}
 			className={cn(
@@ -75,6 +76,6 @@ export const AddToDictionaryButton = ({
 					{t("reader.panel.addToDictionary")}
 				</>
 			)}
-		</button>
+		</Button>
 	);
 };

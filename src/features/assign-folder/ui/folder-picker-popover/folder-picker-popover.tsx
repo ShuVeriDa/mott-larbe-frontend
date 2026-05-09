@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { type ReactNode } from "react";
 import { cn } from "@/shared/lib/cn";
 import { FolderIcon, type Folder } from "@/entities/folder";
@@ -50,8 +54,7 @@ export const FolderPickerPopover = ({
 					{folders.map((f) => {
 					  return (
 						<li key={f.id}>
-							<button
-								type="button"
+							<Button
 								data-folder-id={f.id}
 								onClick={handleFolderPickClick}
 								className={cn(
@@ -60,7 +63,7 @@ export const FolderPickerPopover = ({
 									"transition-colors hover:bg-surf-2 hover:text-t-1",
 								)}
 							>
-								<span
+								<Typography tag="span"
 									className="flex size-5 shrink-0 items-center justify-center rounded-[5px]"
 									style={{
 										background: `${f.color ?? "#2254d3"}1F`,
@@ -68,9 +71,9 @@ export const FolderPickerPopover = ({
 									}}
 								>
 									<FolderIcon icon={f.icon} className="size-3" />
-								</span>
-								<span className="truncate">{f.name}</span>
-							</button>
+								</Typography>
+								<Typography tag="span" className="truncate">{f.name}</Typography>
+							</Button>
 						</li>
 					);
 					})}

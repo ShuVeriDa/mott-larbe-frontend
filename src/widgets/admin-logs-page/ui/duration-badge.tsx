@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/cn";
 
+import { Typography } from "@/shared/ui/typography";
 const getDurClass = (ms: number | null) => {
 	if (ms === null) return "text-t-3";
 	if (ms <= 100) return "text-grn-t";
@@ -19,7 +20,7 @@ interface DurationBadgeProps {
 }
 
 export const DurationBadge = ({ durationMs }: DurationBadgeProps) => (
-	<span className={cn("tabular-nums text-[11.5px] whitespace-nowrap", getDurClass(durationMs))}>
+	<Typography tag="span" className={cn("tabular-nums text-[11.5px] whitespace-nowrap", getDurClass(durationMs))}>
 		{formatDur(durationMs)}
-	</span>
+	</Typography>
 );

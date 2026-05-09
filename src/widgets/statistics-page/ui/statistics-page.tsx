@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import { useStatistics, type StatsPeriod } from "@/entities/statistics";
 import { PeriodTabs } from "@/features/stats-period-tabs";
@@ -78,13 +80,12 @@ return (
 					<Typography tag="p" className="text-sm text-red">
 						{t("statistics.error")}
 					</Typography>
-					<button
-						type="button"
+					<Button
 						onClick={handleClick}
 						className="rounded-md bg-acc px-4 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
 					>
 						{t("statistics.retry")}
-					</button>
+					</Button>
 				</div>
 			) : (
 				<div className="flex flex-col gap-3.5 overflow-y-auto px-[22px] pb-7 pt-4 max-md:px-4 max-md:pb-6 max-md:pt-3.5 max-[480px]:px-3 max-[480px]:pb-5 max-[480px]:pt-3">

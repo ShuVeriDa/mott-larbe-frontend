@@ -1,4 +1,7 @@
-﻿"use client";
+"use client";
+
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 
 import { ComponentProps } from 'react';
 import type {
@@ -185,25 +188,25 @@ return (
 				<div className="mb-2 text-[11.5px] text-t-3">{payment.user.email}</div>
 				<div className="flex flex-wrap gap-1">
 					{subStatusCfg && (
-						<span
+						<Typography tag="span"
 							className={cn(
 								"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-px text-[10.5px] font-semibold",
 								subStatusCfg.cls,
 							)}
 						>
-							<span className="size-[5px] rounded-full bg-current" />
+							<Typography tag="span" className="size-[5px] rounded-full bg-current" />
 							{t(subStatusCfg.i18nKey)}
-						</span>
+						</Typography>
 					)}
 					{userSubPlanCode && (
-						<span
+						<Typography tag="span"
 							className={cn(
 								"inline-block rounded px-1.5 py-px text-[10px] font-semibold",
 								userSubPlanChipCls,
 							)}
 						>
 							{userSub?.plan.code}
-						</span>
+						</Typography>
 					)}
 				</div>
 			</div>
@@ -215,28 +218,28 @@ return (
 				</div>
 				<div className="space-y-1.5">
 					<div className="flex items-baseline justify-between gap-2">
-						<span className="text-[11.5px] text-t-3">
+						<Typography tag="span" className="text-[11.5px] text-t-3">
 							{t("admin.payments.detail.userId")}
-						</span>
-						<span className="font-mono text-[11px] text-t-3">
+						</Typography>
+						<Typography tag="span" className="font-mono text-[11px] text-t-3">
 							{payment.user.id.slice(0, 16)}…
-						</span>
+						</Typography>
 					</div>
 					<div className="flex items-baseline justify-between gap-2">
-						<span className="text-[11.5px] text-t-3">
+						<Typography tag="span" className="text-[11.5px] text-t-3">
 							{t("admin.payments.detail.registered")}
-						</span>
-						<span className="text-[12px] font-medium text-t-1">
+						</Typography>
+						<Typography tag="span" className="text-[12px] font-medium text-t-1">
 							{fmtDate(payment.user.signupAt)}
-						</span>
+						</Typography>
 					</div>
 					<div className="flex items-baseline justify-between gap-2">
-						<span className="text-[11.5px] text-t-3">
+						<Typography tag="span" className="text-[11.5px] text-t-3">
 							{t("admin.payments.detail.lastSeen")}
-						</span>
-						<span className="text-[12px] font-medium text-t-1">
+						</Typography>
+						<Typography tag="span" className="text-[12px] font-medium text-t-1">
 							{fmtDate(payment.user.lastActiveAt)}
-						</span>
+						</Typography>
 					</div>
 				</div>
 			</div>
@@ -249,7 +252,7 @@ return (
 					</div>
 					<div className="flex flex-wrap gap-1">
 						{payment.user.roles.map(r => (
-							<span
+							<Typography tag="span"
 								key={r.role.name}
 								className={cn(
 									"inline-block rounded px-1.5 py-px text-[10px] font-semibold",
@@ -257,7 +260,7 @@ return (
 								)}
 							>
 								{r.role.name}
-							</span>
+							</Typography>
 						))}
 					</div>
 				</div>
@@ -315,44 +318,44 @@ return (
 
 					<div className="space-y-[3px]">
 						<div className="flex items-center justify-between text-[11.5px]">
-							<span className="text-t-3">ID</span>
-							<span className="font-mono text-[11px] text-t-2">
+							<Typography tag="span" className="text-t-3">ID</Typography>
+							<Typography tag="span" className="font-mono text-[11px] text-t-2">
 								{payment.providerPaymentId}
-							</span>
+							</Typography>
 						</div>
 						<div className="flex items-center justify-between text-[11.5px]">
-							<span className="text-t-3">
+							<Typography tag="span" className="text-t-3">
 								{t("admin.payments.detail.provider")}
-							</span>
-							<span className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf px-1.5 py-px text-[10.5px] font-medium text-t-2">
-								<span
+							</Typography>
+							<Typography tag="span" className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf px-1.5 py-px text-[10.5px] font-medium text-t-2">
+								<Typography tag="span"
 									className="size-1.5 rounded-full"
 									style={{ background: provColor }}
 								/>
 								{payment.provider}
-							</span>
+							</Typography>
 						</div>
 						<div className="flex items-center justify-between text-[11.5px]">
-							<span className="text-t-3">
+							<Typography tag="span" className="text-t-3">
 								{t("admin.payments.detail.date")}
-							</span>
-							<span className="font-medium text-t-2">
+							</Typography>
+							<Typography tag="span" className="font-medium text-t-2">
 								{fmtDate(payment.createdAt)}
-							</span>
+							</Typography>
 						</div>
 						<div className="flex items-center justify-between text-[11.5px]">
-							<span className="text-t-3">
+							<Typography tag="span" className="text-t-3">
 								{t("admin.payments.table.status")}
-							</span>
-							<span
+							</Typography>
+							<Typography tag="span"
 								className={cn(
 									"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-px text-[10px] font-semibold",
 									sc.cls,
 								)}
 							>
-								<span className={cn("size-[5px] rounded-full", sc.dotCls)} />
+								<Typography tag="span" className={cn("size-[5px] rounded-full", sc.dotCls)} />
 								{t(sc.i18nKey)}
-							</span>
+							</Typography>
 						</div>
 					</div>
 				</div>
@@ -377,27 +380,27 @@ return (
 										key={p.id}
 										className="flex items-center gap-1.5 border-b border-bd-1 py-[5px] text-[11.5px] last:border-b-0 last:pb-0"
 									>
-										<span
+										<Typography tag="span"
 											className={cn(
 												"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-px text-[9.5px] font-semibold",
 												pSc.cls,
 											)}
 										>
 											{t(pSc.i18nKey).slice(0, 3).toUpperCase()}
-										</span>
-										<span className="flex-1 text-t-2">
+										</Typography>
+										<Typography tag="span" className="flex-1 text-t-2">
 											{p.subscription?.plan?.name ?? "—"}
-										</span>
-										<span className={cn("font-semibold", pAmtColor)}>
+										</Typography>
+										<Typography tag="span" className={cn("font-semibold", pAmtColor)}>
 											{p.status === "REFUNDED" ? "−" : ""}
 											{fmtAmount(p)}
-										</span>
-										<span className="text-[10.5px] text-t-3">
+										</Typography>
+										<Typography tag="span" className="text-[10.5px] text-t-3">
 											{new Date(p.createdAt).toLocaleDateString("ru-RU", {
 												day: "numeric",
 												month: "short",
 											})}
-										</span>
+										</Typography>
 									</div>
 								);
 							})}
@@ -411,8 +414,7 @@ return (
 				<div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
 					{t("admin.payments.detail.actions")}
 				</div>
-				<button
-					type="button"
+				<Button
 					onClick={handleClick}
 					className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
@@ -427,9 +429,8 @@ return (
 						<path d="M4 5h4M4 7h2" strokeLinecap="round" />
 					</svg>
 					{t("admin.payments.detail.viewReceipt")}
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
 					onClick={handleClick2}
 					className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
@@ -443,7 +444,7 @@ return (
 						<path d="M1 3l5 3.5L11 3M1.5 2.5h9a.5.5 0 01.5.5v6a.5.5 0 01-.5.5h-9a.5.5 0 01-.5-.5V3a.5.5 0 01.5-.5z" />
 					</svg>
 					{t("admin.payments.detail.sendReceipt")}
-				</button>
+				</Button>
 				<Link
 					href={`/${lang}/admin/users/${payment.user.id}`}
 					className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
@@ -464,8 +465,7 @@ return (
 					{t("admin.payments.detail.userProfile")}
 				</Link>
 				{payment.status === "SUCCEEDED" && (
-					<button
-						type="button"
+					<Button
 						onClick={handleClick3}
 						className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[12px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 					>
@@ -483,7 +483,7 @@ return (
 							/>
 						</svg>
 						{t("admin.payments.detail.issueRefund")}
-					</button>
+					</Button>
 				)}
 			</div>
 		</div>

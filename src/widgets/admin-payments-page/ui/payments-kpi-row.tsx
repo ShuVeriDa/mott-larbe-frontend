@@ -1,4 +1,6 @@
-﻿"use client";
+"use client";
+
+import { Typography } from "@/shared/ui/typography";
 
 import { ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
@@ -26,9 +28,9 @@ const GrowthSpan = ({ val }: { val: number | null | undefined }) => {
 	if (val == null) return null;
 	const positive = val >= 0;
 	return (
-		<span className={positive ? "text-grn-t" : "text-red-t"}>
+		<Typography tag="span" className={positive ? "text-grn-t" : "text-red-t"}>
 			{fmtGrowth(val)}
-		</span>
+		</Typography>
 	);
 };
 

@@ -6,6 +6,7 @@ import type { CefrLevel } from "@/shared/types";
 import type { LibraryTextLanguage } from "@/entities/library-text";
 import { TextCover } from "./text-cover";
 
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string, vars?: Record<string, string | number>) => string;
 
 interface TextHeroProps {
@@ -69,43 +70,43 @@ export const TextHero = ({
 					</Badge>
 				</div>
 
-				<h1 className="font-display text-[22px] font-normal text-t-1 leading-[1.3] tracking-[-0.2px] max-sm:text-[18px]">
+				<Typography tag="h1" className="font-display text-[22px] font-normal text-t-1 leading-[1.3] tracking-[-0.2px] max-sm:text-[18px]">
 					{title}
-				</h1>
+				</Typography>
 
 				<div className="flex items-center gap-2.5 text-xs text-t-3 flex-wrap max-sm:gap-1.5 max-sm:text-[11px]">
-					{author && <span>{author}</span>}
+					{author && <Typography tag="span">{author}</Typography>}
 					{author && (
-						<span className="w-[2px] h-[2px] rounded-full bg-t-4" />
+						<Typography tag="span" className="w-[2px] h-[2px] rounded-full bg-t-4" />
 					)}
-					<span>
+					<Typography tag="span">
 						{wordCount.toLocaleString()} {t("library.card.wordsUnit")}
-					</span>
-					<span className="w-[2px] h-[2px] rounded-full bg-t-4" />
-					<span>
+					</Typography>
+					<Typography tag="span" className="w-[2px] h-[2px] rounded-full bg-t-4" />
+					<Typography tag="span">
 						~{readingTime} {t("library.card.minUnit")}
-					</span>
+					</Typography>
 				</div>
 
 				<div className="flex items-center gap-2 mt-0.5 flex-wrap max-[380px]:gap-1.5">
 					{isNotReady ? (
-						<span
+						<Typography tag="span"
 							className={cn(
 								buttonVariants({ variant: "ghost", size: "lg" }),
 								"cursor-default opacity-50",
 							)}
 						>
 							{t("library.textDetail.cta.notReady")}
-						</span>
+						</Typography>
 					) : isCompleted ? (
-						<span
+						<Typography tag="span"
 							className={cn(
 								buttonVariants({ variant: "ghost", size: "lg" }),
 								"cursor-default opacity-50",
 							)}
 						>
 							{t("library.textDetail.cta.completed")}
-						</span>
+						</Typography>
 					) : (
 						<Link
 							href={readerHref}

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps, ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { UserEvent, UserEventType, FetchUserEventsQuery } from "@/entities/admin-user";
@@ -158,9 +162,9 @@ return (
 											cfg.bgClass,
 										)}
 									>
-										<span className="size-[13px] [&>svg]:h-full [&>svg]:w-full">
+										<Typography tag="span" className="size-[13px] [&>svg]:h-full [&>svg]:w-full">
 											{cfg.icon}
-										</span>
+										</Typography>
 									</div>
 									<div className="min-w-0 flex-1">
 										<div className="text-[12px] font-semibold text-t-1">
@@ -180,12 +184,12 @@ return (
 
 			{hasMore && !isLoading && (
 				<div className="flex justify-center border-t border-bd-1 p-2.5">
-					<button
+					<Button
 						onClick={onLoadMore}
 						className="border-none bg-transparent text-[12px] text-acc-t transition-opacity hover:opacity-70"
 					>
 						{t("admin.userDetail.events.loadMore", { count: Math.min(25, total - shown) })}
-					</button>
+					</Button>
 				</div>
 			)}
 		</>

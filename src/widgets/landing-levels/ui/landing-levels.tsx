@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -63,9 +65,8 @@ export const LandingLevels = () => {
 					{LEVEL_KEYS.map((key) => {
 					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setActive(key);
 					  return (
-						<button
+						<Button
 							key={key}
-							type="button"
 							role="tab"
 							aria-selected={active === key}
 							onClick={handleClick}
@@ -77,10 +78,10 @@ export const LandingLevels = () => {
 							)}
 						>
 							{t(`landing.levels.tabs.${key}.label`)}
-							<span className="ml-1.5 font-normal opacity-60">
+							<Typography tag="span" className="ml-1.5 font-normal opacity-60">
 								{t(`landing.levels.tabs.${key}.name`)}
-							</span>
-						</button>
+							</Typography>
+						</Button>
 					);
 					})}
 				</div>
@@ -94,9 +95,9 @@ export const LandingLevels = () => {
 							>
 								{t("landing.levels.myDict.title")}
 							</Typography>
-							<span className="rounded-full bg-acc-bg px-2.5 py-0.5 text-[12px] font-medium text-acc-t">
+							<Typography tag="span" className="rounded-full bg-acc-bg px-2.5 py-0.5 text-[12px] font-medium text-acc-t">
 								{t("landing.levels.myDict.badge")}
-							</span>
+							</Typography>
 						</div>
 						<ul className="space-y-2">
 							{DEMO_WORDS.map(({ word, translation, status }) => (
@@ -104,25 +105,24 @@ export const LandingLevels = () => {
 									key={word}
 									className="flex items-center gap-3 rounded-[8px] bg-bg px-3 py-2"
 								>
-									<span
+									<Typography tag="span"
 										className={cn(
 											"h-2 w-2 shrink-0 rounded-full",
 											STATUS_COLOR[status],
 										)}
 									/>
-									<span className="flex-1 text-[14px] font-medium text-t-1">
+									<Typography tag="span" className="flex-1 text-[14px] font-medium text-t-1">
 										{word}
-									</span>
-									<span className="text-[13px] text-t-2">{translation}</span>
+									</Typography>
+									<Typography tag="span" className="text-[13px] text-t-2">{translation}</Typography>
 								</li>
 							))}
 						</ul>
-						<button
-							type="button"
+						<Button
 							className="mt-4 text-[13px] font-medium text-acc-t hover:underline"
 						>
 							{t("landing.levels.myDict.viewAll")}
-						</button>
+						</Button>
 					</article>
 
 					<article className="rounded-[14px] border-hairline border-bd-2 bg-surf p-6">

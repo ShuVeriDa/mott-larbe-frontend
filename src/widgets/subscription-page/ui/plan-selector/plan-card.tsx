@@ -163,9 +163,9 @@ return (
 			onClick={handleClick}
 		>
 			{popular ? (
-				<span className="absolute right-0 top-0 rounded-bl-[7px] rounded-tr-[10px] bg-acc px-2.5 py-[3px] text-[9px] font-bold uppercase tracking-[0.3px] text-white">
+				<Typography tag="span" className="absolute right-0 top-0 rounded-bl-[7px] rounded-tr-[10px] bg-acc px-2.5 py-[3px] text-[9px] font-bold uppercase tracking-[0.3px] text-white">
 					{t("subscription.planCard.popular")}
-				</span>
+				</Typography>
 			) : null}
 
 			<div className="flex items-center gap-2">
@@ -236,7 +236,7 @@ return (
 								aria-hidden="true"
 							/>
 						)}
-						<span>{feat.label}</span>
+						<Typography tag="span">{feat.label}</Typography>
 					</div>
 				))}
 			</div>

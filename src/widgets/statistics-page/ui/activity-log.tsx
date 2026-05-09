@@ -93,9 +93,9 @@ export const ActivityLog = ({ items }: ActivityLogProps) => {
 										{item.description}
 									</Typography>
 								</div>
-								<span className="whitespace-nowrap text-[11px] text-t-3">
+								<Typography tag="span" className="whitespace-nowrap text-[11px] text-t-3">
 									{time}
-								</span>
+								</Typography>
 							</li>
 						);
 					})}

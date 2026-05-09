@@ -28,14 +28,13 @@ export const VocabularyTopbar = ({
 
 			<SearchInput className="ml-auto h-[30px] max-w-[240px] flex-1 max-md:max-w-none" />
 
-			<button
-				type="button"
+			<Button
 				onClick={onOpenDrawer}
 				aria-label={t("vocabulary.openFilters")}
 				className="hidden size-[30px] items-center justify-center rounded-base border-hairline border-bd-2 bg-surf-2 text-t-2 transition-colors hover:text-t-1 max-md:flex"
 			>
 				<SlidersHorizontal className="size-[15px]" strokeWidth={2} />
-			</button>
+			</Button>
 
 			<Button
 				variant="action"

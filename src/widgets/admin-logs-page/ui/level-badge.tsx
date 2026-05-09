@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { AdminLogLevel } from "@/entities/admin-log";
 
+import { Typography } from "@/shared/ui/typography";
 const LEVEL_STYLES: Record<
 	AdminLogLevel,
 	{ badge: string; dot: string; label: string }
@@ -40,15 +41,15 @@ interface LevelBadgeProps {
 export const LevelBadge = ({ level, label }: LevelBadgeProps) => {
 	const styles = LEVEL_STYLES[level];
 	return (
-		<span
+		<Typography tag="span"
 			className={cn(
 				"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold whitespace-nowrap",
 				styles.badge,
 			)}
 		>
-			<span className={cn("size-1.5 shrink-0 rounded-full", styles.dot)} />
+			<Typography tag="span" className={cn("size-1.5 shrink-0 rounded-full", styles.dot)} />
 			{label ?? styles.label}
-		</span>
+		</Typography>
 	);
 };
 

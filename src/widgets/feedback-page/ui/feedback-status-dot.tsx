@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { FeedbackStatus } from "@/entities/feedback";
 
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string) => string;
 
 interface FeedbackStatusDotProps {
@@ -20,8 +21,8 @@ export const FeedbackStatusDot = ({ status, t }: FeedbackStatusDotProps) => (
 		<div
 			className={cn("size-[5px] shrink-0 rounded-full", STATUS_DOT_COLOR[status])}
 		/>
-		<span className="text-[10.5px] text-t-2">
+		<Typography tag="span" className="text-[10.5px] text-t-2">
 			{t(`feedback.statuses.${status}`)}
-		</span>
+		</Typography>
 	</div>
 );

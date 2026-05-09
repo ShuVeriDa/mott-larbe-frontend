@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import type { Editor } from "@tiptap/react";
 import {
 	type ReactNode,
@@ -36,9 +38,8 @@ export const SlashMenu = ({ items, command, ref }: SlashMenuProps) => {
 		<div className="z-50 min-w-[220px] overflow-hidden rounded-[10px] border border-bd-2 bg-bg p-1 shadow-lg">
 			{items.map((item, i) => {
 				return (
-					<button
+					<Button
 						key={i}
-						type="button"
 						data-index={i}
 						onMouseDown={handleItemMouseDown}
 						className={`flex w-full items-center gap-3 rounded-base px-2.5 py-2 text-left transition-colors ${
@@ -56,7 +57,7 @@ export const SlashMenu = ({ items, command, ref }: SlashMenuProps) => {
 								{item.description}
 							</div>
 						</div>
-					</button>
+					</Button>
 				);
 			})}
 		</div>

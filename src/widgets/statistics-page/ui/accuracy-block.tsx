@@ -29,7 +29,7 @@ const AccuracyRow = ({
 		<div className="flex items-center justify-between">
 			<div className="flex items-center gap-1.5 text-xs text-t-2">
 				{dotColor ? (
-					<span className={`size-[7px] rounded-full ${dotColor}`} />
+					<Typography tag="span" className={`size-[7px] rounded-full ${dotColor}`} />
 				) : null}
 				{label}
 			</div>
@@ -63,9 +63,9 @@ export const AccuracyBlock = ({ accuracy }: AccuracyBlockProps) => {
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.accuracy.title")}
 				</Typography>
-				<span className="text-[11px] text-t-3">
+				<Typography tag="span" className="text-[11px] text-t-3">
 					{t("statistics.accuracy.meta")}
-				</span>
+				</Typography>
 			</header>
 
 			<div className="flex items-start gap-5 max-[480px]:flex-col max-[480px]:gap-3">
@@ -103,9 +103,9 @@ export const AccuracyBlock = ({ accuracy }: AccuracyBlockProps) => {
 
 					<div className="mt-0.5 border-t border-bd-1 pt-1.5">
 						<div className="flex items-center justify-between">
-							<span className="text-[11px] text-t-3">
+							<Typography tag="span" className="text-[11px] text-t-3">
 								{t("statistics.accuracy.bestStreak")}
-							</span>
+							</Typography>
 							<Typography
 								tag="span"
 								className="text-xs font-semibold text-t-1"
@@ -116,9 +116,9 @@ export const AccuracyBlock = ({ accuracy }: AccuracyBlockProps) => {
 							</Typography>
 						</div>
 						<div className="mt-1 flex items-center justify-between">
-							<span className="text-[11px] text-t-3">
+							<Typography tag="span" className="text-[11px] text-t-3">
 								{t("statistics.accuracy.sessions")}
-							</span>
+							</Typography>
 							<Typography
 								tag="span"
 								className="text-xs font-semibold text-t-1"

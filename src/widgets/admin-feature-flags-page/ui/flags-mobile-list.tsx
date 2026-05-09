@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagItem } from "@/entities/feature-flag";
@@ -59,22 +61,22 @@ export const FlagsMobileList = ({
 				>
 					<div className="flex items-start gap-2.5 p-3">
 						<div className="min-w-0 flex-1">
-							<span
+							<Typography tag="span"
 								className={cn(
 									"mb-1 inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap rounded-[5px] border border-bd-1 bg-surf-2 px-1.5 py-0.5 font-mono text-[11.5px] text-t-1",
 								)}
 							>
 								{flag.key}
-							</span>
+							</Typography>
 							{flag.description && (
-								<p className="mb-1.5 text-[12px] text-t-2">{flag.description}</p>
+								<Typography tag="p" className="mb-1.5 text-[12px] text-t-2">{flag.description}</Typography>
 							)}
 							<div className="flex flex-wrap items-center gap-1.5">
 								<FlagCategoryBadge category={flag.category} t={t} />
 								{flag.environments.map((env) => (
 									<FlagEnvChip key={env} env={env} />
 								))}
-								<span className="text-[11px] text-t-3">{formatDate(flag.updatedAt)}</span>
+								<Typography tag="span" className="text-[11px] text-t-3">{formatDate(flag.updatedAt)}</Typography>
 							</div>
 						</div>
 						<div className="flex shrink-0 flex-col items-end gap-2">

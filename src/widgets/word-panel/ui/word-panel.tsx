@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { X } from "lucide-react";
 import { useWordLookupStore } from "@/features/word-lookup";
 import { cn } from "@/shared/lib/cn";
@@ -31,17 +35,16 @@ export const WordPanel = ({ textId }: WordPanelProps) => {
 			)}
 		>
 			<div className="flex shrink-0 items-center justify-between border-b border-hairline border-bd-1 px-3.5 py-2.5">
-				<span className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
+				<Typography tag="span" className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
 					{t("reader.panel.label")}
-				</span>
-				<button
-					type="button"
+				</Typography>
+				<Button
 					onClick={closePanel}
 					aria-label={t("reader.panel.close")}
 					className="inline-flex size-6 items-center justify-center rounded-[5px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
 					<X className="size-3" strokeWidth={1.6} />
-				</button>
+				</Button>
 			</div>
 			{showWord && activeToken ? (
 				<WordPanelContent token={activeToken} textId={textId} />

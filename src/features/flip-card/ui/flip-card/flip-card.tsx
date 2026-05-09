@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import type { ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 
@@ -24,8 +26,7 @@ export const FlipCard = ({
 		)}
 		style={{ perspective: "1000px" }}
 	>
-		<button
-			type="button"
+		<Button
 			onClick={onFlip}
 			aria-pressed={flipped}
 			className={cn(
@@ -65,6 +66,6 @@ export const FlipCard = ({
 			>
 				{back}
 			</div>
-		</button>
+		</Button>
 	</div>
 );

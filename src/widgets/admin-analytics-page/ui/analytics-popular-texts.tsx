@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -35,12 +39,12 @@ export const AnalyticsPopularTexts = ({
 	return (
 		<div className="rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="px-4 pt-3.5">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.analytics.popularTexts.title")}
-				</span>
-				<span className="ml-2 text-[11px] text-t-3">
+				</Typography>
+				<Typography tag="span" className="ml-2 text-[11px] text-t-3">
 					{t("admin.analytics.popularTexts.subtitle")}
-				</span>
+				</Typography>
 			</div>
 
 			{/* Tab strip */}
@@ -48,9 +52,8 @@ export const AnalyticsPopularTexts = ({
 				{TABS.map((tb) => {
 				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onTabChange(tb);
 				  return (
-					<button
+					<Button
 						key={tb}
-						type="button"
 						onClick={handleClick}
 						className={cn(
 							"whitespace-nowrap border-b-2 px-2.5 py-2 text-[12px] font-medium transition-colors",
@@ -60,7 +63,7 @@ export const AnalyticsPopularTexts = ({
 						)}
 					>
 						{t(`admin.analytics.popularTexts.tab${tb.charAt(0).toUpperCase() + tb.slice(1)}`)}
-					</button>
+					</Button>
 				);
 				})}
 			</div>
@@ -119,14 +122,14 @@ export const AnalyticsPopularTexts = ({
 										</td>
 										<td className="px-2 py-2.5">
 											{item.level && (
-												<span
+												<Typography tag="span"
 													className={cn(
 														"inline-flex h-5 w-8 items-center justify-center rounded-[5px] text-[10.5px] font-bold",
 														LEVEL_BADGE_CLASS[item.level],
 													)}
 												>
 													{item.level}
-												</span>
+												</Typography>
 											)}
 										</td>
 										<td className="py-2.5 pl-2 pr-4 text-right font-mono text-[12px] text-t-2">

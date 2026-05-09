@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import type { PaymentUiTab } from "@/entities/admin-payment";
 import { cn } from "@/shared/lib/cn";
@@ -27,9 +31,8 @@ export const PaymentsTabs = ({ active, counts, onChange }: Props) => {
 				{TABS.map(({ key, i18nKey }) => {
 				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(key);
 				  return (
-					<button
+					<Button
 						key={key}
-						type="button"
 						onClick={handleClick}
 						className={cn(
 							"flex h-[26px] items-center gap-1 whitespace-nowrap rounded-base px-2.5 text-[12px] transition-colors",
@@ -39,15 +42,15 @@ export const PaymentsTabs = ({ active, counts, onChange }: Props) => {
 						)}
 					>
 						{t(i18nKey)}
-						<span
+						<Typography tag="span"
 							className={cn(
 								"rounded px-[5px] py-px text-[10px] font-semibold text-t-3",
 								active === key ? "bg-surf-2" : "bg-surf-3",
 							)}
 						>
 							{counts[key].toLocaleString("ru-RU")}
-						</span>
-					</button>
+						</Typography>
+					</Button>
 				);
 				})}
 			</div>

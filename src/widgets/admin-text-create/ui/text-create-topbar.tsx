@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { useI18n } from "@/shared/lib/i18n";
 import Link from "next/link";
 import type { SaveState } from "../model/use-admin-text-create-page";
@@ -59,10 +63,10 @@ export const TextCreateTopbar = ({
 					>
 						{t("admin.texts.title")}
 					</Link>
-					<span className="shrink-0 text-t-4 max-[600px]:hidden">/</span>
-					<span className="truncate font-medium text-t-2">
+					<Typography tag="span" className="shrink-0 text-t-4 max-[600px]:hidden">/</Typography>
+					<Typography tag="span" className="truncate font-medium text-t-2">
 						{t("admin.texts.createPage.newText")}
-					</span>
+					</Typography>
 				</nav>
 			</div>
 
@@ -72,7 +76,7 @@ export const TextCreateTopbar = ({
 				{statusLabel && (
 					<div className="flex items-center gap-1.5 max-[600px]:hidden">
 						{saveState === "unsaved" && (
-							<span className="h-[7px] w-[7px] shrink-0 animate-pulse rounded-full bg-amb" />
+							<Typography tag="span" className="h-[7px] w-[7px] shrink-0 animate-pulse rounded-full bg-amb" />
 						)}
 						{saveState === "saved" && (
 							<svg
@@ -91,12 +95,11 @@ export const TextCreateTopbar = ({
 								/>
 							</svg>
 						)}
-						<span className="text-[11px] text-t-3">{statusLabel}</span>
+						<Typography tag="span" className="text-[11px] text-t-3">{statusLabel}</Typography>
 					</div>
 				)}
 
-				<button
-					type="button"
+				<Button
 					onClick={onSaveDraft}
 					disabled={isSaving}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-xs text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50 max-[600px]:hidden"
@@ -121,10 +124,9 @@ export const TextCreateTopbar = ({
 						/>
 					</svg>
 					{t("admin.texts.createPage.saveDraft")}
-				</button>
+				</Button>
 
-				<button
-					type="button"
+				<Button
 					onClick={onPublish}
 					disabled={isSaving}
 					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-xs font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50"
@@ -138,13 +140,13 @@ export const TextCreateTopbar = ({
 							strokeLinejoin="round"
 						/>
 					</svg>
-					<span className="max-[600px]:hidden">
+					<Typography tag="span" className="max-[600px]:hidden">
 						{t("admin.texts.createPage.publish")}
-					</span>
-					<span className="hidden max-[600px]:inline">
+					</Typography>
+					<Typography tag="span" className="hidden max-[600px]:inline">
 						{t("admin.texts.createPage.publish")}
-					</span>
-				</button>
+					</Typography>
+				</Button>
 			</div>
 		</header>
 	);

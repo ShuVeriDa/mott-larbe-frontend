@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { useI18n } from "@/shared/lib/i18n";
 
 interface UnknownWordsTopbarProps {
@@ -24,8 +28,7 @@ export const UnknownWordsTopbar = ({
 				</div>
 			</div>
 			<div className="ml-auto flex items-center gap-2">
-				<button
-					type="button"
+				<Button
 					onClick={onExport}
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
@@ -38,12 +41,11 @@ export const UnknownWordsTopbar = ({
 							strokeLinejoin="round"
 						/>
 					</svg>
-					<span className="max-sm:hidden">
+					<Typography tag="span" className="max-sm:hidden">
 						{t("admin.unknownWords.export")}
-					</span>
-				</button>
-				<button
-					type="button"
+					</Typography>
+				</Button>
+				<Button
 					onClick={onClearAll}
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-red-t transition-colors hover:border-red/30 hover:bg-red-bg"
 				>
@@ -61,10 +63,10 @@ export const UnknownWordsTopbar = ({
 							strokeLinecap="round"
 						/>
 					</svg>
-					<span className="max-sm:hidden">
+					<Typography tag="span" className="max-sm:hidden">
 						{t("admin.unknownWords.clearAll")}
-					</span>
-				</button>
+					</Typography>
+				</Button>
 			</div>
 		</header>
 	);

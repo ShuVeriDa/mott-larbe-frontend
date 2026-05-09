@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { ComponentProps } from 'react';
 import { Tooltip as TooltipPrimitive } from "radix-ui"
 

@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { useEffect, useRef } from 'react';
 import { useQueryClient } from "@tanstack/react-query";
 import { useLibraryFilters } from "@/features/library-filters";
@@ -78,14 +82,13 @@ export const LibraryPage = () => {
 
 				{query.isError && (
 					<div className="flex flex-col items-center justify-center gap-2 py-16 text-t-3">
-						<p className="text-sm text-t-2">{t("library.error")}</p>
-						<button
-							type="button"
+						<Typography tag="p" className="text-sm text-t-2">{t("library.error")}</Typography>
+						<Button
 							onClick={handleRefresh}
 							className="text-xs text-acc-t hover:underline"
 						>
 							{t("library.retry")}
-						</button>
+						</Button>
 					</div>
 				)}
 

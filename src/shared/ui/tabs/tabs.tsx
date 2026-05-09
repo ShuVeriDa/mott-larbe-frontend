@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import type { ComponentProps } from 'react';
 import { Tabs as TabsPrimitive } from "radix-ui";
 import { cn } from "@/shared/lib/cn";
@@ -48,7 +50,7 @@ export const TabItem = ({ className, ...props }: TabItemProps) => (
 export type TabCountProps = ComponentProps<"span">;
 
 export const TabCount = ({ className, ...props }: TabCountProps) => (
-	<span
+	<Typography tag="span"
 		data-slot="tab-count"
 		className={cn(
 			"px-[5px] py-px rounded-[4px] bg-surf-3 text-t-3",

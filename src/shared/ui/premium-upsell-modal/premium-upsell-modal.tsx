@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
@@ -25,9 +27,9 @@ return (
 			onClose={onClose}
 			title={t("vocabulary.foldersPage.upsell.title")}
 		>
-			<p className="mb-5 text-[13.5px] leading-relaxed text-t-2">
+			<Typography tag="p" className="mb-5 text-[13.5px] leading-relaxed text-t-2">
 				{t("vocabulary.foldersPage.upsell.description")}
-			</p>
+			</Typography>
 			<ModalActions>
 				<Button
 					variant="ghost"

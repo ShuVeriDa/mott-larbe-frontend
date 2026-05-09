@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminDictFrequencyStats } from "@/entities/dictionary";
 
@@ -14,9 +16,9 @@ export const FrequencySideCard = ({ data, isLoading }: FrequencySideCardProps) =
 	return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			<div className="border-b border-bd-1 px-4 py-3">
-				<span className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
+				<Typography tag="span" className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
 					{t("admin.dictionaryDetail.frequencyCard")}
-				</span>
+				</Typography>
 			</div>
 
 			{isLoading ? (
@@ -43,11 +45,11 @@ export const FrequencySideCard = ({ data, isLoading }: FrequencySideCardProps) =
 							/>
 						</div>
 						<div className="flex justify-between text-[11px] text-t-3">
-							<span>0</span>
-							<span>
-								<strong className="text-t-2">{data.frequency.toLocaleString("ru-RU")}</strong>{" "}
+							<Typography tag="span">0</Typography>
+							<Typography tag="span">
+								<Typography tag="strong" className="text-t-2">{data.frequency.toLocaleString("ru-RU")}</Typography>{" "}
 								/ {data.maxFrequency.toLocaleString("ru-RU")} {t("admin.dictionaryDetail.max")}
-							</span>
+							</Typography>
 						</div>
 					</div>
 					<div className="px-4 pb-3.5 text-[11.5px] leading-[1.5] text-t-3">

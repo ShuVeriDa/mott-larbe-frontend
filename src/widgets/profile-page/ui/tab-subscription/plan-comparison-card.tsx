@@ -12,7 +12,7 @@ const CheckIcon = () => (
 );
 
 const DashIcon = () => (
-	<span className="inline-block w-3 text-center text-[12px] text-t-4">—</span>
+	<Typography tag="span" className="inline-block w-3 text-center text-[12px] text-t-4">—</Typography>
 );
 
 interface FeatureRow {
@@ -127,9 +127,9 @@ export const PlanComparisonCard = () => {
 						key={row.label}
 						className={`grid grid-cols-[1fr_repeat(3,68px)] gap-1.5 py-[7px] ${i < rows.length - 1 ? "border-b border-hairline border-bd-1" : ""}`}
 					>
-						<span className="flex items-center text-[12px] text-t-2 leading-[1.3]">
+						<Typography tag="span" className="flex items-center text-[12px] text-t-2 leading-[1.3]">
 							{row.label}
-						</span>
+						</Typography>
 						<div className="flex items-center justify-center">
 							<CellValue value={row.free} color="text-t-2" />
 						</div>

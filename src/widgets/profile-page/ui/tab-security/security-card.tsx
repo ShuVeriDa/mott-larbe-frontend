@@ -113,9 +113,9 @@ return (
 						key={row.id}
 						className="flex items-center gap-3 border-b border-hairline border-bd-1 px-4 py-3 last:border-b-0"
 					>
-						<span className={`flex size-8 shrink-0 items-center justify-center rounded-[8px] ${row.iconBg}`}>
+						<Typography tag="span" className={`flex size-8 shrink-0 items-center justify-center rounded-[8px] ${row.iconBg}`}>
 							<row.Icon />
-						</span>
+						</Typography>
 						<div className="flex-1 min-w-0">
 							<Typography tag="p" className="text-[12.5px] font-medium text-t-1 mb-0.5">
 								{row.name}

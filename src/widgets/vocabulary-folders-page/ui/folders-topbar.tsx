@@ -21,11 +21,11 @@ export const FoldersTopbar = ({ onCreate, createDisabled }: FoldersTopbarProps) 
 				className="flex items-center gap-1 text-[12.5px] text-t-3 transition-colors hover:text-t-1"
 			>
 				<ChevronLeft className="size-3" strokeWidth={1.6} />
-				<span>{t("vocabulary.foldersPage.breadcrumb.vocabulary")}</span>
+				<Typography tag="span">{t("vocabulary.foldersPage.breadcrumb.vocabulary")}</Typography>
 			</Link>
-			<span aria-hidden className="text-[12px] text-t-4">
+			<Typography tag="span" aria-hidden className="text-[12px] text-t-4">
 				·
-			</span>
+			</Typography>
 			<Typography
 				tag="h1"
 				className="text-[13px] font-semibold text-t-1 max-md:text-[14px]"

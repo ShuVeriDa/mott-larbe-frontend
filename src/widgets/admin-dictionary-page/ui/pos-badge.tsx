@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/cn";
 
+import { Typography } from "@/shared/ui/typography";
 const POS_STYLES: Record<string, string> = {
 	noun: "bg-acc-bg text-acc-t",
 	verb: "bg-grn-bg text-grn-t",
@@ -18,16 +19,16 @@ interface PosBadgeProps {
 }
 
 export const PosBadge = ({ pos, label }: PosBadgeProps) => {
-	if (!pos) return <span className="text-[11px] text-t-4">—</span>;
+	if (!pos) return <Typography tag="span" className="text-[11px] text-t-4">—</Typography>;
 	const style = POS_STYLES[pos.toLowerCase()] ?? "bg-surf-3 text-t-2";
 	return (
-		<span
+		<Typography tag="span"
 			className={cn(
 				"inline-flex items-center rounded-[5px] px-[7px] py-[2px] text-[10.5px] font-semibold whitespace-nowrap",
 				style,
 			)}
 		>
 			{label ?? pos}
-		</span>
+		</Typography>
 	);
 };

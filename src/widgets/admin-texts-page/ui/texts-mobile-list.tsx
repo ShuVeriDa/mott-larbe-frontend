@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminTextListItem } from "@/entities/admin-text";
 import type { useAdminTextMutations } from "@/entities/admin-text/model/use-admin-text-mutations";
@@ -68,15 +70,15 @@ export const TextsMobileList = ({ texts, mutations, isLoading }: TextsMobileList
 					{/* Meta row */}
 					<div className="ml-[22px] mb-2 flex flex-wrap items-center gap-2.5 text-[11.5px] text-t-3">
 						{text.tokenCount > 0 && (
-							<span>{t("admin.texts.table.tokens", { count: text.tokenCount })}</span>
+							<Typography tag="span">{t("admin.texts.table.tokens", { count: text.tokenCount })}</Typography>
 						)}
 						{text.tags.length > 0 && (
-							<span>{text.tags.map((tag) => tag.name).join(", ")}</span>
+							<Typography tag="span">{text.tags.map((tag) => tag.name).join(", ")}</Typography>
 						)}
 						{text.readCount > 0 && (
-							<span>{text.readCount.toLocaleString("ru-RU")} {t("admin.texts.table.readsMobile")}</span>
+							<Typography tag="span">{text.readCount.toLocaleString("ru-RU")} {t("admin.texts.table.readsMobile")}</Typography>
 						)}
-						<span>{formatDate(text.createdAt)}</span>
+						<Typography tag="span">{formatDate(text.createdAt)}</Typography>
 					</div>
 
 					{/* Processing bar */}

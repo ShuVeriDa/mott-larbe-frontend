@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -229,9 +233,9 @@ return (
 								>
 									{/* TxID */}
 									<td className="px-3 py-2.5 max-md:hidden">
-										<span className="font-mono text-[11px] text-t-3">
+										<Typography tag="span" className="font-mono text-[11px] text-t-3">
 											{item.providerPaymentId}
-										</span>
+										</Typography>
 									</td>
 
 									{/* User */}
@@ -253,25 +257,25 @@ return (
 
 									{/* Plan */}
 									<td className="px-3 py-2.5">
-										<span
+										<Typography tag="span"
 											className={cn(
 												"inline-block rounded px-1.5 py-px text-[10px] font-semibold whitespace-nowrap",
 												planCls,
 											)}
 										>
 											{planName} · {period}
-										</span>
+										</Typography>
 									</td>
 
 									{/* Provider */}
 									<td className="px-3 py-2.5 max-md:hidden">
-										<span className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[11px] font-medium text-t-2">
-											<span
+										<Typography tag="span" className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[11px] font-medium text-t-2">
+											<Typography tag="span"
 												className="size-1.5 rounded-full"
 												style={{ background: provColor }}
 											/>
 											{item.provider}
-										</span>
+										</Typography>
 									</td>
 
 									{/* Date */}
@@ -281,25 +285,25 @@ return (
 
 									{/* Status */}
 									<td className="px-3 py-2.5">
-										<span
+										<Typography tag="span"
 											className={cn(
 												"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-px text-[10.5px] font-semibold",
 												sc.cls,
 											)}
 										>
-											<span
+											<Typography tag="span"
 												className={cn(
 													"size-[5px] rounded-full",
 													sc.dotCls,
 												)}
 											/>
 											{t(sc.i18nKey)}
-										</span>
+										</Typography>
 									</td>
 
 									{/* Amount */}
 									<td className="px-3 py-2.5 text-right">
-										<span
+										<Typography tag="span"
 											className={cn(
 												"font-semibold",
 												item.status === "SUCCEEDED"
@@ -311,27 +315,25 @@ return (
 										>
 											{item.status === "REFUNDED" ? "−" : ""}
 											{amtStr}
-										</span>
+										</Typography>
 									</td>
 
 									{/* Actions */}
 									<td className="px-3 py-2.5">
 										<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100 group-[.selected]:opacity-100 [tr.bg-acc-bg_&]:opacity-100">
-											<button
-												type="button"
+											<Button
 												onClick={handleClick2}
 												className="flex h-[24px] items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 											>
 												{t("admin.payments.table.receipt")}
-											</button>
+											</Button>
 											{item.status === "SUCCEEDED" && (
-												<button
-													type="button"
+												<Button
 													onClick={handleClick3}
 													className="flex h-[24px] items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 												>
 													{t("admin.payments.table.refund")}
-												</button>
+												</Button>
 											)}
 										</div>
 									</td>

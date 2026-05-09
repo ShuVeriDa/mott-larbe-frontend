@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminPlan } from "@/entities/admin-billing";
 import { BillingPlanCard, BillingPlanCardSkeleton } from "./billing-plan-card";
@@ -25,9 +27,9 @@ export const BillingPlansGrid = ({
 	return (
 		<section className="mb-5">
 			<div className="mb-3 flex items-center justify-between">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.plans.plansSection.title")}
-				</span>
+				</Typography>
 			</div>
 			<div className="overflow-x-auto">
 				<div className="grid min-w-[520px] grid-cols-5 gap-2.5 max-lg:grid-cols-3 max-sm:grid-cols-2">

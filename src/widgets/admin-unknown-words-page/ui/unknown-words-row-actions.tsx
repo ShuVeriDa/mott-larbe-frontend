@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { UnknownWordItem } from "@/entities/admin-unknown-word";
@@ -51,8 +53,7 @@ export const UnknownWordRowActions = ({
 return (
 		<div className="flex items-center justify-end gap-0.5">
 			{/* Quick add */}
-			<button
-				type="button"
+			<Button
 				onClick={handleClick}
 				className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-acc-bg hover:text-acc-t"
 				title={t("admin.unknownWords.row.addToDictionary")}
@@ -60,12 +61,11 @@ return (
 				<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
 					<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
 				</svg>
-			</button>
+			</Button>
 
 			{/* Dropdown */}
 			<div ref={ref} className="relative">
-				<button
-					type="button"
+				<Button
 					onClick={handleClick2}
 					className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2"
 				>
@@ -74,12 +74,11 @@ return (
 						<circle cx="8" cy="8" r="1" fill="currentColor" />
 						<circle cx="8" cy="12" r="1" fill="currentColor" />
 					</svg>
-				</button>
+				</Button>
 
 				{open && (
 					<div className="absolute right-0 top-[calc(100%+4px)] z-20 min-w-[190px] rounded-[9px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
-						<button
-							type="button"
+						<Button
 							onClick={handleClick3}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
@@ -87,9 +86,8 @@ return (
 								<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
 							</svg>
 							{t("admin.unknownWords.row.addToDictionary")}
-						</button>
-						<button
-							type="button"
+						</Button>
+						<Button
 							onClick={handleClick4}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
@@ -98,9 +96,8 @@ return (
 								<path d="M9 9.5L8 8V5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
 							</svg>
 							{t("admin.unknownWords.row.linkToLemma")}
-						</button>
-						<button
-							type="button"
+						</Button>
+						<Button
 							onClick={handleClick5}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
@@ -109,10 +106,9 @@ return (
 								<path d="M5 6h6M5 9h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
 							</svg>
 							{t("admin.unknownWords.row.allContexts")}
-						</button>
+						</Button>
 						<div className="my-1 h-px bg-bd-1" />
-						<button
-							type="button"
+						<Button
 							disabled={isDeleting}
 							onClick={handleClick6}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
@@ -132,7 +128,7 @@ return (
 								/>
 							</svg>
 							{t("admin.unknownWords.row.delete")}
-						</button>
+						</Button>
 					</div>
 				)}
 			</div>

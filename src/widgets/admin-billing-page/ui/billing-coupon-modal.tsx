@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import type { CreateCouponDto, CouponType } from "@/entities/admin-billing";
@@ -79,26 +83,26 @@ return (
 			>
 				{/* Header */}
 				<div className="flex items-center justify-between border-b border-bd-1 px-[18px] py-4">
-					<span className="font-display text-[14px] font-semibold text-t-1">
+					<Typography tag="span" className="font-display text-[14px] font-semibold text-t-1">
 						{t("admin.plans.couponModal.title")}
-					</span>
-					<button
+					</Typography>
+					<Button
 						onClick={onClose}
 						className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
 						<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
 							<path d="M1 1l10 10M11 1 1 11" />
 						</svg>
-					</button>
+					</Button>
 				</div>
 
 				{/* Body */}
 				<form action={handleSubmit} id="coupon-form">
 					<div className="space-y-3.5 px-[18px] py-4">
 						<div>
-							<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+							<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 								{t("admin.plans.couponModal.code")}
-							</label>
+							</Typography>
 							<input
 								value={form.code}
 								onChange={handleChange}
@@ -108,9 +112,9 @@ return (
 						</div>
 
 						<div>
-							<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+							<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 								{t("admin.plans.couponModal.name")}
-							</label>
+							</Typography>
 							<input
 								value={form.name}
 								onChange={handleChange2}
@@ -121,9 +125,9 @@ return (
 
 						<div className="grid grid-cols-2 gap-2.5">
 							<div>
-								<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+								<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 									{t("admin.plans.couponModal.discountType")}
-								</label>
+								</Typography>
 								<select
 									value={form.type}
 									onChange={handleChange3}
@@ -134,9 +138,9 @@ return (
 								</select>
 							</div>
 							<div>
-								<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+								<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 									{t("admin.plans.couponModal.discount")}
-								</label>
+								</Typography>
 								<div className="relative">
 									<input
 										type="number"
@@ -148,18 +152,18 @@ return (
 										placeholder={form.type === "PERCENT" ? "10" : "500"}
 										className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 pr-7 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
 									/>
-									<span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[12px] text-t-3">
+									<Typography tag="span" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[12px] text-t-3">
 										{form.type === "PERCENT" ? "%" : "₽"}
-									</span>
+									</Typography>
 								</div>
 							</div>
 						</div>
 
 						<div className="grid grid-cols-2 gap-2.5">
 							<div>
-								<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+								<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 									{t("admin.plans.couponModal.maxUses")}
-								</label>
+								</Typography>
 								<input
 									type="number"
 									min={1}
@@ -170,9 +174,9 @@ return (
 								/>
 							</div>
 							<div>
-								<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+								<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 									{t("admin.plans.couponModal.expiresAt")}
-								</label>
+								</Typography>
 								<input
 									type="date"
 									value={form.validUntil}
@@ -186,21 +190,20 @@ return (
 
 				{/* Footer */}
 				<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-[18px] py-3">
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						className="h-8 rounded-[8px] border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 					>
 						{t("admin.plans.couponModal.cancel")}
-					</button>
-					<button
+					</Button>
+					<Button
 						type="submit"
 						form="coupon-form"
 						disabled={isPending || !form.code.trim()}
 						className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 					>
 						{t("admin.plans.couponModal.save")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { useLibraryFilters } from "@/features/library-filters";
 import { useI18n } from "@/shared/lib/i18n";
 import { ChangeEvent } from 'react';
@@ -22,19 +26,19 @@ export const LibraryTopbar = ({
 	return (
 		<>
 			<div className="flex h-12 shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-5 max-sm:px-3">
-				<span className="font-display text-sm font-medium tracking-[-0.1px] text-t-1">
+				<Typography tag="span" className="font-display text-sm font-medium tracking-[-0.1px] text-t-1">
 					{t("library.title")}
-				</span>
-				<span className="hidden text-xs text-t-3 sm:block">
+				</Typography>
+				<Typography tag="span" className="hidden text-xs text-t-3 sm:block">
 					{t("library.total", { count: String(totalCount) })}
-				</span>
+				</Typography>
 
 				<div className="flex-1" />
 
 				<div className="relative hidden sm:block">
-					<span className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 text-t-3">
+					<Typography tag="span" className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 text-t-3">
 						<SearchIcon />
-					</span>
+					</Typography>
 					<input
 						type="text"
 						value={search}
@@ -45,21 +49,20 @@ export const LibraryTopbar = ({
 					/>
 				</div>
 
-				<button
-					type="button"
+				<Button
 					onClick={onRefresh}
 					aria-label={t("library.refresh")}
 					className="hidden h-[30px] w-[30px] shrink-0 items-center justify-center rounded-base border border-bd-2 bg-transparent text-t-2 transition-colors duration-100 hover:bg-surf-2 hover:text-t-1 sm:flex"
 				>
 					<RefreshIcon />
-				</button>
+				</Button>
 			</div>
 
 			<div className="flex shrink-0 border-b border-bd-1 bg-surf px-3 py-2 sm:hidden">
 				<div className="relative w-full">
-					<span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-t-3">
+					<Typography tag="span" className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-t-3">
 						<SearchIcon />
-					</span>
+					</Typography>
 					<input
 						type="text"
 						value={search}

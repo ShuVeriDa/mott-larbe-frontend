@@ -3,6 +3,8 @@ import type { SubscriptionsTab } from "@/entities/admin-subscription";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 interface TabCounts {
 	all: number;
 	active: number;
@@ -34,9 +36,8 @@ export const SubscriptionsTabs = ({ active, counts, onChange }: Props) => {
 				{tabs.map(({ key, label }) => {
 				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(key);
 				  return (
-					<button
+					<Button
 						key={key}
-						type="button"
 						onClick={handleClick}
 						className={cn(
 							"flex h-[26px] shrink-0 items-center gap-1 rounded-base px-3 text-[12px] transition-colors",
@@ -46,15 +47,15 @@ export const SubscriptionsTabs = ({ active, counts, onChange }: Props) => {
 						)}
 					>
 						{label}
-						<span
+						<Typography tag="span"
 							className={cn(
 								"rounded px-[5px] py-px text-[10px] font-semibold",
 								active === key ? "bg-surf-2 text-t-3" : "bg-surf-3 text-t-3",
 							)}
 						>
 							{counts[key]}
-						</span>
-					</button>
+						</Typography>
+					</Button>
 				);
 				})}
 			</div>

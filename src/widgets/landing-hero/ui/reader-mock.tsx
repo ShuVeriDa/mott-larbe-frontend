@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ChevronDown, Plus } from "lucide-react";
 import { ComponentProps, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
@@ -23,7 +25,7 @@ export const ReaderMock = () => {
 	return (
 		<div className="relative" style={{ perspective: "1400px" }}>
 			<div className="absolute -top-4 right-6 z-[4] flex items-center gap-2 rounded-[10px] border-hairline border-bd-2 bg-surf px-3 py-2.5 text-[12px] shadow-md max-[640px]:hidden animate-[chipFloat_5s_ease-in-out_infinite]">
-				<span className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-md bg-grn-bg text-grn-t">
+				<Typography tag="span" className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-md bg-grn-bg text-grn-t">
 					<svg
 						width="11"
 						height="11"
@@ -35,7 +37,7 @@ export const ReaderMock = () => {
 					>
 						<path d="M2 6l3 3 5-5" />
 					</svg>
-				</span>
+				</Typography>
 				<Typography tag="span">
 					<Typography tag="span" className="block font-semibold text-t-1">
 						{t("landing.hero.chip1Title")}
@@ -47,7 +49,7 @@ export const ReaderMock = () => {
 			</div>
 
 			<div className="absolute -bottom-3.5 left-7 z-[4] flex items-center gap-2 rounded-[10px] border-hairline border-bd-2 bg-surf px-3 py-2.5 text-[12px] shadow-md max-[640px]:hidden animate-[chipFloat_6s_ease-in-out_infinite_reverse]">
-				<span className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-md bg-pur-bg text-pur-t">
+				<Typography tag="span" className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-md bg-pur-bg text-pur-t">
 					<svg
 						width="11"
 						height="11"
@@ -59,7 +61,7 @@ export const ReaderMock = () => {
 					>
 						<path d="M3 6c0-1.66 1.34-3 3-3M9 6c0 1.66-1.34 3-3 3M8.5 2.5L9 4l1.5-.5M3.5 9.5L3 8l-1.5.5" />
 					</svg>
-				</span>
+				</Typography>
 				<Typography tag="span">
 					<Typography tag="span" className="block font-semibold text-t-1">
 						{t("landing.hero.chip2Title")}
@@ -72,17 +74,17 @@ export const ReaderMock = () => {
 
 			<div className="overflow-hidden rounded-[14px] border-hairline border-bd-2 bg-surf shadow-lg transition-transform duration-300 -rotate-1 hover:rotate-0 max-[640px]:rotate-0">
 				<div className="flex items-center gap-1.5 border-hairline border-b border-bd-1 bg-surf-2 px-[14px] py-[10px]">
-					<span
+					<Typography tag="span"
 						aria-hidden="true"
 						className="h-[9px] w-[9px] rounded-full"
 						style={{ background: "#e87171", opacity: 0.55 }}
 					/>
-					<span
+					<Typography tag="span"
 						aria-hidden="true"
 						className="h-[9px] w-[9px] rounded-full"
 						style={{ background: "#f5a524", opacity: 0.55 }}
 					/>
-					<span
+					<Typography tag="span"
 						aria-hidden="true"
 						className="h-[9px] w-[9px] rounded-full"
 						style={{ background: "#3dc87a", opacity: 0.55 }}
@@ -171,20 +173,18 @@ return (
 						</div>
 					) : null}
 					<div className="flex gap-1.5 p-[7px]">
-						<button
-							type="button"
+						<Button
 							className="flex h-7 flex-1 items-center justify-center gap-1 rounded-md border-0 bg-acc text-[11px] font-semibold text-white"
 						>
 							<Plus size={11} strokeWidth={2} />
 							{t("landing.hero.popupAdd")}
-						</button>
-						<button
-							type="button"
+						</Button>
+						<Button
 							aria-hidden="true"
 							className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-hairline border-bd-1 bg-surf-2 text-t-2"
 						>
 							<ChevronDown size={11} strokeWidth={2} />
-						</button>
+						</Button>
 					</div>
 				</div>
 			</div>

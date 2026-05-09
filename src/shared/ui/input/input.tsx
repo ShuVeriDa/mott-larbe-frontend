@@ -1,6 +1,7 @@
 import type { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 
+import { Typography } from "@/shared/ui/typography";
 export type InputProps = ComponentProps<"input">;
 
 export const Input = ({ className, type = "text", ...props }: InputProps) => (
@@ -23,7 +24,7 @@ export const Input = ({ className, type = "text", ...props }: InputProps) => (
 export type InputLabelProps = ComponentProps<"label">;
 
 export const InputLabel = ({ className, ...props }: InputLabelProps) => (
-	<label
+	<Typography tag="label"
 		data-slot="input-label"
 		className={cn(
 			"block mb-[5px] text-[11.5px] font-medium text-t-2",

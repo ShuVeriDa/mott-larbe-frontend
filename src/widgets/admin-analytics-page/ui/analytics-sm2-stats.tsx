@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { Sm2Stats } from "@/entities/admin-analytics";
@@ -50,12 +52,12 @@ export const AnalyticsSm2Stats = ({
 	return (
 		<div className="rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between px-4 pt-3.5 pb-3">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.analytics.sm2.title")}
-				</span>
-				<span className="text-[11px] text-t-3">
+				</Typography>
+				<Typography tag="span" className="text-[11px] text-t-3">
 					{t("admin.analytics.sm2.subtitle")}
-				</span>
+				</Typography>
 			</div>
 
 			<div className="grid grid-cols-2 gap-2.5 px-4 pb-4">

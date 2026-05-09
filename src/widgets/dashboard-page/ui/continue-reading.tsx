@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -51,13 +53,13 @@ const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 
 			<div className="flex flex-1 flex-col p-[13px_14px_14px]">
 				<div className="mb-2 flex items-center gap-[5px]">
-					<span
+					<Typography tag="span"
 						className="size-[6px] shrink-0 rounded-full"
 						style={{ background: dotColor }}
 					/>
-					<span className="text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+					<Typography tag="span" className="text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
 						{langLabel}
-					</span>
+					</Typography>
 				</div>
 
 				<div className="mb-[3px] flex-1 text-[13px] font-semibold leading-[1.35] text-t-1">
@@ -72,15 +74,15 @@ const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 				</div>
 
 				<div className="flex items-center justify-between">
-					<span
+					<Typography tag="span"
 						className={cn(
 							"text-[12px] font-semibold",
 							isAlmostDone ? "text-grn" : "text-acc",
 						)}
 					>
 						{pct}%
-					</span>
-					<span
+					</Typography>
+					<Typography tag="span"
 						className={cn(
 							"rounded-[5px] border-none px-[9px] py-[3px] text-[11px] font-semibold transition-opacity group-hover:opacity-80",
 							isAlmostDone
@@ -91,7 +93,7 @@ const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 						{isAlmostDone
 							? t("dashboard.continueReading.almostDone")
 							: t("dashboard.continueReading.continue")}
-					</span>
+					</Typography>
 				</div>
 			</div>
 		</Link>
@@ -106,9 +108,9 @@ export const ContinueReading = ({ items, lang }: ContinueReadingProps) => {
 	return (
 		<section>
 			<div className="mb-2.5 flex items-center justify-between">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("dashboard.continueReading.title")}
-				</span>
+				</Typography>
 				<Link
 					href={`/${lang}/texts?status=IN_PROGRESS`}
 					className="text-[11.5px] text-acc transition-colors hover:underline"

@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -29,9 +31,8 @@ export const PeriodTabs = ({ value, onChange, className }: PeriodTabsProps) => {
 				const active = value === period;
 								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(period);
 return (
-					<button
+					<Button
 						key={period}
-						type="button"
 						role="tab"
 						aria-selected={active}
 						onClick={handleClick}
@@ -43,7 +44,7 @@ return (
 						)}
 					>
 						{t(`statistics.period.${period}`)}
-					</button>
+					</Button>
 				);
 			})}
 		</div>

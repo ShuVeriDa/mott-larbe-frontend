@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { FeedbackStatus } from "@/entities/feedback";
 
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string) => string;
 
 const STATUS_CLASSES: Record<FeedbackStatus, string> = {
@@ -29,7 +30,7 @@ interface FeedbackStatusDotProps {
 }
 
 export const FeedbackStatusBadge = ({ status, t, className }: FeedbackStatusBadgeProps) => (
-	<span
+	<Typography tag="span"
 		className={cn(
 			"inline-flex items-center rounded-[5px] px-[7px] py-[2px] text-[10px] font-semibold",
 			STATUS_CLASSES[status],
@@ -37,11 +38,11 @@ export const FeedbackStatusBadge = ({ status, t, className }: FeedbackStatusBadg
 		)}
 	>
 		{t(`admin.feedback.status.${status}`)}
-	</span>
+	</Typography>
 );
 
 export const FeedbackStatusDot = ({ status, className }: FeedbackStatusDotProps) => (
-	<span
+	<Typography tag="span"
 		className={cn(
 			"inline-block size-[5px] shrink-0 rounded-full",
 			STATUS_DOT_CLASSES[status],

@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import {
@@ -86,9 +88,8 @@ return (
 						const selected = preferences.popupMode === opt.value;
 												const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => updatePopup(opt.value);
 return (
-							<button
+							<Button
 								key={opt.value}
-								type="button"
 								onClick={handleClick}
 								aria-pressed={selected}
 								className={cn(
@@ -96,17 +97,17 @@ return (
 									"hover:bg-surf-2",
 								)}
 							>
-								<span
+								<Typography tag="span"
 									className={cn(
 										"flex size-4 shrink-0 items-center justify-center rounded-full border-[1.5px]",
 										selected ? "border-acc" : "border-bd-2",
 									)}
 								>
 									{selected ? (
-										<span className="block size-2 rounded-full bg-acc" />
+										<Typography tag="span" className="block size-2 rounded-full bg-acc" />
 									) : null}
-								</span>
-								<span className="flex-1">
+								</Typography>
+								<Typography tag="span" className="flex-1">
 									<Typography
 										tag="span"
 										className="block text-[12.5px] font-medium text-t-1"
@@ -119,8 +120,8 @@ return (
 									>
 										{t(opt.descKey)}
 									</Typography>
-								</span>
-							</button>
+								</Typography>
+							</Button>
 						);
 					})}
 				</div>

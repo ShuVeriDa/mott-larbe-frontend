@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { ReactNode } from "react";
 
 import type { LibraryTextCounts } from "@/entities/library-text";
@@ -15,19 +17,19 @@ export const LibraryStatsRow = ({ counts }: LibraryStatsRowProps) => {
 	return (
 		<div className="flex shrink-0 items-center gap-3.5 overflow-x-auto border-b border-bd-1 bg-surf px-5 py-1.5 text-[11px] [scrollbar-width:none] max-sm:gap-3 max-sm:px-3 [&::-webkit-scrollbar]:hidden">
 			<StatChip dotClass="bg-t-3">
-				<span className="font-semibold text-t-2">{counts.total}</span>
+				<Typography tag="span" className="font-semibold text-t-2">{counts.total}</Typography>
 				&nbsp;{t("library.stats.total")}
 			</StatChip>
 			<StatChip dotClass="bg-grn">
-				<span className="font-semibold text-t-2">{counts.completed}</span>
+				<Typography tag="span" className="font-semibold text-t-2">{counts.completed}</Typography>
 				&nbsp;{t("library.stats.done")}
 			</StatChip>
 			<StatChip dotClass="bg-acc">
-				<span className="font-semibold text-t-2">{counts.inProgress}</span>
+				<Typography tag="span" className="font-semibold text-t-2">{counts.inProgress}</Typography>
 				&nbsp;{t("library.stats.reading")}
 			</StatChip>
 			<StatChip dotClass="bg-t-4">
-				<span className="font-semibold text-t-2">{counts.new}</span>
+				<Typography tag="span" className="font-semibold text-t-2">{counts.new}</Typography>
 				&nbsp;{t("library.stats.new")}
 			</StatChip>
 		</div>
@@ -42,7 +44,7 @@ const StatChip = ({
 	dotClass: string;
 }) => (
 	<div className="flex shrink-0 items-center gap-[5px] text-t-3">
-		<span className={`size-1.5 shrink-0 rounded-full ${dotClass}`} />
+		<Typography tag="span" className={`size-1.5 shrink-0 rounded-full ${dotClass}`} />
 		{children}
 	</div>
 );

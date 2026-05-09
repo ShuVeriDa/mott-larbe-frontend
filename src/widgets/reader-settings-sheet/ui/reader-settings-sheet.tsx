@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import { useEffect } from 'react';
 import { createPortal } from "react-dom";
 import { FontSizeGroup } from "@/features/reader-font-size";
@@ -70,7 +72,7 @@ export const ReaderSettingsSheet = ({
 								key={item.key}
 								className="flex items-center gap-2.5 text-[13px] text-t-2"
 							>
-								<span
+								<Typography tag="span"
 									aria-hidden="true"
 									className="block h-0.5 w-5 rounded-[1px]"
 									style={{ background: item.color }}

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminDictMorphForm } from "@/entities/dictionary";
@@ -86,12 +90,12 @@ export const MorphFormsCard = ({
 return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
-				<span className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
+				<Typography tag="span" className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
 					{t("admin.dictionaryDetail.morphForms")}
-				</span>
+				</Typography>
 				<div className="flex items-center gap-1.5">
-					<span className="text-[11.5px] text-t-3">{forms.length} {t("admin.dictionaryDetail.formCount")}</span>
-					<button
+					<Typography tag="span" className="text-[11.5px] text-t-3">{forms.length} {t("admin.dictionaryDetail.formCount")}</Typography>
+					<Button
 						className="flex h-[26px] items-center gap-1.5 rounded-md border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 						onClick={handleClick}
 					>
@@ -99,7 +103,7 @@ return (
 							<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
 						</svg>
 						{t("admin.dictionaryDetail.add")}
-					</button>
+					</Button>
 				</div>
 			</div>
 
@@ -118,25 +122,25 @@ return (
 								key={form.id}
 								className={`group flex items-center gap-2.5 border-b border-bd-1 px-3.5 py-2 transition-colors hover:bg-surf-2 ${i % 2 === 0 ? "border-r" : ""} ${i >= forms.length - (forms.length % 2 === 0 ? 2 : 1) ? "border-b-0" : ""}`}
 							>
-								<span className="min-w-[90px] text-[10.5px] font-medium text-t-3">
+								<Typography tag="span" className="min-w-[90px] text-[10.5px] font-medium text-t-3">
 									{formLabel(form)}
-								</span>
-								<span className="flex-1 font-display text-[13.5px] font-medium text-t-1">
+								</Typography>
+								<Typography tag="span" className="flex-1 font-display text-[13.5px] font-medium text-t-1">
 									{form.form}
-								</span>
+								</Typography>
 								<div className="flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100 max-sm:opacity-100">
-									<button
+									<Button
 										className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 										onClick={handleClick}
 									>
 										<IconEdit />
-									</button>
-									<button
+									</Button>
+									<Button
 										className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 										onClick={handleClick2}
 									>
 										<IconTrash />
-									</button>
+									</Button>
 								</div>
 							</div>
 						);
@@ -144,7 +148,7 @@ return (
 					</div>
 
 					{forms.length > INITIAL_COUNT && (
-						<button
+						<Button
 							className="w-full border-t border-bd-1 py-2.5 text-center text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-acc-t"
 							onClick={onToggleAll}
 						>
@@ -160,7 +164,7 @@ return (
 							>
 								<path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
 							</svg>
-						</button>
+						</Button>
 					)}
 				</>
 			)}

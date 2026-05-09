@@ -3,6 +3,8 @@ import type { FeedbackThread } from "@/entities/feedback";
 import { FeedbackTypeBadge } from "./feedback-type-badge";
 import { FeedbackStatusDot } from "./feedback-status-dot";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string) => string;
 
 interface FeedbackThreadItemProps {
@@ -33,8 +35,7 @@ export const FeedbackThreadItem = ({
 	const unread = thread.unreadCountUser;
 
 	return (
-		<button
-			type="button"
+		<Button
 			onClick={onClick}
 			className={cn(
 				"relative w-full cursor-pointer border-b border-bd-1 px-4 py-[11px] text-left transition-colors",
@@ -45,12 +46,12 @@ export const FeedbackThreadItem = ({
 		>
 			<div className="mb-1 flex items-center justify-between gap-1.5">
 				<FeedbackTypeBadge type={thread.type} t={t} />
-				<span className="shrink-0 text-[10.5px] text-t-3">{dateLabel}</span>
+				<Typography tag="span" className="shrink-0 text-[10.5px] text-t-3">{dateLabel}</Typography>
 			</div>
 
-			<p className="mb-1 line-clamp-2 text-[11.5px] leading-[1.45] text-t-1">
+			<Typography tag="p" className="mb-1 line-clamp-2 text-[11.5px] leading-[1.45] text-t-1">
 				{thread.title ?? thread.body}
-			</p>
+			</Typography>
 
 			<div className="flex items-center justify-between">
 				<FeedbackStatusDot status={thread.status} t={t} />
@@ -60,6 +61,6 @@ export const FeedbackThreadItem = ({
 					</div>
 				)}
 			</div>
-		</button>
+		</Button>
 	);
 };

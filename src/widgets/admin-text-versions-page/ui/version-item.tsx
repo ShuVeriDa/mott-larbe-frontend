@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps, ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -55,9 +59,9 @@ const Tag = ({ children, variant }: TagProps) => {
 		neutral: "bg-surf-3 text-t-2",
 	}[variant];
 	return (
-		<span className={cn("rounded px-1.5 py-px text-[10px] font-semibold tracking-[0.2px]", cls)}>
+		<Typography tag="span" className={cn("rounded px-1.5 py-px text-[10px] font-semibold tracking-[0.2px]", cls)}>
 			{children}
-		</span>
+		</Typography>
 	);
 };
 
@@ -118,16 +122,16 @@ return (
 				<div className="flex flex-1 min-w-0 flex-col gap-1">
 					{/* Top row: version + time */}
 					<div className="flex items-start justify-between gap-2">
-						<span className={cn(
+						<Typography tag="span" className={cn(
 							"text-[12.5px] font-medium leading-tight",
 							item.status === "RUNNING" || item.status === "IDLE" ? "text-t-2 font-normal" : "text-t-1",
 						)}>
 							v{item.version}
-							{item.label && <span className="ml-1.5 text-t-3">— {item.label}</span>}
-						</span>
-						<span className="shrink-0 mt-px text-[10.5px] text-t-3">
+							{item.label && <Typography tag="span" className="ml-1.5 text-t-3">— {item.label}</Typography>}
+						</Typography>
+						<Typography tag="span" className="shrink-0 mt-px text-[10.5px] text-t-3">
 							{new Date(item.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-						</span>
+						</Typography>
 					</div>
 
 					{/* Tags */}
@@ -142,45 +146,45 @@ return (
 							{t(`admin.texts.versions.trigger.${item.trigger}`)}
 						</Tag>
 						{item.initiator && (
-							<span className="text-[10.5px] text-t-3">
+							<Typography tag="span" className="text-[10.5px] text-t-3">
 								{t("admin.texts.versions.item.by")} {item.initiator.name}
-							</span>
+							</Typography>
 						)}
 					</div>
 
 					{/* Stats */}
 					{item.status === "COMPLETED" && (
 						<div className="flex flex-wrap items-center gap-3">
-							<span className="flex items-center gap-1 text-[11px] text-t-3">
+							<Typography tag="span" className="flex items-center gap-1 text-[11px] text-t-3">
 								<svg width="10" height="10" viewBox="0 0 16 16" fill="none">
 									<path d="M3 4h10M3 7h10M3 10h6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
 								</svg>
-								<strong className="text-t-2">{item.tokenCount.toLocaleString()}</strong>
+								<Typography tag="strong" className="text-t-2">{item.tokenCount.toLocaleString()}</Typography>
 								{" "}{t("admin.texts.versions.item.tokens")}
-							</span>
+							</Typography>
 							{item.unknownCount > 0 && (
-								<span className="flex items-center gap-1 text-[11px] text-t-3">
+								<Typography tag="span" className="flex items-center gap-1 text-[11px] text-t-3">
 									<svg width="10" height="10" viewBox="0 0 16 16" fill="none">
 										<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
 										<path d="M8 9V8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
 										<circle cx="8" cy="11" r=".75" fill="currentColor" />
 									</svg>
-									<strong className="text-red-t">{item.unknownCount}</strong>
+									<Typography tag="strong" className="text-red-t">{item.unknownCount}</Typography>
 									{" "}{t("admin.texts.versions.item.unknown")}
-								</span>
+								</Typography>
 							)}
-							<span className="flex items-center gap-1 text-[11px] text-t-3">
+							<Typography tag="span" className="flex items-center gap-1 text-[11px] text-t-3">
 								<svg width="10" height="10" viewBox="0 0 16 16" fill="none">
 									<rect x="2" y="2" width="12" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
 									<path d="M5 8h6M5 5h6M5 11h3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
 								</svg>
-								<strong className="text-t-2">{item.pageCount}</strong>
+								<Typography tag="strong" className="text-t-2">{item.pageCount}</Typography>
 								{" "}{t("admin.texts.versions.item.pages")}
-							</span>
+							</Typography>
 							{item.durationMs !== null && (
-								<span className="text-[11px] text-t-3">
+								<Typography tag="span" className="text-[11px] text-t-3">
 									{formatDuration(item.durationMs)}
-								</span>
+								</Typography>
 							)}
 						</div>
 					)}
@@ -194,9 +198,9 @@ return (
 									style={{ width: `${item.progress}%` }}
 								/>
 							</div>
-							<span className="min-w-[30px] text-right text-[10.5px] tabular-nums text-t-3">
+							<Typography tag="span" className="min-w-[30px] text-right text-[10.5px] tabular-nums text-t-3">
 								{item.progress}%
-							</span>
+							</Typography>
 						</div>
 					)}
 
@@ -211,8 +215,7 @@ return (
 				{/* Hover actions */}
 				<div className="flex shrink-0 flex-col justify-start gap-1 pt-0.5 opacity-0 transition-opacity group-hover:opacity-100 max-sm:opacity-100">
 					{item.status === "COMPLETED" && !item.isCurrent && (
-						<button
-							type="button"
+						<Button
 							onClick={handleClick}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.restore")}
@@ -221,11 +224,10 @@ return (
 								<path d="M13 8A5 5 0 013.5 11M3 8a5 5 0 019.5-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
 								<path d="M3 5v3h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
 							</svg>
-						</button>
+						</Button>
 					)}
 					{item.status === "ERROR" && (
-						<button
-							type="button"
+						<Button
 							onClick={handleClick2}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.retry")}
@@ -234,11 +236,10 @@ return (
 								<path d="M13 8A5 5 0 013.5 11M3 8a5 5 0 019.5-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
 								<path d="M13 5v3h-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
 							</svg>
-						</button>
+						</Button>
 					)}
 					{item.status === "COMPLETED" && (
-						<button
-							type="button"
+						<Button
 							onClick={handleClick3}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.download")}
@@ -247,7 +248,7 @@ return (
 								<path d="M8 3v7M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
 								<path d="M3 13h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
 							</svg>
-						</button>
+						</Button>
 					)}
 				</div>
 			</div>

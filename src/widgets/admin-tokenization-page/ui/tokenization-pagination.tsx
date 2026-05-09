@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 
@@ -41,14 +45,14 @@ export const TokenizationPagination = ({
 	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(page + 1);
 return (
 		<div className="flex items-center justify-between border-t border-bd-1 px-4 py-3">
-			<span className="text-[12px] text-t-3 max-sm:hidden">
+			<Typography tag="span" className="text-[12px] text-t-3 max-sm:hidden">
 				{t("admin.tokenization.pagination.showing")
 					.replace("{from}", String(from))
 					.replace("{to}", String(to))
 					.replace("{total}", String(total))}
-			</span>
+			</Typography>
 			<div className="flex gap-1">
-				<button
+				<Button
 					onClick={handleClick}
 					disabled={page === 1}
 					className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
@@ -56,20 +60,20 @@ return (
 					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
 						<path d="M10 4l-4 4 4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
 					</svg>
-				</button>
+				</Button>
 				{pages.map((p, i) => {
 					if (p === "…") {
 						return (
-							<span key={`ellipsis-${i}`} className="flex size-7 items-center justify-center text-[12px] text-t-3">
+							<Typography tag="span" key={`ellipsis-${i}`} className="flex size-7 items-center justify-center text-[12px] text-t-3">
 								…
-							</span>
+							</Typography>
 						);
 					}
 
 					const handlePageClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(p);
 
 					return (
-						<button
+						<Button
 							key={p}
 							onClick={handlePageClick}
 							className={`flex size-7 items-center justify-center rounded-[6px] border text-[12px] font-medium transition-colors ${
@@ -79,10 +83,10 @@ return (
 							}`}
 						>
 							{p}
-						</button>
+						</Button>
 					);
 				})}
-				<button
+				<Button
 					onClick={handleClick2}
 					disabled={page === totalPages}
 					className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
@@ -90,7 +94,7 @@ return (
 					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
 						<path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
 					</svg>
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

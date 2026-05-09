@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
@@ -41,18 +45,18 @@ const ExampleItem = ({ example, onEdit, onDelete }: ExampleItemProps) => (
 			<div className="text-[11.5px] leading-[1.3] text-t-3">{example.translation}</div>
 		)}
 		<div className="absolute right-2 top-[7px] flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100 max-sm:opacity-100">
-			<button
+			<Button
 				className="flex size-[26px] items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 				onClick={onEdit}
 			>
 				<IconEdit />
-			</button>
-			<button
+			</Button>
+			<Button
 				className="flex size-[26px] items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 				onClick={onDelete}
 			>
 				<IconTrash />
-			</button>
+			</Button>
 		</div>
 	</div>
 );
@@ -91,18 +95,18 @@ return (
 					)}
 				</div>
 				<div className="flex shrink-0 gap-0.5 opacity-0 transition-opacity group-hover:opacity-100 max-sm:opacity-100">
-					<button
+					<Button
 						className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 						onClick={onEditSense}
 					>
 						<IconEdit />
-					</button>
-					<button
+					</Button>
+					<Button
 						className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 						onClick={onDeleteSense}
 					>
 						<IconTrash />
-					</button>
+					</Button>
 				</div>
 			</div>
 
@@ -126,13 +130,13 @@ return (
 
 			{/* Add example */}
 			<div className="ml-[30px]">
-				<button
+				<Button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-dashed border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-3 transition-colors hover:border-solid hover:border-acc hover:bg-acc-bg hover:text-acc-t"
 					onClick={handleClick}
 				>
 					<IconPlus />
 					{t("admin.dictionaryDetail.addExample")}
-				</button>
+				</Button>
 			</div>
 		</div>
 	);
@@ -190,10 +194,10 @@ return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			{/* Header */}
 			<div className="flex items-center justify-between border-b-0 px-4 py-3">
-				<span className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
+				<Typography tag="span" className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
 					{t("admin.dictionaryDetail.lemmasAndSenses")}
-				</span>
-				<button
+				</Typography>
+				<Button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 					onClick={handleClick}
 				>
@@ -201,7 +205,7 @@ return (
 						<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
 					</svg>
 					{t("admin.dictionaryDetail.addSense")}
-				</button>
+				</Button>
 			</div>
 
 			{/* Lemma tabs (only if multiple lemmas for this entry) */}
@@ -214,7 +218,7 @@ return (
 									if (!isActiveLemma) router.push(`/${lang}/admin/dictionary/${lemma.id}`);
 								};
 						  return (
-							<button
+							<Button
 								key={lemma.id}
 								className={cn(
 									"rounded-[6px] px-3.5 py-1 font-display text-[12.5px] font-medium transition-colors",
@@ -226,9 +230,9 @@ return (
 							>
 								{lemma.baseForm}{" "}
 								{lemma.partOfSpeech && (
-									<span className="font-sans text-[10px] opacity-50">{lemma.partOfSpeech}</span>
+									<Typography tag="span" className="font-sans text-[10px] opacity-50">{lemma.partOfSpeech}</Typography>
 								)}
-							</button>
+							</Button>
 						);
 						})}
 					</div>
@@ -265,13 +269,13 @@ return (
 
 			{/* Add sense footer */}
 			<div className="flex items-center border-t border-bd-1 px-4 py-2.5">
-				<button
+				<Button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-dashed border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-3 transition-colors hover:border-solid hover:border-acc hover:bg-acc-bg hover:text-acc-t"
 					onClick={handleClick2}
 				>
 					<IconPlus />
 					{t("admin.dictionaryDetail.addSense")}
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

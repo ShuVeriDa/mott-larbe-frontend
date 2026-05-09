@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -36,9 +38,8 @@ export const StatusButtons = ({ wordId, current }: StatusButtonsProps) => {
 							mutate({ id: wordId, body: { learningLevel: level }, previousLevel: current });
 						};
 return (
-					<button
+					<Button
 						key={level}
-						type="button"
 						disabled={isPending || active}
 						onClick={handleClick}
 						className={cn(
@@ -52,7 +53,7 @@ return (
 						)}
 					>
 						{t(LABEL_KEY[level])}
-					</button>
+					</Button>
 				);
 			})}
 		</div>

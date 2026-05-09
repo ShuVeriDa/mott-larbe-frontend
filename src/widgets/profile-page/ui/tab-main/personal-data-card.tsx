@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import { ComponentProps, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
@@ -83,7 +85,7 @@ return (
 						disabled
 						className="opacity-60 cursor-not-allowed"
 					/>
-					<p className="mt-1 text-[11px] text-t-3">{t("profile.personalData.emailHint")}</p>
+					<Typography tag="p" className="mt-1 text-[11px] text-t-3">{t("profile.personalData.emailHint")}</Typography>
 				</div>
 
 				<div>

@@ -54,12 +54,12 @@ export const ProfileHeader = ({ profile, subscription }: ProfileHeaderProps) => 
 						{getDisplayName(profile)}
 					</Typography>
 					<div className="flex flex-wrap items-center gap-1.5 text-[12px] text-t-2">
-						<span className="truncate max-w-[200px]">{profile.email}</span>
-						<span className="size-[3px] rounded-full bg-surf-4 shrink-0 max-sm:hidden" />
-						<span className="max-sm:block max-sm:w-full">
+						<Typography tag="span" className="truncate max-w-[200px]">{profile.email}</Typography>
+						<Typography tag="span" className="size-[3px] rounded-full bg-surf-4 shrink-0 max-sm:hidden" />
+						<Typography tag="span" className="max-sm:block max-sm:w-full">
 							{getMemberSince(profile.createdAt, t)}
-						</span>
-						<span className="size-[3px] rounded-full bg-surf-4 shrink-0 max-sm:hidden" />
+						</Typography>
+						<Typography tag="span" className="size-[3px] rounded-full bg-surf-4 shrink-0 max-sm:hidden" />
 						<Badge
 							className={
 								isPremium

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type { ProcessTextDto } from "@/entities/admin-text";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -43,11 +47,10 @@ export const RunProcessModal = ({
 			>
 				<div className="w-[400px] max-w-full overflow-hidden rounded-[14px] border border-bd-2 bg-surf shadow-lg max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[16px]">
 					<div className="flex items-center justify-between border-b border-bd-1 px-4.5 py-3.5">
-						<span className="font-display text-[15px] text-t-1">
+						<Typography tag="span" className="font-display text-[15px] text-t-1">
 							{t("admin.texts.versions.runModal.title")}
-						</span>
-						<button
-							type="button"
+						</Typography>
+						<Button
 							onClick={onClose}
 							className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 						>
@@ -59,7 +62,7 @@ export const RunProcessModal = ({
 									strokeLinecap="round"
 								/>
 							</svg>
-						</button>
+						</Button>
 					</div>
 
 					<form action={handleSubmit}>
@@ -91,25 +94,24 @@ export const RunProcessModal = ({
 						</div>
 
 						<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-4 py-3">
-							<button
-								type="button"
+							<Button
 								onClick={onClose}
 								className="flex h-[30px] items-center rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							>
 								{t("admin.texts.versions.runModal.cancel")}
-							</button>
-							<button
+							</Button>
+							<Button
 								type="submit"
 								disabled={isPending}
 								className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 							>
 								{isPending && (
-									<span className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />
+									<Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />
 								)}
 								{isPending
 									? t("admin.texts.versions.runModal.running")
 									: t("admin.texts.versions.runModal.run")}
-							</button>
+							</Button>
 						</div>
 					</form>
 				</div>
@@ -135,7 +137,7 @@ const CheckboxRow = ({
 }: CheckboxRowProps) => {
   const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onChange?.(e.currentTarget.checked);
   return (
-	<label
+	<Typography tag="label"
 		className={cn(
 			"flex cursor-pointer items-start gap-3 rounded-[10px] border border-bd-1 bg-surf-2 px-3.5 py-3 transition-colors",
 			disabled && "cursor-default opacity-60",
@@ -163,8 +165,8 @@ const CheckboxRow = ({
 			</div>
 		</div>
 		<div className="flex flex-col gap-0.5">
-			<span className="text-[13px] font-medium text-t-1">{label}</span>
-			<span className="text-[11.5px] text-t-3">{description}</span>
+			<Typography tag="span" className="text-[13px] font-medium text-t-1">{label}</Typography>
+			<Typography tag="span" className="text-[11.5px] text-t-3">{description}</Typography>
 		</div>
 		{!disabled && (
 			<input
@@ -174,6 +176,6 @@ const CheckboxRow = ({
 				onChange={handleChange}
 			/>
 		)}
-	</label>
+	</Typography>
 );
 };

@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import type { AdminFeedbackMessage } from "@/entities/feedback";
 import { useEffect, useRef } from 'react';
 import { FeedbackMessageBubble } from "./feedback-message-bubble";
@@ -48,10 +50,10 @@ export const FeedbackMessagesList = ({
 								key={`divider-${msg.id}`}
 								className="relative my-1 text-center text-[10.5px] text-t-3"
 							>
-								<span className="relative z-10 bg-bg px-2">
+								<Typography tag="span" className="relative z-10 bg-bg px-2">
 									{formatDateDivider(msg.createdAt)}
-								</span>
-								<span className="absolute inset-x-0 top-1/2 -z-0 h-px bg-bd-2" />
+								</Typography>
+								<Typography tag="span" className="absolute inset-x-0 top-1/2 -z-0 h-px bg-bd-2" />
 							</div>
 						)}
 						<FeedbackMessageBubble

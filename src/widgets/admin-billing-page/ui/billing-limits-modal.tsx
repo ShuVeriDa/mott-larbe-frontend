@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import type { AdminPlan, PlanLimits } from "@/entities/admin-billing";
 import { useBillingLimitsModal } from "../model/use-billing-limits-modal";
 
@@ -46,17 +50,17 @@ export const BillingLimitsModal = ({
 			>
 				{/* Header */}
 				<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-[18px] py-4">
-					<span className="font-display text-[14px] font-semibold text-t-1">
+					<Typography tag="span" className="font-display text-[14px] font-semibold text-t-1">
 						{t("admin.plans.limitsModal.title")}: {plan.name}
-					</span>
-					<button
+					</Typography>
+					<Button
 						onClick={onClose}
 						className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
 						<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
 							<path d="M1 1l10 10M11 1 1 11" />
 						</svg>
-					</button>
+					</Button>
 				</div>
 
 				{/* Body */}
@@ -70,14 +74,14 @@ export const BillingLimitsModal = ({
 						<div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.4px] text-t-3">
 							{t("admin.plans.limitsModal.numericSection")}
 						</div>
-						<p className="mb-3 text-[11.5px] text-t-3">
+						<Typography tag="p" className="mb-3 text-[11.5px] text-t-3">
 							{t("admin.plans.limitsModal.unlimitedHint")}
-						</p>
+						</Typography>
 						<div className="space-y-2.5">
 							{numericFields.map(({ key, label }) => {
 							  return (
 								<div key={key as string} className="flex items-center gap-3">
-									<label className="w-40 shrink-0 text-[12.5px] text-t-1">{label}</label>
+									<Typography tag="label" className="w-40 shrink-0 text-[12.5px] text-t-1">{label}</Typography>
 									<input
 										type="number"
 										min={-1}
@@ -101,8 +105,8 @@ export const BillingLimitsModal = ({
 							{boolFields.map(({ key, label }) => {
 							  return (
 								<div key={key as string} className="flex items-center justify-between">
-									<span className="text-[12.5px] text-t-1">{label}</span>
-									<label className="relative h-[18px] w-8 cursor-pointer">
+									<Typography tag="span" className="text-[12.5px] text-t-1">{label}</Typography>
+									<Typography tag="label" className="relative h-[18px] w-8 cursor-pointer">
 										<input
 											type="checkbox"
 											className="peer sr-only"
@@ -110,9 +114,9 @@ export const BillingLimitsModal = ({
 											data-field={key as string}
 											onChange={handleBoolChange}
 										/>
-										<span className="absolute inset-0 rounded-full border border-bd-2 bg-surf-3 transition-colors peer-checked:border-acc peer-checked:bg-acc" />
-										<span className="absolute left-0.5 top-0.5 size-3 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-3.5" />
-									</label>
+										<Typography tag="span" className="absolute inset-0 rounded-full border border-bd-2 bg-surf-3 transition-colors peer-checked:border-acc peer-checked:bg-acc" />
+										<Typography tag="span" className="absolute left-0.5 top-0.5 size-3 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-3.5" />
+									</Typography>
 								</div>
 							);
 							})}
@@ -122,21 +126,20 @@ export const BillingLimitsModal = ({
 
 				{/* Footer */}
 				<div className="flex shrink-0 items-center justify-end gap-2 border-t border-bd-1 px-[18px] py-3">
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						className="h-8 rounded-[8px] border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 					>
 						{t("admin.plans.limitsModal.cancel")}
-					</button>
-					<button
+					</Button>
+					<Button
 						type="submit"
 						form="limits-form"
 						disabled={isPending}
 						className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 					>
 						{t("admin.plans.limitsModal.save")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

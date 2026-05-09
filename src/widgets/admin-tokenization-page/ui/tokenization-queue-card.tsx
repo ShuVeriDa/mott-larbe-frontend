@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type { TokenizationQueue } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
 
@@ -17,13 +21,13 @@ export const TokenizationQueueCard = ({
 	return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 			<div className="flex items-center border-b border-bd-1 px-3.5 py-[11px]">
-				<span className="text-[11px] font-semibold uppercase tracking-[0.4px] text-t-2">
+				<Typography tag="span" className="text-[11px] font-semibold uppercase tracking-[0.4px] text-t-2">
 					{t("admin.tokenization.sidePanel.queue")}
-				</span>
+				</Typography>
 				{queue && queue.count > 0 && (
-					<span className="ml-2 rounded bg-amb-bg px-1 py-px text-[10px] font-semibold text-amb-t">
+					<Typography tag="span" className="ml-2 rounded bg-amb-bg px-1 py-px text-[10px] font-semibold text-amb-t">
 						{queue.count}
-					</span>
+					</Typography>
 				)}
 			</div>
 
@@ -47,12 +51,12 @@ export const TokenizationQueueCard = ({
 							key={item.textId}
 							className="flex items-center gap-2.5 border-b border-bd-1 px-3.5 py-[7px] text-[12px] last:border-b-0 hover:bg-surf-2 transition-colors"
 						>
-							<span className="text-[10.5px] text-t-4 tabular-nums w-4 shrink-0">
+							<Typography tag="span" className="text-[10.5px] text-t-4 tabular-nums w-4 shrink-0">
 								{i + 1}
-							</span>
-							<span className="flex-1 min-w-0 truncate text-t-1">
+							</Typography>
+							<Typography tag="span" className="flex-1 min-w-0 truncate text-t-1">
 								{item.title}
-							</span>
+							</Typography>
 							<div className="flex items-center gap-1.5 shrink-0">
 								<div className="h-1 w-12 overflow-hidden rounded-full bg-surf-3">
 									<div
@@ -60,9 +64,9 @@ export const TokenizationQueueCard = ({
 										style={{ width: `${item.progress}%` }}
 									/>
 								</div>
-								<span className="text-[10.5px] text-t-3 tabular-nums w-7 text-right">
+								<Typography tag="span" className="text-[10.5px] text-t-3 tabular-nums w-7 text-right">
 									{item.progress}%
-								</span>
+								</Typography>
 							</div>
 						</div>
 					))}
@@ -70,7 +74,7 @@ export const TokenizationQueueCard = ({
 			)}
 
 			<div className="border-t border-bd-1 p-3.5">
-				<button
+				<Button
 					onClick={onRun}
 					className="flex h-[34px] w-full items-center justify-center gap-1.5 rounded-base bg-acc text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
@@ -78,7 +82,7 @@ export const TokenizationQueueCard = ({
 						<path d="M5 3l8 5-8 5V3z" fill="currentColor" />
 					</svg>
 					{t("admin.tokenization.sidePanel.runBtn")}
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

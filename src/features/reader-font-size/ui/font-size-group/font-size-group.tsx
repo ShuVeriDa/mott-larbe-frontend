@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -37,9 +39,8 @@ export const FontSizeGroup = ({
 				const active = item.value === size;
 								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setSize(item.value);
 return (
-					<button
+					<Button
 						key={item.value}
-						type="button"
 						onClick={handleClick}
 						aria-pressed={active}
 						className={cn(
@@ -52,7 +53,7 @@ return (
 						)}
 					>
 						{item.label}
-					</button>
+					</Button>
 				);
 			})}
 		</div>

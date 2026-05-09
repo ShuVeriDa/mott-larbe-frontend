@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { HeatmapDay, HeatmapLevel } from "@/entities/statistics";
@@ -39,7 +41,7 @@ export const ActivityCard = ({ heatmap }: ActivityCardProps) => {
 	return (
 		<SettingCard title={t("profile.activity.title")} noBody>
 			<div className="px-4 pt-3 pb-3.5">
-				<p className="text-[11px] text-t-3 mb-2">{t("profile.activity.label")}</p>
+				<Typography tag="p" className="text-[11px] text-t-3 mb-2">{t("profile.activity.label")}</Typography>
 				<div className="flex flex-wrap gap-[2.5px]">
 					{heatmap.map((day) => (
 						<HeatmapCell

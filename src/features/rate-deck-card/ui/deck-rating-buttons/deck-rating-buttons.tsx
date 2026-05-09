@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -56,9 +58,8 @@ export const DeckRatingButtons = ({
 				{OPTIONS.map((option) => {
 				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRate(option.key);
 				  return (
-					<button
+					<Button
 						key={option.key}
-						type="button"
 						disabled={disabled || !visible}
 						onClick={handleClick}
 						className={cn(
@@ -69,14 +70,14 @@ export const DeckRatingButtons = ({
 							option.hoverClass,
 						)}
 					>
-						<span className="text-[20px] leading-none">{option.icon}</span>
-						<span className="text-[12.5px] font-semibold text-t-1">
+						<Typography tag="span" className="text-[20px] leading-none">{option.icon}</Typography>
+						<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 							{t(`review.deck.card.rate.${option.key}.label`)}
-						</span>
-						<span className="text-[11px] text-t-3 max-md:hidden">
+						</Typography>
+						<Typography tag="span" className="text-[11px] text-t-3 max-md:hidden">
 							{t(`review.deck.card.rate.${option.key}.sub`)}
-						</span>
-					</button>
+						</Typography>
+					</Button>
 				);
 				})}
 			</div>

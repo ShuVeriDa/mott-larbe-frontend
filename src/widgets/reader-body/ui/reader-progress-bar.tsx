@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 
 export interface ReaderProgressBarProps {
@@ -13,12 +15,12 @@ export const ReaderProgressBar = ({ progress }: ReaderProgressBarProps) => {
 	return (
 		<div className="mb-7" aria-live="polite">
 			<div className="mb-2 flex justify-between">
-				<span className="text-[11px] text-t-3">
+				<Typography tag="span" className="text-[11px] text-t-3">
 					{t("reader.body.progress")}
-				</span>
-				<span className="text-[11px] font-semibold text-acc tabular-nums">
+				</Typography>
+				<Typography tag="span" className="text-[11px] font-semibold text-acc tabular-nums">
 					{value}%
-				</span>
+				</Typography>
 			</div>
 			<div
 				role="progressbar"

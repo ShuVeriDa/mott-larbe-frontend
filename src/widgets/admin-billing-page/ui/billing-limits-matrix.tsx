@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminPlan, PlanLimits, PlanType } from "@/entities/admin-billing";
 
@@ -47,14 +49,14 @@ const CellValue = ({
 }) => {
 	if (format === "bool") {
 		return value === true
-			? <span className="font-semibold text-grn-t">✓</span>
-			: <span className="text-t-4">—</span>;
+			? <Typography tag="span" className="font-semibold text-grn-t">✓</Typography>
+			: <Typography tag="span" className="text-t-4">—</Typography>;
 	}
 	if (value === -1 || value === null || value === undefined)
-		return <span className="font-semibold text-acc-t">{unlimitedLabel}</span>;
+		return <Typography tag="span" className="font-semibold text-acc-t">{unlimitedLabel}</Typography>;
 	if (typeof value === "number")
-		return <span className="font-medium text-t-2">{value.toLocaleString("ru-RU")}</span>;
-	return <span className="text-t-4">—</span>;
+		return <Typography tag="span" className="font-medium text-t-2">{value.toLocaleString("ru-RU")}</Typography>;
+	return <Typography tag="span" className="text-t-4">—</Typography>;
 };
 
 interface BillingLimitsMatrixProps {
@@ -68,9 +70,9 @@ export const BillingLimitsMatrix = ({ plans, isLoading }: BillingLimitsMatrixPro
 	return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
-				<span className="text-[12.5px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("admin.plans.limitsMatrix.title")}
-				</span>
+				</Typography>
 			</div>
 			<div className="overflow-x-auto [&::-webkit-scrollbar]:h-0">
 				{isLoading ? (
@@ -91,11 +93,11 @@ export const BillingLimitsMatrix = ({ plans, isLoading }: BillingLimitsMatrixPro
 										key={plan.id}
 										className="border-b border-bd-1 px-2.5 py-2 text-center text-[11px]"
 									>
-										<span
+										<Typography tag="span"
 											className={`inline-flex items-center rounded-[6px] px-2 py-0.5 text-[11px] font-semibold ${PLAN_BADGE[plan.type] ?? "bg-surf-3 text-t-2"}`}
 										>
 											{plan.name}
-										</span>
+										</Typography>
 									</th>
 								))}
 							</tr>

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -34,7 +38,7 @@ export const TokenizationTabs = ({ activeTab, stats, onChange }: TokenizationTab
 				{TABS.map(({ key, labelKey }) => {
 				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(key);
 				  return (
-					<button
+					<Button
 						key={key}
 						onClick={handleClick}
 						className={cn(
@@ -46,16 +50,16 @@ export const TokenizationTabs = ({ activeTab, stats, onChange }: TokenizationTab
 					>
 						{t(labelKey)}
 						{counts[key] !== undefined && (
-							<span
+							<Typography tag="span"
 								className={cn(
 									"rounded px-1 py-px text-[10px] font-semibold",
 									activeTab === key ? "bg-surf-3 text-t-2" : "bg-surf-3 text-t-3",
 								)}
 							>
 								{counts[key]!.toLocaleString()}
-							</span>
+							</Typography>
 						)}
-					</button>
+					</Button>
 				);
 				})}
 			</div>

@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminDictUserStats } from "@/entities/dictionary";
 
@@ -31,9 +33,9 @@ export const UserStatsSideCard = ({ data, isLoading }: UserStatsSideCardProps) =
 	return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			<div className="border-b border-bd-1 px-4 py-3">
-				<span className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
+				<Typography tag="span" className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
 					{t("admin.dictionaryDetail.userDictionaries")}
-				</span>
+				</Typography>
 			</div>
 
 			{isLoading ? (
@@ -52,8 +54,8 @@ export const UserStatsSideCard = ({ data, isLoading }: UserStatsSideCardProps) =
 							key={row.key}
 							className="flex items-center justify-between border-b border-bd-1 px-4 py-2.5 text-[12.5px] last:border-b-0"
 						>
-							<span className="text-t-3">{row.key}</span>
-							<span className={row.className ?? "font-medium text-t-1"}>{row.value}</span>
+							<Typography tag="span" className="text-t-3">{row.key}</Typography>
+							<Typography tag="span" className={row.className ?? "font-medium text-t-1"}>{row.value}</Typography>
 						</div>
 					))}
 				</div>

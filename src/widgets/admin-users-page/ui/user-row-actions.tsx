@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
@@ -69,8 +71,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 								};
 return (
 		<div className="flex items-center justify-end gap-0.5">
-			<button
-				type="button"
+			<Button
 				aria-label={t("admin.users.actions.openProfile")}
 				className={btnClass}
 				onClick={handleClick}
@@ -84,11 +85,10 @@ return (
 						strokeLinejoin="round"
 					/>
 				</svg>
-			</button>
+			</Button>
 
 			<div ref={menuRef} className="relative">
-				<button
-					type="button"
+				<Button
 					className={btnClass}
 					onClick={handleClick2}
 					disabled={isPending}
@@ -98,12 +98,11 @@ return (
 						<circle cx="8" cy="8" r="1" fill="currentColor" />
 						<circle cx="8" cy="12" r="1" fill="currentColor" />
 					</svg>
-				</button>
+				</Button>
 
 				{open && (
 					<div className="absolute right-0 top-[calc(100%+4px)] z-300 min-w-[170px] rounded-[10px] border border-bd-2 bg-surf p-1 shadow-md">
-						<button
-							type="button"
+						<Button
 							className={menuItemClass}
 							onClick={handleClick3}
 						>
@@ -121,13 +120,12 @@ return (
 								/>
 							</svg>
 							{t("admin.users.actions.openProfile")}
-						</button>
+						</Button>
 
 						<div className="my-[3px] h-px bg-bd-1" />
 
 						{user.status === "ACTIVE" && (
-							<button
-								type="button"
+							<Button
 								className={menuItemClass}
 								onClick={handleClick4}
 							>
@@ -144,12 +142,11 @@ return (
 									/>
 								</svg>
 								{t("admin.users.actions.freeze")}
-							</button>
+							</Button>
 						)}
 
 						{user.status === "FROZEN" && (
-							<button
-								type="button"
+							<Button
 								className={menuItemClass}
 								onClick={handleClick5}
 							>
@@ -167,12 +164,11 @@ return (
 									<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
 								</svg>
 								{t("admin.users.actions.unfreeze")}
-							</button>
+							</Button>
 						)}
 
 						{user.status === "BLOCKED" && (
-							<button
-								type="button"
+							<Button
 								className={menuItemClass}
 								onClick={handleClick6}
 							>
@@ -190,12 +186,11 @@ return (
 									<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
 								</svg>
 								{t("admin.users.actions.unblock")}
-							</button>
+							</Button>
 						)}
 
 						{(user.status === "ACTIVE" || user.status === "FROZEN") && (
-							<button
-								type="button"
+							<Button
 								className={menuDangerClass}
 								onClick={handleClick7}
 							>
@@ -213,12 +208,11 @@ return (
 									/>
 								</svg>
 								{t("admin.users.actions.block")}
-							</button>
+							</Button>
 						)}
 
 						{user.status === "BLOCKED" && (
-							<button
-								type="button"
+							<Button
 								className={menuDangerClass}
 								onClick={handleClick8}
 							>
@@ -241,7 +235,7 @@ return (
 									/>
 								</svg>
 								{t("admin.users.actions.delete")}
-							</button>
+							</Button>
 						)}
 					</div>
 				)}

@@ -2,6 +2,8 @@ import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminDictTab } from "@/entities/dictionary";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 const TABS: AdminDictTab[] = ["all", "no_senses", "no_examples", "no_forms"];
 
 interface DictionaryTabsProps {
@@ -16,9 +18,8 @@ export const DictionaryTabs = ({ active, counts, onChange, t }: DictionaryTabsPr
 		{TABS.map((tab) => {
 		  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab);
 		  return (
-			<button
+			<Button
 				key={tab}
-				type="button"
 				onClick={handleClick}
 				className={cn(
 					"flex cursor-pointer items-center gap-1.5 border-b-2 pb-2 pt-1 text-[12.5px] transition-colors",
@@ -29,7 +30,7 @@ export const DictionaryTabs = ({ active, counts, onChange, t }: DictionaryTabsPr
 			>
 				{t(`admin.dictionary.tabs.${tab}`)}
 				{counts?.[tab] !== undefined && (
-					<span
+					<Typography tag="span"
 						className={cn(
 							"rounded-[4px] px-1.5 py-px text-[10.5px] font-semibold",
 							active === tab
@@ -38,9 +39,9 @@ export const DictionaryTabs = ({ active, counts, onChange, t }: DictionaryTabsPr
 						)}
 					>
 						{counts[tab]}
-					</span>
+					</Typography>
 				)}
-			</button>
+			</Button>
 		);
 		})}
 	</div>

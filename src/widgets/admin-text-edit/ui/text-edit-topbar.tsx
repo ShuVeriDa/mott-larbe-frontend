@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { useI18n } from "@/shared/lib/i18n";
 import Link from "next/link";
 
@@ -55,16 +59,16 @@ export const TextEditTopbar = ({
 					>
 						{t("admin.texts.title")}
 					</Link>
-					<span className="shrink-0 text-t-4 max-[600px]:hidden">/</span>
-					<span className="truncate font-medium text-t-2">
+					<Typography tag="span" className="shrink-0 text-t-4 max-[600px]:hidden">/</Typography>
+					<Typography tag="span" className="truncate font-medium text-t-2">
 						{textTitle || t("admin.texts.editPage.editing")}
-					</span>
+					</Typography>
 				</nav>
 
 				{/* Text ID badge */}
-				<span className="shrink-0 rounded-[5px] border border-bd-2 bg-surf-2 px-2 py-[2px] font-mono text-[10.5px] text-t-3 max-[900px]:hidden">
+				<Typography tag="span" className="shrink-0 rounded-[5px] border border-bd-2 bg-surf-2 px-2 py-[2px] font-mono text-[10.5px] text-t-3 max-[900px]:hidden">
 					#{textId.slice(0, 8)}
-				</span>
+				</Typography>
 			</div>
 
 			{/* Right side */}
@@ -100,19 +104,18 @@ export const TextEditTopbar = ({
 				{/* Unsaved indicator */}
 				<div className="flex items-center gap-1.5 max-[600px]:hidden">
 					{isUnsaved && (
-						<span className="h-[7px] w-[7px] shrink-0 animate-pulse rounded-full bg-amb" />
+						<Typography tag="span" className="h-[7px] w-[7px] shrink-0 animate-pulse rounded-full bg-amb" />
 					)}
-					<span className="text-[11px] text-t-3">
+					<Typography tag="span" className="text-[11px] text-t-3">
 						{isSaving
 							? t("admin.texts.editPage.saving")
 							: isUnsaved
 								? t("admin.texts.editPage.unsaved")
 								: t("admin.texts.editPage.saved")}
-					</span>
+					</Typography>
 				</div>
 
-				<button
-					type="button"
+				<Button
 					onClick={onSaveDraft}
 					disabled={isSaving}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-xs text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50 max-[600px]:hidden"
@@ -137,10 +140,9 @@ export const TextEditTopbar = ({
 						/>
 					</svg>
 					{t("admin.texts.editPage.saveDraft")}
-				</button>
+				</Button>
 
-				<button
-					type="button"
+				<Button
 					onClick={onSaveAndUpdate}
 					disabled={isSaving}
 					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-xs font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50"
@@ -154,15 +156,15 @@ export const TextEditTopbar = ({
 							strokeLinejoin="round"
 						/>
 					</svg>
-					<span className="max-[600px]:hidden">
+					<Typography tag="span" className="max-[600px]:hidden">
 						{isSaving
 							? t("admin.texts.editPage.saving")
 							: t("admin.texts.editPage.saveUpdate")}
-					</span>
-					<span className="hidden max-[600px]:inline">
+					</Typography>
+					<Typography tag="span" className="hidden max-[600px]:inline">
 						{t("admin.texts.editPage.saveUpdate")}
-					</span>
-				</button>
+					</Typography>
+				</Button>
 			</div>
 		</header>
 	);

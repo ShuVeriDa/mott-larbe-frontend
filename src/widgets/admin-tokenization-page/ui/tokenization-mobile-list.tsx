@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import type { ProcessingStatus, TokenizationTextItem } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
@@ -52,7 +56,7 @@ export const TokenizationMobileList = ({
 								/>
 							</div>
 						</div>
-						<button className="flex size-8 shrink-0 items-center justify-center rounded-base bg-surf-2 text-t-2">
+						<Button className="flex size-8 shrink-0 items-center justify-center rounded-base bg-surf-2 text-t-2">
 							<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
 								<path
 									d="M6 4l4 4-4 4"
@@ -62,24 +66,24 @@ export const TokenizationMobileList = ({
 									strokeLinejoin="round"
 								/>
 							</svg>
-						</button>
+						</Button>
 					</div>
 					<div className="flex items-center gap-3 text-[11px] text-t-3">
-						<span>
+						<Typography tag="span">
 							{t("admin.tokenization.table.tokens")}:{" "}
-							<strong className="text-t-2">
+							<Typography tag="strong" className="text-t-2">
 								{formatCount(item.totalTokens)}
-							</strong>
-						</span>
+							</Typography>
+						</Typography>
 						{item.notFoundCount > 0 && (
-							<span className="text-red-t font-semibold">
+							<Typography tag="span" className="text-red-t font-semibold">
 								—{item.notFoundCount}
-							</span>
+							</Typography>
 						)}
 						{item.ambiguousCount > 0 && (
-							<span className="text-amb-t font-semibold">
+							<Typography tag="span" className="text-amb-t font-semibold">
 								~{item.ambiguousCount}
-							</span>
+							</Typography>
 						)}
 					</div>
 				</div>

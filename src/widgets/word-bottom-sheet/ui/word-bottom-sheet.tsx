@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { useEffect } from 'react';
 import { createPortal } from "react-dom";
 import { Plus, X } from "lucide-react";
@@ -63,7 +67,7 @@ const SheetContent = ({
 					</div>
 					<div className="text-[12px] text-t-3">
 						{t("reader.panel.baseForm")}:{" "}
-						<strong className="font-medium text-t-2">{lookup.baseForm}</strong>
+						<Typography tag="strong" className="font-medium text-t-2">{lookup.baseForm}</Typography>
 					</div>
 				</div>
 				<div className="border-b border-hairline border-bd-1 px-4 py-3.5">
@@ -79,12 +83,12 @@ const SheetContent = ({
 				{lookup.tags.length > 0 ? (
 					<div className="flex flex-wrap gap-1 border-b border-hairline border-bd-1 px-4 py-2.5">
 						{lookup.tags.map((tag) => (
-							<span
+							<Typography tag="span"
 								key={tag}
 								className="rounded-[5px] border-hairline border-bd-1 bg-surf-2 px-2 py-0.5 text-[10.5px] font-medium text-t-2"
 							>
 								{tag}
-							</span>
+							</Typography>
 						))}
 					</div>
 				) : null}
@@ -101,8 +105,7 @@ const SheetContent = ({
 				</div>
 			</div>
 			<div className="flex shrink-0 gap-2 px-4 pt-3 pb-[max(16px,env(safe-area-inset-bottom))]">
-				<button
-					type="button"
+				<Button
 					onClick={onPrimary}
 					disabled={isPending}
 					className={cn(
@@ -114,16 +117,15 @@ const SheetContent = ({
 					{lookup.inDictionary
 						? t("reader.popup.inDictionary")
 						: t("reader.popup.addToDictionary")}
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
 					onClick={onClose}
 					aria-label={t("reader.sheet.close")}
 					className="inline-flex h-11 items-center justify-center gap-1.5 rounded-[10px] border-hairline border-bd-2 bg-surf-2 px-4 text-[14px] font-semibold text-t-2"
 				>
 					<X className="size-4" strokeWidth={1.6} />
 					{t("reader.sheet.close")}
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

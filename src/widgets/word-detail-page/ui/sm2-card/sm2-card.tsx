@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import type {
 	DetailReviewHistory,
 	DetailSm2Progress,
@@ -21,15 +23,15 @@ export const Sm2Card = ({ sm2, reviewHistory }: Sm2CardProps) => {
 				aria-labelledby="sm2-card-title"
 				className="mb-3.5 rounded-card border-hairline border-bd-1 bg-surf p-4"
 			>
-				<h3
+				<Typography tag="h3"
 					id="sm2-card-title"
 					className="mb-3 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
 				>
 					{t("vocabulary.wordDetail.sections.sm2")}
-				</h3>
-				<p className="text-[12.5px] text-t-3">
+				</Typography>
+				<Typography tag="p" className="text-[12.5px] text-t-3">
 					{t("vocabulary.wordDetail.sm2.empty")}
-				</p>
+				</Typography>
 			</section>
 		);
 	}
@@ -46,23 +48,23 @@ export const Sm2Card = ({ sm2, reviewHistory }: Sm2CardProps) => {
 			aria-labelledby="sm2-card-title"
 			className="mb-3.5 rounded-card border-hairline border-bd-1 bg-surf p-4"
 		>
-			<h3
+			<Typography tag="h3"
 				id="sm2-card-title"
 				className="mb-3 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
 			>
 				{t("vocabulary.wordDetail.sections.sm2")}
-			</h3>
+			</Typography>
 
 			<div className="mb-1.5 flex items-center justify-between">
-				<span className="text-[12px] text-t-2">
+				<Typography tag="span" className="text-[12px] text-t-2">
 					{t("vocabulary.wordDetail.sm2.progress")}
-				</span>
-				<span className="font-display text-[17px] text-t-1">
+				</Typography>
+				<Typography tag="span" className="font-display text-[17px] text-t-1">
 					{t("vocabulary.wordDetail.sm2.progressValue", {
 						current: sm2.repetitions,
 						target: sm2.targetRepetitions,
 					})}
-				</span>
+				</Typography>
 			</div>
 			<div
 				role="progressbar"

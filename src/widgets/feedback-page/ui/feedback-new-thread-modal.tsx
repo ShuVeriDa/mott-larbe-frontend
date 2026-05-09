@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, MouseEvent, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { FeedbackType } from "@/entities/feedback";
@@ -81,11 +85,10 @@ return (
 			>
 				{/* Header */}
 				<div className="mb-[18px] flex items-center justify-between">
-					<p className="text-sm font-semibold text-t-1">
+					<Typography tag="p" className="text-sm font-semibold text-t-1">
 						{t("feedback.modal.title")}
-					</p>
-					<button
-						type="button"
+					</Typography>
+					<Button
 						onClick={onClose}
 						className="flex size-7 items-center justify-center rounded-base border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
@@ -99,21 +102,20 @@ return (
 						>
 							<path d="M2 2l8 8M10 2l-8 8" />
 						</svg>
-					</button>
+					</Button>
 				</div>
 
 				{/* Type selector */}
 				<div className="mb-3.5">
-					<label className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
+					<Typography tag="label" className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
 						{t("feedback.modal.typeLabel")}
-					</label>
+					</Typography>
 					<div className="grid grid-cols-2 gap-[7px]">
 						{TYPE_OPTIONS.map((opt) => {
 						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setType(opt.value);
 						  return (
-							<button
+							<Button
 								key={opt.value}
-								type="button"
 								onClick={handleClick}
 								className={cn(
 									"flex cursor-pointer items-center gap-[9px] rounded-[9px] border px-2.5 py-[9px] text-left transition-all",
@@ -138,7 +140,7 @@ return (
 										{t(`feedback.threadTypeDesc.${opt.value}`)}
 									</div>
 								</div>
-							</button>
+							</Button>
 						);
 						})}
 					</div>
@@ -146,9 +148,9 @@ return (
 
 				{/* Title */}
 				<div className="mb-3">
-					<label className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
+					<Typography tag="label" className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
 						{t("feedback.modal.titleLabel")}
-					</label>
+					</Typography>
 					<input
 						type="text"
 						value={title}
@@ -161,9 +163,9 @@ return (
 
 				{/* Message */}
 				<div className="mb-0">
-					<label className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
+					<Typography tag="label" className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
 						{t("feedback.modal.messageLabel")}
-					</label>
+					</Typography>
 					<textarea
 						value={body}
 						onChange={handleChange2}
@@ -174,21 +176,19 @@ return (
 
 				{/* Actions */}
 				<div className="mt-4 flex gap-2">
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						className="h-9 flex-1 rounded-[9px] border border-bd-2 bg-surf-2 font-[inherit] text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 					>
 						{t("feedback.modal.cancel")}
-					</button>
-					<button
-						type="button"
+					</Button>
+					<Button
 						disabled={!body.trim() || submitFeedback.isPending}
 						onClick={handleSubmit}
 						className="h-9 flex-2 rounded-[9px] bg-acc font-[inherit] text-[13px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88] disabled:opacity-50"
 					>
 						{t("feedback.modal.submit")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

@@ -29,9 +29,9 @@ export const PaymentHistoryCard = () => {
 		<SettingCard title={t("profile.subscription.paymentHistory")} noBody>
 			{payments.length === 0 ? (
 				<div className="flex flex-col items-center gap-2 px-4 py-8 text-center">
-					<span className="flex size-9 items-center justify-center rounded-[9px] bg-surf-2">
+					<Typography tag="span" className="flex size-9 items-center justify-center rounded-[9px] bg-surf-2">
 						<CardIcon />
-					</span>
+					</Typography>
 					<Typography tag="p" className="text-[12.5px] font-medium text-t-1">
 						{t("profile.subscription.noPayments")}
 					</Typography>
@@ -53,12 +53,12 @@ export const PaymentHistoryCard = () => {
 								{new Date(p.createdAt).toLocaleDateString()}
 							</Typography>
 						</div>
-						<span className="text-[12.5px] font-semibold text-t-1 shrink-0">
+						<Typography tag="span" className="text-[12.5px] font-semibold text-t-1 shrink-0">
 							{formatPrice(p.amountCents, p.currency)}
-						</span>
-						<span className={`px-1.5 py-0.5 rounded text-[10.5px] font-medium shrink-0 ${STATUS_STYLE[p.status]}`}>
+						</Typography>
+						<Typography tag="span" className={`px-1.5 py-0.5 rounded text-[10.5px] font-medium shrink-0 ${STATUS_STYLE[p.status]}`}>
 							{t(`profile.subscription.status.${p.status.toLowerCase()}`)}
-						</span>
+						</Typography>
 					</div>
 				))
 			)}

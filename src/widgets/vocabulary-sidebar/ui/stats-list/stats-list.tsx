@@ -57,7 +57,7 @@ export const StatsList = ({ stats }: StatsListProps) => {
 					className="flex items-center justify-between rounded-[8px] border-hairline border-bd-1 bg-surf-2 px-2.5 py-2 transition-colors hover:border-bd-2"
 				>
 					<div className="flex items-center gap-[7px]">
-						<span
+						<Typography tag="span"
 							aria-hidden="true"
 							className={`size-[7px] rounded-full ${row.dotClass}`}
 						/>

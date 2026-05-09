@@ -1,6 +1,7 @@
 import type { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 
+import { Button } from "@/shared/ui/button";
 export type ChipProps = ComponentProps<"button"> & {
 	active?: boolean;
 };
@@ -8,12 +9,10 @@ export type ChipProps = ComponentProps<"button"> & {
 export const Chip = ({
 	active = false,
 	className,
-	type = "button",
 	...props
 }: ChipProps) => (
-	<button
+	<Button
 		data-slot="chip"
-		type={type}
 		aria-pressed={active}
 		className={cn(
 			"shrink-0 px-[9px] py-[3.5px] rounded-md text-[11px] font-medium font-[inherit]",

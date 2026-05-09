@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackMessage } from "@/entities/feedback";
 
+import { Typography } from "@/shared/ui/typography";
 const formatTime = (iso: string) =>
 	new Date(iso).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
 
@@ -56,9 +57,9 @@ export const FeedbackMessageBubble = ({ message, noteLabel }: FeedbackMessageBub
 					</div>
 				)}
 				{!isNote && (
-					<p className={cn("text-[10.5px] text-t-3", isAdmin && "text-right")}>
+					<Typography tag="p" className={cn("text-[10.5px] text-t-3", isAdmin && "text-right")}>
 						{authorName} · {formatTime(message.createdAt)}
-					</p>
+					</Typography>
 				)}
 
 				<div
@@ -74,9 +75,9 @@ export const FeedbackMessageBubble = ({ message, noteLabel }: FeedbackMessageBub
 					{message.body}
 				</div>
 
-				<p className={cn("text-[10px] text-t-3", isAdmin && "text-right")}>
+				<Typography tag="p" className={cn("text-[10px] text-t-3", isAdmin && "text-right")}>
 					{formatTime(message.createdAt)}
-				</p>
+				</Typography>
 			</div>
 		</div>
 	);

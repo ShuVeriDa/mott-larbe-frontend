@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import type { AdminUserDetail } from "@/entities/admin-user";
 import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
@@ -55,14 +59,14 @@ return (
 						strokeLinejoin="round"
 					/>
 				</svg>
-				<span className="font-medium text-t-1">
+				<Typography tag="span" className="font-medium text-t-1">
 					{user ? `${user.name} ${user.surname}` : "…"}
-				</span>
+				</Typography>
 			</nav>
 
 			<div className="ml-auto flex items-center gap-1.5 max-sm:hidden">
 				{(isActive || isFrozen) && (
-					<button
+					<Button
 						onClick={handleClick
 						}
 						disabled={
@@ -73,10 +77,10 @@ return (
 						{isFrozen
 							? t("admin.users.actions.unfreeze")
 							: t("admin.users.actions.freeze")}
-					</button>
+					</Button>
 				)}
 				{(isActive || isFrozen || isBlocked) && (
-					<button
+					<Button
 						onClick={handleClick2
 						}
 						disabled={mutations.block.isPending || mutations.unblock.isPending}
@@ -85,7 +89,7 @@ return (
 						{isBlocked
 							? t("admin.users.actions.unblock")
 							: t("admin.users.actions.block")}
-					</button>
+					</Button>
 				)}
 			</div>
 		</header>

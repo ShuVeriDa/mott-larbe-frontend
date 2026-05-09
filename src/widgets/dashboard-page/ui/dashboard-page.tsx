@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, type SyntheticEvent, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { useDashboard } from "@/entities/dashboard";
@@ -76,13 +78,12 @@ return (
 					<Typography tag="p" className="text-sm text-red">
 						{t("dashboard.error")}
 					</Typography>
-					<button
-						type="button"
+					<Button
 						onClick={handleClick}
 						className="rounded-md bg-acc px-4 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
 					>
 						{t("dashboard.retry")}
-					</button>
+					</Button>
 				</div>
 			) : (
 				<div className="flex flex-1 flex-col gap-3.5 overflow-y-auto px-[22px] pb-7 pt-4 max-md:px-4 max-sm:px-3.5 max-sm:pb-5 max-sm:pt-3.5">

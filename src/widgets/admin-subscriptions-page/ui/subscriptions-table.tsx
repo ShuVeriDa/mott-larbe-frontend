@@ -10,6 +10,8 @@ import { SubscriptionStatusBadge } from "./subscription-status-badge";
 import { SubscriptionPlanChip } from "./subscription-plan-chip";
 import { SubscriptionProviderBadge } from "./subscription-provider-badge";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 interface Props {
 	items: AdminSubscriptionListItem[];
 	selectedId: string | null;
@@ -200,7 +202,7 @@ return (
 
 									{/* Next billing */}
 									<td className="px-3.5 py-[9px] max-sm:hidden">
-										<span
+										<Typography tag="span"
 											className={cn(
 												"text-[12.5px]",
 												isExpired ? "text-red-t" : "text-t-1",
@@ -211,7 +213,7 @@ return (
 												: isExpired || isCanceled
 												? formatDate(sub.endDate)
 												: formatDate(sub.endDate)}
-										</span>
+										</Typography>
 									</td>
 
 									{/* Amount */}
@@ -226,22 +228,20 @@ return (
 									>
 										<div className="flex justify-end gap-1 opacity-0 transition-opacity group-hover:opacity-100 [tr:hover_&]:opacity-100">
 											{canExtend && (
-												<button
-													type="button"
+												<Button
 													onClick={handleClick3}
 													className="h-6 rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 whitespace-nowrap"
 												>
 													{t("admin.subscriptions.actions.extend")}
-												</button>
+												</Button>
 											)}
 											{canCancel && (
-												<button
-													type="button"
+												<Button
 													onClick={handleClick4}
 													className="h-6 rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg whitespace-nowrap"
 												>
 													{t("admin.subscriptions.actions.cancel")}
-												</button>
+												</Button>
 											)}
 										</div>
 									</td>

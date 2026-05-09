@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { ProcessingStatus, TokenizationTextItem } from "@/entities/token";
@@ -32,9 +36,9 @@ const TokenBar = ({
 	const pct = normalizedMax > 0 ? Math.round((normalizedValue / normalizedMax) * 100) : 0;
 	return (
 		<div className="flex items-center gap-1.5">
-			<span className="tabular-nums text-[12.5px] text-t-1">
+			<Typography tag="span" className="tabular-nums text-[12.5px] text-t-1">
 				{normalizedValue.toLocaleString()}
-			</span>
+			</Typography>
 			<div className="h-1.5 w-14 overflow-hidden rounded-full bg-surf-3">
 				<div className={`h-full rounded-full ${color}`} style={{ width: `${pct}%` }} />
 			</div>
@@ -156,7 +160,7 @@ export const TokenizationTable = ({
 										label={statusLabels[item.processingStatus]}
 										progress={item.processingProgress}
 									/>
-									<span>{item.pagesCount} {t("admin.tokenization.table.pages")}</span>
+									<Typography tag="span">{item.pagesCount} {t("admin.tokenization.table.pages")}</Typography>
 								</div>
 							</td>
 							<td className="px-2.5 py-2.5">
@@ -167,35 +171,35 @@ export const TokenizationTable = ({
 							</td>
 							<td className="px-2.5 py-2.5">
 								{item.notFoundCount > 0 ? (
-									<span className="font-semibold text-red-t tabular-nums">
+									<Typography tag="span" className="font-semibold text-red-t tabular-nums">
 										{item.notFoundCount.toLocaleString()}
-									</span>
+									</Typography>
 								) : (
-									<span className="text-t-4">—</span>
+									<Typography tag="span" className="text-t-4">—</Typography>
 								)}
 							</td>
 							<td className="px-2.5 py-2.5">
 								{item.ambiguousCount > 0 ? (
-									<span className="font-semibold text-amb-t tabular-nums">
+									<Typography tag="span" className="font-semibold text-amb-t tabular-nums">
 										{item.ambiguousCount.toLocaleString()}
-									</span>
+									</Typography>
 								) : (
-									<span className="text-t-4">—</span>
+									<Typography tag="span" className="text-t-4">—</Typography>
 								)}
 							</td>
 							<td className="px-2.5 py-2.5">
 								{item.tokenizationVersion !== null ? (
-									<span className="font-mono text-[11.5px] text-t-3">
+									<Typography tag="span" className="font-mono text-[11.5px] text-t-3">
 										v{item.tokenizationVersion}
-									</span>
+									</Typography>
 								) : (
-									<span className="text-t-4">—</span>
+									<Typography tag="span" className="text-t-4">—</Typography>
 								)}
 							</td>
 							<td className="px-2 py-2.5" onClick={handleClick3}>
 								<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
 									{item.processingStatus === "RUNNING" ? (
-										<button
+										<Button
 											onClick={handleClick4}
 											disabled={mutations.cancelText.isPending}
 											title={t("admin.tokenization.row.cancel")}
@@ -204,9 +208,9 @@ export const TokenizationTable = ({
 											<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 												<rect x="4" y="4" width="8" height="8" rx="1.5" fill="currentColor" />
 											</svg>
-										</button>
+										</Button>
 									) : (
-										<button
+										<Button
 											onClick={handleClick5}
 											disabled={mutations.runText.isPending}
 											title={t("admin.tokenization.row.run")}
@@ -215,9 +219,9 @@ export const TokenizationTable = ({
 											<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
 												<path d="M5 3l8 5-8 5V3z" fill="currentColor" />
 											</svg>
-										</button>
+										</Button>
 									)}
-									<button
+									<Button
 										onClick={handleClick6}
 										disabled={mutations.resetText.isPending}
 										title={t("admin.tokenization.row.reset")}
@@ -227,7 +231,7 @@ export const TokenizationTable = ({
 											<path d="M2.5 8A5.5 5.5 0 0114 8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
 											<path d="M2.5 8L4.5 5.5M2.5 8L5 10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
 										</svg>
-									</button>
+									</Button>
 								</div>
 							</td>
 						</tr>

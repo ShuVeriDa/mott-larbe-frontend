@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import type { DetailMorphForm } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
 import { CardSection } from "../card-section";
@@ -22,11 +24,11 @@ export const MorphologySection = ({
 			title={t("vocabulary.wordDetail.sections.morphology")}
 			rightSlot={
 				declensionClass ? (
-					<span className="text-[11px] text-t-3">
+					<Typography tag="span" className="text-[11px] text-t-3">
 						{t("vocabulary.wordDetail.declensionClass", {
 							name: declensionClass,
 						})}
-					</span>
+					</Typography>
 				) : undefined
 			}
 		>
@@ -55,9 +57,9 @@ export const MorphologySection = ({
 									{form.caseLabel ?? form.gramCase ?? form.grammarTag ?? "—"}
 								</td>
 								<td className="py-1.5 pr-2">
-									<span className="inline-flex items-center rounded-[5px] border-hairline border-bd-1 bg-surf-2 px-2 py-[2px] font-display text-[12px] italic text-t-1">
+									<Typography tag="span" className="inline-flex items-center rounded-[5px] border-hairline border-bd-1 bg-surf-2 px-2 py-[2px] font-display text-[12px] italic text-t-1">
 										{form.form}
-									</span>
+									</Typography>
 								</td>
 								<td className="py-1.5 pr-2 text-[12px] text-t-3">
 									{form.translation ?? "—"}

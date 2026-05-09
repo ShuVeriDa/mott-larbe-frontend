@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { useAdminTags } from "@/entities/admin-tag";
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminTextCreatePage } from "../model/use-admin-text-create-page";
@@ -107,8 +109,7 @@ export const AdminTextCreatePage = () => {
 
 			{/* Mobile bottom action bar */}
 			<div className="sticky bottom-0 z-20 hidden border-t border-bd-1 bg-bg px-4 py-3 max-[900px]:flex max-[900px]:items-center max-[900px]:gap-2">
-				<button
-					type="button"
+				<Button
 					onClick={handleSaveDraft}
 					disabled={isSaving}
 					className="flex h-[38px] flex-1 items-center justify-center gap-1.5 rounded-[8px] border border-bd-2 bg-transparent text-sm text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50"
@@ -133,10 +134,9 @@ export const AdminTextCreatePage = () => {
 						/>
 					</svg>
 					{t("admin.texts.createPage.saveDraft")}
-				</button>
+				</Button>
 
-				<button
-					type="button"
+				<Button
 					onClick={handlePublish}
 					disabled={isSaving}
 					className="flex h-[38px] flex-1 items-center justify-center gap-1.5 rounded-[8px] bg-acc text-sm font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50"
@@ -151,7 +151,7 @@ export const AdminTextCreatePage = () => {
 						/>
 					</svg>
 					{t("admin.texts.createPage.publish")}
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type {
 	Editor,
@@ -64,8 +68,7 @@ const TbBtn = ({
 			onExec();
 		};
   return (
-	<button
-		type="button"
+	<Button
 		title={title}
 		onMouseDown={handleMouseDown}
 		className={`flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-[5px] transition-all duration-100 ${
@@ -75,7 +78,7 @@ const TbBtn = ({
 		}`}
 	>
 		{children}
-	</button>
+	</Button>
 );
 };
 
@@ -87,27 +90,27 @@ const getSlashItems = (t: ReturnType<typeof useI18n>["t"]): SlashMenuItem[] => [
 			{
 				title: t("admin.texts.createPage.formatText"),
 				description: "Обычный абзац",
-				icon: <span className="text-[11px] font-medium text-t-2">¶</span>,
+				icon: <Typography tag="span" className="text-[11px] font-medium text-t-2">¶</Typography>,
 				command: editor => editor.chain().focus().setParagraph().run(),
 			},
 			{
 				title: t("admin.texts.createPage.formatH2"),
 				description: "Крупный заголовок",
-				icon: <span className="text-[11px] font-bold text-t-2">H2</span>,
+				icon: <Typography tag="span" className="text-[11px] font-bold text-t-2">H2</Typography>,
 				command: editor =>
 					editor.chain().focus().setHeading({ level: 2 }).run(),
 			},
 			{
 				title: t("admin.texts.createPage.formatH3"),
 				description: "Средний заголовок",
-				icon: <span className="text-[10px] font-bold text-t-2">H3</span>,
+				icon: <Typography tag="span" className="text-[10px] font-bold text-t-2">H3</Typography>,
 				command: editor =>
 					editor.chain().focus().setHeading({ level: 3 }).run(),
 			},
 			{
 				title: t("admin.texts.createPage.formatQuote"),
 				description: "Цитата",
-				icon: <span className="text-[13px] text-t-2">&quot;</span>,
+				icon: <Typography tag="span" className="text-[13px] text-t-2">&quot;</Typography>,
 				command: editor => editor.chain().focus().setBlockquote().run(),
 			},
 			{
@@ -451,21 +454,21 @@ return (
 
 			{/* Keyboard hints */}
 			<div className="ml-auto flex shrink-0 items-center gap-1.5 pl-2 text-[10px] text-t-4 max-lg:hidden">
-				<span className="rounded-[3px] bg-surf-3 px-1 py-px text-t-3">
+				<Typography tag="span" className="rounded-[3px] bg-surf-3 px-1 py-px text-t-3">
 					Ctrl+S
-				</span>
-				<span>—</span>
-				<span>{t("admin.texts.createPage.saveDraft")}</span>
-				<span className="ml-1 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">
+				</Typography>
+				<Typography tag="span">—</Typography>
+				<Typography tag="span">{t("admin.texts.createPage.saveDraft")}</Typography>
+				<Typography tag="span" className="ml-1 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">
 					Ctrl+↵
-				</span>
-				<span>—</span>
-				<span>{t("admin.texts.createPage.publish")}</span>
-				<span className="ml-2 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">
+				</Typography>
+				<Typography tag="span">—</Typography>
+				<Typography tag="span">{t("admin.texts.createPage.publish")}</Typography>
+				<Typography tag="span" className="ml-2 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">
 					/
-				</span>
-				<span>—</span>
-				<span>блоки</span>
+				</Typography>
+				<Typography tag="span">—</Typography>
+				<Typography tag="span">блоки</Typography>
 			</div>
 		</div>
 	);
@@ -600,12 +603,11 @@ return (
 								: "border-transparent text-t-3 hover:text-t-2"
 						}`}
 					>
-						<button
-							type="button"
+						<Button
 							onClick={handleClick}
 							className="flex items-center gap-1.5 text-xs"
 						>
-							<span
+							<Typography tag="span"
 								className={`flex h-[17px] w-[17px] items-center justify-center rounded-[4px] text-[10px] font-semibold ${
 									i === activePage
 										? "bg-acc-muted text-acc-strong"
@@ -613,12 +615,11 @@ return (
 								}`}
 							>
 								{i + 1}
-							</span>
+							</Typography>
 							{t("admin.texts.createPage.pageN", { n: i + 1 })}
-						</button>
+						</Button>
 						{pages.length > 1 && (
-							<button
-								type="button"
+							<Button
 								title={t("admin.texts.createPage.deletePage")}
 								onClick={handleClick2}
 								className="ml-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] opacity-0 transition-opacity hover:bg-surf-3 group-hover/tab:opacity-100"
@@ -631,14 +632,13 @@ return (
 										strokeLinecap="round"
 									/>
 								</svg>
-							</button>
+							</Button>
 						)}
 					</div>
 				);
 				})}
 
-				<button
-					type="button"
+				<Button
 					title={t("admin.texts.createPage.addPage")}
 					onClick={onAddPage}
 					className="ml-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-[5px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2"
@@ -651,7 +651,7 @@ return (
 							strokeLinecap="round"
 						/>
 					</svg>
-				</button>
+				</Button>
 
 				<div className="ml-auto shrink-0 pl-2 text-[11px] text-t-3">
 					{t("admin.texts.createPage.pages", { n: pages.length })}
@@ -680,29 +680,27 @@ return (
 			{confirmDeleteIndex !== null && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
 					<div className="mx-4 w-full max-w-sm rounded-xl border border-bd-1 bg-surf p-6 shadow-xl">
-						<h2 className="text-base font-semibold text-t-1">
+						<Typography tag="h2" className="text-base font-semibold text-t-1">
 							{t("admin.texts.createPage.deletePageTitle")}
-						</h2>
-						<p className="mt-2 text-sm text-t-3">
+						</Typography>
+						<Typography tag="p" className="mt-2 text-sm text-t-3">
 							{t("admin.texts.createPage.deletePageBody", {
 								n: confirmDeleteIndex + 1,
 							})}
-						</p>
+						</Typography>
 						<div className="mt-5 flex justify-end gap-2">
-							<button
-								type="button"
+							<Button
 								onClick={handleClick}
 								className="rounded-lg border border-bd-1 px-4 py-1.5 text-sm text-t-2 transition-colors hover:bg-surf-2"
 							>
 								{t("admin.texts.createPage.deletePageCancel")}
-							</button>
-							<button
-								type="button"
+							</Button>
+							<Button
 								onClick={handleConfirmDelete}
 								className="rounded-lg bg-red px-4 py-1.5 text-sm text-white transition-opacity hover:opacity-80"
 							>
 								{t("admin.texts.createPage.deletePageConfirm")}
-							</button>
+							</Button>
 						</div>
 					</div>
 				</div>
@@ -720,17 +718,17 @@ return (
 						/>
 					</svg>
 					{t("admin.texts.createPage.words")}:&nbsp;
-					<span className="font-medium text-t-2">{stats.words}</span>
+					<Typography tag="span" className="font-medium text-t-2">{stats.words}</Typography>
 				</div>
 				<div className="h-3 w-px bg-bd-2" />
 				<div>
 					{t("admin.texts.createPage.chars")}:&nbsp;
-					<span className="font-medium text-t-2">{stats.chars}</span>
+					<Typography tag="span" className="font-medium text-t-2">{stats.chars}</Typography>
 				</div>
 				<div className="h-3 w-px bg-bd-2 max-sm:hidden" />
 				<div className="max-sm:hidden">
 					{t("admin.texts.createPage.paragraphs")}:&nbsp;
-					<span className="font-medium text-t-2">{stats.paragraphs}</span>
+					<Typography tag="span" className="font-medium text-t-2">{stats.paragraphs}</Typography>
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { Plus } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -13,8 +17,7 @@ export const FolderNewCard = ({ onClick, disabled }: FolderNewCardProps) => {
 	const { t } = useI18n();
 
 	return (
-		<button
-			type="button"
+		<Button
 			onClick={onClick}
 			disabled={disabled}
 			className={cn(
@@ -26,17 +29,17 @@ export const FolderNewCard = ({ onClick, disabled }: FolderNewCardProps) => {
 				"max-md:min-h-[80px] max-md:flex-row max-md:justify-start max-md:gap-2.5 max-md:p-4",
 			)}
 		>
-			<span className="text-t-4 transition-colors group-hover:text-acc max-md:flex max-md:items-center max-md:justify-center">
+			<Typography tag="span" className="text-t-4 transition-colors group-hover:text-acc max-md:flex max-md:items-center max-md:justify-center">
 				<Plus className="size-6" strokeWidth={1.6} />
-			</span>
+			</Typography>
 			<div className="flex flex-col gap-1 max-md:items-start">
-				<span className="text-[13px] font-semibold text-t-3 transition-colors group-hover:text-acc-t">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-3 transition-colors group-hover:text-acc-t">
 					{t("vocabulary.foldersPage.newCard.title")}
-				</span>
-				<span className="text-[11.5px] text-t-3 max-md:hidden">
+				</Typography>
+				<Typography tag="span" className="text-[11.5px] text-t-3 max-md:hidden">
 					{t("vocabulary.foldersPage.newCard.description")}
-				</span>
+				</Typography>
 			</div>
-		</button>
+		</Button>
 	);
 };

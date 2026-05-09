@@ -24,7 +24,7 @@ export const LimitBar = ({
 			<div className="flex justify-between text-[12px] text-t-2">
 				<Typography tag="span">{label}</Typography>
 				<Typography tag="span">
-					<strong className="font-semibold text-t-1">{used}</strong>{" "}
+					<Typography tag="strong" className="font-semibold text-t-1">{used}</Typography>{" "}
 					{unlimited ? `/ ${unlimitedLabel}` : `/ ${limit}`}
 				</Typography>
 			</div>

@@ -2,6 +2,8 @@ import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 interface Props {
 	page: number;
 	limit: number;
@@ -37,12 +39,11 @@ export const SubscriptionsPagination = ({
 	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(page + 1);
 return (
 		<div className="flex items-center justify-between border-t border-bd-1 px-3.5 py-2.5">
-			<span className="text-[11.5px] text-t-3">
+			<Typography tag="span" className="text-[11.5px] text-t-3">
 				{from}–{to} {t("admin.subscriptions.pagination.of")} {total}
-			</span>
+			</Typography>
 			<div className="flex gap-1">
-				<button
-					type="button"
+				<Button
 					disabled={page === 1}
 					onClick={handleClick}
 					className="flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border border-bd-1 bg-surf-2 px-1.5 text-[12px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 disabled:pointer-events-none disabled:opacity-40"
@@ -50,22 +51,21 @@ return (
 					<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
 						<path d="M7.5 2L3.5 6l4 4" strokeLinecap="round" strokeLinejoin="round" />
 					</svg>
-				</button>
+				</Button>
 
 				{pages.map((p, i) =>
 					{
 				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(p as number);
 				  return p === "…" ? (
-						<span
+						<Typography tag="span"
 							key={`ellipsis-${i}`}
 							className="flex h-[26px] min-w-[26px] items-center justify-center text-[12px] text-t-4"
 						>
 							…
-						</span>
+						</Typography>
 					) : (
-						<button
+						<Button
 							key={p}
-							type="button"
 							onClick={handleClick}
 							className={cn(
 								"flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border px-1.5 text-[12px] transition-colors",
@@ -75,13 +75,12 @@ return (
 							)}
 						>
 							{p}
-						</button>
+						</Button>
 					);
 				},
 				)}
 
-				<button
-					type="button"
+				<Button
 					disabled={page === totalPages}
 					onClick={handleClick2}
 					className="flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border border-bd-1 bg-surf-2 px-1.5 text-[12px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 disabled:pointer-events-none disabled:opacity-40"
@@ -89,7 +88,7 @@ return (
 					<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.4">
 						<path d="M4.5 2l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
 					</svg>
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

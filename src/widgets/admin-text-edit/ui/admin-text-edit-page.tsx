@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import Link from "next/link";
@@ -91,7 +95,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 								strokeDashoffset="10"
 							/>
 						</svg>
-						<span className="text-sm">{t("admin.texts.editPage.loading")}</span>
+						<Typography tag="span" className="text-sm">{t("admin.texts.editPage.loading")}</Typography>
 					</div>
 				</div>
 			</div>
@@ -123,7 +127,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 						strokeLinecap="round"
 					/>
 				</svg>
-				<p className="text-sm">{t("admin.texts.editPage.loadError")}</p>
+				<Typography tag="p" className="text-sm">{t("admin.texts.editPage.loadError")}</Typography>
 				<Link
 					href={`/${lang}/admin/texts`}
 					className="text-sm font-medium text-acc hover:underline"
@@ -211,8 +215,7 @@ return (
 
 			{/* Mobile bottom action bar */}
 			<div className="sticky bottom-0 z-20 hidden border-t border-bd-1 bg-bg px-4 py-3 max-[900px]:flex max-[900px]:items-center max-[900px]:gap-2">
-				<button
-					type="button"
+				<Button
 					onClick={handleSaveDraft}
 					disabled={isSaving}
 					className="flex h-[38px] flex-1 items-center justify-center gap-1.5 rounded-[8px] border border-bd-2 bg-transparent text-sm text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50"
@@ -237,9 +240,8 @@ return (
 						/>
 					</svg>
 					{t("admin.texts.editPage.saveDraft")}
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
 					onClick={handleSaveAndUpdate}
 					disabled={isSaving}
 					className="flex h-[38px] flex-1 items-center justify-center gap-1.5 rounded-[8px] bg-acc text-sm font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50"
@@ -254,7 +256,7 @@ return (
 						/>
 					</svg>
 					{t("admin.texts.editPage.saveUpdate")}
-				</button>
+				</Button>
 			</div>
 
 			{/* Delete confirmation modal */}

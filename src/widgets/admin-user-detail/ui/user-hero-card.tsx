@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminUserDetail } from "@/entities/admin-user";
 import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
@@ -99,16 +101,16 @@ export const UserHeroCard = ({
 				</div>
 				<div className="mb-2.5 text-[12px] text-t-3">{user.email}</div>
 				<div className="flex flex-wrap gap-1">
-					<span
+					<Typography tag="span"
 						className={`inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold ${statusCfg.wrap}`}
 					>
-						<span className={`size-[5px] shrink-0 rounded-full ${statusCfg.dot}`} />
+						<Typography tag="span" className={`size-[5px] shrink-0 rounded-full ${statusCfg.dot}`} />
 						{t(`admin.users.status.${user.status.toLowerCase()}`)}
-					</span>
+					</Typography>
 					{user.subscription && (
-						<span className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${planStyle}`}>
+						<Typography tag="span" className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${planStyle}`}>
 							{user.subscription.planName}
-						</span>
+						</Typography>
 					)}
 				</div>
 			</div>

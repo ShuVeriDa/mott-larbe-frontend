@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AdminDashboardKpi } from "@/entities/admin-dashboard";
@@ -22,10 +24,10 @@ interface TrendProps {
 }
 
 const TrendChip = ({ value, label }: TrendProps) => {
-	if (value === null) return <span className="text-[11px] text-t-3">{label}</span>;
+	if (value === null) return <Typography tag="span" className="text-[11px] text-t-3">{label}</Typography>;
 	const up = value >= 0;
 	return (
-		<span className={cn("flex items-center gap-1 text-[11px]", up ? "text-grn-t" : "text-red-t")}>
+		<Typography tag="span" className={cn("flex items-center gap-1 text-[11px]", up ? "text-grn-t" : "text-red-t")}>
 			<svg className="size-3 shrink-0" viewBox="0 0 12 12" fill="none">
 				{up ? (
 					<path
@@ -47,14 +49,14 @@ const TrendChip = ({ value, label }: TrendProps) => {
 			</svg>
 			{up ? "+" : ""}
 			{value}% {label}
-		</span>
+		</Typography>
 	);
 };
 
 const AbsoluteTrend = ({ value, label }: { value: number; label: string }) => {
 	const up = value >= 0;
 	return (
-		<span className={cn("flex items-center gap-1 text-[11px]", up ? "text-grn-t" : "text-red-t")}>
+		<Typography tag="span" className={cn("flex items-center gap-1 text-[11px]", up ? "text-grn-t" : "text-red-t")}>
 			<svg className="size-3 shrink-0" viewBox="0 0 12 12" fill="none">
 				{up ? (
 					<path
@@ -76,7 +78,7 @@ const AbsoluteTrend = ({ value, label }: { value: number; label: string }) => {
 			</svg>
 			{up ? "+" : ""}
 			{value} {label}
-		</span>
+		</Typography>
 	);
 };
 

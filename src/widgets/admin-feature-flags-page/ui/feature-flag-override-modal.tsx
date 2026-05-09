@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type {
 	CreateFeatureFlagOverrideDto,
 	FeatureFlagKeyItem,
@@ -120,18 +124,18 @@ return (
 			onClick={handleClick}
 		>
 			<div className="w-[440px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
-				<h2 className="font-display text-[16px] text-t-1 mb-1">
+				<Typography tag="h2" className="font-display text-[16px] text-t-1 mb-1">
 					{t("admin.featureFlags.overrideModal.title")}
-				</h2>
-				<p className="mb-4 text-[12.5px] text-t-3">
+				</Typography>
+				<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
 					{t("admin.featureFlags.overrideModal.subtitle")}
-				</p>
+				</Typography>
 
 				{/* Flag select */}
 				<div className="mb-3.5">
-					<label className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.featureFlags.overrideModal.flagLabel")} *
-					</label>
+					</Typography>
 					<select
 						className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 						value={flagId}
@@ -150,9 +154,9 @@ return (
 
 				{/* User typeahead */}
 				<div className="mb-3.5" ref={suggestRef}>
-					<label className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.featureFlags.overrideModal.userLabel")} *
-					</label>
+					</Typography>
 					<div className="relative">
 						<input
 							className={inputCls}
@@ -171,17 +175,16 @@ return (
 											setShowSuggestions(false);
 										};
 								  return (
-									<button
+									<Button
 										key={u.id}
-										type="button"
 										className="flex w-full flex-col rounded-[6px] px-2.5 py-1.5 text-left transition-colors hover:bg-surf-2"
 										onClick={handleClick}
 									>
-										<span className="text-[12.5px] text-t-1">
+										<Typography tag="span" className="text-[12.5px] text-t-1">
 											{u.name} {u.surname}
-										</span>
-										<span className="text-[11px] text-t-3">{u.email}</span>
-									</button>
+										</Typography>
+										<Typography tag="span" className="text-[11px] text-t-3">{u.email}</Typography>
+									</Button>
 								);
 								})}
 							</div>
@@ -191,17 +194,17 @@ return (
 
 				{/* isEnabled toggle */}
 				<div className="mb-3.5 flex items-center justify-between rounded-[8px] border border-bd-1 bg-bg px-3 py-2.5">
-					<span className="text-[12.5px] text-t-2">
+					<Typography tag="span" className="text-[12.5px] text-t-2">
 						{t("admin.featureFlags.overrideModal.valueLabel")}
-					</span>
+					</Typography>
 					<FlagToggle enabled={isEnabled} onChange={setIsEnabled} />
 				</div>
 
 				{/* Reason */}
 				<div className="mb-3.5">
-					<label className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.featureFlags.overrideModal.reasonLabel")}
-					</label>
+					</Typography>
 					<input
 						className={inputCls}
 						placeholder={t(
@@ -213,16 +216,14 @@ return (
 				</div>
 
 				<div className="mt-5 flex justify-end gap-2 max-sm:flex-col-reverse">
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						disabled={isSubmitting}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10"
 					>
 						{t("admin.featureFlags.modal.cancel")}
-					</button>
-					<button
-						type="button"
+					</Button>
+					<Button
 						onClick={handleSubmit}
 						disabled={isSubmitting || !flagId || !userInput}
 						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10"
@@ -230,7 +231,7 @@ return (
 						{isSubmitting
 							? t("admin.featureFlags.overrideModal.saving")
 							: t("admin.featureFlags.overrideModal.confirm")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

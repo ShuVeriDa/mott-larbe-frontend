@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type {
 	CreateFeatureFlagDto,
 	FeatureFlagEnvironment,
@@ -76,22 +80,22 @@ export const FeatureFlagModal = ({
 			onClick={handleBackdropClick}
 		>
 			<div className="w-[480px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08),0_2px_4px_rgba(0,0,0,0.04)] max-sm:w-full max-sm:max-h-[92vh] max-sm:overflow-y-auto max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
-				<h2 className="font-display text-[16px] text-t-1 mb-1">
+				<Typography tag="h2" className="font-display text-[16px] text-t-1 mb-1">
 					{isEdit
 						? t("admin.featureFlags.modal.editTitle")
 						: t("admin.featureFlags.modal.createTitle")}
-				</h2>
-				<p className="mb-4 text-[12.5px] text-t-3">
+				</Typography>
+				<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
 					{isEdit
 						? t("admin.featureFlags.modal.editSubtitle")
 						: t("admin.featureFlags.modal.createSubtitle")}
-				</p>
+				</Typography>
 
 				{/* Key */}
 				<div className="mb-3.5">
-					<label className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.featureFlags.modal.keyLabel")} *
-					</label>
+					</Typography>
 					<input
 						className={cn(inputCls, keyError && "border-red-400")}
 						placeholder="category.feature_name"
@@ -100,19 +104,19 @@ export const FeatureFlagModal = ({
 						disabled={isEdit}
 					/>
 					{keyError ? (
-						<p className="mt-1 text-[11px] text-red-t">{keyError}</p>
+						<Typography tag="p" className="mt-1 text-[11px] text-red-t">{keyError}</Typography>
 					) : (
-						<p className="mt-1 text-[11px] text-t-3">
+						<Typography tag="p" className="mt-1 text-[11px] text-t-3">
 							{t("admin.featureFlags.modal.keyHint")}
-						</p>
+						</Typography>
 					)}
 				</div>
 
 				{/* Description */}
 				<div className="mb-3.5">
-					<label className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.featureFlags.modal.descLabel")}
-					</label>
+					</Typography>
 					<textarea
 						className="w-full min-h-[64px] resize-y rounded-[8px] border border-bd-2 bg-bg px-2.5 py-2 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 						placeholder={t("admin.featureFlags.modal.descPlaceholder")}
@@ -124,9 +128,9 @@ export const FeatureFlagModal = ({
 				{/* Category + Rollout */}
 				<div className="mb-3.5 grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
 					<div>
-						<label className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+						<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 							{t("admin.featureFlags.modal.categoryLabel")}
-						</label>
+						</Typography>
 						<select
 							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 							value={category}
@@ -140,9 +144,9 @@ export const FeatureFlagModal = ({
 						</select>
 					</div>
 					<div>
-						<label className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+						<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 							{t("admin.featureFlags.modal.rolloutLabel")}
-						</label>
+						</Typography>
 						<input
 							type="number"
 							min={0}
@@ -156,16 +160,15 @@ export const FeatureFlagModal = ({
 
 				{/* Environments */}
 				<div className="mb-3.5">
-					<label className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.featureFlags.modal.envsLabel")}
-					</label>
+					</Typography>
 					<div className="flex flex-wrap gap-1.5">
 						{environmentsList.map(env => {
 							const selected = environments.includes(env);
 return (
-								<button
+								<Button
 									key={env}
-									type="button"
 									data-environment={env}
 									onClick={handleEnvironmentClick}
 									className={cn(
@@ -175,14 +178,14 @@ return (
 											: "border-bd-2 bg-bg text-t-2 hover:border-bd-3",
 									)}
 								>
-									<span
+									<Typography tag="span"
 										className={cn(
 											"size-1.5 shrink-0 rounded-full",
 											selected ? ENV_DOT_STYLES[env] : "bg-surf-4",
 										)}
 									/>
 									{env}
-								</button>
+								</Button>
 							);
 						})}
 					</div>
@@ -190,24 +193,22 @@ return (
 
 				{/* Enabled toggle */}
 				<div className="mb-3.5 flex items-center justify-between rounded-[8px] border border-bd-1 bg-bg px-3 py-2.5">
-					<span className="text-[12.5px] text-t-2">
+					<Typography tag="span" className="text-[12.5px] text-t-2">
 						{t("admin.featureFlags.modal.enabledLabel")}
-					</span>
+					</Typography>
 					<FlagToggle enabled={isEnabled} onChange={setIsEnabled} />
 				</div>
 
 				{/* Footer */}
 				<div className="mt-5 flex justify-end gap-2 max-sm:flex-col-reverse">
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						disabled={isSubmitting}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
 					>
 						{t("admin.featureFlags.modal.cancel")}
-					</button>
-					<button
-						type="button"
+					</Button>
+					<Button
 						onClick={handleSubmit}
 						disabled={isSubmitting || !key || environments.length === 0}
 						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
@@ -217,7 +218,7 @@ return (
 							: isEdit
 								? t("admin.featureFlags.modal.save")
 								: t("admin.featureFlags.modal.create")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

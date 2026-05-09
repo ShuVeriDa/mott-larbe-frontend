@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -27,9 +31,8 @@ export const SettingsNav = ({ active, onChange }: SettingsNavProps) => {
 				const isActive = section.id === active;
 								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(section.id);
 return (
-					<button
+					<Button
 						key={section.id}
-						type="button"
 						onClick={handleClick}
 						aria-current={isActive ? "page" : undefined}
 						className={cn(
@@ -41,13 +44,13 @@ return (
 								: "text-t-2 hover:bg-surf-2 hover:text-t-1 [&_.sn-icon]:text-t-3",
 						)}
 					>
-						<span className="sn-icon shrink-0 max-md:hidden">
+						<Typography tag="span" className="sn-icon shrink-0 max-md:hidden">
 							{section.icon}
-						</span>
-						<span className="text-[12.5px] whitespace-nowrap max-md:text-[12.5px]">
+						</Typography>
+						<Typography tag="span" className="text-[12.5px] whitespace-nowrap max-md:text-[12.5px]">
 							{t(section.labelKey)}
-						</span>
-					</button>
+						</Typography>
+					</Button>
 				);
 			})}
 		</nav>

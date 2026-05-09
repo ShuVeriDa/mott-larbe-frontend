@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import type {
 	ProcessingStatus,
@@ -74,10 +78,10 @@ return (
 			>
 				{/* Header */}
 				<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-4 py-3.5">
-					<span className="font-display text-[15px] text-t-1">
+					<Typography tag="span" className="font-display text-[15px] text-t-1">
 						{t("admin.tokenization.detail.title")}
-					</span>
-					<button
+					</Typography>
+					<Button
 						onClick={onClose}
 						className="flex size-[26px] items-center justify-center rounded-[6px] bg-surf-2 text-t-2 hover:bg-surf-3"
 					>
@@ -89,7 +93,7 @@ return (
 								strokeLinecap="round"
 							/>
 						</svg>
-					</button>
+					</Button>
 				</div>
 
 				{/* Body */}
@@ -125,34 +129,34 @@ return (
 									{
 										label: t("admin.tokenization.detail.version"),
 										value: detail.version ? (
-											<span className="font-mono text-[12px] text-t-2">
+											<Typography tag="span" className="font-mono text-[12px] text-t-2">
 												v{detail.version.version}
-											</span>
+											</Typography>
 										) : (
-											<span className="text-t-4">—</span>
+											<Typography tag="span" className="text-t-4">—</Typography>
 										),
 									},
 									{
 										label: t("admin.tokenization.detail.totalTokens"),
 										value: (
-											<span className="font-medium text-t-1">
+											<Typography tag="span" className="font-medium text-t-1">
 												{detail.tokenStats.total.toLocaleString()}
-											</span>
+											</Typography>
 										),
 									},
 									{
 										label: t("admin.tokenization.detail.analyzed"),
 										value: (
-											<span className="font-medium text-grn-t">
+											<Typography tag="span" className="font-medium text-grn-t">
 												{detail.tokenStats.analyzed.toLocaleString()} (
 												{detail.tokenStats.analyzePercent}%)
-											</span>
+											</Typography>
 										),
 									},
 									{
 										label: t("admin.tokenization.detail.notFound"),
 										value: (
-											<span
+											<Typography tag="span"
 												className={
 													detail.tokenStats.notFound > 0
 														? "font-medium text-red-t"
@@ -162,13 +166,13 @@ return (
 												{detail.tokenStats.notFound > 0
 													? detail.tokenStats.notFound.toLocaleString()
 													: "—"}
-											</span>
+											</Typography>
 										),
 									},
 									{
 										label: t("admin.tokenization.detail.ambiguous"),
 										value: (
-											<span
+											<Typography tag="span"
 												className={
 													detail.tokenStats.ambiguous > 0
 														? "font-medium text-amb-t"
@@ -178,19 +182,19 @@ return (
 												{detail.tokenStats.ambiguous > 0
 													? detail.tokenStats.ambiguous.toLocaleString()
 													: "—"}
-											</span>
+											</Typography>
 										),
 									},
 									{
 										label: t("admin.tokenization.detail.processedAt"),
 										value: detail.version?.processedAt ? (
-											<span className="text-[11.5px] text-t-3">
+											<Typography tag="span" className="text-[11.5px] text-t-3">
 												{new Date(
 													detail.version.processedAt,
 												).toLocaleDateString()}
-											</span>
+											</Typography>
 										) : (
-											<span className="text-t-4">—</span>
+											<Typography tag="span" className="text-t-4">—</Typography>
 										),
 									},
 								].map(({ label, value }) => (
@@ -238,21 +242,21 @@ return (
 													className="border-b border-bd-1 last:border-b-0 hover:bg-surf-2"
 												>
 													<td className="px-2.5 py-2">
-														<span
+														<Typography tag="span"
 															className={`inline-flex items-center rounded-[4px] px-1.5 py-0.5 font-mono text-[11.5px] font-semibold ${TOKEN_STATUS_STYLES[token.status]}`}
 														>
 															{token.original}
-														</span>
+														</Typography>
 													</td>
 													<td className="px-2.5 py-2 font-mono text-[11px] text-t-3 max-sm:hidden">
 														{token.normalized}
 													</td>
 													<td className="px-2.5 py-2">
-														<span
+														<Typography tag="span"
 															className={`inline-flex items-center rounded-[4px] px-1.5 py-0.5 text-[10px] font-semibold ${SOURCE_STYLES[token.source]}`}
 														>
 															{token.source}
-														</span>
+														</Typography>
 													</td>
 													<td className="px-2.5 py-2 text-[11px] text-t-3 tabular-nums max-sm:hidden">
 														{token.pageNumber}
@@ -269,7 +273,7 @@ return (
 
 				{/* Footer actions */}
 				<div className="flex shrink-0 gap-2 border-t border-bd-1 px-4 py-3.5">
-					<button
+					<Button
 						onClick={handleClick2}
 						disabled={
 							mutations.runText.isPending ||
@@ -281,20 +285,20 @@ return (
 							<path d="M5 3l8 5-8 5V3z" fill="currentColor" />
 						</svg>
 						{t("admin.tokenization.detail.runBtn")}
-					</button>
-					<button
+					</Button>
+					<Button
 						onClick={handleClick3}
 						disabled={mutations.resetText.isPending}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 disabled:opacity-50"
 					>
 						{t("admin.tokenization.detail.resetBtn")}
-					</button>
-					<button
+					</Button>
+					<Button
 						onClick={onClose}
 						className="ml-auto flex h-[30px] items-center px-3 text-[12px] text-t-3 transition-colors hover:text-t-1"
 					>
 						{t("admin.tokenization.detail.closeBtn")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

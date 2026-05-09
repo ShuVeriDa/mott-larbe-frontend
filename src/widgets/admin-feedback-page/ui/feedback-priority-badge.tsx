@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { FeedbackPriority } from "@/entities/feedback";
 
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string) => string;
 
 const PRIORITY_CLASSES: Record<FeedbackPriority, string> = {
@@ -17,7 +18,7 @@ interface FeedbackPriorityBadgeProps {
 }
 
 export const FeedbackPriorityBadge = ({ priority, t, className }: FeedbackPriorityBadgeProps) => (
-	<span
+	<Typography tag="span"
 		className={cn(
 			"inline-flex items-center rounded-[5px] px-[7px] py-[2px] text-[10px] font-semibold",
 			PRIORITY_CLASSES[priority],
@@ -25,5 +26,5 @@ export const FeedbackPriorityBadge = ({ priority, t, className }: FeedbackPriori
 		)}
 	>
 		{t(`admin.feedback.priority.${priority}`)}
-	</span>
+	</Typography>
 );

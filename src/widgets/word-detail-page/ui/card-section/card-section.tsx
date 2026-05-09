@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 
+import { Typography } from "@/shared/ui/typography";
 export interface CardSectionProps {
 	title: string;
 	children: ReactNode;
@@ -26,9 +27,9 @@ export const CardSection = ({
 	>
 		{headless ? null : (
 			<header className="flex items-center justify-between border-b border-hairline border-bd-1 px-4 pt-3 pb-2.5">
-				<span className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
+				<Typography tag="span" className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
 					{title}
-				</span>
+				</Typography>
 				{rightSlot}
 			</header>
 		)}

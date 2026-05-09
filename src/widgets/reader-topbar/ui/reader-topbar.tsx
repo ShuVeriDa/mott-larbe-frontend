@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import Link from "next/link";
 import { Bookmark, ChevronLeft, PanelRightOpen, Settings } from "lucide-react";
 import { useToggleBookmark } from "@/features/bookmark-text";
@@ -60,10 +64,10 @@ export const ReaderTopbar = ({
 				className="inline-flex shrink-0 items-center gap-1.5 rounded-base px-2 py-1 text-[12.5px] text-t-2 transition-colors duration-100 hover:bg-surf-2 hover:text-t-1"
 			>
 				<ChevronLeft className="size-3.5" strokeWidth={1.6} />
-				<span className="max-md:hidden">{t("reader.topbar.back")}</span>
+				<Typography tag="span" className="max-md:hidden">{t("reader.topbar.back")}</Typography>
 			</Link>
 
-			<span
+			<Typography tag="span"
 				aria-hidden="true"
 				className="h-4 w-px shrink-0 bg-bd-2 max-md:hidden"
 			/>
@@ -84,28 +88,25 @@ export const ReaderTopbar = ({
 				totalPages={data.totalPages}
 			/>
 
-			<span aria-hidden="true" className="h-4 w-px shrink-0 bg-bd-2" />
+			<Typography tag="span" aria-hidden="true" className="h-4 w-px shrink-0 bg-bd-2" />
 
 			<div className="flex shrink-0 items-center gap-1">
-				<button
-					type="button"
+				<Button
 					onClick={togglePanel}
 					aria-pressed={panelOpen}
 					aria-label={t("reader.topbar.togglePanel")}
 					className={cn(iconBtnClass, "max-md:hidden")}
 				>
 					<PanelRightOpen className="size-[15px]" strokeWidth={1.4} />
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
 					onClick={onOpenSettings}
 					aria-label={t("reader.topbar.settings")}
 					className={iconBtnClass}
 				>
 					<Settings className="size-[15px]" strokeWidth={1.4} />
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
 					onClick={onBookmark}
 					disabled={bookmarking}
 					aria-pressed={Boolean(data.bookmarked)}
@@ -117,7 +118,7 @@ export const ReaderTopbar = ({
 						strokeWidth={1.4}
 						fill={data.bookmarked ? "currentColor" : "none"}
 					/>
-				</button>
+				</Button>
 			</div>
 		</header>
 	);

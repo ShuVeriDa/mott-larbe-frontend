@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { useEffect } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useSwipe } from "@/shared/lib/swipe";
@@ -158,8 +160,7 @@ export const Sm2Session = ({
 			<RatingButtons visible={flipped} onRate={rate} />
 
 			<div className="mt-2.5 flex w-full max-w-[520px] items-center gap-2">
-				<button
-					type="button"
+				<Button
 					onClick={skip}
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-hairline border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 				>
@@ -173,10 +174,9 @@ export const Sm2Session = ({
 						/>
 					</svg>
 					{t("review.sm2.card.skip")}
-				</button>
+				</Button>
 				<div className="flex-1" />
-				<button
-					type="button"
+				<Button
 					onClick={toggleMode}
 					aria-label={t("review.sm2.card.modeToggle")}
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-hairline border-bd-2 bg-surf-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-3"
@@ -195,7 +195,7 @@ export const Sm2Session = ({
 							? "review.sm2.card.modeBack"
 							: "review.sm2.card.modeFront",
 					)}
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

@@ -124,17 +124,17 @@ export const SideNav = () => {
 											: "text-t-2 hover:bg-surf-2 hover:text-t-1",
 									)}
 								>
-									<span
+									<Typography tag="span"
 										className={cn(
 											"shrink-0",
 											active ? "text-acc-t" : "text-t-3",
 										)}
 									>
 										{item.icon}
-									</span>
+									</Typography>
 									{t(item.labelKey)}
 									{active ? (
-										<span
+										<Typography tag="span"
 											aria-hidden="true"
 											className="absolute left-0 top-[5px] bottom-[5px] w-[2px] rounded-r-[2px] bg-acc"
 										/>

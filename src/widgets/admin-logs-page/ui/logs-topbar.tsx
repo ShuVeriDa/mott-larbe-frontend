@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 
@@ -26,24 +30,23 @@ export const LogsTopbar = ({
 			</div>
 
 			<div className="ml-auto flex items-center gap-2">
-				<span
+				<Typography tag="span"
 					className={cn(
 						"inline-flex items-center gap-1.5 rounded-full px-2 py-1 text-[11px] font-semibold transition-opacity",
 						"bg-grn-bg text-grn-t",
 						!isLive && "opacity-40",
 					)}
 				>
-					<span
+					<Typography tag="span"
 						className={cn(
 							"size-1.5 rounded-full bg-grn",
 							isLive && "animate-[pulse_1.6s_ease-in-out_infinite]",
 						)}
 					/>
-					<span>{t("admin.logs.live")}</span>
-				</span>
+					<Typography tag="span">{t("admin.logs.live")}</Typography>
+				</Typography>
 
-				<button
-					type="button"
+				<Button
 					onClick={onToggleLive}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
@@ -78,10 +81,9 @@ export const LogsTopbar = ({
 						)}
 					</svg>
 					{isLive ? t("admin.logs.pause") : t("admin.logs.resume")}
-				</button>
+				</Button>
 
-				<button
-					type="button"
+				<Button
 					onClick={onExport}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
@@ -101,7 +103,7 @@ export const LogsTopbar = ({
 						/>
 					</svg>
 					{t("admin.logs.export")}
-				</button>
+				</Button>
 			</div>
 		</header>
 	);

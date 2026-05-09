@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import type { DashboardPeriod } from "@/entities/admin-dashboard";
 import { cn } from "@/shared/lib/cn";
@@ -37,9 +41,8 @@ return (
 					{PERIODS.map(p => {
 					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onPeriodChange(p);
 					  return (
-						<button
+						<Button
 							key={p}
-							type="button"
 							onClick={handleClick}
 							className={cn(
 								"h-[26px] rounded-[5px] px-3 text-[11.5px] font-medium transition-colors",
@@ -49,7 +52,7 @@ return (
 							)}
 						>
 							{t(`admin.dashboard.period.${p}` as Parameters<typeof t>[0])}
-						</button>
+						</Button>
 					);
 					})}
 				</div>
@@ -66,8 +69,7 @@ return (
 					))}
 				</select>
 
-				<button
-					type="button"
+				<Button
 					onClick={onExport}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
@@ -86,8 +88,8 @@ return (
 							strokeLinejoin="round"
 						/>
 					</svg>
-					<span className="max-sm:hidden">{t("admin.dashboard.export")}</span>
-				</button>
+					<Typography tag="span" className="max-sm:hidden">{t("admin.dashboard.export")}</Typography>
+				</Button>
 			</div>
 		</header>
 	);

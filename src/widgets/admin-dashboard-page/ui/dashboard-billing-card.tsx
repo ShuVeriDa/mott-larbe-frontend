@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
@@ -41,9 +43,9 @@ export const DashboardBillingCard = ({ billing }: DashboardBillingCardProps) => 
 	return (
 		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.billing.title")}
-				</span>
+				</Typography>
 				<Link
 					href={`/${params.lang}/admin/billing`}
 					className="shrink-0 text-[11.5px] text-acc hover:underline"
@@ -59,13 +61,13 @@ export const DashboardBillingCard = ({ billing }: DashboardBillingCardProps) => 
 						return (
 							<div key={plan.id}>
 								<div className="flex min-w-0 items-baseline justify-between gap-2">
-									<span className="min-w-0 truncate text-[11.5px] text-t-2">{plan.name}</span>
-									<span className="shrink-0 text-[11.5px] font-semibold text-t-1">
+									<Typography tag="span" className="min-w-0 truncate text-[11.5px] text-t-2">{plan.name}</Typography>
+									<Typography tag="span" className="shrink-0 text-[11.5px] font-semibold text-t-1">
 										{plan.activeSubscriptions.toLocaleString("ru-RU")}{" "}
-										<span className="font-normal text-t-3">
+										<Typography tag="span" className="font-normal text-t-3">
 											{t("admin.dashboard.billing.users")}
-										</span>
-									</span>
+										</Typography>
+									</Typography>
 								</div>
 								<div className="mt-1.5 h-1 overflow-hidden rounded-full bg-surf-3">
 									<div

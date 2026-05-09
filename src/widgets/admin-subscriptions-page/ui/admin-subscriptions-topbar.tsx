@@ -1,5 +1,6 @@
 import { useI18n } from "@/shared/lib/i18n";
 
+import { Button } from "@/shared/ui/button";
 interface Props {
 	onAdd: () => void;
 	onExport: () => void;
@@ -19,8 +20,7 @@ export const AdminSubscriptionsTopbar = ({ onAdd, onExport }: Props) => {
 				</div>
 			</div>
 			<div className="ml-auto flex items-center gap-2">
-				<button
-					type="button"
+				<Button
 					onClick={onAdd}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
@@ -35,9 +35,8 @@ export const AdminSubscriptionsTopbar = ({ onAdd, onExport }: Props) => {
 						<path d="M1 6h10M6 1v10" strokeLinecap="round" />
 					</svg>
 					{t("admin.subscriptions.topbar.add")}
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
 					onClick={onExport}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
@@ -56,7 +55,7 @@ export const AdminSubscriptionsTopbar = ({ onAdd, onExport }: Props) => {
 						/>
 					</svg>
 					{t("admin.subscriptions.topbar.export")}
-				</button>
+				</Button>
 			</div>
 		</header>
 	);

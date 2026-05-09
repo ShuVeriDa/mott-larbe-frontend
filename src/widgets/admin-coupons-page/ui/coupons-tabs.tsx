@@ -3,6 +3,8 @@ import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { CouponsTab } from "../model/use-admin-coupons-page";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 interface Props {
 	active: CouponsTab;
 	counts: Record<CouponsTab, number>;
@@ -27,9 +29,8 @@ export const CouponsTabs = ({ active, counts, onChange }: Props) => {
 				{TABS.map(tab => {
 				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab);
 				  return (
-					<button
+					<Button
 						key={tab}
-						type="button"
 						onClick={handleClick}
 						className={cn(
 							"flex h-[26px] items-center gap-1 whitespace-nowrap rounded-base px-2.5 text-[12px] transition-colors",
@@ -39,15 +40,15 @@ export const CouponsTabs = ({ active, counts, onChange }: Props) => {
 						)}
 					>
 						{labels[tab]}
-						<span
+						<Typography tag="span"
 							className={cn(
 								"rounded px-1 py-px text-[10px] font-semibold",
 								active === tab ? "bg-surf-2 text-t-3" : "bg-surf-3 text-t-3",
 							)}
 						>
 							{counts[tab]}
-						</span>
-					</button>
+						</Typography>
+					</Button>
 				);
 				})}
 			</div>

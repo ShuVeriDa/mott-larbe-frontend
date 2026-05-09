@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { useEffect } from 'react';
 import type { AdminFeedbackThread, FeedbackStatus, FeedbackPriority } from "@/entities/feedback";
 import { FeedbackInfoPanel } from "./feedback-info-panel";
@@ -60,15 +62,14 @@ export const FeedbackInfoDrawer = ({
 				{/* Handle */}
 				<div className="mx-auto mb-2 mt-3 h-1 w-9 rounded-full bg-surf-4" />
 				{/* Close btn */}
-				<button
-					type="button"
+				<Button
 					onClick={onClose}
 					className="absolute right-4 top-3 flex size-7 items-center justify-center rounded-md border border-bd-1 bg-surf-2 text-t-2"
 				>
 					<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="size-3">
 						<path d="M2 2l8 8M10 2l-8 8" />
 					</svg>
-				</button>
+				</Button>
 
 				<FeedbackInfoPanel
 					thread={thread}

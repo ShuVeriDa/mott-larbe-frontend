@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { ReactNode } from 'react';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,19 +26,19 @@ const NavItem = ({ href, label, icon, badge, active }: NavItemProps) => (
 				: "text-t-2 hover:bg-surf-2 hover:text-t-1",
 		)}
 	>
-		<span
+		<Typography tag="span"
 			className={cn(
 				"size-[15px] shrink-0",
 				active ? "text-acc-t" : "text-t-3",
 			)}
 		>
 			{icon}
-		</span>
+		</Typography>
 		{label}
 		{badge !== undefined && badge > 0 && (
-			<span className="ml-auto min-w-[18px] rounded bg-red-bg px-1 py-px text-center text-[10px] font-semibold text-red-t">
+			<Typography tag="span" className="ml-auto min-w-[18px] rounded bg-red-bg px-1 py-px text-center text-[10px] font-semibold text-red-t">
 				{badge}
-			</span>
+			</Typography>
 		)}
 	</Link>
 );
@@ -76,12 +78,12 @@ export const AdminSideNav = () => {
 						/>
 					</svg>
 				</div>
-				<span className="font-display text-[14px] font-medium tracking-[-0.1px] text-t-1">
+				<Typography tag="span" className="font-display text-[14px] font-medium tracking-[-0.1px] text-t-1">
 					{t("admin.brand")}
-				</span>
-				<span className="ml-auto shrink-0 rounded bg-red-bg px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.3px] text-red-t">
+				</Typography>
+				<Typography tag="span" className="ml-auto shrink-0 rounded bg-red-bg px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.3px] text-red-t">
 					{t("admin.chip")}
-				</span>
+				</Typography>
 			</div>
 
 			{/* Scrollable nav */}

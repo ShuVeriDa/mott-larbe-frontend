@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagStats } from "@/entities/feature-flag";
 
+import { Typography } from "@/shared/ui/typography";
 interface StatCardProps {
 	label: string;
 	value: string | number;
@@ -10,10 +11,10 @@ interface StatCardProps {
 
 const StatCard = ({ label, value, sub, subVariant = "default" }: StatCardProps) => (
 	<div className="rounded-[10px] border border-bd-1 bg-surf p-3 transition-colors">
-		<p className="mb-1.5 text-[10.5px] font-medium tracking-[0.3px] text-t-3">{label}</p>
-		<p className="mb-0.5 text-[22px] font-semibold leading-none text-t-1">{value}</p>
+		<Typography tag="p" className="mb-1.5 text-[10.5px] font-medium tracking-[0.3px] text-t-3">{label}</Typography>
+		<Typography tag="p" className="mb-0.5 text-[22px] font-semibold leading-none text-t-1">{value}</Typography>
 		{sub && (
-			<p
+			<Typography tag="p"
 				className={cn(
 					"text-[11px]",
 					subVariant === "green" && "text-grn-t",
@@ -22,7 +23,7 @@ const StatCard = ({ label, value, sub, subVariant = "default" }: StatCardProps) 
 				)}
 			>
 				{sub}
-			</p>
+			</Typography>
 		)}
 	</div>
 );

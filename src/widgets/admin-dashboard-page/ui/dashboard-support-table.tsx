@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
@@ -40,17 +42,17 @@ export const DashboardSupportTable = ({ support }: DashboardSupportTableProps) =
 	return (
 		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center gap-2 px-4 py-3.5">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.support.title")}
-				</span>
+				</Typography>
 				<div className="ml-auto flex items-center gap-2">
 					{support.openCount > 0 && (
-						<span className="inline-flex items-center rounded-[5px] bg-red-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-red-t">
+						<Typography tag="span" className="inline-flex items-center rounded-[5px] bg-red-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-red-t">
 							{t("admin.dashboard.support.openTickets").replace(
 								"{count}",
 								String(support.openCount),
 							)}
-						</span>
+						</Typography>
 					)}
 					<Link
 						href={`/${params.lang}/admin/feedback`}
@@ -93,19 +95,19 @@ export const DashboardSupportTable = ({ support }: DashboardSupportTableProps) =
 								</td>
 								<td className="px-4 py-2.5 text-t-1">{thread.userName}</td>
 								<td className="max-w-[200px] px-4 py-2.5">
-									<span className="block truncate text-t-1">
+									<Typography tag="span" className="block truncate text-t-1">
 										{thread.subject ?? t("admin.dashboard.support.noSubject")}
-									</span>
+									</Typography>
 								</td>
 								<td className="px-4 py-2.5">
-									<span
+									<Typography tag="span"
 										className={cn(
 											"inline-flex items-center rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold",
 											STATUS_STYLES[thread.status] ?? "bg-surf-3 text-t-2",
 										)}
 									>
 										{statusLabel(thread.status)}
-									</span>
+									</Typography>
 								</td>
 								<td className="px-4 py-2.5 text-right text-[11.5px] whitespace-nowrap text-t-3">
 									{formatDateTime(thread.createdAt)}

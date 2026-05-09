@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -28,9 +30,8 @@ export const AuthTabs = ({ mode, onChange }: AuthTabsProps) => {
 				const isActive = tab.key === mode;
 								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab.key);
 return (
-					<button
+					<Button
 						key={tab.key}
-						type="button"
 						role="tab"
 						aria-selected={isActive}
 						onClick={handleClick}
@@ -42,7 +43,7 @@ return (
 						)}
 					>
 						{t(tab.labelKey)}
-					</button>
+					</Button>
 				);
 			})}
 		</div>

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type { FeedbackThread } from "@/entities/feedback";
 import { useFeedbackThreads } from "@/entities/feedback";
 import { useI18n } from "@/shared/lib/i18n";
@@ -49,12 +53,11 @@ return (
 		<>
 			{/* Topbar — mobile "New" button */}
 			<div className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-sm:px-4">
-				<span className="flex-1 text-[13.5px] font-semibold text-t-1">
+				<Typography tag="span" className="flex-1 text-[13.5px] font-semibold text-t-1">
 					{t("feedback.pageTitle")}
-				</span>
+				</Typography>
 				{/* Mobile-only new button in topbar */}
-				<button
-					type="button"
+				<Button
 					onClick={handleNewThread}
 					className="hidden h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88] max-sm:flex"
 				>
@@ -69,7 +72,7 @@ return (
 						<path d="M7 2v10M2 7h10" />
 					</svg>
 					{t("feedback.new")}
-				</button>
+				</Button>
 			</div>
 
 			{/* Main layout */}
@@ -120,7 +123,7 @@ return (
 								<path d="M16 14H11l-4 3V14H4a1.5 1.5 0 0 1-1.5-1.5V4A1.5 1.5 0 0 1 4 2.5h12A1.5 1.5 0 0 1 17.5 4v8.5A1.5 1.5 0 0 1 16 14z" />
 							</svg>
 						</div>
-						<p className="text-[13px] text-t-3">{t("feedback.selectThread")}</p>
+						<Typography tag="p" className="text-[13px] text-t-3">{t("feedback.selectThread")}</Typography>
 					</div>
 				)}
 			</div>

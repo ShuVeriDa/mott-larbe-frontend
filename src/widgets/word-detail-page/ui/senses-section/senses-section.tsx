@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import type { DetailSense } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
 import { CardSection } from "../card-section";
@@ -14,9 +16,9 @@ export const SensesSection = ({ senses }: SensesSectionProps) => {
 	return (
 		<CardSection title={t("vocabulary.wordDetail.sections.senses")}>
 			{senses.length === 0 ? (
-				<p className="text-[12.5px] text-t-3">
+				<Typography tag="p" className="text-[12.5px] text-t-3">
 					{t("vocabulary.wordDetail.senses.empty")}
-				</p>
+				</Typography>
 			) : (
 				<ol className="flex flex-col">
 					{senses.map((sense, idx) => (
@@ -37,18 +39,18 @@ export const SensesSection = ({ senses }: SensesSectionProps) => {
 											key={ex.id}
 											className="rounded-base border-l-2 border-bd-2 bg-surf-2 px-2.5 py-2"
 										>
-											<p className="mb-0.5 text-[13px] italic leading-[1.55] text-t-1 max-md:text-[12.5px]">
+											<Typography tag="p" className="mb-0.5 text-[13px] italic leading-[1.55] text-t-1 max-md:text-[12.5px]">
 												«{ex.text}»
-											</p>
+											</Typography>
 											{ex.translation ? (
-												<p className="text-[12px] leading-[1.45] text-t-3">
+												<Typography tag="p" className="text-[12px] leading-[1.45] text-t-3">
 													{ex.translation}
-												</p>
+												</Typography>
 											) : null}
 											{ex.origin ? (
-												<p className="mt-[3px] text-[11px] text-t-4">
+												<Typography tag="p" className="mt-[3px] text-[11px] text-t-4">
 													{ex.origin}
-												</p>
+												</Typography>
 											) : null}
 										</div>
 									))}

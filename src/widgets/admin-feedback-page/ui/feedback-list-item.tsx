@@ -3,6 +3,8 @@ import type { AdminFeedbackThread } from "@/entities/feedback";
 import { FeedbackTypeBadge } from "./feedback-type-badge";
 import { FeedbackStatusDot } from "./feedback-status-badge";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string) => string;
 
 const formatDate = (iso: string): string => {
@@ -49,8 +51,7 @@ export const FeedbackListItem = ({ thread, isActive, t, onClick }: FeedbackListI
 	const isResolved = thread.status === "RESOLVED";
 
 	return (
-		<button
-			type="button"
+		<Button
 			onClick={onClick}
 			className={cn(
 				"relative w-full cursor-pointer border-b border-bd-1 px-3.5 py-[11px] text-left transition-colors",
@@ -70,35 +71,35 @@ export const FeedbackListItem = ({ thread, isActive, t, onClick }: FeedbackListI
 				>
 					{initials}
 				</div>
-				<span className="flex-1 truncate text-[12px] font-semibold text-t-1">
+				<Typography tag="span" className="flex-1 truncate text-[12px] font-semibold text-t-1">
 					{thread.user.name} {thread.user.surname}
-				</span>
-				<span className="shrink-0 text-[10.5px] text-t-3">{dateLabel}</span>
+				</Typography>
+				<Typography tag="span" className="shrink-0 text-[10.5px] text-t-3">{dateLabel}</Typography>
 			</div>
 
 			{/* Row 2: subject */}
-			<p className="mb-1 truncate text-[12px] font-medium text-t-1">
+			<Typography tag="p" className="mb-1 truncate text-[12px] font-medium text-t-1">
 				{thread.title ?? `#${thread.ticketNumber}`}
-			</p>
+			</Typography>
 
 			{/* Row 3: preview */}
-			<p className="mb-[5px] line-clamp-2 text-[11px] leading-[1.4] text-t-2">
+			<Typography tag="p" className="mb-[5px] line-clamp-2 text-[11px] leading-[1.4] text-t-2">
 				{preview}
-			</p>
+			</Typography>
 
 			{/* Row 4: badges + status + unread */}
 			<div className="flex items-center gap-1.5">
 				<FeedbackTypeBadge type={thread.type} t={t} />
 				<FeedbackStatusDot status={thread.status} className="ml-0.5" />
-				<span className="text-[10.5px] text-t-2">
+				<Typography tag="span" className="text-[10.5px] text-t-2">
 					{t(`admin.feedback.status.${thread.status}`)}
-				</span>
+				</Typography>
 				{thread.unreadCountAdmin > 0 && (
-					<span className="ml-auto flex size-4 items-center justify-center rounded-full bg-acc text-[9px] font-bold text-white">
+					<Typography tag="span" className="ml-auto flex size-4 items-center justify-center rounded-full bg-acc text-[9px] font-bold text-white">
 						{thread.unreadCountAdmin > 9 ? "9+" : thread.unreadCountAdmin}
-					</span>
+					</Typography>
 				)}
 			</div>
-		</button>
+		</Button>
 	);
 };

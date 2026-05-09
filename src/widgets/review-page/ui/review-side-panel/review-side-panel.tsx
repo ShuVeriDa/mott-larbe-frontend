@@ -82,7 +82,7 @@ export const ReviewSidePanel = ({
 							{t("review.sidePanel.streakTitle")}
 						</Typography>
 						<div className="flex items-center gap-1.5">
-							<span aria-hidden="true" className="text-[16px]">🔥</span>
+							<Typography tag="span" aria-hidden="true" className="text-[16px]">🔥</Typography>
 							<Typography className="text-[13px] font-semibold text-t-1">
 								{t("review.sidePanel.streakDays", { n: streak })}
 							</Typography>

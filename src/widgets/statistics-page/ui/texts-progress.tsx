@@ -63,16 +63,16 @@ const TextRow = ({
 					{item.title}
 				</Typography>
 				<div className="flex items-center gap-1.5 text-[11px] text-t-3">
-					<span>{item.level}</span>
-					<span aria-hidden="true">·</span>
-					<span>{item.language}</span>
-					<span aria-hidden="true">·</span>
-					<span>
+					<Typography tag="span">{item.level}</Typography>
+					<Typography tag="span" aria-hidden="true">·</Typography>
+					<Typography tag="span">{item.language}</Typography>
+					<Typography tag="span" aria-hidden="true">·</Typography>
+					<Typography tag="span">
 						{t("statistics.texts.wordsOf", {
 							known: item.knownWords,
 							total: item.wordCount,
 						})}
-					</span>
+					</Typography>
 				</div>
 			</div>
 

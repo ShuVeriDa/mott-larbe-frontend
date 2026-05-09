@@ -1,4 +1,6 @@
-﻿"use client";
+"use client";
+
+import { Typography } from "@/shared/ui/typography";
 
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { useI18n } from "@/shared/lib/i18n";
@@ -44,9 +46,9 @@ export const PaymentsProvidersChart = ({ items, isLoading }: Props) => {
 	return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="border-b border-bd-1 px-4 py-3">
-				<span className="text-[12.5px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("admin.payments.providers.title")}
-				</span>
+				</Typography>
 			</div>
 
 			<div className="px-4 py-3.5">
@@ -97,19 +99,19 @@ export const PaymentsProvidersChart = ({ items, isLoading }: Props) => {
 						<div className="flex flex-col gap-[7px]">
 							{data.map((item) => (
 								<div key={item.name} className="flex items-center gap-2">
-									<span
+									<Typography tag="span"
 										className="size-2 shrink-0 rounded-full"
 										style={{ background: item.color }}
 									/>
-									<span className="flex-1 text-[12px] text-t-2">
+									<Typography tag="span" className="flex-1 text-[12px] text-t-2">
 										{item.name}
-									</span>
-									<span className="text-[12px] font-medium text-t-1">
+									</Typography>
+									<Typography tag="span" className="text-[12px] font-medium text-t-1">
 										{fmtMoney(item.totalCents)}
-									</span>
-									<span className="w-[34px] text-right text-[11px] text-t-3">
+									</Typography>
+									<Typography tag="span" className="w-[34px] text-right text-[11px] text-t-3">
 										{item.value}%
-									</span>
+									</Typography>
 								</div>
 							))}
 						</div>

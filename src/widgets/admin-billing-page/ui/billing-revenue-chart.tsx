@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { PlanRevenueItem, PlanCode } from "@/entities/admin-billing";
 
@@ -30,9 +32,9 @@ export const BillingRevenueChart = ({ items, isLoading }: BillingRevenueChartPro
 	return (
 		<div className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf transition-colors">
 			<div className="border-b border-bd-1 px-4 py-3">
-				<span className="text-[12.5px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("admin.plans.revenue.title")}
-				</span>
+				</Typography>
 			</div>
 			<div className="px-4 py-4">
 				{isLoading ? (
@@ -55,10 +57,10 @@ export const BillingRevenueChart = ({ items, isLoading }: BillingRevenueChartPro
 							return (
 								<div key={item.planId}>
 									<div className="mb-1 flex items-baseline justify-between gap-2">
-										<span className="text-[12px] text-t-2">{item.planName}</span>
-										<span className="shrink-0 text-[12.5px] font-semibold text-t-1">
+										<Typography tag="span" className="text-[12px] text-t-2">{item.planName}</Typography>
+										<Typography tag="span" className="shrink-0 text-[12.5px] font-semibold text-t-1">
 											{fmtMoney(item.totalCents)}
-										</span>
+										</Typography>
 									</div>
 									<div className="h-1.5 overflow-hidden rounded-full bg-surf-3">
 										<div

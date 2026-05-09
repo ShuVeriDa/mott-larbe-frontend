@@ -1,3 +1,5 @@
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string) => string;
 
 interface FeedbackEmptyProps {
@@ -18,18 +20,17 @@ export const FeedbackEmpty = ({ t, onNewThread }: FeedbackEmptyProps) => (
 				<path d="M16 14H11l-4 3V14H4a1.5 1.5 0 0 1-1.5-1.5V4A1.5 1.5 0 0 1 4 2.5h12A1.5 1.5 0 0 1 17.5 4v8.5A1.5 1.5 0 0 1 16 14z" />
 			</svg>
 		</div>
-		<p className="mb-1 text-[13px] font-semibold text-t-1">
+		<Typography tag="p" className="mb-1 text-[13px] font-semibold text-t-1">
 			{t("feedback.empty.title")}
-		</p>
-		<p className="mb-4 text-[11.5px] leading-[1.5] text-t-3">
+		</Typography>
+		<Typography tag="p" className="mb-4 text-[11.5px] leading-[1.5] text-t-3">
 			{t("feedback.empty.description")}
-		</p>
-		<button
-			type="button"
+		</Typography>
+		<Button
 			onClick={onNewThread}
 			className="h-8 rounded-base bg-acc px-4 text-[12px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88]"
 		>
 			{t("feedback.empty.action")}
-		</button>
+		</Button>
 	</div>
 );

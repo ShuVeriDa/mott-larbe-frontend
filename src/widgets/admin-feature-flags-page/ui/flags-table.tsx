@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagItem, FeatureFlagCategory } from "@/entities/feature-flag";
@@ -57,26 +61,26 @@ const ExpandedRow = ({
 			<td colSpan={8} className="px-3.5 pb-3.5 pt-2.5">
 				<div className="flex flex-wrap gap-4 text-[12px] text-t-2 mb-3">
 					<div>
-						<span className="text-t-3">{t("admin.featureFlags.table.category")}: </span>
+						<Typography tag="span" className="text-t-3">{t("admin.featureFlags.table.category")}: </Typography>
 						<FlagCategoryBadge category={flag.category} t={t} />
 					</div>
 					{flag.updatedBy && (
 						<div>
-							<span className="text-t-3">{t("admin.featureFlags.table.updatedBy")}: </span>
-							<span className="text-acc-t">{flag.updatedBy.name} {flag.updatedBy.surname}</span>
+							<Typography tag="span" className="text-t-3">{t("admin.featureFlags.table.updatedBy")}: </Typography>
+							<Typography tag="span" className="text-acc-t">{flag.updatedBy.name} {flag.updatedBy.surname}</Typography>
 						</div>
 					)}
 					{flag.description && (
 						<div>
-							<span className="text-t-3">{t("admin.featureFlags.table.description")}: </span>
+							<Typography tag="span" className="text-t-3">{t("admin.featureFlags.table.description")}: </Typography>
 							{flag.description}
 						</div>
 					)}
 				</div>
 
-				<p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.5px] text-t-3">
+				<Typography tag="p" className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.5px] text-t-3">
 					{t("admin.featureFlags.expandDetails")}
-				</p>
+				</Typography>
 				{historyQuery.isLoading ? (
 					<div className="space-y-1.5">
 						{Array.from({ length: 3 }).map((_, i) => (
@@ -84,26 +88,26 @@ const ExpandedRow = ({
 						))}
 					</div>
 				) : items.length === 0 ? (
-					<p className="text-[11.5px] text-t-3">{t("admin.featureFlags.expandNoHistory")}</p>
+					<Typography tag="p" className="text-[11.5px] text-t-3">{t("admin.featureFlags.expandNoHistory")}</Typography>
 				) : (
 					<div className="space-y-1">
 						{items.map((h) => (
 							<div key={h.id} className="flex items-center gap-2 text-[11.5px]">
-								<span className="shrink-0 text-t-3">
+								<Typography tag="span" className="shrink-0 text-t-3">
 									{new Date(h.createdAt).toLocaleString("ru-RU", {
 										day: "numeric",
 										month: "short",
 										hour: "2-digit",
 										minute: "2-digit",
 									})}
-								</span>
-								<span className="text-t-2">
+								</Typography>
+								<Typography tag="span" className="text-t-2">
 									{t(`admin.featureFlags.history.eventType.${h.eventType}`)}
-								</span>
+								</Typography>
 								{h.actor && (
-									<span className="text-acc-t">
+									<Typography tag="span" className="text-acc-t">
 										{h.actor.name} {h.actor.surname}
-									</span>
+									</Typography>
 								)}
 							</div>
 						))}
@@ -175,9 +179,9 @@ export const FlagsTable = ({
 											className="border-b border-bd-1 px-3.5 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3"
 										>
 											<FlagCategoryBadge category={category} t={t} />
-											<span className="ml-2 text-t-3">
+											<Typography tag="span" className="ml-2 text-t-3">
 												{t("admin.featureFlags.table.categoryCount", { count: flags.length })}
-											</span>
+											</Typography>
 										</td>
 									</tr>
 									{flags.map((flag) => {
@@ -190,8 +194,7 @@ export const FlagsTable = ({
 												className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2"
 											>
 												<td className="pl-3.5">
-													<button
-														type="button"
+													<Button
 														onClick={handleClick}
 														aria-expanded={expanded.has(flag.id)}
 														className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
@@ -210,16 +213,16 @@ export const FlagsTable = ({
 														>
 															<path d="M6 4l4 4-4 4" />
 														</svg>
-													</button>
+													</Button>
 												</td>
 												<td className="py-3 pl-3.5">
-													<span className="rounded-[5px] border border-bd-1 bg-surf-2 px-1.5 py-0.5 font-mono text-[11.5px] text-t-1">
+													<Typography tag="span" className="rounded-[5px] border border-bd-1 bg-surf-2 px-1.5 py-0.5 font-mono text-[11.5px] text-t-1">
 														{flag.key}
-													</span>
+													</Typography>
 													{flag.description && (
-														<p className="mt-0.5 text-[11.5px] text-t-3 line-clamp-1">
+														<Typography tag="p" className="mt-0.5 text-[11.5px] text-t-3 line-clamp-1">
 															{flag.description}
-														</p>
+														</Typography>
 													)}
 												</td>
 												<td className="py-3 pl-3.5">
@@ -243,22 +246,22 @@ export const FlagsTable = ({
 																style={{ width: `${flag.rolloutPercent}%` }}
 															/>
 														</div>
-														<span className="shrink-0 text-[11px] text-t-2">
+														<Typography tag="span" className="shrink-0 text-[11px] text-t-2">
 															{flag.rolloutPercent}%
-														</span>
+														</Typography>
 													</div>
 												</td>
 												<td className="py-3 pl-3.5">
 													{flag.overridesCount > 0 ? (
-														<span className="inline-flex cursor-pointer items-center gap-[3px] rounded px-1.5 py-[1.5px] text-[10.5px] bg-pur-bg text-pur-t hover:opacity-80">
+														<Typography tag="span" className="inline-flex cursor-pointer items-center gap-[3px] rounded px-1.5 py-[1.5px] text-[10.5px] bg-pur-bg text-pur-t hover:opacity-80">
 															<svg className="size-2.5" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
 																<circle cx="7.5" cy="5" r="2" />
 																<path d="M2.5 13c0-2.5 2.5-4 5-4s5 1.5 5 4" strokeLinecap="round" />
 															</svg>
 															{flag.overridesCount}
-														</span>
+														</Typography>
 													) : (
-														<span className="text-t-3">—</span>
+														<Typography tag="span" className="text-t-3">—</Typography>
 													)}
 												</td>
 												<td className="py-3 pl-3.5 text-[11.5px] text-t-3">

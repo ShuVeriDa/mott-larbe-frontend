@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagItem } from "@/entities/feature-flag";
@@ -35,15 +37,14 @@ export const FlagRowActions = ({ flag, onEdit, onDuplicate, onDelete, onAddOverr
 	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => { onDelete(flag); setOpen(false); };
 return (
 		<div ref={ref} className="relative flex items-center gap-0.5">
-			<button type="button" className={btn} title={t("admin.featureFlags.actions.edit")} onClick={handleClick}>
+			<Button className={btn} title={t("admin.featureFlags.actions.edit")} onClick={handleClick}>
 				<svg className="size-3.5" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
 					<path d="M10.5 2.5l2 2-7 7H3.5v-2l7-7z" strokeLinejoin="round" />
 				</svg>
-			</button>
+			</Button>
 
 			<div className="relative">
-				<button
-					type="button"
+				<Button
 					className={btn}
 					title={t("admin.featureFlags.actions.more")}
 					onClick={handleClick2}
@@ -53,12 +54,11 @@ return (
 						<circle cx="7.5" cy="7.5" r="0.8" fill="currentColor" />
 						<circle cx="7.5" cy="11.5" r="0.8" fill="currentColor" />
 					</svg>
-				</button>
+				</Button>
 
 				{open && (
 					<div className="absolute right-0 top-[calc(100%+4px)] z-50 min-w-[190px] rounded-[9px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08),0_2px_4px_rgba(0,0,0,0.04)]">
-						<button
-							type="button"
+						<Button
 							className="flex w-full items-center gap-2 rounded-[6px] border-none bg-transparent px-2.5 py-[7px] text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							onClick={handleClick3}
 						>
@@ -68,9 +68,8 @@ return (
 								<path d="M11 8v4M9 10h4" strokeLinecap="round" />
 							</svg>
 							{t("admin.featureFlags.actions.addOverride")}
-						</button>
-						<button
-							type="button"
+						</Button>
+						<Button
 							className="flex w-full items-center gap-2 rounded-[6px] border-none bg-transparent px-2.5 py-[7px] text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							onClick={handleClick4}
 						>
@@ -79,10 +78,9 @@ return (
 								<path d="M2.5 10.5V2.5h8" strokeLinecap="round" />
 							</svg>
 							{t("admin.featureFlags.actions.duplicate")}
-						</button>
+						</Button>
 						<div className="my-[3px] mx-0.5 h-px bg-bd-1" />
-						<button
-							type="button"
+						<Button
 							className={cn(
 								"flex w-full items-center gap-2 rounded-[6px] border-none bg-transparent px-2.5 py-[7px] text-left text-[12.5px] transition-colors",
 								"text-red-t hover:bg-red-bg",
@@ -94,7 +92,7 @@ return (
 								<path d="M3.5 4.5l.7 7.5h6.6l.7-7.5" />
 							</svg>
 							{t("admin.featureFlags.actions.delete")}
-						</button>
+						</Button>
 					</div>
 				)}
 			</div>

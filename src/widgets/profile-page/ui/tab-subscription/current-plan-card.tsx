@@ -42,10 +42,10 @@ const LimitBar = ({ label, used, max, color }: LimitBarProps) => {
 	return (
 		<div className="flex flex-col gap-1">
 			<div className="flex justify-between text-[12px]">
-				<span className="text-t-2">{label}</span>
-				<span className="text-t-2">
-					<strong className="text-t-1">{used}</strong> / {displayMax}
-				</span>
+				<Typography tag="span" className="text-t-2">{label}</Typography>
+				<Typography tag="span" className="text-t-2">
+					<Typography tag="strong" className="text-t-1">{used}</Typography> / {displayMax}
+				</Typography>
 			</div>
 			<div className="h-[3px] rounded-[2px] bg-surf-3 overflow-hidden">
 				<div
@@ -85,9 +85,9 @@ const CurrentPlanCard = ({ subscription, usage, lang }: CurrentPlanCardProps) =>
 	return (
 		<SettingCard title={t("profile.subscription.currentPlan")} noBody>
 			<div className="flex items-center gap-3 px-4 py-3.5 border-b border-hairline border-bd-1">
-				<span className={`flex size-9 shrink-0 items-center justify-center rounded-[9px] ${isFree ? "bg-surf-2 text-t-2" : "bg-acc-bg text-acc-t"}`}>
+				<Typography tag="span" className={`flex size-9 shrink-0 items-center justify-center rounded-[9px] ${isFree ? "bg-surf-2 text-t-2" : "bg-acc-bg text-acc-t"}`}>
 					{isFree ? <FreeIcon /> : <PremiumIcon />}
-				</span>
+				</Typography>
 				<div className="flex-1 min-w-0">
 					<Typography tag="p" className="text-[13px] font-semibold text-t-1 mb-0.5">
 						{subscription?.plan.name ?? t("profile.header.freePlan")}
@@ -99,13 +99,13 @@ const CurrentPlanCard = ({ subscription, usage, lang }: CurrentPlanCardProps) =>
 					</Typography>
 				</div>
 				{subscription ? (
-					<span className={`px-2 py-0.5 rounded-[5px] text-[11px] font-semibold border-hairline ${getStatusStyle(subscription)}`}>
+					<Typography tag="span" className={`px-2 py-0.5 rounded-[5px] text-[11px] font-semibold border-hairline ${getStatusStyle(subscription)}`}>
 						{getStatusLabel(subscription, t)}
-					</span>
+					</Typography>
 				) : (
-					<span className="px-2 py-0.5 rounded-[5px] text-[11px] font-semibold bg-surf-2 border-hairline border-bd-2 text-t-2">
+					<Typography tag="span" className="px-2 py-0.5 rounded-[5px] text-[11px] font-semibold bg-surf-2 border-hairline border-bd-2 text-t-2">
 						{t("profile.subscription.active")}
-					</span>
+					</Typography>
 				)}
 			</div>
 

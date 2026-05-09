@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import {
 	FolderForm,
 } from "@/entities/folder";
@@ -48,9 +50,9 @@ export const CreateFolderModal = ({
 				/>
 
 				{error ? (
-					<p className="text-[12px] text-red" role="alert">
+					<Typography tag="p" className="text-[12px] text-red" role="alert">
 						{error}
-					</p>
+					</Typography>
 				) : null}
 
 				<ModalActions>

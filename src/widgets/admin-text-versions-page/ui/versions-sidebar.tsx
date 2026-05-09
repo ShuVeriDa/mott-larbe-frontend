@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -62,8 +66,8 @@ interface InfoRowProps {
 
 const InfoRow = ({ label, children }: InfoRowProps) => (
 	<div className="flex items-start justify-between gap-2 border-b border-bd-1 px-3.5 py-2 text-[12px] last:border-none">
-		<span className="shrink-0 text-t-3">{label}</span>
-		<span className="text-right font-medium text-t-1">{children}</span>
+		<Typography tag="span" className="shrink-0 text-t-3">{label}</Typography>
+		<Typography tag="span" className="text-right font-medium text-t-1">{children}</Typography>
 	</div>
 );
 
@@ -76,13 +80,13 @@ interface SettingRowProps {
 
 const SettingRow = ({ label, value, onLabel, offLabel }: SettingRowProps) => (
 	<div className="flex items-center justify-between gap-2 px-3.5 py-2 text-[12px]">
-		<span className="text-t-2">{label}</span>
-		<span className={cn(
+		<Typography tag="span" className="text-t-2">{label}</Typography>
+		<Typography tag="span" className={cn(
 			"rounded px-1.5 py-px text-[11px] font-semibold",
 			value ? "bg-grn-bg text-grn-t" : "bg-surf-3 text-t-3",
 		)}>
 			{value ? onLabel : offLabel}
-		</span>
+		</Typography>
 	</div>
 );
 
@@ -125,16 +129,16 @@ export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokeniza
 						<InfoRow label={t("admin.texts.versions.sidebar.versionNumber")}>
 							v{currentVersion.version}
 							{currentVersion.label && (
-								<span className="ml-1 text-t-3 font-normal">— {currentVersion.label}</span>
+								<Typography tag="span" className="ml-1 text-t-3 font-normal">— {currentVersion.label}</Typography>
 							)}
 						</InfoRow>
 						<InfoRow label={t("admin.texts.versions.sidebar.processingStatus")}>
-							<span className={cn(
+							<Typography tag="span" className={cn(
 								"rounded px-1.5 py-px text-[10.5px] font-semibold",
 								ProcessingStatusClass[currentVersion.status] ?? "bg-surf-3 text-t-2",
 							)}>
 								{t(`admin.texts.versions.status.${currentVersion.status}`)}
-							</span>
+							</Typography>
 						</InfoRow>
 						<InfoRow label={t("admin.texts.versions.sidebar.updatedAt")}>
 							{new Date(currentVersion.updatedAt).toLocaleDateString([], {
@@ -159,16 +163,16 @@ export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokeniza
 				<div>
 					<InfoRow label={t("admin.texts.versions.sidebar.status")}>
 						{text ? (
-							<span className={cn("rounded px-1.5 py-px text-[10.5px] font-semibold", StatusBadgeClass[text.status] ?? "bg-surf-3 text-t-2")}>
+							<Typography tag="span" className={cn("rounded px-1.5 py-px text-[10.5px] font-semibold", StatusBadgeClass[text.status] ?? "bg-surf-3 text-t-2")}>
 								{t(`admin.texts.status.${text.status}`)}
-							</span>
+							</Typography>
 						) : "—"}
 					</InfoRow>
 					<InfoRow label={t("admin.texts.versions.sidebar.level")}>
 						{text?.level ? (
-							<span className={cn("rounded px-1.5 py-px text-[10px] font-semibold uppercase", LevelBadgeClass[text.level] ?? "bg-surf-3 text-t-2")}>
+							<Typography tag="span" className={cn("rounded px-1.5 py-px text-[10px] font-semibold uppercase", LevelBadgeClass[text.level] ?? "bg-surf-3 text-t-2")}>
 								{text.level}
-							</span>
+							</Typography>
 						) : t("admin.texts.versions.sidebar.noLevel")}
 					</InfoRow>
 					<InfoRow label={t("admin.texts.versions.sidebar.language")}>
@@ -195,12 +199,12 @@ export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokeniza
 							return (
 								<div key={page.pageId}>
 									<div className="mb-1 flex items-center justify-between">
-										<span className="text-[11.5px] text-t-2">
+										<Typography tag="span" className="text-[11.5px] text-t-2">
 											{t("admin.texts.versions.sidebar.pageN").replace("{n}", String(page.pageNumber))}
-										</span>
-										<span className="text-[11px] tabular-nums text-t-3">
+										</Typography>
+										<Typography tag="span" className="text-[11px] tabular-nums text-t-3">
 											{page.tokenCount.toLocaleString()} {t("admin.texts.versions.item.tokens")}
-										</span>
+										</Typography>
 									</div>
 									<div className="h-1 overflow-hidden rounded-full bg-surf-3">
 										<div className="h-full rounded-full bg-acc transition-all" style={{ width: `${pct}%` }} />
@@ -236,15 +240,14 @@ export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokeniza
 						/>
 					</div>
 					<div className="border-t border-bd-1 p-3.5">
-						<button
-							type="button"
+						<Button
 							onClick={onRunTokenization}
 							disabled={isRunning}
 							className="flex h-[34px] w-full cursor-pointer items-center justify-center gap-1.5 rounded-[8px] bg-acc font-sans text-[12.5px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 						>
 							{isRunning ? (
 								<>
-									<span className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />
+									<Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />
 									{t("admin.texts.versions.sidebar.runBtnRunning")}
 								</>
 							) : (
@@ -255,7 +258,7 @@ export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokeniza
 									{t("admin.texts.versions.sidebar.runBtn")}
 								</>
 							)}
-						</button>
+						</Button>
 					</div>
 				</SectionCard>
 			)}

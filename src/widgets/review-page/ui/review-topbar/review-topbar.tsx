@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -92,8 +94,7 @@ interface TabButtonProps {
 }
 
 const TabButton = ({ label, count, active, onClick }: TabButtonProps) => (
-	<button
-		type="button"
+	<Button
 		role="tab"
 		aria-selected={active}
 		onClick={onClick}
@@ -106,7 +107,7 @@ const TabButton = ({ label, count, active, onClick }: TabButtonProps) => (
 	>
 		{label}
 		{count !== null && count > 0 ? (
-			<span
+			<Typography tag="span"
 				className={cn(
 					"rounded-[3px] px-1.5 py-px text-[10px] font-bold",
 					active
@@ -115,7 +116,7 @@ const TabButton = ({ label, count, active, onClick }: TabButtonProps) => (
 				)}
 			>
 				{count}
-			</span>
+			</Typography>
 		) : null}
-	</button>
+	</Button>
 );

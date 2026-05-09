@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type { FeatureFlagItem } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
 import { ComponentProps, useEffect, useState } from 'react';
@@ -52,16 +56,16 @@ return (
 			onClick={handleClick}
 		>
 			<div className="w-[400px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
-				<h2 className="font-display text-[16px] text-t-1 mb-1">
+				<Typography tag="h2" className="font-display text-[16px] text-t-1 mb-1">
 					{t("admin.featureFlags.duplicateModal.title")}
-				</h2>
-				<p className="mb-4 text-[12.5px] text-t-3">
+				</Typography>
+				<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
 					{t("admin.featureFlags.duplicateModal.subtitle")}
-				</p>
+				</Typography>
 				<div className="mb-1.5">
-					<label className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.featureFlags.modal.keyLabel")} *
-					</label>
+					</Typography>
 					<input
 						className={cn(
 							"h-[34px] w-full rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc",
@@ -71,24 +75,22 @@ return (
 						onChange={handleChange}
 					/>
 					{keyError ? (
-						<p className="mt-1 text-[11px] text-red-t">{keyError}</p>
+						<Typography tag="p" className="mt-1 text-[11px] text-red-t">{keyError}</Typography>
 					) : (
-						<p className="mt-1 text-[11px] text-t-3">
+						<Typography tag="p" className="mt-1 text-[11px] text-t-3">
 							{t("admin.featureFlags.modal.keyHint")}
-						</p>
+						</Typography>
 					)}
 				</div>
 				<div className="mt-5 flex justify-end gap-2">
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						disabled={isDuplicating}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50"
 					>
 						{t("admin.featureFlags.modal.cancel")}
-					</button>
-					<button
-						type="button"
+					</Button>
+					<Button
 						onClick={handleSubmit}
 						disabled={isDuplicating || !key}
 						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50"
@@ -96,7 +98,7 @@ return (
 						{isDuplicating
 							? t("admin.featureFlags.duplicateModal.duplicating")
 							: t("admin.featureFlags.duplicateModal.confirm")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

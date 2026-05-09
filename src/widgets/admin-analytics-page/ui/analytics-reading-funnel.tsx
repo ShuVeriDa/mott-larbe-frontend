@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { ReadingFunnel } from "@/entities/admin-analytics";
@@ -21,15 +23,15 @@ const FunnelRow = ({ label, value, widthPct, isCompleted }: FunnelRowProps) => (
 			style={{ width: `${widthPct}%` }}
 		/>
 		<div className="relative z-10 flex w-full items-center justify-between px-3">
-			<span className="text-[12px] font-medium text-t-1">{label}</span>
-			<span
+			<Typography tag="span" className="text-[12px] font-medium text-t-1">{label}</Typography>
+			<Typography tag="span"
 				className={cn(
 					"text-[12px] font-semibold",
 					isCompleted ? "text-grn-t" : "text-t-1",
 				)}
 			>
 				{value}
-			</span>
+			</Typography>
 		</div>
 	</div>
 );
@@ -48,12 +50,12 @@ export const AnalyticsReadingFunnel = ({
 	return (
 		<div className="rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between px-4 pt-3.5 pb-3">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.analytics.readingFunnel.title")}
-				</span>
-				<span className="text-[11px] text-t-3">
+				</Typography>
+				<Typography tag="span" className="text-[11px] text-t-3">
 					{t("admin.analytics.readingFunnel.subtitle")}
-				</span>
+				</Typography>
 			</div>
 
 			<div className="flex flex-col gap-1.5 px-4 pb-4">

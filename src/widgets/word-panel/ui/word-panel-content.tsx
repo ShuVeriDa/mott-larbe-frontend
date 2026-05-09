@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { ReactNode } from 'react';
 import type { TextToken } from "@/entities/text";
 import { useWordLookup, type WordLookupResponse } from "@/entities/word";
@@ -46,17 +48,17 @@ const PanelHeader = ({
 			{word}
 		</div>
 		<div className="mb-2 text-[12px] text-t-3">
-			{baseLabel}: <strong className="font-medium text-t-2">{baseForm}</strong>
+			{baseLabel}: <Typography tag="strong" className="font-medium text-t-2">{baseForm}</Typography>
 		</div>
 		{tags.length > 0 ? (
 			<div className="flex flex-wrap gap-1">
 				{tags.map((tag) => (
-					<span
+					<Typography tag="span"
 						key={tag}
 						className="rounded-[5px] border-hairline border-bd-1 bg-surf-2 px-2 py-0.5 text-[10.5px] font-medium text-t-2"
 					>
 						{tag}
-					</span>
+					</Typography>
 				))}
 			</div>
 		) : null}

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { cn } from "@/shared/lib/cn";
 import { ComponentProps, KeyboardEvent, useRef, useState } from 'react';
 type Translator = (key: string) => string;
@@ -53,13 +57,12 @@ export const FeedbackAdminInput = ({
 			<div className="shrink-0 border-t border-bd-1 bg-surf px-5 py-3 text-center text-[12px] text-t-3">
 				{t("admin.feedback.closed")}
 				{" · "}
-				<button
-					type="button"
+				<Button
 					onClick={onReopen}
 					className="font-medium text-acc-t hover:underline"
 				>
 					{t("admin.feedback.reopen")}
-				</button>
+				</Button>
 			</div>
 		);
 	}
@@ -76,8 +79,7 @@ return (
 		<div className="shrink-0 border-t border-bd-1 bg-surf px-5 pb-[14px] pt-2.5">
 			{/* Mode toggle */}
 			<div className="mb-2 flex gap-0.5">
-				<button
-					type="button"
+				<Button
 					onClick={handleClick}
 					className={cn(
 						"flex h-6 items-center gap-1 rounded-[5px] border px-2.5 text-[11px] font-medium transition-all",
@@ -95,9 +97,8 @@ return (
 						/>
 					</svg>
 					{t("admin.feedback.input.replyMode")}
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
 					onClick={handleClick2}
 					className={cn(
 						"flex h-6 items-center gap-1 rounded-[5px] border px-2.5 text-[11px] font-medium transition-all",
@@ -115,7 +116,7 @@ return (
 						/>
 					</svg>
 					{t("admin.feedback.input.noteMode")}
-				</button>
+				</Button>
 			</div>
 
 			{/* Input box */}
@@ -144,8 +145,7 @@ return (
 					)}
 					style={{ maxHeight: 100 }}
 				/>
-				<button
-					type="button"
+				<Button
 					disabled={!value.trim() || isPending}
 					onClick={handleSend}
 					className={cn(
@@ -166,12 +166,12 @@ return (
 					>
 						<path d="M13.5 2.5L2.5 7l5 1.5M13.5 2.5L9 13.5l-1.5-5" />
 					</svg>
-				</button>
+				</Button>
 			</div>
 
-			<p className="mt-1.5 text-center text-[10px] text-t-3">
+			<Typography tag="p" className="mt-1.5 text-center text-[10px] text-t-3">
 				{t("admin.feedback.input.hint")}
-			</p>
+			</Typography>
 		</div>
 	);
 };

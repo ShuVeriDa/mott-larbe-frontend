@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { ComponentProps } from 'react';
@@ -15,8 +17,7 @@ export const AuthThemeToggle = () => {
 
 		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setTheme(dark ? "light" : "dark");
 return (
-		<button
-			type="button"
+		<Button
 			onClick={handleClick}
 			aria-label={t("auth.resetPassword.theme")}
 			className="inline-flex h-8 w-8 items-center justify-center rounded-[8px] border border-bd-2 bg-surf text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
@@ -26,6 +27,6 @@ return (
 			) : (
 				<Moon size={14} strokeWidth={1.8} />
 			)}
-		</button>
+		</Button>
 	);
 };

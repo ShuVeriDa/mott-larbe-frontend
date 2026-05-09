@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -39,7 +43,7 @@ export const MorphologyTabs = ({ active, stats, onChange }: Props) => {
         {tabs.map((tab) => {
           const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab.key);
           return (
-          <button
+          <Button
             key={tab.key}
             onClick={handleClick}
             className={cn(
@@ -51,7 +55,7 @@ export const MorphologyTabs = ({ active, stats, onChange }: Props) => {
           >
             {tab.label}
             {tab.count !== undefined && (
-              <span
+              <Typography tag="span"
                 className={cn(
                   "rounded px-1.5 py-px text-[10px] font-semibold",
                   active === tab.key
@@ -60,9 +64,9 @@ export const MorphologyTabs = ({ active, stats, onChange }: Props) => {
                 )}
               >
                 {tab.count.toLocaleString()}
-              </span>
+              </Typography>
             )}
-          </button>
+          </Button>
         );
         })}
       </div>

@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import { ComponentProps, useEffect, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useFolders, useFoldersSummary, type Folder } from "@/entities/folder";
@@ -66,22 +68,22 @@ return (
 
 			<main className="flex flex-1 flex-col gap-5 overflow-y-auto bg-panel px-[26px] py-[22px] pb-10 max-md:px-[14px] max-md:py-[14px]">
 				<section aria-labelledby="folders-summary-heading">
-					<h2 id="folders-summary-heading" className="sr-only">
+					<Typography tag="h2" id="folders-summary-heading" className="sr-only">
 						{t("vocabulary.foldersPage.summary.foldersCount")}
-					</h2>
+					</Typography>
 					<FoldersSummary />
 				</section>
 
 				<section aria-labelledby="folders-list-heading">
 					<div className="mb-3 flex items-center justify-between gap-3">
-						<h2
+						<Typography tag="h2"
 							id="folders-list-heading"
 							className="text-[13px] font-semibold text-t-1"
 						>
 							{t("vocabulary.foldersPage.section.title")}
-						</h2>
+						</Typography>
 						{limitMessage ? (
-							<span className="text-[12px] text-t-3">{limitMessage}</span>
+							<Typography tag="span" className="text-[12px] text-t-3">{limitMessage}</Typography>
 						) : null}
 					</div>
 
@@ -107,9 +109,9 @@ return (
 				</section>
 
 				<section aria-labelledby="folders-uncat-heading">
-					<h2 id="folders-uncat-heading" className="sr-only">
+					<Typography tag="h2" id="folders-uncat-heading" className="sr-only">
 						{t("vocabulary.foldersPage.uncategorized.title")}
-					</h2>
+					</Typography>
 					<UncategorizedSection
 						count={summary?.wordsWithoutFolder ?? 0}
 					/>

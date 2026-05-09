@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
@@ -96,8 +98,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 						)}
 						aria-invalid={Boolean(errors.password)}
 					/>
-					<button
-						type="button"
+					<Button
 						tabIndex={-1}
 						onClick={handleTogglePasswordVisibility}
 						aria-label={t(
@@ -110,7 +111,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 						) : (
 							<Eye size={16} strokeWidth={1.8} />
 						)}
-					</button>
+					</Button>
 				</div>
 				{errors.password ? (
 					<Typography className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
@@ -152,7 +153,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 				</Typography>
 			</div>
 
-			<button
+			<Button
 				type="submit"
 				disabled={isPending}
 				className={cn(
@@ -164,7 +165,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 					{t("auth.submit.login")}
 				</Typography>
 				<ArrowRight size={14} strokeWidth={2} />
-			</button>
+			</Button>
 		</form>
 	);
 };

@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import type {
 	AdminDictGramCase,
 	AdminDictGramNumber,
@@ -150,20 +152,19 @@ return (
 						</div>
 					</div>
 					<div className="mt-5 flex justify-end gap-2">
-						<button
-							type="button"
+						<Button
 							className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
 							onClick={onClose}
 						>
 							{t("admin.dictionaryDetail.cancel")}
-						</button>
-						<button
+						</Button>
+						<Button
 							type="submit"
 							disabled={isPending || !form.trim()}
 							className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
 						>
 							{t("admin.dictionaryDetail.add")}
-						</button>
+						</Button>
 					</div>
 				</form>
 			</div>

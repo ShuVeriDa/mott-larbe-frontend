@@ -1,4 +1,5 @@
 import { ComponentProps } from 'react';
+import { Typography } from "@/shared/ui/typography";
 import { Slot } from "radix-ui"
 
 import { cn } from "@/shared/lib/cn"
@@ -58,7 +59,7 @@ function BreadcrumbLink({
 
 function BreadcrumbPage({ className, ...props }: ComponentProps<"span">) {
   return (
-    <span
+    <Typography tag="span"
       data-slot="breadcrumb-page"
       role="link"
       aria-disabled="true"
@@ -94,7 +95,7 @@ function BreadcrumbEllipsis({
   ...props
 }: ComponentProps<"span">) {
   return (
-    <span
+    <Typography tag="span"
       data-slot="breadcrumb-ellipsis"
       role="presentation"
       aria-hidden="true"
@@ -106,8 +107,8 @@ function BreadcrumbEllipsis({
     >
       <MoreHorizontalIcon
       />
-      <span className="sr-only">More</span>
-    </span>
+      <Typography tag="span" className="sr-only">More</Typography>
+    </Typography>
   )
 }
 

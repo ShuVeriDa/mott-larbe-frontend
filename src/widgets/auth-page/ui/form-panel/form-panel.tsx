@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { LoginForm } from "@/features/login";
 import { RegisterForm } from "@/features/register";
@@ -67,24 +69,22 @@ return (
 						{isLogin ? (
 							<>
 								{t("auth.crosslink.noAccount")}{" "}
-								<button
-									type="button"
+								<Button
 									onClick={handleClick}
 									className="font-semibold text-acc-t hover:underline"
 								>
 									{t("auth.crosslink.signup")}
-								</button>
+								</Button>
 							</>
 						) : (
 							<>
 								{t("auth.crosslink.haveAccount")}{" "}
-								<button
-									type="button"
+								<Button
 									onClick={handleClick2}
 									className="font-semibold text-acc-t hover:underline"
 								>
 									{t("auth.crosslink.signin")}
-								</button>
+								</Button>
 							</>
 						)}
 					</Typography>

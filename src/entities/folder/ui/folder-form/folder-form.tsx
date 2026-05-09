@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { useFolderForm } from "../../model";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { cn } from "@/shared/lib/cn";
@@ -102,9 +104,8 @@ export const FolderForm = ({
 				<div className="flex flex-wrap gap-1.5">
 					{FOLDER_ICON_KEYS.map((iconKey) => {
 					  return (
-						<button
+						<Button
 							key={iconKey}
-							type="button"
 							data-icon={iconKey}
 							onClick={handleIconClick}
 							aria-pressed={internal.icon === iconKey}
@@ -117,7 +118,7 @@ export const FolderForm = ({
 							)}
 						>
 							<FolderIcon icon={iconKey} className="size-[15px]" />
-						</button>
+						</Button>
 					);
 					})}
 				</div>
@@ -131,9 +132,8 @@ export const FolderForm = ({
 					{FOLDER_COLORS.map((c) => {
 						const selected = internal.color === c;
 return (
-							<button
+							<Button
 								key={c}
-								type="button"
 								data-color={c}
 								onClick={handleColorClick}
 								aria-label={c}

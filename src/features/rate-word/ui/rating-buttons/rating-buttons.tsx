@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -73,9 +75,8 @@ export const RatingButtons = ({
 				{RATINGS.map((rating) => {
 				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRate(rating.quality);
 				  return (
-					<button
+					<Button
 						key={rating.key}
-						type="button"
 						disabled={disabled || !visible}
 						onClick={handleClick}
 						className={cn(
@@ -86,14 +87,14 @@ export const RatingButtons = ({
 							rating.hoverClass,
 						)}
 					>
-						<span className="text-[17px] leading-none">{rating.icon}</span>
-						<span className="text-[11.5px] font-semibold text-t-1">
+						<Typography tag="span" className="text-[17px] leading-none">{rating.icon}</Typography>
+						<Typography tag="span" className="text-[11.5px] font-semibold text-t-1">
 							{t(`review.sm2.card.rate.${rating.key}.label`)}
-						</span>
-						<span className="text-[10px] text-t-3 max-md:hidden">
+						</Typography>
+						<Typography tag="span" className="text-[10px] text-t-3 max-md:hidden">
 							{t(`review.sm2.card.rate.${rating.key}.sub`)}
-						</span>
-					</button>
+						</Typography>
+					</Button>
 				);
 				})}
 			</div>

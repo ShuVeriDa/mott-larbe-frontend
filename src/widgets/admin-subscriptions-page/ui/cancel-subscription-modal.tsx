@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
 import { useI18n } from "@/shared/lib/i18n";
 import { ComponentProps, useState } from "react";
@@ -29,11 +33,10 @@ export const CancelSubscriptionModal = ({
 return (
 		<>
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
-				<span className="font-display text-[14px] font-semibold text-t-1">
+				<Typography tag="span" className="font-display text-[14px] font-semibold text-t-1">
 					{t("admin.subscriptions.modal.cancelTitle")}
-				</span>
-				<button
-					type="button"
+				</Typography>
+				<Button
 					onClick={onClose}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
@@ -47,17 +50,17 @@ return (
 					>
 						<path d="M1 1l10 10M11 1 1 11" strokeLinecap="round" />
 					</svg>
-				</button>
+				</Button>
 			</div>
 
 			<form action={handleConfirm} className="px-4 py-3.5">
-				<p className="mb-3 text-[12.5px] leading-relaxed text-t-2">
+				<Typography tag="p" className="mb-3 text-[12.5px] leading-relaxed text-t-2">
 					{t("admin.subscriptions.modal.cancelWarning")}
-				</p>
+				</Typography>
 				<div>
-					<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.subscriptions.modal.cancelReason")}
-					</label>
+					</Typography>
 					<input
 						value={reason}
 						onChange={handleChange}
@@ -68,15 +71,13 @@ return (
 			</form>
 
 			<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-4 py-3">
-				<button
-					type="button"
+				<Button
 					onClick={onClose}
 					className="h-8 rounded-lg border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 				>
 					{t("admin.subscriptions.modal.keepSub")}
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
 					onClick={handleConfirm}
 					disabled={mutations.cancel.isPending}
 					className="h-8 rounded-lg bg-red px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
@@ -84,7 +85,7 @@ return (
 					{mutations.cancel.isPending
 						? t("admin.subscriptions.modal.saving")
 						: t("admin.subscriptions.modal.cancelConfirm")}
-				</button>
+				</Button>
 			</div>
 		</>
 	);

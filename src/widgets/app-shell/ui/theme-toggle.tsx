@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useI18n } from "@/shared/lib/i18n";
@@ -18,8 +20,7 @@ export const ThemeToggle = () => {
 	};
 
 	return (
-		<button
-			type="button"
+		<Button
 			onClick={handleToggle}
 			aria-label={dark ? t("nav.lightTheme") : t("nav.darkTheme")}
 			className="flex w-full items-center gap-[9px] border-none bg-transparent px-3.5 py-1.5 text-left font-[inherit] text-[13px] text-t-2 transition-colors hover:bg-surf-2"
@@ -32,6 +33,6 @@ export const ThemeToggle = () => {
 			<Typography tag="span">
 				{dark ? t("nav.lightTheme") : t("nav.darkTheme")}
 			</Typography>
-		</button>
+		</Button>
 	);
 };

@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { FeedbackMessage } from "@/entities/feedback";
 
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string) => string;
 
 interface FeedbackMessageBubbleProps {
@@ -57,7 +58,7 @@ export const FeedbackMessageBubble = ({
 				>
 					{message.body}
 				</div>
-				<span className="text-[10px] text-t-3">{time}</span>
+				<Typography tag="span" className="text-[10px] text-t-3">{time}</Typography>
 			</div>
 		</div>
 	);

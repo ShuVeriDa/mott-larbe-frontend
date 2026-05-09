@@ -2,6 +2,8 @@ import { ComponentProps } from 'react';
 import type { useCouponMutations } from "@/entities/admin-coupon";
 import { useI18n } from "@/shared/lib/i18n";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 interface Props {
 	couponId: string | null;
 	hasError: boolean;
@@ -31,13 +33,12 @@ return (
 		<>
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
-				<h2 className="font-display text-[14px] font-semibold text-t-1">
+				<Typography tag="h2" className="font-display text-[14px] font-semibold text-t-1">
 					{hasError
 						? t("admin.coupons.deleteModal.errorTitle")
 						: t("admin.coupons.deleteModal.title")}
-				</h2>
-				<button
-					type="button"
+				</Typography>
+				<Button
 					onClick={onClose}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
@@ -51,46 +52,43 @@ return (
 					>
 						<path d="M2 2l8 8M10 2l-8 8" strokeLinecap="round" />
 					</svg>
-				</button>
+				</Button>
 			</div>
 
 			{/* Body */}
 			<div className="px-4 py-4">
-				<p className="text-[13px] leading-relaxed text-t-2">
+				<Typography tag="p" className="text-[13px] leading-relaxed text-t-2">
 					{hasError
 						? t("admin.coupons.deleteModal.errorText")
 						: t("admin.coupons.deleteModal.text")}
-				</p>
+				</Typography>
 			</div>
 
 			{/* Footer */}
 			<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-4 py-3">
-				<button
-					type="button"
+				<Button
 					onClick={onClose}
 					className="h-8 rounded-[8px] border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 				>
 					{t("admin.coupons.deleteModal.cancel")}
-				</button>
+				</Button>
 
 				{hasError ? (
-					<button
-						type="button"
+					<Button
 						disabled={isPending}
 						onClick={handleClick}
 						className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						{t("admin.coupons.deleteModal.deactivate")}
-					</button>
+					</Button>
 				) : (
-					<button
-						type="button"
+					<Button
 						disabled={isPending}
 						onClick={handleClick2}
 						className="h-8 rounded-[8px] bg-red px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						{t("admin.coupons.deleteModal.confirm")}
-					</button>
+					</Button>
 				)}
 			</div>
 		</>

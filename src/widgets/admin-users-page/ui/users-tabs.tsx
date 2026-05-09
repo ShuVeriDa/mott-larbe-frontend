@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -23,9 +27,8 @@ export const UsersTabs = ({ active, counts, onChange }: UsersTabsProps) => {
 					const count = counts?.[tab];
 										const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(tab);
 return (
-						<button
+						<Button
 							key={tab}
-							type="button"
 							onClick={handleClick}
 							className={cn(
 								"flex h-7 cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-base border-none px-[11px] font-sans text-[12.5px] transition-colors",
@@ -36,16 +39,16 @@ return (
 						>
 							{t(`admin.users.tabs.${tab}`)}
 							{count !== undefined && (
-								<span
+								<Typography tag="span"
 									className={cn(
 										"min-w-[18px] rounded px-1 py-px text-center text-[10px] font-semibold",
 										active === tab ? "bg-surf-2 text-t-3" : "bg-surf-3 text-t-3",
 									)}
 								>
 									{count.toLocaleString("ru-RU")}
-								</span>
+								</Typography>
 							)}
-						</button>
+						</Button>
 					);
 				})}
 			</div>

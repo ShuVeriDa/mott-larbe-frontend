@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { LearningLevel } from "@/shared/types";
 
+import { Typography } from "@/shared/ui/typography";
 const COLOR: Record<LearningLevel, string> = {
 	NEW: "bg-surf-4",
 	LEARNING: "bg-amb",
@@ -13,7 +14,7 @@ export interface StatusDotProps {
 }
 
 export const StatusDot = ({ status, className }: StatusDotProps) => (
-	<span
+	<Typography tag="span"
 		aria-hidden="true"
 		className={cn(
 			"inline-block size-[7px] shrink-0 rounded-full",

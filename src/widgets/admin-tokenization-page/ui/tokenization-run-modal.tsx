@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -58,10 +62,10 @@ return (
 				onClick={handleClick}
 			>
 				<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
-					<span className="font-display text-[15px] text-t-1">
+					<Typography tag="span" className="font-display text-[15px] text-t-1">
 						{t("admin.tokenization.runModal.title")}
-					</span>
-					<button
+					</Typography>
+					<Button
 						onClick={onClose}
 						className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
@@ -73,18 +77,18 @@ return (
 								strokeLinecap="round"
 							/>
 						</svg>
-					</button>
+					</Button>
 				</div>
 
 				<div className="p-4">
-					<p className="mb-3.5 text-[12px] text-t-3">
+					<Typography tag="p" className="mb-3.5 text-[12px] text-t-3">
 						{t("admin.tokenization.runModal.subtitle")}
-					</p>
+					</Typography>
 					<div className="flex flex-col gap-2">
 						{options.map((opt) => {
 						  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => setScope(opt.value);
 						  return (
-							<label
+							<Typography tag="label"
 								key={opt.value}
 								className={cn(
 									"flex cursor-pointer items-start gap-2.5 rounded-[9px] border p-3 transition-colors",
@@ -103,44 +107,44 @@ return (
 								/>
 								<div className="min-w-0 flex-1">
 									<div className="flex items-center justify-between gap-2">
-										<span className="text-[12.5px] font-medium text-t-1">
+										<Typography tag="span" className="text-[12.5px] font-medium text-t-1">
 											{t(opt.labelKey)}
-										</span>
+										</Typography>
 										{opt.count !== undefined && (
-											<span className="shrink-0 rounded-full bg-surf-3 px-1.5 py-0.5 text-[10.5px] font-semibold tabular-nums text-t-2">
+											<Typography tag="span" className="shrink-0 rounded-full bg-surf-3 px-1.5 py-0.5 text-[10.5px] font-semibold tabular-nums text-t-2">
 												{opt.count}
-											</span>
+											</Typography>
 										)}
 									</div>
 									<div className="mt-0.5 text-[11px] text-t-3">{t(opt.subKey)}</div>
 								</div>
-							</label>
+							</Typography>
 						);
 						})}
 					</div>
 				</div>
 
 				<div className="flex gap-2 border-t border-bd-1 px-4 py-3.5">
-					<button
+					<Button
 						onClick={onClose}
 						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-bd-2 text-[12.5px] text-t-2 transition-colors hover:bg-surf-2"
 					>
 						{t("admin.tokenization.runModal.cancelBtn")}
-					</button>
-					<button
+					</Button>
+					<Button
 						onClick={handleClick2}
 						disabled={isLoading}
 						className="flex h-[34px] flex-1 items-center justify-center gap-1.5 rounded-base bg-acc text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						{isLoading ? (
-							<span className="size-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+							<Typography tag="span" className="size-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
 						) : (
 							<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
 								<path d="M5 3l8 5-8 5V3z" fill="currentColor" />
 							</svg>
 						)}
 						{t("admin.tokenization.runModal.runBtn")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

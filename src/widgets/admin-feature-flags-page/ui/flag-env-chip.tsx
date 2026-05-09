@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagEnvironment } from "@/entities/feature-flag";
 
+import { Typography } from "@/shared/ui/typography";
 interface FlagEnvChipProps {
 	env: FeatureFlagEnvironment;
 }
@@ -12,12 +13,12 @@ const ENV_STYLES: Record<FeatureFlagEnvironment, string> = {
 };
 
 export const FlagEnvChip = ({ env }: FlagEnvChipProps) => (
-	<span
+	<Typography tag="span"
 		className={cn(
 			"rounded px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.2px] border",
 			ENV_STYLES[env],
 		)}
 	>
 		{env}
-	</span>
+	</Typography>
 );

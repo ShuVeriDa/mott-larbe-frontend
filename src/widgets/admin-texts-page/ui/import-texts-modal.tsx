@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type {
 	BulkImportResultItem,
 	CreateTextDto,
@@ -90,11 +94,10 @@ return (
 			<div className="flex w-full max-w-[560px] flex-col rounded-[12px] border border-bd-2 bg-surf shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
 				{/* Header */}
 				<div className="flex items-center justify-between border-b border-bd-1 px-5 py-4">
-					<h2 className="text-[14px] font-semibold text-t-1">
+					<Typography tag="h2" className="text-[14px] font-semibold text-t-1">
 						{t("admin.texts.import.title")}
-					</h2>
-					<button
-						type="button"
+					</Typography>
+					<Button
 						onClick={onClose}
 						className="flex size-7 cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
@@ -106,7 +109,7 @@ return (
 								strokeLinecap="round"
 							/>
 						</svg>
-					</button>
+					</Button>
 				</div>
 
 				{/* Body */}
@@ -115,22 +118,22 @@ return (
 						<div className="flex flex-col gap-4">
 							{/* Summary */}
 							<div className="flex gap-3 rounded-[8px] border border-bd-1 bg-surf-2 px-4 py-3 text-[12.5px]">
-								<span className="text-t-2">
+								<Typography tag="span" className="text-t-2">
 									{t("admin.texts.import.summaryTotal", {
 										count: summary.total,
 									})}
-								</span>
-								<span className="text-grn-t font-medium">
+								</Typography>
+								<Typography tag="span" className="text-grn-t font-medium">
 									{t("admin.texts.import.summaryCreated", {
 										count: summary.created,
 									})}
-								</span>
+								</Typography>
 								{summary.failed > 0 && (
-									<span className="text-red-t font-medium">
+									<Typography tag="span" className="text-red-t font-medium">
 										{t("admin.texts.import.summaryFailed", {
 											count: summary.failed,
 										})}
-									</span>
+									</Typography>
 								)}
 							</div>
 
@@ -141,10 +144,10 @@ return (
 										key={item.index}
 										className="flex items-start gap-3 border-b border-bd-1 px-3 py-2.5 last:border-b-0"
 									>
-										<span className="mt-px shrink-0 text-[10.5px] text-t-4">
+										<Typography tag="span" className="mt-px shrink-0 text-[10.5px] text-t-4">
 											#{item.index + 1}
-										</span>
-										<span
+										</Typography>
+										<Typography tag="span"
 											className={`mt-px shrink-0 text-[10.5px] font-semibold ${
 												item.status === "ok" ? "text-grn-t" : "text-red-t"
 											}`}
@@ -152,15 +155,15 @@ return (
 											{item.status === "ok"
 												? t("admin.texts.import.resultOk")
 												: t("admin.texts.import.resultError")}
-										</span>
+										</Typography>
 										<div className="min-w-0 flex-1">
-											<p className="truncate text-[12px] text-t-1">
+											<Typography tag="p" className="truncate text-[12px] text-t-1">
 												{item.title}
-											</p>
+											</Typography>
 											{item.error && (
-												<p className="mt-0.5 text-[11px] text-red-t">
+												<Typography tag="p" className="mt-0.5 text-[11px] text-red-t">
 													{item.error}
-												</p>
+												</Typography>
 											)}
 										</div>
 									</div>
@@ -168,27 +171,25 @@ return (
 							</div>
 
 							<div className="flex justify-end gap-2">
-								<button
-									type="button"
+								<Button
 									onClick={handleReset}
 									className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-4 text-[12.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2"
 								>
 									{t("admin.texts.import.importMore")}
-								</button>
-								<button
-									type="button"
+								</Button>
+								<Button
 									onClick={onClose}
 									className="h-8 cursor-pointer rounded-base bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-88"
 								>
 									{t("admin.texts.import.done")}
-								</button>
+								</Button>
 							</div>
 						</div>
 					) : (
 						<form action={handleSubmit} className="flex flex-col gap-4">
-							<p className="text-[12.5px] text-t-3">
+							<Typography tag="p" className="text-[12.5px] text-t-3">
 								{t("admin.texts.import.description")}
-							</p>
+							</Typography>
 
 							{/* File picker */}
 							<div
@@ -220,13 +221,13 @@ return (
 									/>
 								</svg>
 								{fileName ? (
-									<span className="max-w-[320px] truncate text-[12.5px] font-medium text-t-1">
+									<Typography tag="span" className="max-w-[320px] truncate text-[12.5px] font-medium text-t-1">
 										{fileName}
-									</span>
+									</Typography>
 								) : (
-									<span className="text-[12.5px] text-t-3">
+									<Typography tag="span" className="text-[12.5px] text-t-3">
 										{t("admin.texts.import.chooseFile")}
-									</span>
+									</Typography>
 								)}
 								<input
 									ref={fileRef}
@@ -238,26 +239,25 @@ return (
 							</div>
 
 							{parseError && (
-								<p className="rounded-[6px] bg-red-bg px-3 py-2 text-[12px] text-red-t">
+								<Typography tag="p" className="rounded-[6px] bg-red-bg px-3 py-2 text-[12px] text-red-t">
 									{parseError}
-								</p>
+								</Typography>
 							)}
 
 							{bulkImport.isError && (
-								<p className="rounded-[6px] bg-red-bg px-3 py-2 text-[12px] text-red-t">
+								<Typography tag="p" className="rounded-[6px] bg-red-bg px-3 py-2 text-[12px] text-red-t">
 									{t("admin.texts.import.serverError")}
-								</p>
+								</Typography>
 							)}
 
 							<div className="flex justify-end gap-2">
-								<button
-									type="button"
+								<Button
 									onClick={onClose}
 									className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-4 text-[12.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2"
 								>
 									{t("admin.texts.import.cancel")}
-								</button>
-								<button
+								</Button>
+								<Button
 									type="submit"
 									disabled={!fileName || bulkImport.isPending}
 									className="h-8 cursor-pointer rounded-base bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-40"
@@ -265,7 +265,7 @@ return (
 									{bulkImport.isPending
 										? t("admin.texts.import.importing")
 										: t("admin.texts.import.submit")}
-								</button>
+								</Button>
 							</div>
 						</form>
 					)}

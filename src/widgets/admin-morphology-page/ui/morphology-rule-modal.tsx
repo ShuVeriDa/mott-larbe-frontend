@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type {
 	CreateMorphRuleDto,
 	MorphRule,
@@ -104,21 +108,21 @@ return (
 			onClick={handleClick}
 		>
 			<div className="w-full max-w-[480px] overflow-y-auto rounded-[14px] border border-bd-2 bg-surf p-5 shadow-md max-sm:max-w-full max-sm:rounded-b-none max-sm:rounded-t-[16px] max-sm:pb-7">
-				<h2 className="font-display text-[15px] text-t-1 mb-1">
+				<Typography tag="h2" className="font-display text-[15px] text-t-1 mb-1">
 					{isEdit
 						? t("admin.morphology.ruleModal.editTitle")
 						: t("admin.morphology.ruleModal.addTitle")}
-				</h2>
-				<p className="mb-4 text-[12px] text-t-3">
+				</Typography>
+				<Typography tag="p" className="mb-4 text-[12px] text-t-3">
 					{t("admin.morphology.ruleModal.subtitle")}
-				</p>
+				</Typography>
 
 				<form action={handleSubmit} className="flex flex-col gap-3.5">
 					{/* Pattern */}
 					<div>
-						<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+						<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
 							{t("admin.morphology.ruleModal.suffixLabel")}
-						</label>
+						</Typography>
 						<input
 							required
 							type="text"
@@ -132,12 +136,12 @@ return (
 					<div className="flex gap-2.5">
 						{/* Replacement */}
 						<div className="flex-1">
-							<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+							<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
 								{t("admin.morphology.ruleModal.addLabel")}
-								<span className="ml-1.5 font-normal tracking-normal text-t-3">
+								<Typography tag="span" className="ml-1.5 font-normal tracking-normal text-t-3">
 									{t("admin.morphology.ruleModal.addHint")}
-								</span>
-							</label>
+								</Typography>
+							</Typography>
 							<input
 								type="text"
 								value={form.add ?? ""}
@@ -149,9 +153,9 @@ return (
 
 						{/* POS */}
 						<div className="w-28">
-							<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+							<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
 								{t("admin.morphology.ruleModal.posLabel")}
-							</label>
+							</Typography>
 							<input
 								type="text"
 								value={form.pos ?? ""}
@@ -165,9 +169,9 @@ return (
 					<div className="flex gap-2.5">
 						{/* Type */}
 						<div className="flex-1">
-							<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+							<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
 								{t("admin.morphology.ruleModal.typeLabel")}
-							</label>
+							</Typography>
 							<select
 								value={form.type}
 								onChange={handleChange4
@@ -184,9 +188,9 @@ return (
 
 						{/* Priority */}
 						<div className="w-24">
-							<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+							<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
 								{t("admin.morphology.ruleModal.priorityLabel")}
-							</label>
+							</Typography>
 							<input
 								type="number"
 								min={0}
@@ -201,9 +205,9 @@ return (
 
 					{/* Description */}
 					<div>
-						<label className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+						<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
 							{t("admin.morphology.ruleModal.descriptionLabel")}
-						</label>
+						</Typography>
 						<input
 							type="text"
 							value={form.description ?? ""}
@@ -217,7 +221,7 @@ return (
 					</div>
 
 					{/* Active toggle */}
-					<label className="flex cursor-pointer items-center gap-2.5">
+					<Typography tag="label" className="flex cursor-pointer items-center gap-2.5">
 						<input
 							type="checkbox"
 							checked={form.isActive ?? true}
@@ -225,20 +229,19 @@ return (
 							}
 							className="accent-acc"
 						/>
-						<span className="text-[12.5px] text-t-2">
+						<Typography tag="span" className="text-[12.5px] text-t-2">
 							{t("admin.morphology.ruleModal.activeLabel")}
-						</span>
-					</label>
+						</Typography>
+					</Typography>
 
 					<div className="mt-1.5 flex justify-end gap-2 max-sm:flex-col-reverse">
-						<button
-							type="button"
+						<Button
 							onClick={onClose}
 							className="flex h-[30px] items-center justify-center rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
 						>
 							{t("admin.morphology.ruleModal.cancel")}
-						</button>
-						<button
+						</Button>
+						<Button
 							type="submit"
 							disabled={isLoading || !form.suffix || !form.type}
 							className="flex h-[30px] items-center justify-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
@@ -248,7 +251,7 @@ return (
 								: isEdit
 									? t("admin.morphology.ruleModal.save")
 									: t("admin.morphology.ruleModal.create")}
-						</button>
+						</Button>
 					</div>
 				</form>
 			</div>

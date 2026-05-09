@@ -188,9 +188,9 @@ export const LearningSection = ({
 			<SettingCard
 				title={t("settings.learning.srs")}
 				headExtra={
-					<span className="rounded bg-pur-bg px-1.5 py-0.5 text-[10.5px] font-medium text-pur-t">
+					<Typography tag="span" className="rounded bg-pur-bg px-1.5 py-0.5 text-[10.5px] font-medium text-pur-t">
 						{t("settings.premium")}
-					</span>
+					</Typography>
 				}
 				noBody
 			>

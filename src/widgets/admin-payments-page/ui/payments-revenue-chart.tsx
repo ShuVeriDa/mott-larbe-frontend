@@ -1,4 +1,6 @@
-﻿"use client";
+"use client";
+
+import { Typography } from "@/shared/ui/typography";
 
 import {
 	BarChart,
@@ -40,16 +42,16 @@ export const PaymentsRevenueChart = ({ items, isLoading }: Props) => {
 	return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
-				<span className="text-[12.5px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("admin.payments.chart.revenueTitle")}
-				</span>
+				</Typography>
 				<div className="flex items-center gap-3.5">
 					<div className="flex items-center gap-1.5 text-[11px] text-t-3">
-						<span className="inline-block size-2 rounded-[2px] bg-acc/70" />
+						<Typography tag="span" className="inline-block size-2 rounded-[2px] bg-acc/70" />
 						{t("admin.payments.chart.legendPaid")}
 					</div>
 					<div className="flex items-center gap-1.5 text-[11px] text-t-3">
-						<span className="inline-block size-2 rounded-[2px] bg-red/60" />
+						<Typography tag="span" className="inline-block size-2 rounded-[2px] bg-red/60" />
 						{t("admin.payments.chart.legendRefunds")}
 					</div>
 				</div>

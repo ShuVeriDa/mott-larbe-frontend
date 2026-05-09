@@ -2,6 +2,7 @@ import Image from "next/image";
 import { cn } from "@/shared/lib/cn";
 import type { LibraryTextLanguage } from "@/entities/library-text";
 
+import { Typography } from "@/shared/ui/typography";
 interface TextCoverProps {
 	language: LibraryTextLanguage;
 	imageUrl: string | null;
@@ -42,8 +43,8 @@ export const TextCover = ({ language, imageUrl, className }: TextCoverProps) => 
 				<div className="h-[2.5px] rounded-full bg-bd-3 w-[70%]" />
 			</div>
 		)}
-		<span className="absolute bottom-1.5 right-1.5 text-[9px] font-bold tracking-[0.06em] text-acc-t bg-acc-bg border border-acc/20 px-1.5 py-[1px] rounded-[4px]">
+		<Typography tag="span" className="absolute bottom-1.5 right-1.5 text-[9px] font-bold tracking-[0.06em] text-acc-t bg-acc-bg border border-acc/20 px-1.5 py-[1px] rounded-[4px]">
 			{language}
-		</span>
+		</Typography>
 	</div>
 );

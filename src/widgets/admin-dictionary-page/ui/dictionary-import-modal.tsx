@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, DragEvent, useRef, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminImportResult } from "@/entities/dictionary";
@@ -81,31 +85,31 @@ return (
 			onClick={handleClick}
 		>
 			<div className="w-[460px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
-				<h2 className="font-display text-[16px] text-t-1 mb-1">
+				<Typography tag="h2" className="font-display text-[16px] text-t-1 mb-1">
 					{t("admin.dictionary.importModal.title")}
-				</h2>
-				<p className="mb-4 text-[12.5px] text-t-3">
+				</Typography>
+				<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
 					{t("admin.dictionary.importModal.subtitle")}
-				</p>
+				</Typography>
 
 				{result ? (
 					<div className="mb-4 rounded-[10px] border border-bd-1 bg-surf-2 p-4">
-						<p className="mb-2 text-[13px] font-semibold text-t-1">
+						<Typography tag="p" className="mb-2 text-[13px] font-semibold text-t-1">
 							{t("admin.dictionary.importModal.done")}
-						</p>
+						</Typography>
 						<div className="flex gap-4 text-[12.5px]">
-							<span className="text-t-2">
+							<Typography tag="span" className="text-t-2">
 								{t("admin.dictionary.importModal.created")}:{" "}
-								<span className="font-semibold text-acc-t">{result.created}</span>
-							</span>
-							<span className="text-t-2">
+								<Typography tag="span" className="font-semibold text-acc-t">{result.created}</Typography>
+							</Typography>
+							<Typography tag="span" className="text-t-2">
 								{t("admin.dictionary.importModal.skipped")}:{" "}
-								<span className="font-semibold text-t-1">{result.skipped}</span>
-							</span>
-							<span className="text-t-2">
+								<Typography tag="span" className="font-semibold text-t-1">{result.skipped}</Typography>
+							</Typography>
+							<Typography tag="span" className="text-t-2">
 								{t("admin.dictionary.importModal.total")}:{" "}
-								<span className="font-semibold text-t-1">{result.total}</span>
-							</span>
+								<Typography tag="span" className="font-semibold text-t-1">{result.total}</Typography>
+							</Typography>
 						</div>
 					</div>
 				) : (
@@ -126,15 +130,15 @@ return (
 								<line x1="12" y1="3" x2="12" y2="15" strokeLinecap="round" />
 							</svg>
 							{file ? (
-								<p className="text-[13px] font-medium text-t-1">{file.name}</p>
+								<Typography tag="p" className="text-[13px] font-medium text-t-1">{file.name}</Typography>
 							) : (
 								<>
-									<p className="text-[13px] font-medium text-t-1">
+									<Typography tag="p" className="text-[13px] font-medium text-t-1">
 										{t("admin.dictionary.importModal.dropHere")}
-									</p>
-									<p className="text-[11.5px] text-t-3">
+									</Typography>
+									<Typography tag="p" className="text-[11.5px] text-t-3">
 										{t("admin.dictionary.importModal.orClick")}
-									</p>
+									</Typography>
 								</>
 							)}
 							<input
@@ -146,26 +150,24 @@ return (
 							/>
 						</div>
 						{error && (
-							<p className="mb-3 text-[11.5px] text-red-t">{error}</p>
+							<Typography tag="p" className="mb-3 text-[11.5px] text-red-t">{error}</Typography>
 						)}
-						<p className="mb-4 text-[11px] text-t-3">
+						<Typography tag="p" className="mb-4 text-[11px] text-t-3">
 							{t("admin.dictionary.importModal.hint")}
-						</p>
+						</Typography>
 					</>
 				)}
 
 				<div className="flex justify-end gap-2 max-sm:flex-col-reverse">
-					<button
-						type="button"
+					<Button
 						onClick={handleClose}
 						disabled={isSubmitting}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
 					>
 						{result ? t("admin.dictionary.importModal.close") : t("admin.dictionary.importModal.cancel")}
-					</button>
+					</Button>
 					{!result && (
-						<button
-							type="button"
+						<Button
 							onClick={handleClick3}
 							disabled={!file || isSubmitting}
 							className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
@@ -173,7 +175,7 @@ return (
 							{isSubmitting
 								? t("admin.dictionary.importModal.importing")
 								: t("admin.dictionary.importModal.import")}
-						</button>
+						</Button>
 					)}
 				</div>
 			</div>

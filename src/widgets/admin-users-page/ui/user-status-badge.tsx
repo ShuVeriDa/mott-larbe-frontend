@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { UserStatus } from "@/entities/admin-user";
 
+import { Typography } from "@/shared/ui/typography";
 const statusConfig: Record<
 	UserStatus,
 	{ label: string; dot: string; wrap: string }
@@ -35,14 +36,14 @@ interface UserStatusBadgeProps {
 export const UserStatusBadge = ({ status, labels }: UserStatusBadgeProps) => {
 	const cfg = statusConfig[status];
 	return (
-		<span
+		<Typography tag="span"
 			className={cn(
 				"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold whitespace-nowrap",
 				cfg.wrap,
 			)}
 		>
-			<span className={cn("size-[5px] shrink-0 rounded-full", cfg.dot)} />
+			<Typography tag="span" className={cn("size-[5px] shrink-0 rounded-full", cfg.dot)} />
 			{labels[status.toLowerCase()] ?? status}
-		</span>
+		</Typography>
 	);
 };

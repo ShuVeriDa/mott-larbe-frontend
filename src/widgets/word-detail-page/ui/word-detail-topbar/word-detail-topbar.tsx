@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -54,17 +58,17 @@ return (
 					<ChevronLeft className="size-3" strokeWidth={1.8} />
 					{t("vocabulary.wordDetail.back")}
 				</Link>
-				<span aria-hidden="true" className="text-[12px] text-t-4">
+				<Typography tag="span" aria-hidden="true" className="text-[12px] text-t-4">
 					·
-				</span>
-				<span
+				</Typography>
+				<Typography tag="span"
 					className={cn(
 						"min-w-0 truncate font-display text-[13px] font-semibold italic text-t-1",
 						"max-md:max-w-[120px]",
 					)}
 				>
 					{entry.word}
-				</span>
+				</Typography>
 
 				<div className="ml-auto flex shrink-0 items-center gap-1.5">
 					{neighbors?.prev ? (
@@ -85,26 +89,24 @@ return (
 							<ChevronRight className="size-3" strokeWidth={1.8} />
 						</Link>
 					) : null}
-					<button
-						type="button"
+					<Button
 						onClick={handleClick}
 						disabled={!entry.lemma}
 						className={cn(tbBtnClass, "ml-0.5")}
 					>
 						<RefreshCw className="size-3" strokeWidth={1.8} />
-						<span className="max-md:hidden">
+						<Typography tag="span" className="max-md:hidden">
 							{t("vocabulary.wordDetail.review")}
-						</span>
-					</button>
-					<button
-						type="button"
+						</Typography>
+					</Button>
+					<Button
 						onClick={onDelete}
 						disabled={isDeleting}
 						className={cn(tbBtnClass, "border-red/20 text-red hover:text-red")}
 					>
 						<Trash2 className="size-3" strokeWidth={1.8} />
-						<span className="max-md:hidden">{t("vocabulary.card.delete")}</span>
-					</button>
+						<Typography tag="span" className="max-md:hidden">{t("vocabulary.card.delete")}</Typography>
+					</Button>
 				</div>
 			</header>
 

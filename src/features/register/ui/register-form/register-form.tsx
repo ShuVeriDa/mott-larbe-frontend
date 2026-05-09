@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
@@ -202,8 +204,7 @@ export const RegisterForm = ({
 						)}
 						aria-invalid={Boolean(errors.password)}
 					/>
-					<button
-						type="button"
+					<Button
 						tabIndex={-1}
 						onClick={handleTogglePasswordVisibility}
 						aria-label={t(
@@ -216,7 +217,7 @@ export const RegisterForm = ({
 						) : (
 							<Eye size={16} strokeWidth={1.8} />
 						)}
-					</button>
+					</Button>
 				</div>
 				<PasswordStrengthMeter password={password} />
 				{errors.password ? (
@@ -264,9 +265,8 @@ export const RegisterForm = ({
 				<div className="grid grid-cols-3 gap-2">
 					{CEFR_LEVELS.map((cefrLevel) => {
 					  return (
-						<button
+						<Button
 							key={cefrLevel}
-							type="button"
 							data-level={cefrLevel}
 							onClick={handleLevelClick}
 							className={cn(
@@ -278,13 +278,13 @@ export const RegisterForm = ({
 							aria-pressed={level === cefrLevel}
 						>
 							{cefrLevel}
-						</button>
+						</Button>
 					);
 					})}
 				</div>
 			</div>
 
-			<button
+			<Button
 				type="submit"
 				disabled={isPending}
 				className={cn(
@@ -296,7 +296,7 @@ export const RegisterForm = ({
 					{t("auth.submit.register")}
 				</Typography>
 				<ArrowRight size={14} strokeWidth={2} />
-			</button>
+			</Button>
 
 			<Typography className="mt-3.5 text-center text-[11.5px] leading-[1.55] text-t-3">
 				{t("auth.terms.agree")}{" "}

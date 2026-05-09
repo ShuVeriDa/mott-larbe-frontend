@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
@@ -177,19 +181,19 @@ return (
 					<SectionTitle label={t("admin.subscriptions.detail.account")} />
 					<div className="space-y-1.5">
 						<div className="flex items-baseline justify-between gap-2">
-							<span className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.userId")}</span>
-							<span className="font-mono text-[11px] text-t-3">{sub.userId.slice(0, 16)}…</span>
+							<Typography tag="span" className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.userId")}</Typography>
+							<Typography tag="span" className="font-mono text-[11px] text-t-3">{sub.userId.slice(0, 16)}…</Typography>
 						</div>
 						<div className="flex items-baseline justify-between gap-2">
-							<span className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.registered")}</span>
-							<span className="text-[12px] font-medium text-t-1">{formatDate(sub.user.signupAt)}</span>
+							<Typography tag="span" className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.registered")}</Typography>
+							<Typography tag="span" className="text-[12px] font-medium text-t-1">{formatDate(sub.user.signupAt)}</Typography>
 						</div>
 						<div className="flex items-baseline justify-between gap-2">
-							<span className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.lastSeen")}</span>
-							<span className="text-[12px] font-medium text-t-1">{formatDate(sub.user.lastActiveAt)}</span>
+							<Typography tag="span" className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.lastSeen")}</Typography>
+							<Typography tag="span" className="text-[12px] font-medium text-t-1">{formatDate(sub.user.lastActiveAt)}</Typography>
 						</div>
 						<div className="flex items-baseline justify-between gap-2">
-							<span className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.provider")}</span>
+							<Typography tag="span" className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.provider")}</Typography>
 							<SubscriptionProviderBadge provider={sub.provider} />
 						</div>
 					</div>
@@ -204,23 +208,22 @@ return (
 								const isLearner = r.role.name === LEARNER_ROLE;
 																const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => revokeRole.mutate({ roleId: r.id });
 return (
-									<span
+									<Typography tag="span"
 										key={r.id}
 										className="flex items-center gap-1 rounded-[5px] border border-bd-2 bg-surf-2 px-1.5 py-0.5 text-[11px] text-t-2"
 									>
 										{r.role.name}
 										{!isLearner && (
-											<button
-												type="button"
+											<Button
 												onClick={handleClick}
 												disabled={revokeRole.isPending}
 												className="ml-0.5 text-[10px] text-t-3 transition-colors hover:text-red-t disabled:opacity-40"
 												aria-label={`Remove ${r.role.name}`}
 											>
 												×
-											</button>
+											</Button>
 										)}
-									</span>
+									</Typography>
 								);
 							})}
 						</div>
@@ -247,61 +250,58 @@ return (
 					</div>
 					<div className="space-y-1.5">
 						<div className="flex items-baseline justify-between gap-2">
-							<span className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.nextBilling")}</span>
-							<span className="text-[12px] font-medium text-t-1">
+							<Typography tag="span" className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.nextBilling")}</Typography>
+							<Typography tag="span" className="text-[12px] font-medium text-t-1">
 								{sub.isLifetime ? "∞" : formatDate(sub.endDate)}
-							</span>
+							</Typography>
 						</div>
 						<div className="flex items-baseline justify-between gap-2">
-							<span className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.amount")}</span>
-							<span className="text-[12px] font-medium text-t-1">
+							<Typography tag="span" className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.amount")}</Typography>
+							<Typography tag="span" className="text-[12px] font-medium text-t-1">
 								{formatAmount(sub.plan.priceCents, sub.plan.currency)}
-							</span>
+							</Typography>
 						</div>
 						<div className="flex items-baseline justify-between gap-2">
-							<span className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.startDate")}</span>
-							<span className="text-[12px] font-medium text-t-1">{formatDate(sub.startDate)}</span>
+							<Typography tag="span" className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.startDate")}</Typography>
+							<Typography tag="span" className="text-[12px] font-medium text-t-1">{formatDate(sub.startDate)}</Typography>
 						</div>
 						<div className="flex items-baseline justify-between gap-2">
-							<span className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.endDate")}</span>
-							<span className="text-[12px] font-medium text-t-1">
+							<Typography tag="span" className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.endDate")}</Typography>
+							<Typography tag="span" className="text-[12px] font-medium text-t-1">
 								{sub.isLifetime ? "∞" : formatDate(sub.endDate)}
-							</span>
+							</Typography>
 						</div>
 						{sub.canceledAt && (
 							<div className="flex items-baseline justify-between gap-2">
-								<span className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.canceledAt")}</span>
-								<span className="text-[12px] font-medium text-red-t">{formatDate(sub.canceledAt)}</span>
+								<Typography tag="span" className="text-[11.5px] text-t-3">{t("admin.subscriptions.detail.canceledAt")}</Typography>
+								<Typography tag="span" className="text-[12px] font-medium text-red-t">{formatDate(sub.canceledAt)}</Typography>
 							</div>
 						)}
 					</div>
 					{/* Subscription actions */}
 					<div className="mt-2.5 flex flex-wrap gap-1.5">
 						{canExtend && (
-							<button
-								type="button"
+							<Button
 								onClick={handleClick}
 								className="flex h-[28px] items-center gap-1 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							>
 								{t("admin.subscriptions.actions.extend")}
-							</button>
+							</Button>
 						)}
-						<button
-							type="button"
+						<Button
 							onClick={handleClick2}
 							disabled={applyCoupon.isPending}
 							className="flex h-[28px] items-center gap-1 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-60"
 						>
 							{t("admin.subscriptions.detail.coupon")}
-						</button>
+						</Button>
 						{canCancel && (
-							<button
-								type="button"
+							<Button
 								onClick={handleClick3}
 								className="flex h-[28px] items-center gap-1 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[11.5px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 							>
 								{t("admin.subscriptions.actions.cancel")}
-							</button>
+							</Button>
 						)}
 					</div>
 				</div>
@@ -320,17 +320,17 @@ return (
 										className="size-1.5 shrink-0 rounded-full"
 										style={{ background: PROVIDER_COLORS[p.provider] ?? "#a5a39a" }}
 									/>
-									<span className="flex-1 font-medium text-t-1">
+									<Typography tag="span" className="flex-1 font-medium text-t-1">
 										{formatAmount(p.amountCents, p.currency)}
-									</span>
+									</Typography>
 									{p.refundedCents > 0 && (
-										<span className="text-[10.5px] text-red-t">
+										<Typography tag="span" className="text-[10.5px] text-red-t">
 											−{formatAmount(p.refundedCents, p.currency)}
-										</span>
+										</Typography>
 									)}
-									<span className="text-[10.5px] text-t-3">
+									<Typography tag="span" className="text-[10.5px] text-t-3">
 										{formatDateShort(p.createdAt)}
-									</span>
+									</Typography>
 								</div>
 							))}
 						</div>
@@ -347,8 +347,8 @@ return (
 								return (
 									<div key={ev.id} className="flex items-center gap-2 border-b border-bd-1 py-[5px] last:border-b-0 last:pb-0">
 										<div className={`size-1.5 shrink-0 rounded-full ${style.dot}`} />
-										<span className="flex-1 text-[11.5px] text-t-2">{ev.type}</span>
-										<span className="text-[10.5px] text-t-3">{formatDateShort(ev.createdAt)}</span>
+										<Typography tag="span" className="flex-1 text-[11.5px] text-t-2">{ev.type}</Typography>
+										<Typography tag="span" className="text-[10.5px] text-t-3">{formatDateShort(ev.createdAt)}</Typography>
 									</div>
 								);
 							})}
@@ -358,8 +358,7 @@ return (
 
 				{/* Actions */}
 				<div className="flex flex-col gap-1.5 px-[15px] py-2.5">
-					<button
-						type="button"
+					<Button
 						onClick={handleClick4}
 						className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
@@ -368,9 +367,8 @@ return (
 							<path d="M1.5 10.5c0-2.485 2.015-4.5 4.5-4.5s4.5 2.015 4.5 4.5" strokeLinecap="round" />
 						</svg>
 						{t("admin.subscriptions.detail.goToProfile")}
-					</button>
-					<button
-						type="button"
+					</Button>
+					<Button
 						onClick={handleClick5}
 						disabled={logoutAll.isPending}
 						className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-60"
@@ -380,9 +378,8 @@ return (
 							<path d="M5 8.5L2 6l3-2.5M2 6h6" strokeLinecap="round" strokeLinejoin="round" />
 						</svg>
 						{t("admin.subscriptions.detail.resetSessions")}
-					</button>
-					<button
-						type="button"
+					</Button>
+					<Button
 						onClick={handleClick6}
 						disabled={freeze.isPending}
 						className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[12px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg disabled:opacity-60"
@@ -391,7 +388,7 @@ return (
 							<path d="M6 1v10M1 6h10M2.5 2.5l7 7M9.5 2.5l-7 7" strokeLinecap="round" />
 						</svg>
 						{t("admin.subscriptions.detail.freezeAccount")}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

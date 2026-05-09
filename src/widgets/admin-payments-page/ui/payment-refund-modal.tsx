@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type {
 	AdminPaymentListItem,
 	RefundReason,
@@ -52,11 +56,10 @@ return (
 		<div className="overflow-hidden rounded-t-[14px] bg-surf sm:rounded-[14px]">
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
-				<span className="font-display text-[14px] font-semibold text-t-1">
+				<Typography tag="span" className="font-display text-[14px] font-semibold text-t-1">
 					{t("admin.payments.refundModal.title")}
-				</span>
-				<button
-					type="button"
+				</Typography>
+				<Button
 					onClick={onClose}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
@@ -71,7 +74,7 @@ return (
 					>
 						<path d="M1 1l10 10M11 1 1 11" />
 					</svg>
-				</button>
+				</Button>
 			</div>
 
 			{/* Body */}
@@ -79,18 +82,18 @@ return (
 				<div className="px-4 py-3.5">
 					{/* Payment summary */}
 					<div className="mb-3 rounded-lg border border-bd-1 bg-surf-2 px-3 py-2.5 text-[12.5px] text-t-2">
-						<span className="font-semibold text-t-1">{fmtUser}</span>
+						<Typography tag="span" className="font-semibold text-t-1">{fmtUser}</Typography>
 						{" · "}
 						{fmtPlan}
 						{" · "}
-						<span className="font-semibold text-t-1">{fmtOrig}</span>
+						<Typography tag="span" className="font-semibold text-t-1">{fmtOrig}</Typography>
 					</div>
 
 					{/* Amount */}
 					<div className="mb-3">
-						<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+						<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 							{t("admin.payments.refundModal.amountLabel")}
-						</label>
+						</Typography>
 						<input
 							type="number"
 							step="0.01"
@@ -105,9 +108,9 @@ return (
 
 					{/* Reason */}
 					<div>
-						<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+						<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 							{t("admin.payments.refundModal.reasonLabel")}
-						</label>
+						</Typography>
 						<select
 							value={reason}
 							onChange={handleChange2}
@@ -124,15 +127,14 @@ return (
 
 				{/* Footer */}
 				<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-4 py-3">
-					<button
-						type="button"
+					<Button
 						onClick={onClose}
 						disabled={isPending}
 						className="flex h-[32px] items-center rounded-lg border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3 disabled:opacity-60"
 					>
 						{t("admin.payments.refundModal.cancel")}
-					</button>
-					<button
+					</Button>
+					<Button
 						type="submit"
 						disabled={isPending}
 						className="flex h-[32px] items-center rounded-lg bg-red px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
@@ -140,7 +142,7 @@ return (
 						{isPending
 							? t("admin.payments.refundModal.loading")
 							: t("admin.payments.refundModal.confirm")}
-					</button>
+					</Button>
 				</div>
 			</form>
 		</div>

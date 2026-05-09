@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type { AdminCouponDetail, CouponStatus } from "@/entities/admin-coupon";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -119,15 +123,15 @@ return (
 							: "border-bd-2 bg-surf-2 hover:border-acc",
 					)}
 				>
-					<span
+					<Typography tag="span"
 						className={cn(
 							"font-mono text-[17px] font-extrabold tracking-[1.5px]",
 							copied ? "text-grn-t" : "text-t-1",
 						)}
 					>
 						{coupon.code}
-					</span>
-					<span
+					</Typography>
+					<Typography tag="span"
 						className={cn(
 							"flex items-center gap-1 text-[11px] font-medium",
 							copied ? "text-grn-t" : "text-t-3",
@@ -147,31 +151,31 @@ return (
 						{copied
 							? t("admin.coupons.detail.copied")
 							: t("admin.coupons.detail.copy")}
-					</span>
+					</Typography>
 				</div>
 
 				{/* Badges */}
 				<div className="mb-2.5 flex flex-wrap gap-1.5">
-					<span
+					<Typography tag="span"
 						className={cn(
 							"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold",
 							STATUS_STYLES[coupon.computedStatus],
 						)}
 					>
 						{coupon.computedStatus === "active" && (
-							<span className="size-[5px] rounded-full bg-grn" />
+							<Typography tag="span" className="size-[5px] rounded-full bg-grn" />
 						)}
 						{t(`admin.coupons.status.${coupon.computedStatus}`)}
-					</span>
+					</Typography>
 					{coupon.newUsersOnly && (
-						<span className="rounded-[5px] bg-pur-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-pur-t">
+						<Typography tag="span" className="rounded-[5px] bg-pur-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-pur-t">
 							{t("admin.coupons.detail.newUsersOnly")}
-						</span>
+						</Typography>
 					)}
 					{coupon.isStackable && (
-						<span className="rounded-[5px] bg-acc-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-acc-t">
+						<Typography tag="span" className="rounded-[5px] bg-acc-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-acc-t">
 							{t("admin.coupons.detail.stackable")}
-						</span>
+						</Typography>
 					)}
 				</div>
 
@@ -201,17 +205,17 @@ return (
 
 				<div className="mb-2.5">
 					<div className="mb-1.5 flex items-baseline justify-between">
-						<span className="text-[18px] font-bold text-t-1">
+						<Typography tag="span" className="text-[18px] font-bold text-t-1">
 							{coupon.redeemedCount}
-						</span>
-						<span className="text-[12px] text-t-3">
+						</Typography>
+						<Typography tag="span" className="text-[12px] text-t-3">
 							{maxR
 								? t("admin.coupons.detail.usageOf").replace(
 										"{max}",
 										String(maxR),
 									)
 								: t("admin.coupons.detail.usageUnlimited")}
-						</span>
+						</Typography>
 					</div>
 					{maxR && (
 						<div className="h-[7px] overflow-hidden rounded-full bg-surf-3">
@@ -228,25 +232,25 @@ return (
 
 				<div className="space-y-1.5">
 					<div className="flex items-baseline justify-between gap-2">
-						<span className="text-[11.5px] text-t-3">
+						<Typography tag="span" className="text-[11.5px] text-t-3">
 							{t("admin.coupons.detail.perUser")}
-						</span>
-						<span className="text-[12px] font-medium text-t-1">
+						</Typography>
+						<Typography tag="span" className="text-[12px] font-medium text-t-1">
 							{coupon.maxPerUser ?? t("admin.coupons.detail.usageUnlimited")}
-						</span>
+						</Typography>
 					</div>
 					<div className="flex items-baseline justify-between gap-2">
-						<span className="text-[11.5px] text-t-3">
+						<Typography tag="span" className="text-[11.5px] text-t-3">
 							{t("admin.coupons.detail.plans")}
-						</span>
+						</Typography>
 						<div className="flex flex-wrap justify-end gap-1">
 							{coupon.applicablePlans.length === 0 ? (
-								<span className="rounded bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
+								<Typography tag="span" className="rounded bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
 									{t("admin.coupons.table.planAll")}
-								</span>
+								</Typography>
 							) : (
 								coupon.applicablePlans.map(p => (
-									<span
+									<Typography tag="span"
 										key={p}
 										className={cn(
 											"rounded px-1.5 py-0.5 text-[10px] font-semibold",
@@ -254,28 +258,28 @@ return (
 										)}
 									>
 										{p.charAt(0) + p.slice(1).toLowerCase()}
-									</span>
+									</Typography>
 								))
 							)}
 						</div>
 					</div>
 					{coupon.validFrom && (
 						<div className="flex items-baseline justify-between gap-2">
-							<span className="text-[11.5px] text-t-3">
+							<Typography tag="span" className="text-[11.5px] text-t-3">
 								{t("admin.coupons.detail.validFrom")}
-							</span>
-							<span className="text-[12px] font-medium text-t-1">
+							</Typography>
+							<Typography tag="span" className="text-[12px] font-medium text-t-1">
 								{formatDate(coupon.validFrom)}
-							</span>
+							</Typography>
 						</div>
 					)}
 					<div className="flex items-baseline justify-between gap-2">
-						<span className="text-[11.5px] text-t-3">
+						<Typography tag="span" className="text-[11.5px] text-t-3">
 							{t("admin.coupons.detail.validUntil")}
-						</span>
-						<span className="text-[12px] font-medium text-t-1">
+						</Typography>
+						<Typography tag="span" className="text-[12px] font-medium text-t-1">
 							{formatDate(coupon.validUntil)}
-						</span>
+						</Typography>
 					</div>
 				</div>
 			</div>
@@ -333,8 +337,7 @@ return (
 
 			{/* Actions */}
 			<div className="flex flex-col gap-1.5 px-[15px] py-2.5">
-				<button
-					type="button"
+				<Button
 					onClick={handleClick}
 					className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
@@ -352,10 +355,9 @@ return (
 						/>
 					</svg>
 					{t("admin.coupons.detail.edit")}
-				</button>
+				</Button>
 
-				<button
-					type="button"
+				<Button
 					onClick={handleCopy}
 					className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
@@ -370,12 +372,11 @@ return (
 						<path d="M1 4v6a1 1 0 001 1h6" strokeLinecap="round" />
 					</svg>
 					{t("admin.coupons.detail.copyCode")}
-				</button>
+				</Button>
 
 				{(coupon.computedStatus === "active" ||
 					coupon.computedStatus === "disabled") && (
-					<button
-						type="button"
+					<Button
 						disabled={toggling}
 						onClick={handleToggle}
 						className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-50"
@@ -393,11 +394,10 @@ return (
 						{coupon.computedStatus === "disabled"
 							? t("admin.coupons.detail.activate")
 							: t("admin.coupons.detail.deactivate")}
-					</button>
+					</Button>
 				)}
 
-				<button
-					type="button"
+				<Button
 					onClick={handleClick2}
 					className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[11.5px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 				>
@@ -415,7 +415,7 @@ return (
 						/>
 					</svg>
 					{t("admin.coupons.detail.delete")}
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

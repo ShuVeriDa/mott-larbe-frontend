@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -46,17 +50,16 @@ export const UsersPagination = ({
 	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(page + 1);
 return (
 		<div className="flex flex-wrap items-center justify-between gap-2 border-t border-bd-1 px-3.5 py-2.5">
-			<span className="text-[12px] text-t-3">
+			<Typography tag="span" className="text-[12px] text-t-3">
 				{t("admin.users.pagination.showing", {
 					from,
 					to,
 					total,
 				})}
-			</span>
+			</Typography>
 
 			<div className="flex items-center gap-1">
-				<button
-					type="button"
+				<Button
 					disabled={page <= 1}
 					onClick={handleClick}
 					className={btnClass()}
@@ -75,36 +78,34 @@ return (
 							strokeLinejoin="round"
 						/>
 					</svg>
-				</button>
+				</Button>
 
 				{pages.map((p, i) => {
 					if (p === "ellipsis") {
 						return (
-							<span
+							<Typography tag="span"
 								key={`ellipsis-${i}`}
 								className="px-0.5 text-[12px] text-t-3"
 							>
 								…
-							</span>
+							</Typography>
 						);
 					}
 
 					const handlePageClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onPageChange(p);
 
 					return (
-						<button
+						<Button
 							key={p}
-							type="button"
 							onClick={handlePageClick}
 							className={btnClass(p === page)}
 						>
 							{p}
-						</button>
+						</Button>
 					);
 				})}
 
-				<button
-					type="button"
+				<Button
 					disabled={page >= totalPages}
 					onClick={handleClick2}
 					className={btnClass()}
@@ -123,7 +124,7 @@ return (
 							strokeLinejoin="round"
 						/>
 					</svg>
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

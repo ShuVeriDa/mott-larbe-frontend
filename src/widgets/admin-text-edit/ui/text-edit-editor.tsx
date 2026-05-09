@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type { ProcessingStatus } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
 import type {
@@ -37,8 +41,7 @@ const TbBtn = ({
 			onExec();
 		};
   return (
-	<button
-		type="button"
+	<Button
 		title={title}
 		onMouseDown={handleMouseDown}
 		className={`flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-[5px] transition-all duration-100 ${
@@ -48,7 +51,7 @@ const TbBtn = ({
 		}`}
 	>
 		{children}
-	</button>
+	</Button>
 );
 };
 
@@ -347,21 +350,21 @@ return (
 			</TbBtn>
 
 			<div className="ml-auto flex shrink-0 items-center gap-1.5 pl-2 text-[10px] text-t-4 max-lg:hidden">
-				<span className="rounded-[3px] bg-surf-3 px-1 py-px text-t-3">
+				<Typography tag="span" className="rounded-[3px] bg-surf-3 px-1 py-px text-t-3">
 					Ctrl+S
-				</span>
-				<span>—</span>
-				<span>{t("admin.texts.editPage.saveDraft")}</span>
-				<span className="ml-1 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">
+				</Typography>
+				<Typography tag="span">—</Typography>
+				<Typography tag="span">{t("admin.texts.editPage.saveDraft")}</Typography>
+				<Typography tag="span" className="ml-1 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">
 					Ctrl+↵
-				</span>
-				<span>—</span>
-				<span>{t("admin.texts.editPage.saveUpdate")}</span>
-				<span className="ml-2 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">
+				</Typography>
+				<Typography tag="span">—</Typography>
+				<Typography tag="span">{t("admin.texts.editPage.saveUpdate")}</Typography>
+				<Typography tag="span" className="ml-2 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">
 					/
-				</span>
-				<span>—</span>
-				<span>блоки</span>
+				</Typography>
+				<Typography tag="span">—</Typography>
+				<Typography tag="span">блоки</Typography>
 			</div>
 		</div>
 	);
@@ -389,27 +392,27 @@ const getSlashItems = (t: ReturnType<typeof useI18n>["t"]): SlashMenuItem[] => [
 			{
 				title: t("admin.texts.createPage.formatText"),
 				description: "Обычный абзац",
-				icon: <span className="text-[11px] font-medium text-t-2">¶</span>,
+				icon: <Typography tag="span" className="text-[11px] font-medium text-t-2">¶</Typography>,
 				command: editor => editor.chain().focus().setParagraph().run(),
 			},
 			{
 				title: t("admin.texts.createPage.formatH2"),
 				description: "Крупный заголовок",
-				icon: <span className="text-[11px] font-bold text-t-2">H2</span>,
+				icon: <Typography tag="span" className="text-[11px] font-bold text-t-2">H2</Typography>,
 				command: editor =>
 					editor.chain().focus().setHeading({ level: 2 }).run(),
 			},
 			{
 				title: t("admin.texts.createPage.formatH3"),
 				description: "Средний заголовок",
-				icon: <span className="text-[10px] font-bold text-t-2">H3</span>,
+				icon: <Typography tag="span" className="text-[10px] font-bold text-t-2">H3</Typography>,
 				command: editor =>
 					editor.chain().focus().setHeading({ level: 3 }).run(),
 			},
 			{
 				title: t("admin.texts.createPage.formatQuote"),
 				description: "Цитата",
-				icon: <span className="text-[13px] text-t-2">&quot;</span>,
+				icon: <Typography tag="span" className="text-[13px] text-t-2">&quot;</Typography>,
 				command: editor => editor.chain().focus().setBlockquote().run(),
 			},
 			{
@@ -466,14 +469,13 @@ const CharsPopup = ({ onInsert }: { onInsert: (char: string) => void }) => {
 				};
 return (
 		<div ref={ref} className="relative">
-			<button
-				type="button"
+			<Button
 				title={t("admin.texts.editPage.specialChars")}
 				onMouseDown={handleMouseDown}
 				className="flex h-7 items-center gap-1 rounded-[5px] px-1.5 text-[11px] font-semibold text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 			>
 				Ӏ
-			</button>
+			</Button>
 			{open && (
 				<div
 					className="absolute bottom-full left-0 z-30 mb-2 flex flex-wrap gap-1 rounded-[8px] border border-bd-2 bg-bg p-2 shadow-md"
@@ -486,14 +488,13 @@ return (
 								setOpen(false);
 							};
 					  return (
-						<button
+						<Button
 							key={ch}
-							type="button"
 							onMouseDown={handleMouseDown}
 							className="flex h-7 min-w-[40px] items-center justify-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[12px] font-medium text-t-1 transition-colors hover:border-acc hover:bg-acc-muted hover:text-acc-strong"
 						>
 							{ch}
-						</button>
+						</Button>
 					);
 					})}
 				</div>
@@ -597,11 +598,11 @@ export const TextEditEditor = ({
 		if (processingStatus === "RUNNING") {
 			return (
 				<div className="flex items-center gap-2 border-b border-bd-1 bg-acc-muted px-6 py-2 transition-colors">
-					<span className="inline-block h-3.5 w-3.5 shrink-0 animate-spin rounded-full border border-acc border-t-transparent" />
-					<span className="flex-1 text-[11.5px] text-acc-strong">
+					<Typography tag="span" className="inline-block h-3.5 w-3.5 shrink-0 animate-spin rounded-full border border-acc border-t-transparent" />
+					<Typography tag="span" className="flex-1 text-[11.5px] text-acc-strong">
 						{t("admin.texts.editPage.tokenBar.running")}{" "}
 						{processingProgress > 0 ? `${processingProgress}%` : ""}
-					</span>
+					</Typography>
 				</div>
 			);
 		}
@@ -629,9 +630,9 @@ export const TextEditEditor = ({
 						/>
 						<circle cx="8" cy="11" r=".7" fill="currentColor" />
 					</svg>
-					<span className="flex-1 text-[11.5px] text-red-strong">
+					<Typography tag="span" className="flex-1 text-[11.5px] text-red-strong">
 						{t("admin.texts.editPage.tokenBar.error")}
-					</span>
+					</Typography>
 				</div>
 			);
 		}
@@ -660,12 +661,12 @@ export const TextEditEditor = ({
 							strokeLinejoin="round"
 						/>
 					</svg>
-					<span className="flex-1 text-[11.5px] text-grn-strong">
+					<Typography tag="span" className="flex-1 text-[11.5px] text-grn-strong">
 						{t("admin.texts.editPage.tokenBar.done", {
 							pages: pages.length,
 							tokens: tokenCount,
 						})}
-					</span>
+					</Typography>
 					<a
 						href={`/${lang}/admin/texts/${textId}/versions`}
 						className="shrink-0 text-[11px] font-medium text-acc transition-opacity hover:opacity-75"
@@ -710,16 +711,15 @@ return (
 						/>
 						<circle cx="8" cy="11" r=".7" fill="currentColor" />
 					</svg>
-					<span className="flex-1 text-[11.5px] text-amb-strong">
+					<Typography tag="span" className="flex-1 text-[11.5px] text-amb-strong">
 						{t("admin.texts.editPage.retokenizeBar.text")}
-					</span>
-					<button
-						type="button"
+					</Typography>
+					<Button
 						onClick={onDismissRetokenize}
 						className="shrink-0 rounded-[4px] px-1.5 py-0.5 text-[11px] text-t-3 transition-colors hover:bg-surf-3"
 					>
 						✕
-					</button>
+					</Button>
 				</div>
 			)}
 
@@ -757,12 +757,11 @@ return (
 								: "border-transparent text-t-3 hover:text-t-2"
 						}`}
 					>
-						<button
-							type="button"
+						<Button
 							onClick={handleClick}
 							className="flex items-center gap-1.5 text-xs"
 						>
-							<span
+							<Typography tag="span"
 								className={`flex h-[17px] w-[17px] items-center justify-center rounded-[4px] text-[10px] font-semibold ${
 									i === activePage
 										? "bg-acc-muted text-acc-strong"
@@ -770,15 +769,14 @@ return (
 								}`}
 							>
 								{i + 1}
-							</span>
+							</Typography>
 							{t("admin.texts.createPage.pageN", { n: i + 1 })}
-						</button>
+						</Button>
 					</div>
 				);
 				})}
 
-				<button
-					type="button"
+				<Button
 					title={t("admin.texts.createPage.addPage")}
 					onClick={onAddPage}
 					className="ml-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-[5px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2"
@@ -791,7 +789,7 @@ return (
 							strokeLinecap="round"
 						/>
 					</svg>
-				</button>
+				</Button>
 
 				<div className="ml-auto shrink-0 pl-2 text-[11px] text-t-3">
 					{tokenCount > 0
@@ -834,17 +832,17 @@ return (
 						/>
 					</svg>
 					{t("admin.texts.createPage.words")}:&nbsp;
-					<span className="font-medium text-t-2">{stats.words}</span>
+					<Typography tag="span" className="font-medium text-t-2">{stats.words}</Typography>
 				</div>
 				<div className="h-3 w-px bg-bd-2" />
 				<div>
 					{t("admin.texts.createPage.chars")}:&nbsp;
-					<span className="font-medium text-t-2">{stats.chars}</span>
+					<Typography tag="span" className="font-medium text-t-2">{stats.chars}</Typography>
 				</div>
 				<div className="h-3 w-px bg-bd-2 max-sm:hidden" />
 				<div className="max-sm:hidden">
 					{t("admin.texts.createPage.paragraphs")}:&nbsp;
-					<span className="font-medium text-t-2">{stats.paragraphs}</span>
+					<Typography tag="span" className="font-medium text-t-2">{stats.paragraphs}</Typography>
 				</div>
 			</div>
 		</div>

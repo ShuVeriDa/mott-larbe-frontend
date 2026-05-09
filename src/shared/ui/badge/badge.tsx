@@ -2,6 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import type { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 
+import { Typography } from "@/shared/ui/typography";
 export const badgeVariants = cva(
 	"inline-flex items-center gap-1 px-[7px] py-[2px] rounded-[5px] text-[10.5px] font-semibold whitespace-nowrap",
 	{
@@ -25,7 +26,7 @@ export type BadgeProps = ComponentProps<"span"> &
 	VariantProps<typeof badgeVariants>;
 
 export const Badge = ({ className, variant, ...props }: BadgeProps) => (
-	<span
+	<Typography tag="span"
 		data-slot="badge"
 		className={cn(badgeVariants({ variant }), className)}
 		{...props}

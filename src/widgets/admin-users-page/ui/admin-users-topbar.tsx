@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { useI18n } from "@/shared/lib/i18n";
 
 interface AdminUsersTopbarProps {
@@ -20,8 +24,7 @@ export const AdminUsersTopbar = ({ onExport }: AdminUsersTopbarProps) => {
 				</div>
 			</div>
 			<div className="ml-auto">
-				<button
-					type="button"
+				<Button
 					onClick={onExport}
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
@@ -34,8 +37,8 @@ export const AdminUsersTopbar = ({ onExport }: AdminUsersTopbarProps) => {
 							strokeLinejoin="round"
 						/>
 					</svg>
-					<span className="max-sm:hidden">{t("admin.users.export")}</span>
-				</button>
+					<Typography tag="span" className="max-sm:hidden">{t("admin.users.export")}</Typography>
+				</Button>
 			</div>
 		</header>
 	);

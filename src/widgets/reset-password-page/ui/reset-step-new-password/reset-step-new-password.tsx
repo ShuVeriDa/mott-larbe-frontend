@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { AlertCircle, Check, Shield } from "lucide-react";
 import { useState } from "react";
 import {
@@ -117,7 +119,7 @@ export const ResetStepNewPassword = ({
 					</Typography>
 				)}
 
-				<button
+				<Button
 					type="submit"
 					disabled={!canSubmit}
 					className="mt-1.5 inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-[9px] bg-acc text-[13.5px] font-semibold text-white transition-opacity hover:opacity-[0.92] active:translate-y-px disabled:cursor-not-allowed disabled:opacity-55"
@@ -128,7 +130,7 @@ export const ResetStepNewPassword = ({
 							: t("auth.resetPassword.step3.submit")}
 					</Typography>
 					<Check size={14} strokeWidth={2} />
-				</button>
+				</Button>
 			</form>
 		</section>
 	);

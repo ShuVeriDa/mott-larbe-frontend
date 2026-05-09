@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps } from "react";
 import Link from "next/link";
 import { useLibraryTextDetailPage } from "../model";
@@ -46,14 +50,13 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 		> = handleRetry;
 		return (
 			<div className="flex flex-1 flex-col items-center justify-center gap-3 py-20 text-t-3">
-				<p className="text-sm text-t-2">{t("library.textDetail.error")}</p>
-				<button
-					type="button"
+				<Typography tag="p" className="text-sm text-t-2">{t("library.textDetail.error")}</Typography>
+				<Button
 					onClick={handleRetryClick}
 					className="text-xs text-acc-t hover:underline"
 				>
 					{t("library.textDetail.retry")}
-				</button>
+				</Button>
 			</div>
 		);
 	}
@@ -88,22 +91,21 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 					{t("library.textDetail.back")}
 				</Link>
 
-				<span className="w-px h-3.5 bg-bd-2" />
+				<Typography tag="span" className="w-px h-3.5 bg-bd-2" />
 
-				<span className="text-xs text-t-3 hidden sm:flex items-center gap-1.5">
+				<Typography tag="span" className="text-xs text-t-3 hidden sm:flex items-center gap-1.5">
 					<Link
 						href={`/${lang}/texts`}
 						className="hover:text-t-2 transition-colors"
 					>
 						{t("nav.texts")}
 					</Link>
-					<span className="text-t-4">/</span>
-					<span className="text-t-2">{t("library.textDetail.breadcrumb")}</span>
-				</span>
+					<Typography tag="span" className="text-t-4">/</Typography>
+					<Typography tag="span" className="text-t-2">{t("library.textDetail.breadcrumb")}</Typography>
+				</Typography>
 
 				<div className="ml-auto flex items-center gap-1.5">
-					<button
-						type="button"
+					<Button
 						onClick={handleShare}
 						title={t("library.textDetail.share")}
 						className="w-7 h-7 rounded-base border border-bd-2 flex items-center justify-center text-t-2 hover:bg-surf-2 transition-colors"
@@ -138,12 +140,11 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 								<path d="M5.5 7.5l5-2.5M5.5 8.5l5 2.5" />
 							</svg>
 						)}
-					</button>
+					</Button>
 
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<button
-								type="button"
+							<Button
 								title={t("library.textDetail.more")}
 								className="w-7 h-7 rounded-base border border-bd-2 flex items-center justify-center text-t-2 hover:bg-surf-2 transition-colors data-[state=open]:bg-surf-2"
 							>
@@ -157,7 +158,7 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 									<circle cx="8" cy="8" r="1.3" />
 									<circle cx="8" cy="13" r="1.3" />
 								</svg>
-							</button>
+							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end" className="min-w-[168px]">
 							<DropdownMenuItem

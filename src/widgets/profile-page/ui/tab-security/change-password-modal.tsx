@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import { ComponentProps, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
@@ -84,13 +86,13 @@ return (
 						required
 					/>
 					{mismatch && (
-						<p className="mt-1 text-[11px] text-red-500">
+						<Typography tag="p" className="mt-1 text-[11px] text-red-500">
 							{t("profile.security.passwordMismatch")}
-						</p>
+						</Typography>
 					)}
 				</div>
 				<ModalActions>
-					<Button type="button" variant="ghost" className="flex-1" onClick={handleClose}>
+					<Button variant="ghost" className="flex-1" onClick={handleClose}>
 						{t("profile.common.cancel")}
 					</Button>
 					<Button type="submit" variant="action" className="flex-1" disabled={isPending}>

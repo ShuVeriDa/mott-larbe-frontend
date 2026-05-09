@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
@@ -21,9 +23,9 @@ export const AnalyticsTopWords = ({
 	return (
 		<div className="rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between px-4 pt-3.5 pb-3">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.analytics.topWords.title")}
-				</span>
+				</Typography>
 				<Link
 					href={`/${lang}/admin/unknown-words`}
 					className="text-[11.5px] text-acc hover:underline"
@@ -51,12 +53,12 @@ export const AnalyticsTopWords = ({
 							key={word.rank}
 							className="flex items-center gap-2 border-t border-bd-1 px-4 py-1.5"
 						>
-							<span className="w-4 shrink-0 text-right text-[10.5px] font-semibold text-t-3">
+							<Typography tag="span" className="w-4 shrink-0 text-right text-[10.5px] font-semibold text-t-3">
 								{word.rank}
-							</span>
-							<span className="min-w-[110px] shrink-0 text-[12.5px] font-medium text-t-1 max-sm:min-w-[80px]">
+							</Typography>
+							<Typography tag="span" className="min-w-[110px] shrink-0 text-[12.5px] font-medium text-t-1 max-sm:min-w-[80px]">
 								{word.word}
-							</span>
+							</Typography>
 							<div className="flex-1">
 								<div className="h-[5px] overflow-hidden rounded-full bg-surf-3">
 									<div
@@ -65,9 +67,9 @@ export const AnalyticsTopWords = ({
 									/>
 								</div>
 							</div>
-							<span className="min-w-[36px] shrink-0 text-right text-[11.5px] font-medium text-t-2">
+							<Typography tag="span" className="min-w-[36px] shrink-0 text-right text-[11.5px] font-medium text-t-2">
 								{word.count}×
-							</span>
+							</Typography>
 						</div>
 					))}
 		</div>

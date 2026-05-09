@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { AlertCircle, ArrowLeft, ArrowRight, Lock } from "lucide-react";
 import Link from "next/link";
 import { ComponentProps, useState } from "react";
@@ -98,7 +100,7 @@ return (
 					)}
 				</div>
 
-				<button
+				<Button
 					type="submit"
 					disabled={isPending}
 					className="mt-1.5 inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-[9px] bg-acc text-[13.5px] font-semibold text-white transition-opacity hover:opacity-[0.92] active:translate-y-px disabled:cursor-not-allowed disabled:opacity-55"
@@ -109,7 +111,7 @@ return (
 							: t("auth.resetPassword.step1.submit")}
 					</Typography>
 					<ArrowRight size={14} strokeWidth={2} />
-				</button>
+				</Button>
 			</form>
 
 			<Link

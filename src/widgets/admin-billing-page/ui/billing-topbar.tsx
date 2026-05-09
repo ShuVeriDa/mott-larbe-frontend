@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { useI18n } from "@/shared/lib/i18n";
 
 interface BillingTopbarProps {
@@ -24,7 +26,7 @@ export const BillingTopbar = ({
 				</div>
 			</div>
 			<div className="flex shrink-0 items-center gap-2">
-				<button
+				<Button
 					onClick={onNewCoupon}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
@@ -40,8 +42,8 @@ export const BillingTopbar = ({
 						<path d="M1 6h10M6 1v10" />
 					</svg>
 					{t("admin.plans.newCoupon")}
-				</button>
-				<button
+				</Button>
+				<Button
 					onClick={onNewPlan}
 					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
@@ -57,7 +59,7 @@ export const BillingTopbar = ({
 						<path d="M1 6h10M6 1v10" />
 					</svg>
 					{t("admin.plans.newPlan")}
-				</button>
+				</Button>
 			</div>
 		</header>
 	);

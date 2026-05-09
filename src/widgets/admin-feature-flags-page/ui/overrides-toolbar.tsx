@@ -1,6 +1,7 @@
 import { ComponentProps } from 'react';
 import type { FeatureFlagKeyItem } from "@/entities/feature-flag";
 
+import { Button } from "@/shared/ui/button";
 interface OverridesToolbarProps {
 	search: string;
 	flagId: string;
@@ -72,8 +73,7 @@ export const OverridesToolbar = ({
 			<option value="false">{t("admin.featureFlags.overrides.off")}</option>
 		</select>
 
-		<button
-			type="button"
+		<Button
 			onClick={onAddOverride}
 			className="ml-auto flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 		>
@@ -88,7 +88,7 @@ export const OverridesToolbar = ({
 				<path d="M7.5 2v11M2 7.5h11" />
 			</svg>
 			{t("admin.featureFlags.overrides.addOverride")}
-		</button>
+		</Button>
 	</div>
 );
 };

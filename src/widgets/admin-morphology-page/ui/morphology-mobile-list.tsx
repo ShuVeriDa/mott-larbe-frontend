@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import type { MorphRule } from "@/entities/morph-rule";
 import { cn } from "@/shared/lib/cn";
@@ -66,43 +70,43 @@ export const MorphologyMobileList = ({
 									rule.suffix
 								) : (
 									<>
-										<span className="text-t-3">.*</span>
-										<span className="rounded bg-acc-bg px-[3px] font-bold text-acc-t">
+										<Typography tag="span" className="text-t-3">.*</Typography>
+										<Typography tag="span" className="rounded bg-acc-bg px-[3px] font-bold text-acc-t">
 											{rule.suffix}
-										</span>
+										</Typography>
 									</>
 								)}
 							</div>
 							<div className="mt-0.5 flex items-center gap-1.5 text-[11.5px] text-t-3">
 								{rule.description}
 								{rule.isRegex && (
-									<span className="rounded bg-pur-bg px-1 py-px text-[9.5px] font-bold uppercase tracking-[0.3px] text-pur-t">
+									<Typography tag="span" className="rounded bg-pur-bg px-1 py-px text-[9.5px] font-bold uppercase tracking-[0.3px] text-pur-t">
 										Regex
-									</span>
+									</Typography>
 								)}
 							</div>
 						</div>
 						{rule.isActive ? (
-							<span className="inline-flex items-center gap-1 rounded-[5px] bg-grn-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-grn-t">
-								<span className="size-1.5 rounded-full bg-current opacity-70" />
+							<Typography tag="span" className="inline-flex items-center gap-1 rounded-[5px] bg-grn-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-grn-t">
+								<Typography tag="span" className="size-1.5 rounded-full bg-current opacity-70" />
 								{t("admin.morphology.status.active")}
-							</span>
+							</Typography>
 						) : (
-							<span className="inline-flex items-center gap-1 rounded-[5px] bg-surf-3 px-1.5 py-0.5 text-[10.5px] font-semibold text-t-2">
-								<span className="size-1.5 rounded-full bg-current opacity-70" />
+							<Typography tag="span" className="inline-flex items-center gap-1 rounded-[5px] bg-surf-3 px-1.5 py-0.5 text-[10.5px] font-semibold text-t-2">
+								<Typography tag="span" className="size-1.5 rounded-full bg-current opacity-70" />
 								{t("admin.morphology.status.inactive")}
-							</span>
+							</Typography>
 						)}
 					</div>
 
 					{/* Replace row */}
 					<div className="mb-2.5 flex flex-wrap items-center gap-1.5 rounded-lg border border-bd-1 bg-surf-2 px-2.5 py-1.5">
-						<span className="text-[10.5px] font-medium text-t-3">
+						<Typography tag="span" className="text-[10.5px] font-medium text-t-3">
 							{t("admin.morphology.table.replace")}:
-						</span>
-						<span className="rounded bg-red-bg px-1.5 py-px font-mono text-[12px] font-semibold text-red-t">
+						</Typography>
+						<Typography tag="span" className="rounded bg-red-bg px-1.5 py-px font-mono text-[12px] font-semibold text-red-t">
 							{rule.suffix}
-						</span>
+						</Typography>
 						<svg
 							className="text-t-3"
 							width="12"
@@ -118,15 +122,15 @@ export const MorphologyMobileList = ({
 								strokeLinejoin="round"
 							/>
 						</svg>
-						<span className="rounded bg-grn-bg px-1.5 py-px font-mono text-[12px] font-semibold text-grn-t">
+						<Typography tag="span" className="rounded bg-grn-bg px-1.5 py-px font-mono text-[12px] font-semibold text-grn-t">
 							{rule.add || "∅"}
-						</span>
+						</Typography>
 					</div>
 
 					{/* Meta row */}
 					<div className="mb-2.5 flex flex-wrap items-center gap-2">
 						{rule.pos && (
-							<span
+							<Typography tag="span"
 								className={cn(
 									"inline-flex items-center rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold italic",
 									rule.pos.toLowerCase() === "noun"
@@ -139,12 +143,12 @@ export const MorphologyMobileList = ({
 								)}
 							>
 								{rule.pos.toLowerCase()}
-							</span>
+							</Typography>
 						)}
-						<span className="text-[11.5px] text-t-3">
+						<Typography tag="span" className="text-[11.5px] text-t-3">
 							{rule.type.toLowerCase()}
-						</span>
-						<span
+						</Typography>
+						<Typography tag="span"
 							className={cn(
 								"inline-flex size-5 items-center justify-center rounded-[5px] text-[11px] font-bold",
 								rule.priority <= 1
@@ -155,7 +159,7 @@ export const MorphologyMobileList = ({
 							)}
 						>
 							{rule.priority}
-						</span>
+						</Typography>
 					</div>
 
 					{/* Footer */}
@@ -167,20 +171,20 @@ export const MorphologyMobileList = ({
 									style={{ width: "40%" }}
 								/>
 							</div>
-							<span className="font-[tabular-nums] text-[11px] text-t-3">
+							<Typography tag="span" className="font-[tabular-nums] text-[11px] text-t-3">
 								{rule.matchCount.toLocaleString()}
-							</span>
+							</Typography>
 						</div>
 						<div className="flex shrink-0 gap-1.5">
 							{!rule.isActive && (
-								<button
+								<Button
 									onClick={handleClick}
 									className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf-2 px-2.5 text-[11.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 								>
 									{t("admin.morphology.row.activate")}
-								</button>
+								</Button>
 							)}
-							<button
+							<Button
 								onClick={handleClick2}
 								className="flex size-[30px] items-center justify-center rounded-base border border-bd-2 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 							>
@@ -193,8 +197,8 @@ export const MorphologyMobileList = ({
 										strokeLinejoin="round"
 									/>
 								</svg>
-							</button>
-							<button
+							</Button>
+							<Button
 								onClick={handleClick3}
 								className="flex size-[30px] items-center justify-center rounded-base border border-red/20 bg-surf-2 text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 							>
@@ -212,7 +216,7 @@ export const MorphologyMobileList = ({
 										strokeLinecap="round"
 									/>
 								</svg>
-							</button>
+							</Button>
 						</div>
 					</div>
 				</div>

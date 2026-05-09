@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type { PaymentProvider } from "@/entities/admin-subscription";
 import { adminSubscriptionApi } from "@/entities/admin-subscription";
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
@@ -52,11 +56,10 @@ export const AddSubscriptionModal = ({
 return (
 		<>
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
-				<span className="font-display text-[14px] font-semibold text-t-1">
+				<Typography tag="span" className="font-display text-[14px] font-semibold text-t-1">
 					{t("admin.subscriptions.modal.addTitle")}
-				</span>
-				<button
-					type="button"
+				</Typography>
+				<Button
 					onClick={onClose}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
@@ -70,14 +73,14 @@ return (
 					>
 						<path d="M1 1l10 10M11 1 1 11" strokeLinecap="round" />
 					</svg>
-				</button>
+				</Button>
 			</div>
 
 			<form action={handleSubmit} className="px-4 py-3.5">
 				<div className="mb-3">
-					<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.subscriptions.modal.emailOrId")}
-					</label>
+					</Typography>
 					<input
 						value={email}
 						onChange={handleChange}
@@ -87,9 +90,9 @@ return (
 				</div>
 
 				<div className="mb-3">
-					<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.subscriptions.modal.plan")}
-					</label>
+					</Typography>
 					<select
 						value={planId}
 						onChange={handleChange2}
@@ -106,9 +109,9 @@ return (
 				</div>
 
 				<div className="mb-3">
-					<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.subscriptions.modal.duration")}
-					</label>
+					</Typography>
 					<select
 						value={durationDays}
 						onChange={handleChange3}
@@ -130,9 +133,9 @@ return (
 				</div>
 
 				<div className="mb-3">
-					<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.subscriptions.modal.provider")}
-					</label>
+					</Typography>
 					<select
 						value={provider}
 						onChange={handleChange4}
@@ -147,9 +150,9 @@ return (
 				</div>
 
 				<div className="mb-0">
-					<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.subscriptions.modal.reason")}
-					</label>
+					</Typography>
 					<input
 						value={reason}
 						onChange={handleChange5}
@@ -160,15 +163,13 @@ return (
 			</form>
 
 			<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-4 py-3">
-				<button
-					type="button"
+				<Button
 					onClick={onClose}
 					className="h-8 rounded-lg border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 				>
 					{t("admin.subscriptions.modal.cancel")}
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
 					onClick={handleSubmit}
 					disabled={mutations.create.isPending || !planId || !email.trim()}
 					className="h-8 rounded-lg bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
@@ -176,7 +177,7 @@ return (
 					{mutations.create.isPending
 						? t("admin.subscriptions.modal.saving")
 						: t("admin.subscriptions.modal.addConfirm")}
-				</button>
+				</Button>
 			</div>
 		</>
 	);

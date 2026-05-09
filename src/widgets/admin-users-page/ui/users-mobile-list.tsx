@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminUserListItem, RoleName } from "@/entities/admin-user";
@@ -96,9 +98,9 @@ export const UsersMobileList = ({
 							))}
 							<UserPlanChip plan={user.plan} labels={planLabels} />
 							{user.lastActiveAt && (
-								<span className="text-[11px] text-t-3">
+								<Typography tag="span" className="text-[11px] text-t-3">
 									{formatActivity(user.lastActiveAt)}
-								</span>
+								</Typography>
 							)}
 						</div>
 					</div>

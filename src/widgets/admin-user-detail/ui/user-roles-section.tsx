@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { UserRoleItem, RoleName } from "@/entities/admin-user";
@@ -44,12 +48,12 @@ export const UserRolesSection = ({ roles, roleMutations }: UserRolesSectionProps
 return (
 		<div className="border-b border-bd-1 px-4 py-3">
 			<div className="mb-2 flex items-center justify-between">
-				<span className="text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+				<Typography tag="span" className="text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
 					{t("admin.userDetail.roles")}
-				</span>
+				</Typography>
 				{availableRoles.length > 0 && (
 					<div className="relative">
-						<button
+						<Button
 							onClick={handleClick}
 							className="flex h-[22px] items-center gap-1 rounded-[5px] bg-acc-bg px-2 text-[11px] font-semibold text-acc-t transition-colors hover:bg-acc-bg/80"
 						>
@@ -62,27 +66,27 @@ return (
 								/>
 							</svg>
 							{t("admin.userDetail.addRole")}
-						</button>
+						</Button>
 						{showDropdown && (
 							<div className="absolute right-0 top-full z-20 mt-1 min-w-[130px] overflow-hidden rounded-lg border border-bd-2 bg-surf shadow-md">
 								{availableRoles.map((role) => {
 								  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleAssign(role);
 								  return (
-									<button
+									<Button
 										key={role}
 										onClick={handleClick}
 										disabled={roleMutations.assign.isPending}
 										className="flex w-full items-center px-3 py-1.5 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2 disabled:opacity-50"
 									>
-										<span
+										<Typography tag="span"
 											className={cn(
 												"rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
 												roleStyles[role],
 											)}
 										>
 											{t(`admin.users.roles.${role}`)}
-										</span>
-									</button>
+										</Typography>
+									</Button>
 								);
 								})}
 							</div>
@@ -106,17 +110,17 @@ return (
 							className="flex items-center justify-between py-1.5 last:pb-0 first:pt-0"
 						>
 							<div className="flex items-center gap-1.5">
-								<span
+								<Typography tag="span"
 									className={cn(
 										"rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
 										roleStyles[role.name],
 									)}
 								>
 									{t(`admin.users.roles.${role.name}`)}
-								</span>
-								<span className="text-[10.5px] text-t-3">{sinceDate}</span>
+								</Typography>
+								<Typography tag="span" className="text-[10.5px] text-t-3">{sinceDate}</Typography>
 							</div>
-							<button
+							<Button
 								onClick={handleClick}
 								disabled={isLearner || roleMutations.revoke.isPending}
 								title={t("admin.userDetail.revokeRole")}
@@ -133,7 +137,7 @@ return (
 										strokeLinecap="round"
 									/>
 								</svg>
-							</button>
+							</Button>
 						</div>
 					);
 				})}

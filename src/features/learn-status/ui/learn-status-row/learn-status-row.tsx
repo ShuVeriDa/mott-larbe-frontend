@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -43,9 +45,8 @@ export const LearnStatusRow = ({
 				const isActive = level === active;
 								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleSelect(level);
 return (
-					<button
+					<Button
 						key={level}
-						type="button"
 						disabled={isPending}
 						onClick={handleClick}
 						className={cn(
@@ -57,7 +58,7 @@ return (
 						)}
 					>
 						{t(`reader.learnStatus.${level}`)}
-					</button>
+					</Button>
 				);
 			})}
 		</div>

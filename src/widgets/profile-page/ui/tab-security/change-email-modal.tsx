@@ -66,7 +66,7 @@ return (
 					/>
 				</div>
 				<ModalActions>
-					<Button type="button" variant="ghost" className="flex-1" onClick={handleClose}>
+					<Button variant="ghost" className="flex-1" onClick={handleClose}>
 						{t("profile.common.cancel")}
 					</Button>
 					<Button type="submit" variant="action" className="flex-1" disabled={isPending}>

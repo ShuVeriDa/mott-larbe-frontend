@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { Check, X } from "lucide-react";
 import type { DetailReviewLog } from "@/entities/dictionary";
 import { cn } from "@/shared/lib/cn";
@@ -20,9 +22,9 @@ export const HistoryCard = ({ logs }: HistoryCardProps) => {
 				title={t("vocabulary.wordDetail.sections.history")}
 				bodyClassName="px-4 py-3"
 			>
-				<p className="text-[12.5px] text-t-3">
+				<Typography tag="p" className="text-[12.5px] text-t-3">
 					{t("vocabulary.wordDetail.history.empty")}
-				</p>
+				</Typography>
 			</CardSection>
 		);
 	}
@@ -41,7 +43,7 @@ export const HistoryCard = ({ logs }: HistoryCardProps) => {
 							key={log.id}
 							className="flex items-center gap-2.5 border-b border-hairline border-bd-1 py-1.5 last:border-b-0"
 						>
-							<span
+							<Typography tag="span"
 								className={cn(
 									"flex size-[26px] shrink-0 items-center justify-center rounded-[6px]",
 									correct ? "bg-grn-bg text-grn" : "bg-red-bg text-red",
@@ -52,18 +54,18 @@ export const HistoryCard = ({ logs }: HistoryCardProps) => {
 								) : (
 									<X className="size-3" strokeWidth={2} />
 								)}
-							</span>
+							</Typography>
 							<div className="min-w-0 flex-1">
-								<p className="text-[12.5px] text-t-1">
+								<Typography tag="p" className="text-[12.5px] text-t-1">
 									{correct
 										? t("vocabulary.wordDetail.history.success")
 										: t("vocabulary.wordDetail.history.fail")}
-								</p>
-								<p className="text-[11px] text-t-3">
+								</Typography>
+								<Typography tag="p" className="text-[11px] text-t-3">
 									{formatNextReview(log.createdAt, t, lang)}
-								</p>
+								</Typography>
 							</div>
-							<span
+							<Typography tag="span"
 								className={cn(
 									"ml-auto text-[12px] font-semibold",
 									correct ? "text-grn" : "text-red-t",
@@ -78,7 +80,7 @@ export const HistoryCard = ({ logs }: HistoryCardProps) => {
 													n: delta,
 												})
 											: ""}
-							</span>
+							</Typography>
 						</li>
 					);
 				})}

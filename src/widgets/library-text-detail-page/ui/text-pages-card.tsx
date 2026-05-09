@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { LibraryTextPage } from "@/entities/library-text";
 
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string, vars?: Record<string, string | number>) => string;
 
 interface TextPagesCardProps {
@@ -20,9 +21,9 @@ export const TextPagesCard = ({
 
 	return (
 		<div className="bg-surf border border-bd-1 rounded-card px-[17px] py-[15px]">
-			<p className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-3">
+			<Typography tag="p" className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-3">
 				{t("library.textDetail.pagesCard.label")}
-			</p>
+			</Typography>
 			<div className="flex flex-col gap-0.5 max-h-[190px] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-sm:max-h-[160px]">
 				{pages.map((page) => {
 					const isDone = page.pageNumber <= donePages;
@@ -39,7 +40,7 @@ export const TextPagesCard = ({
 							key={page.id}
 							className="flex items-center gap-2 px-1.5 py-[5px] rounded-base hover:bg-surf-2 transition-colors cursor-default"
 						>
-							<span
+							<Typography tag="span"
 								className={cn(
 									"text-[11px] font-semibold w-[18px] shrink-0 tabular-nums",
 									isDone
@@ -50,8 +51,8 @@ export const TextPagesCard = ({
 								)}
 							>
 								{page.pageNumber}
-							</span>
-							<span
+							</Typography>
+							<Typography tag="span"
 								className={cn(
 									"text-xs flex-1 truncate",
 									isDone
@@ -62,12 +63,12 @@ export const TextPagesCard = ({
 								)}
 							>
 								{label}
-							</span>
+							</Typography>
 							{isDone && <CheckIcon />}
 							{isCur && (
-								<span className="text-[9px] font-semibold tracking-[0.04em] text-acc-t bg-acc-bg border border-acc/20 px-1.5 py-[1px] rounded-[3px]">
+								<Typography tag="span" className="text-[9px] font-semibold tracking-[0.04em] text-acc-t bg-acc-bg border border-acc/20 px-1.5 py-[1px] rounded-[3px]">
 									{t("library.textDetail.pagesCard.current")}
-								</span>
+								</Typography>
 							)}
 						</div>
 					);

@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect, useRef, useState } from 'react';
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
@@ -65,8 +67,7 @@ return (
 
 			{/* Tokenize — shown if not yet processed */}
 			{notProcessed && !isRunning && (
-				<button
-					type="button"
+				<Button
 					onClick={handleClick}
 					disabled={mutations.tokenize.isPending}
 					className={`${btnClass} text-acc`}
@@ -81,13 +82,12 @@ return (
 							strokeLinejoin="round"
 						/>
 					</svg>
-				</button>
+				</Button>
 			)}
 
 			{/* Retry — shown for errors */}
 			{isError && !isRunning && (
-				<button
-					type="button"
+				<Button
 					onClick={handleClick2}
 					disabled={mutations.tokenize.isPending}
 					className={`${btnClass} text-amb`}
@@ -108,7 +108,7 @@ return (
 							strokeLinejoin="round"
 						/>
 					</svg>
-				</button>
+				</Button>
 			)}
 
 			{/* Versions link — shown for processed texts */}
@@ -127,8 +127,7 @@ return (
 
 			{/* Dropdown */}
 			<div ref={ref} className="relative">
-				<button
-					type="button"
+				<Button
 					onClick={handleClick3}
 					className={btnClass}
 				>
@@ -137,7 +136,7 @@ return (
 						<circle cx="8" cy="8" r="1" fill="currentColor" />
 						<circle cx="8" cy="12" r="1" fill="currentColor" />
 					</svg>
-				</button>
+				</Button>
 
 				{open && (
 					<div className="absolute right-0 top-[calc(100%+4px)] z-50 min-w-[190px] rounded-[10px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08),0_2px_4px_rgba(0,0,0,0.04)]">
@@ -149,32 +148,29 @@ return (
 							{t("admin.texts.actions.versions")}
 						</Link>
 
-						<button
-							type="button"
+						<Button
 							onClick={handleClick5}
 							className={dropItemClass}
 						>
 							{t("admin.texts.actions.tokenize")}
-						</button>
+						</Button>
 
 						<div className="my-[3px] h-px bg-bd-1" />
 
 						{isPublished ? (
-							<button
-								type="button"
+							<Button
 								onClick={handleClick6}
 								className={dropItemClass}
 							>
 								{t("admin.texts.actions.unpublish")}
-							</button>
+							</Button>
 						) : (
-							<button
-								type="button"
+							<Button
 								onClick={handleClick7}
 								className={dropItemClass}
 							>
 								{t("admin.texts.actions.publish")}
-							</button>
+							</Button>
 						)}
 
 						<Link
@@ -187,13 +183,12 @@ return (
 
 						<div className="my-[3px] h-px bg-bd-1" />
 
-						<button
-							type="button"
+						<Button
 							onClick={handleClick9}
 							className="flex w-full cursor-pointer items-center gap-2 rounded-[6px] px-2.5 py-[7px] text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg"
 						>
 							{t("admin.texts.actions.delete")}
-						</button>
+						</Button>
 					</div>
 				)}
 			</div>

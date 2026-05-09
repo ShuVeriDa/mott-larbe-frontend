@@ -105,7 +105,7 @@ export const ReviewIntro = ({
 								key={item.lemmaId}
 								className="flex items-center gap-2.5 rounded-base border-hairline border-bd-1 bg-surf px-3 py-2"
 							>
-								<span
+								<Typography tag="span"
 									aria-hidden="true"
 									className={`size-1.5 shrink-0 rounded-full ${dotClass(item.status)}`}
 								/>

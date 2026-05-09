@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { PlanType } from "@/entities/admin-user";
 
+import { Typography } from "@/shared/ui/typography";
 const planStyles: Record<string, string> = {
 	FREE: "bg-surf-3 text-t-3",
 	BASIC: "bg-acc-bg text-acc-t",
@@ -17,13 +18,13 @@ interface UserPlanChipProps {
 export const UserPlanChip = ({ plan, labels }: UserPlanChipProps) => {
 	const key = plan ?? "FREE";
 	return (
-		<span
+		<Typography tag="span"
 			className={cn(
 				"rounded px-1.5 py-0.5 text-[10px] font-semibold",
 				planStyles[key] ?? planStyles.FREE,
 			)}
 		>
 			{labels[key.toLowerCase()] ?? key}
-		</span>
+		</Typography>
 	);
 };

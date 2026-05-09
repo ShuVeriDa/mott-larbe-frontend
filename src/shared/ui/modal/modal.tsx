@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import { ComponentProps, type ReactNode, useEffect } from 'react';
 import { createPortal } from "react-dom";
 import { cn } from "@/shared/lib/cn";
@@ -54,7 +56,7 @@ return createPortal(
 				)}
 			>
 				{title ? (
-					<h2 className="font-display text-[18px] text-t-1 mb-4">{title}</h2>
+					<Typography tag="h2" className="font-display text-[18px] text-t-1 mb-4">{title}</Typography>
 				) : null}
 				{children}
 			</div>

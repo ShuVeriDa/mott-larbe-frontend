@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -43,12 +47,12 @@ export const AnalyticsDifficultTexts = ({
 	return (
 		<div className="rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="px-4 pt-3.5">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.analytics.difficultTexts.title")}
-				</span>
-				<span className="ml-2 text-[11px] text-t-3">
+				</Typography>
+				<Typography tag="span" className="ml-2 text-[11px] text-t-3">
 					{t("admin.analytics.difficultTexts.subtitle")}
-				</span>
+				</Typography>
 			</div>
 
 			{/* Tab strip */}
@@ -56,9 +60,8 @@ export const AnalyticsDifficultTexts = ({
 				{TABS.map((tb) => {
 				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onTabChange(tb);
 				  return (
-					<button
+					<Button
 						key={tb}
-						type="button"
 						onClick={handleClick}
 						className={cn(
 							"whitespace-nowrap border-b-2 px-2.5 py-2 text-[12px] font-medium transition-colors",
@@ -68,7 +71,7 @@ export const AnalyticsDifficultTexts = ({
 						)}
 					>
 						{t(`admin.analytics.difficultTexts.tab${tb.charAt(0).toUpperCase() + tb.slice(1)}`)}
-					</button>
+					</Button>
 				);
 				})}
 			</div>
@@ -93,23 +96,23 @@ export const AnalyticsDifficultTexts = ({
 							key={item.rank}
 							className="flex items-center gap-2.5 border-b border-bd-1 px-4 py-2 last:border-0"
 						>
-							<span className="w-4 shrink-0 text-right text-[10.5px] font-semibold text-t-3">
+							<Typography tag="span" className="w-4 shrink-0 text-right text-[10.5px] font-semibold text-t-3">
 								{item.rank}
-							</span>
+							</Typography>
 							<div className="min-w-0 flex-1">
 								<div className="truncate text-[12.5px] font-medium text-t-1">
 									{item.title}
 								</div>
 								<div className="mt-0.5 flex items-center gap-1 text-[11px] text-t-3">
 									{item.level && (
-										<span
+										<Typography tag="span"
 											className={cn(
 												"inline-flex h-5 w-8 items-center justify-center rounded-[5px] text-[10.5px] font-bold",
 												LEVEL_BADGE_CLASS[item.level],
 											)}
 										>
 											{item.level}
-										</span>
+										</Typography>
 									)}
 									{item.wordsCount.toLocaleString()}{" "}
 									{t("admin.analytics.difficultTexts.words")}

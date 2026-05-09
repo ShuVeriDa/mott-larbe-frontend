@@ -24,9 +24,9 @@ export const StreakBlock = ({ streak, heatmap }: StreakBlockProps) => {
 					>
 						{streak.current}
 					</Typography>
-					<span className="text-[26px] leading-none" aria-hidden="true">
+					<Typography tag="span" className="text-[26px] leading-none" aria-hidden="true">
 						🔥
-					</span>
+					</Typography>
 				</div>
 				<Typography tag="p" className="mb-0.5 text-xs font-semibold text-t-2">
 					{t("statistics.streak.daysInRow")}

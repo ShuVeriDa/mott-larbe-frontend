@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps, ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { CefrBadge } from "@/entities/dictionary";
@@ -61,16 +65,16 @@ export const MetaSideCard = ({ data, isLoading, onOpenModal }: MetaSideCardProps
 		},
 		{
 			key: t("admin.dictionaryDetail.createdAt"),
-			value: <span className="text-t-3">{formatDate(data.createdAt)}</span>,
+			value: <Typography tag="span" className="text-t-3">{formatDate(data.createdAt)}</Typography>,
 		},
 		{
 			key: t("admin.dictionaryDetail.updatedAt"),
-			value: <span className="text-t-3">{formatDate(data.updatedAt)}</span>,
+			value: <Typography tag="span" className="text-t-3">{formatDate(data.updatedAt)}</Typography>,
 		},
 		{
 			key: "ID",
 			value: (
-				<span className="font-mono text-[11px] text-t-3">{data.id.slice(0, 10)}</span>
+				<Typography tag="span" className="font-mono text-[11px] text-t-3">{data.id.slice(0, 10)}</Typography>
 			),
 		},
 	];
@@ -79,16 +83,16 @@ export const MetaSideCard = ({ data, isLoading, onOpenModal }: MetaSideCardProps
 return (
 		<div className="overflow-hidden rounded-xl border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
-				<span className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
+				<Typography tag="span" className="text-[11.5px] font-semibold uppercase tracking-[0.5px] text-t-2">
 					{t("admin.dictionaryDetail.metadata")}
-				</span>
-				<button
+				</Typography>
+				<Button
 					className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 					onClick={handleClick}
 					title={t("admin.dictionaryDetail.edit")}
 				>
 					<IconEdit />
-				</button>
+				</Button>
 			</div>
 			<div>
 				{rows.map((row) => (
@@ -96,8 +100,8 @@ return (
 						key={row.key}
 						className="flex items-center justify-between border-b border-bd-1 px-4 py-2.5 text-[12.5px] last:border-b-0"
 					>
-						<span className="text-t-3">{row.key}</span>
-						<span className="font-medium text-t-1">{row.value}</span>
+						<Typography tag="span" className="text-t-3">{row.key}</Typography>
+						<Typography tag="span" className="font-medium text-t-1">{row.value}</Typography>
 					</div>
 				))}
 			</div>

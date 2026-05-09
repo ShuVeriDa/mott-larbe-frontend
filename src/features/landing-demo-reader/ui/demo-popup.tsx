@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { Plus, X } from "lucide-react";
 import type { CSSProperties } from 'react';
 import { cn } from "@/shared/lib/cn";
@@ -92,8 +94,7 @@ export const DemoPopup = ({
 				</div>
 			) : null}
 			<div className="flex gap-1.5 p-[7px]">
-				<button
-					type="button"
+				<Button
 					onClick={onAdd}
 					className={cn(
 						"flex h-7 flex-1 items-center justify-center gap-1 rounded-md border-0 text-[11px] font-semibold transition-opacity",
@@ -104,15 +105,14 @@ export const DemoPopup = ({
 				>
 					<Plus size={11} strokeWidth={2} />
 					{isAdded ? t("landing.demo.addedBtn") : t("landing.demo.addBtn")}
-				</button>
-				<button
-					type="button"
+				</Button>
+				<Button
 					onClick={onClose}
 					aria-label={t("landing.nav.close")}
 					className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-hairline border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 				>
 					<X size={11} strokeWidth={2} />
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

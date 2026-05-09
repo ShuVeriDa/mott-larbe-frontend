@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { LibraryTextListItem } from "@/entities/library-text";
@@ -38,8 +40,8 @@ export const LibraryTextCards = ({ items, view, sort }: LibraryTextCardsProps) =
 				>
 					<path d="M4 8h28M4 16h20M4 24h14M4 32h8" />
 				</svg>
-				<p className="text-sm font-medium text-t-2">{t("library.empty.title")}</p>
-				<p className="text-xs">{t("library.empty.sub")}</p>
+				<Typography tag="p" className="text-sm font-medium text-t-2">{t("library.empty.title")}</Typography>
+				<Typography tag="p" className="text-xs">{t("library.empty.sub")}</Typography>
 			</div>
 		);
 	}
@@ -68,18 +70,18 @@ export const LibraryTextCards = ({ items, view, sort }: LibraryTextCardsProps) =
 					return (
 						<div key={lvl} className="mb-5">
 							<div className="mb-2.5 flex items-center gap-2.5">
-								<span
+								<Typography tag="span"
 									className={cn(
 										"rounded-[5px] px-[9px] py-[3px] text-[11px] font-semibold uppercase tracking-[0.08em]",
 										sectionClass,
 									)}
 								>
 									{lvl}
-								</span>
+								</Typography>
 								<div className="h-px flex-1 bg-bd-1" />
-								<span className="shrink-0 text-[11px] text-t-3">
+								<Typography tag="span" className="shrink-0 text-[11px] text-t-3">
 									{group.length}
-								</span>
+								</Typography>
 							</div>
 							<div className={gridClass}>
 								{group.map((item) => {

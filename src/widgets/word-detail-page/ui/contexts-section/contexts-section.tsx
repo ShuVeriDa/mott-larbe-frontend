@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import Link from "next/link";
 import type { DetailWordContext } from "@/entities/dictionary";
@@ -34,7 +38,7 @@ const renderHighlighted = (snippet: string, pattern: RegExp) => {
 				{part}
 			</mark>
 		) : (
-			<span key={idx}>{part}</span>
+			<Typography tag="span" key={idx}>{part}</Typography>
 		),
 	);
 };
@@ -53,13 +57,13 @@ const ContextItem = ({
 			href={`/${lang}/reader/${ctx.text.id}`}
 			className="block rounded-[8px] border-hairline border-bd-1 bg-surf-2 px-3 py-2.5 transition-colors duration-150 hover:border-bd-2"
 		>
-			<p className="mb-1 text-[13px] leading-[1.6] text-t-2">
+			<Typography tag="p" className="mb-1 text-[13px] leading-[1.6] text-t-2">
 				«{ctx.snippet ? renderHighlighted(ctx.snippet, pattern) : pattern.source}»
-			</p>
-			<p className="text-[11px] text-t-3">
+			</Typography>
+			<Typography tag="p" className="text-[11px] text-t-3">
 				{ctx.text.title}
 				{ctx.text.level ? ` · ${ctx.text.level}` : ""}
-			</p>
+			</Typography>
 		</Link>
 	</li>
 );
@@ -83,9 +87,9 @@ export const ContextsSection = ({
 	if (contexts.length === 0) {
 		return (
 			<CardSection title={t("vocabulary.wordDetail.sections.contexts")}>
-				<p className="text-[12.5px] text-t-3">
+				<Typography tag="p" className="text-[12.5px] text-t-3">
 					{t("vocabulary.wordDetail.contexts.empty")}
-				</p>
+				</Typography>
 			</CardSection>
 		);
 	}
@@ -96,15 +100,14 @@ return (
 			title={t("vocabulary.wordDetail.sections.contexts")}
 			rightSlot={
 				lemmaId && !expanded ? (
-					<button
-						type="button"
+					<Button
 						onClick={handleClick}
 						className="border-0 bg-transparent p-0 text-[11.5px] text-acc font-[inherit] hover:underline"
 					>
 						{isFetching
 							? "…"
 							: t("vocabulary.wordDetail.sections.contextsAll")}
-					</button>
+					</Button>
 				) : undefined
 			}
 		>

@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect, useRef } from 'react';
 import type { FeedbackThread } from "@/entities/feedback";
 import { FeedbackThreadItem } from "./feedback-thread-item";
@@ -58,11 +62,10 @@ export const FeedbackThreadList = ({
 			].join(" ")}
 		>
 			<div className="shrink-0 border-b border-bd-1 px-4 pb-2.5 pt-3.5">
-				<p className="mb-2.5 text-xs font-semibold text-t-1">
+				<Typography tag="p" className="mb-2.5 text-xs font-semibold text-t-1">
 					{t("feedback.myThreads")}
-				</p>
-				<button
-					type="button"
+				</Typography>
+				<Button
 					onClick={onNewThread}
 					className="flex h-[30px] w-full cursor-pointer items-center justify-center gap-1.5 rounded-base bg-acc text-[12px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88]"
 				>
@@ -77,7 +80,7 @@ export const FeedbackThreadList = ({
 						<path d="M7 2v10M2 7h10" />
 					</svg>
 					{t("feedback.newThread")}
-				</button>
+				</Button>
 			</div>
 
 			<div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:w-0">

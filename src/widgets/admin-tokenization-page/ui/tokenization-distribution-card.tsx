@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { TokenizationDistribution } from "@/entities/token";
 
@@ -86,9 +88,9 @@ export const TokenizationDistributionCard = ({
 	return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 			<div className="flex items-center border-b border-bd-1 px-3.5 py-[11px]">
-				<span className="text-[11px] font-semibold uppercase tracking-[0.4px] text-t-2">
+				<Typography tag="span" className="text-[11px] font-semibold uppercase tracking-[0.4px] text-t-2">
 					{t("admin.tokenization.sidePanel.distribution")}
-				</span>
+				</Typography>
 			</div>
 
 			{!distribution ? (
@@ -140,14 +142,14 @@ export const TokenizationDistributionCard = ({
 							},
 						].map(({ label, value, pct, color }) => (
 							<div key={label} className="flex items-center gap-2.5">
-								<span className="size-2 shrink-0 rounded-full" style={{ background: color }} />
-								<span className="flex-1 text-[12px] text-t-2">{label}</span>
-								<span className="text-[11.5px] font-semibold text-t-1">
+								<Typography tag="span" className="size-2 shrink-0 rounded-full" style={{ background: color }} />
+								<Typography tag="span" className="flex-1 text-[12px] text-t-2">{label}</Typography>
+								<Typography tag="span" className="text-[11.5px] font-semibold text-t-1">
 									{value.toLocaleString()}
-								</span>
-								<span className="text-[10.5px] text-t-3 w-9 text-right">
+								</Typography>
+								<Typography tag="span" className="text-[10.5px] text-t-3 w-9 text-right">
 									{pct}%
-								</span>
+								</Typography>
 							</div>
 						))}
 					</div>
@@ -166,10 +168,10 @@ export const TokenizationDistributionCard = ({
 								] as [keyof typeof distribution.sources, number][]
 							).map(([key, val]) => (
 								<div key={key} className="flex items-center justify-between text-[11.5px]">
-									<span className="text-t-3">
+									<Typography tag="span" className="text-t-3">
 										{t(`admin.tokenization.sidePanel.sources.${key}`)}
-									</span>
-									<span className="font-medium text-t-2">{val.toLocaleString()}</span>
+									</Typography>
+									<Typography tag="span" className="font-medium text-t-2">{val.toLocaleString()}</Typography>
 								</div>
 							))}
 						</div>

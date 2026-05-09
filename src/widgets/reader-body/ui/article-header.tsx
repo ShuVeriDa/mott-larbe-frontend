@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import type { TextPageResponse } from "@/entities/text";
 import { useI18n } from "@/shared/lib/i18n";
 
@@ -18,31 +20,31 @@ export const ArticleHeader = ({ data, currentPage }: ArticleHeaderProps) => {
 		<header className="mb-7 border-b border-hairline border-bd-1 pb-6">
 			<div className="mb-3 flex flex-wrap gap-1.5">
 				{data.level ? (
-					<span className={`${badgeClass} bg-amb-bg text-amb-t`}>
+					<Typography tag="span" className={`${badgeClass} bg-amb-bg text-amb-t`}>
 						{data.level}
-					</span>
+					</Typography>
 				) : null}
-				<span className={`${badgeClass} bg-surf-3 text-t-2`}>
+				<Typography tag="span" className={`${badgeClass} bg-surf-3 text-t-2`}>
 					{data.language}
-				</span>
+				</Typography>
 			</div>
-			<h1 className="mb-2.5 font-display text-[clamp(1.5rem,3vw,2rem)] font-medium leading-[1.35] tracking-[-0.3px] text-t-1">
+			<Typography tag="h1" className="mb-2.5 font-display text-[clamp(1.5rem,3vw,2rem)] font-medium leading-[1.35] tracking-[-0.3px] text-t-1">
 				{data.title}
-			</h1>
+			</Typography>
 			<div className="flex flex-wrap items-center gap-2">
 				{data.author ? (
-					<span className="text-[12px] text-t-2">{data.author}</span>
+					<Typography tag="span" className="text-[12px] text-t-2">{data.author}</Typography>
 				) : null}
 				{data.author ? (
-					<span aria-hidden="true" className="size-0.5 rounded-full bg-t-4" />
+					<Typography tag="span" aria-hidden="true" className="size-0.5 rounded-full bg-t-4" />
 				) : null}
-				<span className="text-[12px] text-t-3">
+				<Typography tag="span" className="text-[12px] text-t-3">
 					{t("reader.body.byline", {
 						count: data.wordCount,
 						current: currentPage,
 						total: data.totalPages,
 					})}
-				</span>
+				</Typography>
 			</div>
 		</header>
 	);

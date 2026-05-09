@@ -1,4 +1,6 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
 import { ComponentProps, useState } from 'react';
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
@@ -51,9 +53,9 @@ return (
 				onClose={handleClose}
 				title={t("vocabulary.card.delete")}
 			>
-				<p className="mb-4 text-[14px] text-t-2">
+				<Typography tag="p" className="mb-4 text-[14px] text-t-2">
 					{t("vocabulary.wordDetail.deleteConfirm", { word })}
-				</p>
+				</Typography>
 				<ModalActions>
 					<Button
 						variant="ghost"

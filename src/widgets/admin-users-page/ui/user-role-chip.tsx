@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { RoleName } from "@/entities/admin-user";
 
+import { Typography } from "@/shared/ui/typography";
 const roleStyles: Record<RoleName, string> = {
 	learner: "bg-surf-3 text-t-2",
 	support: "bg-acc-bg text-acc-t",
@@ -16,12 +17,12 @@ interface UserRoleChipProps {
 }
 
 export const UserRoleChip = ({ role, label }: UserRoleChipProps) => (
-	<span
+	<Typography tag="span"
 		className={cn(
 			"rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
 			roleStyles[role],
 		)}
 	>
 		{label}
-	</span>
+	</Typography>
 );

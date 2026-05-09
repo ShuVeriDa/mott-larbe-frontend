@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { ComponentProps } from 'react';
 import type { AdminLogItem } from "@/entities/admin-log";
 import { LevelBadge } from "./level-badge";
@@ -57,21 +59,21 @@ export const LogsMobileList = ({
 				>
 					<div className="mb-1.5 flex items-center gap-1.5">
 						<LevelBadge level={item.level} />
-						<span className="rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[10.5px] font-medium text-t-2">
+						<Typography tag="span" className="rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[10.5px] font-medium text-t-2">
 							{item.service}
-						</span>
-						<span className="ml-auto tabular-nums text-[11px] text-t-3 whitespace-nowrap">
+						</Typography>
+						<Typography tag="span" className="ml-auto tabular-nums text-[11px] text-t-3 whitespace-nowrap">
 							{formatTime(item.timestamp)}
-						</span>
+						</Typography>
 					</div>
 					<div className="mb-1.5 line-clamp-2 font-mono text-[13px] leading-[1.45] text-t-1">
 						{item.message}
 					</div>
 					<div className="flex items-center gap-2">
 						<DurationBadge durationMs={item.durationMs} />
-						<span className="ml-auto font-mono text-[11px] text-t-4">
+						<Typography tag="span" className="ml-auto font-mono text-[11px] text-t-4">
 							{shortTrace(item.traceId)}
-						</span>
+						</Typography>
 					</div>
 				</div>
 			);

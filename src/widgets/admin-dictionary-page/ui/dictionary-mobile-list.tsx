@@ -5,6 +5,8 @@ import { CefrBadge } from "@/entities/dictionary";
 import type { AdminDictListItem } from "@/entities/dictionary";
 import { PosBadge } from "./pos-badge";
 
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 const formatDate = (iso: string) =>
 	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
 
@@ -60,20 +62,19 @@ export const DictionaryMobileList = ({
 							/>
 						</div>
 						{item.translation && (
-							<p className="mb-1 text-[12px] text-t-3 line-clamp-1">{item.translation}</p>
+							<Typography tag="p" className="mb-1 text-[12px] text-t-3 line-clamp-1">{item.translation}</Typography>
 						)}
 						<div className="flex items-center gap-3 text-[11px] text-t-3">
-							<span>
-								{t("admin.dictionary.table.meanings")}: <span className={cn("font-medium", item.sensesCount === 0 && "text-red-t")}>{item.sensesCount}</span>
-							</span>
-							<span>
-								{t("admin.dictionary.table.forms")}: <span className="font-medium text-t-2">{item.formsCount}</span>
-							</span>
-							<span>{formatDate(item.createdAt ?? "")}</span>
+							<Typography tag="span">
+								{t("admin.dictionary.table.meanings")}: <Typography tag="span" className={cn("font-medium", item.sensesCount === 0 && "text-red-t")}>{item.sensesCount}</Typography>
+							</Typography>
+							<Typography tag="span">
+								{t("admin.dictionary.table.forms")}: <Typography tag="span" className="font-medium text-t-2">{item.formsCount}</Typography>
+							</Typography>
+							<Typography tag="span">{formatDate(item.createdAt ?? "")}</Typography>
 						</div>
 					</div>
-					<button
-						type="button"
+					<Button
 						onClick={handleClick}
 						className="shrink-0 mt-0.5 flex size-[30px] cursor-pointer items-center justify-center rounded-base border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 					>
@@ -81,7 +82,7 @@ export const DictionaryMobileList = ({
 							<path d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4" strokeLinecap="round" />
 							<path d="M4 5l.7 7.5A1 1 0 005.7 13h4.6a1 1 0 001-.95L12 5" strokeLinecap="round" />
 						</svg>
-					</button>
+					</Button>
 				</div>
 			);
 			})}

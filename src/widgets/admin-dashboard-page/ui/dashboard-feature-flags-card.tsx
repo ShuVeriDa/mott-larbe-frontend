@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
@@ -15,8 +19,7 @@ interface FlagToggleProps {
 const FlagToggle = ({ flag, onToggle }: FlagToggleProps) => {
   const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onToggle(flag.id, flag.isEnabled);
   return (
-	<button
-		type="button"
+	<Button
 		onClick={handleClick}
 		aria-label={flag.key}
 		aria-checked={flag.isEnabled}
@@ -26,13 +29,13 @@ const FlagToggle = ({ flag, onToggle }: FlagToggleProps) => {
 			flag.isEnabled ? "bg-acc" : "bg-surf-4",
 		)}
 	>
-		<span
+		<Typography tag="span"
 			className={cn(
 				"absolute top-[2px] size-[14px] rounded-full bg-white shadow-sm transition-[left] duration-200",
 				flag.isEnabled ? "left-[18px]" : "left-[2px]",
 			)}
 		/>
-	</button>
+	</Button>
 );
 };
 
@@ -48,9 +51,9 @@ export const DashboardFeatureFlagsCard = ({ flags, onToggle }: DashboardFeatureF
 	return (
 		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
 			<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
-				<span className="text-[13px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.featureFlags.title")}
-				</span>
+				</Typography>
 				<Link
 					href={`/${params.lang}/admin/feature-flags`}
 					className="shrink-0 text-[11.5px] text-acc hover:underline"

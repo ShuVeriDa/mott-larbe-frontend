@@ -1,4 +1,8 @@
 "use client";
+
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect, useRef } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackThread, AdminFeedbackTab, FeedbackType } from "@/entities/feedback";
@@ -90,9 +94,8 @@ return (
 					{TAB_KEYS.map(({ key, label }) => {
 					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onTabChange(key);
 					  return (
-						<button
+						<Button
 							key={key}
-							type="button"
 							onClick={handleClick}
 							className={cn(
 								"flex flex-1 items-center justify-center gap-1 rounded-md py-[5px] text-[11.5px] font-medium transition-all",
@@ -103,7 +106,7 @@ return (
 						>
 							{t(label)}
 							{key === "OPEN" && openCount > 0 && (
-								<span
+								<Typography tag="span"
 									className={cn(
 										"rounded-[3px] px-1 py-px text-[9.5px] font-bold",
 										tab === "OPEN"
@@ -112,9 +115,9 @@ return (
 									)}
 								>
 									{openCount}
-								</span>
+								</Typography>
 							)}
-						</button>
+						</Button>
 					);
 					})}
 				</div>
@@ -143,9 +146,8 @@ return (
 				{TYPE_FILTERS.map(({ key, label }) => {
 				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onTypeChange(key);
 				  return (
-					<button
+					<Button
 						key={key}
-						type="button"
 						onClick={handleClick}
 						className={cn(
 							"h-6 shrink-0 rounded-[5px] border px-2 text-[11px] font-medium transition-all",
@@ -155,7 +157,7 @@ return (
 						)}
 					>
 						{t(label)}
-					</button>
+					</Button>
 				);
 				})}
 			</div>

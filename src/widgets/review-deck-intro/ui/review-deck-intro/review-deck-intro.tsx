@@ -124,7 +124,7 @@ export const ReviewDeckIntro = ({
 
 			{premiumLocked ? (
 				<div className="mt-4 flex w-full max-w-[340px] flex-col items-center gap-2 rounded-card border-hairline border-pur/20 bg-pur-bg p-4 text-center">
-					<span className="text-[20px]" aria-hidden="true">🔒</span>
+					<Typography tag="span" className="text-[20px]" aria-hidden="true">🔒</Typography>
 					<Typography
 						tag="h2"
 						className="text-[13px] font-semibold text-pur-t"
@@ -134,13 +134,12 @@ export const ReviewDeckIntro = ({
 					<Typography className="text-[12px] leading-normal text-t-3">
 						{t("review.deck.intro.premium.subtitle")}
 					</Typography>
-					<button
-						type="button"
+					<Button
 						onClick={onUpgrade}
 						className="h-8 cursor-pointer rounded-base bg-pur px-4 text-[12px] font-semibold text-white transition-opacity hover:opacity-[0.88]"
 					>
 						{t("review.deck.intro.premium.cta")}
-					</button>
+					</Button>
 				</div>
 			) : null}
 		</section>

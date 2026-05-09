@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/cn";
 
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string, vars?: Record<string, string | number>) => string;
 
 interface TextProgressCardProps {
@@ -35,18 +36,18 @@ export const TextProgressCard = ({
 
 	return (
 		<div className="bg-surf border border-bd-1 rounded-card px-[17px] py-[15px]">
-			<p className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-3">
+			<Typography tag="p" className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-3">
 				{t("library.textDetail.progress.label")}
-			</p>
-			<p className="font-display text-[30px] font-normal text-t-1 leading-none mb-0.5 max-sm:text-[26px]">
+			</Typography>
+			<Typography tag="p" className="font-display text-[30px] font-normal text-t-1 leading-none mb-0.5 max-sm:text-[26px]">
 				{progressPercent}%
-			</p>
-			<p className="text-xs text-t-3 mb-2.5">
+			</Typography>
+			<Typography tag="p" className="text-xs text-t-3 mb-2.5">
 				{t("library.textDetail.progress.pagesRead", {
 					done: donePages,
 					total: totalPages,
 				})}
-			</p>
+			</Typography>
 
 			<div className="h-[5px] bg-surf-3 rounded-full overflow-hidden mb-1.5">
 				<div
@@ -74,13 +75,13 @@ export const TextProgressCard = ({
 			)}
 
 			{lastReadStr ? (
-				<p className="text-[11px] text-t-3">
+				<Typography tag="p" className="text-[11px] text-t-3">
 					{t("library.textDetail.progress.lastRead", { time: lastReadStr })}
-				</p>
+				</Typography>
 			) : (
-				<p className="text-[11px] text-t-3">
+				<Typography tag="p" className="text-[11px] text-t-3">
 					{t("library.textDetail.progress.notStarted")}
-				</p>
+				</Typography>
 			)}
 		</div>
 	);

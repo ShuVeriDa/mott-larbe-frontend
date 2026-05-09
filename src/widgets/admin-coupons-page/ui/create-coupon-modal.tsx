@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import type {
 	AdminCouponDetail,
 	CouponType,
@@ -53,13 +57,12 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 		<form action={handleSubmit}>
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
-				<h2 className="font-display text-[14px] font-semibold text-t-1">
+				<Typography tag="h2" className="font-display text-[14px] font-semibold text-t-1">
 					{isEdit
 						? t("admin.coupons.modal.titleEdit")
 						: t("admin.coupons.modal.titleNew")}
-				</h2>
-				<button
-					type="button"
+				</Typography>
+				<Button
 					onClick={onClose}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
@@ -73,17 +76,17 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 					>
 						<path d="M2 2l8 8M10 2l-8 8" strokeLinecap="round" />
 					</svg>
-				</button>
+				</Button>
 			</div>
 
 			{/* Body */}
 			<div className="max-h-[70vh] overflow-y-auto p-4">
 				{/* Code + random */}
 				<div className="mb-3">
-					<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.coupons.modal.code")}
-						<span className="ml-1 text-red-t">*</span>
-					</label>
+						<Typography tag="span" className="ml-1 text-red-t">*</Typography>
+					</Typography>
 					<div className="flex gap-1.5">
 						<input
 							value={form.code}
@@ -94,24 +97,23 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 								errors.code ? "border-red" : "border-bd-2",
 							)}
 						/>
-						<button
-							type="button"
+						<Button
 							onClick={handleGenerateCodeClick}
 							className="h-[34px] shrink-0 rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 						>
 							{t("admin.coupons.modal.random")}
-						</button>
+						</Button>
 					</div>
 					{errors.code && (
-						<p className="mt-1 text-[11px] text-red-t">{errors.code}</p>
+						<Typography tag="p" className="mt-1 text-[11px] text-red-t">{errors.code}</Typography>
 					)}
 				</div>
 
 				{/* Name */}
 				<div className="mb-3">
-					<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.coupons.modal.name")}
-					</label>
+					</Typography>
 					<input
 						value={form.name}
 						onChange={handleNameChange}
@@ -123,15 +125,14 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 				{/* Type toggle + amount */}
 				<div className="mb-3 grid grid-cols-2 gap-2.5">
 					<div>
-						<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+						<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 							{t("admin.coupons.modal.type")}
-						</label>
+						</Typography>
 						<div className="flex gap-1">
 							{(["PERCENT", "FIXED"] as CouponType[]).map(tp => {
 							  return (
-								<button
+								<Button
 									key={tp}
-									type="button"
 									data-type={tp}
 									onClick={handleTypeClick}
 									className={cn(
@@ -144,16 +145,16 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 									{tp === "PERCENT"
 										? t("admin.coupons.modal.typePercent")
 										: t("admin.coupons.modal.typeFixed")}
-								</button>
+								</Button>
 							);
 							})}
 						</div>
 					</div>
 					<div>
-						<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+						<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 							{t("admin.coupons.modal.amount")}
-							<span className="ml-1 text-red-t">*</span>
-						</label>
+							<Typography tag="span" className="ml-1 text-red-t">*</Typography>
+						</Typography>
 						<input
 							type="number"
 							min="0"
@@ -167,7 +168,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 							)}
 						/>
 						{errors.amount && (
-							<p className="mt-1 text-[11px] text-red-t">{errors.amount}</p>
+							<Typography tag="p" className="mt-1 text-[11px] text-red-t">{errors.amount}</Typography>
 						)}
 					</div>
 				</div>
@@ -175,12 +176,12 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 				{/* Max redemptions + per user */}
 				<div className="mb-3 grid grid-cols-2 gap-2.5">
 					<div>
-						<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+						<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 							{t("admin.coupons.modal.maxRedemptions")}
-							<span className="ml-1 text-[10.5px] font-normal text-t-3">
+							<Typography tag="span" className="ml-1 text-[10.5px] font-normal text-t-3">
 								{t("admin.coupons.modal.optional")}
-							</span>
-						</label>
+							</Typography>
+						</Typography>
 						<input
 							type="number"
 							min="1"
@@ -191,9 +192,9 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 						/>
 					</div>
 					<div>
-						<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+						<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 							{t("admin.coupons.modal.maxPerUser")}
-						</label>
+						</Typography>
 						<input
 							type="number"
 							min="1"
@@ -206,12 +207,11 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 
 				{/* Applicable plans */}
 				<div className="mb-3">
-					<label className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 						{t("admin.coupons.modal.plans")}
-					</label>
+					</Typography>
 					<div className="flex flex-wrap gap-1.5">
-						<button
-							type="button"
+						<Button
 							onClick={handleAllPlansClick}
 							className={cn(
 								"h-7 rounded-[6px] border px-2.5 text-[11.5px] transition-colors",
@@ -221,12 +221,11 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 							)}
 						>
 							{t("admin.coupons.modal.plansAll")}
-						</button>
+						</Button>
 						{plans.map(p => {
 						  return (
-							<button
+							<Button
 								key={p}
-								type="button"
 								data-plan={p}
 								onClick={handlePlanClick}
 								className={cn(
@@ -237,7 +236,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 								)}
 							>
 								{p.charAt(0) + p.slice(1).toLowerCase()}
-							</button>
+							</Button>
 						);
 						})}
 					</div>
@@ -246,9 +245,9 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 				{/* Dates */}
 				<div className="mb-3 grid grid-cols-2 gap-2.5">
 					<div>
-						<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+						<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 							{t("admin.coupons.modal.validFrom")}
-						</label>
+						</Typography>
 						<input
 							type="date"
 							value={form.validFrom}
@@ -257,9 +256,9 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 						/>
 					</div>
 					<div>
-						<label className="mb-1 block text-[11.5px] font-medium text-t-2">
+						<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 							{t("admin.coupons.modal.validUntil")}
-						</label>
+						</Typography>
 						<input
 							type="date"
 							value={form.validUntil}
@@ -270,48 +269,47 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 							)}
 						/>
 						{errors.validUntil && (
-							<p className="mt-1 text-[11px] text-red-t">{errors.validUntil}</p>
+							<Typography tag="p" className="mt-1 text-[11px] text-red-t">{errors.validUntil}</Typography>
 						)}
 					</div>
 				</div>
 
 				{/* Checkboxes */}
 				<div className="flex flex-wrap gap-4">
-					<label className="flex cursor-pointer items-center gap-2">
+					<Typography tag="label" className="flex cursor-pointer items-center gap-2">
 						<input
 							type="checkbox"
 							checked={form.newUsersOnly}
 							onChange={handleNewUsersOnlyChange}
 							className="h-3.5 w-3.5 cursor-pointer accent-acc"
 						/>
-						<span className="text-[12.5px] text-t-2">
+						<Typography tag="span" className="text-[12.5px] text-t-2">
 							{t("admin.coupons.modal.newUsersOnly")}
-						</span>
-					</label>
-					<label className="flex cursor-pointer items-center gap-2">
+						</Typography>
+					</Typography>
+					<Typography tag="label" className="flex cursor-pointer items-center gap-2">
 						<input
 							type="checkbox"
 							checked={form.isStackable}
 							onChange={handleIsStackableChange}
 							className="h-3.5 w-3.5 cursor-pointer accent-acc"
 						/>
-						<span className="text-[12.5px] text-t-2">
+						<Typography tag="span" className="text-[12.5px] text-t-2">
 							{t("admin.coupons.modal.isStackable")}
-						</span>
-					</label>
+						</Typography>
+					</Typography>
 				</div>
 			</div>
 
 			{/* Footer */}
 			<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-4 py-3">
-				<button
-					type="button"
+				<Button
 					onClick={onClose}
 					className="h-8 rounded-[8px] border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 				>
 					{t("admin.coupons.modal.cancel")}
-				</button>
-				<button
+				</Button>
+				<Button
 					type="submit"
 					disabled={isPending}
 					className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
@@ -319,7 +317,7 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 					{isEdit
 						? t("admin.coupons.modal.save")
 						: t("admin.coupons.modal.create")}
-				</button>
+				</Button>
 			</div>
 		</form>
 	);

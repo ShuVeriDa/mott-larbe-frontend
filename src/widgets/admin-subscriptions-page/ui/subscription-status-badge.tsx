@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { SubscriptionStatus } from "@/entities/admin-subscription";
 
+import { Typography } from "@/shared/ui/typography";
 interface Props {
 	status: SubscriptionStatus;
 	label: string;
@@ -21,13 +22,13 @@ const dotStyles: Record<SubscriptionStatus, string> = {
 };
 
 export const SubscriptionStatusBadge = ({ status, label }: Props) => (
-	<span
+	<Typography tag="span"
 		className={cn(
 			"inline-flex items-center gap-[3px] rounded-[5px] px-[7px] py-[2px] text-[10.5px] font-semibold whitespace-nowrap",
 			styles[status],
 		)}
 	>
-		<span className={cn("size-[5px] shrink-0 rounded-full", dotStyles[status])} />
+		<Typography tag="span" className={cn("size-[5px] shrink-0 rounded-full", dotStyles[status])} />
 		{label}
-	</span>
+	</Typography>
 );

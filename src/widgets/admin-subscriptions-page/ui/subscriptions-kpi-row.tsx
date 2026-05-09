@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminSubscriptionsStats } from "@/entities/admin-subscription";
 
+import { Typography } from "@/shared/ui/typography";
 interface Props {
 	stats: AdminSubscriptionsStats | undefined;
 	isLoading: boolean;
@@ -46,7 +47,7 @@ export const SubscriptionsKpiRow = ({ stats, isLoading }: Props) => {
 				sub={
 					stats?.newThisMonth !== undefined ? (
 						<>
-							<span className="text-grn-t">+{stats.newThisMonth}</span>{" "}
+							<Typography tag="span" className="text-grn-t">+{stats.newThisMonth}</Typography>{" "}
 							{t("admin.subscriptions.kpi.perMonth")}
 						</>
 					) : null
@@ -65,7 +66,7 @@ export const SubscriptionsKpiRow = ({ stats, isLoading }: Props) => {
 				sub={
 					stats?.churnThisMonth !== undefined ? (
 						<>
-							<span className="text-red-t">+{stats.churnThisMonth}</span>{" "}
+							<Typography tag="span" className="text-red-t">+{stats.churnThisMonth}</Typography>{" "}
 							{t("admin.subscriptions.kpi.vsLastMonth")}
 						</>
 					) : null

@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -90,16 +94,15 @@ export const VersionsTimeline = ({
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 			{/* Filter tabs */}
 			<div className="flex items-center justify-between gap-3 border-b border-bd-1 px-4 py-3 max-sm:flex-col max-sm:items-start max-sm:gap-2">
-				<span className="text-[12.5px] font-semibold text-t-1">
+				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("admin.texts.versions.pageTitle")}
-				</span>
+				</Typography>
 				<div className="flex rounded-[8px] bg-surf-2 p-[3px]">
 					{tabs.map(({ key, label }) => {
 					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onStatusFilterChange(key);
 					  return (
-						<button
+						<Button
 							key={key}
-							type="button"
 							onClick={handleClick}
 							className={cn(
 								"rounded-[5px] px-3 py-1 text-[12px] font-medium transition-colors",
@@ -109,7 +112,7 @@ export const VersionsTimeline = ({
 							)}
 						>
 							{label}
-						</button>
+						</Button>
 					);
 					})}
 				</div>

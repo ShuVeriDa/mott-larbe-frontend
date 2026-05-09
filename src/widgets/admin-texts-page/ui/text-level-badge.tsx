@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { TextLevel } from "@/entities/admin-text";
 
+import { Typography } from "@/shared/ui/typography";
 const levelStyles: Record<TextLevel, string> = {
 	A1: "bg-grn-bg text-grn-t",
 	A2: "bg-grn-bg text-grn-t",
@@ -11,16 +12,16 @@ const levelStyles: Record<TextLevel, string> = {
 };
 
 export const TextLevelBadge = ({ level }: { level: TextLevel | null }) => {
-	if (!level) return <span className="text-[11px] text-t-4">—</span>;
+	if (!level) return <Typography tag="span" className="text-[11px] text-t-4">—</Typography>;
 
 	return (
-		<span
+		<Typography tag="span"
 			className={cn(
 				"inline-flex h-[18px] w-[30px] items-center justify-center rounded-[5px] text-[10px] font-bold tracking-[0.3px]",
 				levelStyles[level],
 			)}
 		>
 			{level}
-		</span>
+		</Typography>
 	);
 };

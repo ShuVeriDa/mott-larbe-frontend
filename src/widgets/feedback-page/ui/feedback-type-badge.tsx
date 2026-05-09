@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { FeedbackType } from "@/entities/feedback";
 
+import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string) => string;
 
 interface FeedbackTypeBadgeProps {
@@ -21,7 +22,7 @@ export const FeedbackTypeBadge = ({
 	t,
 	className,
 }: FeedbackTypeBadgeProps) => (
-	<span
+	<Typography tag="span"
 		className={cn(
 			"shrink-0 rounded-[4px] px-1.5 py-0.5 text-[10px] font-semibold",
 			TYPE_STYLES[type],
@@ -29,5 +30,5 @@ export const FeedbackTypeBadge = ({
 		)}
 	>
 		{t(`feedback.threadTypes.${type}`)}
-	</span>
+	</Typography>
 );

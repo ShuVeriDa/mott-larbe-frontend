@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/shared/ui/button";
+
 import { cn } from "@/shared/lib/cn";
 import { Avatar } from "@/shared/ui/avatar";
 import { CreditCardIcon, GlobeIcon, LayoutDashboardIcon, LifeBuoyIcon, LogOutIcon, SettingsIcon, UserIcon } from "lucide-react";
@@ -36,8 +38,7 @@ export const UserMenu = () => {
 	return (
 		<DropdownMenuPrimitive.Root open={open} onOpenChange={setOpen}>
 			<DropdownMenuPrimitive.Trigger asChild>
-				<button
-					type="button"
+				<Button
 					className={cn(
 						"flex w-full items-center gap-2.5 px-3.5 py-1.5 pb-3 text-left transition-colors",
 						"hover:bg-surf-2 focus-visible:outline-none focus-visible:bg-surf-2",
@@ -51,7 +52,7 @@ export const UserMenu = () => {
 						</div>
 						<div className="text-[11px] text-t-3">{user.email}</div>
 					</div>
-				</button>
+				</Button>
 			</DropdownMenuPrimitive.Trigger>
 
 			<DropdownMenuPrimitive.Portal>
@@ -130,9 +131,8 @@ export const UserMenu = () => {
 								{locales.map((locale) => {
 									const active = locale === lang;
 return (
-										<button
+										<Button
 											key={locale}
-											type="button"
 											data-locale={locale}
 											role="radio"
 											aria-checked={active}
@@ -145,7 +145,7 @@ return (
 											)}
 										>
 											{localeShort[locale]}
-										</button>
+										</Button>
 									);
 								})}
 							</div>
@@ -155,8 +155,7 @@ return (
 					{/* Logout */}
 					<div className="border-t border-bd-1 py-1">
 						<DropdownMenuPrimitive.Item asChild>
-							<button
-								type="button"
+							<Button
 								disabled={logout.isPending}
 								onClick={handleLogout}
 								className={cn(
@@ -166,7 +165,7 @@ return (
 							>
 								<LogOutIcon className="size-[13px] shrink-0" strokeWidth={1.75} />
 								{t("nav.userMenu.logout")}
-							</button>
+							</Button>
 						</DropdownMenuPrimitive.Item>
 					</div>
 				</DropdownMenuPrimitive.Content>

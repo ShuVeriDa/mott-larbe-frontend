@@ -1,5 +1,9 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
+import { Button } from "@/shared/ui/button";
+
 import { ComponentProps, ReactNode } from 'react';
 import type {
 	LibraryProgressStatus,
@@ -53,9 +57,9 @@ export const LibraryFilterBar = () => {
 	const handleClick5: NonNullable<ComponentProps<typeof ViewBtn>["onClick"]> = () => setView("list");
 return (
 		<div className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-b border-bd-1 bg-surf px-5 py-2 [scrollbar-width:none] max-sm:px-3 max-sm:gap-1 [&::-webkit-scrollbar]:hidden">
-			<span className="shrink-0 text-[11px] font-medium text-t-3 max-sm:hidden">
+			<Typography tag="span" className="shrink-0 text-[11px] font-medium text-t-3 max-sm:hidden">
 				{t("library.filterLevel")}
-			</span>
+			</Typography>
 
 			<Pill
 				active={level === "all"}
@@ -85,9 +89,9 @@ return (
 
 			<Divider />
 
-			<span className="shrink-0 text-[11px] font-medium text-t-3 max-sm:hidden">
+			<Typography tag="span" className="shrink-0 text-[11px] font-medium text-t-3 max-sm:hidden">
 				{t("library.filterLang")}
-			</span>
+			</Typography>
 
 			<Pill
 				active={lang === "all"}
@@ -121,9 +125,9 @@ return (
 
 			<Divider />
 
-			<span className="shrink-0 text-[11px] font-medium text-t-3 max-sm:hidden">
+			<Typography tag="span" className="shrink-0 text-[11px] font-medium text-t-3 max-sm:hidden">
 				{t("library.filterProgress")}
-			</span>
+			</Typography>
 
 			<Pill
 				active={status === "all"}
@@ -204,8 +208,7 @@ const Pill = ({
 	onClick: () => void;
 	className: string;
 }) => (
-	<button
-		type="button"
+	<Button
 		onClick={onClick}
 		aria-pressed={active}
 		className={cn(
@@ -214,11 +217,11 @@ const Pill = ({
 		)}
 	>
 		{children}
-	</button>
+	</Button>
 );
 
 const Divider = () => (
-	<span className="mx-0.5 h-4 w-px shrink-0 bg-bd-2" aria-hidden="true" />
+	<Typography tag="span" className="mx-0.5 h-4 w-px shrink-0 bg-bd-2" aria-hidden="true" />
 );
 
 const ViewBtn = ({
@@ -232,8 +235,7 @@ const ViewBtn = ({
 	onClick: () => void;
 	"aria-label": string;
 }) => (
-	<button
-		type="button"
+	<Button
 		onClick={onClick}
 		aria-label={ariaLabel}
 		aria-pressed={active}
@@ -243,7 +245,7 @@ const ViewBtn = ({
 		)}
 	>
 		{children}
-	</button>
+	</Button>
 );
 
 const GridIcon = () => (

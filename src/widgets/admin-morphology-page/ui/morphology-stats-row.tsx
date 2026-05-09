@@ -1,5 +1,7 @@
 "use client";
 
+import { Typography } from "@/shared/ui/typography";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { ReactNode } from 'react';
 import type { MorphRuleStats } from "@/entities/morph-rule";
@@ -65,12 +67,12 @@ export const MorphologyStatsRow = ({ stats, isLoading }: Props) => {
         value={`${stats.coveragePct}%`}
         valueClass="text-grn"
         sub={
-          <span>
-            <span
+          <Typography tag="span">
+            <Typography tag="span"
               className="mr-1 inline-block size-1.5 rounded-full bg-grn align-middle"
             />
             {t("admin.morphology.stats.coverageSub")}
-          </span>
+          </Typography>
         }
       />
       <StatCard
