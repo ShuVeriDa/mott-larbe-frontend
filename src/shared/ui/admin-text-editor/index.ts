@@ -2,8 +2,7 @@ export { TbBtn, TbDivider, EditorToolbar, getSlashItems } from "./admin-text-edi
 export { AdminTextMetaStatusSection } from "./admin-text-meta-status-section";
 export { AdminTextMobileActionBar } from "./admin-text-mobile-action-bar";
 export {
-	countChars,
-	countParagraphs,
+	computeDocStats,
 	countWords,
 	hasTextContent,
 } from "./admin-text-editor-stats";

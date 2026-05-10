@@ -7,11 +7,7 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import { AdminTextEditorFooter } from "./admin-text-editor-footer";
 import { AdminTextEditorPageTabs } from "./admin-text-editor-page-tabs";
-import {
-	countChars,
-	countParagraphs,
-	countWords,
-} from "./admin-text-editor-stats";
+import { computeDocStats } from "./admin-text-editor-stats";
 import { AdminTextEditorTitleField } from "./admin-text-editor-title-field";
 import { EditorToolbar, getSlashItems } from "./admin-text-editor-toolbar";
 import { getAdminTextEditorShortcuts } from "./model/get-admin-text-editor-shortcuts";
@@ -67,13 +63,9 @@ export const AdminTextEditorShell = ({
 	});
 
 	const handleUpdate = (doc: TipTapDoc) => {
-		const wordCount = countWords(doc);
-		onPageContentChange(doc, wordCount);
-		setStats({
-			words: wordCount,
-			chars: countChars(doc),
-			paragraphs: countParagraphs(doc),
-		});
+		const { words, chars, paragraphs } = computeDocStats(doc);
+		onPageContentChange(doc, words);
+		setStats({ words, chars, paragraphs });
 	};
 
 	const handleKeyDown = (event: KeyboardEvent) => {
