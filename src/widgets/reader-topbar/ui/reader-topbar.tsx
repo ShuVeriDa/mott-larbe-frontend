@@ -1,16 +1,28 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
 import type { TextPageResponse } from "@/entities/text";
 import { useToggleBookmark } from "@/features/bookmark-text";
-import { useWordLookupStore } from "@/features/word-lookup";
+import { usePageBookmarkToggle } from "@/features/page-bookmark-toggle";
+import {
+	SHEET_LAYOUT_MAX_WIDTH_PX,
+	useWordLookupStore,
+} from "@/features/word-lookup";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
-import { Bookmark, ChevronLeft, PanelRightOpen, Settings } from "lucide-react";
+import {
+	Bookmark,
+	BookMarked,
+	ChevronLeft,
+	List,
+	Maximize2,
+	Minimize2,
+	NotebookPen,
+	PanelRightOpen,
+	Settings,
+} from "lucide-react";
 import Link from "next/link";
 import { ReaderPager } from "./reader-pager";
 
@@ -26,7 +38,16 @@ export interface ReaderTopbarProps {
 	lang: string;
 	currentPage: number;
 	data: TextPageResponse;
-	onOpenSettings: () => void;
+	settingsOpen: boolean;
+	onToggleSettings: () => void;
+	notesOpen: boolean;
+	onToggleNotes: () => void;
+	tocOpen?: boolean;
+	onToggleToc?: () => void;
+	bookmarksOpen?: boolean;
+	onToggleBookmarks?: () => void;
+	focusModeActive?: boolean;
+	onToggleFocusMode?: () => void;
 }
 
 export const ReaderTopbar = ({
@@ -34,15 +55,53 @@ export const ReaderTopbar = ({
 	lang,
 	currentPage,
 	data,
-	onOpenSettings,
+	settingsOpen,
+	onToggleSettings,
+	notesOpen,
+	onToggleNotes,
+	tocOpen,
+	onToggleToc,
+	bookmarksOpen,
+	onToggleBookmarks,
+	focusModeActive,
+	onToggleFocusMode,
 }: ReaderTopbarProps) => {
 	const { t } = useI18n();
-	const { mutate: toggleBookmark, isPending: bookmarking } =
-		useToggleBookmark();
+	const { mutate: toggleBookmark, isPending: bookmarking } = useToggleBookmark();
 	const { success, error } = useToast();
 
+	const snippet = data.page.contentRaw.slice(0, 100);
+	const { isBookmarked: isPageBookmarked, handleToggle: togglePageBookmark } =
+		usePageBookmarkToggle(textId, currentPage, snippet);
+
 	const panelOpen = useWordLookupStore(s => s.panelOpen);
+	const surface = useWordLookupStore(s => s.surface);
+	const activeToken = useWordLookupStore(s => s.activeToken);
 	const togglePanel = useWordLookupStore(s => s.togglePanel);
+	const openInSheet = useWordLookupStore(s => s.openInSheet);
+	const openEmptyWordSheet = useWordLookupStore(s => s.openEmptyWordSheet);
+	const closeSheet = useWordLookupStore(s => s.closeSheet);
+
+	const handleToggleWordPanel = () => {
+		if (
+			typeof window !== "undefined" &&
+			window.innerWidth <= SHEET_LAYOUT_MAX_WIDTH_PX
+		) {
+			if (surface === "sheet") {
+				closeSheet();
+				return;
+			}
+			if (activeToken) {
+				openInSheet(activeToken);
+				return;
+			}
+			openEmptyWordSheet();
+			return;
+		}
+		togglePanel();
+	};
+
+	const wordPanelTogglePressed = panelOpen || surface === "sheet";
 
 	const onBookmark = () => {
 		toggleBookmark(textId, {
@@ -100,22 +159,88 @@ export const ReaderTopbar = ({
 
 			<div className="flex shrink-0 items-center gap-1">
 				<Button
-					onClick={togglePanel}
+					onClick={handleToggleWordPanel}
 					size="bare"
-					aria-pressed={panelOpen}
+					aria-pressed={wordPanelTogglePressed}
 					aria-label={t("reader.topbar.togglePanel")}
-					className={cn(iconBtnClass, "max-md:hidden")}
+					className={iconBtnClass}
 				>
 					<PanelRightOpen className="size-[15px]" strokeWidth={1.4} />
 				</Button>
-				<Button
-					onClick={onOpenSettings}
+
+				{onToggleToc && (
+					<Button
+						onClick={onToggleToc}
+						size="bare"
+						aria-pressed={tocOpen}
+						aria-label={t("reader.topbar.toc")}
+						className={iconBtnClass}
+					>
+						<List className="size-[15px]" strokeWidth={1.4} />
+					</Button>
+				)}
+
+					<Button
+					onClick={togglePageBookmark}
 					size="bare"
+					aria-pressed={isPageBookmarked}
+					aria-label={t("reader.topbar.bookmarks")}
+					className={iconBtnClass}
+				>
+					<BookMarked
+						className="size-[15px]"
+						strokeWidth={1.4}
+						fill={isPageBookmarked ? "currentColor" : "none"}
+					/>
+				</Button>
+
+				{onToggleBookmarks && (
+					<Button
+						onClick={onToggleBookmarks}
+						size="bare"
+						aria-pressed={bookmarksOpen}
+						aria-label={t("reader.topbar.bookmarksList")}
+						className={iconBtnClass}
+					>
+						<List className="size-[15px]" strokeWidth={1.4} />
+					</Button>
+				)}
+
+				<Button
+					onClick={onToggleNotes}
+					size="bare"
+					aria-pressed={notesOpen}
+					aria-label={t("reader.topbar.notes")}
+					className={iconBtnClass}
+				>
+					<NotebookPen className="size-[15px]" strokeWidth={1.4} />
+				</Button>
+
+				<Button
+					onClick={onToggleSettings}
+					size="bare"
+					aria-pressed={settingsOpen}
 					aria-label={t("reader.topbar.settings")}
 					className={iconBtnClass}
 				>
 					<Settings className="size-[15px]" strokeWidth={1.4} />
 				</Button>
+
+				{onToggleFocusMode && (
+					<Button
+						onClick={onToggleFocusMode}
+						size="bare"
+						aria-pressed={focusModeActive}
+						aria-label={t("reader.topbar.focusMode")}
+						className={iconBtnClass}
+					>
+						{focusModeActive
+							? <Minimize2 className="size-[15px]" strokeWidth={1.4} />
+							: <Maximize2 className="size-[15px]" strokeWidth={1.4} />
+						}
+					</Button>
+				)}
+
 				<Button
 					onClick={onBookmark}
 					size="bare"

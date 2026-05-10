@@ -1446,8 +1446,12 @@
 			"prev": "Previous page",
 			"next": "Next page",
 			"togglePanel": "Word panel",
+			"notes": "Notes",
 			"settings": "Reading settings",
-			"bookmark": "Bookmark"
+			"bookmark": "Bookmark",
+			"toc": "Table of contents",
+			"bookmarks": "Bookmarks",
+			"focusMode": "Focus mode"
 		},
 		"body": {
 			"progress": "Reading progress",
@@ -1484,7 +1488,59 @@
 		"settings": {
 			"title": "Reading settings",
 			"size": "Text size",
-			"legend": "Legend"
+			"font": "Font",
+			"columnWidth": "Column width",
+			"pagePadding": "Page padding",
+			"paddingCompact": "Compact",
+			"paddingNormal": "Normal",
+			"paddingWide": "Wide",
+			"lineHeight": "Line height",
+			"lineCompact": "Compact",
+			"lineNormal": "Normal",
+			"lineRelaxed": "Relaxed",
+			"letterSpacing": "Letter spacing",
+			"spacingTight": "Tight",
+			"spacingNormal": "Normal",
+			"spacingWide": "Wide",
+			"legend": "Legend",
+			"theme": "Background",
+			"themeDefault": "Default",
+			"themeSepia": "Sepia",
+			"themeCustom": "Custom"
+		},
+		"notes": {
+			"title": "Notes",
+			"placeholder": "Write a note…",
+			"save": "Save",
+			"cancel": "Cancel",
+			"edit": "Edit",
+			"delete": "Delete",
+			"empty": "No notes on this page yet",
+			"loading": "Loading notes…"
+		},
+		"toc": {
+			"title": "Table of Contents",
+			"empty": "No chapters found",
+			"loading": "Loading...",
+			"page": "Page"
+		},
+		"bookmarks": {
+			"title": "Bookmarks",
+			"empty": "No bookmarks yet",
+			"loading": "Loading...",
+			"addSuccess": "Page bookmarked",
+			"removeSuccess": "Bookmark removed",
+			"failed": "Failed to update bookmark"
+		},
+		"highlight": {
+			"toolbar": "Highlight",
+			"remove": "Remove highlight",
+			"color": {
+				"yellow": "Yellow",
+				"green": "Green",
+				"blue": "Blue",
+				"pink": "Pink"
+			}
 		},
 		"footer": {
 			"size": "Size"

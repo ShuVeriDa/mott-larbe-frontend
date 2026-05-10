@@ -1446,8 +1446,12 @@
 			"prev": "Предыдущая страница",
 			"next": "Следующая страница",
 			"togglePanel": "Панель слова",
+			"notes": "Заметки",
 			"settings": "Настройки чтения",
-			"bookmark": "Закладка"
+			"bookmark": "Закладка",
+			"toc": "Оглавление",
+			"bookmarks": "Закладки",
+			"focusMode": "Режим фокуса"
 		},
 		"body": {
 			"progress": "Прогресс по тексту",
@@ -1484,7 +1488,59 @@
 		"settings": {
 			"title": "Настройки чтения",
 			"size": "Размер текста",
-			"legend": "Обозначения"
+			"font": "Шрифт",
+			"columnWidth": "Ширина колонки",
+			"pagePadding": "Отступы страницы",
+			"paddingCompact": "Узкие",
+			"paddingNormal": "Обычные",
+			"paddingWide": "Широкие",
+			"lineHeight": "Межстрочный интервал",
+			"lineCompact": "Сжатый",
+			"lineNormal": "Обычный",
+			"lineRelaxed": "Свободный",
+			"letterSpacing": "Межбуквенный интервал",
+			"spacingTight": "Узкий",
+			"spacingNormal": "Обычный",
+			"spacingWide": "Широкий",
+			"legend": "Обозначения",
+			"theme": "Фон",
+			"themeDefault": "Стандартный",
+			"themeSepia": "Сепия",
+			"themeCustom": "Свой цвет"
+		},
+		"notes": {
+			"title": "Заметки",
+			"placeholder": "Написать заметку…",
+			"save": "Сохранить",
+			"cancel": "Отмена",
+			"edit": "Редактировать",
+			"delete": "Удалить",
+			"empty": "На этой странице пока нет заметок",
+			"loading": "Загрузка заметок…"
+		},
+		"toc": {
+			"title": "Оглавление",
+			"empty": "Главы не найдены",
+			"loading": "Загрузка...",
+			"page": "Стр."
+		},
+		"bookmarks": {
+			"title": "Закладки",
+			"empty": "Закладок пока нет",
+			"loading": "Загрузка...",
+			"addSuccess": "Страница добавлена в закладки",
+			"removeSuccess": "Закладка удалена",
+			"failed": "Не удалось обновить закладку"
+		},
+		"highlight": {
+			"toolbar": "Выделить",
+			"remove": "Убрать выделение",
+			"color": {
+				"yellow": "Жёлтый",
+				"green": "Зелёный",
+				"blue": "Синий",
+				"pink": "Розовый"
+			}
 		},
 		"footer": {
 			"size": "Размер"

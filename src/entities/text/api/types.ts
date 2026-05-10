@@ -4,12 +4,13 @@ export type TextLanguage = "CHE" | "RU" | "EN" | string;
 
 export interface TextToken {
 	id: string;
-	text: string;
+	position: number;
+	original: string;
 	normalized: string;
-	lemmaId: string;
+	lemmaId: string | null;
 	userStatus: LearningLevel | null;
-	start: number;
-	end: number;
+	startOffset: number;
+	endOffset: number;
 }
 
 export interface TextPageData {

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import type { Metadata } from "next";
-import { Playfair_Display, Golos_Text, Geist_Mono, Inter } from "next/font/google";
+import { Playfair_Display, Golos_Text, Geist_Mono, Inter, Lora } from "next/font/google";
 import { headers } from "next/headers";
 import { QueryProvider } from "@/shared/ui/query-provider";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
@@ -29,6 +29,12 @@ const geistMono = Geist_Mono({
 	subsets: ["latin"],
 });
 
+const lora = Lora({
+	variable: "--font-lora",
+	subsets: ["latin", "cyrillic"],
+	weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
 	title: "Mott & Larbe",
 	description: "Mott & Larbe",
@@ -44,7 +50,7 @@ const RootLayout = async ({
 	return (
 		<html
 			lang={locale}
-			className={cn("h-full", "antialiased", golosText.variable, playfairDisplay.variable, geistMono.variable, "font-sans", inter.variable, playfairDisplayHeading.variable)}
+			className={cn("h-full", "antialiased", golosText.variable, playfairDisplay.variable, geistMono.variable, lora.variable, "font-sans", inter.variable, playfairDisplayHeading.variable)}
 			suppressHydrationWarning
 		>
 			<body className="min-h-full flex flex-col" suppressHydrationWarning>

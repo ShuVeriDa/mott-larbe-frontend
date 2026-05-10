@@ -11,9 +11,11 @@ import {
 } from "../../model/font-size-store";
 
 const SIZES: Array<{ value: ReaderFontSize; label: string }> = [
-	{ value: "sm", label: "A−" },
-	{ value: "md", label: "A" },
-	{ value: "lg", label: "A+" },
+	{ value: "xs", label: "13px" },
+	{ value: "sm", label: "15px" },
+	{ value: "md", label: "17px" },
+	{ value: "lg", label: "19px" },
+	{ value: "xl", label: "22px" },
 ];
 
 export interface FontSizeGroupProps {
@@ -37,8 +39,8 @@ export const FontSizeGroup = ({
 		>
 			{SIZES.map((item) => {
 				const active = item.value === size;
-								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setSize(item.value);
-return (
+				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setSize(item.value);
+				return (
 					<Button
 						key={item.value}
 						variant="bare"
@@ -47,7 +49,7 @@ return (
 						aria-pressed={active}
 						className={cn(
 							"h-[26px] rounded-[5px] border-hairline border-bd-1 px-[9px]",
-							"text-[11px] font-medium transition-colors duration-100",
+							"text-[11px] font-medium leading-none transition-colors duration-100",
 							active
 								? "border-acc/20 bg-acc-bg text-acc-t"
 								: "bg-surf-2 text-t-2 hover:border-bd-2 hover:text-t-1",

@@ -1,7 +1,6 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { ComponentProps, type MouseEvent, type Ref } from "react";
+import { type ComponentProps, type MouseEvent, type Ref } from "react";
 import { cn } from "@/shared/lib/cn";
 import { tokenStatusClass } from "../../lib/status-class";
 import type { TextToken } from "../../api";
@@ -27,11 +26,11 @@ export const ArticleToken = ({ token, active, onSelect, ref }: ArticleTokenProps
 	};
 
 	return (
-		<Typography tag="span"
+		<span
 			ref={ref}
 			role="button"
 			tabIndex={0}
-			aria-label={token.text}
+			aria-label={token.original}
 			data-token-id={token.id}
 			onClick={handleClick}
 			onKeyDown={handleKeyDown}
@@ -42,8 +41,8 @@ export const ArticleToken = ({ token, active, onSelect, ref }: ArticleTokenProps
 				active && "bg-acc-bg text-acc-t",
 			)}
 		>
-			{token.text}
-		</Typography>
+			{token.original}
+		</span>
 	);
 };
 

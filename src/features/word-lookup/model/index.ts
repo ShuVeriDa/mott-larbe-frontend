@@ -4,4 +4,7 @@ export {
 	type WordLookupState,
 	type WordLookupSurface,
 } from "./word-lookup-store";
-export { useSelectToken } from "./use-select-token";
+export {
+	SHEET_LAYOUT_MAX_WIDTH_PX,
+	useSelectToken,
+} from "./use-select-token";

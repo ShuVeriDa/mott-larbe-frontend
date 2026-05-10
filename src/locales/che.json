@@ -1446,8 +1446,12 @@
 			"prev": "Хьалхара аг1о",
 			"next": "Кхиаран аг1о",
 			"togglePanel": "Дешан панель",
+			"notes": "Тептарш",
 			"settings": "Доьшаран нисдарш",
-			"bookmark": "Билгало"
+			"bookmark": "Билгало",
+			"toc": "Оглавление",
+			"bookmarks": "Закладки",
+			"focusMode": "Режим фокуса"
 		},
 		"body": {
 			"progress": "Доьшаран прогресс",
@@ -1484,7 +1488,59 @@
 		"settings": {
 			"title": "Доьшаран нисдарш",
 			"size": "Йозанан барам",
-			"legend": "Билгалонаш"
+			"font": "Шрифт",
+			"columnWidth": "Колонкан шоралла",
+			"pagePadding": "Аг1онан отступаш",
+			"paddingCompact": "Жима",
+			"paddingNormal": "Юккъера",
+			"paddingWide": "Шуьйра",
+			"lineHeight": "Некъийн барам",
+			"lineCompact": "Хийца",
+			"lineNormal": "Юккъера",
+			"lineRelaxed": "Шуьйра",
+			"letterSpacing": "Элпийн хьалха",
+			"spacingTight": "Гуттаренна",
+			"spacingNormal": "Юккъера",
+			"spacingWide": "Шуьйра",
+			"legend": "Билгалонаш",
+			"theme": "Фон",
+			"themeDefault": "Стандартный",
+			"themeSepia": "Сепия",
+			"themeCustom": "Свой цвет"
+		},
+		"notes": {
+			"title": "Тептарш",
+			"placeholder": "Тептар яздан…",
+			"save": "Сохрани",
+			"cancel": "ДIаяккха",
+			"edit": "Нисйан",
+			"delete": "ДIаяккха",
+			"empty": "Хlокху аг1онехь тептарш яц",
+			"loading": "Тептарш лоьху…"
+		},
+		"toc": {
+			"title": "Оглавление",
+			"empty": "Главы не найдены",
+			"loading": "Загрузка...",
+			"page": "Стр."
+		},
+		"bookmarks": {
+			"title": "Закладки",
+			"empty": "Закладок пока нет",
+			"loading": "Загрузка...",
+			"addSuccess": "Страница добавлена в закладки",
+			"removeSuccess": "Закладка удалена",
+			"failed": "Не удалось обновить закладку"
+		},
+		"highlight": {
+			"toolbar": "Нийсаде",
+			"remove": "Нийсаде дӀаяккха",
+			"color": {
+				"yellow": "Можа",
+				"green": "Баьццара",
+				"blue": "СӀена",
+				"pink": "РозовӀе"
+			}
 		},
 		"footer": {
 			"size": "Барам"

@@ -16,3 +16,4 @@ export {
 export { tokenStatusClass } from "./lib/status-class";
 export { ArticleToken } from "./ui/article-token";
 export { ArticleTokenized } from "./ui/article-tokenized";
+export { ArticleRich } from "./ui/article-rich";

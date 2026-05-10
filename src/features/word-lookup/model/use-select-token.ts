@@ -3,7 +3,11 @@ import { type MouseEvent } from 'react';
 import type { TextToken } from "@/entities/text";
 import { useWordLookupStore } from "./word-lookup-store";
 
-const MOBILE_BREAKPOINT = 640;
+/**
+ * Matches Tailwind `max-md`: viewports narrower than `--breakpoint-md` (768px).
+ * Word lookup uses bottom sheet here; sidebar panel exists only ≥768px.
+ */
+export const SHEET_LAYOUT_MAX_WIDTH_PX = 767;
 
 export const useSelectToken = () => {
 	const openInPopup = useWordLookupStore((s) => s.openInPopup);
@@ -12,11 +16,11 @@ export const useSelectToken = () => {
 	const panelPinned = useWordLookupStore((s) => s.panelPinned);
 
 	return (token: TextToken, event: MouseEvent<HTMLSpanElement>) => {
-		const isMobile =
+		const useSheetLayout =
 			typeof window !== "undefined" &&
-			window.innerWidth <= MOBILE_BREAKPOINT;
+			window.innerWidth <= SHEET_LAYOUT_MAX_WIDTH_PX;
 
-		if (isMobile) {
+		if (useSheetLayout) {
 			openInSheet(token);
 			return;
 		}

@@ -28,10 +28,9 @@ export const WordPanel = ({ textId }: WordPanelProps) => {
 		<aside
 			aria-hidden={!open}
 			className={cn(
-				"flex shrink-0 flex-col overflow-hidden bg-surf transition-[width,border-color] duration-250 max-md:hidden",
-				open
-					? "w-[296px] border-l border-hairline border-bd-1"
-					: "w-0 border-l border-l-transparent",
+				"flex shrink-0 flex-col overflow-hidden bg-surf max-md:hidden",
+				"border-l border-hairline transition-[border-color] duration-200",
+				open ? "w-[296px] border-bd-1" : "w-0 min-w-0 border-l-transparent",
 			)}
 		>
 			<div className="flex shrink-0 items-center justify-between border-b border-hairline border-bd-1 px-3.5 py-2.5">

@@ -16,7 +16,7 @@ export const tokenizeContent = (
 ): TokenizedParagraph[] => {
 	if (!contentRaw) return [];
 
-	const sorted = [...tokens].sort((a, b) => a.start - b.start);
+	const sorted = [...tokens].sort((a, b) => a.startOffset - b.startOffset);
 	const paragraphs: TokenizedParagraph[] = [];
 
 	let cursor = 0;
@@ -39,21 +39,21 @@ export const tokenizeContent = (
 
 		while (
 			tokenIdx < sorted.length &&
-			sorted[tokenIdx].start < paraEnd
+			sorted[tokenIdx].startOffset < paraEnd
 		) {
 			const tok = sorted[tokenIdx];
-			if (tok.start < cursor) {
+			if (tok.startOffset < cursor) {
 				tokenIdx += 1;
 				continue;
 			}
-			if (textCursor < tok.start) {
+			if (textCursor < tok.startOffset) {
 				segments.push({
 					kind: "text",
-					value: contentRaw.slice(textCursor, tok.start),
+					value: contentRaw.slice(textCursor, tok.startOffset),
 				});
 			}
 			segments.push({ kind: "token", token: tok });
-			textCursor = tok.end;
+			textCursor = tok.endOffset;
 			tokenIdx += 1;
 		}
 

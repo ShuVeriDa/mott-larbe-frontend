@@ -77,7 +77,7 @@ const PopupBody = ({
 		<>
 			<div className="border-b border-hairline border-bd-1 px-3.5 pt-3.5 pb-2.5">
 				<div className="mb-1 text-[17px] font-semibold tracking-[-0.2px] text-t-1">
-					{token.text}
+					{token.original}
 				</div>
 				<div className="text-[11.5px] text-t-3">
 					{t("reader.panel.baseForm")}:{" "}
@@ -171,7 +171,7 @@ export const WordPopup = () => {
 			/>
 			<div
 				role="dialog"
-				aria-label={token.text}
+				aria-label={token.original}
 				className="fixed z-[200] w-[264px] overflow-hidden rounded-card border-hairline border-bd-2 bg-surf shadow-lg"
 				style={{ left: position.left, top: position.top }}
 			>

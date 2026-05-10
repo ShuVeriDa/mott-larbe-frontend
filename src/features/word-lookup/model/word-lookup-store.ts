@@ -21,6 +21,8 @@ export interface WordLookupState {
 	openInPopup: (token: TextToken, anchor: PopupAnchor) => void;
 	openInPanel: (token: TextToken | null) => void;
 	openInSheet: (token: TextToken) => void;
+	/** Narrow layout: word tray open with no token (empty hint UI). */
+	openEmptyWordSheet: () => void;
 	togglePanel: () => void;
 	closePanel: () => void;
 	closePopup: () => void;
@@ -51,6 +53,12 @@ export const useWordLookupStore = create<WordLookupState>((set) => ({
 	openInSheet: (token) =>
 		set({
 			activeToken: token,
+			surface: "sheet",
+			anchor: null,
+		}),
+	openEmptyWordSheet: () =>
+		set({
+			activeToken: null,
 			surface: "sheet",
 			anchor: null,
 		}),

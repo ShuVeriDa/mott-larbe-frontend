@@ -79,7 +79,7 @@ const PanelBody = ({
 	return (
 		<div className="flex-1 overflow-y-auto [scrollbar-width:thin]">
 			<PanelHeader
-				word={token.text}
+				word={token.original}
 				baseForm={lookup.baseForm}
 				tags={lookup.tags}
 				baseLabel={t("reader.panel.baseForm")}
@@ -105,7 +105,7 @@ const PanelBody = ({
 
 			{lookup.forms.length > 0 ? (
 				<Section title={t("reader.panel.sections.forms")}>
-					<WordFormsChips forms={lookup.forms} current={token.text} />
+					<WordFormsChips forms={lookup.forms} current={token.original} />
 				</Section>
 			) : null}
 
@@ -113,7 +113,7 @@ const PanelBody = ({
 				<WordExamplesList
 					lemmaId={lookup.lemmaId}
 					fallback={lookup.examples}
-					highlight={token.text}
+					highlight={token.original}
 				/>
 			</Section>
 

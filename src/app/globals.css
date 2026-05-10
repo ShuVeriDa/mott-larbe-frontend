@@ -167,6 +167,25 @@
 }
 
 /* ═══════════════════════════════════════════
+   DESIGN TOKENS — SEPIA READER THEME
+   ═══════════════════════════════════════════ */
+[data-reader-theme="sepia"] {
+	--bg: #f4efe6;
+	--panel: #ede8de;
+	--surf: #ede8de;
+	--surf-2: #e6e0d4;
+	--surf-3: #ddd6c8;
+	--surf-4: #cec6b5;
+	--t-1: #3b2f1e;
+	--t-2: #5c4a34;
+	--t-3: #8a7060;
+	--t-4: #b5a28e;
+	--bd-1: rgba(92, 74, 52, 0.12);
+	--bd-2: rgba(92, 74, 52, 0.2);
+	--bd-3: rgba(92, 74, 52, 0.35);
+}
+
+/* ═══════════════════════════════════════════
    TAILWIND THEME MAPPING
    ═══════════════════════════════════════════ */
 @theme inline {
@@ -230,6 +249,7 @@
 
 	/* Fonts */
 	--font-sans: var(--font-sans);
+	--font-serif: var(--font-lora), Georgia, serif;
 	--font-display: var(--font-playfair), Georgia, serif;
 	--font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
 	--font-heading: var(--font-heading);

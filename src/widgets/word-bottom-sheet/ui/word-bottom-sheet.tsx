@@ -2,10 +2,6 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { Button } from "@/shared/ui/button";
-import { useEffect } from 'react';
-import { createPortal } from "react-dom";
-import { Plus, X } from "lucide-react";
 import type { TextToken } from "@/entities/text";
 import { useWordLookup, type WordLookupResponse } from "@/entities/word";
 import {
@@ -17,8 +13,18 @@ import { useWordLookupStore } from "@/features/word-lookup";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
+import { Button } from "@/shared/ui/button";
+import {
+	READER_MOBILE_SHEET_OVERLAY_CLASSES,
+	ReaderMobileSheetHeader,
+} from "@/shared/ui/reader-mobile-sheet-header";
+import { WordPanelEmpty } from "@/widgets/word-panel";
+import { Plus, X } from "lucide-react";
+import type { MouseEvent } from "react";
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
 
-const SheetContent = ({
+const SheetBody = ({
 	token,
 	lookup,
 	textId,
@@ -35,7 +41,7 @@ const SheetContent = ({
 	const { mutate: remove, isPending: removing } = useRemoveFromVocabulary();
 	const isPending = adding || removing;
 
-	const onPrimary = () => {
+	const handlePrimaryClick = () => {
 		if (lookup.inDictionary && lookup.dictionaryEntryId) {
 			remove(
 				{ dictionaryEntryId: lookup.dictionaryEntryId, tokenId: token.id },
@@ -56,43 +62,43 @@ const SheetContent = ({
 	};
 
 	return (
-		<div className="flex max-h-[85vh] flex-col">
-			<div className="flex justify-center pt-2.5 pb-1.5">
-				<div className="h-1 w-9 rounded-full bg-surf-4" />
-			</div>
-			<div className="flex-1 overflow-y-auto">
-				<div className="border-b border-hairline border-bd-1 px-4 pb-3.5">
+		<div className="flex min-h-0 flex-1 flex-col">
+			<div className="min-h-0 flex-1 overflow-y-auto">
+				<div className="border-b border-bd-1 px-4 pb-3.5">
 					<div className="mb-1 font-display text-[22px] font-semibold tracking-[-0.3px] text-t-1">
-						{token.text}
+						{token.original}
 					</div>
 					<div className="text-[12px] text-t-3">
 						{t("reader.panel.baseForm")}:{" "}
-						<Typography tag="strong" className="font-medium text-t-2">{lookup.baseForm}</Typography>
+						<Typography tag="strong" className="font-medium text-t-2">
+							{lookup.baseForm}
+						</Typography>
 					</div>
 				</div>
-				<div className="border-b border-hairline border-bd-1 px-4 py-3.5">
+				<div className="border-b border-bd-1 px-4 py-3.5">
 					<div className="mb-1 text-[16px] font-medium text-t-1">
 						{lookup.translation}
 					</div>
 					{lookup.tranAlt ? (
-						<div className="text-[13px] leading-[1.5] text-t-3">
+						<div className="text-[13px] leading-normal text-t-3">
 							{lookup.tranAlt}
 						</div>
 					) : null}
 				</div>
 				{lookup.tags.length > 0 ? (
-					<div className="flex flex-wrap gap-1 border-b border-hairline border-bd-1 px-4 py-2.5">
-						{lookup.tags.map((tag) => (
-							<Typography tag="span"
+					<div className="flex flex-wrap gap-1 border-b border-bd-1 px-4 py-2.5">
+						{lookup.tags.map(tag => (
+							<Typography
+								tag="span"
 								key={tag}
-								className="rounded-[5px] border-hairline border-bd-1 bg-surf-2 px-2 py-0.5 text-[10.5px] font-medium text-t-2"
+								className="rounded-[5px] border border-bd-1 bg-surf-2 px-2 py-0.5 text-[10.5px] font-medium text-t-2"
 							>
 								{tag}
 							</Typography>
 						))}
 					</div>
 				) : null}
-				<div className="border-b border-hairline border-bd-1 px-4 py-3.5">
+				<div className="border-b border-bd-1 px-4 py-3.5">
 					<div className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.6px] text-t-3">
 						{t("reader.panel.sections.level")}
 					</div>
@@ -104,9 +110,9 @@ const SheetContent = ({
 					/>
 				</div>
 			</div>
-			<div className="flex shrink-0 gap-2 px-4 pt-3 pb-[max(16px,env(safe-area-inset-bottom))]">
+			<div className="flex shrink-0 gap-2 border-t border-bd-1 px-4 pt-3 pb-[max(16px,env(safe-area-inset-bottom))]">
 				<Button
-					onClick={onPrimary}
+					onClick={handlePrimaryClick}
 					disabled={isPending}
 					className={cn(
 						"flex h-11 flex-1 items-center justify-center gap-1.5 rounded-[10px] text-[14px] font-semibold text-white shadow-sm transition-opacity hover:opacity-90 disabled:opacity-60",
@@ -121,7 +127,7 @@ const SheetContent = ({
 				<Button
 					onClick={onClose}
 					aria-label={t("reader.sheet.close")}
-					className="inline-flex h-11 items-center justify-center gap-1.5 rounded-[10px] border-hairline border-bd-2 bg-surf-2 px-4 text-[14px] font-semibold text-t-2"
+					className="inline-flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-[10px] border border-bd-2 bg-surf-2 px-4 text-[14px] font-semibold text-t-2"
 				>
 					<X className="size-4" strokeWidth={1.6} />
 					{t("reader.sheet.close")}
@@ -133,62 +139,80 @@ const SheetContent = ({
 
 export const WordBottomSheet = ({ textId }: { textId: string }) => {
 	const { t } = useI18n();
-	const surface = useWordLookupStore((s) => s.surface);
-	const token = useWordLookupStore((s) => s.activeToken);
-	const closeSheet = useWordLookupStore((s) => s.closeSheet);
+	const surface = useWordLookupStore(s => s.surface);
+	const token = useWordLookupStore(s => s.activeToken);
+	const closeSheet = useWordLookupStore(s => s.closeSheet);
 
-	const isVisible = surface === "sheet" && Boolean(token);
+	const sheetOpen = surface === "sheet";
 
 	const { data, isLoading } = useWordLookup(
-		isVisible && token ? token.id : null,
+		sheetOpen && token ? token.id : null,
 	);
 
 	useEffect(() => {
-		if (!isVisible) return;
-		const onKey = (event: KeyboardEvent) => {
+		if (!sheetOpen) return;
+		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "Escape") closeSheet();
 		};
-		document.addEventListener("keydown", onKey);
+		document.addEventListener("keydown", handleKeyDown);
 		const prev = document.body.style.overflow;
 		document.body.style.overflow = "hidden";
 		return () => {
-			document.removeEventListener("keydown", onKey);
+			document.removeEventListener("keydown", handleKeyDown);
 			document.body.style.overflow = prev;
 		};
-	}, [isVisible, closeSheet]);
+	}, [sheetOpen, closeSheet]);
 
-	if (!isVisible || !token || typeof window === "undefined") return null;
+	const handleBackdropClick = () => closeSheet();
+	const handleSheetClick = (e: MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+	};
+
+	if (!sheetOpen || typeof window === "undefined") return null;
 
 	return createPortal(
-		<>
-			<div
-				className="fixed inset-0 z-[180] bg-black/40"
-				onClick={closeSheet}
-				aria-hidden="true"
-			/>
+		<div
+			role="presentation"
+			className={READER_MOBILE_SHEET_OVERLAY_CLASSES}
+			onClick={handleBackdropClick}
+		>
 			<div
 				role="dialog"
-				aria-label={token.text}
 				aria-modal="true"
-				className="fixed inset-x-0 bottom-0 z-[190] rounded-t-2xl border-t border-hairline border-bd-2 bg-surf shadow-lg animate-[fadeUp_0.25s_ease]"
+				aria-label={token?.original ?? t("reader.panel.label")}
+				className="flex max-h-[82vh] min-h-0 w-full flex-col rounded-t-2xl border-t border-bd-1 bg-surf"
+				onClick={handleSheetClick}
 			>
-				{isLoading || !data ? (
-					<div className="flex flex-col items-center justify-center gap-2 p-6">
-						<div className="size-[18px] animate-spin rounded-full border-2 border-surf-3 border-t-acc" />
-						<div className="text-[12px] text-t-3">
-							{t("reader.popup.loading")}
+				<ReaderMobileSheetHeader
+					title={t("reader.panel.label")}
+					closeAriaLabel={t("reader.panel.close")}
+					onClose={closeSheet}
+				/>
+				{token ? (
+					isLoading || !data ? (
+						<div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-2 px-4 py-12 pb-4">
+							<div className="size-[18px] animate-spin rounded-full border-2 border-surf-3 border-t-acc" />
+							<div className="text-[12px] text-t-3">
+								{t("reader.popup.loading")}
+							</div>
+						</div>
+					) : (
+						<SheetBody
+							token={token}
+							lookup={data}
+							textId={textId}
+							onClose={closeSheet}
+						/>
+					)
+				) : (
+					<div className="min-h-0 flex-1 overflow-y-auto p-4">
+						<div className="flex min-h-[min(280px,50dvh)] flex-col justify-center py-8">
+							<WordPanelEmpty />
 						</div>
 					</div>
-				) : (
-					<SheetContent
-						token={token}
-						lookup={data}
-						textId={textId}
-						onClose={closeSheet}
-					/>
 				)}
 			</div>
-		</>,
+		</div>,
 		document.body,
 	);
 };
