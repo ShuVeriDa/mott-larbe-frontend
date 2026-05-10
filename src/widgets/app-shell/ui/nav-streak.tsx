@@ -2,9 +2,9 @@
 
 import { Typography } from "@/shared/ui/typography";
 
+import type { DashboardStats } from "@/entities/dashboard";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import type { DashboardStats } from "@/entities/dashboard";
 
 interface NavStreakProps {
 	stats: Pick<DashboardStats, "streak" | "streakRecord" | "streakDays">;
@@ -16,37 +16,31 @@ export const NavStreak = ({ stats }: NavStreakProps) => {
 	return (
 		<div className="px-3.5 pb-2.5 pt-1.5">
 			<div className="mb-2 flex items-center justify-between">
-				<Typography tag="span" className="text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
+				<Typography
+					tag="span"
+					className="text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3"
+				>
 					{t("nav.streak")}
 				</Typography>
-				<Typography tag="span" className="font-display text-[17px] font-normal leading-none text-amb">
+				<Typography
+					tag="span"
+					className="font-display text-[17px] font-normal leading-none text-amb"
+				>
 					{stats.streak}
 				</Typography>
 			</div>
 
-			<div className="mb-1.5 flex items-end gap-[3px]">
-				{stats.streakDays.map((day) => (
+			<div className="mb-1 flex flex-wrap gap-[3px]">
+				{stats.streakDays.map(day => (
 					<div
 						key={day.date}
-						className="flex flex-1 flex-col items-center gap-[3px]"
+						className={cn(
+							"w-5.5 h-5.5 rounded-[5px] flex items-center justify-center px-2 py-1 text-[9px] font-semibold leading-none transition-colors",
+							day.active ? "bg-acc text-white" : "bg-acc-bg text-acc-t",
+							day.isToday && !day.active ? "ring-1 ring-amb" : "",
+						)}
 					>
-						<div
-							className={cn(
-								"w-full rounded-[2.5px] h-[11px] transition-colors",
-								day.active ? "bg-amb" : "bg-surf-3",
-								day.isToday && !day.active
-									? "outline outline-1 outline-offset-[1px] outline-amb"
-									: "",
-							)}
-						/>
-						<Typography tag="span"
-							className={cn(
-								"text-[8.5px] leading-none",
-								day.isToday ? "text-amb" : "text-t-3",
-							)}
-						>
-							{day.label}
-						</Typography>
+						{day.label}
 					</div>
 				))}
 			</div>
