@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
-
 import { useI18n } from "@/shared/lib/i18n";
+import { Plus } from "lucide-react";
 
 interface BillingTopbarProps {
 	onNewPlan: () => void;
@@ -30,34 +30,14 @@ export const BillingTopbar = ({
 					onClick={onNewCoupon}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
-					<svg
-						width="11"
-						height="11"
-						viewBox="0 0 12 12"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-					>
-						<path d="M1 6h10M6 1v10" />
-					</svg>
+					<Plus className="size-[11px]" />
 					{t("admin.plans.newCoupon")}
 				</Button>
 				<Button
 					onClick={onNewPlan}
 					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
-					<svg
-						width="11"
-						height="11"
-						viewBox="0 0 12 12"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-					>
-						<path d="M1 6h10M6 1v10" />
-					</svg>
+					<Plus className="size-[11px]" />
 					{t("admin.plans.newPlan")}
 				</Button>
 			</div>

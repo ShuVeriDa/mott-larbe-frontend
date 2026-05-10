@@ -1,8 +1,8 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
+import { User, RotateCcw, Check, ArrowRight, Trash2 } from "lucide-react";
 
 import { ComponentProps, ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
@@ -128,10 +128,7 @@ return (
 							</>
 						) : (
 							<>
-								<svg viewBox="0 0 16 16" fill="none" className="size-3 text-t-3">
-									<circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.3" />
-									<path d="M2 14c0-3.3 2.7-5 6-5s6 1.7 6 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-								</svg>
+								<User className="size-3 text-t-3" />
 								{t("admin.feedback.ticket.assign")}
 							</>
 						)}
@@ -152,12 +149,7 @@ return (
 						<ActionBtn
 							onClick={onReopen}
 							className="border-bd-2 bg-surf-2 text-t-2 hover:bg-surf-3 hover:text-t-1"
-							icon={
-								<svg viewBox="0 0 16 16" fill="none" className="size-3">
-									<path d="M2.5 8a5.5 5.5 0 019.2-4M13.5 8a5.5 5.5 0 01-9.2 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-									<path d="M11.5 4l.2 2.5L9.2 5.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-								</svg>
-							}
+							icon={<RotateCcw className="size-3" />}
 						>
 							{t("admin.feedback.actions.reopen")}
 						</ActionBtn>
@@ -165,11 +157,7 @@ return (
 						<ActionBtn
 							onClick={onClose}
 							className="border-[rgba(26,158,82,0.25)] bg-grn-bg text-grn-t hover:opacity-80"
-							icon={
-								<svg viewBox="0 0 16 16" fill="none" className="size-3">
-									<path d="M3 8l4 4 6-8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-								</svg>
-							}
+							icon={<Check className="size-3" />}
 						>
 							{t("admin.feedback.actions.close")}
 						</ActionBtn>
@@ -177,22 +165,14 @@ return (
 					<ActionBtn
 						onClick={onTransferOpen}
 						className="border-bd-2 bg-surf-2 text-t-2 hover:bg-surf-3 hover:text-t-1"
-						icon={
-							<svg viewBox="0 0 16 16" fill="none" className="size-3">
-								<path d="M2 8h12M9 4l5 4-5 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-							</svg>
-						}
+						icon={<ArrowRight className="size-3" />}
 					>
 						{t("admin.feedback.actions.transfer")}
 					</ActionBtn>
 					<ActionBtn
 						onClick={onDelete}
 						className="border-[rgba(220,38,38,0.2)] bg-red-bg text-red-t hover:opacity-80"
-						icon={
-							<svg viewBox="0 0 16 16" fill="none" className="size-3">
-								<path d="M3 4h10M6 4V3a1 1 0 012 0v1M5 4l.5 9h5l.5-9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-							</svg>
-						}
+						icon={<Trash2 className="size-3" />}
 					>
 						{t("admin.feedback.actions.delete")}
 					</ActionBtn>

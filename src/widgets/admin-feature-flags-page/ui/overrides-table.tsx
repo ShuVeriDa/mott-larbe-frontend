@@ -1,9 +1,9 @@
 import { ComponentProps } from 'react';
 import type { FeatureFlagOverrideItem } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
-
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { Trash2 } from "lucide-react";
 const formatDate = (iso: string) =>
 	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" });
 
@@ -135,10 +135,7 @@ return (
 											className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 											title={t("admin.featureFlags.overrides.remove")}
 										>
-											<svg className="size-3.5" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-												<path d="M2.5 4.5h10M5 4.5V3h5v1.5M6 7v4M9 7v4" strokeLinecap="round" />
-												<path d="M3.5 4.5l.7 7.5h6.6l.7-7.5" />
-											</svg>
+											<Trash2 className="size-3.5" />
 										</Button>
 									</td>
 								</tr>

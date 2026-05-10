@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminTextListItem } from "@/entities/admin-text";
 import type { useAdminTextMutations } from "@/entities/admin-text/model/use-admin-text-mutations";
+import { Pencil, Play, RotateCcw, Clock, MoreVertical } from "lucide-react";
 
 interface TextRowActionsProps {
 	text: AdminTextListItem;
@@ -54,15 +55,7 @@ return (
 				className={btnClass}
 				title={t("admin.texts.actions.edit")}
 			>
-				<svg viewBox="0 0 16 16" fill="none">
-					<path
-						d="M10.5 3.5l2 2L5 13H3v-2l7.5-7.5z"
-						stroke="currentColor"
-						strokeWidth="1.3"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</svg>
+				<Pencil className="size-[14px]" />
 			</Link>
 
 			{/* Tokenize — shown if not yet processed */}
@@ -73,15 +66,7 @@ return (
 					className={`${btnClass} text-acc`}
 					title={t("admin.texts.actions.tokenize")}
 				>
-					<svg viewBox="0 0 16 16" fill="none">
-						<path
-							d="M5 3.5l8 4.5-8 4.5V3.5z"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<Play className="size-[14px]" />
 				</Button>
 			)}
 
@@ -93,21 +78,7 @@ return (
 					className={`${btnClass} text-amb`}
 					title={t("admin.texts.actions.retry")}
 				>
-					<svg viewBox="0 0 16 16" fill="none">
-						<path
-							d="M13 8A5 5 0 013.5 11M3 8a5 5 0 019.5-3"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-						/>
-						<path
-							d="M13 5v3h-3"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<RotateCcw className="size-[14px]" />
 				</Button>
 			)}
 
@@ -118,10 +89,7 @@ return (
 					className={btnClass}
 					title={t("admin.texts.actions.versions")}
 				>
-					<svg viewBox="0 0 16 16" fill="none">
-						<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-						<path d="M8 5v3l2 2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-					</svg>
+					<Clock className="size-[14px]" />
 				</Link>
 			)}
 
@@ -131,11 +99,7 @@ return (
 					onClick={handleClick3}
 					className={btnClass}
 				>
-					<svg viewBox="0 0 16 16" fill="none">
-						<circle cx="8" cy="4" r="1" fill="currentColor" />
-						<circle cx="8" cy="8" r="1" fill="currentColor" />
-						<circle cx="8" cy="12" r="1" fill="currentColor" />
-					</svg>
+					<MoreVertical className="size-[14px]" />
 				</Button>
 
 				{open && (

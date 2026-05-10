@@ -1,15 +1,14 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
 import type {
 	BulkImportResultItem,
 	CreateTextDto,
 } from "@/entities/admin-text";
 import { useAdminTextBulkImport } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
+import { X, Upload } from "lucide-react";
 import { ChangeEvent, ComponentProps, useRef, useState } from "react";
 interface ImportTextsModalProps {
 	onClose: () => void;
@@ -101,14 +100,7 @@ return (
 						onClick={onClose}
 						className="flex size-7 cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
-						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<path
-								d="M3 3l10 10M13 3L3 13"
-								stroke="currentColor"
-								strokeWidth="1.4"
-								strokeLinecap="round"
-							/>
-						</svg>
+						<X className="size-[14px]" />
 					</Button>
 				</div>
 
@@ -199,27 +191,7 @@ return (
 								role="button"
 								tabIndex={0}
 							>
-								<svg
-									width="24"
-									height="24"
-									viewBox="0 0 24 24"
-									fill="none"
-									className="text-t-3"
-								>
-									<path
-										d="M12 16V8M12 8l-3 3M12 8l3 3"
-										stroke="currentColor"
-										strokeWidth="1.5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-									<path
-										d="M3 16v2a2 2 0 002 2h14a2 2 0 002-2v-2"
-										stroke="currentColor"
-										strokeWidth="1.5"
-										strokeLinecap="round"
-									/>
-								</svg>
+								<Upload className="size-6 text-t-3" />
 								{fileName ? (
 									<Typography tag="span" className="max-w-[320px] truncate text-[12.5px] font-medium text-t-1">
 										{fileName}

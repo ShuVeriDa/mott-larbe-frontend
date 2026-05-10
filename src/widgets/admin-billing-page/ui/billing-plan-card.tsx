@@ -1,11 +1,10 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { Check } from "lucide-react";
 import type { AdminPlan, PlanType } from "@/entities/admin-billing";
 
 const PLAN_COLORS: Record<PlanType, string> = {
@@ -94,21 +93,7 @@ return (
 				<div className="px-3.5 py-2.5">
 					{plan.highlightFeatures.slice(0, 3).map((feat) => (
 						<div key={feat} className="mb-1 flex items-center gap-1.5 last:mb-0">
-							<svg
-								width="11"
-								height="11"
-								viewBox="0 0 12 12"
-								fill="none"
-								className="shrink-0 text-grn-t"
-							>
-								<path
-									d="M2 6l3 3 5-5"
-									stroke="currentColor"
-									strokeWidth="1.4"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							</svg>
+							<Check className="size-[11px] shrink-0 text-grn-t" />
 							<Typography tag="span" className="text-[11px] text-t-2">{feat}</Typography>
 						</div>
 					))}

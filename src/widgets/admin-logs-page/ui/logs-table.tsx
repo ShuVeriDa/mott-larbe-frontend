@@ -9,6 +9,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import type { AdminLogItem } from "@/entities/admin-log";
 import { LevelBadge } from "./level-badge";
 import { DurationBadge } from "./duration-badge";
+import { MoreVertical } from "lucide-react";
 
 const formatTime = (iso: string) => {
 	const d = new Date(iso);
@@ -111,11 +112,7 @@ return (
 											onClick={handleClick2}
 											className="flex size-[26px] items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 										>
-											<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-												<circle cx="8" cy="4" r="1" fill="currentColor" />
-												<circle cx="8" cy="8" r="1" fill="currentColor" />
-												<circle cx="8" cy="12" r="1" fill="currentColor" />
-											</svg>
+											<MoreVertical className="size-[13px]" />
 										</Button>
 									</div>
 								</td>

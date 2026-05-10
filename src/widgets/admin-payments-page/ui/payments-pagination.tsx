@@ -1,9 +1,8 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -53,20 +52,7 @@ return (
 					onClick={handleClick}
 					className="flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 disabled:pointer-events-none disabled:opacity-40"
 				>
-					<svg
-						width="11"
-						height="11"
-						viewBox="0 0 11 11"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.4"
-					>
-						<path
-							d="M7 2L4 5.5l3 3.5"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<ChevronLeft className="size-[11px]" />
 				</Button>
 
 				{getPages().map((p, i) =>
@@ -101,20 +87,7 @@ return (
 					onClick={handleClick2}
 					className="flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 disabled:pointer-events-none disabled:opacity-40"
 				>
-					<svg
-						width="11"
-						height="11"
-						viewBox="0 0 11 11"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.4"
-					>
-						<path
-							d="M4 2l3 3.5-3 3.5"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<ChevronRight className="size-[11px]" />
 				</Button>
 			</div>
 		</div>

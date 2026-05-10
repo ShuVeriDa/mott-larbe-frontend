@@ -1,8 +1,8 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
+import { X } from "lucide-react";
 
 import type { AdminLogDetail } from "@/entities/admin-log";
 import { cn } from "@/shared/lib/cn";
@@ -73,14 +73,7 @@ export const LogsDetailPanel = ({
 						onClick={onClose}
 						className="flex size-7 items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
-						<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-							<path
-								d="M12 4L4 12M4 4l8 8"
-								stroke="currentColor"
-								strokeWidth="1.4"
-								strokeLinecap="round"
-							/>
-						</svg>
+						<X className="size-[13px]" />
 					</Button>
 					<Typography tag="span" className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-[13.5px] font-semibold text-t-1">
 						{detail

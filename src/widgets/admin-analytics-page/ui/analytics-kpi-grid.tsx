@@ -1,8 +1,8 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { cn } from "@/shared/lib/cn";
+import { ArrowUp, ArrowDown } from "lucide-react";
 import type { KpiItem } from "@/entities/admin-analytics";
 
 interface KpiCardProps {
@@ -36,33 +36,8 @@ const KpiCard = ({ item, isLoading }: KpiCardProps) => (
 					item.changeType === "neutral" && "text-t-3",
 				)}
 			>
-				{item.changeType !== "neutral" && (
-					<svg
-						width="11"
-						height="11"
-						viewBox="0 0 12 12"
-						fill="none"
-						aria-hidden="true"
-					>
-						{item.changeType === "up" ? (
-							<path
-								d="M6 9V3M3 6l3-3 3 3"
-								stroke="currentColor"
-								strokeWidth="1.4"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						) : (
-							<path
-								d="M6 3v6M3 6l3 3 3-3"
-								stroke="currentColor"
-								strokeWidth="1.4"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						)}
-					</svg>
-				)}
+				{item.changeType === "up" && <ArrowUp className="size-[11px]" aria-hidden="true" />}
+				{item.changeType === "down" && <ArrowDown className="size-[11px]" aria-hidden="true" />}
 				{item.changeText}
 			</div>
 		)}

@@ -9,6 +9,7 @@ import { cn } from "@/shared/lib/cn";
 import { CefrBadge } from "@/entities/dictionary";
 import type { AdminDictListItem, AdminDictSort } from "@/entities/dictionary";
 import { PosBadge } from "./pos-badge";
+import { Eye, ChevronDown, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 
 const formatDate = (iso: string) =>
 	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
@@ -23,25 +24,11 @@ const SkeletonRow = () => (
 	</tr>
 );
 
-const IconEye = () => (
-	<svg className="size-[13px]" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
-		<ellipse cx="8" cy="8" rx="5.5" ry="4" />
-		<circle cx="8" cy="8" r="1.5" />
-	</svg>
-);
-
-const IconChevronDown = () => (
-	<svg className="size-[11px]" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-		<path d="M2 4l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
-);
-
-const IconSortable = ({ active, dir }: { active: boolean; dir?: "asc" | "desc" }) => (
-	<svg className={cn("ml-1 size-[10px]", active ? "text-acc" : "text-t-4")} viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.4">
-		{(!active || dir === "asc") && <path d="M5 1v8M2 4l3-3 3 3" strokeLinecap="round" strokeLinejoin="round" opacity={active && dir === "asc" ? 1 : 0.5} />}
-		{(!active || dir === "desc") && <path d="M5 9V1M2 6l3 3 3-3" strokeLinecap="round" strokeLinejoin="round" opacity={active && dir === "desc" ? 1 : 0.5} />}
-	</svg>
-);
+const IconSortable = ({ active, dir }: { active: boolean; dir?: "asc" | "desc" }) => {
+	if (active && dir === "asc") return <ArrowUp className={cn("ml-1 size-[10px] text-acc")} />;
+	if (active && dir === "desc") return <ArrowDown className={cn("ml-1 size-[10px] text-acc")} />;
+	return <ArrowUpDown className={cn("ml-1 size-[10px] text-t-4")} />;
+};
 
 interface RowDropdownProps {
 	item: AdminDictListItem;
@@ -77,7 +64,7 @@ return (
 				className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 				title={t("admin.dictionary.row.more")}
 			>
-				<IconChevronDown />
+				<ChevronDown className="size-[11px]" />
 			</Button>
 			{open && (
 				<div className="absolute right-0 top-full z-50 mt-1 w-[160px] rounded-[9px] border border-bd-2 bg-surf py-1 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
@@ -314,7 +301,7 @@ export const DictionaryTable = ({
 											className="flex size-[26px] items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 											title={t("admin.dictionary.row.view")}
 										>
-											<IconEye />
+											<Eye className="size-[13px]" />
 										</Link>
 										<RowDropdown
 											item={item}

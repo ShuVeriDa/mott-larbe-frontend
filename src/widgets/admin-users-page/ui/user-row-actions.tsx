@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminUserListItem } from "@/entities/admin-user";
 import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
+import { ArrowRight, MoreVertical, User, Plus, MinusCircle, Ban, Trash2 } from "lucide-react";
 
 interface UserRowActionsProps {
 	user: AdminUserListItem;
@@ -76,15 +77,7 @@ return (
 				className={btnClass}
 				onClick={handleOpenProfileClick}
 			>
-				<svg className="size-3.5" viewBox="0 0 16 16" fill="none">
-					<path
-						d="M2 8h12M8 2l6 6-6 6"
-						stroke="currentColor"
-						strokeWidth="1.3"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</svg>
+				<ArrowRight className="size-3.5" />
 			</Button>
 
 			<div ref={menuRef} className="relative">
@@ -93,11 +86,7 @@ return (
 					onClick={handleMenuToggleClick}
 					disabled={isPending}
 				>
-					<svg className="size-3.5" viewBox="0 0 16 16" fill="none">
-						<circle cx="8" cy="4" r="1" fill="currentColor" />
-						<circle cx="8" cy="8" r="1" fill="currentColor" />
-						<circle cx="8" cy="12" r="1" fill="currentColor" />
-					</svg>
+					<MoreVertical className="size-3.5" />
 				</Button>
 
 				{open && (
@@ -106,19 +95,7 @@ return (
 							className={menuItemClass}
 							onClick={handleMenuOpenProfileClick}
 						>
-							<svg
-								className="size-3.5 shrink-0 text-t-3"
-								viewBox="0 0 16 16"
-								fill="none"
-							>
-								<circle cx="8" cy="5.5" r="2.5" stroke="currentColor" strokeWidth="1.3" />
-								<path
-									d="M2.5 13.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"
-									stroke="currentColor"
-									strokeWidth="1.3"
-									strokeLinecap="round"
-								/>
-							</svg>
+							<User className="size-3.5 shrink-0 text-t-3" />
 							{t("admin.users.actions.openProfile")}
 						</Button>
 
@@ -129,18 +106,7 @@ return (
 								className={menuItemClass}
 								onClick={handleFreezeClick}
 							>
-								<svg
-									className="size-3.5 shrink-0 text-t-3"
-									viewBox="0 0 16 16"
-									fill="none"
-								>
-									<path
-										d="M8 2v4M8 10v4M2 8h4M10 8h4"
-										stroke="currentColor"
-										strokeWidth="1.3"
-										strokeLinecap="round"
-									/>
-								</svg>
+								<Plus className="size-3.5 shrink-0 text-t-3" />
 								{t("admin.users.actions.freeze")}
 							</Button>
 						)}
@@ -150,19 +116,7 @@ return (
 								className={menuItemClass}
 								onClick={handleUnfreezeClick}
 							>
-								<svg
-									className="size-3.5 shrink-0 text-t-3"
-									viewBox="0 0 16 16"
-									fill="none"
-								>
-									<path
-										d="M5 8h6"
-										stroke="currentColor"
-										strokeWidth="1.3"
-										strokeLinecap="round"
-									/>
-									<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-								</svg>
+								<MinusCircle className="size-3.5 shrink-0 text-t-3" />
 								{t("admin.users.actions.unfreeze")}
 							</Button>
 						)}
@@ -172,19 +126,7 @@ return (
 								className={menuItemClass}
 								onClick={handleUnblockClick}
 							>
-								<svg
-									className="size-3.5 shrink-0 text-t-3"
-									viewBox="0 0 16 16"
-									fill="none"
-								>
-									<path
-										d="M4 8h8"
-										stroke="currentColor"
-										strokeWidth="1.3"
-										strokeLinecap="round"
-									/>
-									<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-								</svg>
+								<MinusCircle className="size-3.5 shrink-0 text-t-3" />
 								{t("admin.users.actions.unblock")}
 							</Button>
 						)}
@@ -194,19 +136,7 @@ return (
 								className={menuDangerClass}
 								onClick={handleBlockClick}
 							>
-								<svg
-									className="size-3.5 shrink-0 text-red-t"
-									viewBox="0 0 16 16"
-									fill="none"
-								>
-									<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-									<path
-										d="M10 6L6 10M6 6l4 4"
-										stroke="currentColor"
-										strokeWidth="1.3"
-										strokeLinecap="round"
-									/>
-								</svg>
+								<Ban className="size-3.5 shrink-0 text-red-t" />
 								{t("admin.users.actions.block")}
 							</Button>
 						)}
@@ -216,24 +146,7 @@ return (
 								className={menuDangerClass}
 								onClick={handleDeleteClick}
 							>
-								<svg
-									className="size-3.5 shrink-0 text-red-t"
-									viewBox="0 0 16 16"
-									fill="none"
-								>
-									<path
-										d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4"
-										stroke="currentColor"
-										strokeWidth="1.3"
-										strokeLinecap="round"
-									/>
-									<path
-										d="M4 5l.7 7.5A1 1 0 005.7 13h4.6a1 1 0 001-.95L12 5"
-										stroke="currentColor"
-										strokeWidth="1.3"
-										strokeLinecap="round"
-									/>
-								</svg>
+								<Trash2 className="size-3.5 shrink-0 text-red-t" />
 								{t("admin.users.actions.delete")}
 							</Button>
 						)}

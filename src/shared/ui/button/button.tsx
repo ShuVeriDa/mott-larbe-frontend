@@ -24,6 +24,7 @@ export const buttonVariants = cva(
 				bare: "",
 			},
 			size: {
+				bare: "",
 				default: "h-[30px] px-3 text-[12px]",
 				lg: "h-[38px] px-5 text-[13px] rounded-[8px]",
 				"icon-sm": "size-7 p-0 [&_svg]:size-3.5",
@@ -52,7 +53,10 @@ export const Button = ({
 		<button
 			data-slot="button"
 			type={type}
-			className={cn(buttonVariants({ variant: resolvedVariant, size }), className)}
+			className={cn(
+				buttonVariants({ variant: resolvedVariant, size }),
+				className,
+			)}
 			{...props}
 		/>
 	);

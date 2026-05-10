@@ -8,6 +8,7 @@ import { ComponentProps } from 'react';
 import type { MorphRule } from "@/entities/morph-rule";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { ArrowRight, Pencil, Trash2 } from "lucide-react";
 
 interface Props {
 	items: MorphRule[];
@@ -107,21 +108,7 @@ export const MorphologyMobileList = ({
 						<Typography tag="span" className="rounded bg-red-bg px-1.5 py-px font-mono text-[12px] font-semibold text-red-t">
 							{rule.suffix}
 						</Typography>
-						<svg
-							className="text-t-3"
-							width="12"
-							height="12"
-							viewBox="0 0 16 16"
-							fill="none"
-						>
-							<path
-								d="M3 8h10M9 5l4 3-4 3"
-								stroke="currentColor"
-								strokeWidth="1.4"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</svg>
+						<ArrowRight className="size-3 text-t-3" />
 						<Typography tag="span" className="rounded bg-grn-bg px-1.5 py-px font-mono text-[12px] font-semibold text-grn-t">
 							{rule.add || "∅"}
 						</Typography>
@@ -188,34 +175,13 @@ export const MorphologyMobileList = ({
 								onClick={handleEditClick}
 								className="flex size-[30px] items-center justify-center rounded-base border border-bd-2 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 							>
-								<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-									<path
-										d="M10.5 3.5l2 2L5 13H3v-2l7.5-7.5z"
-										stroke="currentColor"
-										strokeWidth="1.3"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
+								<Pencil className="size-[13px]" />
 							</Button>
 							<Button
 								onClick={handleDeleteClick}
 								className="flex size-[30px] items-center justify-center rounded-base border border-red/20 bg-surf-2 text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 							>
-								<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-									<path
-										d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4"
-										stroke="currentColor"
-										strokeWidth="1.3"
-										strokeLinecap="round"
-									/>
-									<path
-										d="M4 5l.7 7.5A1 1 0 005.7 13h4.6a1 1 0 001-.95L12 5"
-										stroke="currentColor"
-										strokeWidth="1.3"
-										strokeLinecap="round"
-									/>
-								</svg>
+								<Trash2 className="size-[13px]" />
 							</Button>
 						</div>
 					</div>

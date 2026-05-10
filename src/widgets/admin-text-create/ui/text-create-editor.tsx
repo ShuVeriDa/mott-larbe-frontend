@@ -1,12 +1,18 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Button } from "@/shared/ui/button";
 import { useI18n } from "@/shared/lib/i18n";
 import { EditorToolbar, getSlashItems } from "@/shared/ui/admin-text-editor";
+import { Button } from "@/shared/ui/button";
 import type { TipTapDoc, TipTapNode } from "@/shared/ui/notion-editor";
 import { NotionEditor } from "@/shared/ui/notion-editor";
-import { type ChangeEvent, type ComponentProps, type MouseEvent, useState, useRef } from "react";
+import { Typography } from "@/shared/ui/typography";
+import {
+	type ChangeEvent,
+	type ComponentProps,
+	type MouseEvent,
+	useRef,
+	useState,
+} from "react";
 import type { PageContent } from "../model/use-admin-text-create-page";
 
 export type { TipTapDoc, TipTapNode };
@@ -23,12 +29,14 @@ const countWords = (doc: TipTapDoc) => {
 	const text = extractText(doc).trim();
 	return text ? text.split(/\s+/).filter(Boolean).length : 0;
 };
-const countChars = (doc: TipTapDoc) => extractText(doc).replace(/\s/g, "").length;
+const countChars = (doc: TipTapDoc) =>
+	extractText(doc).replace(/\s/g, "").length;
 const countParagraphs = (doc: TipTapDoc) => {
 	const blockTypes = new Set(["paragraph", "heading", "listItem"]);
 	const walk = (nodes: TipTapNode[]): number =>
 		nodes.reduce(
-			(acc, n) => acc + (blockTypes.has(n.type) ? 1 : 0) + walk(n.content ?? []),
+			(acc, n) =>
+				acc + (blockTypes.has(n.type) ? 1 : 0) + walk(n.content ?? []),
 			0,
 		);
 	return Math.max(walk(doc.content), 1);
@@ -46,20 +54,31 @@ const EditorFooter = ({
 	<div className="flex flex-wrap items-center gap-3 border-t border-bd-1 bg-surf-2 px-[22px] py-[7px] text-[11px] text-t-3 transition-colors max-sm:px-4">
 		<div className="flex items-center gap-1">
 			<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-				<path d="M2 4h12M2 7.5h8M2 11h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+				<path
+					d="M2 4h12M2 7.5h8M2 11h5"
+					stroke="currentColor"
+					strokeWidth="1.3"
+					strokeLinecap="round"
+				/>
 			</svg>
 			{t("admin.texts.createPage.words")}:&nbsp;
-			<Typography tag="span" className="font-medium text-t-2">{stats.words}</Typography>
+			<Typography tag="span" className="font-medium text-t-2">
+				{stats.words}
+			</Typography>
 		</div>
 		<div className="h-3 w-px bg-bd-2" />
 		<div>
 			{t("admin.texts.createPage.chars")}:&nbsp;
-			<Typography tag="span" className="font-medium text-t-2">{stats.chars}</Typography>
+			<Typography tag="span" className="font-medium text-t-2">
+				{stats.chars}
+			</Typography>
 		</div>
 		<div className="h-3 w-px bg-bd-2 max-sm:hidden" />
 		<div className="max-sm:hidden">
 			{t("admin.texts.createPage.paragraphs")}:&nbsp;
-			<Typography tag="span" className="font-medium text-t-2">{stats.paragraphs}</Typography>
+			<Typography tag="span" className="font-medium text-t-2">
+				{stats.paragraphs}
+			</Typography>
 		</div>
 	</div>
 );
@@ -131,9 +150,13 @@ export const TextCreateEditor = ({
 	const { t } = useI18n();
 	const titleRef = useRef<HTMLTextAreaElement>(null);
 	const [stats, setStats] = useState({ words: 0, chars: 0, paragraphs: 0 });
-	const [editor, setEditor] = useState<import("@/shared/ui/notion-editor").Editor | null>(null);
+	const [editor, setEditor] = useState<
+		import("@/shared/ui/notion-editor").Editor | null
+	>(null);
 	const slashItems = getSlashItems(t);
-	const [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(null);
+	const [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(
+		null,
+	);
 
 	const handlePageCloseClick = (e: MouseEvent, index: number) => {
 		e.stopPropagation();
@@ -169,7 +192,11 @@ export const TextCreateEditor = ({
 	const handleUpdate = (doc: TipTapDoc) => {
 		const wc = countWords(doc);
 		onPageContentChange(doc, wc);
-		setStats({ words: wc, chars: countChars(doc), paragraphs: countParagraphs(doc) });
+		setStats({
+			words: wc,
+			chars: countChars(doc),
+			paragraphs: countParagraphs(doc),
+		});
 	};
 
 	const handleKeyDown = (event: KeyboardEvent) => {
@@ -191,13 +218,30 @@ export const TextCreateEditor = ({
 
 	const keyboardHints = (
 		<>
-			<Typography tag="span" className="rounded-[3px] bg-surf-3 px-1 py-px text-t-3">Ctrl+S</Typography>
+			<Typography
+				tag="span"
+				className="rounded-[3px] bg-surf-3 px-1 py-px text-t-3"
+			>
+				Ctrl+S
+			</Typography>
 			<Typography tag="span">—</Typography>
-			<Typography tag="span">{t("admin.texts.createPage.saveDraft")}</Typography>
-			<Typography tag="span" className="ml-1 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">Ctrl+↵</Typography>
+			<Typography tag="span">
+				{t("admin.texts.createPage.saveDraft")}
+			</Typography>
+			<Typography
+				tag="span"
+				className="ml-1 rounded-[3px] bg-surf-3 px-1 py-px text-t-3"
+			>
+				Ctrl+↵
+			</Typography>
 			<Typography tag="span">—</Typography>
 			<Typography tag="span">{t("admin.texts.createPage.publish")}</Typography>
-			<Typography tag="span" className="ml-2 rounded-[3px] bg-surf-3 px-1 py-px text-t-3">/</Typography>
+			<Typography
+				tag="span"
+				className="ml-2 rounded-[3px] bg-surf-3 px-1 py-px text-t-3"
+			>
+				/
+			</Typography>
 			<Typography tag="span">—</Typography>
 			<Typography tag="span">блоки</Typography>
 		</>
@@ -215,7 +259,9 @@ export const TextCreateEditor = ({
 					maxLength={200}
 					className="w-full resize-none overflow-hidden border-none bg-transparent font-display text-[22px] font-normal leading-[1.35] text-t-1 outline-none placeholder:text-t-4 max-sm:text-[18px]"
 				/>
-				<div className={`pb-2.5 pt-1 text-right text-[10.5px] ${titleWarn ? "text-amb" : "text-t-4"}`}>
+				<div
+					className={`pb-2.5 pt-1 text-right text-[10.5px] ${titleWarn ? "text-amb" : "text-t-4"}`}
+				>
 					{titleLen} / 200
 				</div>
 			</div>
@@ -224,8 +270,12 @@ export const TextCreateEditor = ({
 
 			<div className="sticky top-[93px] z-10 flex items-center overflow-x-auto border-b border-bd-1 bg-surf px-3.5 transition-colors [scrollbar-width:none]">
 				{pages.map((_, i) => {
-					const handleTabClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onSelectPage(i);
-					const handleCloseClick: NonNullable<ComponentProps<"button">["onClick"]> = e => handlePageCloseClick(e, i);
+					const handleTabClick: NonNullable<
+						ComponentProps<"button">["onClick"]
+					> = () => onSelectPage(i);
+					const handleCloseClick: NonNullable<
+						ComponentProps<"button">["onClick"]
+					> = e => handlePageCloseClick(e, i);
 					return (
 						<div
 							key={i}
@@ -235,11 +285,16 @@ export const TextCreateEditor = ({
 									: "border-transparent text-t-3 hover:text-t-2"
 							}`}
 						>
-							<Button onClick={handleTabClick} className="flex items-center gap-1.5 text-xs">
+							<Button
+								onClick={handleTabClick}
+								className="flex items-center gap-1.5 text-xs"
+							>
 								<Typography
 									tag="span"
 									className={`flex h-[17px] w-[17px] items-center justify-center rounded-[4px] text-[10px] font-semibold ${
-										i === activePage ? "bg-acc-muted text-acc-strong" : "bg-surf-3 text-t-3"
+										i === activePage
+											? "bg-acc-muted text-acc-strong"
+											: "bg-surf-3 text-t-3"
 									}`}
 								>
 									{i + 1}
@@ -253,7 +308,12 @@ export const TextCreateEditor = ({
 									className="ml-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] opacity-0 transition-opacity hover:bg-surf-3 group-hover/tab:opacity-100"
 								>
 									<svg width="8" height="8" viewBox="0 0 10 10" fill="none">
-										<path d="M2 2l6 6M8 2L2 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+										<path
+											d="M2 2l6 6M8 2L2 8"
+											stroke="currentColor"
+											strokeWidth="1.4"
+											strokeLinecap="round"
+										/>
 									</svg>
 								</Button>
 							)}
@@ -267,7 +327,12 @@ export const TextCreateEditor = ({
 					className="ml-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-[5px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2"
 				>
 					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-						<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+						<path
+							d="M8 3v10M3 8h10"
+							stroke="currentColor"
+							strokeWidth="1.5"
+							strokeLinecap="round"
+						/>
 					</svg>
 				</Button>
 
@@ -279,7 +344,12 @@ export const TextCreateEditor = ({
 			<div className="group relative flex-1 px-[22px] py-[22px] pb-10 max-sm:px-4 bg-surf">
 				<NotionEditor
 					key={activePage}
-					content={pages[activePage]?.doc ?? { type: "doc", content: [{ type: "paragraph" }] }}
+					content={
+						pages[activePage]?.doc ?? {
+							type: "doc",
+							content: [{ type: "paragraph" }],
+						}
+					}
 					placeholder={t("admin.texts.createPage.startTyping")}
 					slashMenuItems={slashItems}
 					onUpdate={handleUpdate}

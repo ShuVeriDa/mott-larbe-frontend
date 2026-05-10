@@ -8,6 +8,7 @@ import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminDictMorphForm } from "@/entities/dictionary";
 import type { DictModal } from "../model/use-admin-dictionary-detail-page";
+import { Pencil, Trash2, Plus, ChevronDown } from "lucide-react";
 
 const CASE_LABELS: Record<string, string> = {
 	NOM: "Им.",
@@ -33,18 +34,6 @@ const formLabel = (f: AdminDictMorphForm): string => {
 	return f.grammarTag ?? "—";
 };
 
-const IconEdit = () => (
-	<svg viewBox="0 0 16 16" fill="none" className="size-[13px]">
-		<path d="M10.5 3.5l2 2L5 13H3v-2l7.5-7.5z" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
-);
-
-const IconTrash = () => (
-	<svg viewBox="0 0 16 16" fill="none" className="size-[13px]">
-		<path d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-		<path d="M4 5l.7 7.5A1 1 0 005.7 13h4.6a1 1 0 001-.95L12 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-	</svg>
-);
 
 interface MorphFormsCardProps {
 	forms: AdminDictMorphForm[] | undefined;

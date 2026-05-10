@@ -3,6 +3,7 @@ import { cn } from "@/shared/lib/cn";
 
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 interface DictionaryPaginationProps {
 	page: number;
 	totalPages: number;
@@ -39,9 +40,7 @@ return (
 					onClick={handleClick}
 					disabled={page <= 1}
 				>
-					<svg className="size-3" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.5">
-						<path d="M9 11L5 7.5 9 4" strokeLinecap="round" strokeLinejoin="round" />
-					</svg>
+					<ChevronLeft className="size-3" />
 				</Button>
 
 				{Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
@@ -75,9 +74,7 @@ return (
 					onClick={handleClick2}
 					disabled={page >= totalPages}
 				>
-					<svg className="size-3" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.5">
-						<path d="M6 4l4 3.5L6 11" strokeLinecap="round" strokeLinejoin="round" />
-					</svg>
+					<ChevronRight className="size-3" />
 				</Button>
 			</div>
 		</div>

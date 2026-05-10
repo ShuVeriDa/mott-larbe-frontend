@@ -1,10 +1,10 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AdminDashboardKpi } from "@/entities/admin-dashboard";
+import { ArrowUp, ArrowDown } from "lucide-react";
 
 const formatRevenue = (cents: number, currency: string) => {
 	const amount = cents / 100;
@@ -26,27 +26,10 @@ interface TrendProps {
 const TrendChip = ({ value, label }: TrendProps) => {
 	if (value === null) return <Typography tag="span" className="text-[11px] text-t-3">{label}</Typography>;
 	const up = value >= 0;
+	const Icon = up ? ArrowUp : ArrowDown;
 	return (
 		<Typography tag="span" className={cn("flex items-center gap-1 text-[11px]", up ? "text-grn-t" : "text-red-t")}>
-			<svg className="size-3 shrink-0" viewBox="0 0 12 12" fill="none">
-				{up ? (
-					<path
-						d="M6 9V3M3 6l3-3 3 3"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				) : (
-					<path
-						d="M6 3v6M9 6L6 9 3 6"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				)}
-			</svg>
+			<Icon className="size-3 shrink-0" />
 			{up ? "+" : ""}
 			{value}% {label}
 		</Typography>
@@ -55,27 +38,10 @@ const TrendChip = ({ value, label }: TrendProps) => {
 
 const AbsoluteTrend = ({ value, label }: { value: number; label: string }) => {
 	const up = value >= 0;
+	const Icon = up ? ArrowUp : ArrowDown;
 	return (
 		<Typography tag="span" className={cn("flex items-center gap-1 text-[11px]", up ? "text-grn-t" : "text-red-t")}>
-			<svg className="size-3 shrink-0" viewBox="0 0 12 12" fill="none">
-				{up ? (
-					<path
-						d="M6 9V3M3 6l3-3 3 3"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				) : (
-					<path
-						d="M6 3v6M9 6L6 9 3 6"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				)}
-			</svg>
+			<Icon className="size-3 shrink-0" />
 			{up ? "+" : ""}
 			{value} {label}
 		</Typography>

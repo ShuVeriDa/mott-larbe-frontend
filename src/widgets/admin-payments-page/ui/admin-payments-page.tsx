@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
+import { X } from "lucide-react";
 import { ComponentProps, useEffect } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
@@ -212,17 +213,7 @@ return (
 								onClick={closeMobileSheet}
 								className="flex size-7 items-center justify-center rounded-lg bg-surf-2 text-t-2"
 							>
-								<svg
-									width="14"
-									height="14"
-									viewBox="0 0 14 14"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-								>
-									<path d="M2 2l10 10M12 2L2 12" />
-								</svg>
+								<X className="size-[14px]" />
 							</Button>
 						</div>
 						<div className="px-3.5 pb-6 pt-1">

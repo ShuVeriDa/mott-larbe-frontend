@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/button";
 
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Play, Pause, Download } from "lucide-react";
 
 interface LogsTopbarProps {
 	isLive: boolean;
@@ -50,36 +51,7 @@ export const LogsTopbar = ({
 					onClick={onToggleLive}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
-					<svg
-						width="13"
-						height="13"
-						viewBox="0 0 16 16"
-						fill="none"
-						className="shrink-0"
-					>
-						{isLive ? (
-							<>
-								<rect
-									x="4"
-									y="3"
-									width="3"
-									height="10"
-									rx="1"
-									fill="currentColor"
-								/>
-								<rect
-									x="9"
-									y="3"
-									width="3"
-									height="10"
-									rx="1"
-									fill="currentColor"
-								/>
-							</>
-						) : (
-							<path d="M5 3.5l8 4.5-8 4.5V3.5z" fill="currentColor" />
-						)}
-					</svg>
+					{isLive ? <Pause className="size-[13px] shrink-0" /> : <Play className="size-[13px] shrink-0" />}
 					{isLive ? t("admin.logs.pause") : t("admin.logs.resume")}
 				</Button>
 
@@ -87,21 +59,7 @@ export const LogsTopbar = ({
 					onClick={onExport}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
-					<svg
-						width="13"
-						height="13"
-						viewBox="0 0 16 16"
-						fill="none"
-						className="shrink-0"
-					>
-						<path
-							d="M3 10v2a1 1 0 001 1h8a1 1 0 001-1v-2M8 3v7M5 7l3 3 3-3"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<Download className="size-[13px] shrink-0" />
 					{t("admin.logs.export")}
 				</Button>
 			</div>

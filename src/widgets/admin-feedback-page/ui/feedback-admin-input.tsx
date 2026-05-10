@@ -1,8 +1,8 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
+import { MessageSquare, StickyNote, Send } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
 import { ComponentProps, KeyboardEvent, useRef, useState } from 'react';
@@ -88,14 +88,7 @@ return (
 							: "border-transparent text-t-3 hover:text-t-1",
 					)}
 				>
-					<svg viewBox="0 0 16 16" fill="none" className="size-[11px]">
-						<path
-							d="M13 10.5H9l-3 2.5V10.5H3a1 1 0 01-1-1V3a1 1 0 011-1h10a1 1 0 011 1v6.5a1 1 0 01-1 1z"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<MessageSquare className="size-[11px]" />
 					{t("admin.feedback.input.replyMode")}
 				</Button>
 				<Button
@@ -107,14 +100,7 @@ return (
 							: "border-transparent text-t-3 hover:text-t-1",
 					)}
 				>
-					<svg viewBox="0 0 16 16" fill="none" className="size-[11px]">
-						<path
-							d="M2 5h12v8a1 1 0 01-1 1H3a1 1 0 01-1-1V5zm4-3h4"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-						/>
-					</svg>
+					<StickyNote className="size-[11px]" />
 					{t("admin.feedback.input.noteMode")}
 				</Button>
 			</div>
@@ -155,17 +141,7 @@ return (
 							: "bg-acc shadow-[0_1px_4px_rgba(34,84,211,0.3)]",
 					)}
 				>
-					<svg
-						viewBox="0 0 16 16"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						className="size-[13px]"
-					>
-						<path d="M13.5 2.5L2.5 7l5 1.5M13.5 2.5L9 13.5l-1.5-5" />
-					</svg>
+					<Send className="size-[13px]" />
 				</Button>
 			</div>
 

@@ -339,6 +339,22 @@
 	}
 	* {
 		@apply border-border outline-ring/50;
+		scrollbar-width: thin;
+		scrollbar-color: var(--surf-4) transparent;
+	}
+	::-webkit-scrollbar {
+		width: 4px;
+		height: 4px;
+	}
+	::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	::-webkit-scrollbar-thumb {
+		background: var(--surf-4);
+		border-radius: 9999px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--bd-2);
 	}
 	button:not(:disabled),
 	a,

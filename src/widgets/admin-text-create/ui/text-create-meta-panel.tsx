@@ -129,7 +129,7 @@ export const TextCreateMetaPanel = ({
 	};
 
 	return (
-		<div className="flex flex-col overflow-y-auto [&::-webkit-scrollbar]:w-0">
+		<div className="sticky top-[52px] flex h-[calc(100vh-52px)] flex-col overflow-y-auto">
 			<Button
 				variant="bare"
 				size={null}

@@ -1,12 +1,11 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface UsersPaginationProps {
 	page: number;
@@ -64,20 +63,7 @@ return (
 					onClick={handleClick}
 					className={btnClass()}
 				>
-					<svg
-						width="12"
-						height="12"
-						viewBox="0 0 16 16"
-						fill="none"
-					>
-						<path
-							d="M10 4L6 8l4 4"
-							stroke="currentColor"
-							strokeWidth="1.4"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<ChevronLeft className="size-3" />
 				</Button>
 
 				{pages.map((p, i) => {
@@ -110,20 +96,7 @@ return (
 					onClick={handleClick2}
 					className={btnClass()}
 				>
-					<svg
-						width="12"
-						height="12"
-						viewBox="0 0 16 16"
-						fill="none"
-					>
-						<path
-							d="M6 4l4 4-4 4"
-							stroke="currentColor"
-							strokeWidth="1.4"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<ChevronRight className="size-3" />
 				</Button>
 			</div>
 		</div>

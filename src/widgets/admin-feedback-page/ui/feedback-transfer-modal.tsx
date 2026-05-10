@@ -1,8 +1,8 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
+import { X } from "lucide-react";
 import { ComponentProps, MouseEvent, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackAssignee } from "@/entities/feedback";
@@ -71,9 +71,7 @@ return (
 						onClick={onClose}
 						className="flex size-[26px] items-center justify-center rounded-md border border-bd-1 bg-surf-2 text-t-2 hover:text-t-1"
 					>
-						<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="size-3">
-							<path d="M2 2l8 8M10 2l-8 8" />
-						</svg>
+						<X className="size-3" />
 					</Button>
 				</div>
 

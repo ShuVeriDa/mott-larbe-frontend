@@ -1,7 +1,7 @@
 import { ComponentProps } from 'react';
 import type { FeatureFlagKeyItem } from "@/entities/feature-flag";
-
 import { Button } from "@/shared/ui/button";
+import { Search, Plus } from "lucide-react";
 interface OverridesToolbarProps {
 	search: string;
 	flagId: string;
@@ -31,16 +31,7 @@ export const OverridesToolbar = ({
   return (
 	<div className="mb-3.5 flex flex-wrap items-center gap-2">
 		<div className="relative max-w-[280px] flex-1">
-			<svg
-				className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3"
-				viewBox="0 0 15 15"
-				fill="none"
-				stroke="currentColor"
-				strokeWidth="1.4"
-			>
-				<circle cx="6.5" cy="6.5" r="4" />
-				<path d="M10 10l2.5 2.5" strokeLinecap="round" />
-			</svg>
+			<Search className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3" />
 			<input
 				type="text"
 				value={search}
@@ -77,16 +68,7 @@ export const OverridesToolbar = ({
 			onClick={onAddOverride}
 			className="ml-auto flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 		>
-			<svg
-				className="size-[11px]"
-				viewBox="0 0 15 15"
-				fill="none"
-				stroke="currentColor"
-				strokeWidth="1.8"
-				strokeLinecap="round"
-			>
-				<path d="M7.5 2v11M2 7.5h11" />
-			</svg>
+			<Plus className="size-[11px]" />
 			{t("admin.featureFlags.overrides.addOverride")}
 		</Button>
 	</div>

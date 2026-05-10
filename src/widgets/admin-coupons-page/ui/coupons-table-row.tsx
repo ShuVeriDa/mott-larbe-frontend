@@ -6,6 +6,7 @@ import { ComponentProps, MouseEvent, useState } from 'react';
 import type { AdminCouponListItem } from "@/entities/admin-coupon";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Copy } from "lucide-react";
 
 const PLAN_STYLES: Record<string, string> = {
 	BASIC: "bg-acc-bg text-acc-t",
@@ -60,10 +61,7 @@ const CouponCodeChip = ({ code }: { code: string }) => {
 			)}
 		>
 			{code}
-			<svg className="size-[11px] shrink-0 text-t-4" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
-				<rect x="4" y="1" width="7" height="7" rx="1.2" />
-				<path d="M1 4v6a1 1 0 001 1h6" strokeLinecap="round" />
-			</svg>
+			<Copy className="size-[11px] shrink-0 text-t-4" />
 		</Typography>
 	);
 };

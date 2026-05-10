@@ -1,11 +1,11 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { Calendar } from "lucide-react";
 import type { AnalyticsRange } from "@/entities/admin-analytics";
 
 const RANGES: AnalyticsRange[] = ["7d", "30d", "90d", "all"];
@@ -85,10 +85,7 @@ return (
 								: "border-bd-2 text-t-3 hover:text-t-1",
 						)}
 					>
-						<svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-							<rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" />
-							<path d="M5 1v3M11 1v3M2 7h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-						</svg>
+						<Calendar className="size-[10px]" aria-hidden="true" />
 					</Button>
 				</div>
 			</div>

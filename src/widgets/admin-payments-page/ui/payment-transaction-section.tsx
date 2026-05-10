@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { cn } from "@/shared/lib/cn";
+import { Check, XCircle, TrendingDown } from "lucide-react";
 import type { AdminPaymentDetail, AdminPaymentListItem, PaymentProvider, PaymentBackendStatus } from "@/entities/admin-payment";
 import { PaymentOtherPaymentsList } from "./payment-other-payments-list";
 
@@ -109,32 +110,13 @@ export const PaymentTransactionSection = ({
 							txIconBg,
 						)}
 					>
-						<svg
-							className={cn("size-[14px]", txIconColor)}
-							viewBox="0 0 14 14"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="1.4"
-						>
-							{payment.status === "REFUNDED" ? (
-								<path
-									d="M2 8l3-3 2 2 3-3 2 2"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							) : payment.status === "FAILED" ? (
-								<>
-									<circle cx="7" cy="7" r="5.5" />
-									<path d="M5 5l4 4M9 5l-4 4" strokeLinecap="round" />
-								</>
-							) : (
-								<path
-									d="M2.5 7l3 3 6-6"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							)}
-						</svg>
+						{payment.status === "REFUNDED" ? (
+							<TrendingDown className={cn("size-[14px]", txIconColor)} />
+						) : payment.status === "FAILED" ? (
+							<XCircle className={cn("size-[14px]", txIconColor)} />
+						) : (
+							<Check className={cn("size-[14px]", txIconColor)} />
+						)}
 					</div>
 					<div className="flex-1 text-[13px] font-semibold text-t-1">
 						{planName}

@@ -1,8 +1,8 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { ComponentProps, ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
@@ -43,15 +43,7 @@ return (
 					onClick={handleClick}
 					aria-label={t("admin.logs.pagination.prev")}
 				>
-					<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-						<path
-							d="M10 12L6 8l4-4"
-							stroke="currentColor"
-							strokeWidth="1.4"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<ChevronLeft className="size-[11px]" />
 				</PgBtn>
 
 				{pages.map((p, i) =>
@@ -81,15 +73,7 @@ return (
 					onClick={handleClick2}
 					aria-label={t("admin.logs.pagination.next")}
 				>
-					<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-						<path
-							d="M6 12l4-4-4-4"
-							stroke="currentColor"
-							strokeWidth="1.4"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<ChevronRight className="size-[11px]" />
 				</PgBtn>
 			</div>
 		</div>

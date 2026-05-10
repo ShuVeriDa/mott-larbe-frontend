@@ -1,8 +1,8 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
+import { Download } from "lucide-react";
 
 import { ComponentProps } from 'react';
 import { useAdminFeedbackPage } from "../model/use-admin-feedback-page";
@@ -107,15 +107,7 @@ return (
 						onClick={handleExport}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-50"
 					>
-						<svg viewBox="0 0 16 16" fill="none" className="size-[13px]">
-							<path
-								d="M8 2v9M4 8l4 4 4-4M3 14h10"
-								stroke="currentColor"
-								strokeWidth="1.3"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</svg>
+						<Download className="size-[13px]" />
 						{t("admin.feedback.export")}
 					</Button>
 				</div>

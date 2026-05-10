@@ -4,7 +4,15 @@ import { Button } from "@/shared/ui/button";
 
 import { cn } from "@/shared/lib/cn";
 import { Avatar } from "@/shared/ui/avatar";
-import { CreditCardIcon, GlobeIcon, LayoutDashboardIcon, LifeBuoyIcon, LogOutIcon, SettingsIcon, UserIcon } from "lucide-react";
+import {
+	CreditCardIcon,
+	GlobeIcon,
+	LayoutDashboardIcon,
+	LifeBuoyIcon,
+	LogOutIcon,
+	SettingsIcon,
+	UserIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
 import { useUserMenu } from "../model";
@@ -40,7 +48,7 @@ export const UserMenu = () => {
 			<DropdownMenuPrimitive.Trigger asChild>
 				<Button
 					className={cn(
-						"flex w-full items-center gap-2.5 px-3.5 py-1.5 pb-3 text-left transition-colors",
+						"flex w-full items-center gap-2.5 min-h-fit rounded-none px-3.5 py-1.5 pb-3 text-left transition-colors",
 						"hover:bg-surf-2 focus-visible:outline-none focus-visible:bg-surf-2",
 						open && "bg-surf-2",
 					)}
@@ -73,13 +81,19 @@ export const UserMenu = () => {
 					<div className="py-1">
 						<DropdownMenuPrimitive.Item asChild>
 							<Link href={`/${lang}/profile`} className={itemCls}>
-								<UserIcon className="size-[13px] shrink-0 text-t-3" strokeWidth={1.75} />
+								<UserIcon
+									className="size-[13px] shrink-0 text-t-3"
+									strokeWidth={1.75}
+								/>
 								{t("nav.userMenu.profile")}
 							</Link>
 						</DropdownMenuPrimitive.Item>
 						<DropdownMenuPrimitive.Item asChild>
 							<Link href={`/${lang}/settings`} className={itemCls}>
-								<SettingsIcon className="size-[13px] shrink-0 text-t-3" strokeWidth={1.75} />
+								<SettingsIcon
+									className="size-[13px] shrink-0 text-t-3"
+									strokeWidth={1.75}
+								/>
 								{t("nav.userMenu.settings")}
 							</Link>
 						</DropdownMenuPrimitive.Item>
@@ -89,13 +103,19 @@ export const UserMenu = () => {
 					<div className="border-t border-bd-1 py-1">
 						<DropdownMenuPrimitive.Item asChild>
 							<Link href={`/${lang}/support`} className={itemCls}>
-								<LifeBuoyIcon className="size-[13px] shrink-0 text-t-3" strokeWidth={1.75} />
+								<LifeBuoyIcon
+									className="size-[13px] shrink-0 text-t-3"
+									strokeWidth={1.75}
+								/>
 								{t("nav.userMenu.support")}
 							</Link>
 						</DropdownMenuPrimitive.Item>
 						<DropdownMenuPrimitive.Item asChild>
 							<Link href={`/${lang}/subscription`} className={itemCls}>
-								<CreditCardIcon className="size-[13px] shrink-0 text-t-3" strokeWidth={1.75} />
+								<CreditCardIcon
+									className="size-[13px] shrink-0 text-t-3"
+									strokeWidth={1.75}
+								/>
 								{t("nav.userMenu.subscription")}
 							</Link>
 						</DropdownMenuPrimitive.Item>
@@ -105,8 +125,14 @@ export const UserMenu = () => {
 					{showAdmin && (
 						<div className="border-t border-bd-1 py-1">
 							<DropdownMenuPrimitive.Item asChild>
-								<Link href={`/${lang}/admin/dashboard`} className={cn(itemCls, "text-acc-t")}>
-									<LayoutDashboardIcon className="size-[13px] shrink-0 text-acc" strokeWidth={1.75} />
+								<Link
+									href={`/${lang}/admin/dashboard`}
+									className={cn(itemCls, "text-acc-t")}
+								>
+									<LayoutDashboardIcon
+										className="size-[13px] shrink-0 text-acc"
+										strokeWidth={1.75}
+									/>
 									{t("nav.userMenu.adminPanel")}
 								</Link>
 							</DropdownMenuPrimitive.Item>
@@ -120,7 +146,10 @@ export const UserMenu = () => {
 							className="flex items-center justify-between gap-3 px-3 py-2 focus-visible:outline-none cursor-default"
 						>
 							<div className="flex items-center gap-2.5 text-[12.5px] text-t-2 shrink-0">
-								<GlobeIcon className="size-[13px] shrink-0 text-t-3" strokeWidth={1.75} />
+								<GlobeIcon
+									className="size-[13px] shrink-0 text-t-3"
+									strokeWidth={1.75}
+								/>
 								{t("nav.userMenu.language")}
 							</div>
 							<div
@@ -128,9 +157,9 @@ export const UserMenu = () => {
 								aria-label={t("nav.userMenu.language")}
 								className="flex rounded-full border border-bd-1 bg-surf-2 p-0.5 gap-px"
 							>
-								{locales.map((locale) => {
+								{locales.map(locale => {
 									const active = locale === lang;
-return (
+									return (
 										<Button
 											key={locale}
 											data-locale={locale}
@@ -163,7 +192,10 @@ return (
 									"text-danger hover:bg-danger/8 focus-visible:bg-danger/8 disabled:opacity-50",
 								)}
 							>
-								<LogOutIcon className="size-[13px] shrink-0" strokeWidth={1.75} />
+								<LogOutIcon
+									className="size-[13px] shrink-0"
+									strokeWidth={1.75}
+								/>
 								{t("nav.userMenu.logout")}
 							</Button>
 						</DropdownMenuPrimitive.Item>

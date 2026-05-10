@@ -1,4 +1,5 @@
 import { ComponentProps } from 'react';
+import { Search } from "lucide-react";
 import type {
 	FeatureFlagCategory,
 	FeatureFlagEnvironment,
@@ -44,16 +45,7 @@ export const FeatureFlagsToolbar = ({
   return (
 	<div className="mb-3.5 flex flex-wrap items-center gap-2">
 		<div className="relative max-w-[280px] flex-1">
-			<svg
-				className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3"
-				viewBox="0 0 15 15"
-				fill="none"
-				stroke="currentColor"
-				strokeWidth="1.4"
-			>
-				<circle cx="6.5" cy="6.5" r="4" />
-				<path d="M10 10l2.5 2.5" strokeLinecap="round" />
-			</svg>
+			<Search className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3" />
 			<input
 				type="text"
 				value={search}

@@ -5,6 +5,7 @@ import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 
 import { useI18n } from "@/shared/lib/i18n";
+import { Download, Plus } from "lucide-react";
 
 interface Props {
 	onAdd: () => void;
@@ -30,27 +31,7 @@ export const MorphologyTopbar = ({ onAdd, onImport }: Props) => {
 					onClick={onImport}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 				>
-					<svg
-						width="13"
-						height="13"
-						viewBox="0 0 16 16"
-						fill="none"
-						className="shrink-0"
-					>
-						<path
-							d="M8 2v8M5 8l3 3 3-3"
-							stroke="currentColor"
-							strokeWidth="1.4"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-						<path
-							d="M3 12h10"
-							stroke="currentColor"
-							strokeWidth="1.4"
-							strokeLinecap="round"
-						/>
-					</svg>
+					<Download className="size-[13px] shrink-0" />
 					<Typography tag="span" className="max-sm:hidden">{t("admin.morphology.import")}</Typography>
 				</Button>
 
@@ -58,14 +39,7 @@ export const MorphologyTopbar = ({ onAdd, onImport }: Props) => {
 					onClick={onAdd}
 					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
-					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-						<path
-							d="M8 3v10M3 8h10"
-							stroke="currentColor"
-							strokeWidth="1.7"
-							strokeLinecap="round"
-						/>
-					</svg>
+					<Plus className="size-3" />
 					{t("admin.morphology.add")}
 				</Button>
 			</div>

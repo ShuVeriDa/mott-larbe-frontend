@@ -5,6 +5,7 @@ import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 
 import { useI18n } from "@/shared/lib/i18n";
+import { CheckCircle2, Play } from "lucide-react";
 
 interface TokenizationTopbarProps {
 	onRun: () => void;
@@ -32,22 +33,7 @@ export const TokenizationTopbar = ({
 					onClick={onBatchRun}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 				>
-					<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-						<circle
-							cx="8"
-							cy="8"
-							r="6"
-							stroke="currentColor"
-							strokeWidth="1.3"
-						/>
-						<path
-							d="M5.5 8l1.5 1.5 3-3"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<CheckCircle2 className="size-[13px]" />
 					<Typography tag="span" className="max-sm:hidden">
 						{t("admin.tokenization.batchBtn")}
 					</Typography>
@@ -56,9 +42,7 @@ export const TokenizationTopbar = ({
 					onClick={onRun}
 					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
-					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-						<path d="M5 3l8 5-8 5V3z" fill="currentColor" />
-					</svg>
+					<Play className="size-3" />
 					{t("admin.tokenization.runBtn")}
 				</Button>
 			</div>

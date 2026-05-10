@@ -1,9 +1,9 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { AlertCircle, TrendingUp } from "lucide-react";
 import { useAdminTextSSE } from "@/entities/admin-text";
 import type { AdminTextListItem, ProcessingStatus } from "@/entities/admin-text";
 import type { useAdminTextMutations } from "@/entities/admin-text/model/use-admin-text-mutations";
@@ -62,18 +62,12 @@ return (
 					<Typography tag="span" className="flex flex-wrap items-center gap-1.5 text-[11px] text-t-3">
 						{text.processingStatus === "ERROR" ? (
 							<Typography tag="span" className="flex items-center gap-1 text-red-t">
-								<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-									<circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.3" />
-									<path d="M8 5v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-									<circle cx="8" cy="11.5" r="0.75" fill="currentColor" />
-								</svg>
+								<AlertCircle className="size-[11px]" />
 								{t("admin.texts.table.errorMeta")}
 							</Typography>
 						) : (
 							<Typography tag="span" className="flex items-center gap-1">
-								<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-									<path d="M2 12l4-4.5 2.5 2.5L12 5l2 2.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-								</svg>
+								<TrendingUp className="size-[11px]" />
 								{text.tokenCount > 0
 									? t("admin.texts.table.tokens", { count: text.tokenCount })
 									: t("admin.texts.table.notProcessed")}

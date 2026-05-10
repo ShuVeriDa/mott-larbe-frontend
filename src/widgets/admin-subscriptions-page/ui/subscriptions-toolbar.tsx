@@ -1,5 +1,6 @@
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { Search } from "lucide-react";
 import type { PaymentProvider, PlanType, SubscriptionsSort } from "@/entities/admin-subscription";
 
 interface Props {
@@ -37,18 +38,7 @@ return (
 		<div className="flex flex-wrap items-center gap-2 border-b border-bd-1 px-3.5 py-2.5">
 			{/* Search */}
 			<div className="relative max-w-[260px] flex-1 max-sm:max-w-none max-sm:basis-full">
-				<svg
-					className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-t-3"
-					width="13"
-					height="13"
-					viewBox="0 0 13 13"
-					fill="none"
-					stroke="currentColor"
-					strokeWidth="1.3"
-				>
-					<circle cx="5.5" cy="5.5" r="4" />
-					<path d="M9.5 9.5l2.5 2.5" strokeLinecap="round" />
-				</svg>
+				<Search className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3" />
 				<input
 					value={search}
 					onChange={handleChange}

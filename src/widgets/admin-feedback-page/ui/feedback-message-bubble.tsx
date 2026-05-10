@@ -1,7 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackMessage } from "@/entities/feedback";
-
 import { Typography } from "@/shared/ui/typography";
+import { StickyNote } from "lucide-react";
 const formatTime = (iso: string) =>
 	new Date(iso).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
 
@@ -45,14 +45,7 @@ export const FeedbackMessageBubble = ({ message, noteLabel }: FeedbackMessageBub
 			>
 				{isNote && (
 					<div className="flex items-center gap-1 text-[10px] font-semibold text-amb-t">
-						<svg viewBox="0 0 16 16" fill="none" className="size-[11px]">
-							<path
-								d="M2 5h12v8a1 1 0 01-1 1H3a1 1 0 01-1-1V5zm4-3h4"
-								stroke="currentColor"
-								strokeWidth="1.3"
-								strokeLinecap="round"
-							/>
-						</svg>
+						<StickyNote className="size-[11px]" />
 						{noteLabel}
 					</div>
 				)}

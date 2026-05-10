@@ -3,6 +3,7 @@
 import { ComponentProps } from 'react';
 import type { CefrLevel, TokenSort, TokenStatus } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
+import { Search, ChevronDown } from "lucide-react";
 
 interface TokenizationToolbarProps {
 	search: string;
@@ -19,19 +20,7 @@ const selectCls =
 	"h-8 appearance-none rounded-base border border-bd-2 bg-surf px-2.5 pr-7 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3 focus:border-acc";
 
 const ChevronIcon = () => (
-	<svg
-		className="pointer-events-none absolute right-2 top-1/2 size-2.5 -translate-y-1/2 text-t-3"
-		viewBox="0 0 10 10"
-		fill="none"
-	>
-		<path
-			d="M2 3.5l3 3 3-3"
-			stroke="currentColor"
-			strokeWidth="1.3"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-		/>
-	</svg>
+	<ChevronDown className="pointer-events-none absolute right-2 top-1/2 size-2.5 -translate-y-1/2 text-t-3" />
 );
 
 export const TokenizationToolbar = ({
@@ -61,25 +50,7 @@ export const TokenizationToolbar = ({
 	return (
 		<div className="mb-3.5 flex flex-wrap items-center gap-2">
 			<div className="relative min-w-[160px] flex-1">
-				<svg
-					className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-t-3"
-					viewBox="0 0 16 16"
-					fill="none"
-				>
-					<circle
-						cx="7"
-						cy="7"
-						r="4.5"
-						stroke="currentColor"
-						strokeWidth="1.3"
-					/>
-					<path
-						d="M10.5 10.5l2.5 2.5"
-						stroke="currentColor"
-						strokeWidth="1.3"
-						strokeLinecap="round"
-					/>
-				</svg>
+				<Search className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-t-3" />
 				<input
 					type="text"
 					value={search}

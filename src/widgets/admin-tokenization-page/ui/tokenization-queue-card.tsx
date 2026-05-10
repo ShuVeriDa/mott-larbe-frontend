@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/button";
 
 import type { TokenizationQueue } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
+import { Play } from "lucide-react";
 
 interface TokenizationQueueCardProps {
 	queue: TokenizationQueue | undefined;
@@ -78,9 +79,7 @@ export const TokenizationQueueCard = ({
 					onClick={onRun}
 					className="flex h-[34px] w-full items-center justify-center gap-1.5 rounded-base bg-acc text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
-					<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-						<path d="M5 3l8 5-8 5V3z" fill="currentColor" />
-					</svg>
+					<Play className="size-[13px]" />
 					{t("admin.tokenization.sidePanel.runBtn")}
 				</Button>
 			</div>

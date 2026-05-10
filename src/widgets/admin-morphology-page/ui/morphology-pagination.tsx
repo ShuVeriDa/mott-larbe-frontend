@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/button";
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Props {
   page: number;
@@ -59,15 +60,7 @@ return (
           onClick={handleClick}
           className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
         >
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-            <path
-              d="M10 12L6 8l4-4"
-              stroke="currentColor"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <ChevronLeft className="size-3" />
         </Button>
 
         {pages.map((p, i) => {
@@ -105,15 +98,7 @@ return (
           onClick={handleClick2}
           className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
         >
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-            <path
-              d="M6 4l4 4-4 4"
-              stroke="currentColor"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <ChevronRight className="size-3" />
         </Button>
       </div>
     </div>

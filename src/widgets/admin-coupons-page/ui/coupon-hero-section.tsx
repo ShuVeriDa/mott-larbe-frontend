@@ -4,6 +4,7 @@ import { Typography } from "@/shared/ui/typography";
 import { cn } from "@/shared/lib/cn";
 import type { AdminCouponDetail, CouponStatus } from "@/entities/admin-coupon";
 import { ComponentProps } from "react";
+import { Copy } from "lucide-react";
 
 const STATUS_STYLES: Record<CouponStatus, string> = {
 	active: "bg-grn-bg text-grn-t",
@@ -63,17 +64,7 @@ export const CouponHeroSection = ({
 						copied ? "text-grn-t" : "text-t-3",
 					)}
 				>
-					<svg
-						width="12"
-						height="12"
-						viewBox="0 0 12 12"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.3"
-					>
-						<rect x="4" y="1" width="7" height="7" rx="1.2" />
-						<path d="M1 4v6a1 1 0 001 1h6" strokeLinecap="round" />
-					</svg>
+					<Copy className="size-3" />
 					{copied ? labels.copied : labels.copy}
 				</Typography>
 			</div>

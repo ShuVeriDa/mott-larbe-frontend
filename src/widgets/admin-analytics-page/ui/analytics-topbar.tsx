@@ -1,12 +1,11 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
 import type { AnalyticsRange } from "@/entities/admin-analytics";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Calendar, Download } from "lucide-react";
 import { ComponentProps, useRef, useState } from 'react';
 const RANGES: AnalyticsRange[] = ["7d", "30d", "90d", "all"];
 
@@ -104,29 +103,7 @@ return (
 								: "border-bd-2 bg-transparent text-t-2 hover:border-bd-3 hover:text-t-1",
 						)}
 					>
-						<svg
-							width="11"
-							height="11"
-							viewBox="0 0 16 16"
-							fill="none"
-							aria-hidden="true"
-						>
-							<rect
-								x="2"
-								y="3"
-								width="12"
-								height="11"
-								rx="2"
-								stroke="currentColor"
-								strokeWidth="1.3"
-							/>
-							<path
-								d="M5 1v3M11 1v3M2 7h12"
-								stroke="currentColor"
-								strokeWidth="1.3"
-								strokeLinecap="round"
-							/>
-						</svg>
+						<Calendar className="size-[11px]" aria-hidden="true" />
 						{isCustomRange && dateFrom && dateTo
 							? `${dateFrom.slice(0, 10)} — ${dateTo.slice(0, 10)}`
 							: t("admin.analytics.dateRange")}
@@ -185,21 +162,7 @@ return (
 						onClick={handleExportMenuToggle}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 					>
-						<svg
-							width="12"
-							height="12"
-							viewBox="0 0 16 16"
-							fill="none"
-							aria-hidden="true"
-						>
-							<path
-								d="M8 2v8M5 7l3 3 3-3M3 12h10"
-								stroke="currentColor"
-								strokeWidth="1.3"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</svg>
+						<Download className="size-3" aria-hidden="true" />
 						{t("admin.analytics.export")}
 					</Button>
 

@@ -10,25 +10,8 @@ import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AdminDictEntryCard, AdminDictRelatedLemma, AdminDictSense, AdminDictExample } from "@/entities/dictionary";
 import type { DictModal } from "../model/use-admin-dictionary-detail-page";
+import { Pencil, Trash2, Plus } from "lucide-react";
 
-const IconEdit = () => (
-	<svg viewBox="0 0 16 16" fill="none" className="size-[13px]">
-		<path d="M10.5 3.5l2 2L5 13H3v-2l7.5-7.5z" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
-);
-
-const IconTrash = () => (
-	<svg viewBox="0 0 16 16" fill="none" className="size-[13px]">
-		<path d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-		<path d="M4 5l.7 7.5A1 1 0 005.7 13h4.6a1 1 0 001-.95L12 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-	</svg>
-);
-
-const IconPlus = () => (
-	<svg viewBox="0 0 16 16" fill="none" className="size-[11px]">
-		<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-	</svg>
-);
 
 interface ExampleItemProps {
 	example: AdminDictExample;
@@ -55,7 +38,7 @@ const ExampleItem = ({ example, onEdit, onDelete }: ExampleItemProps) => (
 				className="flex size-[26px] items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 				onClick={onDelete}
 			>
-				<IconTrash />
+				<Trash2 className="size-[13px]" />
 			</Button>
 		</div>
 	</div>
@@ -99,13 +82,13 @@ return (
 						className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 						onClick={onEditSense}
 					>
-						<IconEdit />
+						<Pencil className="size-[13px]" />
 					</Button>
 					<Button
 						className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 						onClick={onDeleteSense}
 					>
-						<IconTrash />
+						<Trash2 className="size-[13px]" />
 					</Button>
 				</div>
 			</div>
@@ -134,7 +117,7 @@ return (
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-dashed border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-3 transition-colors hover:border-solid hover:border-acc hover:bg-acc-bg hover:text-acc-t"
 					onClick={handleAddSenseClick}
 				>
-					<IconPlus />
+					<Plus className="size-[11px]" />
 					{t("admin.dictionaryDetail.addExample")}
 				</Button>
 			</div>
@@ -200,9 +183,7 @@ export const LemmasSensesCard = ({
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 					onClick={handleAddSenseClick}
 				>
-					<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-						<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-					</svg>
+					<Plus className="size-[11px]" />
 					{t("admin.dictionaryDetail.addSense")}
 				</Button>
 			</div>
@@ -272,7 +253,7 @@ export const LemmasSensesCard = ({
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-dashed border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-3 transition-colors hover:border-solid hover:border-acc hover:bg-acc-bg hover:text-acc-t"
 					onClick={handleClick2}
 				>
-					<IconPlus />
+					<Plus className="size-[11px]" />
 					{t("admin.dictionaryDetail.addSense")}
 				</Button>
 			</div>

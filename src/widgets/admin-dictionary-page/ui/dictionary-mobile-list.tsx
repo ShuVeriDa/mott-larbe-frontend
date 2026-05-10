@@ -7,6 +7,7 @@ import { PosBadge } from "./pos-badge";
 
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { Trash2 } from "lucide-react";
 const formatDate = (iso: string) =>
 	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
 
@@ -78,10 +79,7 @@ export const DictionaryMobileList = ({
 						onClick={handleClick}
 						className="shrink-0 mt-0.5 flex size-[30px] cursor-pointer items-center justify-center rounded-base border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 					>
-						<svg className="size-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<path d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4" strokeLinecap="round" />
-							<path d="M4 5l.7 7.5A1 1 0 005.7 13h4.6a1 1 0 001-.95L12 5" strokeLinecap="round" />
-						</svg>
+						<Trash2 className="size-3.5" />
 					</Button>
 				</div>
 			);

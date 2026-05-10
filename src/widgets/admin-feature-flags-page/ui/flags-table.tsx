@@ -3,6 +3,7 @@
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
+import { ChevronRight, User } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagItem, FeatureFlagCategory } from "@/entities/feature-flag";
 import { useAdminFeatureFlagItemHistory } from "@/entities/feature-flag";
@@ -152,20 +153,7 @@ const FlagRow = ({
 						aria-expanded={isExpanded}
 						className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
-						<svg
-							className={cn(
-								"size-3.5 transition-transform",
-								isExpanded && "rotate-90",
-							)}
-							viewBox="0 0 15 15"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="1.4"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						>
-							<path d="M6 4l4 4-4 4" />
-						</svg>
+						<ChevronRight className={cn("size-3.5 transition-transform", isExpanded && "rotate-90")} />
 					</Button>
 				</td>
 				<td className="py-3 pl-3.5">
@@ -204,10 +192,7 @@ const FlagRow = ({
 				<td className="py-3 pl-3.5">
 					{flag.overridesCount > 0 ? (
 						<Typography tag="span" className="inline-flex cursor-pointer items-center gap-[3px] rounded px-1.5 py-[1.5px] text-[10.5px] bg-pur-bg text-pur-t hover:opacity-80">
-							<svg className="size-2.5" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-								<circle cx="7.5" cy="5" r="2" />
-								<path d="M2.5 13c0-2.5 2.5-4 5-4s5 1.5 5 4" strokeLinecap="round" />
-							</svg>
+							<User className="size-2.5" />
 							{flag.overridesCount}
 						</Typography>
 					) : (

@@ -1,9 +1,8 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
+import { X } from "lucide-react";
 import type { PaymentProvider } from "@/entities/admin-subscription";
 import { adminSubscriptionApi } from "@/entities/admin-subscription";
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
@@ -63,16 +62,7 @@ return (
 					onClick={onClose}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
-					<svg
-						width="12"
-						height="12"
-						viewBox="0 0 12 12"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.5"
-					>
-						<path d="M1 1l10 10M11 1 1 11" strokeLinecap="round" />
-					</svg>
+					<X className="size-3" />
 				</Button>
 			</div>
 

@@ -8,6 +8,7 @@ import type { ImportMorphRulesResult } from "@/entities/morph-rule";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { ChangeEvent, ComponentProps, DragEvent, useRef, useState } from "react";
+import { Download } from "lucide-react";
 interface Props {
 	open: boolean;
 	isLoading?: boolean;
@@ -140,27 +141,7 @@ return (
 								onChange={handleFileChange}
 							/>
 							<div className="mb-2 text-t-3">
-								<svg
-									className="mx-auto"
-									width="24"
-									height="24"
-									viewBox="0 0 16 16"
-									fill="none"
-								>
-									<path
-										d="M8 2v8M5 8l3 3 3-3"
-										stroke="currentColor"
-										strokeWidth="1.4"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-									<path
-										d="M3 12h10"
-										stroke="currentColor"
-										strokeWidth="1.4"
-										strokeLinecap="round"
-									/>
-								</svg>
+								<Download className="mx-auto size-6" />
 							</div>
 							{file ? (
 								<div className="text-[13px] font-semibold text-t-1">

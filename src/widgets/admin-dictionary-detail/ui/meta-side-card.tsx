@@ -9,12 +9,8 @@ import { useI18n } from "@/shared/lib/i18n";
 import { CefrBadge } from "@/entities/dictionary";
 import type { AdminDictEntryCard } from "@/entities/dictionary";
 import type { DictModal } from "../model/use-admin-dictionary-detail-page";
+import { Pencil } from "lucide-react";
 
-const IconEdit = () => (
-	<svg viewBox="0 0 16 16" fill="none" className="size-[13px]">
-		<path d="M10.5 3.5l2 2L5 13H3v-2l7.5-7.5z" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
-);
 
 interface MetaSideCardProps {
 	data: AdminDictEntryCard | undefined;
@@ -91,7 +87,7 @@ return (
 					onClick={handleClick}
 					title={t("admin.dictionaryDetail.edit")}
 				>
-					<IconEdit />
+					<Pencil className="size-[13px]" />
 				</Button>
 			</div>
 			<div>

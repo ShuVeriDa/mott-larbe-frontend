@@ -8,6 +8,7 @@ import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { MorphRule } from "@/entities/morph-rule";
+import { ArrowRight, CheckCircle2, Pencil, Trash2 } from "lucide-react";
 
 // ─── Sub-components ────────────────────────────────────────────────────────
 
@@ -46,21 +47,7 @@ const ReplaceCell = ({ rule }: { rule: MorphRule }) => (
     <Typography tag="span" className="rounded bg-red-bg px-1.5 py-px font-mono text-[12px] font-semibold text-red-t">
       {rule.suffix}
     </Typography>
-    <svg
-      className="shrink-0 text-t-3"
-      width="12"
-      height="12"
-      viewBox="0 0 16 16"
-      fill="none"
-    >
-      <path
-        d="M3 8h10M9 5l4 3-4 3"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <ArrowRight className="size-3 shrink-0 text-t-3" />
     <Typography tag="span" className="rounded bg-grn-bg px-1.5 py-px font-mono text-[12px] font-semibold text-grn-t">
       {rule.add || "∅"}
     </Typography>
@@ -281,20 +268,7 @@ export const MorphologyTable = ({
                             title={t("admin.morphology.row.activate")}
                             className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
                           >
-                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                              <path
-                                d="M3 8a5 5 0 1010 0A5 5 0 003 8z"
-                                stroke="currentColor"
-                                strokeWidth="1.3"
-                              />
-                              <path
-                                d="M6 8l2 2 3-3"
-                                stroke="currentColor"
-                                strokeWidth="1.3"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
+                            <CheckCircle2 className="size-[14px]" />
                           </Button>
                         )}
                         <Button
@@ -302,35 +276,14 @@ export const MorphologyTable = ({
                           title={t("admin.morphology.row.edit")}
                           className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
                         >
-                          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                            <path
-                              d="M10.5 3.5l2 2L5 13H3v-2l7.5-7.5z"
-                              stroke="currentColor"
-                              strokeWidth="1.3"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
+                          <Pencil className="size-[14px]" />
                         </Button>
                         <Button
                           onClick={handleClick3}
                           title={t("admin.morphology.row.delete")}
                           className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
                         >
-                          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                            <path
-                              d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4"
-                              stroke="currentColor"
-                              strokeWidth="1.3"
-                              strokeLinecap="round"
-                            />
-                            <path
-                              d="M4 5l.7 7.5A1 1 0 005.7 13h4.6a1 1 0 001-.95L12 5"
-                              stroke="currentColor"
-                              strokeWidth="1.3"
-                              strokeLinecap="round"
-                            />
-                          </svg>
+                          <Trash2 className="size-[14px]" />
                         </Button>
                       </div>
                     </td>

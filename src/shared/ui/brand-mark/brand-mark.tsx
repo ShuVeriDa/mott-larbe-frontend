@@ -127,7 +127,9 @@ export const BrandMark = ({
 			fill="var(--acc)"
 			opacity="0.75"
 		/>
-		<circle cx="27" cy="38.5" r="5" fill="var(--acc)" opacity="0.15" />
-		<circle cx="27" cy="38.5" r="1.8" fill="var(--acc)" opacity="0.85" />
+		<circle cx="27" cy="38.5" r="5" fill="var(--acc)" opacity="0.15" className="icon-highlight-glow" />
+		<circle cx="27" cy="38.5" r="1.8" fill="var(--acc)" opacity="0.85">
+			<animate attributeName="opacity" values="0.85;0.5;0.85" dur="2.5s" repeatCount="indefinite" />
+		</circle>
 	</svg>
 );

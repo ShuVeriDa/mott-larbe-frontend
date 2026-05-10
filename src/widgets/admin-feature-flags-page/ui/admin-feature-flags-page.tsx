@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
-
+import { Upload, Plus } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
 import { ComponentProps } from "react";
 import { useAdminFeatureFlagsPage } from "../model/use-admin-feature-flags-page";
@@ -134,34 +134,14 @@ export const AdminFeatureFlagsPage = () => {
 							onClick={handleImportClick}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
-							<svg
-								className="size-[11px]"
-								viewBox="0 0 15 15"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="1.6"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							>
-								<path d="M7.5 10V2M4 6.5l3.5 4 3.5-4" />
-								<path d="M2 12h11" />
-							</svg>
+							<Upload className="size-[11px]" />
 							{t("admin.featureFlags.importJson")}
 						</Button>
 						<Button
 							onClick={openCreate}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 						>
-							<svg
-								className="size-[11px]"
-								viewBox="0 0 15 15"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="1.8"
-								strokeLinecap="round"
-							>
-								<path d="M7.5 2v11M2 7.5h11" />
-							</svg>
+							<Plus className="size-[11px]" />
 							{t("admin.featureFlags.newFlag")}
 						</Button>
 					</>

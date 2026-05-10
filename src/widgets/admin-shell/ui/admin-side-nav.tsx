@@ -1,12 +1,29 @@
 "use client";
 
+import { BrandMark } from "@/shared/ui/brand-mark";
 import { Typography } from "@/shared/ui/typography";
-
-import { ReactNode } from 'react';
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import {
+	LayoutGrid,
+	TrendingUp,
+	FileText,
+	Scissors,
+	BookOpen,
+	Layers,
+	UserX,
+	Users,
+	MessageSquare,
+	CreditCard,
+	Clock,
+	DollarSign,
+	Ticket,
+	Settings,
+	ScrollText,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
+import { ReactNode } from "react";
 
 interface NavItemProps {
 	href: string;
@@ -26,17 +43,18 @@ const NavItem = ({ href, label, icon, badge, active }: NavItemProps) => (
 				: "text-t-2 hover:bg-surf-2 hover:text-t-1",
 		)}
 	>
-		<Typography tag="span"
-			className={cn(
-				"size-[15px] shrink-0",
-				active ? "text-acc-t" : "text-t-3",
-			)}
+		<Typography
+			tag="span"
+			className={cn("size-[15px] shrink-0", active ? "text-acc-t" : "text-t-3")}
 		>
 			{icon}
 		</Typography>
 		{label}
 		{badge !== undefined && badge > 0 && (
-			<Typography tag="span" className="ml-auto min-w-[18px] rounded bg-red-bg px-1 py-px text-center text-[10px] font-semibold text-red-t">
+			<Typography
+				tag="span"
+				className="ml-auto min-w-[18px] rounded bg-red-bg px-1 py-px text-center text-[10px] font-semibold text-red-t"
+			>
 				{badge}
 			</Typography>
 		)}
@@ -49,9 +67,7 @@ const NavSection = ({ label }: { label: string }) => (
 	</div>
 );
 
-const NavDivider = () => (
-	<div className="mx-3.5 my-1.5 h-px bg-bd-1" />
-);
+const NavDivider = () => <div className="mx-3.5 my-1.5 h-px bg-bd-1" />;
 
 export const AdminSideNav = () => {
 	const { t, lang } = useI18n();
@@ -63,27 +79,21 @@ export const AdminSideNav = () => {
 		<nav className="relative flex h-screen w-[210px] shrink-0 flex-col border-r border-bd-1 bg-surf transition-colors max-md:hidden">
 			{/* Logo */}
 			<div className="flex items-center gap-2.5 border-b border-bd-1 px-3.5 py-4">
-				<div className="flex size-[30px] shrink-0 items-center justify-center rounded-lg bg-acc shadow-[0_2px_6px_rgba(34,84,211,0.35)]">
-					<svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-						<path
-							d="M7.5 2L3 5.5v7h9v-7L7.5 2z"
-							fill="#fff"
-							fillOpacity=".9"
-						/>
-						<path
-							d="M5.5 12.5V9h4v3.5"
-							stroke="#fff"
-							strokeWidth="1.1"
-							strokeLinecap="round"
-						/>
-					</svg>
+				<BrandMark width="30" height="36" />
+				<div className="flex flex-col">
+					<Typography
+						tag="span"
+						className="font-display text-sm font-medium tracking-[-0.1px] text-t-1"
+					>
+						{t("admin.brand")}
+					</Typography>
+					<Typography
+						tag="span"
+						className="text-[9px] uppercase tracking-[1px] text-t-3 opacity-70"
+					>
+						{t("admin.chip")}
+					</Typography>
 				</div>
-				<Typography tag="span" className="font-display text-[14px] font-medium tracking-[-0.1px] text-t-1">
-					{t("admin.brand")}
-				</Typography>
-				<Typography tag="span" className="ml-auto shrink-0 rounded bg-red-bg px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.3px] text-red-t">
-					{t("admin.chip")}
-				</Typography>
 			</div>
 
 			{/* Scrollable nav */}
@@ -93,24 +103,13 @@ export const AdminSideNav = () => {
 					href={`/${lang}/admin/dashboard`}
 					label={t("admin.nav.dashboard")}
 					active={isActive("/admin/dashboard")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<rect x="1.5" y="1.5" width="5" height="5" rx="1.2" />
-							<rect x="8.5" y="1.5" width="5" height="5" rx="1.2" />
-							<rect x="1.5" y="8.5" width="5" height="5" rx="1.2" />
-							<rect x="8.5" y="8.5" width="5" height="5" rx="1.2" />
-						</svg>
-					}
+					icon={<LayoutGrid className="size-[15px]" />}
 				/>
 				<NavItem
 					href={`/${lang}/admin/analytics`}
 					label={t("admin.nav.analytics")}
 					active={isActive("/admin/analytics")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<path d="M2 11l2.5-3 2 2.5 2.5-3L12 11" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
-					}
+					icon={<TrendingUp className="size-[15px]" />}
 				/>
 
 				<NavSection label={t("admin.nav.content")} />
@@ -118,55 +117,32 @@ export const AdminSideNav = () => {
 					href={`/${lang}/admin/texts`}
 					label={t("admin.nav.texts")}
 					active={isActive("/admin/texts")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<rect x="2" y="2" width="11" height="11" rx="1.5" />
-							<path d="M4.5 5h6M4.5 7.5h6M4.5 10h4" strokeLinecap="round" />
-						</svg>
-					}
+					icon={<FileText className="size-[15px]" />}
 				/>
 				<NavItem
 					href={`/${lang}/admin/tokenization`}
 					label={t("admin.nav.tokenization")}
 					active={isActive("/admin/tokenization")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<path d="M2 4.5h2M5.5 4.5h8M2 7.5h6.5M10 7.5h3M2 10.5h3.5M7 10.5h6" strokeLinecap="round" />
-						</svg>
-					}
+					icon={<Scissors className="size-[15px]" />}
 				/>
 				<NavItem
 					href={`/${lang}/admin/dictionary`}
 					label={t("admin.nav.dictionary")}
 					active={isActive("/admin/dictionary")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<path d="M3 4h9M3 7.5h7M3 11h5" strokeLinecap="round" />
-						</svg>
-					}
+					icon={<BookOpen className="size-[15px]" />}
 				/>
 				<NavItem
 					href={`/${lang}/admin/morphology`}
 					label={t("admin.nav.morphology")}
 					active={isActive("/admin/morphology")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<path d="M4 7.5h7M4 4.5c0-1 .9-1.8 2-1.8h3c1.1 0 2 .8 2 1.8M4 10.5c0 1 .9 1.8 2 1.8h3c1.1 0 2-.8 2-1.8" strokeLinecap="round" />
-						</svg>
-					}
+					icon={<Layers className="size-[15px]" />}
 				/>
 				<NavItem
 					href={`/${lang}/admin/unknown-words`}
 					label={t("admin.nav.unknownWords")}
 					active={isActive("/admin/unknown-words")}
 					badge={142}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<circle cx="7.5" cy="5" r="2" />
-							<path d="M2 12c0-2.5 2.5-4 5.5-4s5.5 1.5 5.5 4" strokeLinecap="round" />
-							<path d="M9.5 9l2.5 2.5M12 9l-2.5 2.5" strokeLinecap="round" />
-						</svg>
-					}
+					icon={<UserX className="size-[15px]" />}
 				/>
 
 				<NavSection label={t("admin.nav.users")} />
@@ -174,25 +150,14 @@ export const AdminSideNav = () => {
 					href={`/${lang}/admin/users`}
 					label={t("admin.nav.usersList")}
 					active={isActive("/admin/users")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<circle cx="7.5" cy="5" r="2.5" />
-							<path d="M2.5 13c0-2.76 2.24-5 5-5s5 2.24 5 5" strokeLinecap="round" />
-						</svg>
-					}
+					icon={<Users className="size-[15px]" />}
 				/>
 				<NavItem
 					href={`/${lang}/admin/feedback`}
 					label={t("admin.nav.feedback")}
 					active={isActive("/admin/feedback")}
 					badge={7}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<path d="M2 11c0-2 1.5-3.5 3.5-3.5h4C11.5 7.5 13 9 13 11" strokeLinecap="round" />
-							<circle cx="5" cy="4.5" r="1.8" />
-							<circle cx="10" cy="4.5" r="1.8" />
-						</svg>
-					}
+					icon={<MessageSquare className="size-[15px]" />}
 				/>
 
 				<NavDivider />
@@ -202,44 +167,25 @@ export const AdminSideNav = () => {
 					href={`/${lang}/admin/plans`}
 					label={t("admin.nav.plans")}
 					active={isActive("/admin/plans")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<rect x="1.5" y="3.5" width="12" height="8" rx="1.5" />
-							<path d="M1.5 6.5h12" strokeLinecap="round" />
-							<path d="M4 9.5h3" strokeLinecap="round" />
-						</svg>
-					}
+					icon={<CreditCard className="size-[15px]" />}
 				/>
 				<NavItem
 					href={`/${lang}/admin/billing`}
 					label={t("admin.nav.subscriptions")}
 					active={isActive("/admin/billing")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<circle cx="7.5" cy="7.5" r="5.5" />
-							<path d="M7.5 4.5v3l2 1.5" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
-					}
+					icon={<Clock className="size-[15px]" />}
 				/>
 				<NavItem
 					href={`/${lang}/admin/payments`}
 					label={t("admin.nav.payments")}
 					active={isActive("/admin/payments")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<path d="M7.5 1.5v12M4 4.5c0-1.1.9-2 2-2h3c1.1 0 2 .9 2 2s-.9 2-2 2H6c-1.1 0-2 .9-2 2s.9 2 2 2h3c1.1 0 2-.9 2-2" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
-					}
+					icon={<DollarSign className="size-[15px]" />}
 				/>
 				<NavItem
 					href={`/${lang}/admin/billing/coupons`}
 					label={t("admin.nav.coupons")}
 					active={isActive("/admin/billing/coupons")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<path d="M1.5 7.5h12M5.5 4.5l-4 3 4 3M9.5 4.5l4 3-4 3" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
-					}
+					icon={<Ticket className="size-[15px]" />}
 				/>
 
 				<NavSection label={t("admin.nav.system")} />
@@ -247,23 +193,13 @@ export const AdminSideNav = () => {
 					href={`/${lang}/admin/feature-flags`}
 					label={t("admin.nav.featureFlags")}
 					active={isActive("/admin/feature-flags")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<circle cx="7.5" cy="7.5" r="2" />
-							<path d="M7.5 1.5v2m0 8v2m6-6h-2m-8 0H1.5" strokeLinecap="round" />
-						</svg>
-					}
+					icon={<Settings className="size-[15px]" />}
 				/>
 				<NavItem
 					href={`/${lang}/admin/logs`}
 					label={t("admin.nav.logs")}
 					active={isActive("/admin/logs")}
-					icon={
-						<svg viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.3">
-							<circle cx="7.5" cy="7.5" r="5.5" />
-							<path d="M7.5 4.5v3l2 2" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
-					}
+					icon={<ScrollText className="size-[15px]" />}
 				/>
 			</div>
 		</nav>

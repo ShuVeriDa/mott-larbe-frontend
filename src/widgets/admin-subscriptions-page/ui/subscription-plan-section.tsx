@@ -3,6 +3,7 @@
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { ComponentProps } from "react";
+import { CreditCard } from "lucide-react";
 import type { AdminSubscriptionDetail, PlanType } from "@/entities/admin-subscription";
 
 const formatDate = (date: string | null, fallback = "—") => {
@@ -70,11 +71,7 @@ export const SubscriptionPlanSection = ({ sub, labels, isApplyCouponPending, onE
 			<SectionTitle label={labels.sectionTitle} />
 			<div className="mb-2.5 flex items-start gap-2.5">
 				<div className={`flex size-[30px] shrink-0 items-center justify-center rounded-lg ${planStyle.bg}`}>
-					<svg className={`size-[14px] ${planStyle.text}`} viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.3">
-						<rect x="1" y="2.5" width="12" height="9" rx="1.5" />
-						<path d="M1 5.5h12" strokeLinecap="round" />
-						<path d="M3.5 8.5h4" strokeLinecap="round" />
-					</svg>
+					<CreditCard className={`size-[14px] ${planStyle.text}`} />
 				</div>
 				<div>
 					<div className="text-[13px] font-semibold text-t-1">{sub.plan.name}</div>

@@ -4,6 +4,7 @@ import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AdminLogRange } from "@/entities/admin-log";
+import { Search, Calendar } from "lucide-react";
 
 const RANGES: Array<{ value: AdminLogRange; labelKey: string }> = [
 	{ value: "15m", labelKey: "admin.logs.toolbar.last15m" },
@@ -45,21 +46,7 @@ return (
 		<div className="mb-2.5 flex flex-wrap items-center gap-2">
 			{/* Search */}
 			<div className="relative min-w-[160px] flex-1">
-				<svg
-					width="13"
-					height="13"
-					viewBox="0 0 16 16"
-					fill="none"
-					className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-t-3"
-				>
-					<circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.3" />
-					<path
-						d="M10.5 10.5L13 13"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-					/>
-				</svg>
+				<Search className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3" />
 				<input
 					type="text"
 					value={search}
@@ -105,29 +92,7 @@ return (
 							</option>
 						))}
 					</select>
-					<svg
-						width="12"
-						height="12"
-						viewBox="0 0 16 16"
-						fill="none"
-						className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-t-3"
-					>
-						<rect
-							x="2"
-							y="3"
-							width="12"
-							height="11"
-							rx="2"
-							stroke="currentColor"
-							strokeWidth="1.3"
-						/>
-						<path
-							d="M5 2v2M11 2v2M2 7h12"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-						/>
-					</svg>
+					<Calendar className="pointer-events-none absolute left-2.5 top-1/2 size-[12px] -translate-y-1/2 text-t-3" />
 				</div>
 			</div>
 		</div>

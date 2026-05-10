@@ -3,6 +3,7 @@
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { FetchAdminUsersQuery, RoleName, UsersSort } from "@/entities/admin-user";
+import { Search } from "lucide-react";
 
 const ROLES: Array<{ value: RoleName | ""; label: string }> = [
 	{ value: "", label: "" },
@@ -63,19 +64,7 @@ return (
 		<div className="mb-2.5 flex flex-wrap items-center gap-2">
 			{/* Search */}
 			<div className="relative min-w-[180px] flex-1">
-				<svg
-					className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3"
-					viewBox="0 0 16 16"
-					fill="none"
-				>
-					<circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.3" />
-					<path
-						d="M10.5 10.5l2.5 2.5"
-						stroke="currentColor"
-						strokeWidth="1.3"
-						strokeLinecap="round"
-					/>
-				</svg>
+				<Search className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3" />
 				<input
 					type="text"
 					value={search}

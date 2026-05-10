@@ -9,6 +9,7 @@ import type { ProcessingStatus, TokenizationTextItem } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
 import { TokenizationLevelBadge } from "./tokenization-level-badge";
 import { TokenizationStatusBadge } from "./tokenization-status-badge";
+import { ChevronRight } from "lucide-react";
 
 interface TokenizationMobileListProps {
 	items: TokenizationTextItem[];
@@ -57,15 +58,7 @@ export const TokenizationMobileList = ({
 							</div>
 						</div>
 						<Button className="flex size-8 shrink-0 items-center justify-center rounded-base bg-surf-2 text-t-2">
-							<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-								<path
-									d="M6 4l4 4-4 4"
-									stroke="currentColor"
-									strokeWidth="1.4"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							</svg>
+							<ChevronRight className="size-[14px]" />
 						</Button>
 					</div>
 					<div className="flex items-center gap-3 text-[11px] text-t-3">

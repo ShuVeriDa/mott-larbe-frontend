@@ -3,6 +3,7 @@
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { MorphRuleType } from "@/entities/morph-rule";
+import { Search } from "lucide-react";
 
 const POS_OPTIONS = ["NOUN", "VERB", "ADJ", "ADV", "PRON"];
 const TYPE_OPTIONS: MorphRuleType[] = [
@@ -40,19 +41,7 @@ export const MorphologyToolbar = ({
 return (
     <div className="mb-3.5 flex flex-wrap items-center gap-2">
       <div className="relative min-w-[160px] flex-1">
-        <svg
-          className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-t-3"
-          viewBox="0 0 16 16"
-          fill="none"
-        >
-          <circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.3" />
-          <path
-            d="M10 10l3 3"
-            stroke="currentColor"
-            strokeWidth="1.3"
-            strokeLinecap="round"
-          />
-        </svg>
+        <Search className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-t-3" />
         <input
           type="text"
           value={search}

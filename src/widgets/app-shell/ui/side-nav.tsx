@@ -14,8 +14,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from 'react';
-import { ChechenIcon, GrammarIcon, LogoIcon } from "./nav-icons";
+import type { ReactNode } from "react";
+import { BrandMark } from "@/shared/ui/brand-mark";
+import { ChechenIcon, GrammarIcon } from "./nav-icons";
 import { NavStreak } from "./nav-streak";
 import { NavVocab } from "./nav-vocab";
 import { ThemeToggle } from "./theme-toggle";
@@ -96,13 +97,18 @@ export const SideNav = () => {
 		>
 			<div className="flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 				<div className="flex items-center gap-2.5 border-hairline border-b border-bd-1 px-3.5 py-[16px_14px] pt-4 pb-3.5">
-					<LogoIcon />
-					<Typography
-						tag="span"
-						className="font-display text-sm font-medium tracking-[-0.1px] text-t-1"
-					>
-						Мотт Ларбе
-					</Typography>
+					<BrandMark width="30" height="36" />
+					<div className="flex flex-col">
+						<Typography
+							tag="span"
+							className="font-display text-sm font-medium tracking-[-0.1px] text-t-1"
+						>
+							{t("auth.brand.name")}
+						</Typography>
+						<Typography tag="span" className="text-[9px] uppercase tracking-[1px] text-t-3 opacity-70">
+							{t("auth.brand.tagline")}
+						</Typography>
+					</div>
 				</div>
 
 				{sections.map((section, secIdx) => (
@@ -124,7 +130,8 @@ export const SideNav = () => {
 											: "text-t-2 hover:bg-surf-2 hover:text-t-1",
 									)}
 								>
-									<Typography tag="span"
+									<Typography
+										tag="span"
 										className={cn(
 											"shrink-0",
 											active ? "text-acc-t" : "text-t-3",
@@ -134,7 +141,8 @@ export const SideNav = () => {
 									</Typography>
 									{t(item.labelKey)}
 									{active ? (
-										<Typography tag="span"
+										<Typography
+											tag="span"
 											aria-hidden="true"
 											className="absolute left-0 top-[5px] bottom-[5px] w-[2px] rounded-r-[2px] bg-acc"
 										/>
