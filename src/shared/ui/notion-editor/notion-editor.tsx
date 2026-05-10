@@ -179,7 +179,9 @@ export const NotionEditor = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [editor]);
 
-	const handleInsertSlash: NonNullable<ComponentProps<"button">["onMouseDown"]> = e => {
+	const handleInsertSlash: NonNullable<
+		ComponentProps<"button">["onMouseDown"]
+	> = e => {
 		e.preventDefault();
 		if (!editor) return;
 		editor.chain().focus().insertContent("/").run();
@@ -201,7 +203,10 @@ export const NotionEditor = ({
 					options={{ placement: "top" }}
 					className="z-9997"
 				>
-					<BubbleMenuContent editor={editor} extraToolbarItems={extraToolbarItems} />
+					<BubbleMenuContent
+						editor={editor}
+						extraToolbarItems={extraToolbarItems}
+					/>
 				</BubbleMenu>
 			)}
 
@@ -209,15 +214,21 @@ export const NotionEditor = ({
 				<FloatingMenu
 					editor={editor}
 					options={{ placement: "left" }}
-					className="flex items-center"
+					className="-translate-x-1.5 flex items-center"
 				>
 					<Button
 						title="Insert block (/)"
+						size={"bare"}
 						onMouseDown={handleInsertSlash}
 						className="flex h-6 w-6 items-center justify-center rounded-[5px] text-t-4 transition-colors hover:bg-surf-2 hover:text-t-2"
 					>
 						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+							<path
+								d="M8 3v10M3 8h10"
+								stroke="currentColor"
+								strokeWidth="1.5"
+								strokeLinecap="round"
+							/>
 						</svg>
 					</Button>
 				</FloatingMenu>
@@ -225,7 +236,7 @@ export const NotionEditor = ({
 
 			{editor && (
 				<DragHandle editor={editor}>
-					<div className="flex h-5 w-4 cursor-grab items-center justify-center rounded-[4px] text-t-4 opacity-0 transition-opacity group-hover:opacity-100 hover:opacity-100! hover:bg-surf-2 hover:text-t-2 active:cursor-grabbing">
+					<div className="ml-1 flex h-5 w-4 cursor-grab items-center justify-center rounded-[4px] text-t-4 opacity-0 transition-opacity group-hover:opacity-100 hover:opacity-100! hover:bg-surf-2 hover:text-t-2 active:cursor-grabbing">
 						<svg width="10" height="14" viewBox="0 0 10 16" fill="none">
 							<circle cx="3" cy="4" r="1.2" fill="currentColor" />
 							<circle cx="7" cy="4" r="1.2" fill="currentColor" />
@@ -253,7 +264,10 @@ export const NotionEditor = ({
 				createPortal(
 					<div
 						className="fixed z-9999"
-						style={{ top: slashPortal.rect.bottom + 6, left: slashPortal.rect.left }}
+						style={{
+							top: slashPortal.rect.bottom + 6,
+							left: slashPortal.rect.left,
+						}}
 					>
 						<SlashMenu
 							ref={slashMenuRef}

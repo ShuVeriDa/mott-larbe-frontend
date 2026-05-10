@@ -1,39 +1,43 @@
 "use client";
 
-import { ComponentProps } from "react";
 import type { TextLanguage, TextStatus } from "@/entities/admin-text";
 import {
 	FieldSelect,
 	MetaSection,
 } from "@/shared/ui/admin-text-meta-fields";
+import type { ComponentProps } from "react";
 
-interface Props {
+interface AdminTextMetaStatusSectionLabels {
+	statusSection: string;
+	statusDraft: string;
+	statusPublished: string;
+	statusArchived: string;
+	langLabel: string;
+	langChe: string;
+	langRu: string;
+}
+
+interface AdminTextMetaStatusSectionProps {
 	status: TextStatus;
 	language: TextLanguage;
-	labels: {
-		statusSection: string;
-		statusDraft: string;
-		statusPublished: string;
-		statusArchived: string;
-		langLabel: string;
-		langChe: string;
-		langRu: string;
-	};
+	labels: AdminTextMetaStatusSectionLabels;
 	onStatusChange: (v: TextStatus) => void;
 	onLanguageChange: (v: TextLanguage) => void;
 }
 
-export const TextEditMetaStatusSection = ({
+export const AdminTextMetaStatusSection = ({
 	status,
 	language,
 	labels,
 	onStatusChange,
 	onLanguageChange,
-}: Props) => {
-	const handleStatusChange: NonNullable<ComponentProps<typeof FieldSelect>["onChange"]> = e =>
-		onStatusChange(e.currentTarget.value as TextStatus);
-	const handleLanguageChange: NonNullable<ComponentProps<typeof FieldSelect>["onChange"]> = e =>
-		onLanguageChange(e.currentTarget.value as TextLanguage);
+}: AdminTextMetaStatusSectionProps) => {
+	const handleStatusChange: NonNullable<
+		ComponentProps<typeof FieldSelect>["onChange"]
+	> = e => onStatusChange(e.currentTarget.value as TextStatus);
+	const handleLanguageChange: NonNullable<
+		ComponentProps<typeof FieldSelect>["onChange"]
+	> = e => onLanguageChange(e.currentTarget.value as TextLanguage);
 
 	return (
 		<>

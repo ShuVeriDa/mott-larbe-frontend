@@ -8,15 +8,9 @@ import type {
 } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
 import {
-	FieldInput,
-	FieldLabel,
-	levelColorMap,
-	LEVELS,
-	MetaSection,
-} from "@/shared/ui/admin-text-meta-fields";
-import { Button } from "@/shared/ui/button";
-import { Typography } from "@/shared/ui/typography";
-import type { ComponentProps, KeyboardEvent } from "react";
+	AdminTextMetaPanelShell,
+} from "@/shared/ui/admin-text-editor";
+import type { KeyboardEvent } from "react";
 import { useState } from "react";
 import type {
 	PageContent,
@@ -24,12 +18,9 @@ import type {
 } from "../model/use-admin-text-create-page";
 import { ProcessingSection } from "./processing-section";
 import { TextCreateMetaActionsSection } from "./text-create-meta-actions-section";
-import { AlignLeft, ChevronDown } from "lucide-react";
 import { TextCreateMetaCoverSection } from "./text-create-meta-cover-section";
 import { TextCreateMetaDescriptionSection } from "./text-create-meta-description-section";
 import { TextCreateMetaPageStatsSection } from "./text-create-meta-page-stats-section";
-import { TextCreateMetaStatusSection } from "./text-create-meta-status-section";
-import { TextCreateMetaTagsSection } from "./text-create-meta-tags-section";
 
 interface TextCreateMetaPanelProps {
 	status: TextStatus;
@@ -96,7 +87,6 @@ export const TextCreateMetaPanel = ({
 }: TextCreateMetaPanelProps) => {
 	const { t } = useI18n();
 	const [tagInputValue, setTagInputValue] = useState("");
-	const [metaOpen, setMetaOpen] = useState(false);
 
 	const handleTagKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
@@ -113,120 +103,27 @@ export const TextCreateMetaPanel = ({
 		}
 	};
 
-	const handleToggleMeta: NonNullable<
-		ComponentProps<"button">["onClick"]
-	> = () => setMetaOpen(v => !v);
-	const handleAuthorChange: NonNullable<
-		ComponentProps<typeof FieldInput>["onChange"]
-	> = e => onAuthorChange(e.currentTarget.value);
-	const handleSourceChange: NonNullable<
-		ComponentProps<typeof FieldInput>["onChange"]
-	> = e => onSourceChange(e.currentTarget.value);
-	const handleLevelClick: NonNullable<
-		ComponentProps<"button">["onClick"]
-	> = e => {
-		const lvl = (e.currentTarget as HTMLButtonElement).dataset.level as
-			| TextLevel
-			| undefined;
-		if (lvl) onLevelChange(level === lvl ? null : lvl);
-	};
-
 	return (
-		<div className="sticky top-[52px] flex h-[calc(100vh-52px)] flex-col overflow-y-auto">
-			<Button
-				variant="bare"
-				size={null}
-				onClick={handleToggleMeta}
-				className="hidden items-center justify-between border-t border-bd-1 bg-surf-2 px-4 py-[13px] transition-colors hover:bg-surf-3 max-[900px]:flex"
-			>
-				<Typography
-					tag="span"
-					className="flex items-center gap-2 text-[13px] font-medium text-t-1"
-				>
-					<AlignLeft className="size-3.5" />
-					{t("admin.texts.createPage.sections.settings")}
-				</Typography>
-				<ChevronDown className={`size-3.5 text-t-3 transition-transform ${metaOpen ? "rotate-180" : ""}`} />
-			</Button>
-
-			<div
-				className={`flex flex-col max-[900px]:${metaOpen ? "flex" : "hidden"}`}
-			>
-				<TextCreateMetaStatusSection
-					status={status}
-					language={language}
-					labels={{
-						statusSection: t("admin.texts.createPage.sections.status"),
-						statusDraft: t("admin.texts.createPage.statusOptions.draft"),
-						statusPublished: t("admin.texts.createPage.statusOptions.published"),
-						statusArchived: t("admin.texts.createPage.statusOptions.archived"),
-						langLabel: t("admin.texts.createPage.sections.metadata"),
-						langChe: t("admin.texts.createPage.langChe"),
-						langRu: t("admin.texts.createPage.langRu"),
-					}}
-					onStatusChange={onStatusChange}
-					onLanguageChange={onLanguageChange}
-				/>
-
-				<MetaSection title={t("admin.texts.createPage.sections.metadata")}>
-					<div className="mb-[11px]">
-						<FieldLabel>{t("admin.texts.createPage.levelLabel")}</FieldLabel>
-						<div className="grid grid-cols-6 gap-1.5">
-							{LEVELS.map(lvl => (
-								<Button
-									key={lvl}
-									variant="bare"
-									size={null}
-									data-level={lvl}
-									onClick={handleLevelClick}
-									className={`flex h-[30px] items-center justify-center rounded-[6px] border text-[11.5px] font-semibold transition-colors ${
-										level === lvl
-											? levelColorMap[lvl]
-											: "border-bd-2 bg-surf text-t-2 hover:border-bd-3 hover:bg-surf-2"
-									}`}
-								>
-									{lvl}
-								</Button>
-							))}
-						</div>
-					</div>
-
-					<div className="mb-[11px]">
-						<FieldLabel>{t("admin.texts.createPage.authorLabel")}</FieldLabel>
-						<FieldInput
-							type="text"
-							value={author}
-							maxLength={50}
-							onChange={handleAuthorChange}
-							placeholder={t("admin.texts.createPage.authorPlaceholder")}
-						/>
-					</div>
-
-					<div>
-						<FieldLabel>{t("admin.texts.createPage.sourceLabel")}</FieldLabel>
-						<FieldInput
-							type="url"
-							value={source}
-							onChange={handleSourceChange}
-							placeholder={t("admin.texts.createPage.sourcePlaceholder")}
-						/>
-					</div>
-				</MetaSection>
-
-				<TextCreateMetaTagsSection
-					tags={tags}
-					allTags={allTags}
-					tagInputValue={tagInputValue}
-					sectionTitle={t("admin.texts.createPage.sections.tags")}
-					tagsAddPlaceholder={t("admin.texts.createPage.tagsAddPlaceholder")}
-					tagsHint={t("admin.texts.createPage.tagsHint")}
-					tagsCreate={t("admin.texts.createPage.tagsCreate")}
-					onTagAdd={onTagAdd}
-					onTagRemove={onTagRemove}
-					onTagInputChange={setTagInputValue}
-					onTagKeyDown={handleTagKeyDown}
-				/>
-
+		<AdminTextMetaPanelShell
+			status={status}
+			language={language}
+			level={level}
+			author={author}
+			source={source}
+			tags={tags}
+			allTags={allTags}
+			tagInputValue={tagInputValue}
+			tagsCreateLabel={t("admin.texts.createPage.tagsCreate")}
+			onStatusChange={onStatusChange}
+			onLanguageChange={onLanguageChange}
+			onLevelChange={onLevelChange}
+			onAuthorChange={onAuthorChange}
+			onSourceChange={onSourceChange}
+			onTagAdd={onTagAdd}
+			onTagRemove={onTagRemove}
+			onTagInputChange={setTagInputValue}
+			onTagKeyDown={handleTagKeyDown}
+		>
 				<TextCreateMetaDescriptionSection
 					description={description}
 					sectionTitle={t("admin.texts.createPage.sections.description")}
@@ -274,7 +171,6 @@ export const TextCreateMetaPanel = ({
 					onPublish={onPublish}
 					onSaveDraft={onSaveDraft}
 				/>
-			</div>
-		</div>
+		</AdminTextMetaPanelShell>
 	);
 };

@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { Typography } from "@/shared/ui/typography";
 import type { TextLevel } from "@/entities/admin-text";
+import { Button } from "@/shared/ui/button";
 import { Select, type SelectProps } from "@/shared/ui/select";
+import { Typography } from "@/shared/ui/typography";
 import type { ComponentProps, InputHTMLAttributes, ReactNode } from "react";
 
 export const LEVELS: TextLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
@@ -33,7 +33,10 @@ export const MetaSection = ({
 );
 
 export const FieldLabel = ({ children }: { children: ReactNode }) => (
-	<Typography tag="label" className="mb-1.5 block text-[11px] font-medium text-t-3">
+	<Typography
+		tag="label"
+		className="mb-1.5 block text-[11px] font-medium text-t-3"
+	>
 		{children}
 	</Typography>
 );
@@ -46,11 +49,7 @@ export const FieldInput = (props: InputHTMLAttributes<HTMLInputElement>) => (
 );
 
 export const FieldSelect = (props: SelectProps) => (
-	<Select
-		variant="lg"
-		className="bg-surf"
-		{...props}
-	/>
+	<Select variant="lg" className="bg-surf border" {...props} />
 );
 
 export const MetaToggle = ({
@@ -60,7 +59,8 @@ export const MetaToggle = ({
 	checked: boolean;
 	onChange: (v: boolean) => void;
 }) => {
-	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(!checked);
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		onChange(!checked);
 	return (
 		<Button
 			role="switch"

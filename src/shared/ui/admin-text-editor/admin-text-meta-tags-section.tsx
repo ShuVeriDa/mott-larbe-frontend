@@ -1,30 +1,34 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Button } from "@/shared/ui/button";
-import { ComponentProps, KeyboardEvent, useRef } from "react";
-import { cn } from "@/shared/lib/cn";
-import { MetaSection } from "@/shared/ui/admin-text-meta-fields";
 import type { AdminTag } from "@/entities/admin-tag";
-import type { TagEntry } from "../model/use-admin-text-create-page";
+import { MetaSection } from "@/shared/ui/admin-text-meta-fields";
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
+import type { ComponentProps, KeyboardEvent } from "react";
+import { useRef } from "react";
 
-interface Props {
-	tags: TagEntry[];
-	allTags: AdminTag[];
+interface TagItem {
+	id?: string;
+	name: string;
+}
+
+interface AdminTextMetaTagsSectionProps {
+	tags: TagItem[];
+	allTags?: AdminTag[];
 	tagInputValue: string;
 	sectionTitle: string;
 	tagsAddPlaceholder: string;
 	tagsHint: string;
-	tagsCreate: string;
+	tagsCreate?: string;
 	onTagAdd: (name: string, id?: string) => void;
 	onTagRemove: (index: number) => void;
 	onTagInputChange: (v: string) => void;
 	onTagKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
-export const TextCreateMetaTagsSection = ({
+export const AdminTextMetaTagsSection = ({
 	tags,
-	allTags,
+	allTags = [],
 	tagInputValue,
 	sectionTitle,
 	tagsAddPlaceholder,
@@ -34,40 +38,61 @@ export const TextCreateMetaTagsSection = ({
 	onTagRemove,
 	onTagInputChange,
 	onTagKeyDown,
-}: Props) => {
+}: AdminTextMetaTagsSectionProps) => {
 	const tagInputRef = useRef<HTMLInputElement>(null);
 
 	const filteredSuggestions = tagInputValue
 		? allTags.filter(
 				tag =>
 					tag.name.toLowerCase().includes(tagInputValue.toLowerCase()) &&
-					!tags.some(s => s.id === tag.id || s.name.toLowerCase() === tag.name.toLowerCase()),
+					!tags.some(
+						selected =>
+							selected.id === tag.id ||
+							selected.name.toLowerCase() === tag.name.toLowerCase(),
+					),
 			)
 		: [];
 
-	const hasExactMatch = allTags.some(tag => tag.name.toLowerCase() === tagInputValue.toLowerCase());
+	const hasExactMatch = allTags.some(
+		tag => tag.name.toLowerCase() === tagInputValue.toLowerCase(),
+	);
 	const canCreateNew =
+		Boolean(tagsCreate) &&
 		tagInputValue.trim().length > 0 &&
 		!hasExactMatch &&
-		!tags.some(s => s.name.toLowerCase() === tagInputValue.trim().toLowerCase());
+		!tags.some(
+			selected =>
+				selected.name.toLowerCase() === tagInputValue.trim().toLowerCase(),
+		);
 
-	const handleTagContainerBlur: NonNullable<ComponentProps<"div">["onBlur"]> = e => {
+	const handleTagContainerBlur: NonNullable<
+		ComponentProps<"div">["onBlur"]
+	> = e => {
 		if (!e.currentTarget.contains(e.relatedTarget as Node)) {
 			onTagInputChange("");
 		}
 	};
-	const handleTagContainerClick: NonNullable<ComponentProps<"div">["onClick"]> = () =>
-		tagInputRef.current?.focus();
-	const handleTagInputChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
-		onTagInputChange(e.currentTarget.value);
-	const handleSuggestionMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = e =>
-		e.preventDefault();
-	const handleSuggestionClick = (name: string, id?: string): NonNullable<ComponentProps<"button">["onClick"]> =>
-		() => {
+	const handleTagContainerClick: NonNullable<
+		ComponentProps<"div">["onClick"]
+	> = () => tagInputRef.current?.focus();
+	const handleTagInputChange: NonNullable<
+		ComponentProps<"input">["onChange"]
+	> = e => onTagInputChange(e.currentTarget.value);
+	const handleSuggestionMouseDown: NonNullable<
+		ComponentProps<"button">["onMouseDown"]
+	> = e => e.preventDefault();
+	const handleSuggestionClick = (
+		name: string,
+		id?: string,
+	): NonNullable<ComponentProps<"button">["onClick"]> => {
+		return () => {
 			onTagAdd(name, id);
 			onTagInputChange("");
 		};
-	const handleCreateTagClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+	};
+	const handleCreateTagClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => {
 		onTagAdd(tagInputValue.trim());
 		onTagInputChange("");
 	};
@@ -80,14 +105,27 @@ export const TextCreateMetaTagsSection = ({
 					onClick={handleTagContainerClick}
 				>
 					{tags.map((tag, index) => {
-						const handleTagRemove: NonNullable<ComponentProps<"button">["onClick"]> = e => {
+						const handleTagRemove: NonNullable<
+							ComponentProps<"button">["onClick"]
+						> = e => {
 							e.stopPropagation();
 							onTagRemove(index);
 						};
 						return (
-							<Typography tag="span" key={index} className="inline-flex items-center gap-1 rounded-[4px] bg-acc-muted px-2 py-[3px] text-[11.5px] font-medium text-acc-strong">
-								{tag.name}
-								<Button onClick={handleTagRemove} className="flex items-center text-[13px] leading-none opacity-60 hover:opacity-100">×</Button>
+							<Typography
+								tag="span"
+								key={tag.id ?? `${tag.name}-${index}`}
+								className="inline-flex items-center gap-1 rounded-[4px] bg-acc-bg px-2 py-[3px] text-[11.5px] font-medium text-acc-t"
+							>
+								<Typography tag="span" className="max-w-[140px] truncate">
+									{tag.name}
+								</Typography>
+								<Button
+									onClick={handleTagRemove}
+									className="flex items-center border-none bg-none p-0 text-acc-t text-[13px] leading-none opacity-60 h-fit hover:opacity-100"
+								>
+									×
+								</Button>
 							</Typography>
 						);
 					})}
@@ -96,7 +134,7 @@ export const TextCreateMetaTagsSection = ({
 						value={tagInputValue}
 						onChange={handleTagInputChange}
 						onKeyDown={onTagKeyDown}
-						placeholder={tags.length === 0 ? tagsAddPlaceholder : ""}
+						placeholder={tagsAddPlaceholder}
 						className="min-w-[70px] flex-1 border-none bg-transparent text-[12.5px] text-t-1 outline-none placeholder:text-t-3"
 					/>
 				</div>
@@ -110,8 +148,12 @@ export const TextCreateMetaTagsSection = ({
 								onClick={handleSuggestionClick(tag.name, tag.id)}
 								className="flex w-full items-center gap-2 px-3 py-[9px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 							>
-								<Typography tag="span" className="flex-1">{tag.name}</Typography>
-								<Typography tag="span" className="text-[10.5px] text-t-4">{tag._count.texts}</Typography>
+								<Typography tag="span" className="flex-1">
+									{tag.name}
+								</Typography>
+								<Typography tag="span" className="text-[10.5px] text-t-4">
+									{tag._count.texts}
+								</Typography>
 							</Button>
 						))}
 						{canCreateNew && (
@@ -120,10 +162,15 @@ export const TextCreateMetaTagsSection = ({
 								onClick={handleCreateTagClick}
 								className={`flex w-full items-center gap-2 px-3 py-[9px] text-left text-[12.5px] transition-colors hover:bg-acc-muted ${filteredSuggestions.length > 0 ? "border-t border-bd-1" : ""}`}
 							>
-								<Typography tag="span" className="text-[10px] font-semibold uppercase tracking-wide text-t-3">
+								<Typography
+									tag="span"
+									className="text-[10px] font-semibold uppercase tracking-wide text-t-3"
+								>
 									{tagsCreate}
 								</Typography>
-								<Typography tag="span" className="text-acc-strong">{tagInputValue.trim()}</Typography>
+								<Typography tag="span" className="text-acc-strong">
+									{tagInputValue.trim()}
+								</Typography>
 							</Button>
 						)}
 					</div>

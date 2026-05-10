@@ -24,7 +24,7 @@ export const TextCreateMetaActionsSection = ({
 	const handleSaveDraft: NonNullable<ComponentProps<"button">["onClick"]> = () => onSaveDraft();
 
 	return (
-		<div className="flex flex-col gap-1.5 border-t border-bd-1 bg-surf-2 px-4 py-[14px] transition-colors max-[900px]:hidden">
+		<div className="flex flex-col gap-1.5 border-t border-bd-1 bg-surf-2 px-4 py-[14px] transition-colors max-[767px]:bg-surf">
 			<Button
 				onClick={handlePublish}
 				disabled={isSaving}

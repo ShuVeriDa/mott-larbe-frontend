@@ -1,10 +1,9 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import Link from "next/link";
-import { type ComponentProps } from "react";
+import { type ComponentProps, useState } from "react";
 import { useAdminTextEditPage } from "../model/use-admin-text-edit-page";
 import { TextEditDeleteModal } from "./text-edit-delete-modal";
 import { TextEditEditor } from "./text-edit-editor";
@@ -17,6 +16,7 @@ interface AdminTextEditPageProps {
 
 export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 	const { t, lang } = useI18n();
+	const [isMetaPanelVisible, setIsMetaPanelVisible] = useState(true);
 
 	const {
 		textData,
@@ -147,21 +147,32 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 	const handleCancel: NonNullable<
 		ComponentProps<typeof TextEditDeleteModal>["onCancel"]
 	> = () => setShowDeleteModal(false);
+	const handleToggleMetaPanel = () => setIsMetaPanelVisible(v => !v);
+	const gridColumnsClassName = isMetaPanelVisible
+		? "min-[768px]:grid-cols-[1fr_248px]"
+		: "min-[768px]:grid-cols-[1fr_0px]";
+	const metaPanelClassName = isMetaPanelVisible
+		? "min-[768px]:translate-x-0 min-[768px]:opacity-100"
+		: "min-[768px]:pointer-events-none min-[768px]:translate-x-3 min-[768px]:opacity-0";
 
 	return (
-		<div className="flex min-h-screen flex-col text-t-1 transition-colors">
+		<div className="flex h-screen min-h-0 flex-col overflow-hidden text-t-1 transition-colors">
 			<TextEditTopbar
 				textId={textId}
 				textTitle={textData.title}
 				textStatus={status}
 				isUnsaved={isUnsaved}
 				isSaving={isSaving}
+				isMetaPanelVisible={isMetaPanelVisible}
 				onSaveDraft={handleSaveDraft}
 				onSaveAndUpdate={handleSaveAndUpdate}
+				onToggleMetaPanel={handleToggleMetaPanel}
 			/>
 
 			{/* Two-column layout */}
-			<div className="grid flex-1 grid-cols-[1fr_248px] max-[900px]:grid-cols-1">
+			<div
+				className={`grid min-h-0 flex-1 overflow-hidden transition-[grid-template-columns] duration-300 ease-out max-[767px]:grid-cols-1 ${gridColumnsClassName}`}
+			>
 				<TextEditEditor
 					title={title}
 					pages={pages}
@@ -180,88 +191,46 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					onDismissRetokenize={handleDismissRetokenize}
 				/>
 
-				<TextEditMetaPanel
-					textId={textId}
-					status={status}
-					language={language}
-					level={level}
-					author={author}
-					source={source}
-					tags={tags}
-					description={description}
-					coverPreviewUrl={coverPreviewUrl}
-					autoTokenizeOnSave={autoTokenizeOnSave}
-					useNormalization={useNormalization}
-					useMorphAnalysis={useMorphAnalysis}
-					pages={pages}
-					pageTokenCounts={pageTokenCounts}
-					isSaving={isSaving}
-					processingStatus={textData.processingStatus}
-					tokenCount={textData.tokenCount}
-					recentVersions={recentVersions}
-					onStatusChange={setStatus}
-					onLanguageChange={setLanguage}
-					onLevelChange={setLevel}
-					onAuthorChange={setAuthor}
-					onSourceChange={setSource}
-					onTagAdd={handleAddTag}
-					onTagRemove={handleRemoveTag}
-					onDescriptionChange={setDescription}
-					onCoverSelect={handleCoverSelect}
-					onAutoTokenizeChange={setAutoTokenizeOnSave}
-					onNormalizationChange={setUseNormalization}
-					onMorphAnalysisChange={setUseMorphAnalysis}
-					onSaveDraft={handleSaveDraft}
-					onSaveAndUpdate={handleSaveAndUpdate}
-					onDeleteRequest={handleDeleteRequest}
-					onTokenize={handleTokenize}
-				/>
-			</div>
-
-			{/* Mobile bottom action bar */}
-			<div className="sticky bottom-0 z-20 hidden border-t border-bd-1 bg-bg px-4 py-3 max-[900px]:flex max-[900px]:items-center max-[900px]:gap-2">
-				<Button
-					onClick={handleSaveDraft}
-					disabled={isSaving}
-					className="flex h-[38px] flex-1 items-center justify-center gap-1.5 rounded-[8px] border border-bd-2 bg-transparent text-sm text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50"
+				<div
+					className={`min-h-0 overflow-hidden transition-[opacity,transform] duration-200 ease-out max-[767px]:contents ${metaPanelClassName}`}
 				>
-					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-						<path
-							d="M3 4a1 1 0 011-1h6l3 3v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"
-							stroke="currentColor"
-							strokeWidth="1.3"
-						/>
-						<path
-							d="M10 3v3H6V3"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-						/>
-						<path
-							d="M5 10h6"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-						/>
-					</svg>
-					{t("admin.texts.editPage.saveDraft")}
-				</Button>
-				<Button
-					onClick={handleSaveAndUpdate}
-					disabled={isSaving}
-					className="flex h-[38px] flex-1 items-center justify-center gap-1.5 rounded-[8px] bg-acc text-sm font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50"
-				>
-					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-						<path
-							d="M2.5 8.5L6 12l7.5-8"
-							stroke="#fff"
-							strokeWidth="1.6"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
-					{t("admin.texts.editPage.saveUpdate")}
-				</Button>
+					<TextEditMetaPanel
+						textId={textId}
+						status={status}
+						language={language}
+						level={level}
+						author={author}
+						source={source}
+						tags={tags}
+						description={description}
+						coverPreviewUrl={coverPreviewUrl}
+						autoTokenizeOnSave={autoTokenizeOnSave}
+						useNormalization={useNormalization}
+						useMorphAnalysis={useMorphAnalysis}
+						pages={pages}
+						pageTokenCounts={pageTokenCounts}
+						isSaving={isSaving}
+						processingStatus={textData.processingStatus}
+						tokenCount={textData.tokenCount}
+						recentVersions={recentVersions}
+						onStatusChange={setStatus}
+						onLanguageChange={setLanguage}
+						onLevelChange={setLevel}
+						onAuthorChange={setAuthor}
+						onSourceChange={setSource}
+						onTagAdd={handleAddTag}
+						onTagRemove={handleRemoveTag}
+						onDescriptionChange={setDescription}
+						onCoverSelect={handleCoverSelect}
+						onAutoTokenizeChange={setAutoTokenizeOnSave}
+						onNormalizationChange={setUseNormalization}
+						onMorphAnalysisChange={setUseMorphAnalysis}
+						onSaveDraft={handleSaveDraft}
+						onSaveAndUpdate={handleSaveAndUpdate}
+						onDeleteRequest={handleDeleteRequest}
+						onTokenize={handleTokenize}
+					/>
+				</div>
 			</div>
 
 			{/* Delete confirmation modal */}
