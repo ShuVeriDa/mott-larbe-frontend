@@ -3,8 +3,8 @@
 import { useI18n } from "@/shared/lib/i18n";
 import type { Editor, TipTapDoc } from "@/shared/ui/notion-editor";
 import { NotionEditor } from "@/shared/ui/notion-editor";
-import type { ReactNode } from "react";
-import { useState } from "react";
+import type { ReactNode, RefObject } from "react";
+import { useLayoutEffect, useState } from "react";
 import { AdminTextEditorFooter } from "./admin-text-editor-footer";
 import { AdminTextEditorPageTabs } from "./admin-text-editor-page-tabs";
 import { computeDocStats, PAGE_CHAR_LIMIT } from "./admin-text-editor-stats";
@@ -34,6 +34,8 @@ interface AdminTextEditorShellProps {
 	toolbarExtraItems?: ReactNode;
 	notionExtraToolbarItems?: ReactNode;
 	onEditorReady?: (editor: Editor) => void;
+	findReplaceCharHandlerRef?: RefObject<((char: string) => boolean) | null>;
+	findReplaceCharsPicker?: ReactNode;
 }
 
 export const AdminTextEditorShell = ({
@@ -55,11 +57,21 @@ export const AdminTextEditorShell = ({
 	toolbarExtraItems,
 	notionExtraToolbarItems,
 	onEditorReady,
+	findReplaceCharHandlerRef,
+	findReplaceCharsPicker,
 }: AdminTextEditorShellProps) => {
 	const { t } = useI18n();
 	const [stats, setStats] = useState({ words: 0, chars: 0, paragraphs: 0 });
 	const [editor, setEditor] = useState<Editor | null>(null);
 	const findReplace = useFindReplace(editor);
+
+	useLayoutEffect(() => {
+		if (!findReplaceCharHandlerRef) return;
+		findReplaceCharHandlerRef.current = findReplace.tryInsertChar;
+		return () => {
+			findReplaceCharHandlerRef.current = null;
+		};
+	}, [findReplace.tryInsertChar, findReplaceCharHandlerRef]);
 	const slashItems = getSlashItems(t);
 	const keyboardShortcuts = getAdminTextEditorShortcuts({
 		t,
@@ -107,12 +119,14 @@ export const AdminTextEditorShell = ({
 			/>
 
 			<EditorToolbar
-					editor={editor}
-					t={t}
-					extraItems={toolbarExtraItems}
-					onFindReplace={findReplace.isOpen ? findReplace.close : findReplace.open}
-					findReplaceOpen={findReplace.isOpen}
-				/>
+				editor={editor}
+				t={t}
+				extraItems={toolbarExtraItems}
+				onFindReplace={
+					findReplace.isOpen ? findReplace.close : findReplace.open
+				}
+				findReplaceOpen={findReplace.isOpen}
+			/>
 
 			{findReplace.isOpen && (
 				<AdminTextFindReplaceBar
@@ -120,7 +134,12 @@ export const AdminTextEditorShell = ({
 					replacement={findReplace.replacement}
 					matchLabel={findReplace.matchLabel}
 					hasMatches={findReplace.hasMatches}
+					replacePanelOpen={findReplace.replacePanelOpen}
+					matchCase={findReplace.matchCase}
+					wholeWord={findReplace.wholeWord}
 					searchInputRef={findReplace.searchInputRef}
+					replacementInputRef={findReplace.replacementInputRef}
+					charsPicker={findReplaceCharsPicker}
 					onQueryChange={findReplace.handleQueryChange}
 					onReplacementChange={findReplace.handleReplacementChange}
 					onFindNext={findReplace.handleFindNext}
@@ -129,6 +148,11 @@ export const AdminTextEditorShell = ({
 					onReplaceAll={findReplace.handleReplaceAll}
 					onClose={findReplace.close}
 					onKeyDown={findReplace.handleKeyDown}
+					onToggleReplacePanel={findReplace.handleToggleReplacePanel}
+					onToggleMatchCase={findReplace.handleToggleMatchCase}
+					onToggleWholeWord={findReplace.handleToggleWholeWord}
+					onSearchFocus={findReplace.handleSearchFocus}
+					onReplaceFocus={findReplace.handleReplaceFocus}
 				/>
 			)}
 

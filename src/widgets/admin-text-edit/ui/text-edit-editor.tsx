@@ -47,10 +47,14 @@ export const TextEditEditor = ({
 }: TextEditEditorProps) => {
 	const { t, lang } = useI18n();
 	const editorRef = useRef<Editor | null>(null);
+	const findReplaceInsertRef = useRef<((char: string) => boolean) | null>(
+		null,
+	);
 
 	const handleInsertChar: NonNullable<
 		ComponentProps<typeof CharsPopup>["onInsert"]
 	> = char => {
+		if (findReplaceInsertRef.current?.(char)) return;
 		editorRef.current?.chain().focus().insertContent(char).run();
 	};
 
@@ -101,6 +105,8 @@ export const TextEditEditor = ({
 			}
 			toolbarExtraItems={charsPopup}
 			notionExtraToolbarItems={charsPopup}
+			findReplaceCharHandlerRef={findReplaceInsertRef}
+			findReplaceCharsPicker={charsPopup}
 			onEditorReady={handleEditorReady}
 		/>
 	);

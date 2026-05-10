@@ -3106,7 +3106,11 @@
 					"close": "Close",
 					"hintNext": "next match",
 					"hintPrev": "previous match",
-					"hintClose": "close"
+					"hintClose": "close",
+					"matchCaseTitle": "Match case",
+					"wholeWordTitle": "Whole word",
+					"toggleReplace": "Replace",
+					"toggleReplaceTitle": "Show or hide the replace field"
 				}
 			},
 			"editPage": {

@@ -3106,7 +3106,11 @@
 					"close": "Закрыть",
 					"hintNext": "следующее",
 					"hintPrev": "предыдущее",
-					"hintClose": "закрыть"
+					"hintClose": "закрыть",
+					"matchCaseTitle": "С учётом регистра",
+					"wholeWordTitle": "Только целое слово",
+					"toggleReplace": "Замена",
+					"toggleReplaceTitle": "Показать или скрыть поле замены"
 				}
 			},
 			"editPage": {

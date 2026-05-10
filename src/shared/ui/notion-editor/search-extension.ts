@@ -16,15 +16,24 @@ export interface SearchMatch {
 
 interface SearchState {
 	query: string;
+	matchCase: boolean;
+	wholeWord: boolean;
 	matches: SearchMatch[];
 	activeIndex: number;
 	decorations: DecorationSet;
+}
+
+interface FindMatchesOptions {
+	matchCase: boolean;
+	wholeWord: boolean;
 }
 
 declare module "@tiptap/core" {
 	interface Commands<ReturnType> {
 		search: {
 			setSearchQuery: (query: string) => ReturnType;
+			setSearchMatchCase: (matchCase: boolean) => ReturnType;
+			setSearchWholeWord: (wholeWord: boolean) => ReturnType;
 			clearSearch: () => ReturnType;
 			findNext: () => ReturnType;
 			findPrev: () => ReturnType;
@@ -59,21 +68,72 @@ const buildDecorations = (
 	return DecorationSet.create(state.doc, decorations);
 };
 
-const findMatches = (doc: EditorState["doc"], query: string): SearchMatch[] => {
+const WORD_CHAR_RE = /^[\p{L}\p{N}\p{M}_]$/u;
+
+const isWordChar = (char: string): boolean =>
+	char.length > 0 && WORD_CHAR_RE.test(char);
+
+const charBeforeByteOffset = (text: string, offset: number): string => {
+	if (offset <= 0) return "";
+	return [...text.slice(0, offset)].at(-1) ?? "";
+};
+
+const charAfterByteOffset = (text: string, offset: number): string => {
+	if (offset >= text.length) return "";
+	const first = [...text.slice(offset)][0];
+	return first ?? "";
+};
+
+const sliceMatchesQuery = (
+	text: string,
+	from: number,
+	query: string,
+	matchCase: boolean,
+): boolean => {
+	const slice = text.slice(from, from + query.length);
+	if (slice.length !== query.length) return false;
+	return matchCase ? slice === query : slice.toLowerCase() === query.toLowerCase();
+};
+
+const findMatches = (
+	doc: EditorState["doc"],
+	query: string,
+	options: FindMatchesOptions,
+): SearchMatch[] => {
 	if (!query) return [];
 
 	const matches: SearchMatch[] = [];
-	const lowerQuery = query.toLowerCase();
+	const { matchCase, wholeWord } = options;
 
 	doc.descendants((node: PmNode, pos: number) => {
 		if (!node.isText || !node.text) return;
 
-		const text = node.text.toLowerCase();
+		const text = node.text;
 		let index = 0;
 
 		while (index < text.length) {
-			const found = text.indexOf(lowerQuery, index);
+			const found = matchCase
+				? text.indexOf(query, index)
+				: text.toLowerCase().indexOf(query.toLowerCase(), index);
+
 			if (found === -1) break;
+
+			if (!sliceMatchesQuery(text, found, query, matchCase)) {
+				index = found + 1;
+				continue;
+			}
+
+			if (wholeWord) {
+				const before = charBeforeByteOffset(text, found);
+				const after = charAfterByteOffset(text, found + query.length);
+				const startOk = before === "" || !isWordChar(before);
+				const endOk = after === "" || !isWordChar(after);
+				if (!startOk || !endOk) {
+					index = found + 1;
+					continue;
+				}
+			}
+
 			matches.push({ from: pos + found, to: pos + found + query.length });
 			index = found + 1;
 		}
@@ -92,7 +152,13 @@ export const SearchExtension = Extension.create({
 			setSearchQuery:
 				(query: string) =>
 				({ editor, dispatch, tr }) => {
-					const matches = findMatches(editor.state.doc, query);
+					const prev = searchPluginKey.getState(editor.state);
+					const matchCase = prev?.matchCase ?? false;
+					const wholeWord = prev?.wholeWord ?? false;
+					const matches = findMatches(editor.state.doc, query, {
+						matchCase,
+						wholeWord,
+					});
 					const activeIndex = matches.length > 0 ? 0 : -1;
 					const decorations = buildDecorations(
 						editor.state,
@@ -103,6 +169,8 @@ export const SearchExtension = Extension.create({
 					if (dispatch) {
 						tr.setMeta(searchPluginKey, {
 							query,
+							matchCase,
+							wholeWord,
 							matches,
 							activeIndex,
 							decorations,
@@ -113,12 +181,86 @@ export const SearchExtension = Extension.create({
 					return true;
 				},
 
+			setSearchMatchCase:
+				(matchCase: boolean) =>
+				({ editor, dispatch, tr }) => {
+					const prev = searchPluginKey.getState(editor.state);
+					if (!prev) return false;
+					const matches = findMatches(editor.state.doc, prev.query, {
+						matchCase,
+						wholeWord: prev.wholeWord,
+					});
+					const activeIndex = matches.length > 0 ? 0 : -1;
+					const decorations = buildDecorations(
+						editor.state,
+						matches,
+						activeIndex,
+					);
+
+					if (dispatch) {
+						tr.setMeta(searchPluginKey, {
+							...prev,
+							matchCase,
+							matches,
+							activeIndex,
+							decorations,
+						});
+						dispatch(tr);
+					}
+
+					const match = matches[activeIndex];
+					if (match) {
+						editor.commands.setTextSelection({ from: match.from, to: match.to });
+						scrollToMatch(editor, match);
+					}
+
+					return true;
+				},
+
+			setSearchWholeWord:
+				(wholeWord: boolean) =>
+				({ editor, dispatch, tr }) => {
+					const prev = searchPluginKey.getState(editor.state);
+					if (!prev) return false;
+					const matches = findMatches(editor.state.doc, prev.query, {
+						matchCase: prev.matchCase,
+						wholeWord,
+					});
+					const activeIndex = matches.length > 0 ? 0 : -1;
+					const decorations = buildDecorations(
+						editor.state,
+						matches,
+						activeIndex,
+					);
+
+					if (dispatch) {
+						tr.setMeta(searchPluginKey, {
+							...prev,
+							wholeWord,
+							matches,
+							activeIndex,
+							decorations,
+						});
+						dispatch(tr);
+					}
+
+					const match = matches[activeIndex];
+					if (match) {
+						editor.commands.setTextSelection({ from: match.from, to: match.to });
+						scrollToMatch(editor, match);
+					}
+
+					return true;
+				},
+
 			clearSearch:
 				() =>
-				({ dispatch, tr, editor }) => {
+				({ dispatch, tr }) => {
 					if (dispatch) {
 						tr.setMeta(searchPluginKey, {
 							query: "",
+							matchCase: false,
+							wholeWord: false,
 							matches: [],
 							activeIndex: -1,
 							decorations: DecorationSet.empty,
@@ -254,6 +396,8 @@ export const SearchExtension = Extension.create({
 					init(): SearchState {
 						return {
 							query: "",
+							matchCase: false,
+							wholeWord: false,
 							matches: [],
 							activeIndex: -1,
 							decorations: DecorationSet.empty,
@@ -265,13 +409,18 @@ export const SearchExtension = Extension.create({
 
 						// Rebuild matches after document changes
 						if (tr.docChanged && prev.query) {
-							const matches = findMatches(newState.doc, prev.query);
-							const activeIndex = Math.min(
-								prev.activeIndex,
-								matches.length - 1,
-							);
+							const matches = findMatches(newState.doc, prev.query, {
+								matchCase: prev.matchCase,
+								wholeWord: prev.wholeWord,
+							});
+							const activeIndex =
+								matches.length === 0
+									? -1
+									: Math.max(0, Math.min(prev.activeIndex, matches.length - 1));
 							return {
 								query: prev.query,
+								matchCase: prev.matchCase,
+								wholeWord: prev.wholeWord,
 								matches,
 								activeIndex,
 								decorations: buildDecorations(newState, matches, activeIndex),

@@ -3106,7 +3106,11 @@
 					"close": "Дlадаккха",
 					"hintNext": "хьалхара",
 					"hintPrev": "тIаьхьара",
-					"hintClose": "дIадаккха"
+					"hintClose": "дIадаккха",
+					"matchCaseTitle": "Регистр латора",
+					"wholeWordTitle": "Йозанийн тайпара",
+					"toggleReplace": "Хийцар",
+					"toggleReplaceTitle": "Хийцар некъ хьайожар"
 				}
 			},
 			"editPage": {
