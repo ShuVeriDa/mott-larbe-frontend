@@ -13,6 +13,8 @@ import {
 	ListOrdered,
 	Redo,
 	Strikethrough,
+	Subscript,
+	Superscript,
 	Underline,
 	Undo,
 	type LucideIcon,
@@ -23,6 +25,8 @@ interface ToolbarActionHandlers {
 	handleToggleItalic: () => void;
 	handleToggleUnderline: () => void;
 	handleToggleStrike: () => void;
+	handleToggleSuperscript: () => void;
+	handleToggleSubscript: () => void;
 	handleToggleBulletList: () => void;
 	handleToggleOrderedList: () => void;
 	handleSetAlignLeft: () => void;
@@ -82,6 +86,20 @@ export const getAdminTextEditorToolbarActionSections = ({
 			active: editor?.isActive("strike"),
 			onExec: handlers.handleToggleStrike,
 			Icon: Strikethrough,
+		},
+		{
+			id: "superscript",
+			title: t("admin.texts.createPage.superscript"),
+			active: editor?.isActive("superscript"),
+			onExec: handlers.handleToggleSuperscript,
+			Icon: Superscript,
+		},
+		{
+			id: "subscript",
+			title: t("admin.texts.createPage.subscript"),
+			active: editor?.isActive("subscript"),
+			onExec: handlers.handleToggleSubscript,
+			Icon: Subscript,
 		},
 	],
 	[

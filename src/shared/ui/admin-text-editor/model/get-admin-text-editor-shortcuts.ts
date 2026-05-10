@@ -40,6 +40,18 @@ export const getAdminTextEditorShortcuts = ({
 			label: t("admin.texts.createPage.underline"),
 		},
 		{
+			combo: "Ctrl/Cmd + .",
+			label: t("admin.texts.createPage.superscript"),
+		},
+		{
+			combo: "Ctrl/Cmd + ,",
+			label: t("admin.texts.createPage.subscript"),
+		},
+		{
+			combo: "Ctrl/Cmd + H",
+			label: t("admin.texts.createPage.shortcuts.findReplace"),
+		},
+		{
 			combo: "Ctrl/Cmd + Z",
 			label: t("admin.texts.createPage.undo"),
 		},

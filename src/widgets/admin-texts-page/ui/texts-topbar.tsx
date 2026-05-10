@@ -30,7 +30,9 @@ export const TextsTopbar = ({ onImportClick }: TextsTopbarProps) => {
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 max-sm:px-2"
 				>
 					<Download className="size-[13px]" />
-					<Typography tag="span" className="max-sm:hidden">{t("admin.texts.import")}</Typography>
+					<Typography tag="span" className="max-sm:hidden">
+						{t("admin.texts.import.button")}
+					</Typography>
 				</Button>
 				<Link
 					href={`/${lang}/admin/texts/create`}

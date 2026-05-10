@@ -1,9 +1,18 @@
 "use client";
 
+import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import type { Editor } from "@tiptap/react";
-import { Bold, Code, Italic, Strikethrough, Underline } from "lucide-react";
+import {
+	Bold,
+	Code,
+	Italic,
+	Strikethrough,
+	Subscript,
+	Superscript,
+	Underline,
+} from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -56,6 +65,7 @@ export const BubbleMenuContent = ({
 	editor: Editor;
 	extraToolbarItems?: ReactNode;
 }) => {
+	const { t } = useI18n();
 	const [colorOpen, setColorOpen] = useState(false);
 	const [colorAnchor, setColorAnchor] = useState<DOMRect | null>(null);
 	const colorBtnRef = useRef<HTMLButtonElement>(null);
@@ -77,6 +87,9 @@ export const BubbleMenuContent = ({
 	const handleItalic = () => editor.chain().focus().toggleItalic().run();
 	const handleUnderline = () => editor.chain().focus().toggleUnderline().run();
 	const handleStrike = () => editor.chain().focus().toggleStrike().run();
+	const handleSuperscript = () =>
+		editor.chain().focus().toggleSuperscript().run();
+	const handleSubscript = () => editor.chain().focus().toggleSubscript().run();
 	const handleCode = () => editor.chain().focus().toggleCode().run();
 	const handleColorMouseDown: NonNullable<
 		ComponentProps<"button">["onMouseDown"]
@@ -117,6 +130,20 @@ export const BubbleMenuContent = ({
 					onExec={handleStrike}
 				>
 					<Strikethrough className="size-[13px]" />
+				</Btn>
+				<Btn
+					title={t("admin.texts.createPage.superscript")}
+					active={editor.isActive("superscript")}
+					onExec={handleSuperscript}
+				>
+					<Superscript className="size-[13px]" />
+				</Btn>
+				<Btn
+					title={t("admin.texts.createPage.subscript")}
+					active={editor.isActive("subscript")}
+					onExec={handleSubscript}
+				>
+					<Subscript className="size-[13px]" />
 				</Btn>
 				<Btn title="Code" active={editor.isActive("code")} onExec={handleCode}>
 					<Code className="size-[13px]" />

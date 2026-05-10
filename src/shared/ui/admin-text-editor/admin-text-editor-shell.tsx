@@ -10,7 +10,10 @@ import { AdminTextEditorPageTabs } from "./admin-text-editor-page-tabs";
 import { computeDocStats, PAGE_CHAR_LIMIT } from "./admin-text-editor-stats";
 import { AdminTextEditorTitleField } from "./admin-text-editor-title-field";
 import { EditorToolbar, getSlashItems } from "./admin-text-editor-toolbar";
+import { AdminTextFindReplaceBar } from "./admin-text-find-replace-bar";
+import { CharLimitMarkerExtension } from "./model/char-limit-marker-extension";
 import { getAdminTextEditorShortcuts } from "./model/get-admin-text-editor-shortcuts";
+import { useFindReplace } from "./model/use-find-replace";
 
 interface AdminTextEditorShellProps {
 	title: string;
@@ -56,6 +59,7 @@ export const AdminTextEditorShell = ({
 	const { t } = useI18n();
 	const [stats, setStats] = useState({ words: 0, chars: 0, paragraphs: 0 });
 	const [editor, setEditor] = useState<Editor | null>(null);
+	const findReplace = useFindReplace(editor);
 	const slashItems = getSlashItems(t);
 	const keyboardShortcuts = getAdminTextEditorShortcuts({
 		t,
@@ -79,6 +83,11 @@ export const AdminTextEditorShell = ({
 			onPrimaryAction();
 			return true;
 		}
+		if ((event.ctrlKey || event.metaKey) && event.key === "h") {
+			event.preventDefault();
+			findReplace.open();
+			return true;
+		}
 		return false;
 	};
 
@@ -98,10 +107,30 @@ export const AdminTextEditorShell = ({
 			/>
 
 			<EditorToolbar
-				editor={editor}
-				t={t}
-				extraItems={toolbarExtraItems}
-			/>
+					editor={editor}
+					t={t}
+					extraItems={toolbarExtraItems}
+					onFindReplace={findReplace.isOpen ? findReplace.close : findReplace.open}
+					findReplaceOpen={findReplace.isOpen}
+				/>
+
+			{findReplace.isOpen && (
+				<AdminTextFindReplaceBar
+					query={findReplace.query}
+					replacement={findReplace.replacement}
+					matchLabel={findReplace.matchLabel}
+					hasMatches={findReplace.hasMatches}
+					searchInputRef={findReplace.searchInputRef}
+					onQueryChange={findReplace.handleQueryChange}
+					onReplacementChange={findReplace.handleReplacementChange}
+					onFindNext={findReplace.handleFindNext}
+					onFindPrev={findReplace.handleFindPrev}
+					onReplaceActive={findReplace.handleReplaceActive}
+					onReplaceAll={findReplace.handleReplaceAll}
+					onClose={findReplace.close}
+					onKeyDown={findReplace.handleKeyDown}
+				/>
+			)}
 
 			<AdminTextEditorPageTabs
 				pagesCount={pages.length}
@@ -128,6 +157,12 @@ export const AdminTextEditorShell = ({
 					placeholder={t("admin.texts.createPage.startTyping")}
 					slashMenuItems={slashItems}
 					extraToolbarItems={notionExtraToolbarItems}
+					extraExtensions={[
+						CharLimitMarkerExtension.configure({
+							limit: PAGE_CHAR_LIMIT,
+							markerTitle: t("admin.texts.createPage.charLimitMarker"),
+						}),
+					]}
 					onUpdate={handleUpdate}
 					onKeyDown={handleKeyDown}
 					onEditorReady={handleEditorReady}

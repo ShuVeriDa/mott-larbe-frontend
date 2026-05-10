@@ -1,6 +1,7 @@
 import { http } from "@/shared/api";
 import type {
 	AdminTextDetail,
+	AdminTextListItem,
 	AdminTextUnknownWords,
 	AdminTextsListResponse,
 	AdminTextsStats,
@@ -31,8 +32,8 @@ export const adminTextApi = {
 		params.page = query.page ?? 1;
 		params.limit = query.limit ?? 20;
 
-		const { data } = await http.get<AdminTextsListResponse>("/admin/texts", { params });
-		return data;
+		const { data } = await http.get<{ data: AdminTextListItem[]; total: number; page: number; limit: number }>("/admin/texts", { params });
+		return { items: data.data, total: data.total, page: data.page, limit: data.limit };
 	},
 
 	stats: async (): Promise<AdminTextsStats> => {

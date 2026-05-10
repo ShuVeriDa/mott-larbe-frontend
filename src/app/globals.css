@@ -361,4 +361,30 @@
 	[role="button"]:not([aria-disabled="true"]) {
 		cursor: pointer;
 	}
+
+	.search-highlight {
+		background-color: color-mix(in srgb, #f5a623 40%, transparent);
+		border-radius: 2px;
+	}
+
+	.search-highlight--active {
+		background-color: color-mix(in srgb, #f5a623 80%, transparent);
+		outline: 1.5px solid #f5a623;
+	}
+
+	.char-limit-marker {
+		display: inline-block;
+		width: 2px;
+		height: 1em;
+		margin: 0 2px;
+		vertical-align: text-bottom;
+		background: color-mix(in srgb, var(--destructive) 85%, transparent);
+		border-radius: 1px;
+		pointer-events: none;
+	}
+
+	.char-limit-overflow {
+		background-color: color-mix(in srgb, var(--destructive) 14%, transparent);
+		border-radius: 2px;
+	}
 }

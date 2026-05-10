@@ -92,6 +92,10 @@ export const useAdminTextEditorToolbar = ({
 	const handleToggleItalic = () => editor?.chain().focus().toggleItalic().run();
 	const handleToggleUnderline = () => editor?.chain().focus().toggleUnderline().run();
 	const handleToggleStrike = () => editor?.chain().focus().toggleStrike().run();
+	const handleToggleSuperscript = () =>
+		editor?.chain().focus().toggleSuperscript().run();
+	const handleToggleSubscript = () =>
+		editor?.chain().focus().toggleSubscript().run();
 	const handleToggleBulletList = () =>
 		editor?.chain().focus().toggleBulletList().run();
 	const handleToggleOrderedList = () =>
@@ -114,6 +118,8 @@ export const useAdminTextEditorToolbar = ({
 			handleToggleItalic,
 			handleToggleUnderline,
 			handleToggleStrike,
+			handleToggleSuperscript,
+			handleToggleSubscript,
 			handleToggleBulletList,
 			handleToggleOrderedList,
 			handleSetAlignLeft,

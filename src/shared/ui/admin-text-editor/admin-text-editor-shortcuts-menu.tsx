@@ -49,18 +49,15 @@ export const AdminTextEditorShortcutsMenu = ({
 				>
 					{title}
 				</Typography>
-				<div className="flex flex-col gap-1">
+				<div className="flex flex-col gap-0.5">
 					{shortcuts.map(shortcut => (
 						<div
 							key={`${shortcut.combo}-${shortcut.label}`}
-							className="flex items-center gap-2 rounded-[6px] px-1 py-1"
+							className="flex items-center gap-2.5 rounded-[6px] px-1 py-1"
 						>
-							<Typography
-								tag="span"
-								className="rounded-[4px] bg-surf-3 px-1.5 py-px text-[10px] text-t-2"
-							>
+							<kbd className="inline-flex shrink-0 items-center rounded-[4px] border border-bd-2 bg-surf px-[5px] py-px font-[inherit] text-[10px] font-medium text-t-2 shadow-[0_1px_0_0] shadow-bd-2">
 								{shortcut.combo}
-							</Typography>
+							</kbd>
 							<Typography tag="span" className="text-[12px] text-t-2">
 								{shortcut.label}
 							</Typography>

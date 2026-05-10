@@ -8,6 +8,9 @@ import {
 	ChevronDown,
 	List,
 	ListOrdered,
+	Search,
+	Subscript,
+	Superscript,
 } from "lucide-react";
 import { Fragment, type ComponentProps, type ReactNode } from "react";
 import { createPortal } from "react-dom";
@@ -140,18 +143,38 @@ export const getSlashItems = (
 		icon: <ListOrdered className="size-3" />,
 		command: editor => editor.chain().focus().toggleOrderedList().run(),
 	},
+	{
+		title: t("admin.texts.createPage.superscript"),
+		description: t("admin.texts.createPage.superscriptDesc"),
+		group: "Basic blocks",
+		hint: ".",
+		icon: <Superscript className="size-3" />,
+		command: editor => editor.chain().focus().toggleSuperscript().run(),
+	},
+	{
+		title: t("admin.texts.createPage.subscript"),
+		description: t("admin.texts.createPage.subscriptDesc"),
+		group: "Basic blocks",
+		hint: ",",
+		icon: <Subscript className="size-3" />,
+		command: editor => editor.chain().focus().toggleSubscript().run(),
+	},
 ];
 
 interface EditorToolbarProps {
 	editor: Editor | null;
 	t: ReturnType<typeof useI18n>["t"];
 	extraItems?: ReactNode;
+	onFindReplace?: () => void;
+	findReplaceOpen?: boolean;
 }
 
 export const EditorToolbar = ({
 	editor,
 	t,
 	extraItems,
+	onFindReplace,
+	findReplaceOpen,
 }: EditorToolbarProps) => {
 	const {
 		blockTypeAnchor,
@@ -244,6 +267,19 @@ export const EditorToolbar = ({
 						{sectionIndex < toolbarActionSections.length - 1 && <TbDivider />}
 					</Fragment>
 				))}
+
+				{onFindReplace && (
+					<>
+						<TbDivider />
+						<TbBtn
+							title={t("admin.texts.createPage.shortcuts.findReplace")}
+							active={findReplaceOpen}
+							onExec={onFindReplace}
+						>
+							<Search className="size-[13px]" />
+						</TbBtn>
+					</>
+				)}
 
 				{extraItems && (
 					<>

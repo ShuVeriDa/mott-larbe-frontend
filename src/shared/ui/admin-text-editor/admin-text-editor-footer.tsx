@@ -44,7 +44,11 @@ export const AdminTextEditorFooter = ({
 				</Typography>
 			</div>
 			<div className="h-3 w-px bg-bd-2" />
-			<div className={isOverLimit ? "text-red-500" : isNearLimit ? "text-amber-500" : ""}>
+			<div
+				className={
+					isOverLimit ? "text-red-500" : isNearLimit ? "text-amber-500" : ""
+				}
+			>
 				{labels.chars}:&nbsp;
 				<Typography
 					tag="span"

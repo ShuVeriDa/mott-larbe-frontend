@@ -5,9 +5,12 @@ import Color from "@tiptap/extension-color";
 import { DragHandle } from "@tiptap/extension-drag-handle-react";
 import Highlight from "@tiptap/extension-highlight";
 import Placeholder from "@tiptap/extension-placeholder";
+import Subscript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
 import TextAlign from "@tiptap/extension-text-align";
 import { TextStyle } from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
+import type { Extension } from "@tiptap/core";
 import type { Editor } from "@tiptap/react";
 import { Tiptap, useEditor } from "@tiptap/react";
 import { BubbleMenu, FloatingMenu } from "@tiptap/react/menus";
@@ -20,6 +23,8 @@ import type { CSSProperties, ReactNode } from "react";
 import { ComponentProps, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { BubbleMenuContent } from "./bubble-menu-content";
+import { PalochkaDecorationExtension } from "./palochka-decoration-extension";
+import { SearchExtension } from "./search-extension";
 import { SlashExtension } from "./slash-extension";
 import type { SlashMenuHandle, SlashMenuItem } from "./slash-menu";
 import { SlashMenu } from "./slash-menu";
@@ -48,6 +53,7 @@ export interface NotionEditorProps {
 	onKeyDown?: (event: KeyboardEvent) => boolean;
 	onEditorReady?: (editor: Editor) => void;
 	minHeight?: string;
+	extraExtensions?: Extension[];
 }
 
 // ── Slash portal state ────────────────────────────────────────────────────────
@@ -69,6 +75,7 @@ export const NotionEditor = ({
 	onKeyDown,
 	onEditorReady,
 	minHeight = "360px",
+	extraExtensions = [],
 }: NotionEditorProps) => {
 	const swappingRef = useRef(false);
 	const slashMenuRef = useRef<SlashMenuHandle>(null);
@@ -81,11 +88,16 @@ export const NotionEditor = ({
 		extensions: [
 			StarterKit.configure({ heading: { levels: [1, 2, 3, 4] } }),
 			Underline,
+			Superscript,
+			Subscript,
 			TextAlign.configure({ types: ["heading", "paragraph"] }),
 			TextStyle,
 			Color,
 			Highlight.configure({ multicolor: true }),
 			Placeholder.configure({ placeholder }),
+			SearchExtension,
+			PalochkaDecorationExtension,
+			...extraExtensions,
 			SlashExtension.configure({
 				suggestion: {
 					char: "/",
@@ -179,6 +191,18 @@ export const NotionEditor = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [editor]);
 
+	useEffect(() => {
+		if (!editor || swappingRef.current) return;
+		const current = JSON.stringify(editor.getJSON());
+		const next = JSON.stringify(content);
+		if (current !== next) {
+			swappingRef.current = true;
+			editor.commands.setContent(content, { emitUpdate: false });
+			swappingRef.current = false;
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [content]);
+
 	const handleInsertSlash: NonNullable<
 		ComponentProps<"button">["onMouseDown"]
 	> = e => {
@@ -250,7 +274,7 @@ export const NotionEditor = ({
 			)}
 
 			<div
-				className="[&_.tiptap]:cursor-text [&_.tiptap]:outline-none [&_.tiptap_blockquote]:my-3 [&_.tiptap_blockquote]:border-l-[3px] [&_.tiptap_blockquote]:border-acc-muted [&_.tiptap_blockquote]:pl-3.5 [&_.tiptap_blockquote]:text-t-2 [&_.tiptap_blockquote_p]:mb-0 [&_.tiptap_h1]:mb-2 [&_.tiptap_h1]:mt-8 [&_.tiptap_h1]:font-display [&_.tiptap_h1]:text-[26px] [&_.tiptap_h1]:font-semibold [&_.tiptap_h1]:text-t-1 [&_.tiptap_h2]:mb-1.5 [&_.tiptap_h2]:mt-6 [&_.tiptap_h2]:font-display [&_.tiptap_h2]:text-[18px] [&_.tiptap_h2]:font-medium [&_.tiptap_h2]:text-t-1 [&_.tiptap_h3]:mb-1 [&_.tiptap_h3]:mt-4 [&_.tiptap_h3]:text-[15px] [&_.tiptap_h3]:font-semibold [&_.tiptap_h3]:text-t-1 [&_.tiptap_h4]:mb-1 [&_.tiptap_h4]:mt-3 [&_.tiptap_h4]:text-[13.5px] [&_.tiptap_h4]:font-semibold [&_.tiptap_h4]:uppercase [&_.tiptap_h4]:tracking-wide [&_.tiptap_h4]:text-t-2 [&_.tiptap_li]:mb-1 [&_.tiptap_ol]:mb-3 [&_.tiptap_ol]:pl-5 [&_.tiptap_p:last-child]:mb-0 [&_.tiptap_p]:mb-2.5 [&_.tiptap_ul]:mb-3 [&_.tiptap_ul]:pl-5 [&_.tiptap_p.is-editor-empty:first-child]:before:pointer-events-none [&_.tiptap_p.is-editor-empty:first-child]:before:float-left [&_.tiptap_p.is-editor-empty:first-child]:before:h-0 [&_.tiptap_p.is-editor-empty:first-child]:before:text-t-4 [&_.tiptap_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)] [&_.tiptap_mark]:rounded-[2px] [&_.tiptap_mark]:px-px"
+				className="[&_.tiptap]:cursor-text [&_.tiptap]:outline-none [&_.tiptap_blockquote]:my-3 [&_.tiptap_blockquote]:border-l-[3px] [&_.tiptap_blockquote]:border-acc-muted [&_.tiptap_blockquote]:pl-3.5 [&_.tiptap_blockquote]:text-t-2 [&_.tiptap_blockquote_p]:mb-0 [&_.tiptap_h1]:mb-2 [&_.tiptap_h1]:mt-8 [&_.tiptap_h1]:font-display [&_.tiptap_h1]:text-[26px] [&_.tiptap_h1]:font-semibold [&_.tiptap_h1]:text-t-1 [&_.tiptap_h2]:mb-1.5 [&_.tiptap_h2]:mt-6 [&_.tiptap_h2]:font-display [&_.tiptap_h2]:text-[18px] [&_.tiptap_h2]:font-medium [&_.tiptap_h2]:text-t-1 [&_.tiptap_h3]:mb-1 [&_.tiptap_h3]:mt-4 [&_.tiptap_h3]:text-[15px] [&_.tiptap_h3]:font-semibold [&_.tiptap_h3]:text-t-1 [&_.tiptap_h4]:mb-1 [&_.tiptap_h4]:mt-3 [&_.tiptap_h4]:text-[13.5px] [&_.tiptap_h4]:font-semibold [&_.tiptap_h4]:uppercase [&_.tiptap_h4]:tracking-wide [&_.tiptap_h4]:text-t-2 [&_.tiptap_li]:mb-1 [&_.tiptap_ol]:mb-3 [&_.tiptap_ol]:pl-5 [&_.tiptap_p:last-child]:mb-0 [&_.tiptap_p]:mb-2.5 [&_.tiptap_ul]:mb-3 [&_.tiptap_ul]:pl-5 [&_.tiptap_p.is-editor-empty:first-child]:before:pointer-events-none [&_.tiptap_p.is-editor-empty:first-child]:before:float-left [&_.tiptap_p.is-editor-empty:first-child]:before:h-0 [&_.tiptap_p.is-editor-empty:first-child]:before:text-t-4 [&_.tiptap_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)] [&_.tiptap_mark]:rounded-[2px] [&_.tiptap_mark]:px-px [&_.tiptap_.palochka-editor-char-upper]:rounded-[2px] [&_.tiptap_.palochka-editor-char-upper]:bg-acc-bg [&_.tiptap_.palochka-editor-char-upper]:px-px [&_.tiptap_.palochka-editor-char-upper]:text-acc-t [&_.tiptap_.palochka-editor-char-upper]:[box-decoration-break:clone] [&_.tiptap_.palochka-editor-char-lower]:rounded-[2px] [&_.tiptap_.palochka-editor-char-lower]:bg-pur-bg [&_.tiptap_.palochka-editor-char-lower]:px-px [&_.tiptap_.palochka-editor-char-lower]:text-pur-t [&_.tiptap_.palochka-editor-char-lower]:[box-decoration-break:clone]"
 				style={{ "--editor-min-h": minHeight } as CSSProperties}
 			>
 				{editor && (
