@@ -4,14 +4,14 @@ import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
 
-import Link from "next/link";
-import { Bookmark, ChevronLeft, PanelRightOpen, Settings } from "lucide-react";
+import type { TextPageResponse } from "@/entities/text";
 import { useToggleBookmark } from "@/features/bookmark-text";
 import { useWordLookupStore } from "@/features/word-lookup";
-import type { TextPageResponse } from "@/entities/text";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
+import { Bookmark, ChevronLeft, PanelRightOpen, Settings } from "lucide-react";
+import Link from "next/link";
 import { ReaderPager } from "./reader-pager";
 
 const iconBtnClass = cn(
@@ -37,11 +37,12 @@ export const ReaderTopbar = ({
 	onOpenSettings,
 }: ReaderTopbarProps) => {
 	const { t } = useI18n();
-	const { mutate: toggleBookmark, isPending: bookmarking } = useToggleBookmark();
+	const { mutate: toggleBookmark, isPending: bookmarking } =
+		useToggleBookmark();
 	const { success, error } = useToast();
 
-	const panelOpen = useWordLookupStore((s) => s.panelOpen);
-	const togglePanel = useWordLookupStore((s) => s.togglePanel);
+	const panelOpen = useWordLookupStore(s => s.panelOpen);
+	const togglePanel = useWordLookupStore(s => s.togglePanel);
 
 	const onBookmark = () => {
 		toggleBookmark(textId, {
@@ -64,10 +65,13 @@ export const ReaderTopbar = ({
 				className="inline-flex shrink-0 items-center gap-1.5 rounded-base px-2 py-1 text-[12.5px] text-t-2 transition-colors duration-100 hover:bg-surf-2 hover:text-t-1"
 			>
 				<ChevronLeft className="size-3.5" strokeWidth={1.6} />
-				<Typography tag="span" className="max-md:hidden">{t("reader.topbar.back")}</Typography>
+				<Typography tag="span" className="max-md:hidden">
+					{t("reader.topbar.back")}
+				</Typography>
 			</Link>
 
-			<Typography tag="span"
+			<Typography
+				tag="span"
 				aria-hidden="true"
 				className="h-4 w-px shrink-0 bg-bd-2 max-md:hidden"
 			/>
@@ -88,11 +92,16 @@ export const ReaderTopbar = ({
 				totalPages={data.totalPages}
 			/>
 
-			<Typography tag="span" aria-hidden="true" className="h-4 w-px shrink-0 bg-bd-2" />
+			<Typography
+				tag="span"
+				aria-hidden="true"
+				className="h-4 w-px shrink-0 bg-bd-2"
+			/>
 
 			<div className="flex shrink-0 items-center gap-1">
 				<Button
 					onClick={togglePanel}
+					size="bare"
 					aria-pressed={panelOpen}
 					aria-label={t("reader.topbar.togglePanel")}
 					className={cn(iconBtnClass, "max-md:hidden")}
@@ -101,6 +110,7 @@ export const ReaderTopbar = ({
 				</Button>
 				<Button
 					onClick={onOpenSettings}
+					size="bare"
 					aria-label={t("reader.topbar.settings")}
 					className={iconBtnClass}
 				>
@@ -108,6 +118,7 @@ export const ReaderTopbar = ({
 				</Button>
 				<Button
 					onClick={onBookmark}
+					size="bare"
 					disabled={bookmarking}
 					aria-pressed={Boolean(data.bookmarked)}
 					aria-label={t("reader.topbar.bookmark")}
