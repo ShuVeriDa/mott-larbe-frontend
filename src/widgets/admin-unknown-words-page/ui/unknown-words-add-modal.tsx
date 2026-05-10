@@ -8,6 +8,7 @@ import { cn } from "@/shared/lib/cn";
 import type { AddToDictionaryPayload } from "@/entities/admin-unknown-word";
 import type { AddModalState } from "../model/use-admin-unknown-words-page";
 import { LemmaAutocomplete } from "./lemma-autocomplete";
+import { X, Check } from "lucide-react";
 import { NewEntryForm } from "./new-entry-form";
 
 type ActionType = "new" | "link";
@@ -112,9 +113,7 @@ export const UnknownWordsAddModal = ({
 						onClick={onClose}
 						className="flex size-7 cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 					>
-						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-						</svg>
+						<X className="size-3.5" />
 					</Button>
 				</div>
 
@@ -232,9 +231,7 @@ export const UnknownWordsAddModal = ({
 						disabled={!canSubmit}
 						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-none bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 max-sm:h-[42px] max-sm:justify-center max-sm:text-[13.5px]"
 					>
-						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-							<path d="M3 8.5L6.5 12 13 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
+						<Check className="size-3" />
 						{action === "link"
 							? t("admin.unknownWords.addModal.submitLink")
 							: t("admin.unknownWords.addModal.submit")}

@@ -14,6 +14,8 @@ import { useLibraryFilters } from "@/features/library-filters";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
+import { Select } from "@/shared/ui/select";
+import { LayoutGrid, List } from "lucide-react";
 
 const CEFR_LEVELS: CefrLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 const LANGUAGES: LibraryTextLanguage[] = ["CHE", "RU"];
@@ -161,11 +163,12 @@ export const LibraryFilterBar = () => {
 
 			<Divider />
 
-			<select
+			<Select
 				value={sort}
 				onChange={handleSortChange}
 				aria-label={t("library.sort.label")}
-				className="h-[26px] shrink-0 cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[11px] text-t-2 outline-none"
+				wrapperClassName="w-auto shrink-0"
+				className="h-[26px] bg-surf text-t-2 text-[11px]"
 			>
 				<option value="level">{t("library.sort.level")}</option>
 				<option value="newest">{t("library.sort.newest")}</option>
@@ -173,7 +176,7 @@ export const LibraryFilterBar = () => {
 				<option value="alpha">{t("library.sort.alpha")}</option>
 				<option value="progress">{t("library.sort.progress")}</option>
 				<option value="length">{t("library.sort.length")}</option>
-			</select>
+			</Select>
 
 			<Divider />
 

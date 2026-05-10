@@ -10,6 +10,7 @@ import type {
 } from "@/entities/dictionary";
 import { cn } from "@/shared/lib/cn";
 import { CEFR_LEVELS } from "@/shared/types";
+import { Select } from "@/shared/ui/select";
 import { ComponentProps, useEffect, useState } from 'react';
 const POS_OPTIONS = [
 	"noun",
@@ -200,8 +201,8 @@ return (
 						<Typography tag="label" className={labelCls}>
 							{t("admin.dictionary.createModal.posLabel")}
 						</Typography>
-						<select
-							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
+						<Select
+							variant="lg"
 							value={pos}
 							onChange={handlePosChange}
 						>
@@ -213,14 +214,14 @@ return (
 									{t(`admin.dictionary.pos.${p}`)}
 								</option>
 							))}
-						</select>
+						</Select>
 					</div>
 					<div>
 						<Typography tag="label" className={labelCls}>
 							{t("admin.dictionary.createModal.levelLabel")}
 						</Typography>
-						<select
-							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
+						<Select
+							variant="lg"
 							value={level}
 							onChange={handleLevelChange}
 						>
@@ -232,7 +233,7 @@ return (
 									{l}
 								</option>
 							))}
-						</select>
+						</Select>
 					</div>
 				</div>
 

@@ -11,6 +11,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
 import Link from "next/link";
 import { ComponentProps } from "react";
+import { MoreVertical } from "lucide-react";
 
 interface LibraryTextCardProps {
 	item: LibraryTextListItem;

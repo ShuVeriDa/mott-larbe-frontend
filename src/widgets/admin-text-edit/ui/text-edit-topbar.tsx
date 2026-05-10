@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/button";
 
 import { useI18n } from "@/shared/lib/i18n";
 import Link from "next/link";
+import { ChevronLeft, ExternalLink, Save, Check } from "lucide-react";
 
 interface TextEditTopbarProps {
 	textId: string;
@@ -37,15 +38,7 @@ export const TextEditTopbar = ({
 					className="flex h-7 w-7 shrink-0 items-center justify-center rounded-base border border-bd-2 bg-surf text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 					aria-label={t("admin.texts.editPage.back")}
 				>
-					<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-						<path
-							d="M10 4l-4 4 4 4"
-							stroke="currentColor"
-							strokeWidth="1.5"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<ChevronLeft className="size-[13px]" />
 				</Link>
 
 				{/* Breadcrumb */}
@@ -82,22 +75,7 @@ export const TextEditTopbar = ({
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-xs text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 max-[600px]:hidden"
 						aria-label={t("admin.texts.editPage.preview")}
 					>
-						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-							<path
-								d="M8 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1V9"
-								stroke="currentColor"
-								strokeWidth="1.3"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-							<path
-								d="M10 2h4v4M14 2L9 7"
-								stroke="currentColor"
-								strokeWidth="1.3"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</svg>
+						<ExternalLink className="size-3" />
 						{t("admin.texts.editPage.preview")}
 					</a>
 				)}
@@ -120,25 +98,7 @@ export const TextEditTopbar = ({
 					disabled={isSaving}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-xs text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50 max-[600px]:hidden"
 				>
-					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-						<path
-							d="M3 4a1 1 0 011-1h6l3 3v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"
-							stroke="currentColor"
-							strokeWidth="1.3"
-						/>
-						<path
-							d="M10 3v3H6V3"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-						/>
-						<path
-							d="M5 10h6"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-						/>
-					</svg>
+					<Save className="size-3" />
 					{t("admin.texts.editPage.saveDraft")}
 				</Button>
 
@@ -147,15 +107,7 @@ export const TextEditTopbar = ({
 					disabled={isSaving}
 					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-xs font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50"
 				>
-					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-						<path
-							d="M2.5 8.5L6 12l7.5-8"
-							stroke="#fff"
-							strokeWidth="1.6"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<Check className="size-3" />
 					<Typography tag="span" className="max-[600px]:hidden">
 						{isSaving
 							? t("admin.texts.editPage.saving")

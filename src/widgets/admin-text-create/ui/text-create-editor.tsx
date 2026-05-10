@@ -3,6 +3,7 @@
 import { useI18n } from "@/shared/lib/i18n";
 import { EditorToolbar, getSlashItems } from "@/shared/ui/admin-text-editor";
 import { Button } from "@/shared/ui/button";
+import { AlignLeft, X, Plus } from "lucide-react";
 import type { TipTapDoc, TipTapNode } from "@/shared/ui/notion-editor";
 import { NotionEditor } from "@/shared/ui/notion-editor";
 import { Typography } from "@/shared/ui/typography";
@@ -53,14 +54,7 @@ const EditorFooter = ({
 }) => (
 	<div className="flex flex-wrap items-center gap-3 border-t border-bd-1 bg-surf-2 px-[22px] py-[7px] text-[11px] text-t-3 transition-colors max-sm:px-4">
 		<div className="flex items-center gap-1">
-			<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-				<path
-					d="M2 4h12M2 7.5h8M2 11h5"
-					stroke="currentColor"
-					strokeWidth="1.3"
-					strokeLinecap="round"
-				/>
-			</svg>
+			<AlignLeft className="size-3" />
 			{t("admin.texts.createPage.words")}:&nbsp;
 			<Typography tag="span" className="font-medium text-t-2">
 				{stats.words}
@@ -307,14 +301,7 @@ export const TextCreateEditor = ({
 									onClick={handleCloseClick}
 									className="ml-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] opacity-0 transition-opacity hover:bg-surf-3 group-hover/tab:opacity-100"
 								>
-									<svg width="8" height="8" viewBox="0 0 10 10" fill="none">
-										<path
-											d="M2 2l6 6M8 2L2 8"
-											stroke="currentColor"
-											strokeWidth="1.4"
-											strokeLinecap="round"
-										/>
-									</svg>
+									<X className="size-2" />
 								</Button>
 							)}
 						</div>
@@ -326,14 +313,7 @@ export const TextCreateEditor = ({
 					onClick={onAddPage}
 					className="ml-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-[5px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2"
 				>
-					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-						<path
-							d="M8 3v10M3 8h10"
-							stroke="currentColor"
-							strokeWidth="1.5"
-							strokeLinecap="round"
-						/>
-					</svg>
+					<Plus className="size-[14px]" />
 				</Button>
 
 				<div className="ml-auto shrink-0 pl-2 text-[11px] text-t-3">

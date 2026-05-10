@@ -5,6 +5,7 @@ import type {
 	FeatureFlagEnvironment,
 	FeatureFlagStatusFilter,
 } from "@/entities/feature-flag";
+import { Select } from "@/shared/ui/select";
 
 interface FeatureFlagsToolbarProps {
 	search: string;
@@ -55,44 +56,32 @@ export const FeatureFlagsToolbar = ({
 			/>
 		</div>
 
-		<select
-			value={category}
-			onChange={handleChange2}
-			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
-		>
+		<Select value={category} onChange={handleChange2} wrapperClassName="w-auto" className="bg-surf text-t-2 hover:border-bd-3">
 			<option value="">{t("admin.featureFlags.toolbar.allCategories")}</option>
 			{CATEGORIES.map(c => (
 				<option key={c} value={c}>
 					{t(`admin.featureFlags.category.${c}`)}
 				</option>
 			))}
-		</select>
+		</Select>
 
-		<select
-			value={environment}
-			onChange={handleChange3}
-			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
-		>
+		<Select value={environment} onChange={handleChange3} wrapperClassName="w-auto" className="bg-surf text-t-2 hover:border-bd-3">
 			<option value="">{t("admin.featureFlags.toolbar.allEnvs")}</option>
 			{ENVIRONMENTS.map(e => (
 				<option key={e} value={e}>
 					{t(`admin.featureFlags.env.${e}`)}
 				</option>
 			))}
-		</select>
+		</Select>
 
-		<select
-			value={status}
-			onChange={handleChange4}
-			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
-		>
+		<Select value={status} onChange={handleChange4} wrapperClassName="w-auto" className="bg-surf text-t-2 hover:border-bd-3">
 			<option value="">{t("admin.featureFlags.toolbar.allStatuses")}</option>
 			{STATUSES.map(s => (
 				<option key={s} value={s}>
 					{t(`admin.featureFlags.status.${s}`)}
 				</option>
 			))}
-		</select>
+		</Select>
 	</div>
 );
 };

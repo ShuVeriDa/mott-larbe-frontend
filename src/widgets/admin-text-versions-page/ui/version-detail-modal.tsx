@@ -6,6 +6,7 @@ import { ComponentProps, ReactNode, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import { useAdminTextVersionDetail } from "@/entities/admin-text/model/use-admin-text-versions";
+import { X, Download } from "lucide-react";
 import type { VersionLogLevel, VersionPageStatus } from "@/entities/admin-text";
 
 type ModalTab = "overview" | "pages" | "log";
@@ -231,9 +232,7 @@ export const VersionDetailModal = ({
 							onClick={onClose}
 							className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 						>
-							<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-								<path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-							</svg>
+							<X className="size-3" />
 						</Button>
 					</div>
 
@@ -290,10 +289,7 @@ export const VersionDetailModal = ({
 								onClick={handleDownloadClick}
 								className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							>
-								<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-									<path d="M8 3v7M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-									<path d="M3 13h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-								</svg>
+								<Download className="size-3" />
 								{t("admin.texts.versions.modal.download")}
 							</Button>
 						)}

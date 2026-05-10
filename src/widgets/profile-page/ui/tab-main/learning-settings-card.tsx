@@ -4,6 +4,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { InputLabel } from "@/shared/ui/input";
+import { Select } from "@/shared/ui/select";
 import { useUpdateUser } from "@/entities/user";
 import type { UserLanguage, UserLevel, UserProfile } from "@/entities/user";
 import { ProfileCard as SettingCard } from "../profile-card";
@@ -22,8 +23,6 @@ const LEVELS: { value: UserLevel; label: string }[] = [
 	{ value: "C2", label: "settings.learning.levelC2" },
 ];
 
-const SELECT_CLS =
-	"h-[34px] w-full px-2.5 pr-7 bg-surf-2 border-hairline border-bd-2 rounded-base text-[13px] text-t-1 font-[inherit] outline-none cursor-pointer appearance-none transition-colors focus:border-acc";
 
 export interface LearningSettingsCardProps {
 	profile: UserProfile;
@@ -56,35 +55,35 @@ return (
 						<InputLabel htmlFor="profile-language">
 							{t("settings.learning.learningLang")}
 						</InputLabel>
-						<select
+						<Select
+							variant="lg"
 							id="profile-language"
 							value={language}
 							onChange={handleChange}
-							className={SELECT_CLS}
 						>
 							{LANGUAGES.map(({ value, label }) => (
 								<option key={value} value={value}>
 									{t(label)}
 								</option>
 							))}
-						</select>
+						</Select>
 					</div>
 					<div>
 						<InputLabel htmlFor="profile-level">
 							{t("settings.learning.level")}
 						</InputLabel>
-						<select
+						<Select
+							variant="lg"
 							id="profile-level"
 							value={level}
 							onChange={handleChange2}
-							className={SELECT_CLS}
 						>
 							{LEVELS.map(({ value, label }) => (
 								<option key={value} value={value}>
 									{t(label)}
 								</option>
 							))}
-						</select>
+						</Select>
 					</div>
 				</div>
 

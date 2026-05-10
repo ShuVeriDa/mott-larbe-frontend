@@ -11,6 +11,7 @@ import type {
 import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
 import { ComponentProps, useEffect, useRef, useState } from "react";
+import { Select } from "@/shared/ui/select";
 const CEFR_LEVELS: readonly CefrLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 const POS_OPTIONS = [
 	"noun",
@@ -80,8 +81,6 @@ export const AddLemmaModal = ({
 
 	const inputCls =
 		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[13px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
-	const selectCls =
-		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[12.5px] text-t-2 outline-none transition-colors focus:border-acc appearance-none cursor-pointer";
 	const labelCls = "mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2";
 
 		const handleBackdropClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
@@ -121,8 +120,8 @@ return (
 					<div className="mb-3.5 flex gap-2.5 max-sm:flex-col">
 						<div className="flex-1">
 							<div className={labelCls}>{t("admin.dictionaryDetail.pos")}</div>
-							<select
-								className={selectCls}
+							<Select
+								variant="lg"
 								value={partOfSpeech}
 								onChange={handlePosChange}
 							>
@@ -134,14 +133,14 @@ return (
 										{p}
 									</option>
 								))}
-							</select>
+							</Select>
 						</div>
 						<div className="flex-1">
 							<div className={labelCls}>
 								{t("admin.dictionaryDetail.level")}
 							</div>
-							<select
-								className={selectCls}
+							<Select
+								variant="lg"
 								value={level}
 								onChange={handleLevelChange}
 							>
@@ -153,7 +152,7 @@ return (
 										{l}
 									</option>
 								))}
-							</select>
+							</Select>
 						</div>
 					</div>
 
@@ -175,14 +174,14 @@ return (
 							<div className={labelCls}>
 								{t("admin.dictionaryDetail.language")}
 							</div>
-							<select
-								className={selectCls}
+							<Select
+								variant="lg"
 								value={language}
 								onChange={handleLanguageChange}
 							>
 								<option value="CHE">CHE</option>
 								<option value="RU">RU</option>
-							</select>
+							</Select>
 						</div>
 					</div>
 

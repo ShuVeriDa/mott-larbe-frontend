@@ -2,6 +2,7 @@ import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { Search } from "lucide-react";
 import type { PaymentProvider, PlanType, SubscriptionsSort } from "@/entities/admin-subscription";
+import { Select } from "@/shared/ui/select";
 
 interface Props {
 	search: string;
@@ -30,11 +31,11 @@ export const SubscriptionsToolbar = ({
 }: Props) => {
 	const { t } = useI18n();
 
-		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
 	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onPlanChange(e.currentTarget.value);
 	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onProviderChange(e.currentTarget.value);
 	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.currentTarget.value as import("@/entities/admin-subscription").SubscriptionsSort);
-return (
+	return (
 		<div className="flex flex-wrap items-center gap-2 border-b border-bd-1 px-3.5 py-2.5">
 			{/* Search */}
 			<div className="relative max-w-[260px] flex-1 max-sm:max-w-none max-sm:basis-full">
@@ -47,46 +48,31 @@ return (
 				/>
 			</div>
 
-			{/* Plan filter */}
-			<select
-				value={planType ?? ""}
-				onChange={handleChange2}
-				className="h-[30px] appearance-none rounded-base border border-bd-1 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%226%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M1%201l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-position-[right_8px_center] pl-2.5 pr-6 text-[12px] text-t-2 outline-none transition-colors focus:border-acc focus:text-t-1"
-			>
+			<Select value={planType ?? ""} onChange={handleChange2} wrapperClassName="w-auto" className="border-bd-1 text-t-2">
 				<option value="">{t("admin.subscriptions.toolbar.allPlans")}</option>
 				<option value="BASIC">Basic</option>
 				<option value="PRO">Pro</option>
 				<option value="PREMIUM">Premium</option>
 				<option value="LIFETIME">Lifetime</option>
-			</select>
+			</Select>
 
-			{/* Provider filter */}
-			<select
-				value={provider ?? ""}
-				onChange={handleChange3}
-				className="h-[30px] appearance-none rounded-base border border-bd-1 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%226%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M1%201l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-position-[right_8px_center] pl-2.5 pr-6 text-[12px] text-t-2 outline-none transition-colors focus:border-acc focus:text-t-1"
-			>
+			<Select value={provider ?? ""} onChange={handleChange3} wrapperClassName="w-auto" className="border-bd-1 text-t-2">
 				<option value="">{t("admin.subscriptions.toolbar.allProviders")}</option>
 				<option value="STRIPE">Stripe</option>
 				<option value="PAYPAL">PayPal</option>
 				<option value="PADDLE">Paddle</option>
 				<option value="LEMONSQUEEZY">LemonSqueezy</option>
 				<option value="MANUAL">Manual</option>
-			</select>
+			</Select>
 
-			{/* Sort */}
-			<select
-				value={sort}
-				onChange={handleChange4}
-				className="h-[30px] appearance-none rounded-base border border-bd-1 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%226%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M1%201l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-position-[right_8px_center] pl-2.5 pr-6 text-[12px] text-t-2 outline-none transition-colors focus:border-acc focus:text-t-1"
-			>
+			<Select value={sort} onChange={handleChange4} wrapperClassName="w-auto" className="border-bd-1 text-t-2">
 				<option value="nextBilling_asc">{t("admin.subscriptions.toolbar.sortNextAsc")}</option>
 				<option value="nextBilling_desc">{t("admin.subscriptions.toolbar.sortNextDesc")}</option>
 				<option value="amount_asc">{t("admin.subscriptions.toolbar.sortAmountAsc")}</option>
 				<option value="amount_desc">{t("admin.subscriptions.toolbar.sortAmountDesc")}</option>
 				<option value="createdAt_asc">{t("admin.subscriptions.toolbar.sortCreatedAsc")}</option>
 				<option value="createdAt_desc">{t("admin.subscriptions.toolbar.sortCreatedDesc")}</option>
-			</select>
+			</Select>
 
 			<div className="ml-auto text-[11.5px] text-t-3">
 				{fetched} {t("admin.subscriptions.toolbar.of")} {total}

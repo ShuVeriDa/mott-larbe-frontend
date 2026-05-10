@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/button";
 import type { ProcessTextDto } from "@/entities/admin-text";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { X, Check } from "lucide-react";
 import { ComponentProps, useState } from "react";
 interface RunProcessModalProps {
 	defaultNormalization: boolean;
@@ -54,14 +55,7 @@ export const RunProcessModal = ({
 							onClick={onClose}
 							className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 						>
-							<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-								<path
-									d="M3 3l10 10M13 3L3 13"
-									stroke="currentColor"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-								/>
-							</svg>
+							<X className="size-3" />
 						</Button>
 					</div>
 
@@ -152,15 +146,7 @@ const CheckboxRow = ({
 				)}
 			>
 				{checked && (
-					<svg width="9" height="9" viewBox="0 0 12 12" fill="none">
-						<path
-							d="M2 6l3 3 5-5"
-							stroke="white"
-							strokeWidth="1.5"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<Check className="size-[9px] text-white" />
 				)}
 			</div>
 		</div>

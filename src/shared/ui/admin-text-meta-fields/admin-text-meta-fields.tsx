@@ -3,7 +3,8 @@
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import type { TextLevel } from "@/entities/admin-text";
-import type { ComponentProps, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
+import { Select, type SelectProps } from "@/shared/ui/select";
+import type { ComponentProps, InputHTMLAttributes, ReactNode } from "react";
 
 export const LEVELS: TextLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
@@ -44,10 +45,11 @@ export const FieldInput = (props: InputHTMLAttributes<HTMLInputElement>) => (
 	/>
 );
 
-export const FieldSelect = (props: SelectHTMLAttributes<HTMLSelectElement>) => (
-	<select
+export const FieldSelect = (props: SelectProps) => (
+	<Select
+		variant="lg"
+		className="bg-surf"
 		{...props}
-		className="h-[34px] w-full cursor-pointer appearance-none rounded-base border border-bd-2 bg-surf px-2.5 pr-7 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
 	/>
 );
 

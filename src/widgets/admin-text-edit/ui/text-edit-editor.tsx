@@ -11,6 +11,7 @@ import { type ChangeEvent, type ComponentProps, useRef, useState } from "react";
 import { countChars, countParagraphs, countWords } from "../lib/tiptap-utils";
 import type { PageContent } from "../model/use-admin-text-edit-page";
 import { CharsPopup } from "./chars-popup";
+import { AlertTriangle, CheckCircle2, AlignLeft, Plus } from "lucide-react";
 
 interface TextEditEditorProps {
 	title: string;
@@ -61,11 +62,7 @@ const TokenStatusBar = ({
 	if (processingStatus === "ERROR") {
 		return (
 			<div className="flex items-center gap-2 border-b border-red/10 bg-red-muted px-6 py-2 transition-colors">
-				<svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 text-red">
-					<path d="M8 2L14.5 13H1.5L8 2z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-					<path d="M8 6.5v3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-					<circle cx="8" cy="11" r=".7" fill="currentColor" />
-				</svg>
+				<AlertTriangle className="size-4 shrink-0 text-red" />
 				<Typography tag="span" className="flex-1 text-[11.5px] text-red-strong">
 					{t("admin.texts.editPage.tokenBar.error")}
 				</Typography>
@@ -75,10 +72,7 @@ const TokenStatusBar = ({
 	if (processingStatus === "COMPLETED" && tokenCount > 0) {
 		return (
 			<div className="flex items-center gap-2 border-b border-bd-1 bg-grn-muted px-6 py-2 transition-colors">
-				<svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 text-grn">
-					<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-					<path d="M5 8l2.5 2.5L11 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-				</svg>
+				<CheckCircle2 className="size-4 shrink-0 text-grn" />
 				<Typography tag="span" className="flex-1 text-[11.5px] text-grn-strong">
 					{t("admin.texts.editPage.tokenBar.done", { pages: pages.length, tokens: tokenCount })}
 				</Typography>
@@ -102,11 +96,7 @@ const RetokenizeBar = ({
 	t: ReturnType<typeof useI18n>["t"];
 }) => (
 	<div className="flex items-center gap-2 border-b border-amb/15 bg-amb-muted px-6 py-2 transition-colors">
-		<svg width="15" height="15" viewBox="0 0 16 16" fill="none" className="shrink-0 text-amb">
-			<path d="M8 2L14.5 13H1.5L8 2z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-			<path d="M8 6.5v3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-			<circle cx="8" cy="11" r=".7" fill="currentColor" />
-		</svg>
+		<AlertTriangle className="size-[15px] shrink-0 text-amb" />
 		<Typography tag="span" className="flex-1 text-[11.5px] text-amb-strong">
 			{t("admin.texts.editPage.retokenizeBar.text")}
 		</Typography>
@@ -128,9 +118,7 @@ const EditorFooter = ({
 }) => (
 	<div className="flex flex-wrap items-center gap-3 border-t border-bd-1 bg-surf-2 px-[22px] py-[7px] text-[11px] text-t-3 transition-colors max-sm:px-4">
 		<div className="flex items-center gap-1">
-			<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-				<path d="M2 4h12M2 7.5h8M2 11h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-			</svg>
+			<AlignLeft className="size-3" />
 			{t("admin.texts.createPage.words")}:&nbsp;
 			<Typography tag="span" className="font-medium text-t-2">{stats.words}</Typography>
 		</div>
@@ -297,9 +285,7 @@ export const TextEditEditor = ({
 					onClick={onAddPage}
 					className="ml-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-[5px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2"
 				>
-					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-						<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-					</svg>
+					<Plus className="size-3.5" />
 				</Button>
 
 				<div className="ml-auto shrink-0 pl-2 text-[11px] text-t-3">

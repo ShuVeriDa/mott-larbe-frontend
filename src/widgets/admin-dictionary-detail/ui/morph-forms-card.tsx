@@ -88,9 +88,7 @@ return (
 						className="flex h-[26px] items-center gap-1.5 rounded-md border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 						onClick={handleClick}
 					>
-						<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-							<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-						</svg>
+						<Plus className="size-[11px]" />
 						{t("admin.dictionaryDetail.add")}
 					</Button>
 				</div>
@@ -122,13 +120,13 @@ return (
 										className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 										onClick={handleClick}
 									>
-										<IconEdit />
+										<Pencil className="size-[13px]" />
 									</Button>
 									<Button
 										className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 										onClick={handleClick2}
 									>
-										<IconTrash />
+										<Trash2 className="size-[13px]" />
 									</Button>
 								</div>
 							</div>
@@ -144,15 +142,7 @@ return (
 							{showAll
 								? t("admin.dictionaryDetail.showLess")
 								: t("admin.dictionaryDetail.showAllForms", { count: forms.length })}
-							<svg
-								width="11"
-								height="11"
-								viewBox="0 0 16 16"
-								fill="none"
-								className={`ml-1 inline align-middle transition-transform ${showAll ? "rotate-180" : ""}`}
-							>
-								<path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-							</svg>
+							<ChevronDown className={`ml-1 inline size-[11px] align-middle transition-transform ${showAll ? "rotate-180" : ""}`} />
 						</Button>
 					)}
 				</>

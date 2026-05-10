@@ -9,6 +9,7 @@ import type {
 } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
 import { ComponentProps, useEffect, useRef, useState } from "react";
+import { Select } from "@/shared/ui/select";
 interface MorphFormModalProps {
 	isOpen: boolean;
 	editForm?: AdminDictMorphForm | null;
@@ -72,8 +73,6 @@ export const MorphFormModal = ({
 
 	const inputCls =
 		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[13px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
-	const selectCls =
-		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[12.5px] text-t-2 outline-none transition-colors focus:border-acc appearance-none cursor-pointer";
 
 		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
 	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(e.currentTarget.value);
@@ -114,11 +113,10 @@ return (
 							<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
 								{t("admin.dictionaryDetail.gramCase")}
 							</div>
-							<select
-								className={selectCls}
+							<Select
+								variant="lg"
 								value={gramCase}
-								onChange={handleChange2
-								}
+								onChange={handleChange2}
 							>
 								<option value="">
 									— {t("admin.dictionaryDetail.selectCase")} —
@@ -128,17 +126,16 @@ return (
 										{c.label}
 									</option>
 								))}
-							</select>
+							</Select>
 						</div>
 						<div className="flex-1">
 							<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
 								{t("admin.dictionaryDetail.gramNumber")}
 							</div>
-							<select
-								className={selectCls}
+							<Select
+								variant="lg"
 								value={gramNumber}
-								onChange={handleChange3
-								}
+								onChange={handleChange3}
 							>
 								<option value="">
 									— {t("admin.dictionaryDetail.selectNumber")} —
@@ -148,7 +145,7 @@ return (
 										{n.label}
 									</option>
 								))}
-							</select>
+							</Select>
 						</div>
 					</div>
 					<div className="mt-5 flex justify-end gap-2">

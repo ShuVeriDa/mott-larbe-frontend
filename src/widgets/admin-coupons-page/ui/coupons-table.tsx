@@ -5,6 +5,7 @@ import { Button } from "@/shared/ui/button";
 import { ComponentProps, MouseEvent, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react";
 import type { AdminCouponListItem, CouponStatus } from "@/entities/admin-coupon";
 import type { CouponSortBy } from "../model/use-admin-coupons-page";
 import { CouponRow } from "./coupons-table-row";
@@ -50,24 +51,11 @@ const usageColor = (redeemed: number, max: number | null | undefined) => {
 
 // ── Sub-components ─────────────────────────────────────────────────────────────
 
-const SortIcon = ({ active, order }: { active: boolean; order: "asc" | "desc" }) => (
-	<svg
-		className={cn("ml-0.5 inline size-[9px] shrink-0", active ? "text-acc" : "text-t-4")}
-		viewBox="0 0 8 10"
-		fill="currentColor"
-	>
-		{active && order === "asc" ? (
-			<path d="M4 0L7.46 5H.54L4 0z" />
-		) : active && order === "desc" ? (
-			<path d="M4 10L.54 5h6.92L4 10z" />
-		) : (
-			<>
-				<path d="M4 0L7.46 4H.54L4 0z" opacity=".3" />
-				<path d="M4 10L.54 6h6.92L4 10z" opacity=".3" />
-			</>
-		)}
-	</svg>
-);
+const SortIcon = ({ active, order }: { active: boolean; order: "asc" | "desc" }) => {
+	if (active && order === "asc") return <ArrowUp className="ml-0.5 inline size-[10px] shrink-0 text-acc" />;
+	if (active && order === "desc") return <ArrowDown className="ml-0.5 inline size-[10px] shrink-0 text-acc" />;
+	return <ArrowUpDown className="ml-0.5 inline size-[10px] shrink-0 text-t-4" />;
+};
 
 
 const SkeletonRow = () => (

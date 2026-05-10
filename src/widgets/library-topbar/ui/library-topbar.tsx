@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/button";
 import { useLibraryFilters } from "@/features/library-filters";
 import { useI18n } from "@/shared/lib/i18n";
 import { ChangeEvent } from 'react';
+import { Search, RotateCcw } from "lucide-react";
 interface LibraryTopbarProps {
 	totalCount: number;
 	onRefresh: () => void;

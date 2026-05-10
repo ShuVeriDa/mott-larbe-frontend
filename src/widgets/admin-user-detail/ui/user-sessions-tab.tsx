@@ -8,6 +8,7 @@ import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { useAdminUserSessions } from "@/entities/admin-user/model/use-admin-user-sessions";
 import { cn } from "@/shared/lib/cn";
+import { Monitor } from "lucide-react";
 
 interface UserSessionsTabProps {
 	sessions: ReturnType<typeof useAdminUserSessions>;
@@ -113,21 +114,7 @@ return (
 						"flex h-7 items-center gap-1.5 rounded-base border border-red/25 bg-transparent px-2.5 text-[12px] font-medium text-red-t transition-colors hover:bg-red-bg disabled:opacity-50",
 					)}
 				>
-					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-						<path
-							d="M2 10V5a2 2 0 012-2h8a2 2 0 012 2v5"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-						/>
-						<path
-							d="M1 10h14M4 13l1-3h6l1 3"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<Monitor className="size-3" />
 					{t("admin.userDetail.actions.resetSessions")}
 				</Button>
 			</div>

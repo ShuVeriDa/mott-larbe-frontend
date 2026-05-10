@@ -3,6 +3,7 @@
 import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { Plus, MoreVertical, Clock, FileText, Trash2 } from "lucide-react";
 import type { UnknownWordItem } from "@/entities/admin-unknown-word";
 import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word/model/use-admin-unknown-word-mutations";
 
@@ -58,9 +59,7 @@ return (
 				className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-acc-bg hover:text-acc-t"
 				title={t("admin.unknownWords.row.addToDictionary")}
 			>
-				<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-					<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-				</svg>
+				<Plus className="size-3.5" />
 			</Button>
 
 			{/* Dropdown */}
@@ -69,11 +68,7 @@ return (
 					onClick={handleClick2}
 					className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2"
 				>
-					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-						<circle cx="8" cy="4" r="1" fill="currentColor" />
-						<circle cx="8" cy="8" r="1" fill="currentColor" />
-						<circle cx="8" cy="12" r="1" fill="currentColor" />
-					</svg>
+					<MoreVertical className="size-3.5" />
 				</Button>
 
 				{open && (
@@ -82,29 +77,21 @@ return (
 							onClick={handleClick3}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
-							<svg className="size-3.5 shrink-0 text-t-3" viewBox="0 0 16 16" fill="none">
-								<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-							</svg>
+							<Plus className="size-3.5 shrink-0 text-t-3" />
 							{t("admin.unknownWords.row.addToDictionary")}
 						</Button>
 						<Button
 							onClick={handleClick4}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
-							<svg className="size-3.5 shrink-0 text-t-3" viewBox="0 0 16 16" fill="none">
-								<circle cx="8" cy="8" r="5" stroke="currentColor" strokeWidth="1.3" />
-								<path d="M9 9.5L8 8V5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-							</svg>
+							<Clock className="size-3.5 shrink-0 text-t-3" />
 							{t("admin.unknownWords.row.linkToLemma")}
 						</Button>
 						<Button
 							onClick={handleClick5}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
-							<svg className="size-3.5 shrink-0 text-t-3" viewBox="0 0 16 16" fill="none">
-								<rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" strokeWidth="1.3" />
-								<path d="M5 6h6M5 9h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-							</svg>
+							<FileText className="size-3.5 shrink-0 text-t-3" />
 							{t("admin.unknownWords.row.allContexts")}
 						</Button>
 						<div className="my-1 h-px bg-bd-1" />
@@ -113,20 +100,7 @@ return (
 							onClick={handleClick6}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
 						>
-							<svg className="size-3.5 shrink-0 text-red-t" viewBox="0 0 16 16" fill="none">
-								<path
-									d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4"
-									stroke="currentColor"
-									strokeWidth="1.3"
-									strokeLinecap="round"
-								/>
-								<path
-									d="M4 5l.7 7.5A1 1 0 005.7 13h4.6a1 1 0 001-.95L12 5"
-									stroke="currentColor"
-									strokeWidth="1.3"
-									strokeLinecap="round"
-								/>
-							</svg>
+							<Trash2 className="size-3.5 shrink-0 text-red-t" />
 							{t("admin.unknownWords.row.delete")}
 						</Button>
 					</div>

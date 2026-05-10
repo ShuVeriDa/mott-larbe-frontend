@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/button";
 import type { AdminTextDetail } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
 import Link from "next/link";
+import { ChevronLeft, Pencil, Play } from "lucide-react";
 
 interface VersionsTopbarProps {
 	textId: string;
@@ -32,15 +33,7 @@ export const VersionsTopbar = ({
 				className="flex size-7 shrink-0 items-center justify-center rounded-base border border-bd-2 bg-surf text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 				aria-label={t("admin.texts.versions.backToTexts")}
 			>
-				<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-					<path
-						d="M10 3L5 8l5 5"
-						stroke="currentColor"
-						strokeWidth="1.5"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</svg>
+				<ChevronLeft className="size-3" />
 			</Link>
 
 			<div className="flex min-w-0 items-center gap-1.5 text-[12.5px]">
@@ -69,15 +62,7 @@ export const VersionsTopbar = ({
 					href={`/${lang}/admin/texts/${textId}/edit`}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 max-sm:px-2"
 				>
-					<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-						<path
-							d="M10.5 3.5l2 2L5 13H3v-2l7.5-7.5z"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<Pencil className="size-[13px]" />
 					<Typography tag="span" className="max-sm:hidden">{t("admin.texts.actions.edit")}</Typography>
 				</Link>
 				<Button
@@ -88,15 +73,7 @@ export const VersionsTopbar = ({
 					{isRunning ? (
 						<Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />
 					) : (
-						<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-							<path
-								d="M5 3.5l8 4.5-8 4.5V3.5z"
-								stroke="#fff"
-								strokeWidth="1.4"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</svg>
+						<Play className="size-[13px]" />
 					)}
 					<Typography tag="span" className="max-sm:hidden">
 						{isRunning

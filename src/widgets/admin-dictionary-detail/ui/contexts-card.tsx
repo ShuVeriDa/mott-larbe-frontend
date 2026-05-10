@@ -6,6 +6,7 @@ import { ComponentProps } from 'react';
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminDictContextItem } from "@/entities/dictionary";
+import { FileText } from "lucide-react";
 
 interface ContextsCardProps {
 	items: AdminDictContextItem[] | undefined;
@@ -57,9 +58,7 @@ export const ContextsCard = ({ items, total, lang, isLoading }: ContextsCardProp
 								dangerouslySetInnerHTML={{ __html: ctx.snippet }}
 							/>
 							<div className="flex items-center gap-1.5 text-[11px] text-t-3">
-								<svg width="10" height="10" viewBox="0 0 16 16" fill="none">
-									<path d="M3 4h10M3 8h7M3 12h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-								</svg>
+								<FileText className="size-[10px]" />
 								<Link
 									href={`/${lang}/texts/${ctx.textId}`}
 									className="text-acc-t hover:underline"

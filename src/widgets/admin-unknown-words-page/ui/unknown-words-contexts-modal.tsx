@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/button";
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminUnknownWordContexts } from "@/entities/admin-unknown-word";
+import { X } from "lucide-react";
 import type { ContextsModalState } from "../model/use-admin-unknown-words-page";
 
 interface UnknownWordsContextsModalProps {
@@ -54,14 +55,7 @@ return (
 						onClick={onClose}
 						className="flex size-7 cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 					>
-						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<path
-								d="M4 4l8 8M12 4l-8 8"
-								stroke="currentColor"
-								strokeWidth="1.4"
-								strokeLinecap="round"
-							/>
-						</svg>
+						<X className="size-3.5" />
 					</Button>
 				</div>
 

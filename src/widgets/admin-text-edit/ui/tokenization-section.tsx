@@ -7,6 +7,7 @@ import { ComponentProps } from "react";
 import type { ProcessingStatus } from "@/entities/admin-text";
 import { MetaSection, MetaToggle } from "@/shared/ui/admin-text-meta-fields";
 import { useI18n } from "@/shared/lib/i18n";
+import { Clock, History } from "lucide-react";
 
 interface Props {
 	processingStatus: ProcessingStatus;
@@ -75,10 +76,7 @@ export const TokenizationSection = ({
 					onClick={handleTokenize}
 					className="mb-3 flex w-full items-center justify-center gap-1.5 rounded-base border border-acc/25 bg-acc-muted px-3 py-[7px] text-[11.5px] font-medium text-acc transition-opacity hover:opacity-80"
 				>
-					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-						<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-						<path d="M8 5v3.5l2 1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-					</svg>
+					<Clock className="size-3" />
 					{t("admin.texts.editPage.tokenizeNow")}
 				</Button>
 			)}
@@ -87,10 +85,7 @@ export const TokenizationSection = ({
 				href={`/${lang}/admin/texts/${textId}/versions`}
 				className="mb-3 flex items-center gap-1.5 rounded-base border border-acc/15 bg-acc-muted px-3 py-[7px] text-[11.5px] font-medium text-acc transition-opacity hover:opacity-80"
 			>
-				<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-					<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-					<path d="M8 5v3l2 1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-				</svg>
+				<History className="size-3" />
 				{t("admin.texts.editPage.tokenHistoryLink")}
 			</Link>
 

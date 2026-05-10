@@ -12,6 +12,7 @@ import { useAdminFeatureFlagKeys } from "@/entities/feature-flag";
 import { http } from "@/shared/api";
 import { useDebounce } from "@/shared/lib/debounce";
 import { ComponentProps, useEffect, useRef, useState } from 'react';
+import { Select } from "@/shared/ui/select";
 import { FlagToggle } from "./flag-toggle";
 
 interface UserSuggestion {
@@ -136,10 +137,11 @@ return (
 					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.featureFlags.overrideModal.flagLabel")} *
 					</Typography>
-					<select
-						className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
+					<Select
+						variant="lg"
 						value={flagId}
 						onChange={handleFlagChange}
+						className="bg-bg"
 					>
 						<option value="">
 							{t("admin.featureFlags.overrideModal.selectFlag")}
@@ -149,7 +151,7 @@ return (
 								{f.key}
 							</option>
 						))}
-					</select>
+					</Select>
 				</div>
 
 				{/* User typeahead */}

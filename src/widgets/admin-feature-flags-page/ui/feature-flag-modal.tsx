@@ -12,6 +12,7 @@ import type {
 } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
 import { useFeatureFlagModal } from "../model/use-feature-flag-modal";
+import { Select } from "@/shared/ui/select";
 import { FlagToggle } from "./flag-toggle";
 
 const ENV_SELECTED_STYLES: Record<FeatureFlagEnvironment, string> = {
@@ -131,17 +132,18 @@ export const FeatureFlagModal = ({
 						<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 							{t("admin.featureFlags.modal.categoryLabel")}
 						</Typography>
-						<select
-							className="h-[34px] w-full cursor-pointer rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc"
+						<Select
+							variant="lg"
 							value={category}
 							onChange={handleCategoryChange}
+							className="bg-bg"
 						>
 							{categories.map(c => (
 								<option key={c} value={c}>
 									{t(`admin.featureFlags.category.${c}`)}
 								</option>
 							))}
-						</select>
+						</Select>
 					</div>
 					<div>
 						<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">

@@ -7,6 +7,7 @@ import type { DashboardPeriod } from "@/entities/admin-dashboard";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Download } from "lucide-react";
+import { Select } from "@/shared/ui/select";
 
 const PERIODS: DashboardPeriod[] = ["week", "month", "year", "all"];
 
@@ -23,8 +24,8 @@ export const DashboardTopbar = ({
 }: DashboardTopbarProps) => {
 	const { t } = useI18n();
 
-		const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = e => onPeriodChange(e.currentTarget.value as DashboardPeriod);
-return (
+	const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = e => onPeriodChange(e.currentTarget.value as DashboardPeriod);
+	return (
 		<header className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-5 py-3.5 transition-colors max-sm:px-3 max-sm:py-2.5">
 			<div className="min-w-0 flex-1">
 				<div className="font-display text-base font-medium text-t-1">
@@ -56,17 +57,18 @@ return (
 					})}
 				</div>
 
-				<select
+				<Select
 					value={period}
 					onChange={handleChange}
-					className="flex h-[30px] items-center rounded-base border border-bd-2 bg-surf px-2 text-[12px] text-t-2 transition-colors hover:border-bd-3 sm:hidden"
+					wrapperClassName="w-auto sm:hidden"
+					className="bg-surf text-t-2 hover:border-bd-3"
 				>
 					{PERIODS.map(p => (
 						<option key={p} value={p}>
 							{t(`admin.dashboard.period.${p}` as Parameters<typeof t>[0])}
 						</option>
 					))}
-				</select>
+				</Select>
 
 				<Button
 					onClick={onExport}

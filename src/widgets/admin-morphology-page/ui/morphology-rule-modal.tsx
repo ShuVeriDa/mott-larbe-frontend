@@ -11,6 +11,7 @@ import type {
 } from "@/entities/morph-rule";
 import { useI18n } from "@/shared/lib/i18n";
 import { ComponentProps, useEffect, useState } from "react";
+import { Select } from "@/shared/ui/select";
 const TYPE_OPTIONS: MorphRuleType[] = [
 	"SUFFIX",
 	"ENDING",
@@ -172,17 +173,18 @@ return (
 							<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
 								{t("admin.morphology.ruleModal.typeLabel")}
 							</Typography>
-							<select
+							<Select
+								variant="lg"
 								value={form.type}
 								onChange={handleTypeChange}
-								className="h-9 w-full appearance-none rounded-lg border border-bd-2 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2211%22%20height%3D%2211%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M4%206l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-position-[right_8px_center] bg-no-repeat px-2.5 pr-7 text-[12.5px] text-t-2 focus:border-acc focus:outline-none"
+								className="rounded-lg h-9"
 							>
 								{TYPE_OPTIONS.map(tp => (
 									<option key={tp} value={tp}>
 										{t(`admin.morphology.ruleType.${tp}` as never) || tp}
 									</option>
 								))}
-							</select>
+							</Select>
 						</div>
 
 						{/* Priority */}

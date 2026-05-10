@@ -6,6 +6,7 @@ import { X } from "lucide-react";
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
 import { useI18n } from "@/shared/lib/i18n";
 import { ComponentProps, useState } from "react";
+import { Select } from "@/shared/ui/select";
 interface Props {
 	subscriptionId: string | null;
 	mutations: ReturnType<typeof useAdminSubscriptionMutations>;
@@ -60,17 +61,18 @@ return (
 					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.subscriptions.modal.extendBy")}
 					</Typography>
-					<select
+					<Select
+						variant="lg"
 						value={extendDays}
 						onChange={handleChange}
-						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf"
+						className="rounded-lg focus:bg-surf"
 					>
 						{DURATION_OPTIONS.map(({ value, labelKey }) => (
 							<option key={value} value={value}>
 								{t(labelKey)}
 							</option>
 						))}
-					</select>
+					</Select>
 				</div>
 
 				<div>

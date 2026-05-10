@@ -6,6 +6,7 @@ import { ComponentProps, useEffect, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { X } from "lucide-react";
 import type { AdminPlan, CreatePlanDto, PlanInterval, PlanType, UpdatePlanDto } from "@/entities/admin-billing";
+import { Select } from "@/shared/ui/select";
 
 interface BillingPlanModalProps {
 	open: boolean;
@@ -142,29 +143,29 @@ return (
 									<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 										{t("admin.plans.planModal.type")}
 									</Typography>
-									<select
+									<Select
+										variant="lg"
 										value={form.type}
 										onChange={handleTypeChange}
-										className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 									>
 										{PLAN_TYPES.map((pt) => (
 											<option key={pt} value={pt}>{pt}</option>
 										))}
-									</select>
+									</Select>
 								</div>
 								<div>
 									<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 										{t("admin.plans.planModal.interval")}
 									</Typography>
-									<select
+									<Select
+										variant="lg"
 										value={form.interval ?? ""}
 										onChange={handleIntervalChange}
-										className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 									>
 										{INTERVALS.map(({ value, label }) => (
 											<option key={value ?? "null"} value={value ?? ""}>{label}</option>
 										))}
-									</select>
+									</Select>
 								</div>
 							</div>
 						)}

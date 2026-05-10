@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/button";
 import { ComponentProps, ReactNode, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { adminUserApi } from "@/entities/admin-user";
+import { CreditCard, Monitor, Clock, Snowflake, Ban, Trash2 } from "lucide-react";
 import type { AdminUserDetail } from "@/entities/admin-user";
 import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
 import type { useAdminUserSessions } from "@/entities/admin-user/model/use-admin-user-sessions";
@@ -55,10 +56,10 @@ return (
 				{t("admin.userDetail.actions.title")}
 			</div>
 
-			<ActionButton icon={<BillingIcon />} label={t("admin.userDetail.actions.manageSubscription")} onClick={onManageSubscription} />
+			<ActionButton icon={<CreditCard className="size-full" />} label={t("admin.userDetail.actions.manageSubscription")} onClick={onManageSubscription} />
 
 			<ActionButton
-				icon={<SessionsIcon />}
+				icon={<Monitor className="size-full" />}
 				label={t("admin.userDetail.actions.resetSessions")}
 				onClick={handleResetSessionsClick}
 				disabled={sessions.logoutAll.isPending}
@@ -66,7 +67,7 @@ return (
 
 			<div>
 				<ActionButton
-					icon={<CouponIcon />}
+					icon={<Clock className="size-full" />}
 					label={t("admin.userDetail.actions.applyCoupon")}
 					onClick={handleCouponToggleClick}
 				/>
@@ -92,7 +93,7 @@ return (
 
 			{(isActive || isBlocked) && (
 				<ActionButton
-					icon={<FreezeIcon />}
+					icon={<Snowflake className="size-full" />}
 					label={
 						isFrozen
 							? t("admin.users.actions.unfreeze")
@@ -106,7 +107,7 @@ return (
 
 			{!isBlocked && (
 				<ActionButton
-					icon={<BlockIcon />}
+					icon={<Ban className="size-full" />}
 					label={t("admin.users.actions.block")}
 					variant="danger"
 					onClick={handleBlockClick}
@@ -115,7 +116,7 @@ return (
 			)}
 
 			<ActionButton
-				icon={<DeleteIcon />}
+				icon={<Trash2 className="size-full" />}
 				label={t("admin.users.actions.delete")}
 				variant="danger"
 				onClick={handleDeleteClick}
@@ -160,43 +161,3 @@ const ActionButton = ({
 	);
 };
 
-const BillingIcon = () => (
-	<svg viewBox="0 0 16 16" fill="none">
-		<rect x="2" y="4" width="12" height="9" rx="2" stroke="currentColor" strokeWidth="1.3" />
-		<path d="M5 4V3.5a.5.5 0 011 0V4M10 4V3.5a.5.5 0 011 0V4" stroke="currentColor" strokeWidth="1.3" />
-	</svg>
-);
-
-const SessionsIcon = () => (
-	<svg viewBox="0 0 16 16" fill="none">
-		<path d="M2 10V5a2 2 0 012-2h8a2 2 0 012 2v5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-		<path d="M1 10h14M4 13l1-3h6l1 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
-);
-
-const CouponIcon = () => (
-	<svg viewBox="0 0 16 16" fill="none">
-		<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-		<path d="M8 5v3l2 2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-	</svg>
-);
-
-const FreezeIcon = () => (
-	<svg viewBox="0 0 16 16" fill="none">
-		<path d="M8 2v4M8 10v4M2 8h4M10 8h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-	</svg>
-);
-
-const BlockIcon = () => (
-	<svg viewBox="0 0 16 16" fill="none">
-		<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-		<path d="M10 6L6 10M6 6l4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-	</svg>
-);
-
-const DeleteIcon = () => (
-	<svg viewBox="0 0 16 16" fill="none">
-		<path d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-		<path d="M4 5l.7 7.5A1 1 0 005.7 13h4.6a1 1 0 001-.95L12 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-	</svg>
-);

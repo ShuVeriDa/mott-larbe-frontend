@@ -5,6 +5,7 @@ import { Typography } from "@/shared/ui/typography";
 import { useI18n } from "@/shared/lib/i18n";
 import { CefrBadge } from "@/entities/dictionary";
 import type { AdminDictEntryCard } from "@/entities/dictionary";
+import { TrendingUp } from "lucide-react";
 
 const POS_STYLE: Record<string, string> = {
 	n: "bg-acc-bg text-acc-t",
@@ -69,9 +70,7 @@ export const EntryHeaderCard = ({ data, isLoading, lemmasCount }: EntryHeaderCar
 					{data.level && <CefrBadge level={data.level} />}
 					<Typography tag="span" className="h-3.5 w-px bg-bd-2" />
 					<Typography tag="span" className="flex items-center gap-1 text-[12px] text-t-3">
-						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-							<path d="M2 12l4-4.5 2.5 2.5L12 5l2 2.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
+						<TrendingUp className="size-3" />
 						{t("admin.dictionaryDetail.frequency")}:{" "}
 						<Typography tag="strong" className="font-semibold text-t-2">{data.frequency ?? "—"}</Typography>
 					</Typography>

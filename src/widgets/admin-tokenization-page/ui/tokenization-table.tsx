@@ -10,6 +10,7 @@ import type { ProcessingStatus, TokenizationTextItem } from "@/entities/token";
 import type { useTokenizationMutations } from "@/entities/token";
 import { TokenizationLevelBadge } from "./tokenization-level-badge";
 import { TokenizationStatusBadge } from "./tokenization-status-badge";
+import { Square, Play, RotateCcw } from "lucide-react";
 
 interface TokenizationTableProps {
 	items: TokenizationTextItem[];
@@ -205,9 +206,7 @@ export const TokenizationTable = ({
 											title={t("admin.tokenization.row.cancel")}
 											className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 										>
-											<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-												<rect x="4" y="4" width="8" height="8" rx="1.5" fill="currentColor" />
-											</svg>
+											<Square className="size-[13px]" />
 										</Button>
 									) : (
 										<Button
@@ -216,9 +215,7 @@ export const TokenizationTable = ({
 											title={t("admin.tokenization.row.run")}
 											className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 										>
-											<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-												<path d="M5 3l8 5-8 5V3z" fill="currentColor" />
-											</svg>
+											<Play className="size-[13px]" />
 										</Button>
 									)}
 									<Button
@@ -227,10 +224,7 @@ export const TokenizationTable = ({
 										title={t("admin.tokenization.row.reset")}
 										className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 									>
-										<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-											<path d="M2.5 8A5.5 5.5 0 0114 8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-											<path d="M2.5 8L4.5 5.5M2.5 8L5 10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-										</svg>
+										<RotateCcw className="size-[13px]" />
 									</Button>
 								</div>
 							</td>

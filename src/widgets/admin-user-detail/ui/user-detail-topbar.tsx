@@ -10,6 +10,7 @@ import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admi
 import { useI18n } from "@/shared/lib/i18n";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { ChevronRight } from "lucide-react";
 
 interface UserDetailTopbarProps {
 	user: AdminUserDetail | undefined;
@@ -44,21 +45,7 @@ return (
 				>
 					{t("admin.users.title")}
 				</Link>
-				<svg
-					width="12"
-					height="12"
-					viewBox="0 0 16 16"
-					fill="none"
-					className="text-t-4"
-				>
-					<path
-						d="M6 4l4 4-4 4"
-						stroke="currentColor"
-						strokeWidth="1.3"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</svg>
+				<ChevronRight className="size-3 text-t-4" />
 				<Typography tag="span" className="font-medium text-t-1">
 					{user ? `${user.name} ${user.surname}` : "…"}
 				</Typography>

@@ -3,6 +3,7 @@ import type { AdminDictLanguage, AdminDictSort } from "@/entities/dictionary";
 import type { CefrLevel } from "@/shared/types";
 import { CEFR_LEVELS } from "@/shared/types";
 import { Search } from "lucide-react";
+import { Select } from "@/shared/ui/select";
 
 const POS_OPTIONS = [
 	"noun",
@@ -53,15 +54,12 @@ export const DictionaryToolbar = ({
 	onLanguageChange,
 	t,
 }: DictionaryToolbarProps) => {
-	const selectCls =
-		"h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3";
-
-		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onSearchChange(e.currentTarget.value);
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onSearchChange(e.currentTarget.value);
 	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => onLanguageChange(e.currentTarget.value);
 	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => onPosChange(e.currentTarget.value);
 	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = e => onLevelChange(e.currentTarget.value);
 	const handleChange5: NonNullable<ComponentProps<"select">["onChange"]> = e => onSortChange(e.currentTarget.value as AdminDictSort);
-return (
+	return (
 		<div className="mb-3.5 flex flex-wrap items-center gap-2">
 			<div className="relative min-w-[200px] flex-1 max-w-[320px]">
 				<Search className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3" />
@@ -74,56 +72,40 @@ return (
 				/>
 			</div>
 
-			<select
-				value={language}
-				onChange={handleChange2}
-				className={selectCls}
-			>
+			<Select value={language} onChange={handleChange2} wrapperClassName="w-auto" className="bg-surf text-t-2 hover:border-bd-3">
 				<option value="">{t("admin.dictionary.toolbar.allLanguages")}</option>
 				{LANG_OPTIONS.map(l => (
 					<option key={l} value={l}>
 						{t(`admin.dictionary.toolbar.lang${l}`)}
 					</option>
 				))}
-			</select>
+			</Select>
 
-			<select
-				value={pos}
-				onChange={handleChange3}
-				className={selectCls}
-			>
+			<Select value={pos} onChange={handleChange3} wrapperClassName="w-auto" className="bg-surf text-t-2 hover:border-bd-3">
 				<option value="">{t("admin.dictionary.toolbar.allPos")}</option>
 				{POS_OPTIONS.map(p => (
 					<option key={p} value={p}>
 						{t(`admin.dictionary.pos.${p}`)}
 					</option>
 				))}
-			</select>
+			</Select>
 
-			<select
-				value={level}
-				onChange={handleChange4}
-				className={selectCls}
-			>
+			<Select value={level} onChange={handleChange4} wrapperClassName="w-auto" className="bg-surf text-t-2 hover:border-bd-3">
 				<option value="">{t("admin.dictionary.toolbar.allLevels")}</option>
 				{CEFR_LEVELS.map((lvl: CefrLevel) => (
 					<option key={lvl} value={lvl}>
 						{lvl}
 					</option>
 				))}
-			</select>
+			</Select>
 
-			<select
-				value={sort}
-				onChange={handleChange5}
-				className={selectCls}
-			>
+			<Select value={sort} onChange={handleChange5} wrapperClassName="w-auto" className="bg-surf text-t-2 hover:border-bd-3">
 				{SORT_OPTIONS.map(({ value, key }) => (
 					<option key={value} value={value}>
 						{t(key)}
 					</option>
 				))}
-			</select>
+			</Select>
 		</div>
 	);
 };

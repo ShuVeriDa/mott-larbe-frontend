@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/button";
 import { ComponentProps, ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { AlignLeft, HelpCircle, FileText, RotateCcw, RefreshCw, Download } from "lucide-react";
 import type { TextVersionListItem } from "@/entities/admin-text";
 
 const formatDuration = (ms: number | null): string => {
@@ -156,28 +157,19 @@ return (
 					{item.status === "COMPLETED" && (
 						<div className="flex flex-wrap items-center gap-3">
 							<Typography tag="span" className="flex items-center gap-1 text-[11px] text-t-3">
-								<svg width="10" height="10" viewBox="0 0 16 16" fill="none">
-									<path d="M3 4h10M3 7h10M3 10h6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-								</svg>
+								<AlignLeft className="size-2.5" />
 								<Typography tag="strong" className="text-t-2">{item.tokenCount.toLocaleString()}</Typography>
 								{" "}{t("admin.texts.versions.item.tokens")}
 							</Typography>
 							{item.unknownCount > 0 && (
 								<Typography tag="span" className="flex items-center gap-1 text-[11px] text-t-3">
-									<svg width="10" height="10" viewBox="0 0 16 16" fill="none">
-										<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-										<path d="M8 9V8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-										<circle cx="8" cy="11" r=".75" fill="currentColor" />
-									</svg>
+									<HelpCircle className="size-2.5" />
 									<Typography tag="strong" className="text-red-t">{item.unknownCount}</Typography>
 									{" "}{t("admin.texts.versions.item.unknown")}
 								</Typography>
 							)}
 							<Typography tag="span" className="flex items-center gap-1 text-[11px] text-t-3">
-								<svg width="10" height="10" viewBox="0 0 16 16" fill="none">
-									<rect x="2" y="2" width="12" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
-									<path d="M5 8h6M5 5h6M5 11h3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-								</svg>
+								<FileText className="size-2.5" />
 								<Typography tag="strong" className="text-t-2">{item.pageCount}</Typography>
 								{" "}{t("admin.texts.versions.item.pages")}
 							</Typography>
@@ -220,10 +212,7 @@ return (
 							className={btnClass}
 							title={t("admin.texts.versions.actions.restore")}
 						>
-							<svg viewBox="0 0 16 16" fill="none">
-								<path d="M13 8A5 5 0 013.5 11M3 8a5 5 0 019.5-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-								<path d="M3 5v3h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-							</svg>
+							<RotateCcw className="size-3" />
 						</Button>
 					)}
 					{item.status === "ERROR" && (
@@ -232,10 +221,7 @@ return (
 							className={btnClass}
 							title={t("admin.texts.versions.actions.retry")}
 						>
-							<svg viewBox="0 0 16 16" fill="none">
-								<path d="M13 8A5 5 0 013.5 11M3 8a5 5 0 019.5-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-								<path d="M13 5v3h-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-							</svg>
+							<RefreshCw className="size-3" />
 						</Button>
 					)}
 					{item.status === "COMPLETED" && (
@@ -244,10 +230,7 @@ return (
 							className={btnClass}
 							title={t("admin.texts.versions.actions.download")}
 						>
-							<svg viewBox="0 0 16 16" fill="none">
-								<path d="M8 3v7M5 7l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-								<path d="M3 13h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-							</svg>
+							<Download className="size-3" />
 						</Button>
 					)}
 				</div>

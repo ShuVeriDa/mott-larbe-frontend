@@ -8,6 +8,8 @@ import { useI18n } from "@/shared/lib/i18n";
 import type { useAdminUserSubscription } from "@/entities/admin-user/model/use-admin-user-subscription";
 import type { PaymentStatus } from "@/entities/admin-user";
 import { cn } from "@/shared/lib/cn";
+import { Star } from "lucide-react";
+import { Select } from "@/shared/ui/select";
 
 const EXTEND_OPTIONS = [
 	{ days: 30, label: "1 месяц" },
@@ -42,7 +44,7 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 	const [extendDays, setExtendDays] = useState(30);
 	const [showExtend, setShowExtend] = useState(false);
 
-		const handleExtendToggleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowExtend((v) => !v);
+	const handleExtendToggleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setShowExtend((v) => !v);
 	const handleCancelClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
 		if (!currentSubscription) return;
 		cancel.mutate(currentSubscription.id);
@@ -55,7 +57,7 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 			{ onSuccess: () => setShowExtend(false) },
 		);
 	};
-return (
+	return (
 		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
 			<div className="flex items-center justify-between border-b border-bd-1 px-3.5 py-3">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
@@ -82,14 +84,7 @@ return (
 						{data?.current ? (
 							<div className="mb-3 flex items-start gap-2.5 rounded-lg border border-bd-2 bg-surf-2 p-3">
 								<div className="flex size-8 shrink-0 items-center justify-center rounded-[8px] bg-pur-bg">
-									<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-										<path
-											d="M8 2l1.8 3.6L14 6.2l-3 2.9.7 4.1L8 11.2l-3.7 1.9.7-4.1-3-2.9 4.2-.6z"
-											stroke="var(--pur-t)"
-											strokeWidth="1.3"
-											strokeLinejoin="round"
-										/>
-									</svg>
+									<Star className="size-4 text-pur-t" />
 								</div>
 								<div className="flex-1">
 									<div className="text-[13.5px] font-semibold text-t-1">
@@ -129,15 +124,16 @@ return (
 									</div>
 									{showExtend && (
 										<div className="flex items-center gap-1">
-											<select
+											<Select
 												value={extendDays}
 												onChange={handleExtendDaysChange}
-												className="h-[26px] flex-1 cursor-pointer appearance-none rounded-base border border-bd-2 bg-surf-2 px-2 text-[11.5px] text-t-1 outline-none focus:border-acc"
+												wrapperClassName="flex-1"
+												className="h-[26px] text-[11.5px]"
 											>
 												{EXTEND_OPTIONS.map(({ days, label }) => (
 													<option key={days} value={days}>{label}</option>
 												))}
-											</select>
+											</Select>
 											<Button
 												onClick={handleExtendConfirmClick}
 												disabled={extend.isPending}

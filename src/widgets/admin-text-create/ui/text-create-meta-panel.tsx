@@ -24,6 +24,7 @@ import type {
 } from "../model/use-admin-text-create-page";
 import { ProcessingSection } from "./processing-section";
 import { TextCreateMetaActionsSection } from "./text-create-meta-actions-section";
+import { AlignLeft, ChevronDown } from "lucide-react";
 import { TextCreateMetaCoverSection } from "./text-create-meta-cover-section";
 import { TextCreateMetaDescriptionSection } from "./text-create-meta-description-section";
 import { TextCreateMetaPageStatsSection } from "./text-create-meta-page-stats-section";
@@ -140,31 +141,10 @@ export const TextCreateMetaPanel = ({
 					tag="span"
 					className="flex items-center gap-2 text-[13px] font-medium text-t-1"
 				>
-					<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-						<path
-							d="M2 4.5h12M2 8.5h8M2 12.5h5"
-							stroke="currentColor"
-							strokeWidth="1.3"
-							strokeLinecap="round"
-						/>
-					</svg>
+					<AlignLeft className="size-3.5" />
 					{t("admin.texts.createPage.sections.settings")}
 				</Typography>
-				<svg
-					width="14"
-					height="14"
-					viewBox="0 0 16 16"
-					fill="none"
-					className={`text-t-3 transition-transform ${metaOpen ? "rotate-180" : ""}`}
-				>
-					<path
-						d="M4 6l4 4 4-4"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</svg>
+				<ChevronDown className={`size-3.5 text-t-3 transition-transform ${metaOpen ? "rotate-180" : ""}`} />
 			</Button>
 
 			<div

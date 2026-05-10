@@ -7,6 +7,7 @@ import { User, RotateCcw, Check, ArrowRight, Trash2 } from "lucide-react";
 import { ComponentProps, ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackThread, FeedbackStatus, FeedbackPriority } from "@/entities/feedback";
+import { Select } from "@/shared/ui/select";
 
 type Translator = (key: string) => string;
 
@@ -42,8 +43,6 @@ const InfoRow = ({ label, children }: { label: string; children: ReactNode }) =>
 	</div>
 );
 
-const selectStyles =
-	"w-full h-7 rounded-[6px] border border-bd-2 bg-surf-2 px-2 text-[11.5px] font-[inherit] text-t-1 outline-none appearance-none cursor-pointer focus:border-acc";
 
 export const FeedbackInfoPanel = ({
 	thread,
@@ -87,30 +86,30 @@ return (
 			{/* Ticket */}
 			<InfoSection title={t("admin.feedback.ticket.title")}>
 				<InfoRow label={t("admin.feedback.ticket.status")}>
-					<select
+					<Select
 						value={thread.status}
 						onChange={handleStatusChange}
-						className={selectStyles}
+						className="h-7 text-[11.5px] rounded-[6px]"
 					>
 						{STATUSES.map((s) => (
 							<option key={s} value={s}>
 								{t(`admin.feedback.status.${s}`)}
 							</option>
 						))}
-					</select>
+					</Select>
 				</InfoRow>
 				<InfoRow label={t("admin.feedback.ticket.priority")}>
-					<select
+					<Select
 						value={thread.priority}
 						onChange={handlePriorityChange}
-						className={selectStyles}
+						className="h-7 text-[11.5px] rounded-[6px]"
 					>
 						{PRIORITIES.map((p) => (
 							<option key={p} value={p}>
 								{t(`admin.feedback.priority.${p}`)}
 							</option>
 						))}
-					</select>
+					</Select>
 				</InfoRow>
 				<InfoRow label={t("admin.feedback.ticket.assignee")}>
 					<Button

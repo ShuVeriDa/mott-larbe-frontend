@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/button";
 
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { Plus, Clock, FileText, Trash2 } from "lucide-react";
 import type { UnknownWordItem } from "@/entities/admin-unknown-word";
 import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word/model/use-admin-unknown-word-mutations";
 import { CountBadge } from "./unknown-words-count-badge";
@@ -91,29 +92,21 @@ export const UnknownWordsMobileList = ({
 								className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-acc-bg hover:text-acc-t"
 								title={t("admin.unknownWords.row.addToDictionary")}
 							>
-								<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-									<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-								</svg>
+								<Plus className="size-3.5" />
 							</Button>
 							<Button
 								onClick={handleClick2}
 								className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 								title={t("admin.unknownWords.row.linkToLemma")}
 							>
-								<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-									<circle cx="8" cy="8" r="5" stroke="currentColor" strokeWidth="1.4" />
-									<path d="M9 9.5L8 8V5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-								</svg>
+								<Clock className="size-3.5" />
 							</Button>
 							<Button
 								onClick={handleClick3}
 								className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 								title={t("admin.unknownWords.row.allContexts")}
 							>
-								<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-									<rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" strokeWidth="1.4" />
-									<path d="M5 6h6M5 9h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-								</svg>
+								<FileText className="size-3.5" />
 							</Button>
 							<Button
 								onClick={handleClick4}
@@ -121,20 +114,7 @@ export const UnknownWordsMobileList = ({
 								className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t disabled:opacity-50"
 								title={t("admin.unknownWords.row.delete")}
 							>
-								<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-									<path
-										d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4"
-										stroke="currentColor"
-										strokeWidth="1.4"
-										strokeLinecap="round"
-									/>
-									<path
-										d="M4 5l.7 7.5A1 1 0 005.7 13h4.6a1 1 0 001-.95L12 5"
-										stroke="currentColor"
-										strokeWidth="1.4"
-										strokeLinecap="round"
-									/>
-								</svg>
+								<Trash2 className="size-3.5" />
 							</Button>
 						</div>
 					</div>

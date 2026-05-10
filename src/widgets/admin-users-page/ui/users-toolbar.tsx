@@ -4,6 +4,7 @@ import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { FetchAdminUsersQuery, RoleName, UsersSort } from "@/entities/admin-user";
 import { Search } from "lucide-react";
+import { Select } from "@/shared/ui/select";
 
 const ROLES: Array<{ value: RoleName | ""; label: string }> = [
 	{ value: "", label: "" },
@@ -41,9 +42,6 @@ interface UsersToolbarProps {
 	onSortChange: (value: UsersSort) => void;
 }
 
-const selectClass =
-	"h-8 cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf px-2.5 pr-7 font-sans text-[12.5px] text-t-2 outline-none transition-colors focus:border-acc focus:text-t-1 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%226%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M1%201l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_9px_center]";
-
 export const UsersToolbar = ({
 	search,
 	role,
@@ -56,11 +54,11 @@ export const UsersToolbar = ({
 }: UsersToolbarProps) => {
 	const { t } = useI18n();
 
-		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
 	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onRoleChange(e.currentTarget.value);
 	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onPlanChange(e.currentTarget.value);
 	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.currentTarget.value as UsersSort);
-return (
+	return (
 		<div className="mb-2.5 flex flex-wrap items-center gap-2">
 			{/* Search */}
 			<div className="relative min-w-[180px] flex-1">
@@ -76,41 +74,29 @@ return (
 
 			{/* Filters */}
 			<div className="flex flex-wrap items-center gap-1.5">
-				<select
-					value={role ?? ""}
-					onChange={handleChange2}
-					className={selectClass}
-				>
+				<Select value={role ?? ""} onChange={handleChange2} wrapperClassName="w-auto" className="bg-surf text-t-2 rounded-lg h-8 hover:border-bd-3">
 					{ROLES.map((r) => (
 						<option key={r.value} value={r.value}>
 							{r.value === "" ? t("admin.users.toolbar.allRoles") : r.label}
 						</option>
 					))}
-				</select>
+				</Select>
 
-				<select
-					value={plan}
-					onChange={handleChange3}
-					className={selectClass}
-				>
+				<Select value={plan} onChange={handleChange3} wrapperClassName="w-auto" className="bg-surf text-t-2 rounded-lg h-8 hover:border-bd-3">
 					{PLANS.map((p) => (
 						<option key={p.value} value={p.value}>
 							{p.value === "" ? t("admin.users.toolbar.allPlans") : p.label}
 						</option>
 					))}
-				</select>
+				</Select>
 
-				<select
-					value={sort}
-					onChange={handleChange4}
-					className={selectClass}
-				>
+				<Select value={sort} onChange={handleChange4} wrapperClassName="w-auto" className="bg-surf text-t-2 rounded-lg h-8 hover:border-bd-3">
 					{SORTS.map((s) => (
 						<option key={s.value} value={s.value}>
 							{t(s.labelKey)}
 						</option>
 					))}
-				</select>
+				</Select>
 			</div>
 		</div>
 	);

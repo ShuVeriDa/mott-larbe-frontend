@@ -14,6 +14,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { TokenizationLevelBadge } from "./tokenization-level-badge";
 import { TokenizationStatusBadge } from "./tokenization-status-badge";
+import { X, Play } from "lucide-react";
 
 interface TokenizationTextDetailModalProps {
 	textId: string | null;
@@ -266,14 +267,7 @@ export const TokenizationTextDetailModal = ({
 						onClick={onClose}
 						className="flex size-[26px] items-center justify-center rounded-[6px] bg-surf-2 text-t-2 hover:bg-surf-3"
 					>
-						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-							<path
-								d="M4 4l8 8M12 4l-8 8"
-								stroke="currentColor"
-								strokeWidth="1.5"
-								strokeLinecap="round"
-							/>
-						</svg>
+						<X className="size-3" />
 					</Button>
 				</div>
 
@@ -310,9 +304,7 @@ export const TokenizationTextDetailModal = ({
 						}
 						className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
-						<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-							<path d="M5 3l8 5-8 5V3z" fill="currentColor" />
-						</svg>
+						<Play className="size-[11px]" />
 						{t("admin.tokenization.detail.runBtn")}
 					</Button>
 					<Button

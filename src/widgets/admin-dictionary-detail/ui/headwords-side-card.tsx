@@ -8,13 +8,8 @@ import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminDictHeadword } from "@/entities/dictionary";
 import type { DictModal } from "../model/use-admin-dictionary-detail-page";
+import { Plus, Trash2 } from "lucide-react";
 
-const IconTrash = () => (
-	<svg viewBox="0 0 16 16" fill="none" className="size-[13px]">
-		<path d="M3 5h10M5 5V4a1 1 0 011-1h4a1 1 0 011 1v1M6 8v4M10 8v4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-		<path d="M4 5l.7 7.5A1 1 0 005.7 13h4.6a1 1 0 001-.95L12 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-	</svg>
-);
 
 interface HeadwordsSideCardProps {
 	headwords: AdminDictHeadword[] | undefined;
@@ -42,9 +37,7 @@ return (
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 					onClick={handleClick}
 				>
-					<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-						<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-					</svg>
+					<Plus className="size-[11px]" />
 					{t("admin.dictionaryDetail.add")}
 				</Button>
 			</div>
@@ -79,7 +72,7 @@ return (
 									className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 									onClick={handleClick}
 								>
-									<IconTrash />
+									<Trash2 className="size-[13px]" />
 								</Button>
 							</div>
 						</div>

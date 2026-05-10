@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { X, Play } from "lucide-react";
 import type { RunScope, TokenizationStats } from "@/entities/token";
 
 interface TokenizationRunModalProps {
@@ -69,14 +70,7 @@ return (
 						onClick={onClose}
 						className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
-						<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-							<path
-								d="M4 4l8 8M12 4l-8 8"
-								stroke="currentColor"
-								strokeWidth="1.5"
-								strokeLinecap="round"
-							/>
-						</svg>
+						<X className="size-3" />
 					</Button>
 				</div>
 
@@ -139,9 +133,7 @@ return (
 						{isLoading ? (
 							<Typography tag="span" className="size-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
 						) : (
-							<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-								<path d="M5 3l8 5-8 5V3z" fill="currentColor" />
-							</svg>
+							<Play className="size-3" />
 						)}
 						{t("admin.tokenization.runModal.runBtn")}
 					</Button>

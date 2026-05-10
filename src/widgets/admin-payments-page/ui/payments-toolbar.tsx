@@ -6,9 +6,7 @@ import { ComponentProps } from 'react';
 import type { AdminPlan } from "@/entities/admin-billing";
 import type { PaymentProvider } from "@/entities/admin-payment";
 import { useI18n } from "@/shared/lib/i18n";
-
-const SELECT_CLS =
-	"h-[30px] appearance-none rounded-base border border-bd-1 bg-surf-2 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%226%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M1%201l4%204%204-4%22%20stroke%3D%22%23a5a39a%22%20stroke-width%3D%221.3%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_8px_center] pl-2.5 pr-6 text-[12px] text-t-2 outline-none transition-colors focus:border-acc focus:text-t-1";
+import { Select } from "@/shared/ui/select";
 
 interface Props {
 	search: string;
@@ -43,12 +41,12 @@ export const PaymentsToolbar = ({
 }: Props) => {
 	const { t } = useI18n();
 
-		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onSearchChange(e.currentTarget.value);
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onSearchChange(e.currentTarget.value);
 	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => onPlanChange(e.currentTarget.value);
 	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => onProviderChange(e.currentTarget.value);
 	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = e => onDateFromChange(e.currentTarget.value);
 	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = e => onDateToChange(e.currentTarget.value);
-return (
+	return (
 		<div className="flex flex-wrap items-center gap-2 border-b border-bd-1 px-3.5 py-2.5">
 			{/* Search */}
 			<div className="relative max-w-[240px] flex-1 max-sm:max-w-none max-sm:basis-full">
@@ -61,33 +59,23 @@ return (
 				/>
 			</div>
 
-			{/* Plan select */}
-			<select
-				value={planId}
-				onChange={handleChange2}
-				className={SELECT_CLS}
-			>
+			<Select value={planId} onChange={handleChange2} wrapperClassName="w-auto" className="border-bd-1 text-t-2">
 				<option value="">{t("admin.payments.toolbar.allPlans")}</option>
 				{plans.map(p => (
 					<option key={p.id} value={p.id}>
 						{p.name}
 					</option>
 				))}
-			</select>
+			</Select>
 
-			{/* Provider select */}
-			<select
-				value={provider}
-				onChange={handleChange3}
-				className={SELECT_CLS}
-			>
+			<Select value={provider} onChange={handleChange3} wrapperClassName="w-auto" className="border-bd-1 text-t-2">
 				<option value="">{t("admin.payments.toolbar.allProviders")}</option>
 				<option value="STRIPE">Stripe</option>
 				<option value="PAYPAL">PayPal</option>
 				<option value="PADDLE">Paddle</option>
 				<option value="LEMONSQUEEZY">LemonSqueezy</option>
 				<option value="MANUAL">Manual</option>
-			</select>
+			</Select>
 
 			{/* Date range */}
 			<div className="flex items-center gap-1.5 max-sm:hidden">

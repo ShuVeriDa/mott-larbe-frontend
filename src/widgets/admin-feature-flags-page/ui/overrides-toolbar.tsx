@@ -2,6 +2,8 @@ import { ComponentProps } from 'react';
 import type { FeatureFlagKeyItem } from "@/entities/feature-flag";
 import { Button } from "@/shared/ui/button";
 import { Search, Plus } from "lucide-react";
+import { Select } from "@/shared/ui/select";
+
 interface OverridesToolbarProps {
 	search: string;
 	flagId: string;
@@ -41,28 +43,20 @@ export const OverridesToolbar = ({
 			/>
 		</div>
 
-		<select
-			value={flagId}
-			onChange={handleChange2}
-			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
-		>
+		<Select value={flagId} onChange={handleChange2} wrapperClassName="w-auto" className="bg-surf text-t-2 hover:border-bd-3">
 			<option value="">{t("admin.featureFlags.overrides.allFlags")}</option>
 			{flagKeys.map(f => (
 				<option key={f.id} value={f.id}>
 					{f.key}
 				</option>
 			))}
-		</select>
+		</Select>
 
-		<select
-			value={isEnabled}
-			onChange={handleChange3}
-			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
-		>
+		<Select value={isEnabled} onChange={handleChange3} wrapperClassName="w-auto" className="bg-surf text-t-2 hover:border-bd-3">
 			<option value="">{t("admin.featureFlags.overrides.anyValue")}</option>
 			<option value="true">{t("admin.featureFlags.overrides.on")}</option>
 			<option value="false">{t("admin.featureFlags.overrides.off")}</option>
-		</select>
+		</Select>
 
 		<Button
 			onClick={onAddOverride}

@@ -2,13 +2,15 @@ import type { ComponentProps } from 'react';
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 
-export type SelectProps = ComponentProps<"select"> & {
+export type SelectProps = Omit<ComponentProps<"select">, "size"> & {
+	variant?: "sm" | "lg";
 	wrapperClassName?: string;
 };
 
 export const Select = ({
 	className,
 	wrapperClassName,
+	variant = "sm",
 	children,
 	...props
 }: SelectProps) => (
@@ -19,12 +21,14 @@ export const Select = ({
 		<select
 			data-slot="select-input"
 			className={cn(
-				"appearance-none w-full h-[30px] pl-[10px] pr-[28px]",
-				"bg-surf-2 border-hairline border-bd-2 rounded-base",
-				"text-[12px] text-t-1 font-[inherit] cursor-pointer outline-none",
+				"appearance-none w-full pl-[10px] pr-[28px]",
+				"border-hairline border-bd-2 rounded-base",
+				"text-t-1 font-[inherit] cursor-pointer outline-none",
 				"transition-colors duration-150",
 				"focus:border-acc",
 				"disabled:opacity-40 disabled:cursor-not-allowed",
+				variant === "sm" && "h-[30px] bg-surf-2 text-[12px]",
+				variant === "lg" && "h-[34px] bg-surf-2 rounded-[8px] text-[13px]",
 				className,
 			)}
 			{...props}

@@ -7,7 +7,9 @@ import { Button } from "@/shared/ui/button";
 import { ComponentProps, ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { UserEvent, UserEventType, FetchUserEventsQuery } from "@/entities/admin-user";
+import { Select } from "@/shared/ui/select";
 import { cn } from "@/shared/lib/cn";
+import { AlignLeft, Plus, AlertCircle, Lock, Circle } from "lucide-react";
 
 const EVENT_ICON_CONFIG: Record<
 	string,
@@ -15,47 +17,25 @@ const EVENT_ICON_CONFIG: Record<
 > = {
 	OPEN_TEXT: {
 		bgClass: "bg-acc-bg text-acc-t",
-		icon: (
-			<svg viewBox="0 0 16 16" fill="none">
-				<path d="M3 4h10M3 8h7M3 12h5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-			</svg>
-		),
+		icon: <AlignLeft className="size-full" />,
 	},
 	ADD_TO_DICTIONARY: {
 		bgClass: "bg-grn-bg text-grn-t",
-		icon: (
-			<svg viewBox="0 0 16 16" fill="none">
-				<path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-			</svg>
-		),
+		icon: <Plus className="size-full" />,
 	},
 	FAIL_LOOKUP: {
 		bgClass: "bg-red-bg text-red-t",
-		icon: (
-			<svg viewBox="0 0 16 16" fill="none">
-				<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-				<path d="M8 5v3M8 11v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-			</svg>
-		),
+		icon: <AlertCircle className="size-full" />,
 	},
 	REVIEW_SESSION: {
 		bgClass: "bg-pur-bg text-pur-t",
-		icon: (
-			<svg viewBox="0 0 16 16" fill="none">
-				<rect x="2" y="5" width="10" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
-				<path d="M4 5V4a2 2 0 014 0v1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-			</svg>
-		),
+		icon: <Lock className="size-full" />,
 	},
 };
 
 const DEFAULT_EVENT_CONFIG = {
 	bgClass: "bg-surf-3 text-t-3",
-	icon: (
-		<svg viewBox="0 0 16 16" fill="none">
-			<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-		</svg>
-	),
+	icon: <Circle className="size-full" />,
 };
 
 const getEventMeta = (event: UserEvent): string => {
@@ -112,10 +92,11 @@ export const UserEventsFeed = ({
 return (
 		<>
 			<div className="flex items-center gap-1.5 border-b border-bd-1 px-3.5 py-2.5">
-				<select
+				<Select
 					value={filter.type ?? ""}
 					onChange={handleChange}
-					className="h-[26px] appearance-none rounded-[6px] border border-bd-2 bg-surf px-2 pr-5 text-[11.5px] text-t-2 outline-none focus:border-acc"
+					wrapperClassName="w-auto"
+					className="h-[26px] bg-surf text-t-2 text-[11.5px] rounded-[6px]"
 				>
 					<option value="">{t("admin.userDetail.events.allTypes")}</option>
 					{FILTERABLE_TYPES.map((type) => (
@@ -123,17 +104,17 @@ return (
 							{type}
 						</option>
 					))}
-				</select>
-				<select
+				</Select>
+				<Select
 					value={filter.period ?? "all"}
-					onChange={handleChange2
-					}
-					className="h-[26px] appearance-none rounded-[6px] border border-bd-2 bg-surf px-2 pr-5 text-[11.5px] text-t-2 outline-none focus:border-acc"
+					onChange={handleChange2}
+					wrapperClassName="w-auto"
+					className="h-[26px] bg-surf text-t-2 text-[11.5px] rounded-[6px]"
 				>
 					<option value="7d">{t("admin.userDetail.events.last7days")}</option>
 					<option value="30d">{t("admin.userDetail.events.last30days")}</option>
 					<option value="all">{t("admin.userDetail.events.allTime")}</option>
-				</select>
+				</Select>
 			</div>
 
 			<div>

@@ -9,6 +9,7 @@ import type { useAdminSubscriptionMutations } from "@/entities/admin-subscriptio
 import { useI18n } from "@/shared/lib/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { ComponentProps, useState } from "react";
+import { Select } from "@/shared/ui/select";
 interface Props {
 	mutations: ReturnType<typeof useAdminSubscriptionMutations>;
 	onClose: () => void;
@@ -83,11 +84,12 @@ return (
 					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.subscriptions.modal.plan")}
 					</Typography>
-					<select
+					<Select
+						variant="lg"
 						value={planId}
 						onChange={handleChange2}
 						disabled={plansQuery.isLoading}
-						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf disabled:opacity-60"
+						className="rounded-lg focus:bg-surf"
 					>
 						<option value="">— выбрать план —</option>
 						{plans.map(plan => (
@@ -95,48 +97,42 @@ return (
 								{plan.name} ({plan.code})
 							</option>
 						))}
-					</select>
+					</Select>
 				</div>
 
 				<div className="mb-3">
 					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.subscriptions.modal.duration")}
 					</Typography>
-					<select
+					<Select
+						variant="lg"
 						value={durationDays}
 						onChange={handleChange3}
-						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf"
+						className="rounded-lg focus:bg-surf"
 					>
-						<option value="30">
-							{t("admin.subscriptions.modal.duration1m")}
-						</option>
-						<option value="90">
-							{t("admin.subscriptions.modal.duration3m")}
-						</option>
-						<option value="180">
-							{t("admin.subscriptions.modal.duration6m")}
-						</option>
-						<option value="365">
-							{t("admin.subscriptions.modal.duration1y")}
-						</option>
-					</select>
+						<option value="30">{t("admin.subscriptions.modal.duration1m")}</option>
+						<option value="90">{t("admin.subscriptions.modal.duration3m")}</option>
+						<option value="180">{t("admin.subscriptions.modal.duration6m")}</option>
+						<option value="365">{t("admin.subscriptions.modal.duration1y")}</option>
+					</Select>
 				</div>
 
 				<div className="mb-3">
 					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
 						{t("admin.subscriptions.modal.provider")}
 					</Typography>
-					<select
+					<Select
+						variant="lg"
 						value={provider}
 						onChange={handleChange4}
-						className="h-[34px] w-full cursor-pointer appearance-none rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf"
+						className="rounded-lg focus:bg-surf"
 					>
 						<option value="MANUAL">Manual</option>
 						<option value="STRIPE">Stripe</option>
 						<option value="PAYPAL">PayPal</option>
 						<option value="PADDLE">Paddle</option>
 						<option value="LEMONSQUEEZY">LemonSqueezy</option>
-					</select>
+					</Select>
 				</div>
 
 				<div className="mb-0">

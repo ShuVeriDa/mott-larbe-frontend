@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/button";
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { Info } from "lucide-react";
 import type { TextVersionListItem, ProcessingStatus } from "@/entities/admin-text";
 import { VersionItem } from "./version-item";
 
@@ -140,11 +141,7 @@ export const VersionsTimeline = ({
 			{/* Empty state */}
 			{!isLoading && versions.length === 0 && (
 				<div className="px-5 py-10 text-center">
-					<svg className="mx-auto mb-2.5 text-t-4" width="32" height="32" viewBox="0 0 32 32" fill="none">
-						<circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="1.5" />
-						<circle cx="16" cy="11" r="2" fill="currentColor" />
-						<path d="M16 17v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-					</svg>
+					<Info className="mx-auto mb-2.5 size-8 text-t-4" />
 					<div className="text-[13px] font-medium text-t-2">{t("admin.texts.versions.timeline.empty")}</div>
 					<div className="mt-1 text-[12px] text-t-3">{t("admin.texts.versions.timeline.emptySub")}</div>
 				</div>

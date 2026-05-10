@@ -5,6 +5,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AdminLogRange } from "@/entities/admin-log";
 import { Search, Calendar } from "lucide-react";
+import { Select } from "@/shared/ui/select";
 
 const RANGES: Array<{ value: AdminLogRange; labelKey: string }> = [
 	{ value: "15m", labelKey: "admin.logs.toolbar.last15m" },
@@ -25,9 +26,6 @@ interface LogsToolbarProps {
 	onRangeChange: (v: AdminLogRange) => void;
 }
 
-const inputCls =
-	"h-8 rounded-lg border border-bd-2 bg-surf font-[inherit] text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc";
-
 export const LogsToolbar = ({
 	search,
 	service,
@@ -39,10 +37,10 @@ export const LogsToolbar = ({
 }: LogsToolbarProps) => {
 	const { t } = useI18n();
 
-		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
 	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onServiceChange(e.currentTarget.value);
 	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onRangeChange(e.currentTarget.value as AdminLogRange);
-return (
+	return (
 		<div className="mb-2.5 flex flex-wrap items-center gap-2">
 			{/* Search */}
 			<div className="relative min-w-[160px] flex-1">
@@ -52,46 +50,31 @@ return (
 					value={search}
 					onChange={handleChange}
 					placeholder={t("admin.logs.toolbar.searchPlaceholder")}
-					className={cn(inputCls, "w-full pl-8 pr-3")}
+					className={cn(
+						"h-8 rounded-lg border border-bd-2 bg-surf font-[inherit] text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc",
+						"w-full pl-8 pr-3",
+					)}
 				/>
 			</div>
 
-			{/* Service filter */}
-			<select
-				value={service}
-				onChange={handleChange2}
-				className={cn(
-					inputCls,
-					"cursor-pointer appearance-none bg-no-repeat pr-7 pl-3",
-					"bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23a5a39a' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")] bg-[right_9px_center] text-t-2",
-				)}
-			>
+			<Select value={service} onChange={handleChange2} wrapperClassName="w-auto" className="bg-surf text-t-2 rounded-lg h-8 hover:border-bd-3">
 				<option value="all">{t("admin.logs.toolbar.allServices")}</option>
 				{services.map((s) => (
 					<option key={s} value={s}>
 						{s}
 					</option>
 				))}
-			</select>
+			</Select>
 
-			{/* Date range */}
 			<div className="ml-auto flex items-center gap-2">
 				<div className="relative">
-					<select
-						value={range}
-						onChange={handleChange3}
-						className={cn(
-							inputCls,
-							"cursor-pointer appearance-none bg-no-repeat pl-8 pr-7",
-							"bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23a5a39a' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")] bg-[right_9px_center] text-t-2",
-						)}
-					>
+					<Select value={range} onChange={handleChange3} wrapperClassName="w-auto" className="bg-surf text-t-2 rounded-lg h-8 pl-8 hover:border-bd-3">
 						{RANGES.map((r) => (
 							<option key={r.value} value={r.value}>
 								{t(r.labelKey)}
 							</option>
 						))}
-					</select>
+					</Select>
 					<Calendar className="pointer-events-none absolute left-2.5 top-1/2 size-[12px] -translate-y-1/2 text-t-3" />
 				</div>
 			</div>

@@ -4,6 +4,7 @@ import type {
 	FeatureFlagActor,
 	FeatureFlagHistoryEventType,
 } from "@/entities/feature-flag";
+import { Select } from "@/shared/ui/select";
 
 const EVENT_TYPES: FeatureFlagHistoryEventType[] = [
 	"FLAG_CREATED",
@@ -57,31 +58,23 @@ export const HistoryToolbar = ({
 			/>
 		</div>
 
-		<select
-			value={eventType}
-			onChange={handleChange2}
-			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
-		>
+		<Select value={eventType} onChange={handleChange2} wrapperClassName="w-auto" className="bg-surf text-t-2 hover:border-bd-3">
 			<option value="">{t("admin.featureFlags.history.allTypes")}</option>
 			{EVENT_TYPES.map(et => (
 				<option key={et} value={et}>
 					{t(`admin.featureFlags.history.eventType.${et}`)}
 				</option>
 			))}
-		</select>
+		</Select>
 
-		<select
-			value={actorId}
-			onChange={handleChange3}
-			className="h-[30px] cursor-pointer rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-2 outline-none transition-colors hover:border-bd-3"
-		>
+		<Select value={actorId} onChange={handleChange3} wrapperClassName="w-auto" className="bg-surf text-t-2 hover:border-bd-3">
 			<option value="">{t("admin.featureFlags.history.allActors")}</option>
 			{actors.map(a => (
 				<option key={a.id} value={a.id}>
 					{a.name} {a.surname}
 				</option>
 			))}
-		</select>
+		</Select>
 	</div>
 );
 };

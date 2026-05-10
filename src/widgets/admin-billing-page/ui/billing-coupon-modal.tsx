@@ -6,6 +6,7 @@ import { ComponentProps, useEffect, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { X } from "lucide-react";
 import type { CreateCouponDto, CouponType } from "@/entities/admin-billing";
+import { Select } from "@/shared/ui/select";
 
 interface BillingCouponModalProps {
 	open: boolean;
@@ -126,14 +127,14 @@ return (
 								<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 									{t("admin.plans.couponModal.discountType")}
 								</Typography>
-								<select
+								<Select
+									variant="lg"
 									value={form.type}
 									onChange={handleTypeChange}
-									className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
 								>
 									<option value="PERCENT">% скидка</option>
 									<option value="FIXED">₽ скидка</option>
-								</select>
+								</Select>
 							</div>
 							<div>
 								<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">

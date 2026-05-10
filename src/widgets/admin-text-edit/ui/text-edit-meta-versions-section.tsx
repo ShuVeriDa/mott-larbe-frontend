@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Typography } from "@/shared/ui/typography";
 import { MetaSection } from "@/shared/ui/admin-text-meta-fields";
+import { Clock } from "lucide-react";
 import type { TextVersionListItem } from "@/entities/admin-text";
 
 const formatVersionDate = (iso: string): string => {
@@ -74,10 +75,7 @@ export const TextEditMetaVersionsSection = ({
 				href={`/${lang}/admin/texts/${textId}/versions`}
 				className="mt-2.5 flex items-center justify-center gap-1.5 rounded-[6px] py-1.5 text-[11.5px] font-medium text-acc transition-colors hover:bg-acc-muted"
 			>
-				<svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-					<circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.3" />
-					<path d="M8 5v3l2 1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-				</svg>
+				<Clock className="size-[11px]" />
 				{allVersionsLabel}
 			</Link>
 		</MetaSection>

@@ -2,6 +2,7 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { Select } from "@/shared/ui/select";
 import type { Editor, SlashMenuItem } from "@/shared/ui/notion-editor";
 import { Typography } from "@/shared/ui/typography";
 import {
@@ -212,8 +213,9 @@ export const EditorToolbar = ({
 	return (
 		<div className="sticky top-[52px] z-10 flex items-center gap-px overflow-x-auto border-b border-bd-1 bg-surf px-2 py-[5px] transition-colors [scrollbar-width:none]">
 			<div className="shrink-0">
-				<select
-					className="h-[28px] cursor-pointer appearance-none rounded-[5px] border-none bg-transparent px-2 pr-5 text-xs text-t-2 outline-none transition-colors hover:bg-surf-2 hover:text-t-1"
+				<Select
+					wrapperClassName="w-auto"
+					className="h-[28px] border-none bg-transparent text-xs text-t-2 hover:bg-surf-2 hover:text-t-1"
 					value={
 						e?.isActive("heading", { level: 1 })
 							? "h1"
@@ -237,7 +239,7 @@ export const EditorToolbar = ({
 					<option value="blockquote">
 						{t("admin.texts.createPage.formatQuote")}
 					</option>
-				</select>
+				</Select>
 			</div>
 
 			<TbDivider />

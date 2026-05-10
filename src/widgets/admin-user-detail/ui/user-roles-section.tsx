@@ -8,6 +8,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import type { UserRoleItem, RoleName } from "@/entities/admin-user";
 import type { useAdminUserRoles } from "@/entities/admin-user/model/use-admin-user-roles";
 import { cn } from "@/shared/lib/cn";
+import { Plus, X } from "lucide-react";
 
 const roleStyles: Record<RoleName, string> = {
 	learner: "bg-surf-3 text-t-2",
@@ -57,14 +58,7 @@ return (
 							onClick={handleClick}
 							className="flex h-[22px] items-center gap-1 rounded-[5px] bg-acc-bg px-2 text-[11px] font-semibold text-acc-t transition-colors hover:bg-acc-bg/80"
 						>
-							<svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-								<path
-									d="M6 2v8M2 6h8"
-									stroke="currentColor"
-									strokeWidth="1.6"
-									strokeLinecap="round"
-								/>
-							</svg>
+							<Plus className="size-2.5" />
 							{t("admin.userDetail.addRole")}
 						</Button>
 						{showDropdown && (
@@ -129,14 +123,7 @@ return (
 									isLearner && "pointer-events-none opacity-30",
 								)}
 							>
-								<svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-									<path
-										d="M2 2l8 8M10 2L2 10"
-										stroke="currentColor"
-										strokeWidth="1.5"
-										strokeLinecap="round"
-									/>
-								</svg>
+								<X className="size-[11px]" />
 							</Button>
 						</div>
 					);

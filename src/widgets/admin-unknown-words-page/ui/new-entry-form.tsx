@@ -3,12 +3,10 @@
 import { Typography } from "@/shared/ui/typography";
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { Select } from "@/shared/ui/select";
 
 const inputCls =
 	"h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf transition-colors";
-const selectCls = "h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf transition-colors cursor-pointer appearance-none pr-7";
-const CHEVRON_BG =
-	"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23a5a39a' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")";
 
 interface Props {
 	headword: string;
@@ -62,15 +60,11 @@ export const NewEntryForm = ({
 					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.unknownWords.addModal.partOfSpeech")}
 					</Typography>
-					<select
+					<Select
+						variant="lg"
 						value={partOfSpeech}
 						onChange={onPartOfSpeechChange}
-						className={selectCls}
-						style={{
-							backgroundImage: CHEVRON_BG,
-							backgroundRepeat: "no-repeat",
-							backgroundPosition: "right 8px center",
-						}}
+						className="rounded-lg h-9 focus:bg-surf"
 					>
 						<option value="">{t("admin.unknownWords.addModal.posNone")}</option>
 						<option value="noun">{t("admin.unknownWords.addModal.posNoun")}</option>
@@ -78,7 +72,7 @@ export const NewEntryForm = ({
 						<option value="adjective">{t("admin.unknownWords.addModal.posAdj")}</option>
 						<option value="adverb">{t("admin.unknownWords.addModal.posAdv")}</option>
 						<option value="particle">{t("admin.unknownWords.addModal.posParticle")}</option>
-					</select>
+					</Select>
 				</div>
 			</div>
 
@@ -100,21 +94,17 @@ export const NewEntryForm = ({
 					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.unknownWords.addModal.level")}
 					</Typography>
-					<select
+					<Select
+						variant="lg"
 						value={level}
 						onChange={onLevelChange}
-						className={selectCls}
-						style={{
-							backgroundImage: CHEVRON_BG,
-							backgroundRepeat: "no-repeat",
-							backgroundPosition: "right 8px center",
-						}}
+						className="rounded-lg h-9 focus:bg-surf"
 					>
 						<option value="">{t("admin.unknownWords.addModal.levelNone")}</option>
 						{["A1", "A2", "B1", "B2", "C1", "C2"].map((l) => (
 							<option key={l} value={l}>{l}</option>
 						))}
-					</select>
+					</Select>
 				</div>
 				<div className="mb-3">
 					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
