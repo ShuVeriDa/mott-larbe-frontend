@@ -1,22 +1,22 @@
 "use client";
 
+import { MetaSection } from "@/shared/ui/admin-text-meta-fields";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { ComponentProps, useRef } from "react";
-import { MetaSection } from "@/shared/ui/admin-text-meta-fields";
 import { Image as ImageIcon, Trash2 } from "lucide-react";
+import { ComponentProps, useRef } from "react";
 
-interface Props {
+interface AdminTextMetaCoverSectionProps {
 	coverPreviewUrl: string | null;
 	sectionTitle: string;
 	uploadLabel: string;
 	uploadSub: string;
-	removeLabel: string;
+	removeLabel?: string;
 	onCoverSelect: (file: File) => void;
-	onCoverRemove: () => void;
+	onCoverRemove?: () => void;
 }
 
-export const TextCreateMetaCoverSection = ({
+export const AdminTextMetaCoverSection = ({
 	coverPreviewUrl,
 	sectionTitle,
 	uploadLabel,
@@ -24,23 +24,31 @@ export const TextCreateMetaCoverSection = ({
 	removeLabel,
 	onCoverSelect,
 	onCoverRemove,
-}: Props) => {
+}: AdminTextMetaCoverSectionProps) => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
-	const handleCoverFileChange: NonNullable<ComponentProps<"input">["onChange"]> = e => {
+	const handleCoverFileChange: NonNullable<
+		ComponentProps<"input">["onChange"]
+	> = e => {
 		const file = e.currentTarget.files?.[0];
 		if (file) onCoverSelect(file);
 	};
-	const handleCoverClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-		fileInputRef.current?.click();
+
+	const handleCoverClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => fileInputRef.current?.click();
+
 	const handleCoverRemoveClick: NonNullable<
 		ComponentProps<"button">["onClick"]
 	> = e => {
 		e.preventDefault();
 		e.stopPropagation();
 		if (fileInputRef.current) fileInputRef.current.value = "";
-		onCoverRemove();
+		onCoverRemove?.();
 	};
+
+	const showRemoveAction =
+		Boolean(coverPreviewUrl) && Boolean(removeLabel) && Boolean(onCoverRemove);
 
 	return (
 		<MetaSection title={sectionTitle}>
@@ -58,16 +66,24 @@ export const TextCreateMetaCoverSection = ({
 				{coverPreviewUrl ? (
 					// blob: URL from URL.createObjectURL — next/image cannot handle it
 					// eslint-disable-next-line @next/next/no-img-element
-					<img src={coverPreviewUrl} alt="cover preview" className="h-full w-full rounded-base object-cover" />
+					<img
+						src={coverPreviewUrl}
+						alt="cover preview"
+						className="h-full w-full rounded-base object-cover"
+					/>
 				) : (
 					<>
 						<ImageIcon className="size-5 text-t-3" />
-						<Typography tag="span" className="text-[11px] text-t-3">{uploadLabel}</Typography>
-						<Typography tag="span" className="text-[10px] text-t-4">{uploadSub}</Typography>
+						<Typography tag="span" className="text-[11px] text-t-3">
+							{uploadLabel}
+						</Typography>
+						<Typography tag="span" className="text-[10px] text-t-4">
+							{uploadSub}
+						</Typography>
 					</>
 				)}
 			</Button>
-			{coverPreviewUrl && (
+			{showRemoveAction && (
 				<Button
 					variant="bare"
 					size={null}

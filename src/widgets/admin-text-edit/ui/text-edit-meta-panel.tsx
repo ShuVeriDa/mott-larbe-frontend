@@ -9,17 +9,19 @@ import type {
 } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
 import {
+	AdminTextMetaCoverSection,
+	AdminTextMetaDescriptionSection,
+	AdminTextMetaPageStatsSection,
 	AdminTextMetaPanelShell,
+	AdminTextMetaPrimaryActionsSection,
 } from "@/shared/ui/admin-text-editor";
-import type { KeyboardEvent } from "react";
+import { Button } from "@/shared/ui/button";
+import { Check, Save, Trash2 } from "lucide-react";
+import type { ComponentProps, KeyboardEvent } from "react";
 import { useState } from "react";
 import type { PageContent } from "../model/use-admin-text-edit-page";
-import { TokenizationSection } from "./tokenization-section";
-import { TextEditMetaDescriptionSection } from "./text-edit-meta-description-section";
-import { TextEditMetaCoverSection } from "./text-edit-meta-cover-section";
-import { TextEditMetaPageStatsSection } from "./text-edit-meta-page-stats-section";
 import { TextEditMetaVersionsSection } from "./text-edit-meta-versions-section";
-import { TextEditMetaActionsSection } from "./text-edit-meta-actions-section";
+import { TokenizationSection } from "./tokenization-section";
 
 interface TextEditMetaPanelProps {
 	textId: string;
@@ -97,6 +99,9 @@ export const TextEditMetaPanel = ({
 	const { t, lang } = useI18n();
 	const [tagInputValue, setTagInputValue] = useState("");
 	const tagItems = tags.map(tag => ({ name: tag }));
+	const handleDeleteRequest: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => onDeleteRequest();
 
 	const handleTagKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
@@ -131,66 +136,83 @@ export const TextEditMetaPanel = ({
 			onTagInputChange={setTagInputValue}
 			onTagKeyDown={handleTagKeyDown}
 		>
-				<TextEditMetaDescriptionSection
-					description={description}
-					sectionTitle={t("admin.texts.createPage.sections.description")}
-					placeholder={t("admin.texts.createPage.descriptionPlaceholder")}
-					onDescriptionChange={onDescriptionChange}
-				/>
+			<AdminTextMetaDescriptionSection
+				description={description}
+				sectionTitle={t("admin.texts.createPage.sections.description")}
+				placeholder={t("admin.texts.createPage.descriptionPlaceholder")}
+				onDescriptionChange={onDescriptionChange}
+			/>
 
-				<TextEditMetaCoverSection
-					coverPreviewUrl={coverPreviewUrl}
-					sectionTitle={t("admin.texts.createPage.sections.cover")}
-					uploadLabel={t("admin.texts.createPage.coverUploadLabel")}
-					uploadSub={t("admin.texts.createPage.coverUploadSub")}
-					onCoverSelect={onCoverSelect}
-				/>
+			<AdminTextMetaCoverSection
+				coverPreviewUrl={coverPreviewUrl}
+				sectionTitle={t("admin.texts.createPage.sections.cover")}
+				uploadLabel={t("admin.texts.createPage.coverUploadLabel")}
+				uploadSub={t("admin.texts.createPage.coverUploadSub")}
+				onCoverSelect={onCoverSelect}
+			/>
 
-				<TokenizationSection
-					processingStatus={processingStatus}
-					tokenCount={tokenCount}
-					autoTokenizeOnSave={autoTokenizeOnSave}
-					useNormalization={useNormalization}
-					useMorphAnalysis={useMorphAnalysis}
-					textId={textId}
-					lang={lang}
-					t={t}
-					onTokenize={onTokenize}
-					onAutoTokenizeChange={onAutoTokenizeChange}
-					onNormalizationChange={onNormalizationChange}
-					onMorphAnalysisChange={onMorphAnalysisChange}
-				/>
+			<TokenizationSection
+				processingStatus={processingStatus}
+				tokenCount={tokenCount}
+				autoTokenizeOnSave={autoTokenizeOnSave}
+				useNormalization={useNormalization}
+				useMorphAnalysis={useMorphAnalysis}
+				textId={textId}
+				lang={lang}
+				t={t}
+				onTokenize={onTokenize}
+				onAutoTokenizeChange={onAutoTokenizeChange}
+				onNormalizationChange={onNormalizationChange}
+				onMorphAnalysisChange={onMorphAnalysisChange}
+			/>
 
-				<TextEditMetaPageStatsSection
-					pages={pages}
-					pageTokenCounts={pageTokenCounts}
-					sectionTitle={t("admin.texts.createPage.sections.pageStats")}
-					pageLabel={t("admin.texts.createPage.pageN")}
-					tokenCountSuffix={t("admin.texts.editPage.tokenCountSuffix")}
-					wordsSuffix={t("admin.texts.createPage.wordsSuffix")}
-				/>
+			<AdminTextMetaPageStatsSection
+				pages={pages}
+				pageTokenCounts={pageTokenCounts}
+				sectionTitle={t("admin.texts.createPage.sections.pageStats")}
+				pageLabel={t("admin.texts.createPage.pageN")}
+				tokenCountSuffix={t("admin.texts.editPage.tokenCountSuffix")}
+				wordsSuffix={t("admin.texts.createPage.wordsSuffix")}
+			/>
 
-				<TextEditMetaVersionsSection
-					recentVersions={recentVersions}
-					textId={textId}
-					lang={lang}
-					sectionTitle={t("admin.texts.editPage.sections.versions")}
-					currentLabel={t("admin.texts.editPage.versionCurrent")}
-					allVersionsLabel={t("admin.texts.editPage.allVersions")}
-				/>
+			<TextEditMetaVersionsSection
+				recentVersions={recentVersions}
+				textId={textId}
+				lang={lang}
+				sectionTitle={t("admin.texts.editPage.sections.versions")}
+				currentLabel={t("admin.texts.editPage.versionCurrent")}
+				allVersionsLabel={t("admin.texts.editPage.allVersions")}
+			/>
 
-				<TextEditMetaActionsSection
-					isSaving={isSaving}
-					labels={{
-						saveUpdate: isSaving ? t("admin.texts.editPage.saving") : t("admin.texts.editPage.saveUpdate"),
-						saveDraft: isSaving ? t("admin.texts.editPage.saving") : t("admin.texts.editPage.saveDraft"),
-						dangerZone: t("admin.texts.editPage.dangerZone"),
-						deleteText: t("admin.texts.editPage.deleteText"),
-					}}
-					onSaveAndUpdate={onSaveAndUpdate}
-					onSaveDraft={onSaveDraft}
-					onDeleteRequest={onDeleteRequest}
-				/>
+			<AdminTextMetaPrimaryActionsSection
+				isSaving={isSaving}
+				primaryLabel={
+					isSaving
+						? t("admin.texts.editPage.saving")
+						: t("admin.texts.editPage.saveUpdate")
+				}
+				secondaryLabel={
+					isSaving
+						? t("admin.texts.editPage.saving")
+						: t("admin.texts.editPage.saveDraft")
+				}
+				primaryIcon={<Check className="size-[13px]" />}
+				secondaryIcon={<Save className="size-3" />}
+				onPrimaryAction={onSaveAndUpdate}
+				onSecondaryAction={onSaveDraft}
+			/>
+			<div className="border-t border-bd-1 px-4 py-3">
+				<div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.6px] text-red opacity-60">
+					{t("admin.texts.editPage.dangerZone")}
+				</div>
+				<Button
+					onClick={handleDeleteRequest}
+					className="flex w-full items-center justify-center gap-1.5 rounded-[6px] border border-red/25 bg-transparent py-[7px] text-[11.5px] text-red transition-colors hover:border-red/40 hover:bg-red-muted"
+				>
+					<Trash2 className="size-3" />
+					{t("admin.texts.editPage.deleteText")}
+				</Button>
+			</div>
 		</AdminTextMetaPanelShell>
 	);
 };

@@ -8,8 +8,13 @@ import type {
 } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
 import {
+	AdminTextMetaCoverSection,
+	AdminTextMetaDescriptionSection,
+	AdminTextMetaPageStatsSection,
 	AdminTextMetaPanelShell,
+	AdminTextMetaPrimaryActionsSection,
 } from "@/shared/ui/admin-text-editor";
+import { Save, Upload } from "lucide-react";
 import type { KeyboardEvent } from "react";
 import { useState } from "react";
 import type {
@@ -17,10 +22,6 @@ import type {
 	TagEntry,
 } from "../model/use-admin-text-create-page";
 import { ProcessingSection } from "./processing-section";
-import { TextCreateMetaActionsSection } from "./text-create-meta-actions-section";
-import { TextCreateMetaCoverSection } from "./text-create-meta-cover-section";
-import { TextCreateMetaDescriptionSection } from "./text-create-meta-description-section";
-import { TextCreateMetaPageStatsSection } from "./text-create-meta-page-stats-section";
 
 interface TextCreateMetaPanelProps {
 	status: TextStatus;
@@ -124,53 +125,57 @@ export const TextCreateMetaPanel = ({
 			onTagInputChange={setTagInputValue}
 			onTagKeyDown={handleTagKeyDown}
 		>
-				<TextCreateMetaDescriptionSection
-					description={description}
-					sectionTitle={t("admin.texts.createPage.sections.description")}
-					placeholder={t("admin.texts.createPage.descriptionPlaceholder")}
-					onDescriptionChange={onDescriptionChange}
-				/>
+			<AdminTextMetaDescriptionSection
+				description={description}
+				sectionTitle={t("admin.texts.createPage.sections.description")}
+				placeholder={t("admin.texts.createPage.descriptionPlaceholder")}
+				onDescriptionChange={onDescriptionChange}
+			/>
 
-				<TextCreateMetaCoverSection
-					coverPreviewUrl={coverPreviewUrl}
-					sectionTitle={t("admin.texts.createPage.sections.cover")}
-					uploadLabel={t("admin.texts.createPage.coverUploadLabel")}
-					uploadSub={t("admin.texts.createPage.coverUploadSub")}
-					removeLabel={t("admin.texts.createPage.coverRemoveLabel")}
-					onCoverSelect={onCoverSelect}
-					onCoverRemove={onCoverRemove}
-				/>
+			<AdminTextMetaCoverSection
+				coverPreviewUrl={coverPreviewUrl}
+				sectionTitle={t("admin.texts.createPage.sections.cover")}
+				uploadLabel={t("admin.texts.createPage.coverUploadLabel")}
+				uploadSub={t("admin.texts.createPage.coverUploadSub")}
+				removeLabel={t("admin.texts.createPage.coverRemoveLabel")}
+				onCoverSelect={onCoverSelect}
+				onCoverRemove={onCoverRemove}
+			/>
 
-				<ProcessingSection
-					autoTokenizeOnSave={autoTokenizeOnSave}
-					useNormalization={useNormalization}
-					useMorphAnalysis={useMorphAnalysis}
-					t={t}
-					onAutoTokenizeChange={onAutoTokenizeChange}
-					onNormalizationChange={onNormalizationChange}
-					onMorphAnalysisChange={onMorphAnalysisChange}
-				/>
+			<ProcessingSection
+				autoTokenizeOnSave={autoTokenizeOnSave}
+				useNormalization={useNormalization}
+				useMorphAnalysis={useMorphAnalysis}
+				t={t}
+				onAutoTokenizeChange={onAutoTokenizeChange}
+				onNormalizationChange={onNormalizationChange}
+				onMorphAnalysisChange={onMorphAnalysisChange}
+			/>
 
-				<TextCreateMetaPageStatsSection
-					pages={pages}
-					sectionTitle={t("admin.texts.createPage.sections.pageStats")}
-					pageLabel={t("admin.texts.createPage.pageN")}
-					wordsSuffix={t("admin.texts.createPage.wordsSuffix")}
-				/>
+			<AdminTextMetaPageStatsSection
+				pages={pages}
+				sectionTitle={t("admin.texts.createPage.sections.pageStats")}
+				pageLabel={t("admin.texts.createPage.pageN")}
+				wordsSuffix={t("admin.texts.createPage.wordsSuffix")}
+			/>
 
-				<TextCreateMetaActionsSection
-					isSaving={isSaving}
-					labels={{
-						publish: isSaving
-							? t("admin.texts.createPage.publishing")
-							: t("admin.texts.createPage.publish"),
-						saveDraft: isSaving
-							? t("admin.texts.createPage.saving")
-							: t("admin.texts.createPage.saveDraft"),
-					}}
-					onPublish={onPublish}
-					onSaveDraft={onSaveDraft}
-				/>
+			<AdminTextMetaPrimaryActionsSection
+				isSaving={isSaving}
+				primaryLabel={
+					isSaving
+						? t("admin.texts.createPage.publishing")
+						: t("admin.texts.createPage.publish")
+				}
+				secondaryLabel={
+					isSaving
+						? t("admin.texts.createPage.saving")
+						: t("admin.texts.createPage.saveDraft")
+				}
+				primaryIcon={<Upload className="size-[13px]" />}
+				secondaryIcon={<Save className="size-3" />}
+				onPrimaryAction={onPublish}
+				onSecondaryAction={onSaveDraft}
+			/>
 		</AdminTextMetaPanelShell>
 	);
 };

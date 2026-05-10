@@ -1,11 +1,14 @@
 "use client";
 
+import {
+	AdminTextConfirmModal,
+	AdminTextPageShell,
+} from "@/shared/ui/admin-text-editor";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import Link from "next/link";
 import { type ComponentProps, useState } from "react";
 import { useAdminTextEditPage } from "../model/use-admin-text-edit-page";
-import { TextEditDeleteModal } from "./text-edit-delete-modal";
 import { TextEditEditor } from "./text-edit-editor";
 import { TextEditMetaPanel } from "./text-edit-meta-panel";
 import { TextEditTopbar } from "./text-edit-topbar";
@@ -144,35 +147,26 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 	const handleDeleteRequest: NonNullable<
 		ComponentProps<typeof TextEditMetaPanel>["onDeleteRequest"]
 	> = () => setShowDeleteModal(true);
-	const handleCancel: NonNullable<
-		ComponentProps<typeof TextEditDeleteModal>["onCancel"]
-	> = () => setShowDeleteModal(false);
+	const handleCancel = () => setShowDeleteModal(false);
 	const handleToggleMetaPanel = () => setIsMetaPanelVisible(v => !v);
-	const gridColumnsClassName = isMetaPanelVisible
-		? "min-[768px]:grid-cols-[1fr_248px]"
-		: "min-[768px]:grid-cols-[1fr_0px]";
-	const metaPanelClassName = isMetaPanelVisible
-		? "min-[768px]:translate-x-0 min-[768px]:opacity-100"
-		: "min-[768px]:pointer-events-none min-[768px]:translate-x-3 min-[768px]:opacity-0";
 
 	return (
-		<div className="flex h-screen min-h-0 flex-col overflow-hidden text-t-1 transition-colors">
-			<TextEditTopbar
-				textId={textId}
-				textTitle={textData.title}
-				textStatus={status}
-				isUnsaved={isUnsaved}
-				isSaving={isSaving}
-				isMetaPanelVisible={isMetaPanelVisible}
-				onSaveDraft={handleSaveDraft}
-				onSaveAndUpdate={handleSaveAndUpdate}
-				onToggleMetaPanel={handleToggleMetaPanel}
-			/>
-
-			{/* Two-column layout */}
-			<div
-				className={`grid min-h-0 flex-1 overflow-hidden transition-[grid-template-columns] duration-300 ease-out max-[767px]:grid-cols-1 ${gridColumnsClassName}`}
-			>
+		<AdminTextPageShell
+			isMetaPanelVisible={isMetaPanelVisible}
+			topbar={
+				<TextEditTopbar
+					textId={textId}
+					textTitle={textData.title}
+					textStatus={status}
+					isUnsaved={isUnsaved}
+					isSaving={isSaving}
+					isMetaPanelVisible={isMetaPanelVisible}
+					onSaveDraft={handleSaveDraft}
+					onSaveAndUpdate={handleSaveAndUpdate}
+					onToggleMetaPanel={handleToggleMetaPanel}
+				/>
+			}
+			editor={
 				<TextEditEditor
 					title={title}
 					pages={pages}
@@ -190,58 +184,63 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					onSaveAndUpdate={handleSaveAndUpdate}
 					onDismissRetokenize={handleDismissRetokenize}
 				/>
-
-				<div
-					className={`min-h-0 overflow-hidden transition-[opacity,transform] duration-200 ease-out max-[767px]:contents ${metaPanelClassName}`}
-				>
-					<TextEditMetaPanel
-						textId={textId}
-						status={status}
-						language={language}
-						level={level}
-						author={author}
-						source={source}
-						tags={tags}
-						description={description}
-						coverPreviewUrl={coverPreviewUrl}
-						autoTokenizeOnSave={autoTokenizeOnSave}
-						useNormalization={useNormalization}
-						useMorphAnalysis={useMorphAnalysis}
-						pages={pages}
-						pageTokenCounts={pageTokenCounts}
-						isSaving={isSaving}
-						processingStatus={textData.processingStatus}
-						tokenCount={textData.tokenCount}
-						recentVersions={recentVersions}
-						onStatusChange={setStatus}
-						onLanguageChange={setLanguage}
-						onLevelChange={setLevel}
-						onAuthorChange={setAuthor}
-						onSourceChange={setSource}
-						onTagAdd={handleAddTag}
-						onTagRemove={handleRemoveTag}
-						onDescriptionChange={setDescription}
-						onCoverSelect={handleCoverSelect}
-						onAutoTokenizeChange={setAutoTokenizeOnSave}
-						onNormalizationChange={setUseNormalization}
-						onMorphAnalysisChange={setUseMorphAnalysis}
-						onSaveDraft={handleSaveDraft}
-						onSaveAndUpdate={handleSaveAndUpdate}
-						onDeleteRequest={handleDeleteRequest}
-						onTokenize={handleTokenize}
-					/>
-				</div>
-			</div>
-
-			{/* Delete confirmation modal */}
-			{showDeleteModal && (
-				<TextEditDeleteModal
-					textTitle={textData.title}
-					isDeleting={isDeleting}
-					onConfirm={handleDelete}
-					onCancel={handleCancel}
+			}
+			metaPanel={
+				<TextEditMetaPanel
+					textId={textId}
+					status={status}
+					language={language}
+					level={level}
+					author={author}
+					source={source}
+					tags={tags}
+					description={description}
+					coverPreviewUrl={coverPreviewUrl}
+					autoTokenizeOnSave={autoTokenizeOnSave}
+					useNormalization={useNormalization}
+					useMorphAnalysis={useMorphAnalysis}
+					pages={pages}
+					pageTokenCounts={pageTokenCounts}
+					isSaving={isSaving}
+					processingStatus={textData.processingStatus}
+					tokenCount={textData.tokenCount}
+					recentVersions={recentVersions}
+					onStatusChange={setStatus}
+					onLanguageChange={setLanguage}
+					onLevelChange={setLevel}
+					onAuthorChange={setAuthor}
+					onSourceChange={setSource}
+					onTagAdd={handleAddTag}
+					onTagRemove={handleRemoveTag}
+					onDescriptionChange={setDescription}
+					onCoverSelect={handleCoverSelect}
+					onAutoTokenizeChange={setAutoTokenizeOnSave}
+					onNormalizationChange={setUseNormalization}
+					onMorphAnalysisChange={setUseMorphAnalysis}
+					onSaveDraft={handleSaveDraft}
+					onSaveAndUpdate={handleSaveAndUpdate}
+					onDeleteRequest={handleDeleteRequest}
+					onTokenize={handleTokenize}
 				/>
-			)}
-		</div>
+			}
+			bottomSlot={
+				showDeleteModal ? (
+					<AdminTextConfirmModal
+						title={t("admin.texts.editPage.deleteConfirmTitle")}
+						description={t("admin.texts.editPage.deleteConfirmBody", {
+							title: textData.title,
+						})}
+						cancelLabel={t("admin.texts.editPage.deleteCancel")}
+						confirmLabel={
+							isDeleting ? "…" : t("admin.texts.editPage.deleteConfirm")
+						}
+						isConfirming={isDeleting}
+						closeOnBackdropClick
+						onConfirm={handleDelete}
+						onCancel={handleCancel}
+					/>
+				) : null
+			}
+		/>
 	);
 };

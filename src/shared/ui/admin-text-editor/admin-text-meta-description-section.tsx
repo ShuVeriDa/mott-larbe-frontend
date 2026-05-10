@@ -1,23 +1,24 @@
 "use client";
 
-import { ComponentProps } from "react";
 import { MetaSection } from "@/shared/ui/admin-text-meta-fields";
+import { ComponentProps } from "react";
 
-interface Props {
+interface AdminTextMetaDescriptionSectionProps {
 	description: string;
 	sectionTitle: string;
 	placeholder: string;
 	onDescriptionChange: (v: string) => void;
 }
 
-export const TextCreateMetaDescriptionSection = ({
+export const AdminTextMetaDescriptionSection = ({
 	description,
 	sectionTitle,
 	placeholder,
 	onDescriptionChange,
-}: Props) => {
-	const handleDescriptionChange: NonNullable<ComponentProps<"textarea">["onChange"]> = e =>
-		onDescriptionChange(e.currentTarget.value);
+}: AdminTextMetaDescriptionSectionProps) => {
+	const handleDescriptionChange: NonNullable<
+		ComponentProps<"textarea">["onChange"]
+	> = e => onDescriptionChange(e.currentTarget.value);
 
 	return (
 		<MetaSection title={sectionTitle}>

@@ -2,13 +2,13 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import {
+	AdminTextConfirmModal,
 	AdminTextEditorShell,
 	hasTextContent,
 } from "@/shared/ui/admin-text-editor";
 import type { TipTapDoc, TipTapNode } from "@/shared/ui/notion-editor";
 import { useState } from "react";
 import type { PageContent } from "../model/use-admin-text-create-page";
-import { TextCreateDeletePageDialog } from "./text-create-delete-page-dialog";
 
 export type { TipTapDoc, TipTapNode };
 
@@ -82,11 +82,15 @@ export const TextCreateEditor = ({
 			/>
 
 			{confirmDeleteIndex !== null && (
-				<TextCreateDeletePageDialog
-					pageIndex={confirmDeleteIndex}
+				<AdminTextConfirmModal
+					title={t("admin.texts.createPage.deletePageTitle")}
+					description={t("admin.texts.createPage.deletePageBody", {
+						n: confirmDeleteIndex + 1,
+					})}
+					cancelLabel={t("admin.texts.createPage.deletePageCancel")}
+					confirmLabel={t("admin.texts.createPage.deletePageConfirm")}
 					onConfirm={handleConfirmDelete}
 					onCancel={handleCancelDelete}
-					t={t}
 				/>
 			)}
 		</>
