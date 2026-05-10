@@ -58,16 +58,20 @@ const SOCIALS = [
 ];
 
 export const LandingFooter = () => {
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
 
 	return (
 		<footer className="border-hairline border-t border-bd-1 bg-surf-2 px-7 pb-8 pt-14 max-[900px]:px-[22px] max-[640px]:px-[18px]">
 			<div className="mx-auto w-full max-w-[1120px]">
 				<div className="mb-9 grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 max-[900px]:grid-cols-2 max-[900px]:gap-8 max-[640px]:gap-7 max-[380px]:grid-cols-1">
 					<div>
-						<div className="flex items-center gap-2.5">
-							<BrandMark className="h-[34px] w-[28px]" />
-							<Typography tag="span" className="flex flex-col">
+						<Link
+							href={`/${lang}/dashboard`}
+							className="flex w-fit max-w-full items-start gap-2.5 rounded-sm outline-offset-2 focus-visible:outline-2 focus-visible:outline-acc"
+							aria-label={t("landing.brand.name")}
+						>
+							<BrandMark className="h-[34px] w-[28px] shrink-0" />
+							<Typography tag="span" className="flex min-w-0 flex-col">
 								<Typography
 									tag="span"
 									className="font-display text-base font-medium leading-[1.1] tracking-[-0.2px] text-t-1"
@@ -81,7 +85,7 @@ export const LandingFooter = () => {
 									{t("landing.brand.sub")}
 								</Typography>
 							</Typography>
-						</div>
+						</Link>
 						<Typography className="mt-3.5 max-w-[280px] text-[13px] leading-[1.55] text-t-2">
 							{t("landing.footer.about")}
 						</Typography>

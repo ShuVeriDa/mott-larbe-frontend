@@ -96,19 +96,27 @@ export const SideNav = () => {
 			aria-label={t("nav.vocabulary")}
 		>
 			<div className="flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-				<div className="flex items-center gap-2.5 border-hairline border-b border-bd-1 px-3.5 py-[16px_14px] pt-4 pb-3.5">
-					<BrandMark width="30" height="36" />
-					<div className="flex flex-col">
-						<Typography
-							tag="span"
-							className="font-display text-sm font-medium tracking-[-0.1px] text-t-1"
-						>
-							{t("auth.brand.name")}
-						</Typography>
-						<Typography tag="span" className="text-[9px] uppercase tracking-[1px] text-t-3 opacity-70">
-							{t("auth.brand.tagline")}
-						</Typography>
-					</div>
+				<div className="flex items-center border-hairline border-b border-bd-1 px-3.5 py-[16px_14px] pt-4 pb-3.5">
+					<Link
+						href={`/${lang}/dashboard`}
+						className="flex min-w-0 items-center gap-2.5 rounded-sm outline-offset-2 focus-visible:outline-2 focus-visible:outline-acc"
+					>
+						<BrandMark width="30" height="36" className="shrink-0" />
+						<div className="flex min-w-0 flex-col">
+							<Typography
+								tag="span"
+								className="font-display text-sm font-medium tracking-[-0.1px] text-t-1"
+							>
+								{t("auth.brand.name")}
+							</Typography>
+							<Typography
+								tag="span"
+								className="text-[9px] uppercase tracking-[1px] text-t-3 opacity-70"
+							>
+								{t("auth.brand.tagline")}
+							</Typography>
+						</div>
+					</Link>
 				</div>
 
 				{sections.map((section, secIdx) => (

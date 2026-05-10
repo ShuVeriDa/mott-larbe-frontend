@@ -4,22 +4,33 @@ import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
 
-import Link from "next/link";
-import { ReactNode } from "react";
 import type { LibraryTextListItem } from "@/entities/library-text";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import Link from "next/link";
+import { ReactNode } from "react";
 import { useLibraryPreview } from "../model";
 
 type CefrKey = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 
-const LEVEL_CLASSES: Record<CefrKey, { badge: string; cov: string; stripe: string }> = {
+const LEVEL_CLASSES: Record<
+	CefrKey,
+	{ badge: string; cov: string; stripe: string }
+> = {
 	A1: { badge: "bg-amb-bg text-amb-t", cov: "bg-amb-bg", stripe: "var(--amb)" },
 	A2: { badge: "bg-grn-bg text-grn-t", cov: "bg-grn-bg", stripe: "var(--grn)" },
 	B1: { badge: "bg-acc-bg text-acc-t", cov: "bg-acc-bg", stripe: "var(--acc)" },
 	B2: { badge: "bg-pur-bg text-pur-t", cov: "bg-pur-bg", stripe: "var(--pur)" },
-	C1: { badge: "bg-ros-bg text-ros-t", cov: "bg-ros-bg", stripe: "var(--ros-t)" },
-	C2: { badge: "bg-ros-bg text-ros-t", cov: "bg-ros-bg", stripe: "var(--ros-t)" },
+	C1: {
+		badge: "bg-ros-bg text-ros-t",
+		cov: "bg-ros-bg",
+		stripe: "var(--ros-t)",
+	},
+	C2: {
+		badge: "bg-ros-bg text-ros-t",
+		cov: "bg-ros-bg",
+		stripe: "var(--ros-t)",
+	},
 };
 
 const DEFAULT_LEVEL_COLORS = LEVEL_CLASSES.B1;
@@ -27,7 +38,7 @@ const DEFAULT_LEVEL_COLORS = LEVEL_CLASSES.B1;
 const getLevelColors = (level: string | null) =>
 	LEVEL_CLASSES[(level as CefrKey) ?? ""] ?? DEFAULT_LEVEL_COLORS;
 
-const LANG_TAG: Record<string, string> = { CHE: "ЧЕ", RU: "RU", EN: "EN" };
+const LANG_TAG: Record<string, string> = { CHE: "НАХ", RU: "RU", EN: "EN" };
 
 const progressColor = (pct: number): string => {
 	if (pct >= 80) return "var(--grn)";
@@ -50,7 +61,9 @@ const LibraryCard = ({ item, lang }: LibraryCardProps) => {
 			href={`/${lang}/texts/${item.id}`}
 			className="group block overflow-hidden rounded-card border-hairline border border-bd-1 bg-surf transition-all hover:-translate-y-px hover:border-bd-2 hover:shadow-md"
 		>
-			<div className={`relative flex h-[72px] items-center justify-center ${colors.cov}`}>
+			<div
+				className={`relative flex h-[72px] items-center justify-center ${colors.cov}`}
+			>
 				<div
 					aria-hidden="true"
 					className="absolute left-0 top-0 bottom-0 w-[3px]"
@@ -83,7 +96,8 @@ const LibraryCard = ({ item, lang }: LibraryCardProps) => {
 			<div className="p-[10px_13px_12px]">
 				<div className="mb-1.5 flex items-center gap-[5px]">
 					{item.level ? (
-						<Typography tag="span"
+						<Typography
+							tag="span"
 							className={`inline-flex items-center rounded-[4px] px-1.5 py-[2px] text-[10px] font-bold ${colors.badge}`}
 						>
 							{item.level}
@@ -98,7 +112,9 @@ const LibraryCard = ({ item, lang }: LibraryCardProps) => {
 					{item.title}
 				</div>
 				{item.author ? (
-					<div className="mb-2 truncate text-[11px] text-t-3">{item.author}</div>
+					<div className="mb-2 truncate text-[11px] text-t-3">
+						{item.author}
+					</div>
 				) : (
 					<div className="mb-2" />
 				)}
@@ -112,10 +128,13 @@ const LibraryCard = ({ item, lang }: LibraryCardProps) => {
 
 				<div className="flex items-center justify-between">
 					<Typography tag="span" className="text-[11px] text-t-3">
-						{t("dashboard.library.words", { count: item.wordCount.toLocaleString() })}
+						{t("dashboard.library.words", {
+							count: item.wordCount.toLocaleString(),
+						})}
 					</Typography>
 					{pct > 0 ? (
-						<Typography tag="span"
+						<Typography
+							tag="span"
 							className="text-[11px] font-semibold"
 							style={{ color: pct >= 80 ? "var(--grn)" : "var(--acc)" }}
 						>
@@ -193,19 +212,19 @@ export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 					>
 						{t("dashboard.library.langAll")}
 					</FilterButton>
-					{langFilters.map((languageFilter) => {
+					{langFilters.map(languageFilter => {
 						const handleLanguageClick = () => {
 							handleLanguageFilterToggle(languageFilter);
 						};
-					  return (
-						<FilterButton
-							key={languageFilter}
-							active={filterLang === languageFilter}
-							onClick={handleLanguageClick}
-						>
-							{LANG_TAG[languageFilter]}
-						</FilterButton>
-					);
+						return (
+							<FilterButton
+								key={languageFilter}
+								active={filterLang === languageFilter}
+								onClick={handleLanguageClick}
+							>
+								{LANG_TAG[languageFilter]}
+							</FilterButton>
+						);
 					})}
 				</div>
 
@@ -218,26 +237,26 @@ export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 					>
 						{t("dashboard.library.levelAll")}
 					</FilterButton>
-					{levelFilters.map((levelFilter) => {
+					{levelFilters.map(levelFilter => {
 						const handleLevelClick = () => {
 							handleLevelFilterToggle(levelFilter);
 						};
-					  return (
-						<FilterButton
-							key={levelFilter}
-							active={filterLevel === levelFilter}
-							onClick={handleLevelClick}
-						>
-							{levelFilter}
-						</FilterButton>
-					);
+						return (
+							<FilterButton
+								key={levelFilter}
+								active={filterLevel === levelFilter}
+								onClick={handleLevelClick}
+							>
+								{levelFilter}
+							</FilterButton>
+						);
 					})}
 				</div>
 			</div>
 
 			{items.length > 0 ? (
 				<div className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">
-					{items.map((item) => (
+					{items.map(item => (
 						<LibraryCard key={item.id} item={item} lang={lang} />
 					))}
 				</div>

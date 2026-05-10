@@ -9,12 +9,12 @@ import type { ComponentProps, InputHTMLAttributes, ReactNode } from "react";
 export const LEVELS: TextLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 export const levelColorMap: Record<TextLevel, string> = {
-	A1: "bg-grn-muted border-grn/25 text-grn-strong",
-	A2: "bg-[#d1fae5] border-[rgba(6,95,70,0.25)] text-[#065f46] dark:bg-[rgba(6,95,70,0.12)] dark:text-[#6ee7b7]",
-	B1: "bg-acc-muted border-acc/25 text-acc-strong",
-	B2: "bg-pur-muted border-pur/20 text-pur-strong",
-	C1: "bg-amb-muted border-amb/20 text-amb-strong",
-	C2: "bg-red-muted border-red/20 text-red-strong",
+	A1: "bg-grn-bg border-grn/25 text-grn-t",
+	A2: "bg-[#d1fae5] border-[rgba(6,95,70,0.25)] text-grn-t dark:bg-[rgba(6,95,70,0.12)] dark:text-[#6ee7b7]",
+	B1: "bg-acc-bg border-acc/25 text-acc-t",
+	B2: "bg-pur-bg border-pur/20 text-pur-t",
+	C1: "bg-amb-bg border-amb/20 text-amb-t",
+	C2: "bg-red-bg border-red/20 text-red-t",
 };
 
 export const MetaSection = ({

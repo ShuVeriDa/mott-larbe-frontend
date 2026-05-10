@@ -29,7 +29,7 @@ export const MobileMenu = ({
 	loginHref,
 	startHref,
 }: MobileMenuProps) => {
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
 
 	return (
 		<>
@@ -51,15 +51,19 @@ export const MobileMenu = ({
 				aria-label={t("landing.nav.menu")}
 			>
 				<div className="flex items-center justify-between border-hairline border-b border-bd-1 px-[18px] py-[14px]">
-					<div className="flex items-center gap-2.5">
-						<BrandMark className="h-[28px] w-[24px]" />
+					<Link
+						href={`/${lang}/dashboard`}
+						className="flex min-w-0 items-center gap-2.5"
+						onClick={onClose}
+					>
+						<BrandMark className="h-[28px] w-[24px] shrink-0" />
 						<Typography
 							tag="span"
-							className="font-display text-base font-medium tracking-[-0.2px] text-t-1"
+							className="font-display truncate text-base font-medium tracking-[-0.2px] text-t-1"
 						>
 							{t("landing.brand.name")}
 						</Typography>
-					</div>
+					</Link>
 					<Button
 						onClick={onClose}
 						aria-label={t("landing.nav.close")}

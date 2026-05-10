@@ -27,7 +27,7 @@ const NAV_LINKS: MobileMenuLink[] = [
 ];
 
 export const LandingNav = ({ loginHref, startHref }: LandingNavProps) => {
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
 	const { open, openMenu, closeMenu } = useMobileMenu();
 
 	return (
@@ -35,7 +35,7 @@ export const LandingNav = ({ loginHref, startHref }: LandingNavProps) => {
 			<div className="mx-auto w-full max-w-[1120px] px-7 max-[900px]:px-[22px] max-[640px]:px-[18px]">
 				<div className="flex h-[60px] items-center justify-between max-[640px]:h-14">
 					<Link
-						href="#"
+						href={`/${lang}/dashboard`}
 						className="flex items-center gap-2.5"
 						aria-label={t("landing.brand.name")}
 					>

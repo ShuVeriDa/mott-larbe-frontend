@@ -137,8 +137,14 @@ export const AdminSideNav = () => {
 						: "max-[899px]:justify-between max-[899px]:px-2.5",
 				)}
 			>
-				<div className="flex items-center gap-2.5 min-w-0">
-					<BrandMark width="30" height="36" />
+				<Link
+					href={`/${lang}/dashboard`}
+					className={cn(
+						"flex min-w-0 items-center gap-2.5 rounded-sm outline-offset-2 focus-visible:outline-2 focus-visible:outline-acc",
+						isCompactMode && "max-[899px]:justify-center max-[899px]:gap-0",
+					)}
+				>
+					<BrandMark width="30" height="36" className="shrink-0" />
 					<div
 						className={cn(
 							"flex min-w-0 flex-col transition-[width,opacity] duration-200",
@@ -146,20 +152,20 @@ export const AdminSideNav = () => {
 								"max-[899px]:w-0 max-[899px]:overflow-hidden max-[899px]:opacity-0",
 						)}
 					>
-					<Typography
-						tag="span"
-						className="font-display text-sm font-medium tracking-[-0.1px] text-t-1"
-					>
-						{t("admin.brand")}
-					</Typography>
-					<Typography
-						tag="span"
-						className="text-[9px] uppercase tracking-[1px] text-t-3 opacity-70"
-					>
-						{t("admin.chip")}
-					</Typography>
+						<Typography
+							tag="span"
+							className="font-display text-sm font-medium tracking-[-0.1px] text-t-1"
+						>
+							{t("admin.brand")}
+						</Typography>
+						<Typography
+							tag="span"
+							className="text-[9px] uppercase tracking-[1px] text-t-3 opacity-70"
+						>
+							{t("admin.chip")}
+						</Typography>
 					</div>
-				</div>
+				</Link>
 			</div>
 
 			{/* Scrollable nav */}
