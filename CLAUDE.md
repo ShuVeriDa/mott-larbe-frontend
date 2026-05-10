@@ -123,7 +123,51 @@ const LoginForm = () => {
 
 This is the **default pattern** for all Client Components.
 
-### Component Decomposition — extract when there is a reason
+### Component Decomposition — default bias: split
+
+Small, focused files are always preferred over large ones. When in doubt — extract.
+Hesitate to keep things together, not to split them apart.
+
+Extract into a **separate file** when **any** of the following is true:
+
+- **Named** — it has a name and a clear props interface, even if used only once.
+- **Reuse** — the same JSX block appears in more than one place (DRY).
+- **Responsibility** — it has its own distinct meaning (SRP).
+- **Logic** — it contains event handlers, derived state, or conditional rendering.
+- **Data / config** — it is a function or array that produces JSX config or static data.
+
+#### What may stay inline
+
+Only truly anonymous JSX with zero props and zero logic may stay inline in the parent file.
+As soon as a piece of JSX or logic gets a name — it gets its own file.
+
+#### File structure inside a slice
+
+Named sub-components → `ui/`, utilities and config → `lib/`, hooks → `model/`:
+
+#### Config and data arrays — extract to `lib/`
+
+Any named array or object that builds config, options, or action descriptors belongs in `lib/`,
+even if it depends on runtime arguments like `t` or `editor`.
+A function that returns an array is still config — not logic — and does not belong in a hook or component.
+
+#### Types — extract to a dedicated file
+
+All named types and interfaces that are shared across more than one file in a slice
+belong in `model/types.ts`.
+
+**Exception: props interfaces stay in the same file as their component.**
+A props type is part of the component's definition — it is never extracted.
+
+```
+// ✅ props interface stays with the component
+interface ButtonProps { ... }
+const Button = ({ ... }: ButtonProps) => { ... }
+
+// ❌ shared types do not live in a component or hook file
+type ToolbarActionIconKey = "bold" | "italic" | ...  // → model/types.ts
+interface ToolbarActionItem { ... }                   // → model/types.ts
+```
 
 Keep components small and focused. Extract a part into a separate component when **any** of the following is true:
 
@@ -147,21 +191,21 @@ Place extracted components at the appropriate Atomic Design level inside the FSD
 ```tsx
 // ❌ one giant component
 const ProfilePage = () => (
-  <div>
-    {/* 50 lines of avatar + bio JSX */}
-    {/* 60 lines of stats JSX */}
-    {/* 40 lines of activity feed JSX */}
-  </div>
-)
+	<div>
+		{/* 50 lines of avatar + bio JSX */}
+		{/* 60 lines of stats JSX */}
+		{/* 40 lines of activity feed JSX */}
+	</div>
+);
 
 // ✅ decomposed
 const ProfilePage = () => (
-  <div>
-    <ProfileHeader />
-    <ProfileStats />
-    <ActivityFeed />
-  </div>
-)
+	<div>
+		<ProfileHeader />
+		<ProfileStats />
+		<ActivityFeed />
+	</div>
+);
 ```
 
 ### Handler Extraction — always extract event handlers
@@ -212,17 +256,26 @@ Always use named imports from `react`. Never use the `React.*` namespace.
 
 ```tsx
 // ❌ wrong
-React.ComponentProps
-React.ReactNode
-React.FC
-React.useState
-React.useRef
-React.MouseEvent
-React.CSSProperties
-React.HTMLAttributes
+React.ComponentProps;
+React.ReactNode;
+React.FC;
+React.useState;
+React.useRef;
+React.MouseEvent;
+React.CSSProperties;
+React.HTMLAttributes;
 
 // ✅ correct
-import { ComponentProps, ReactNode, FC, useState, useRef, MouseEvent, CSSProperties, HTMLAttributes } from 'react'
+import {
+	ComponentProps,
+	ReactNode,
+	FC,
+	useState,
+	useRef,
+	MouseEvent,
+	CSSProperties,
+	HTMLAttributes,
+} from "react";
 ```
 
 ---
@@ -234,13 +287,13 @@ Always use `e.currentTarget` instead of `e.target` in event handlers.
 ```tsx
 // ❌ wrong
 const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-  e.target.value
-}
+	e.target.value;
+};
 
 // ✅ correct
 const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-  e.currentTarget.value
-}
+	e.currentTarget.value;
+};
 ```
 
 `e.currentTarget` always refers to the element the handler is attached to and is correctly typed by TypeScript. `e.target` can be any descendant element and loses type safety.
@@ -270,9 +323,9 @@ React Compiler handles memoization automatically.
 
 ```ts
 // ❌ wrong
-useMemo(() => compute(a, b), [a, b])
-useCallback(fn, [deps])
-memo(MyComponent)
+useMemo(() => compute(a, b), [a, b]);
+useCallback(fn, [deps]);
+memo(MyComponent);
 
 // ✅ exception only: explicitly heavy computations (sorting 10k+ items, d3, canvas)
 ```
@@ -284,37 +337,37 @@ memo(MyComponent)
 ```tsx
 // ❌ wrong
 const Input = forwardRef<HTMLInputElement, Props>((props, ref) => (
-  <input ref={ref} {...props} />
-))
+	<input ref={ref} {...props} />
+));
 
 // ✅ correct
 const Input = ({ ref, ...props }: Props & { ref?: Ref<HTMLInputElement> }) => (
-  <input ref={ref} {...props} />
-)
+	<input ref={ref} {...props} />
+);
 ```
 
 ### New hooks — use instead of old patterns
 
-| Old pattern | React 19 |
-|---|---|
-| `useContext()` | `use(Context)` |
-| manual form state | `useActionState()` |
-| manual optimistic UI | `useOptimistic()` |
-| prop drilling form status | `useFormStatus()` |
+| Old pattern               | React 19           |
+| ------------------------- | ------------------ |
+| `useContext()`            | `use(Context)`     |
+| manual form state         | `useActionState()` |
+| manual optimistic UI      | `useOptimistic()`  |
+| prop drilling form status | `useFormStatus()`  |
 
 ```tsx
 // use() — works in conditionals and loops
-const user = use(UserContext)
-const data = use(fetchDataPromise) // + Suspense
+const user = use(UserContext);
+const data = use(fetchDataPromise); // + Suspense
 
 // useActionState() — for forms
-const [state, action, isPending] = useActionState(submitForm, initialState)
+const [state, action, isPending] = useActionState(submitForm, initialState);
 
 // useOptimistic() — optimistic UI
-const [optimisticList, addOptimistic] = useOptimistic(list)
+const [optimisticList, addOptimistic] = useOptimistic(list);
 
 // useFormStatus() — parent form status
-const { pending } = useFormStatus()
+const { pending } = useFormStatus();
 ```
 
 ### Actions — instead of onSubmit
@@ -338,10 +391,10 @@ const { pending } = useFormStatus()
 ### Resource Loading APIs
 
 ```tsx
-import { preload, preinit } from 'react-dom'
+import { preload, preinit } from "react-dom";
 
-preload('/fonts/font.woff2', { as: 'font' })
-preinit('/scripts/analytics.js', { as: 'script' })
+preload("/fonts/font.woff2", { as: "font" });
+preinit("/scripts/analytics.js", { as: "script" });
 ```
 
 ### Server Components & Directives

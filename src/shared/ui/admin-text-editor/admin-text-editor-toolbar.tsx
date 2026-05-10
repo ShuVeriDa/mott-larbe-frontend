@@ -5,20 +5,11 @@ import { Button } from "@/shared/ui/button";
 import type { Editor, SlashMenuItem } from "@/shared/ui/notion-editor";
 import { Typography } from "@/shared/ui/typography";
 import {
-	AlignCenter,
-	AlignJustify,
-	AlignLeft,
-	AlignRight,
-	Bold,
-	Italic,
+	ChevronDown,
 	List,
 	ListOrdered,
-	Redo,
-	Strikethrough,
-	Underline,
-	Undo,
 } from "lucide-react";
-import type { ComponentProps, ReactNode } from "react";
+import { Fragment, type ComponentProps, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { useAdminTextEditorToolbar } from "./model/use-admin-text-editor-toolbar";
 
@@ -171,18 +162,7 @@ export const EditorToolbar = ({
 		getHandleBlockTypeItemMouseDown,
 		handleBlockTypeBackdropMouseDown,
 		handleBlockTypeMouseDown,
-		handleRedo,
-		handleSetAlignCenter,
-		handleSetAlignJustify,
-		handleSetAlignLeft,
-		handleSetAlignRight,
-		handleToggleBold,
-		handleToggleBulletList,
-		handleToggleItalic,
-		handleToggleOrderedList,
-		handleToggleStrike,
-		handleToggleUnderline,
-		handleUndo,
+		toolbarActionSections,
 	} = useAdminTextEditorToolbar({
 		editor,
 		t,
@@ -197,21 +177,7 @@ export const EditorToolbar = ({
 						className="flex h-7 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 select-none"
 					>
 						{currentBlockTypeLabel}
-						<svg
-							width="10"
-							height="6"
-							viewBox="0 0 10 6"
-							fill="none"
-							className="opacity-50"
-						>
-							<path
-								d="M1 1l4 4 4-4"
-								stroke="currentColor"
-								strokeWidth="1.4"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</svg>
+						<ChevronDown className="size-[12px] opacity-50" />
 					</Button>
 					{blockTypeOpen &&
 						blockTypeAnchor &&
@@ -268,91 +234,16 @@ export const EditorToolbar = ({
 
 				<TbDivider />
 
-				<TbBtn
-					title={t("admin.texts.createPage.bold")}
-					active={editor?.isActive("bold")}
-					onExec={handleToggleBold}
-				>
-					<Bold className="size-[13px]" />
-				</TbBtn>
-				<TbBtn
-					title={t("admin.texts.createPage.italic")}
-					active={editor?.isActive("italic")}
-					onExec={handleToggleItalic}
-				>
-					<Italic className="size-[13px]" />
-				</TbBtn>
-				<TbBtn
-					title={t("admin.texts.createPage.underline")}
-					active={editor?.isActive("underline")}
-					onExec={handleToggleUnderline}
-				>
-					<Underline className="size-[13px]" />
-				</TbBtn>
-				<TbBtn
-					title="Strike"
-					active={editor?.isActive("strike")}
-					onExec={handleToggleStrike}
-				>
-					<Strikethrough className="size-[13px]" />
-				</TbBtn>
-
-				<TbDivider />
-
-				<TbBtn
-					title={t("admin.texts.createPage.bulletList")}
-					active={editor?.isActive("bulletList")}
-					onExec={handleToggleBulletList}
-				>
-					<List className="size-[13px]" />
-				</TbBtn>
-				<TbBtn
-					title={t("admin.texts.createPage.orderedList")}
-					active={editor?.isActive("orderedList")}
-					onExec={handleToggleOrderedList}
-				>
-					<ListOrdered className="size-[13px]" />
-				</TbBtn>
-
-				<TbDivider />
-
-				<TbBtn
-					title="По левому краю"
-					active={editor?.isActive({ textAlign: "left" })}
-					onExec={handleSetAlignLeft}
-				>
-					<AlignLeft className="size-[13px]" />
-				</TbBtn>
-				<TbBtn
-					title="По центру"
-					active={editor?.isActive({ textAlign: "center" })}
-					onExec={handleSetAlignCenter}
-				>
-					<AlignCenter className="size-[13px]" />
-				</TbBtn>
-				<TbBtn
-					title="По правому краю"
-					active={editor?.isActive({ textAlign: "right" })}
-					onExec={handleSetAlignRight}
-				>
-					<AlignRight className="size-[13px]" />
-				</TbBtn>
-				<TbBtn
-					title="По ширине"
-					active={editor?.isActive({ textAlign: "justify" })}
-					onExec={handleSetAlignJustify}
-				>
-					<AlignJustify className="size-[13px]" />
-				</TbBtn>
-
-				<TbDivider />
-
-				<TbBtn title={t("admin.texts.createPage.undo")} onExec={handleUndo}>
-					<Undo className="size-[13px]" />
-				</TbBtn>
-				<TbBtn title={t("admin.texts.createPage.redo")} onExec={handleRedo}>
-					<Redo className="size-[13px]" />
-				</TbBtn>
+				{toolbarActionSections.map((section, sectionIndex) => (
+					<Fragment key={`toolbar-section-${sectionIndex}`}>
+						{section.map(({ id, title, active, onExec, Icon }) => (
+							<TbBtn key={id} title={title} active={active} onExec={onExec}>
+								<Icon className="size-[13px]" />
+							</TbBtn>
+						))}
+						{sectionIndex < toolbarActionSections.length - 1 && <TbDivider />}
+					</Fragment>
+				))}
 
 				{extraItems && (
 					<>

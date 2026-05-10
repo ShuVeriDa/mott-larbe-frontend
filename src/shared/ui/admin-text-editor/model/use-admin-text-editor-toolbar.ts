@@ -4,13 +4,16 @@ import { useI18n } from "@/shared/lib/i18n";
 import type { Editor } from "@/shared/ui/notion-editor";
 import type { ComponentProps } from "react";
 import { useEffect, useState } from "react";
+import {
+	type BlockTypeValue,
+	getAdminTextEditorBlockTypeOptions,
+} from "./get-admin-text-editor-block-type-options";
+import { getAdminTextEditorToolbarActionSections } from "./get-admin-text-editor-toolbar-action-sections";
 
 interface UseAdminTextEditorToolbarParams {
 	editor: Editor | null;
 	t: ReturnType<typeof useI18n>["t"];
 }
-
-type BlockTypeValue = "p" | "h1" | "h2" | "h3" | "h4" | "blockquote";
 
 export const useAdminTextEditorToolbar = ({
 	editor,
@@ -33,44 +36,7 @@ export const useAdminTextEditorToolbar = ({
 
 	const blockTypeOpen = blockTypeAnchor !== null;
 
-	const blockTypeOptions = [
-		{
-			value: "p" as const,
-			label: t("admin.texts.createPage.formatText"),
-			iconLabel: "T",
-			hint: undefined,
-		},
-		{
-			value: "h1" as const,
-			label: t("admin.texts.createPage.formatH1"),
-			iconLabel: "H1",
-			hint: "#",
-		},
-		{
-			value: "h2" as const,
-			label: t("admin.texts.createPage.formatH2"),
-			iconLabel: "H2",
-			hint: "##",
-		},
-		{
-			value: "h3" as const,
-			label: t("admin.texts.createPage.formatH3"),
-			iconLabel: "H3",
-			hint: "###",
-		},
-		{
-			value: "h4" as const,
-			label: t("admin.texts.createPage.formatH4"),
-			iconLabel: "H4",
-			hint: "####",
-		},
-		{
-			value: "blockquote" as const,
-			label: t("admin.texts.createPage.formatQuote"),
-			iconLabel: "\"",
-			hint: "\"",
-		},
-	];
+	const blockTypeOptions = getAdminTextEditorBlockTypeOptions(t);
 
 	const currentBlockType: BlockTypeValue = editor?.isActive("heading", { level: 1 })
 		? "h1"
@@ -140,6 +106,25 @@ export const useAdminTextEditorToolbar = ({
 	const handleUndo = () => editor?.chain().focus().undo().run();
 	const handleRedo = () => editor?.chain().focus().redo().run();
 
+	const toolbarActionSections = getAdminTextEditorToolbarActionSections({
+		editor,
+		t,
+		handlers: {
+			handleToggleBold,
+			handleToggleItalic,
+			handleToggleUnderline,
+			handleToggleStrike,
+			handleToggleBulletList,
+			handleToggleOrderedList,
+			handleSetAlignLeft,
+			handleSetAlignCenter,
+			handleSetAlignRight,
+			handleSetAlignJustify,
+			handleUndo,
+			handleRedo,
+		},
+	});
+
 	return {
 		blockTypeAnchor,
 		blockTypeOpen,
@@ -149,17 +134,6 @@ export const useAdminTextEditorToolbar = ({
 		getHandleBlockTypeItemMouseDown,
 		handleBlockTypeBackdropMouseDown,
 		handleBlockTypeMouseDown,
-		handleRedo,
-		handleSetAlignCenter,
-		handleSetAlignJustify,
-		handleSetAlignLeft,
-		handleSetAlignRight,
-		handleToggleBold,
-		handleToggleBulletList,
-		handleToggleItalic,
-		handleToggleOrderedList,
-		handleToggleStrike,
-		handleToggleUnderline,
-		handleUndo,
+		toolbarActionSections,
 	};
 };
