@@ -58,6 +58,10 @@ export const useAdminTextCreatePage = () => {
 
 	const savedIdRef = useRef<string | null>(null);
 	const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const revokeObjectUrl = (url: string | null) => {
+		if (!url?.startsWith("blob:")) return;
+		URL.revokeObjectURL(url);
+	};
 
 	const doSave = async (targetStatus: TextStatus, silent: boolean) => {
 		if (!title.trim()) {
@@ -161,8 +165,9 @@ export const useAdminTextCreatePage = () => {
 	useEffect(() => {
 		return () => {
 			if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+			revokeObjectUrl(coverPreviewUrl);
 		};
-	}, []);
+	}, [coverPreviewUrl]);
 
 	const handleTitleChange = (value: string) => {
 		setTitle(value);
@@ -203,7 +208,18 @@ export const useAdminTextCreatePage = () => {
 
 	const handleCoverSelect = (file: File) => {
 		setPendingCoverFile(file);
-		setCoverPreviewUrl(URL.createObjectURL(file));
+		setCoverPreviewUrl(prev => {
+			revokeObjectUrl(prev);
+			return URL.createObjectURL(file);
+		});
+		markUnsaved();
+	};
+	const handleCoverRemove = () => {
+		setPendingCoverFile(null);
+		setCoverPreviewUrl(prev => {
+			revokeObjectUrl(prev);
+			return null;
+		});
 		markUnsaved();
 	};
 
@@ -249,6 +265,7 @@ export const useAdminTextCreatePage = () => {
 		handleAddPage,
 		handleSelectPage,
 		handleCoverSelect,
+		handleCoverRemove,
 		handleAddTag,
 		handleRemoveTag,
 		setStatus,

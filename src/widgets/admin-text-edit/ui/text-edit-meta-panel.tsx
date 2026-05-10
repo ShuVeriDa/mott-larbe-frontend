@@ -13,14 +13,12 @@ import { useI18n } from "@/shared/lib/i18n";
 import {
 	FieldInput,
 	FieldLabel,
-	FieldSelect,
 	LEVELS,
 	levelColorMap,
 	MetaSection,
-	MetaToggle,
 } from "@/shared/ui/admin-text-meta-fields";
 import type { ComponentProps, KeyboardEvent } from "react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import type { PageContent } from "../model/use-admin-text-edit-page";
 import { TokenizationSection } from "./tokenization-section";
 import { TextEditMetaStatusSection } from "./text-edit-meta-status-section";
@@ -106,7 +104,6 @@ export const TextEditMetaPanel = ({
 	onTokenize,
 }: TextEditMetaPanelProps) => {
 	const { t, lang } = useI18n();
-	const tagInputRef = useRef<HTMLInputElement>(null);
 	const [tagInputValue, setTagInputValue] = useState("");
 	const [metaOpen, setMetaOpen] = useState(false);
 
@@ -132,8 +129,10 @@ export const TextEditMetaPanel = ({
 	};
 
 	return (
-		<div className="flex flex-col overflow-y-auto [&::-webkit-scrollbar]:w-0">
+		<div className="sticky top-[52px] flex h-[calc(100vh-52px)] flex-col overflow-y-auto">
 			<Button
+				variant="bare"
+				size={null}
 				onClick={handleToggleMeta}
 				className="hidden items-center justify-between border-t border-bd-1 bg-surf-2 px-4 py-[13px] transition-colors hover:bg-surf-3 max-[900px]:flex"
 			>
@@ -150,6 +149,9 @@ export const TextEditMetaPanel = ({
 					language={language}
 					labels={{
 						statusSection: t("admin.texts.createPage.sections.status"),
+						statusDraft: t("admin.texts.createPage.statusOptions.draft"),
+						statusPublished: t("admin.texts.createPage.statusOptions.published"),
+						statusArchived: t("admin.texts.createPage.statusOptions.archived"),
 						langLabel: t("admin.texts.createPage.sections.metadata"),
 						langChe: t("admin.texts.createPage.langChe"),
 						langRu: t("admin.texts.createPage.langRu"),
@@ -165,6 +167,8 @@ export const TextEditMetaPanel = ({
 							{LEVELS.map(lvl => (
 								<Button
 									key={lvl}
+									variant="bare"
+									size={null}
 									data-level={lvl}
 									onClick={handleLevelClick}
 									className={`flex h-[30px] items-center justify-center rounded-[6px] border text-[11.5px] font-semibold transition-colors ${
@@ -179,12 +183,23 @@ export const TextEditMetaPanel = ({
 
 					<div className="mb-[11px]">
 						<FieldLabel>{t("admin.texts.createPage.authorLabel")}</FieldLabel>
-						<FieldInput type="text" value={author} onChange={handleAuthorChange} placeholder={t("admin.texts.createPage.authorPlaceholder")} />
+						<FieldInput
+							type="text"
+							value={author}
+							maxLength={50}
+							onChange={handleAuthorChange}
+							placeholder={t("admin.texts.createPage.authorPlaceholder")}
+						/>
 					</div>
 
 					<div>
 						<FieldLabel>{t("admin.texts.createPage.sourceLabel")}</FieldLabel>
-						<FieldInput type="url" value={source} onChange={handleSourceChange} placeholder={t("admin.texts.createPage.sourcePlaceholder")} />
+						<FieldInput
+							type="url"
+							value={source}
+							onChange={handleSourceChange}
+							placeholder={t("admin.texts.createPage.sourcePlaceholder")}
+						/>
 					</div>
 				</MetaSection>
 

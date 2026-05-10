@@ -24,12 +24,9 @@ export const TextEditMetaActionsSection = ({
 	onSaveDraft,
 	onDeleteRequest,
 }: Props) => {
-	const handleSaveAndUpdate: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-		onSaveAndUpdate();
-	const handleSaveDraft: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-		onSaveDraft();
-	const handleDeleteRequest: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-		onDeleteRequest();
+	const handleSaveAndUpdate: NonNullable<ComponentProps<"button">["onClick"]> = () => onSaveAndUpdate();
+	const handleSaveDraft: NonNullable<ComponentProps<"button">["onClick"]> = () => onSaveDraft();
+	const handleDeleteRequest: NonNullable<ComponentProps<"button">["onClick"]> = () => onDeleteRequest();
 
 	return (
 		<>
@@ -45,7 +42,7 @@ export const TextEditMetaActionsSection = ({
 				<Button
 					onClick={handleSaveDraft}
 					disabled={isSaving}
-					className="relative flex h-[34px] w-full items-center justify-center gap-1.5 rounded-[8px] border border-bd-2 bg-transparent text-[12.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-3 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50"
+					className="flex h-[34px] w-full items-center justify-center gap-1.5 rounded-[8px] border border-bd-2 bg-transparent text-[12.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-3 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					<Save className="size-3" />
 					{labels.saveDraft}

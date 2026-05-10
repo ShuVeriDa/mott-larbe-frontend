@@ -1,24 +1,30 @@
+import {
+	DEFAULT_LOCALE,
+	LOCALES,
+	getDictionary,
+	hasLocale,
+} from "@/i18n/locales";
+import { AdminTextEditPage } from "@/widgets/admin-text-edit";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { DEFAULT_LOCALE, LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
-import { AdminTextEditPage } from "@/widgets/admin-text-edit";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
 
 export const generateMetadata = async (props: {
 	params: Promise<{ lang: string; id: string }>;
 }): Promise<Metadata> => {
-	const { lang } = await props.params;
+	const { lang, id } = await props.params;
 	if (!hasLocale(lang)) return {};
 
 	const dict = await getDictionary(lang);
 	const meta = (
 		dict as Record<string, unknown> & {
-			admin?: { meta?: { textsEdit?: { title?: string; description?: string } } };
+			admin?: {
+				meta?: { textsEdit?: { title?: string; description?: string } };
+			};
 		}
 	)?.admin?.meta?.textsEdit;
 
-	const { id } = await props.params;
 	const title = meta?.title ?? "Edit text — Admin | Mott Larbe";
 	const description = meta?.description ?? "Edit library text content and metadata";
 	const path = `/admin/texts/${id}/edit`;
@@ -51,11 +57,13 @@ export const generateMetadata = async (props: {
 	};
 };
 
-interface PageProps {
+interface AdminTextEditRoutePageProps {
 	params: Promise<{ lang: string; id: string }>;
 }
 
-const AdminTextEditRoutePage = async ({ params }: PageProps) => {
+const AdminTextEditRoutePage = async ({
+	params,
+}: AdminTextEditRoutePageProps) => {
 	const { lang, id } = await params;
 	if (!hasLocale(lang)) notFound();
 

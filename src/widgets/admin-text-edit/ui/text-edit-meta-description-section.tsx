@@ -26,6 +26,7 @@ export const TextEditMetaDescriptionSection = ({
 				onChange={handleDescriptionChange}
 				placeholder={placeholder}
 				rows={3}
+				maxLength={1000}
 				className="w-full resize-y rounded-base border border-bd-2 bg-surf px-2.5 py-2 text-[13px] leading-relaxed text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
 				style={{ minHeight: "68px" }}
 			/>

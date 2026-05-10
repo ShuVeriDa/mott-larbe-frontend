@@ -3062,6 +3062,7 @@
 				"descriptionPlaceholder": "Brief description of the text…",
 				"coverUploadLabel": "Upload cover image",
 				"coverUploadSub": "JPEG, PNG or WebP",
+				"coverRemoveLabel": "Remove cover",
 				"tokenizeLabel": "Auto-tokenize on save",
 				"tokenizeSub": "Run tokenization after saving",
 				"normalizationLabel": "Normalization",

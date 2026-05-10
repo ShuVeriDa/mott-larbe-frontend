@@ -8,12 +8,12 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 
 const BLOCK_TYPES = [
-	{ value: "p", label: "Text", shortLabel: "Text" },
-	{ value: "h1", label: "Heading 1", shortLabel: "H1" },
-	{ value: "h2", label: "Heading 2", shortLabel: "H2" },
-	{ value: "h3", label: "Heading 3", shortLabel: "H3" },
-	{ value: "h4", label: "Heading 4", shortLabel: "H4" },
-	{ value: "blockquote", label: "Quote", shortLabel: "Quote" },
+	{ value: "p", label: "Text", iconLabel: "T", hint: undefined },
+	{ value: "h1", label: "Heading 1", iconLabel: "H1", hint: "#" },
+	{ value: "h2", label: "Heading 2", iconLabel: "H2", hint: "##" },
+	{ value: "h3", label: "Heading 3", iconLabel: "H3", hint: "###" },
+	{ value: "h4", label: "Heading 4", iconLabel: "H4", hint: "####" },
+	{ value: "blockquote", label: "Quote", iconLabel: "\"", hint: "\"" },
 ] as const;
 
 export const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
@@ -32,8 +32,7 @@ export const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 						? "blockquote"
 						: "p";
 
-	const currentLabel =
-		BLOCK_TYPES.find(b => b.value === current)?.shortLabel ?? "Text";
+	const currentLabel = BLOCK_TYPES.find(b => b.value === current)?.label ?? "Text";
 
 	const apply = (v: string) => {
 		if (v === "p") editor.chain().focus().setParagraph().run();
@@ -60,7 +59,7 @@ export const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 		<div className="relative">
 			<Button
 				onMouseDown={handleMouseDown}
-				className="flex h-7 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 select-none"
+				className="flex h-7 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 select-none"
 			>
 				{currentLabel}
 				<svg
@@ -88,7 +87,7 @@ export const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 							onMouseDown={handleBackdropMouseDown}
 						/>
 						<div
-							className="fixed z-9999 min-w-[140px] overflow-hidden rounded-[10px] border border-bd-2 bg-surf p-1 shadow-lg"
+							className="fixed z-9999 min-w-[220px] overflow-hidden rounded-[10px] border border-bd-2 bg-surf py-1 shadow-lg flex flex-col gap-1"
 							style={{ top: anchor.bottom + 6, left: anchor.left }}
 						>
 							{BLOCK_TYPES.map(b => {
@@ -102,32 +101,21 @@ export const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 									<Button
 										key={b.value}
 										onMouseDown={handleItemMouseDown}
-										className={`flex w-full items-center justify-start gap-2.5 rounded-[6px] px-2.5 py-1.5 text-[12.5px] transition-colors
-										${current === b.value ? "bg-acc-muted text-acc-strong font-medium" : "text-t-1 hover:bg-surf-2"}`}
+										className={`flex w-[calc(100%-8px)] items-center gap-2 mx-1 rounded-[6px] px-2 py-[5px] text-left transition-colors ${
+											current === b.value ? "bg-surf-2" : "hover:bg-surf-2"
+										}`}
 									>
-										<Typography
-											tag="span"
-											className="w-6 text-left text-[11px] font-semibold text-t-3"
-										>
-											{b.shortLabel}
-										</Typography>
-										{b.label}
-										{current === b.value && (
-											<svg
-												className="ml-auto"
-												width="12"
-												height="12"
-												viewBox="0 0 12 12"
-												fill="none"
+										<span className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-t-2">
+											<Typography
+												tag="span"
+												className="text-[11px] font-medium text-t-2"
 											>
-												<path
-													d="M2 6l3 3 5-5"
-													stroke="currentColor"
-													strokeWidth="1.5"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-												/>
-											</svg>
+												{b.iconLabel}
+											</Typography>
+										</span>
+										<span className="flex-1 text-[13.5px] text-t-1">{b.label}</span>
+										{b.hint && (
+											<span className="text-[11px] text-t-4">{b.hint}</span>
 										)}
 									</Button>
 								);

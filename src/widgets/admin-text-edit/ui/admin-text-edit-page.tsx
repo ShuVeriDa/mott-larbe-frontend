@@ -1,12 +1,10 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
-import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 import Link from "next/link";
+import { type ComponentProps } from "react";
 import { useAdminTextEditPage } from "../model/use-admin-text-edit-page";
 import { TextEditDeleteModal } from "./text-edit-delete-modal";
 import { TextEditEditor } from "./text-edit-editor";
@@ -140,10 +138,17 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 
 	const recentVersions = versionsData?.data ?? [];
 
-		const handleDismissRetokenize: NonNullable<ComponentProps<typeof TextEditEditor>["onDismissRetokenize"]> = () => setShowRetokenizeBar(false);
-	const handleDeleteRequest: NonNullable<ComponentProps<typeof TextEditMetaPanel>["onDeleteRequest"]> = () => setShowDeleteModal(true);
-	const handleCancel: NonNullable<ComponentProps<typeof TextEditDeleteModal>["onCancel"]> = () => setShowDeleteModal(false);
-return (
+	const handleDismissRetokenize: NonNullable<
+		ComponentProps<typeof TextEditEditor>["onDismissRetokenize"]
+	> = () => setShowRetokenizeBar(false);
+	const handleDeleteRequest: NonNullable<
+		ComponentProps<typeof TextEditMetaPanel>["onDeleteRequest"]
+	> = () => setShowDeleteModal(true);
+	const handleCancel: NonNullable<
+		ComponentProps<typeof TextEditDeleteModal>["onCancel"]
+	> = () => setShowDeleteModal(false);
+
+	return (
 		<div className="flex min-h-screen flex-col text-t-1 transition-colors">
 			<TextEditTopbar
 				textId={textId}

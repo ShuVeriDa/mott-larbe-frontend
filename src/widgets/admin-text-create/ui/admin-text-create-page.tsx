@@ -36,6 +36,7 @@ export const AdminTextCreatePage = () => {
 		handleSelectPage,
 		handleDeletePage,
 		handleCoverSelect,
+		handleCoverRemove,
 		handleAddTag,
 		handleRemoveTag,
 		setStatus,
@@ -99,6 +100,7 @@ export const AdminTextCreatePage = () => {
 					onTagRemove={handleRemoveTag}
 					onDescriptionChange={setDescription}
 					onCoverSelect={handleCoverSelect}
+					onCoverRemove={handleCoverRemove}
 					onAutoTokenizeChange={setAutoTokenizeOnSave}
 					onNormalizationChange={setUseNormalization}
 					onMorphAnalysisChange={setUseMorphAnalysis}

@@ -1,12 +1,10 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
 import { useI18n } from "@/shared/lib/i18n";
 import Link from "next/link";
-import { ChevronLeft, ExternalLink, Save, Check } from "lucide-react";
+import { Check, ChevronLeft, ExternalLink, Save } from "lucide-react";
 
 interface TextEditTopbarProps {
 	textId: string;
@@ -28,9 +26,14 @@ export const TextEditTopbar = ({
 	onSaveAndUpdate,
 }: TextEditTopbarProps) => {
 	const { t, lang } = useI18n();
+	const statusLabel = isSaving
+		? t("admin.texts.editPage.saving")
+		: isUnsaved
+			? t("admin.texts.editPage.unsaved")
+			: t("admin.texts.editPage.saved");
 
 	return (
-		<header className=" flex min-h-[52px] items-center gap-2 border-b border-bd-1 bg-surf px-5 transition-colors max-sm:gap-1.5 max-sm:px-3.5">
+		<header className="flex min-h-[52px] items-center gap-2 border-b border-bd-1 bg-surf px-5 transition-colors max-sm:gap-1.5 max-sm:px-3.5">
 			<div className="flex min-w-0 flex-1 items-center gap-2">
 				{/* Back button */}
 				<Link
@@ -84,12 +87,11 @@ export const TextEditTopbar = ({
 					{isUnsaved && (
 						<Typography tag="span" className="h-[7px] w-[7px] shrink-0 animate-pulse rounded-full bg-amb" />
 					)}
+					{!isSaving && !isUnsaved && (
+						<Check className="size-[11px] shrink-0 text-grn" />
+					)}
 					<Typography tag="span" className="text-[11px] text-t-3">
-						{isSaving
-							? t("admin.texts.editPage.saving")
-							: isUnsaved
-								? t("admin.texts.editPage.unsaved")
-								: t("admin.texts.editPage.saved")}
+						{statusLabel}
 					</Typography>
 				</div>
 

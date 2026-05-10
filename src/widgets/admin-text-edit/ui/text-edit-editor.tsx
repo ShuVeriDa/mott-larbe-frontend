@@ -11,7 +11,7 @@ import { type ChangeEvent, type ComponentProps, useRef, useState } from "react";
 import { countChars, countParagraphs, countWords } from "../lib/tiptap-utils";
 import type { PageContent } from "../model/use-admin-text-edit-page";
 import { CharsPopup } from "./chars-popup";
-import { AlertTriangle, CheckCircle2, AlignLeft, Plus } from "lucide-react";
+import { AlignLeft, AlertTriangle, CheckCircle2, Plus } from "lucide-react";
 
 interface TextEditEditorProps {
 	title: string;
@@ -231,7 +231,7 @@ export const TextEditEditor = ({
 
 			{showRetokenizeBar && <RetokenizeBar onDismiss={onDismissRetokenize} t={t} />}
 
-			<div className="border-b border-bd-1 px-[22px] pt-5 max-sm:px-4 max-sm:pt-4 bg-surf">
+			<div className="border-b border-bd-1 bg-surf px-[22px] pt-5 max-sm:px-4 max-sm:pt-4">
 				<textarea
 					ref={titleRef}
 					value={title}
@@ -255,7 +255,7 @@ export const TextEditEditor = ({
 
 			<div className="sticky top-[52px] z-10 flex items-center overflow-x-auto border-b border-bd-1 bg-surf px-3.5 transition-colors [scrollbar-width:none]">
 				{pages.map((_, i) => {
-					const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onSelectPage(i);
+					const handleTabClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onSelectPage(i);
 					return (
 						<div
 							key={i}
@@ -265,7 +265,7 @@ export const TextEditEditor = ({
 									: "border-transparent text-t-3 hover:text-t-2"
 							}`}
 						>
-							<Button onClick={handleClick} className="flex items-center gap-1.5 text-xs">
+							<Button onClick={handleTabClick} className="flex items-center gap-1.5 text-xs">
 								<Typography
 									tag="span"
 									className={`flex h-[17px] w-[17px] items-center justify-center rounded-[4px] text-[10px] font-semibold ${
@@ -285,7 +285,7 @@ export const TextEditEditor = ({
 					onClick={onAddPage}
 					className="ml-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-[5px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2"
 				>
-					<Plus className="size-3.5" />
+					<Plus className="size-[14px]" />
 				</Button>
 
 				<div className="ml-auto shrink-0 pl-2 text-[11px] text-t-3">
@@ -295,7 +295,7 @@ export const TextEditEditor = ({
 				</div>
 			</div>
 
-			<div className="group relative flex-1 px-[22px] py-[22px] pb-10 max-sm:px-4 bg-surf">
+			<div className="group relative flex-1 bg-surf px-[22px] py-[22px] pb-10 max-sm:px-4">
 				<NotionEditor
 					key={activePage}
 					content={pages[activePage]?.doc ?? { type: "doc", content: [{ type: "paragraph" }] }}

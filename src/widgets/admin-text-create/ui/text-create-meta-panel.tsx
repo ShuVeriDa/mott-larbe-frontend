@@ -55,6 +55,7 @@ interface TextCreateMetaPanelProps {
 	onTagRemove: (index: number) => void;
 	onDescriptionChange: (v: string) => void;
 	onCoverSelect: (file: File) => void;
+	onCoverRemove: () => void;
 	onAutoTokenizeChange: (v: boolean) => void;
 	onNormalizationChange: (v: boolean) => void;
 	onMorphAnalysisChange: (v: boolean) => void;
@@ -86,6 +87,7 @@ export const TextCreateMetaPanel = ({
 	onTagRemove,
 	onDescriptionChange,
 	onCoverSelect,
+	onCoverRemove,
 	onAutoTokenizeChange,
 	onNormalizationChange,
 	onMorphAnalysisChange,
@@ -155,6 +157,9 @@ export const TextCreateMetaPanel = ({
 					language={language}
 					labels={{
 						statusSection: t("admin.texts.createPage.sections.status"),
+						statusDraft: t("admin.texts.createPage.statusOptions.draft"),
+						statusPublished: t("admin.texts.createPage.statusOptions.published"),
+						statusArchived: t("admin.texts.createPage.statusOptions.archived"),
 						langLabel: t("admin.texts.createPage.sections.metadata"),
 						langChe: t("admin.texts.createPage.langChe"),
 						langRu: t("admin.texts.createPage.langRu"),
@@ -234,7 +239,9 @@ export const TextCreateMetaPanel = ({
 					sectionTitle={t("admin.texts.createPage.sections.cover")}
 					uploadLabel={t("admin.texts.createPage.coverUploadLabel")}
 					uploadSub={t("admin.texts.createPage.coverUploadSub")}
+					removeLabel={t("admin.texts.createPage.coverRemoveLabel")}
 					onCoverSelect={onCoverSelect}
+					onCoverRemove={onCoverRemove}
 				/>
 
 				<ProcessingSection

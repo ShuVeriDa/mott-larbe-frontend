@@ -3062,6 +3062,7 @@
 				"descriptionPlaceholder": "Йозанийн юккъера сурт…",
 				"coverUploadLabel": "КIоргехьа сурт яхка",
 				"coverUploadSub": "JPEG, PNG я WebP",
+				"coverRemoveLabel": "КIоргехьа сурт дайта",
 				"tokenizeLabel": "Яздале автоматически токенизаци",
 				"tokenizeSub": "Яздале токенизаци дан",
 				"normalizationLabel": "Нормализаци",

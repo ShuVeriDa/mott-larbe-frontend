@@ -38,15 +38,15 @@ export const TokenizationSection = ({
 	onNormalizationChange,
 	onMorphAnalysisChange,
 }: Props) => {
-	const tokenStatusLabel = (): string => t(`admin.texts.editPage.tokenStatus.${processingStatus}`);
-	const tokenStatusClass = (): string => {
-		switch (processingStatus) {
-			case "COMPLETED": return "bg-grn-muted text-grn-strong";
-			case "RUNNING": return "bg-amb-muted text-amb-strong";
-			case "ERROR": return "bg-red-muted text-red-strong";
-			default: return "bg-surf-3 text-t-3";
-		}
-	};
+	const tokenStatusLabel = t(`admin.texts.editPage.tokenStatus.${processingStatus}`);
+	const tokenStatusClass =
+		processingStatus === "COMPLETED"
+			? "bg-grn-muted text-grn-strong"
+			: processingStatus === "RUNNING"
+				? "bg-amb-muted text-amb-strong"
+				: processingStatus === "ERROR"
+					? "bg-red-muted text-red-strong"
+					: "bg-surf-3 text-t-3";
 
 	const handleTokenize: NonNullable<ComponentProps<"button">["onClick"]> = () => onTokenize();
 	const handleAutoTokenizeChange = (v: boolean) => onAutoTokenizeChange(v);
@@ -59,8 +59,8 @@ export const TokenizationSection = ({
 				<Typography tag="span" className="text-xs text-t-2">
 					{t("admin.texts.editPage.tokenStatusLabel")}
 				</Typography>
-				<Typography tag="span" className={`rounded-[4px] px-2 py-0.5 text-[10.5px] font-semibold ${tokenStatusClass()}`}>
-					{tokenStatusLabel()}
+				<Typography tag="span" className={`rounded-[4px] px-2 py-0.5 text-[10.5px] font-semibold ${tokenStatusClass}`}>
+					{tokenStatusLabel}
 				</Typography>
 			</div>
 

@@ -12,6 +12,9 @@ interface Props {
 	language: TextLanguage;
 	labels: {
 		statusSection: string;
+		statusDraft: string;
+		statusPublished: string;
+		statusArchived: string;
 		langLabel: string;
 		langChe: string;
 		langRu: string;
@@ -36,9 +39,9 @@ export const TextCreateMetaStatusSection = ({
 		<>
 			<MetaSection title={labels.statusSection}>
 				<FieldSelect value={status} onChange={handleStatusChange}>
-					<option value="draft">Draft</option>
-					<option value="published">Published</option>
-					<option value="archived">Archived</option>
+					<option value="draft">{labels.statusDraft}</option>
+					<option value="published">{labels.statusPublished}</option>
+					<option value="archived">{labels.statusArchived}</option>
 				</FieldSelect>
 			</MetaSection>
 

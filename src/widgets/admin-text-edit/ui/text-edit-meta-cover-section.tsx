@@ -4,7 +4,7 @@ import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { ComponentProps, useRef } from "react";
 import { MetaSection } from "@/shared/ui/admin-text-meta-fields";
-import { Image } from "lucide-react";
+import { Image as ImageIcon } from "lucide-react";
 
 interface Props {
 	coverPreviewUrl: string | null;
@@ -41,14 +41,15 @@ export const TextEditMetaCoverSection = ({
 			/>
 			<Button
 				onClick={handleCoverClick}
-				className="flex h-[82px] w-full flex-col items-center justify-center gap-1.5 overflow-hidden rounded-[8px] border border-dashed border-bd-2 bg-surf transition-colors hover:border-acc hover:bg-acc-muted"
+				className="flex h-[82px] w-full flex-col items-center justify-center gap-1.5 rounded-[8px] border border-dashed border-bd-2 bg-surf transition-colors hover:border-acc hover:bg-acc-muted"
 			>
 				{coverPreviewUrl ? (
+					// blob: URL from URL.createObjectURL — next/image cannot handle it
 					// eslint-disable-next-line @next/next/no-img-element
-					<img src={coverPreviewUrl} alt="cover preview" className="h-full w-full object-cover" />
+					<img src={coverPreviewUrl} alt="cover preview" className="h-full w-full rounded-base object-cover" />
 				) : (
 					<>
-						<Image className="size-5 text-t-3" />
+						<ImageIcon className="size-5 text-t-3" />
 						<Typography tag="span" className="text-[11px] text-t-3">{uploadLabel}</Typography>
 						<Typography tag="span" className="text-[10px] text-t-4">{uploadSub}</Typography>
 					</>
