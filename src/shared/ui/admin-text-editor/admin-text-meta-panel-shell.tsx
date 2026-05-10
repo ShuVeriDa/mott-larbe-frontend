@@ -189,7 +189,7 @@ export const AdminTextMetaPanelShell = ({
 				{panelContent}
 			</div>
 
-			<div className="fixed right-4 bottom-4 z-205 min-[768px]:hidden">
+			<div className="fixed right-4 bottom-12 z-205 min-[768px]:hidden">
 				<Button
 					variant="bare"
 					size={null}

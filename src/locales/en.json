@@ -3008,6 +3008,12 @@
 				"unsaved": "Unsaved changes",
 				"draftSaved": "Draft saved",
 				"saveDraft": "Save draft",
+				"shortcuts": {
+					"saveDraft": "Save draft",
+					"blocks": "Blocks",
+					"show": "Keyboard shortcuts",
+					"title": "Keyboard shortcuts"
+				},
 				"publish": "Publish",
 				"publishing": "Publishing…",
 				"titlePlaceholder": "Text title",

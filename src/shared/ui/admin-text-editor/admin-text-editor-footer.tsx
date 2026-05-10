@@ -2,6 +2,8 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { AlignLeft } from "lucide-react";
+import { AdminTextEditorShortcutsMenu } from "./admin-text-editor-shortcuts-menu";
+import type { AdminTextEditorShortcut } from "./model/get-admin-text-editor-shortcuts";
 
 interface AdminTextEditorFooterProps {
 	stats: {
@@ -14,11 +16,17 @@ interface AdminTextEditorFooterProps {
 		chars: string;
 		paragraphs: string;
 	};
+	shortcuts?: AdminTextEditorShortcut[];
+	shortcutsButtonLabel?: string;
+	shortcutsTitle?: string;
 }
 
 export const AdminTextEditorFooter = ({
 	stats,
 	labels,
+	shortcuts,
+	shortcutsButtonLabel,
+	shortcutsTitle,
 }: AdminTextEditorFooterProps) => {
 	return (
 		<div className="flex flex-wrap items-center gap-3 border-t border-bd-1 bg-surf-2 px-[22px] py-[7px] text-[11px] text-t-3 transition-colors max-sm:px-4">
@@ -43,6 +51,16 @@ export const AdminTextEditorFooter = ({
 					{stats.paragraphs}
 				</Typography>
 			</div>
+			{shortcuts && shortcutsButtonLabel && shortcutsTitle ? (
+				<div className="ml-auto">
+					<AdminTextEditorShortcutsMenu
+						shortcuts={shortcuts}
+						buttonLabel={shortcutsButtonLabel}
+						title={shortcutsTitle}
+						iconOnly
+					/>
+				</div>
+			) : null}
 		</div>
 	);
 };

@@ -13,3 +13,7 @@ export { AdminTextEditorPageTabs } from "./admin-text-editor-page-tabs";
 export { AdminTextMetaTagsSection } from "./admin-text-meta-tags-section";
 export { AdminTextEditorShell } from "./admin-text-editor-shell";
 export { AdminTextMetaPanelShell } from "./admin-text-meta-panel-shell";
+export { AdminTextMetaPrimaryActionsSection } from "./admin-text-meta-primary-actions-section";
+export { AdminTextTopbarShell } from "./admin-text-topbar-shell";
+export { AdminTextEditorShortcutsMenu } from "./admin-text-editor-shortcuts-menu";
+export { getAdminTextEditorShortcuts } from "./model/get-admin-text-editor-shortcuts";

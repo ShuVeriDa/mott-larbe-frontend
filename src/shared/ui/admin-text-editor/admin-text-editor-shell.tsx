@@ -3,7 +3,6 @@
 import { useI18n } from "@/shared/lib/i18n";
 import type { Editor, TipTapDoc } from "@/shared/ui/notion-editor";
 import { NotionEditor } from "@/shared/ui/notion-editor";
-import { Typography } from "@/shared/ui/typography";
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { AdminTextEditorFooter } from "./admin-text-editor-footer";
@@ -15,6 +14,7 @@ import {
 } from "./admin-text-editor-stats";
 import { AdminTextEditorTitleField } from "./admin-text-editor-title-field";
 import { EditorToolbar, getSlashItems } from "./admin-text-editor-toolbar";
+import { getAdminTextEditorShortcuts } from "./model/get-admin-text-editor-shortcuts";
 
 interface AdminTextEditorShellProps {
 	title: string;
@@ -61,6 +61,10 @@ export const AdminTextEditorShell = ({
 	const [stats, setStats] = useState({ words: 0, chars: 0, paragraphs: 0 });
 	const [editor, setEditor] = useState<Editor | null>(null);
 	const slashItems = getSlashItems(t);
+	const keyboardShortcuts = getAdminTextEditorShortcuts({
+		t,
+		primaryShortcutLabel,
+	});
 
 	const handleUpdate = (doc: TipTapDoc) => {
 		const wordCount = countWords(doc);
@@ -91,37 +95,6 @@ export const AdminTextEditorShell = ({
 		onEditorReady?.(nextEditor);
 	};
 
-	const keyboardHints = (
-		<>
-			<Typography
-				tag="span"
-				className="rounded-[3px] bg-surf-3 px-1 py-px text-t-3"
-			>
-				Ctrl+S
-			</Typography>
-			<Typography tag="span">—</Typography>
-			<Typography tag="span">
-				{t("admin.texts.createPage.saveDraft")}
-			</Typography>
-			<Typography
-				tag="span"
-				className="ml-1 rounded-[3px] bg-surf-3 px-1 py-px text-t-3"
-			>
-				Ctrl+↵
-			</Typography>
-			<Typography tag="span">—</Typography>
-			<Typography tag="span">{primaryShortcutLabel}</Typography>
-			<Typography
-				tag="span"
-				className="ml-2 rounded-[3px] bg-surf-3 px-1 py-px text-t-3"
-			>
-				/
-			</Typography>
-			<Typography tag="span">—</Typography>
-			<Typography tag="span">блоки</Typography>
-		</>
-	);
-
 	return (
 		<div className="flex min-h-0 min-w-0 flex-col overflow-hidden border-r border-bd-1 max-[767px]:border-r-0">
 			{topContent}
@@ -135,7 +108,6 @@ export const AdminTextEditorShell = ({
 			<EditorToolbar
 				editor={editor}
 				t={t}
-				keyboardHints={keyboardHints}
 				extraItems={toolbarExtraItems}
 			/>
 
@@ -177,6 +149,9 @@ export const AdminTextEditorShell = ({
 					chars: t("admin.texts.createPage.chars"),
 					paragraphs: t("admin.texts.createPage.paragraphs"),
 				}}
+				shortcuts={keyboardShortcuts}
+				shortcutsButtonLabel={t("admin.texts.createPage.shortcuts.show")}
+				shortcutsTitle={t("admin.texts.createPage.shortcuts.title")}
 			/>
 		</div>
 	);

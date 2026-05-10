@@ -47,7 +47,10 @@ const GROUPS: ShortcutGroup[] = [
 ];
 
 const KbdKey = ({ children }: { children: string }) => (
-	<Typography tag="span" className="inline-flex h-5 min-w-[22px] items-center justify-center rounded-[4px] border-hairline border-bd-2 bg-surf-2 px-1.5 text-[11px] font-medium text-t-2 shadow-[0_1px_0_var(--bd-2)]">
+	<Typography
+		tag="span"
+		className="inline-flex h-5 min-w-[22px] items-center justify-center rounded-[4px] border-hairline border-bd-2 bg-surf-2 px-1.5 text-[11px] font-medium text-t-2 shadow-[0_1px_0_var(--bd-2)]"
+	>
 		{children}
 	</Typography>
 );
@@ -61,9 +64,9 @@ export const ShortcutsSection = () => {
 				title={t("settings.shortcuts.title")}
 				subtitle={t("settings.shortcuts.sub")}
 			/>
-			{GROUPS.map((group) => (
+			{GROUPS.map(group => (
 				<SettingCard key={group.titleKey} title={t(group.titleKey)} noBody>
-					{group.items.map((item) => (
+					{group.items.map(item => (
 						<div
 							key={item.labelKey}
 							className="flex items-center justify-between gap-2 border-hairline border-b border-bd-1 px-4 py-2.5 last:border-b-0 max-sm:flex-col max-sm:items-start max-sm:gap-1.5"
