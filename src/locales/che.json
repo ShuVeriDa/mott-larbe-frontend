@@ -3039,6 +3039,7 @@
 				"words": "Дешнаш",
 				"chars": "Символаш",
 				"paragraphs": "Абзацаш",
+				"charsOverLimit": "— агIо доза хьалхара яра",
 				"wordsSuffix": "д.",
 				"statusOptions": {
 					"draft": "Черновик",

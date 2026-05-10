@@ -3003,6 +3003,7 @@
 				"words": "Слова",
 				"chars": "Символы",
 				"paragraphs": "Абзацы",
+				"charsOverLimit": "— превышен лимит страницы",
 				"wordsSuffix": "сл.",
 				"statusOptions": {
 					"draft": "Черновик",

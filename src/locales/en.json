@@ -3039,6 +3039,7 @@
 				"words": "Words",
 				"chars": "Characters",
 				"paragraphs": "Paragraphs",
+				"charsOverLimit": "— page limit exceeded",
 				"wordsSuffix": "w.",
 				"statusOptions": {
 					"draft": "Draft",

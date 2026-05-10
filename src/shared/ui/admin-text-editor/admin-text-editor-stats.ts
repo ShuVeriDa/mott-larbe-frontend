@@ -1,5 +1,7 @@
 import type { TipTapDoc, TipTapNode } from "@/shared/ui/notion-editor";
 
+export const PAGE_CHAR_LIMIT = 1800;
+
 const BLOCK_TYPES = new Set(["paragraph", "heading", "listItem"]);
 
 const extractStats = (

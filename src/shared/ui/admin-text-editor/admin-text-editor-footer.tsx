@@ -15,7 +15,9 @@ interface AdminTextEditorFooterProps {
 		words: string;
 		chars: string;
 		paragraphs: string;
+		charsOverLimit: string;
 	};
+	charLimit: number;
 	shortcuts?: AdminTextEditorShortcut[];
 	shortcutsButtonLabel?: string;
 	shortcutsTitle?: string;
@@ -24,10 +26,14 @@ interface AdminTextEditorFooterProps {
 export const AdminTextEditorFooter = ({
 	stats,
 	labels,
+	charLimit,
 	shortcuts,
 	shortcutsButtonLabel,
 	shortcutsTitle,
 }: AdminTextEditorFooterProps) => {
+	const isOverLimit = stats.chars > charLimit;
+	const isNearLimit = !isOverLimit && stats.chars >= charLimit * 0.9;
+
 	return (
 		<div className="flex flex-wrap items-center gap-3 border-t border-bd-1 bg-surf-2 px-[22px] py-[7px] text-[11px] text-t-3 transition-colors max-sm:px-4">
 			<div className="flex items-center gap-1">
@@ -38,11 +44,19 @@ export const AdminTextEditorFooter = ({
 				</Typography>
 			</div>
 			<div className="h-3 w-px bg-bd-2" />
-			<div>
+			<div className={isOverLimit ? "text-red-500" : isNearLimit ? "text-amber-500" : ""}>
 				{labels.chars}:&nbsp;
-				<Typography tag="span" className="font-medium text-t-2">
-					{stats.chars}
+				<Typography
+					tag="span"
+					className={`font-medium ${isOverLimit ? "text-red-500" : isNearLimit ? "text-amber-500" : "text-t-2"}`}
+				>
+					{stats.chars}&nbsp;/&nbsp;{charLimit}
 				</Typography>
+				{isOverLimit && (
+					<Typography tag="span" className="ml-1 font-medium text-red-500">
+						{labels.charsOverLimit}
+					</Typography>
+				)}
 			</div>
 			<div className="h-3 w-px bg-bd-2 max-sm:hidden" />
 			<div className="max-sm:hidden">
