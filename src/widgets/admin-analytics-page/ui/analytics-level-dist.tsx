@@ -6,6 +6,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { LevelDistItem } from "@/entities/admin-analytics";
 import type { CefrLevel } from "@/shared/types";
+import { CEFR_LEVEL_BADGE_CLASS } from "@/shared/lib/cefr-colors";
 
 const LEVEL_BAR_COLOR: Record<CefrLevel, string> = {
 	A1: "bg-grn opacity-70",
@@ -14,15 +15,6 @@ const LEVEL_BAR_COLOR: Record<CefrLevel, string> = {
 	B2: "bg-pur",
 	C1: "bg-amb",
 	C2: "bg-red",
-};
-
-const LEVEL_BADGE_CLASS: Record<CefrLevel, string> = {
-	A1: "bg-grn-bg text-grn-t",
-	A2: "bg-grn-bg text-grn-t",
-	B1: "bg-acc-bg text-acc-t",
-	B2: "bg-pur-bg text-pur-t",
-	C1: "bg-amb-bg text-amb-t",
-	C2: "bg-red-bg text-red-t",
 };
 
 interface AnalyticsLevelDistProps {
@@ -65,7 +57,7 @@ export const AnalyticsLevelDist = ({
 										<Typography tag="span"
 											className={cn(
 												"inline-flex h-5 w-8 items-center justify-center rounded-[5px] text-[10.5px] font-bold tracking-[0.3px]",
-												LEVEL_BADGE_CLASS[item.level],
+												CEFR_LEVEL_BADGE_CLASS[item.level],
 											)}
 										>
 											{item.level}

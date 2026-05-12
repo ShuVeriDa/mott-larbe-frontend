@@ -8,22 +8,9 @@ import type {
 } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
+import { CEFR_LEVELS, POS_OPTIONS } from "@/shared/types";
 import { ComponentProps, useEffect, useRef, useState } from "react";
 import { Select } from "@/shared/ui/select";
-const CEFR_LEVELS: readonly CefrLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
-
-const POS_OPTIONS = [
-	"noun",
-	"verb",
-	"adjective",
-	"adverb",
-	"pronoun",
-	"numeral",
-	"particle",
-	"conjunction",
-	"preposition",
-	"interjection",
-];
 
 interface MetaModalProps {
 	isOpen: boolean;

@@ -5,8 +5,9 @@ import { Button } from "@/shared/ui/button";
 import { Select, type SelectProps } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
 import type { ComponentProps, InputHTMLAttributes, ReactNode } from "react";
+import { CEFR_LEVELS } from "@/shared/types";
 
-export const LEVELS: TextLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
+export const LEVELS: TextLevel[] = CEFR_LEVELS as TextLevel[];
 
 export const levelColorMap: Record<TextLevel, string> = {
 	A1: "bg-grn-bg border-grn/25 text-grn-t",

@@ -1,0 +1,38 @@
+import type {
+	ReaderLetterSpacing,
+	ReaderLineHeight,
+	ReaderPagePadding,
+} from "@/features/reader-text-width";
+
+export const READER_SETTINGS_LEGEND = [
+	{ key: "KNOWN", swatchClass: "bg-[var(--grn)]" },
+	{ key: "LEARNING", swatchClass: "bg-[var(--amb)]" },
+	{ key: "NEW", swatchClass: "bg-[var(--t-4)]" },
+] as const;
+
+export const PAGE_PADDING_OPTIONS: Array<{ value: ReaderPagePadding; labelKey: string }> = [
+	{ value: "compact", labelKey: "reader.settings.paddingCompact" },
+	{ value: "normal", labelKey: "reader.settings.paddingNormal" },
+	{ value: "wide", labelKey: "reader.settings.paddingWide" },
+];
+
+export const LINE_HEIGHT_OPTIONS: Array<{ value: ReaderLineHeight; labelKey: string }> = [
+	{ value: "compact", labelKey: "reader.settings.lineCompact" },
+	{ value: "normal", labelKey: "reader.settings.lineNormal" },
+	{ value: "relaxed", labelKey: "reader.settings.lineRelaxed" },
+];
+
+export const LETTER_SPACING_OPTIONS: Array<{ value: ReaderLetterSpacing; labelKey: string }> = [
+	{ value: "tight", labelKey: "reader.settings.spacingTight" },
+	{ value: "normal", labelKey: "reader.settings.spacingNormal" },
+	{ value: "wide", labelKey: "reader.settings.spacingWide" },
+];
+
+export const THEME_SWATCHES: Array<{
+	value: "default" | "sepia";
+	color: string;
+	labelKey: string;
+}> = [
+	{ value: "default", color: "#ffffff", labelKey: "reader.settings.themeDefault" },
+	{ value: "sepia", color: "#f4efe6", labelKey: "reader.settings.themeSepia" },
+];

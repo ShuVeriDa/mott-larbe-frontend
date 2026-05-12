@@ -20,6 +20,9 @@
 	--t-3: #a5a39a;
 	--t-4: #d2d0c7;
 
+	/* Pastel highlight fills (reader) — always use dark ink so light/dark UI text tokens do not wash out */
+	--reader-hl-fg: #141413;
+
 	--bd-1: rgba(0, 0, 0, 0.07);
 	--bd-2: rgba(0, 0, 0, 0.13);
 	--bd-3: rgba(0, 0, 0, 0.2);
@@ -103,6 +106,8 @@
 	--t-3: #666672;
 	--t-4: #3d3d47;
 
+	--reader-hl-fg: #141413;
+
 	--bd-1: rgba(255, 255, 255, 0.07);
 	--bd-2: rgba(255, 255, 255, 0.11);
 	--bd-3: rgba(255, 255, 255, 0.18);
@@ -180,6 +185,8 @@
 	--t-2: #5c4a34;
 	--t-3: #8a7060;
 	--t-4: #b5a28e;
+	--reader-hl-fg: #2a2215;
+
 	--bd-1: rgba(92, 74, 52, 0.12);
 	--bd-2: rgba(92, 74, 52, 0.2);
 	--bd-3: rgba(92, 74, 52, 0.35);

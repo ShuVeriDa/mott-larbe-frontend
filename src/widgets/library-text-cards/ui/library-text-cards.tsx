@@ -7,6 +7,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import type { LibraryTextListItem } from "@/entities/library-text";
 import type { LibraryView } from "@/features/library-filters";
 import type { CefrLevel } from "@/shared/types";
+import { CEFR_LEVELS } from "@/shared/types";
 import { LibraryTextCard } from "./library-text-card";
 
 interface LibraryTextCardsProps {
@@ -14,8 +15,6 @@ interface LibraryTextCardsProps {
 	view: LibraryView;
 	sort: string;
 }
-
-const LEVEL_ORDER: CefrLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 const getSectionConfig = (level: CefrLevel) => {
 	if (level === "A1" || level === "A2") return "bg-grn-bg text-grn-t";
@@ -59,7 +58,7 @@ export const LibraryTextCards = ({ items, view, sort }: LibraryTextCardsProps) =
 			if (!groups.has(lvl)) groups.set(lvl, []);
 			groups.get(lvl)!.push(item);
 		}
-		const orderedLevels = LEVEL_ORDER.filter((l) => groups.has(l));
+		const orderedLevels = CEFR_LEVELS.filter((l) => groups.has(l));
 
 		let globalIndex = 0;
 		return (

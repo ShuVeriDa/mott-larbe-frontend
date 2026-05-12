@@ -1,7 +1,7 @@
 import { ComponentProps } from 'react';
 import type { CouponType } from "@/entities/admin-coupon";
 import { useI18n } from "@/shared/lib/i18n";
-import { Search } from "lucide-react";
+import { SearchBox } from "@/shared/ui/search-box";
 import { Select } from "@/shared/ui/select";
 
 interface Props {
@@ -31,15 +31,13 @@ export const CouponsToolbar = ({
 	return (
 		<div className="flex flex-wrap items-center gap-2 border-b border-bd-1 px-3.5 py-2.5">
 			{/* Search */}
-			<div className="relative max-w-[240px] flex-1">
-				<Search className="pointer-events-none absolute left-2 top-1/2 size-[13px] -translate-y-1/2 text-t-3" />
-				<input
-					value={search}
-					onChange={handleChange}
-					placeholder={t("admin.coupons.toolbar.searchPlaceholder")}
-					className="h-[30px] w-full rounded-base border border-bd-1 bg-surf-2 pl-7 pr-2.5 text-[12.5px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
-				/>
-			</div>
+			<SearchBox
+				value={search}
+				onChange={handleChange}
+				placeholder={t("admin.coupons.toolbar.searchPlaceholder")}
+				variant="panel"
+				wrapperClassName="max-w-[240px] flex-1"
+			/>
 
 			<Select value={type} onChange={handleChange2} wrapperClassName="w-auto" className="border-bd-1 text-t-2">
 				<option value="">{t("admin.coupons.toolbar.allTypes")}</option>

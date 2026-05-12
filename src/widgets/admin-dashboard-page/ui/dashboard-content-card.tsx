@@ -4,6 +4,7 @@ import { Typography } from "@/shared/ui/typography";
 
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminDashboardContent } from "@/entities/admin-dashboard";
+import { CEFR_LEVELS } from "@/shared/types";
 
 const LEVEL_COLORS: Record<string, string> = {
 	A1: "var(--grn)",
@@ -51,9 +52,8 @@ export const DashboardContentCard = ({ content }: DashboardContentCardProps) => 
 		},
 	];
 
-	const levelOrder = ["A1", "A2", "B1", "B2", "C1", "C2"];
 	const levelsSorted = [...content.textsByLevel].sort(
-		(a, b) => levelOrder.indexOf(a.level ?? "") - levelOrder.indexOf(b.level ?? ""),
+		(a, b) => CEFR_LEVELS.indexOf(a.level as any) - CEFR_LEVELS.indexOf(b.level as any),
 	);
 
 	return (

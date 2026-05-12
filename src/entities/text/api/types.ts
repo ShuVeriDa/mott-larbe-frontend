@@ -21,12 +21,18 @@ export interface TextPageData {
 	contentRaw: string;
 }
 
+export interface TextPageTag {
+	id: string;
+	name: string;
+}
+
 export interface TextPageResponse {
 	id: string;
 	title: string;
 	author: string | null;
 	language: TextLanguage;
 	level: CefrLevel | null;
+	tags?: TextPageTag[];
 	imageUrl: string | null;
 	totalPages: number;
 	wordCount: number;

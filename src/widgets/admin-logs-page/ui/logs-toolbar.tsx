@@ -2,9 +2,9 @@
 
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type { AdminLogRange } from "@/entities/admin-log";
-import { Search, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
+import { SearchBox } from "@/shared/ui/search-box";
 import { Select } from "@/shared/ui/select";
 
 const RANGES: Array<{ value: AdminLogRange; labelKey: string }> = [
@@ -43,19 +43,13 @@ export const LogsToolbar = ({
 	return (
 		<div className="mb-2.5 flex flex-wrap items-center gap-2">
 			{/* Search */}
-			<div className="relative min-w-[160px] flex-1">
-				<Search className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3" />
-				<input
-					type="text"
-					value={search}
-					onChange={handleChange}
-					placeholder={t("admin.logs.toolbar.searchPlaceholder")}
-					className={cn(
-						"h-8 rounded-lg border border-bd-2 bg-surf font-[inherit] text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc",
-						"w-full pl-8 pr-3",
-					)}
-				/>
-			</div>
+			<SearchBox
+				value={search}
+				onChange={handleChange}
+				placeholder={t("admin.logs.toolbar.searchPlaceholder")}
+				wrapperClassName="min-w-[160px] flex-1"
+				className="h-8"
+			/>
 
 			<Select value={service} onChange={handleChange2} wrapperClassName="w-auto" className="bg-surf text-t-2 rounded-lg h-8 hover:border-bd-3">
 				<option value="all">{t("admin.logs.toolbar.allServices")}</option>

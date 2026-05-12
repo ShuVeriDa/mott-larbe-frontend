@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
-import { Search } from "lucide-react";
+import { SearchBox } from "@/shared/ui/search-box";
 import type { PaymentProvider, PlanType, SubscriptionsSort } from "@/entities/admin-subscription";
 import { Select } from "@/shared/ui/select";
 
@@ -38,15 +38,13 @@ export const SubscriptionsToolbar = ({
 	return (
 		<div className="flex flex-wrap items-center gap-2 border-b border-bd-1 px-3.5 py-2.5">
 			{/* Search */}
-			<div className="relative max-w-[260px] flex-1 max-sm:max-w-none max-sm:basis-full">
-				<Search className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3" />
-				<input
-					value={search}
-					onChange={handleChange}
-					placeholder={t("admin.subscriptions.toolbar.searchPlaceholder")}
-					className="h-[30px] w-full rounded-base border border-bd-1 bg-surf-2 pl-7 pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc focus:bg-surf"
-				/>
-			</div>
+			<SearchBox
+				value={search}
+				onChange={handleChange}
+				placeholder={t("admin.subscriptions.toolbar.searchPlaceholder")}
+				variant="panel"
+				wrapperClassName="max-w-[260px] flex-1 max-sm:max-w-none max-sm:basis-full"
+			/>
 
 			<Select value={planType ?? ""} onChange={handleChange2} wrapperClassName="w-auto" className="border-bd-1 text-t-2">
 				<option value="">{t("admin.subscriptions.toolbar.allPlans")}</option>

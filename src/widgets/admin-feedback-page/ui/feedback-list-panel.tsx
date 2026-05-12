@@ -2,7 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
-import { Search } from "lucide-react";
+import { SearchBox } from "@/shared/ui/search-box";
 import { ComponentProps, useEffect, useRef } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackThread, AdminFeedbackTab, FeedbackType } from "@/entities/feedback";
@@ -123,15 +123,14 @@ return (
 				</div>
 
 				{/* Search */}
-				<div className="relative">
-					<Search className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3" />
-					<input
-						value={search}
-						onChange={handleSearchChange}
-						placeholder={t("admin.feedback.searchPlaceholder")}
-						className="h-[30px] w-full rounded-base border border-bd-1 bg-surf-2 pl-[30px] pr-2.5 text-[12px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc"
-					/>
-				</div>
+				<SearchBox
+					value={search}
+					onChange={handleSearchChange}
+					placeholder={t("admin.feedback.searchPlaceholder")}
+					variant="panel"
+					wrapperClassName="w-full"
+					className="text-[12px]"
+				/>
 			</div>
 
 			{/* Type filters */}

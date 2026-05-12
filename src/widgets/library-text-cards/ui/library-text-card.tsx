@@ -2,8 +2,6 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { Button } from "@/shared/ui/button";
-
 import type { LibraryTextListItem } from "@/entities/library-text";
 import type { LibraryView } from "@/features/library-filters";
 import { cn } from "@/shared/lib/cn";
@@ -11,7 +9,6 @@ import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
 import Link from "next/link";
 import { ComponentProps } from "react";
-import { MoreVertical } from "lucide-react";
 
 interface LibraryTextCardProps {
 	item: LibraryTextListItem;
@@ -174,7 +171,7 @@ export const LibraryTextCard = ({
 			/>
 
 			<div className="flex items-start justify-between gap-2">
-				<div className="flex flex-wrap items-center gap-1">
+				<div className="flex items-center gap-1">
 					{item.level && (
 						<Typography
 							tag="span"
@@ -186,20 +183,23 @@ export const LibraryTextCard = ({
 							{item.level}
 						</Typography>
 					)}
-					<Typography
+					{/* <Typography
 						tag="span"
 						className="rounded border border-bd-1 bg-surf-2 px-[7px] py-[2px] text-[10px] text-t-3"
 					>
 						{t(`library.lang.${item.language}`)}
-					</Typography>
-					{item.tags[0] && (
-						<Typography
-							tag="span"
-							className="rounded border border-bd-1 bg-surf-3 px-[7px] py-[2px] text-[10px] text-t-3 max-sm:hidden"
-						>
-							{item.tags[0].name}
-						</Typography>
-					)}
+					</Typography> */}
+					{item.tags[0] &&
+						item.tags.slice(0, 3).map(tag => (
+							<Typography
+								key={tag.id}
+								tag="span"
+								className="rounded border border-bd-1 bg-surf-3 px-[7px] py-[2px] text-[10px] text-t-3 max-sm:hidden"
+							>
+								{tag.name}
+							</Typography>
+						))}
+
 					{item.isNew && (
 						<Typography
 							tag="span"
@@ -209,13 +209,14 @@ export const LibraryTextCard = ({
 						</Typography>
 					)}
 				</div>
-				<Button
+				{/* <Button
 					onClick={handleMenuClick}
+					size={"bare"}
 					className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[5px] text-t-4 transition-colors duration-100 hover:bg-surf-3 hover:text-t-2"
 					aria-label="Меню"
 				>
 					<DotsIcon />
-				</Button>
+				</Button> */}
 			</div>
 
 			<div>

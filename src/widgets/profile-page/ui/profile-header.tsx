@@ -32,7 +32,7 @@ export interface ProfileHeaderProps {
 export const ProfileHeader = ({ profile, subscription }: ProfileHeaderProps) => {
 	const { t } = useI18n();
 
-	const planName = subscription?.plan.name ?? t("profile.header.freePlan");
+	const planName = subscription?.plan?.name ?? t("profile.header.freePlan");
 	const isPremium = subscription?.status === "ACTIVE" || subscription?.status === "TRIALING";
 
 	return (

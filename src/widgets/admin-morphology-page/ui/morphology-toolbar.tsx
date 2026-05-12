@@ -3,7 +3,7 @@
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { MorphRuleType } from "@/entities/morph-rule";
-import { Search } from "lucide-react";
+import { SearchBox } from "@/shared/ui/search-box";
 import { Select } from "@/shared/ui/select";
 
 const POS_OPTIONS = ["NOUN", "VERB", "ADJ", "ADV", "PRON"];
@@ -41,16 +41,13 @@ export const MorphologyToolbar = ({
   const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onTypeChange(e.currentTarget.value as MorphRuleType | "");
   return (
     <div className="mb-3.5 flex flex-wrap items-center gap-2">
-      <div className="relative min-w-[160px] flex-1">
-        <Search className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-t-3" />
-        <input
-          type="text"
-          value={search}
-          onChange={handleChange}
-          placeholder={t("admin.morphology.toolbar.searchPlaceholder")}
-          className="h-8 w-full rounded-lg border border-bd-2 bg-surf pl-8 pr-2.5 text-[12.5px] text-t-1 placeholder:text-t-3 focus:border-acc focus:outline-none"
-        />
-      </div>
+      <SearchBox
+        value={search}
+        onChange={handleChange}
+        placeholder={t("admin.morphology.toolbar.searchPlaceholder")}
+        wrapperClassName="min-w-[160px] flex-1"
+        className="h-8"
+      />
 
       <Select value={pos} onChange={handleChange2} wrapperClassName="w-auto" className="bg-surf text-t-2 rounded-lg h-8 hover:border-bd-3">
         <option value="">{t("admin.morphology.toolbar.allPos")}</option>

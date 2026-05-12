@@ -1,10 +1,11 @@
 "use client";
 
 import { ComponentProps } from 'react';
-import type { CefrLevel, TokenSort, TokenStatus } from "@/entities/token";
+import type { TokenSort, TokenStatus } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
-import { Search } from "lucide-react";
+import { SearchBox } from "@/shared/ui/search-box";
 import { Select } from "@/shared/ui/select";
+import { CEFR_LEVELS } from "@/shared/types";
 
 interface TokenizationToolbarProps {
 	search: string;
@@ -35,20 +36,17 @@ export const TokenizationToolbar = ({
 	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = e => onSortChange(e.currentTarget.value);
 	return (
 		<div className="mb-3.5 flex flex-wrap items-center gap-2">
-			<div className="relative min-w-[160px] flex-1">
-				<Search className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-t-3" />
-				<input
-					type="text"
-					value={search}
-					onChange={handleChange}
-					placeholder={t("admin.tokenization.toolbar.searchPlaceholder")}
-					className="h-8 w-full rounded-base border border-bd-2 bg-surf pl-8 pr-3 text-[12.5px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc"
-				/>
-			</div>
+			<SearchBox
+				value={search}
+				onChange={handleChange}
+				placeholder={t("admin.tokenization.toolbar.searchPlaceholder")}
+				wrapperClassName="min-w-[160px] flex-1"
+				className="h-8"
+			/>
 
 			<Select value={level} onChange={handleChange2} wrapperClassName="w-auto" className="bg-surf text-t-2 h-8 hover:border-bd-3">
 				<option value="">{t("admin.tokenization.toolbar.allLevels")}</option>
-				{(["A1", "A2", "B1", "B2", "C1", "C2"] as CefrLevel[]).map(l => (
+				{CEFR_LEVELS.map(l => (
 					<option key={l} value={l}>
 						{l}
 					</option>

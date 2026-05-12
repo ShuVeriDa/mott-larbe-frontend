@@ -3,13 +3,14 @@
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminTags } from "@/entities/admin-tag";
-import type { TextLevel, TextSortBy } from "@/entities/admin-text";
-import { Search } from "lucide-react";
+import type { TextSortBy } from "@/entities/admin-text";
+import { SearchBox } from "@/shared/ui/search-box";
 import { Select } from "@/shared/ui/select";
+import { CEFR_LEVELS } from "@/shared/types";
 
 interface TextsToolbarProps {
 	search: string;
-	level: TextLevel | "";
+	level: string;
 	tagId: string;
 	sortBy: TextSortBy;
 	onSearchChange: (v: string) => void;
@@ -37,23 +38,19 @@ export const TextsToolbar = ({
 	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onSortChange(e.currentTarget.value as TextSortBy);
 	return (
 		<div className="mb-3.5 flex flex-wrap items-center gap-2">
-			{/* Search */}
-			<div className="relative min-w-[180px] flex-1">
-				<Search className="pointer-events-none absolute left-2.5 top-1/2 size-[14px] -translate-y-1/2 text-t-3" />
-				<input
-					type="text"
-					value={search}
-					onChange={handleChange}
-					placeholder={t("admin.texts.toolbar.searchPlaceholder")}
-					className="h-8 w-full rounded-lg border border-bd-2 bg-surf pl-8 pr-3 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc max-sm:min-w-full max-sm:order-first"
-				/>
-			</div>
+			<SearchBox
+				value={search}
+				onChange={handleChange}
+				placeholder={t("admin.texts.toolbar.searchPlaceholder")}
+				wrapperClassName="min-w-[180px] flex-1 max-sm:min-w-full max-sm:order-first"
+				className="h-8"
+			/>
 
 			{/* Filters */}
 			<div className="flex flex-wrap gap-1.5">
 				<Select value={level} onChange={handleChange2} wrapperClassName="w-auto" className="bg-surf text-t-2 rounded-lg h-8 hover:border-bd-3">
 					<option value="">{t("admin.texts.toolbar.allLevels")}</option>
-					{(["A1", "A2", "B1", "B2", "C1", "C2"] as TextLevel[]).map((l) => (
+					{CEFR_LEVELS.map((l) => (
 						<option key={l} value={l}>{l}</option>
 					))}
 				</Select>

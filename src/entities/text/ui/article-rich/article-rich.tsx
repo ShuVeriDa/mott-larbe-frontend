@@ -63,8 +63,13 @@ const renderSegmentsWithHighlights = (
 	let keyCounter = 0;
 
 	const makeMarkProps = (r: HlRange) => ({
-		style: { backgroundColor: r.color, borderRadius: "2px", padding: "0 1px" } as CSSProperties,
-		className: "text-inherit",
+		style: {
+			backgroundColor: r.color,
+			borderRadius: "2px",
+			padding: "0 1px",
+			color: "var(--reader-hl-fg)",
+		} as CSSProperties,
+		className: "reader-article-highlight",
 	});
 
 	for (const seg of segments) {

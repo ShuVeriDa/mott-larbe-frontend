@@ -6,17 +6,16 @@ import {
 	type DictionaryEntry,
 	type DictionaryListQuery,
 } from "@/entities/dictionary";
-import { LEARNING_LEVELS, type LearningLevel } from "@/shared/types";
+import { LEARNING_LEVELS } from "@/shared/types";
 import { useDebounce } from "@/shared/lib/debounce";
 import { useVocabularyFilters } from "@/features/vocabulary-filters";
+import type { LearningLevel } from "@/shared/types";
 
 export interface GroupedSection {
 	status: LearningLevel;
 	items: DictionaryEntry[];
 	total: number;
 }
-
-const STATUS_ORDER: LearningLevel[] = ["NEW", "LEARNING", "KNOWN"];
 
 export const useGroupedList = () => {
 	const status = useVocabularyFilters((s) => s.status);
@@ -49,7 +48,7 @@ export const useGroupedList = () => {
 	const isLoading = queries.some((q) => q.isLoading);
 	const isError = queries.some((q) => q.isError);
 
-	const sections: GroupedSection[] = STATUS_ORDER.filter((s) =>
+	const sections: GroupedSection[] = LEARNING_LEVELS.filter((s) =>
 		statuses.includes(s),
 	).map((s) => {
 		const idx = statuses.indexOf(s);

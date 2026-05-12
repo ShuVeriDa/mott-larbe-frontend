@@ -2,37 +2,43 @@ import type { ComponentProps } from 'react';
 import { Search } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 
+export type SearchBoxVariant = "toolbar" | "panel";
+
 export type SearchBoxProps = Omit<ComponentProps<"input">, "type"> & {
 	wrapperClassName?: string;
+	variant?: SearchBoxVariant;
 };
 
 export const SearchBox = ({
 	className,
 	wrapperClassName,
+	variant = "toolbar",
 	...props
 }: SearchBoxProps) => (
 	<div
 		data-slot="search-box"
 		className={cn(
-			"flex items-center gap-[7px] h-8 px-[10px]",
-			"bg-surf-2 border-hairline border-bd-2 rounded-base",
-			"transition-colors duration-150",
-			"focus-within:border-acc",
+			"relative flex items-center",
+			variant === "toolbar" && "h-[30px]",
+			variant === "panel" && "h-[30px]",
 			wrapperClassName,
 		)}
 	>
 		<Search
-			className="size-[13px] shrink-0 text-t-3"
-			strokeWidth={2}
+			className={cn(
+				"pointer-events-none absolute left-2.5 size-[13px] shrink-0 text-t-3",
+			)}
+			strokeWidth={1.4}
 			aria-hidden="true"
 		/>
 		<input
 			data-slot="search-box-input"
-			type="search"
+			type="text"
+			autoComplete="off"
 			className={cn(
-				"flex-1 min-w-0 bg-transparent border-0 outline-none",
-				"text-[12.5px] text-t-1 font-[inherit]",
-				"placeholder:text-t-3",
+				"h-full w-full rounded-base border pl-[30px] pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3",
+				variant === "toolbar" && "border-bd-2 bg-surf focus:border-acc",
+				variant === "panel" && "border-bd-1 bg-surf-2 focus:border-acc focus:bg-surf",
 				"[&::-webkit-search-cancel-button]:appearance-none",
 				className,
 			)}

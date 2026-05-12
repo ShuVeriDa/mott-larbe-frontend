@@ -5,7 +5,7 @@ import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 
 import { cn } from "@/shared/lib/cn";
-import { type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
+import { type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 import type { Folder } from "../../api/types";
 import { DEFAULT_FOLDER_COLOR } from "../../lib/folder-presets";
 import { FolderIcon } from "../folder-icon";
@@ -65,7 +65,8 @@ const CountChip = ({
 	tone: "neutral" | "amber" | "green";
 }) => (
 	<div className="flex flex-1 flex-col items-center gap-0.5 rounded-base bg-surf-2 px-1 py-[5px]">
-		<Typography tag="span"
+		<Typography
+			tag="span"
 			className={cn("font-display text-[16px] leading-none", {
 				"text-t-3": tone === "neutral",
 				"text-amb": tone === "amber",
@@ -74,7 +75,10 @@ const CountChip = ({
 		>
 			{value}
 		</Typography>
-		<Typography tag="span" className="text-[9.5px] font-medium uppercase tracking-[0.3px] text-t-3">
+		<Typography
+			tag="span"
+			className="text-[9.5px] font-medium uppercase tracking-[0.3px] text-t-3"
+		>
 			{label}
 		</Typography>
 	</div>
@@ -127,7 +131,10 @@ export const FolderCard = ({
 					</div>
 
 					<div className="min-w-0 flex-1">
-						<Typography tag="h3" className="text-[14px] font-semibold leading-[1.3] text-t-1">
+						<Typography
+							tag="h3"
+							className="text-[14px] font-semibold leading-[1.3] text-t-1"
+						>
 							{folder.name}
 						</Typography>
 					</div>
@@ -152,7 +159,10 @@ export const FolderCard = ({
 					) : null}
 				</div>
 
-				<Typography tag="p" className="mb-3 min-h-[18px] text-[12px] leading-[1.5] text-t-3 line-clamp-2">
+				<Typography
+					tag="p"
+					className="mb-3 min-h-[18px] text-[12px] leading-normal text-t-3 line-clamp-2"
+				>
 					{folder.description ?? ""}
 				</Typography>
 
@@ -160,8 +170,13 @@ export const FolderCard = ({
 
 				<div className="mb-2.5">
 					<div className="mb-1 flex items-center justify-between">
-						<Typography tag="span" className="text-[11px] text-t-3">{labels.progress}</Typography>
-						<Typography tag="span" className="text-[11px] font-semibold text-t-1">
+						<Typography tag="span" className="text-[11px] text-t-3">
+							{labels.progress}
+						</Typography>
+						<Typography
+							tag="span"
+							className="text-[11px] font-semibold text-t-1"
+						>
 							{folder.progress}%
 						</Typography>
 					</div>

@@ -4,11 +4,18 @@ import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps, ReactNode } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
-import { AlignLeft, HelpCircle, FileText, RotateCcw, RefreshCw, Download } from "lucide-react";
 import type { TextVersionListItem } from "@/entities/admin-text";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import {
+	AlignLeft,
+	Download,
+	FileText,
+	HelpCircle,
+	RefreshCw,
+	RotateCcw,
+} from "lucide-react";
+import { ComponentProps, ReactNode } from "react";
 
 const formatDuration = (ms: number | null): string => {
 	if (ms === null) return "—";
@@ -43,7 +50,9 @@ const Dot = ({ status, isCurrent }: DotProps) => {
 			</div>
 		);
 	}
-	return <div className="relative z-10 size-2 shrink-0 rounded-full bg-surf-4" />;
+	return (
+		<div className="relative z-10 size-2 shrink-0 rounded-full bg-surf-4" />
+	);
 };
 
 interface TagProps {
@@ -60,7 +69,13 @@ const Tag = ({ children, variant }: TagProps) => {
 		neutral: "bg-surf-3 text-t-2",
 	}[variant];
 	return (
-		<Typography tag="span" className={cn("rounded px-1.5 py-px text-[10px] font-semibold tracking-[0.2px]", cls)}>
+		<Typography
+			tag="span"
+			className={cn(
+				"rounded px-1.5 py-px text-[10px] font-semibold tracking-[0.2px]",
+				cls,
+			)}
+		>
 			{children}
 		</Typography>
 	);
@@ -77,29 +92,61 @@ interface VersionItemProps {
 	onDownload: (versionNumber: number) => void;
 }
 
-export const VersionItem = ({ item, isFirst, isLast, isActive, onClick, onRestore, onRetry, onDownload }: VersionItemProps) => {
+export const VersionItem = ({
+	item,
+	isFirst,
+	isLast,
+	isActive,
+	onClick,
+	onRestore,
+	onRetry,
+	onDownload,
+}: VersionItemProps) => {
 	const { t } = useI18n();
 
-	const statusVariant: Record<TextVersionListItem["status"], "green" | "amber" | "red" | "neutral"> = {
+	const statusVariant: Record<
+		TextVersionListItem["status"],
+		"green" | "amber" | "red" | "neutral"
+	> = {
 		COMPLETED: "green",
 		RUNNING: "amber",
 		ERROR: "red",
 		IDLE: "neutral",
 	};
 
-	const triggerVariant: Record<TextVersionListItem["trigger"], "blue" | "neutral"> = {
+	const triggerVariant: Record<
+		TextVersionListItem["trigger"],
+		"blue" | "neutral"
+	> = {
 		MANUAL: "blue",
 		AUTO_ON_SAVE: "neutral",
 		AUTO_ON_CREATE: "neutral",
 	};
 
-	const btnClass = "flex size-6 cursor-pointer items-center justify-center rounded-[5px] border-none bg-surf-3 text-t-2 transition-colors hover:bg-surf-4 hover:text-t-1 [&_svg]:size-3";
+	const btnClass =
+		"flex size-6 cursor-pointer items-center justify-center rounded-[5px] border-none bg-surf-3 text-t-2 transition-colors hover:bg-surf-4 hover:text-t-1 [&_svg]:size-3";
 
-	const handleKeyDown: NonNullable<ComponentProps<"div">["onKeyDown"]> = (e) => e.key === "Enter" && onClick();
-	const handleRestoreClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onRestore(); };
-	const handleRetryClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onRetry(); };
-	const handleDownloadClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onDownload(item.version); };
-return (
+	const handleKeyDown: NonNullable<ComponentProps<"div">["onKeyDown"]> = e =>
+		e.key === "Enter" && onClick();
+	const handleRestoreClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = e => {
+		e.stopPropagation();
+		onRestore();
+	};
+	const handleRetryClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = e => {
+		e.stopPropagation();
+		onRetry();
+	};
+	const handleDownloadClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = e => {
+		e.stopPropagation();
+		onDownload(item.version);
+	};
+	return (
 		<div
 			role="button"
 			tabIndex={0}
@@ -108,37 +155,64 @@ return (
 			className={cn(
 				"group relative flex cursor-pointer gap-0 px-4 transition-colors max-sm:px-3",
 				isActive ? "bg-acc-bg" : "hover:bg-surf-2",
-				isActive && "before:absolute before:bottom-2 before:left-0 before:top-2 before:w-0.5 before:rounded-r-sm before:bg-acc",
+				isActive &&
+					"before:absolute before:bottom-2 before:left-0 before:top-2 before:w-0.5 before:rounded-r-sm before:bg-acc",
 			)}
 		>
 			{/* Timeline spine */}
 			<div className="relative flex w-7 shrink-0 flex-col items-center py-3 max-sm:w-5.5">
-				<div className={cn("w-px flex-1 bg-bd-2", isFirst && "bg-transparent")} />
+				<div
+					className={cn("w-px flex-1 bg-bd-2", isFirst && "bg-transparent")}
+				/>
 				<Dot status={item.status} isCurrent={item.isCurrent} />
-				<div className={cn("w-px flex-1 bg-bd-2", isLast && "bg-transparent")} />
+				<div
+					className={cn("w-px flex-1 bg-bd-2", isLast && "bg-transparent")}
+				/>
 			</div>
 
 			{/* Content */}
-			<div className={cn("flex flex-1 min-w-0 gap-2 border-b border-bd-1 py-2.5 pl-2 max-sm:pl-1.5", isLast && "border-none")}>
+			<div
+				className={cn(
+					"flex flex-1 min-w-0 gap-2 border-b border-bd-1 py-2.5 pl-2 max-sm:pl-1.5",
+					isLast && "border-none",
+				)}
+			>
 				<div className="flex flex-1 min-w-0 flex-col gap-1">
 					{/* Top row: version + time */}
 					<div className="flex items-start justify-between gap-2">
-						<Typography tag="span" className={cn(
-							"text-[12.5px] font-medium leading-tight",
-							item.status === "RUNNING" || item.status === "IDLE" ? "text-t-2 font-normal" : "text-t-1",
-						)}>
+						<Typography
+							tag="span"
+							className={cn(
+								"text-[12.5px] font-medium leading-tight",
+								item.status === "RUNNING" || item.status === "IDLE"
+									? "text-t-2 font-normal"
+									: "text-t-1",
+							)}
+						>
 							v{item.version}
-							{item.label && <Typography tag="span" className="ml-1.5 text-t-3">— {item.label}</Typography>}
+							{item.label && (
+								<Typography tag="span" className="ml-1.5 text-t-3">
+									— {item.label}
+								</Typography>
+							)}
 						</Typography>
-						<Typography tag="span" className="shrink-0 mt-px text-[10.5px] text-t-3">
-							{new Date(item.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+						<Typography
+							tag="span"
+							className="shrink-0 mt-px text-[10.5px] text-t-3"
+						>
+							{new Date(item.createdAt).toLocaleTimeString([], {
+								hour: "2-digit",
+								minute: "2-digit",
+							})}
 						</Typography>
 					</div>
 
 					{/* Tags */}
 					<div className="flex flex-wrap gap-1">
 						{item.isCurrent && (
-							<Tag variant="green">{t("admin.texts.versions.item.currentBadge")}</Tag>
+							<Tag variant="green">
+								{t("admin.texts.versions.item.currentBadge")}
+							</Tag>
 						)}
 						<Tag variant={statusVariant[item.status]}>
 							{t(`admin.texts.versions.status.${item.status}`)}
@@ -156,22 +230,37 @@ return (
 					{/* Stats */}
 					{item.status === "COMPLETED" && (
 						<div className="flex flex-wrap items-center gap-3">
-							<Typography tag="span" className="flex items-center gap-1 text-[11px] text-t-3">
+							<Typography
+								tag="span"
+								className="flex items-center gap-1 text-[11px] text-t-3"
+							>
 								<AlignLeft className="size-2.5" />
-								<Typography tag="strong" className="text-t-2">{item.tokenCount.toLocaleString()}</Typography>
-								{" "}{t("admin.texts.versions.item.tokens")}
+								<Typography tag="strong" className="text-t-2">
+									{item.tokenCount.toLocaleString()}
+								</Typography>{" "}
+								{t("admin.texts.versions.item.tokens")}
 							</Typography>
 							{item.unknownCount > 0 && (
-								<Typography tag="span" className="flex items-center gap-1 text-[11px] text-t-3">
+								<Typography
+									tag="span"
+									className="flex items-center gap-1 text-[11px] text-t-3"
+								>
 									<HelpCircle className="size-2.5" />
-									<Typography tag="strong" className="text-red-t">{item.unknownCount}</Typography>
-									{" "}{t("admin.texts.versions.item.unknown")}
+									<Typography tag="strong" className="text-red-t">
+										{item.unknownCount}
+									</Typography>{" "}
+									{t("admin.texts.versions.item.unknown")}
 								</Typography>
 							)}
-							<Typography tag="span" className="flex items-center gap-1 text-[11px] text-t-3">
+							<Typography
+								tag="span"
+								className="flex items-center gap-1 text-[11px] text-t-3"
+							>
 								<FileText className="size-2.5" />
-								<Typography tag="strong" className="text-t-2">{item.pageCount}</Typography>
-								{" "}{t("admin.texts.versions.item.pages")}
+								<Typography tag="strong" className="text-t-2">
+									{item.pageCount}
+								</Typography>{" "}
+								{t("admin.texts.versions.item.pages")}
 							</Typography>
 							{item.durationMs !== null && (
 								<Typography tag="span" className="text-[11px] text-t-3">
@@ -190,7 +279,10 @@ return (
 									style={{ width: `${item.progress}%` }}
 								/>
 							</div>
-							<Typography tag="span" className="min-w-[30px] text-right text-[10.5px] tabular-nums text-t-3">
+							<Typography
+								tag="span"
+								className="min-w-[30px] text-right text-[10.5px] tabular-nums text-t-3"
+							>
 								{item.progress}%
 							</Typography>
 						</div>

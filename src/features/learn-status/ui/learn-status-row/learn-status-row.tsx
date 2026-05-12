@@ -6,9 +6,8 @@ import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { LearningLevel } from "@/shared/types";
+import { LEARNING_LEVELS } from "@/shared/types";
 import { useUpdateLearnStatus } from "../../model";
-
-const LEVELS: LearningLevel[] = ["NEW", "LEARNING", "KNOWN"];
 
 const ACTIVE_CLASS: Record<LearningLevel, string> = {
 	NEW: "bg-surf-3 border-bd-2 text-t-2",
@@ -41,7 +40,7 @@ export const LearnStatusRow = ({
 
 	return (
 		<div className="flex gap-1.5">
-			{LEVELS.map((level) => {
+			{LEARNING_LEVELS.map((level) => {
 				const isActive = level === active;
 								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleSelect(level);
 return (

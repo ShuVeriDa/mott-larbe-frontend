@@ -2,7 +2,7 @@
 
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
-import { Search } from "lucide-react";
+import { SearchBox } from "@/shared/ui/search-box";
 import type { TextListItem, UnknownWordsSortOrder } from "@/entities/admin-unknown-word";
 import { Select } from "@/shared/ui/select";
 
@@ -33,16 +33,13 @@ export const UnknownWordsToolbar = ({
 	return (
 		<div className="mb-2.5 flex flex-wrap items-center gap-2">
 			{/* Search */}
-			<div className="relative min-w-[180px] flex-1">
-				<Search className="pointer-events-none absolute left-2.5 top-1/2 size-[13px] -translate-y-1/2 text-t-3" />
-				<input
-					type="text"
-					value={search}
-					onChange={handleChange}
-					placeholder={t("admin.unknownWords.toolbar.searchPlaceholder")}
-					className="h-8 w-full rounded-lg border border-bd-2 bg-surf pl-8 pr-3 text-[12.5px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc transition-colors"
-				/>
-			</div>
+			<SearchBox
+				value={search}
+				onChange={handleChange}
+				placeholder={t("admin.unknownWords.toolbar.searchPlaceholder")}
+				wrapperClassName="min-w-[180px] flex-1"
+				className="h-8"
+			/>
 
 			{texts.length > 0 && (
 				<Select value={textId ?? ""} onChange={handleChange2} wrapperClassName="w-auto" className="bg-surf text-t-2 rounded-lg h-8 hover:border-bd-3">

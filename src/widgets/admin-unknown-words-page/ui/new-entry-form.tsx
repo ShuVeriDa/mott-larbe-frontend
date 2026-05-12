@@ -4,6 +4,7 @@ import { Typography } from "@/shared/ui/typography";
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { Select } from "@/shared/ui/select";
+import { CEFR_LEVELS } from "@/shared/types";
 
 const inputCls =
 	"h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf transition-colors";
@@ -101,7 +102,7 @@ export const NewEntryForm = ({
 						className="rounded-lg h-9 focus:bg-surf"
 					>
 						<option value="">{t("admin.unknownWords.addModal.levelNone")}</option>
-						{["A1", "A2", "B1", "B2", "C1", "C2"].map((l) => (
+						{CEFR_LEVELS.map((l) => (
 							<option key={l} value={l}>{l}</option>
 						))}
 					</Select>

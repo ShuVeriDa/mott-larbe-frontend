@@ -5,6 +5,7 @@ export type {
 	TextLanguage,
 	TextPageData,
 	TextPageResponse,
+	TextPageTag,
 	TextProgressResponse,
 	TextToken,
 } from "./types";

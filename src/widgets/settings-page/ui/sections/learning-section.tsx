@@ -65,9 +65,9 @@ export const LearningSection = ({
 								<option value="CHE">
 									{t("settings.learning.learningLangChe")}
 								</option>
-								<option value="RU">
+								{/* <option value="RU">
 									{t("settings.learning.learningLangRu")}
-								</option>
+								</option> */}
 							</Select>
 						</div>
 						<div className="flex-1">
@@ -99,7 +99,7 @@ export const LearningSection = ({
 							wrapperClassName="max-w-[280px]"
 						>
 							<option value="RU">{t("settings.appearance.langRu")}</option>
-							<option value="EN">{t("settings.appearance.langEn")}</option>
+							{/* <option value="EN">{t("settings.appearance.langEn")}</option> */}
 						</Select>
 						<Typography
 							tag="span"
@@ -188,7 +188,10 @@ export const LearningSection = ({
 			<SettingCard
 				title={t("settings.learning.srs")}
 				headExtra={
-					<Typography tag="span" className="rounded bg-pur-bg px-1.5 py-0.5 text-[10.5px] font-medium text-pur-t">
+					<Typography
+						tag="span"
+						className="rounded bg-pur-bg px-1.5 py-0.5 text-[10.5px] font-medium text-pur-t"
+					>
 						{t("settings.premium")}
 					</Typography>
 				}
