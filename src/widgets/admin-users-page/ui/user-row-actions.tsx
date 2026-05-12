@@ -1,12 +1,20 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { ComponentProps, useEffect, useRef, useState } from 'react';
-import { useRouter } from "next/navigation";
-import { useI18n } from "@/shared/lib/i18n";
 import type { AdminUserListItem } from "@/entities/admin-user";
 import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
-import { ArrowRight, MoreVertical, User, Plus, MinusCircle, Ban, Trash2 } from "lucide-react";
+import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import {
+	ArrowRight,
+	Ban,
+	MinusCircle,
+	MoreVertical,
+	Plus,
+	Trash2,
+	User,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ComponentProps, useEffect, useRef, useState } from "react";
 
 interface UserRowActionsProps {
 	user: AdminUserListItem;
@@ -22,7 +30,12 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 	useEffect(() => {
 		if (!open) return;
 		const handler = (e: MouseEvent) => {
-			if (menuRef.current && !menuRef.current.contains(e.target as Node /* intentional: outside-click target */)) {
+			if (
+				menuRef.current &&
+				!menuRef.current.contains(
+					e.target as Node /* intentional: outside-click target */,
+				)
+			) {
 				setOpen(false);
 			}
 		};
@@ -44,35 +57,52 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 	const menuDangerClass =
 		"flex w-full cursor-pointer items-center gap-2 rounded-md border-none bg-transparent px-2.5 py-2 text-left font-sans text-[13px] text-red-t transition-colors hover:bg-red-bg";
 
-	const handleOpenProfileClick: NonNullable<ComponentProps<"button">["onClick"]> = () => router.push(`/${lang}/admin/users/${user.id}`);
-	const handleMenuToggleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
-	const handleMenuOpenProfileClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+	const handleOpenProfileClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => router.push(`/${lang}/admin/users/${user.id}`);
+	const handleMenuToggleClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => setOpen(v => !v);
+	const handleMenuOpenProfileClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => {
 		setOpen(false);
 		router.push(`/${lang}/admin/users/${user.id}`);
 	};
-	const handleFreezeClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+	const handleFreezeClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => {
 		setOpen(false);
 		mutations.freeze.mutate(user.id);
 	};
-	const handleUnfreezeClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+	const handleUnfreezeClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => {
 		setOpen(false);
 		mutations.unfreeze.mutate(user.id);
 	};
-	const handleUnblockClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+	const handleUnblockClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => {
 		setOpen(false);
 		mutations.unblock.mutate(user.id);
 	};
-	const handleBlockClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+	const handleBlockClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => {
 		setOpen(false);
 		mutations.block.mutate(user.id);
 	};
-	const handleDeleteClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+	const handleDeleteClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => {
 		setOpen(false);
 		mutations.remove.mutate(user.id);
 	};
-return (
+	return (
 		<div className="flex items-center justify-end gap-0.5">
 			<Button
+				size={"bare"}
 				aria-label={t("admin.users.actions.openProfile")}
 				className={btnClass}
 				onClick={handleOpenProfileClick}
@@ -82,6 +112,7 @@ return (
 
 			<div ref={menuRef} className="relative">
 				<Button
+					size={"bare"}
 					className={btnClass}
 					onClick={handleMenuToggleClick}
 					disabled={isPending}
@@ -92,6 +123,7 @@ return (
 				{open && (
 					<div className="absolute right-0 top-[calc(100%+4px)] z-300 min-w-[170px] rounded-[10px] border border-bd-2 bg-surf p-1 shadow-md">
 						<Button
+							size={"bare"}
 							className={menuItemClass}
 							onClick={handleMenuOpenProfileClick}
 						>
@@ -103,6 +135,7 @@ return (
 
 						{user.status === "ACTIVE" && (
 							<Button
+								size={"bare"}
 								className={menuItemClass}
 								onClick={handleFreezeClick}
 							>
@@ -113,6 +146,7 @@ return (
 
 						{user.status === "FROZEN" && (
 							<Button
+								size={"bare"}
 								className={menuItemClass}
 								onClick={handleUnfreezeClick}
 							>
@@ -123,6 +157,7 @@ return (
 
 						{user.status === "BLOCKED" && (
 							<Button
+								size={"bare"}
 								className={menuItemClass}
 								onClick={handleUnblockClick}
 							>
@@ -133,6 +168,7 @@ return (
 
 						{(user.status === "ACTIVE" || user.status === "FROZEN") && (
 							<Button
+								size={"bare"}
 								className={menuDangerClass}
 								onClick={handleBlockClick}
 							>
@@ -143,6 +179,7 @@ return (
 
 						{user.status === "BLOCKED" && (
 							<Button
+								size={"bare"}
 								className={menuDangerClass}
 								onClick={handleDeleteClick}
 							>

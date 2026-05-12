@@ -2505,7 +2505,18 @@
 				"status": "Status",
 				"sessionActive": "Active",
 				"sessionExpired": "Expired",
-				"currentSession": "current session"
+				"currentSession": "current session",
+				"eventType": {
+					"START_SESSION": "Session started",
+					"OPEN_TEXT": "Text opened",
+					"CLICK_WORD": "Word clicked",
+					"ADD_TO_DICTIONARY": "Added to dictionary",
+					"FAIL_LOOKUP": "Word not found",
+					"READ_SESSION": "Reading session",
+					"REVIEW_SESSION": "Review session",
+					"PASSWORD_RESET_REQUESTED": "Password reset requested",
+					"PASSWORD_RESET_COMPLETED": "Password reset completed"
+				}
 			},
 			"featureFlags": {
 				"title": "Feature flags",
@@ -2587,7 +2598,7 @@
 			"roles": {
 				"learner": "Learner",
 				"support": "Support",
-				"content": "Content",
+				"content": "Content editor",
 				"linguist": "Linguist",
 				"admin": "Admin",
 				"superadmin": "Superadmin"

@@ -2505,7 +2505,18 @@
 				"status": "Статус",
 				"sessionActive": "Активна",
 				"sessionExpired": "Истекла",
-				"currentSession": "текущая сессия"
+				"currentSession": "текущая сессия",
+				"eventType": {
+					"START_SESSION": "Сессия начата",
+					"OPEN_TEXT": "Открыт текст",
+					"CLICK_WORD": "Клик по слову",
+					"ADD_TO_DICTIONARY": "Добавлено в словарь",
+					"FAIL_LOOKUP": "Слово не найдено",
+					"READ_SESSION": "Сессия чтения",
+					"REVIEW_SESSION": "Сессия повторения",
+					"PASSWORD_RESET_REQUESTED": "Запрошен сброс пароля",
+					"PASSWORD_RESET_COMPLETED": "Пароль сброшен"
+				}
 			},
 			"featureFlags": {
 				"title": "Feature flags",
@@ -2585,12 +2596,12 @@
 				"deleted": "Удалён"
 			},
 			"roles": {
-				"learner": "Learner",
-				"support": "Support",
-				"content": "Content",
-				"linguist": "Linguist",
-				"admin": "Admin",
-				"superadmin": "Superadmin"
+				"learner": "Студент",
+				"support": "Поддержка",
+				"content": "Контент",
+				"linguist": "Лингвист",
+				"admin": "Администратор",
+				"superadmin": "Суперадмин"
 			},
 			"plans": {
 				"free": "Free",

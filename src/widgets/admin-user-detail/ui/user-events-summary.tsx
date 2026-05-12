@@ -41,19 +41,19 @@ export const UserEventsSummaryTab = ({
 		<div className="p-3.5 space-y-3">
 			<div className="grid grid-cols-3 gap-2">
 				<div className="rounded-[8px] bg-acc-bg p-2.5">
-					<div className="mb-0.5 text-[10px] font-semibold text-acc-t">OPEN_TEXT</div>
+					<div className="mb-0.5 text-[10px] font-semibold text-acc-t">{t("admin.userDetail.events.eventType.OPEN_TEXT")}</div>
 					<div className="text-[20px] font-semibold leading-none text-t-1">
 						{openText.toLocaleString()}
 					</div>
 				</div>
 				<div className="rounded-[8px] bg-grn-bg p-2.5">
-					<div className="mb-0.5 text-[10px] font-semibold text-grn-t">ADD_TO_DICT</div>
+					<div className="mb-0.5 text-[10px] font-semibold text-grn-t">{t("admin.userDetail.events.eventType.ADD_TO_DICTIONARY")}</div>
 					<div className="text-[20px] font-semibold leading-none text-t-1">
 						{addToDict.toLocaleString()}
 					</div>
 				</div>
 				<div className="rounded-[8px] bg-red-bg p-2.5">
-					<div className="mb-0.5 text-[10px] font-semibold text-red-t">FAIL_LOOKUP</div>
+					<div className="mb-0.5 text-[10px] font-semibold text-red-t">{t("admin.userDetail.events.eventType.FAIL_LOOKUP")}</div>
 					<div className="text-[20px] font-semibold leading-none text-t-1">
 						{failLookup.toLocaleString()}
 					</div>
@@ -66,7 +66,7 @@ export const UserEventsSummaryTab = ({
 						<Typography tag="span" className="text-[11.5px] font-semibold text-t-1">
 							{t("admin.userDetail.events.topUnknown")}
 						</Typography>
-						<Typography tag="span" className="text-[10.5px] text-t-3">topFailLookups</Typography>
+						<Typography tag="span" className="text-[10.5px] text-t-3">{t("admin.userDetail.events.eventType.FAIL_LOOKUP")}</Typography>
 					</div>
 					<div>
 						{summary.topFailLookups.map((item, i) => (

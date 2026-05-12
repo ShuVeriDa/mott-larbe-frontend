@@ -2505,7 +2505,18 @@
 				"status": "Статус",
 				"sessionActive": "Жигарниг",
 				"sessionExpired": "КIелхьарйолу",
-				"currentSession": "хIинца долу сессия"
+				"currentSession": "хIинца долу сессия",
+				"eventType": {
+					"START_SESSION": "Сессия йолаелла",
+					"OPEN_TEXT": "Текст яьккхина",
+					"CLICK_WORD": "Дош таьIна",
+					"ADD_TO_DICTIONARY": "Словарехь тIетоьхна",
+					"FAIL_LOOKUP": "Дош ца карийна",
+					"READ_SESSION": "Деша сессия",
+					"REVIEW_SESSION": "Хьажа сессия",
+					"PASSWORD_RESET_REQUESTED": "Пароль сахьташ дийхина",
+					"PASSWORD_RESET_COMPLETED": "Пароль сахьташ дина"
+				}
 			},
 			"featureFlags": {
 				"title": "Feature flags",
@@ -2585,12 +2596,12 @@
 				"deleted": "Даьккхина"
 			},
 			"roles": {
-				"learner": "Learner",
-				"support": "Support",
-				"content": "Content",
-				"linguist": "Linguist",
-				"admin": "Admin",
-				"superadmin": "Superadmin"
+				"learner": "ДIашархо",
+				"support": "ГоIнан белхахо",
+				"content": "Контент",
+				"linguist": "Меттан говзанча",
+				"admin": "Куьйгалхо",
+				"superadmin": "Лакхара куьйгалхо"
 			},
 			"plans": {
 				"free": "Free",

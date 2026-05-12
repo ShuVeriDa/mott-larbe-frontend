@@ -194,9 +194,9 @@ export const LibraryTextCard = ({
 							<Typography
 								key={tag.id}
 								tag="span"
-								className="rounded border border-bd-1 bg-surf-3 px-[7px] py-[2px] text-[10px] text-t-3 max-sm:hidden"
+								className="rounded border border-bd-2 bg-surf px-[7px] py-[2px] text-[10px] text-t-2 "
 							>
-								{tag.name}
+								#{tag.name}
 							</Typography>
 						))}
 

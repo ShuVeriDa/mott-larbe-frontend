@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { ComponentProps, useEffect, useRef, useState } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
-import { Plus, MoreVertical, Clock, FileText, Trash2 } from "lucide-react";
 import type { UnknownWordItem } from "@/entities/admin-unknown-word";
 import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word/model/use-admin-unknown-word-mutations";
+import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import { Clock, FileText, MoreVertical, Plus, Trash2 } from "lucide-react";
+import { ComponentProps, useEffect, useRef, useState } from "react";
 
 interface RowActionsProps {
 	word: UnknownWordItem;
@@ -28,7 +28,13 @@ export const UnknownWordRowActions = ({
 
 	useEffect(() => {
 		const handler = (e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node /* intentional: outside-click target */)) setOpen(false);
+			if (
+				ref.current &&
+				!ref.current.contains(
+					e.target as Node /* intentional: outside-click target */,
+				)
+			)
+				setOpen(false);
 		};
 		document.addEventListener("mousedown", handler);
 		return () => document.removeEventListener("mousedown", handler);
@@ -36,25 +42,35 @@ export const UnknownWordRowActions = ({
 
 	const isDeleting = mutations.remove.isPending;
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
-					e.stopPropagation();
-					onAddToDictionary();
-				};
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
-						e.stopPropagation();
-						setOpen((v) => !v);
-					};
-	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => { setOpen(false); onAddToDictionary(); };
-	const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => { setOpen(false); onLinkToLemma(); };
-	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => { setOpen(false); onViewContexts(); };
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = e => {
+		e.stopPropagation();
+		onAddToDictionary();
+	};
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = e => {
+		e.stopPropagation();
+		setOpen(v => !v);
+	};
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		setOpen(false);
+		onAddToDictionary();
+	};
+	const handleClick4: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		setOpen(false);
+		onLinkToLemma();
+	};
+	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		setOpen(false);
+		onViewContexts();
+	};
 	const handleClick6: NonNullable<ComponentProps<"button">["onClick"]> = () => {
-								setOpen(false);
-								mutations.remove.mutate(word.id);
-							};
-return (
+		setOpen(false);
+		mutations.remove.mutate(word.id);
+	};
+	return (
 		<div className="flex items-center justify-end gap-0.5">
 			{/* Quick add */}
 			<Button
+				size={"bare"}
 				onClick={handleClick}
 				className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-acc-bg hover:text-acc-t"
 				title={t("admin.unknownWords.row.addToDictionary")}
@@ -65,6 +81,7 @@ return (
 			{/* Dropdown */}
 			<div ref={ref} className="relative">
 				<Button
+					size={"bare"}
 					onClick={handleClick2}
 					className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2"
 				>
@@ -74,6 +91,7 @@ return (
 				{open && (
 					<div className="absolute right-0 top-[calc(100%+4px)] z-20 min-w-[190px] rounded-[9px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
 						<Button
+							size={"bare"}
 							onClick={handleClick3}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
@@ -81,6 +99,7 @@ return (
 							{t("admin.unknownWords.row.addToDictionary")}
 						</Button>
 						<Button
+							size={"bare"}
 							onClick={handleClick4}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
@@ -88,6 +107,7 @@ return (
 							{t("admin.unknownWords.row.linkToLemma")}
 						</Button>
 						<Button
+							size={"bare"}
 							onClick={handleClick5}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
@@ -96,6 +116,7 @@ return (
 						</Button>
 						<div className="my-1 h-px bg-bd-1" />
 						<Button
+							size={"bare"}
 							disabled={isDeleting}
 							onClick={handleClick6}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"

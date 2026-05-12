@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
 import type { AdminUserDetail } from "@/entities/admin-user";
+import { useI18n } from "@/shared/lib/i18n";
+import { ReactNode } from "react";
 
 import { Typography } from "@/shared/ui/typography";
 interface UserInfoSectionProps {
@@ -9,8 +9,15 @@ interface UserInfoSectionProps {
 
 const InfoRow = ({ label, value }: { label: string; value: ReactNode }) => (
 	<div className="flex items-baseline justify-between gap-2">
-		<Typography tag="span" className="text-[12px] text-t-3 shrink-0">{label}</Typography>
-		<Typography tag="span" className="text-right text-[12.5px] font-medium text-t-1">{value}</Typography>
+		<Typography tag="span" className="text-[12px] text-t-3 shrink-0">
+			{label}
+		</Typography>
+		<Typography
+			tag="span"
+			className="text-right text-[12.5px] font-medium text-t-1"
+		>
+			{value}
+		</Typography>
 	</div>
 );
 
@@ -40,14 +47,22 @@ export const UserInfoSection = ({ user }: UserInfoSectionProps) => {
 			<InfoRow
 				label={t("admin.userDetail.id")}
 				value={
-					<Typography tag="span" className="font-mono text-[11px] text-t-3">{user.id}</Typography>
+					<Typography tag="span" className="font-mono text-[9px] text-t-3">
+						{user.id}
+					</Typography>
 				}
 			/>
-			<InfoRow label={t("admin.userDetail.username")} value={user.username || "—"} />
+			<InfoRow
+				label={t("admin.userDetail.username")}
+				value={user.username || "—"}
+			/>
 			<InfoRow
 				label={t("admin.userDetail.phone")}
 				value={
-					<Typography tag="span" className={user.phone ? "text-t-1" : "text-t-3 font-normal"}>
+					<Typography
+						tag="span"
+						className={user.phone ? "text-t-1" : "text-t-3 font-normal"}
+					>
 						{user.phone ?? "—"}
 					</Typography>
 				}

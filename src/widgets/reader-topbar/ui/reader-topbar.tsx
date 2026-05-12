@@ -4,20 +4,11 @@ import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import type { TextPageResponse } from "@/entities/text";
 import { cn } from "@/shared/lib/cn";
-import {
-	Bookmark,
-	BookMarked,
-	ChevronLeft,
-	List,
-	Maximize2,
-	Minimize2,
-	NotebookPen,
-	PanelRightOpen,
-	Settings,
-} from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { ReaderPager } from "./reader-pager";
 import { useReaderTopbar } from "../model/use-reader-topbar";
+import { getTopbarActions } from "../lib/topbar-actions";
 
 const iconBtnClass = cn(
 	"inline-flex h-[30px] w-[30px] items-center justify-center rounded-base",
@@ -111,103 +102,38 @@ export const ReaderTopbar = ({
 			/>
 
 			<div className="flex shrink-0 items-center gap-1">
-				<Button
-					onClick={handleToggleWordPanel}
-					size="bare"
-					aria-pressed={wordPanelTogglePressed}
-					aria-label={t("reader.topbar.togglePanel")}
-					className={iconBtnClass}
-				>
-					<PanelRightOpen className="size-[15px]" strokeWidth={1.4} />
-				</Button>
-
-				{onToggleToc && (
+				{getTopbarActions({
+					t,
+					wordPanelTogglePressed,
+					handleToggleWordPanel,
+					tocOpen,
+					onToggleToc,
+					isPageBookmarked,
+					togglePageBookmark,
+					bookmarksOpen,
+					onToggleBookmarks,
+					notesOpen,
+					onToggleNotes,
+					settingsOpen,
+					onToggleSettings,
+					focusModeActive,
+					onToggleFocusMode,
+					bookmarked: data.bookmarked,
+					bookmarking,
+					handleBookmark,
+				}).map((action) => (
 					<Button
-						onClick={onToggleToc}
+						key={action.key}
+						onClick={action.onClick}
 						size="bare"
-						aria-pressed={tocOpen}
-						aria-label={t("reader.topbar.toc")}
+						aria-pressed={action.ariaPressed}
+						aria-label={action.ariaLabel}
+						disabled={action.disabled}
 						className={iconBtnClass}
 					>
-						<List className="size-[15px]" strokeWidth={1.4} />
+						{action.renderIcon()}
 					</Button>
-				)}
-
-				<Button
-					onClick={togglePageBookmark}
-					size="bare"
-					aria-pressed={isPageBookmarked}
-					aria-label={t("reader.topbar.bookmarks")}
-					className={iconBtnClass}
-				>
-					<BookMarked
-						className="size-[15px]"
-						strokeWidth={1.4}
-						fill={isPageBookmarked ? "currentColor" : "none"}
-					/>
-				</Button>
-
-				{onToggleBookmarks && (
-					<Button
-						onClick={onToggleBookmarks}
-						size="bare"
-						aria-pressed={bookmarksOpen}
-						aria-label={t("reader.topbar.bookmarksList")}
-						className={iconBtnClass}
-					>
-						<List className="size-[15px]" strokeWidth={1.4} />
-					</Button>
-				)}
-
-				<Button
-					onClick={onToggleNotes}
-					size="bare"
-					aria-pressed={notesOpen}
-					aria-label={t("reader.topbar.notes")}
-					className={iconBtnClass}
-				>
-					<NotebookPen className="size-[15px]" strokeWidth={1.4} />
-				</Button>
-
-				<Button
-					onClick={onToggleSettings}
-					size="bare"
-					aria-pressed={settingsOpen}
-					aria-label={t("reader.topbar.settings")}
-					className={iconBtnClass}
-				>
-					<Settings className="size-[15px]" strokeWidth={1.4} />
-				</Button>
-
-				{onToggleFocusMode && (
-					<Button
-						onClick={onToggleFocusMode}
-						size="bare"
-						aria-pressed={focusModeActive}
-						aria-label={t("reader.topbar.focusMode")}
-						className={iconBtnClass}
-					>
-						{focusModeActive
-							? <Minimize2 className="size-[15px]" strokeWidth={1.4} />
-							: <Maximize2 className="size-[15px]" strokeWidth={1.4} />
-						}
-					</Button>
-				)}
-
-				<Button
-					onClick={handleBookmark}
-					size="bare"
-					disabled={bookmarking}
-					aria-pressed={Boolean(data.bookmarked)}
-					aria-label={t("reader.topbar.bookmark")}
-					className={iconBtnClass}
-				>
-					<Bookmark
-						className="size-[15px]"
-						strokeWidth={1.4}
-						fill={data.bookmarked ? "currentColor" : "none"}
-					/>
-				</Button>
+				))}
 			</div>
 		</header>
 	);

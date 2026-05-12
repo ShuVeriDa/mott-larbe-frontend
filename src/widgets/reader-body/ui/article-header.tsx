@@ -35,10 +35,10 @@ export const ArticleHeader = ({ data, currentPage }: ArticleHeaderProps) => {
 					<Typography
 						key={tag.id}
 						tag="span"
-						className="inline-flex items-center gap-1 rounded-full border border-bd-2 bg-surf px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-t-2 transition-colors"
+						className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-t-2 transition-colors"
 					>
 						{/* <span aria-hidden="true" className="size-1 rounded-full bg-t-4" /> */}
-						{tag.name}
+						#{tag.name}
 					</Typography>
 				))}
 			</div>

@@ -1,8 +1,10 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/cn";
 import { Avatar } from "@/shared/ui/avatar";
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
+import { CircleUserRound } from "lucide-react";
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
 import { useUserMenu } from "../model";
 import { UserMenuContent } from "./user-menu-content";
@@ -21,7 +23,10 @@ interface UserMenuProps {
 	bottomNav?: boolean;
 }
 
-export const UserMenu = ({ isCompactMode = false, bottomNav = false }: UserMenuProps) => {
+export const UserMenu = ({
+	isCompactMode = false,
+	bottomNav = false,
+}: UserMenuProps) => {
 	const { user, open, setOpen, initials, displayName } = useUserMenu();
 
 	if (!user) return null;
@@ -37,7 +42,8 @@ export const UserMenu = ({ isCompactMode = false, bottomNav = false }: UserMenuP
 							open ? "text-acc" : "text-t-3",
 						)}
 					>
-						<Avatar size="default">{initials}</Avatar>
+						<CircleUserRound size={20} />
+						<Typography tag="span">{displayName}</Typography>
 					</button>
 				</DropdownMenuPrimitive.Trigger>
 				<DropdownMenuPrimitive.Portal>
@@ -62,17 +68,21 @@ export const UserMenu = ({ isCompactMode = false, bottomNav = false }: UserMenuP
 						"flex w-full items-center gap-2.5 min-h-fit rounded-none px-3.5 py-1.5 pb-3 text-left transition-[colors,padding,gap] duration-200",
 						"hover:bg-surf-2 focus-visible:outline-none focus-visible:bg-surf-2",
 						open && "bg-surf-2",
-						isCompactMode && "max-[899px]:justify-center! max-[899px]:gap-0 max-[899px]:px-0 max-[899px]:py-2",
+						isCompactMode &&
+							"max-[899px]:justify-center! max-[899px]:gap-0 max-[899px]:px-0 max-[899px]:py-2",
 					)}
 				>
 					<Avatar size="default">{initials}</Avatar>
 					<div
 						className={cn(
 							"min-w-0 flex-1 transition-[width,opacity] duration-200",
-							isCompactMode && "max-[899px]:w-0 max-[899px]:flex-none max-[899px]:overflow-hidden max-[899px]:opacity-0",
+							isCompactMode &&
+								"max-[899px]:w-0 max-[899px]:flex-none max-[899px]:overflow-hidden max-[899px]:opacity-0",
 						)}
 					>
-						<div className="truncate text-[12.5px] font-medium text-t-1">{displayName}</div>
+						<div className="truncate text-[12.5px] font-medium text-t-1">
+							{displayName}
+						</div>
 						<div className="text-[11px] text-t-3">{user.email}</div>
 					</div>
 				</Button>

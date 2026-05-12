@@ -1,9 +1,9 @@
 "use client";
 
-import { cva, type VariantProps } from "class-variance-authority";
-import type { ComponentProps } from 'react';
-import { Avatar as AvatarPrimitive } from "radix-ui";
 import { cn } from "@/shared/lib/cn";
+import { cva, type VariantProps } from "class-variance-authority";
+import { Avatar as AvatarPrimitive } from "radix-ui";
+import type { ComponentProps } from "react";
 
 export const avatarVariants = cva(
 	[
@@ -14,6 +14,7 @@ export const avatarVariants = cva(
 		variants: {
 			size: {
 				default: "size-[30px] text-[11px]",
+				md: "size-5 text-[10px] border-1 border-black",
 				lg: "size-10 text-[14px]",
 			},
 		},
