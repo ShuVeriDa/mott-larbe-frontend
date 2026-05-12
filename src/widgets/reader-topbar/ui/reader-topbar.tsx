@@ -3,15 +3,7 @@
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import type { TextPageResponse } from "@/entities/text";
-import { useToggleBookmark } from "@/features/bookmark-text";
-import { usePageBookmarkToggle } from "@/features/page-bookmark-toggle";
-import {
-	SHEET_LAYOUT_MAX_WIDTH_PX,
-	useWordLookupStore,
-} from "@/features/word-lookup";
 import { cn } from "@/shared/lib/cn";
-import { useI18n } from "@/shared/lib/i18n";
-import { useToast } from "@/shared/lib/toast";
 import {
 	Bookmark,
 	BookMarked,
@@ -25,6 +17,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { ReaderPager } from "./reader-pager";
+import { useReaderTopbar } from "../model/use-reader-topbar";
 
 const iconBtnClass = cn(
 	"inline-flex h-[30px] w-[30px] items-center justify-center rounded-base",
@@ -66,59 +59,19 @@ export const ReaderTopbar = ({
 	focusModeActive,
 	onToggleFocusMode,
 }: ReaderTopbarProps) => {
-	const { t } = useI18n();
-	const { mutate: toggleBookmark, isPending: bookmarking } = useToggleBookmark();
-	const { success, error } = useToast();
-
-	const snippet = data.page.contentRaw.slice(0, 100);
-	const { isBookmarked: isPageBookmarked, handleToggle: togglePageBookmark } =
-		usePageBookmarkToggle(textId, currentPage, snippet);
-
-	const panelOpen = useWordLookupStore(s => s.panelOpen);
-	const surface = useWordLookupStore(s => s.surface);
-	const activeToken = useWordLookupStore(s => s.activeToken);
-	const togglePanel = useWordLookupStore(s => s.togglePanel);
-	const openInSheet = useWordLookupStore(s => s.openInSheet);
-	const openEmptyWordSheet = useWordLookupStore(s => s.openEmptyWordSheet);
-	const closeSheet = useWordLookupStore(s => s.closeSheet);
-
-	const handleToggleWordPanel = () => {
-		if (
-			typeof window !== "undefined" &&
-			window.innerWidth <= SHEET_LAYOUT_MAX_WIDTH_PX
-		) {
-			if (surface === "sheet") {
-				closeSheet();
-				return;
-			}
-			if (activeToken) {
-				openInSheet(activeToken);
-				return;
-			}
-			openEmptyWordSheet();
-			return;
-		}
-		togglePanel();
-	};
-
-	const wordPanelTogglePressed = panelOpen || surface === "sheet";
-
-	const onBookmark = () => {
-		toggleBookmark(textId, {
-			onSuccess: ({ bookmarked }) =>
-				success(
-					bookmarked
-						? t("reader.toasts.bookmarkAdded")
-						: t("reader.toasts.bookmarkRemoved"),
-				),
-			onError: () => error(t("reader.toasts.bookmarkFailed")),
-		});
-	};
-
-	const metaParts = [data.author, data.level, data.language].filter(Boolean);
+	const {
+		t,
+		bookmarking,
+		isPageBookmarked,
+		togglePageBookmark,
+		wordPanelTogglePressed,
+		handleToggleWordPanel,
+		handleBookmark,
+		metaParts,
+	} = useReaderTopbar(textId, currentPage, data);
 
 	return (
-		<header className="flex h-[46px] shrink-0 items-center gap-2 border-b border-hairline border-bd-1 bg-surf px-4">
+		<header className="flex h-[46px] shrink-0 items-center gap-2 border-b border-hairline border-bd-1 bg-surf px-4 max-md:sticky max-md:top-0 max-md:z-80">
 			<Link
 				href={`/${lang}/texts`}
 				className="inline-flex shrink-0 items-center gap-1.5 rounded-base px-2 py-1 text-[12.5px] text-t-2 transition-colors duration-100 hover:bg-surf-2 hover:text-t-1"
@@ -180,7 +133,7 @@ export const ReaderTopbar = ({
 					</Button>
 				)}
 
-					<Button
+				<Button
 					onClick={togglePageBookmark}
 					size="bare"
 					aria-pressed={isPageBookmarked}
@@ -242,7 +195,7 @@ export const ReaderTopbar = ({
 				)}
 
 				<Button
-					onClick={onBookmark}
+					onClick={handleBookmark}
 					size="bare"
 					disabled={bookmarking}
 					aria-pressed={Boolean(data.bookmarked)}

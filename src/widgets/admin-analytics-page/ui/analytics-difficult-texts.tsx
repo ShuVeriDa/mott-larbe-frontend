@@ -4,11 +4,14 @@ import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
+import type {
+	DifficultBy,
+	DifficultTextItem,
+} from "@/entities/admin-analytics";
+import { CEFR_LEVEL_BADGE_CLASS } from "@/shared/lib/cefr-colors";
 import { cn } from "@/shared/lib/cn";
-import type { DifficultBy, DifficultTextItem } from "@/entities/admin-analytics";
-import { CEFR_CEFR_LEVEL_BADGE_CLASS } from "@/shared/lib/cefr-colors";
+import { useI18n } from "@/shared/lib/i18n";
+import { ComponentProps } from "react";
 
 const TABS: DifficultBy[] = ["fail", "pct", "abandon"];
 
@@ -48,22 +51,26 @@ export const AnalyticsDifficultTexts = ({
 
 			{/* Tab strip */}
 			<div className="-mb-px flex gap-px overflow-x-auto border-b border-bd-1 px-4">
-				{TABS.map((tb) => {
-				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onTabChange(tb);
-				  return (
-					<Button
-						key={tb}
-						onClick={handleClick}
-						className={cn(
-							"whitespace-nowrap border-b-2 px-2.5 py-2 text-[12px] font-medium transition-colors",
-							tb === tab
-								? "border-acc text-t-1"
-								: "border-transparent text-t-3 hover:text-t-2",
-						)}
-					>
-						{t(`admin.analytics.difficultTexts.tab${tb.charAt(0).toUpperCase() + tb.slice(1)}`)}
-					</Button>
-				);
+				{TABS.map(tb => {
+					const handleClick: NonNullable<
+						ComponentProps<"button">["onClick"]
+					> = () => onTabChange(tb);
+					return (
+						<Button
+							key={tb}
+							onClick={handleClick}
+							className={cn(
+								"whitespace-nowrap border-b-2 px-2.5 py-2 text-[12px] font-medium transition-colors rounded-b-none",
+								tb === tab
+									? "border-acc text-t-1"
+									: "border-transparent text-t-3 hover:text-t-2",
+							)}
+						>
+							{t(
+								`admin.analytics.difficultTexts.tab${tb.charAt(0).toUpperCase() + tb.slice(1)}`,
+							)}
+						</Button>
+					);
 				})}
 			</div>
 
@@ -82,12 +89,15 @@ export const AnalyticsDifficultTexts = ({
 							<div className="h-4 w-8 animate-pulse rounded bg-surf-3" />
 						</div>
 					))
-				: items.map((item) => (
+				: items.map(item => (
 						<div
 							key={item.rank}
 							className="flex items-center gap-2.5 border-b border-bd-1 px-4 py-2 last:border-0"
 						>
-							<Typography tag="span" className="w-4 shrink-0 text-right text-[10.5px] font-semibold text-t-3">
+							<Typography
+								tag="span"
+								className="w-4 shrink-0 text-right text-[10.5px] font-semibold text-t-3"
+							>
 								{item.rank}
 							</Typography>
 							<div className="min-w-0 flex-1">
@@ -96,7 +106,8 @@ export const AnalyticsDifficultTexts = ({
 								</div>
 								<div className="mt-0.5 flex items-center gap-1 text-[11px] text-t-3">
 									{item.level && (
-										<Typography tag="span"
+										<Typography
+											tag="span"
 											className={cn(
 												"inline-flex h-5 w-8 items-center justify-center rounded-[5px] text-[10.5px] font-bold",
 												CEFR_LEVEL_BADGE_CLASS[item.level],

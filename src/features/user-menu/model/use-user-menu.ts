@@ -5,8 +5,10 @@ import { type MouseEvent, useState } from "react";
 import { useCurrentUser } from "@/entities/user";
 import { LOCALES, type Locale } from "@/i18n/locale-list";
 import { useI18n } from "@/shared/lib/i18n";
+import { useMounted } from "@/shared/lib/mounted";
 import { canAccessAdmin, getDisplayName, getUserInitials } from "../lib/user-helpers";
 import { useLogout } from "./use-logout";
+import { useTheme } from "next-themes";
 
 const LOCALE_SHORT: Record<Locale, string> = {
 	che: "CHE",
@@ -21,6 +23,18 @@ export const useUserMenu = () => {
 	const logout = useLogout();
 	const router = useRouter();
 	const pathname = usePathname();
+	const { theme, setTheme } = useTheme();
+	const mounted = useMounted();
+
+	const handleThemeItemSelect = (e: Event) => {
+		e.preventDefault();
+	};
+
+	const handleSetTheme = (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		const value = e.currentTarget.dataset.theme;
+		if (value === "dark" || value === "light") setTheme(value);
+	};
 
 	const initials = user ? getUserInitials(user) : "";
 	const displayName = user ? getDisplayName(user) : "";
@@ -54,6 +68,9 @@ export const useUserMenu = () => {
 		initials,
 		displayName,
 		showAdmin,
+		theme: mounted ? theme : undefined,
+		handleThemeItemSelect,
+		handleSetTheme,
 		handleLogout,
 		handleLanguageItemSelect,
 		handleLocaleClick,

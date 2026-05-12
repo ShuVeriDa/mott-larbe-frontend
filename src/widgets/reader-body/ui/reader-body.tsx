@@ -1,20 +1,25 @@
 "use client";
-import type { CSSProperties } from 'react';
-import { createPortal } from "react-dom";
-import { cn } from "@/shared/lib/cn";
 import { ArticleRich, type TextPageResponse } from "@/entities/text";
-import { FONT_SIZE_PX, useReaderFontSize } from "@/features/reader-font-size";
-import { FONT_FAMILY_CLASS, useReaderFontFamily } from "@/features/reader-font-family";
 import {
-	useReaderTextLayout,
+	FONT_FAMILY_CLASS,
+	useReaderFontFamily,
+} from "@/features/reader-font-family";
+import { FONT_SIZE_PX, useReaderFontSize } from "@/features/reader-font-size";
+import {
+	HIGHLIGHT_COLOR_HEX,
+	HighlightColorPicker,
+} from "@/features/reader-highlight";
+import {
 	COLUMN_WIDTH_PX,
-	PAGE_PADDING_CLASS,
-	LINE_HEIGHT_VALUE,
 	LETTER_SPACING_VALUE,
+	LINE_HEIGHT_VALUE,
+	PAGE_PADDING_CLASS,
+	useReaderTextLayout,
 } from "@/features/reader-text-width";
-import { HighlightColorPicker, HIGHLIGHT_COLOR_HEX } from "@/features/reader-highlight";
 import { useReaderTheme } from "@/features/reader-theme";
 import { useSelectToken, useWordLookupStore } from "@/features/word-lookup";
+import { cn } from "@/shared/lib/cn";
+import { createPortal } from "react-dom";
 import { useReaderHighlights } from "../model/use-reader-highlights";
 import { ArticleHeader } from "./article-header";
 import { ReaderProgressBar } from "./reader-progress-bar";
@@ -26,12 +31,13 @@ export interface ReaderBodyProps {
 
 export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 	const onSelectToken = useSelectToken();
-	const activeToken = useWordLookupStore((s) => s.activeToken);
-	const theme = useReaderTheme((s) => s.theme);
-	const bgColor = useReaderTheme((s) => s.bgColor);
-	const fontSize = useReaderFontSize((s) => s.size);
-	const fontFamily = useReaderFontFamily((s) => s.family);
-	const { columnWidth, pagePadding, lineHeight, letterSpacing } = useReaderTextLayout();
+	const activeToken = useWordLookupStore(s => s.activeToken);
+	const theme = useReaderTheme(s => s.theme);
+	const bgColor = useReaderTheme(s => s.bgColor);
+	const fontSize = useReaderFontSize(s => s.size);
+	const fontFamily = useReaderFontFamily(s => s.family);
+	const { columnWidth, pagePadding, lineHeight, letterSpacing } =
+		useReaderTextLayout();
 
 	const {
 		articleRef,
@@ -58,7 +64,7 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 	return (
 		<article
 			className={cn(
-				"flex-1 overflow-y-auto pt-8 pb-15 max-md:pt-4 max-md:pb-24",
+				"flex-1 overflow-y-auto pt-8 pb-15 max-md:pt-4",
 				"[&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded [&::-webkit-scrollbar-thumb]:bg-surf-4",
 				PAGE_PADDING_CLASS[pagePadding],
 				FONT_FAMILY_CLASS[fontFamily],
@@ -78,17 +84,19 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 				letterSpacing={LETTER_SPACING_VALUE[letterSpacing]}
 				highlights={highlightMarks}
 			/>
-			{typeof window !== "undefined" && selection && createPortal(
-				<HighlightColorPicker
-					x={selection.x}
-					y={selection.y}
-					onPick={handlePickColor}
-					onDismiss={handleDismiss}
-					hasExisting={!!matchedHighlight}
-					onRemove={matchedHighlight ? handleRemoveHighlight : undefined}
-				/>,
-				document.body,
-			)}
+			{typeof window !== "undefined" &&
+				selection &&
+				createPortal(
+					<HighlightColorPicker
+						x={selection.x}
+						y={selection.y}
+						onPick={handlePickColor}
+						onDismiss={handleDismiss}
+						hasExisting={!!matchedHighlight}
+						onRemove={matchedHighlight ? handleRemoveHighlight : undefined}
+					/>,
+					document.body,
+				)}
 		</article>
 	);
 };

@@ -4,11 +4,11 @@ import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type { PopularBy, PopularTextItem } from "@/entities/admin-analytics";
-import { CEFR_CEFR_LEVEL_BADGE_CLASS } from "@/shared/lib/cefr-colors";
+import { CEFR_LEVEL_BADGE_CLASS } from "@/shared/lib/cefr-colors";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import { ComponentProps } from "react";
 
 const TABS: PopularBy[] = ["opens", "complete", "saved"];
 
@@ -40,22 +40,26 @@ export const AnalyticsPopularTexts = ({
 
 			{/* Tab strip */}
 			<div className="-mb-px flex gap-px overflow-x-auto border-b border-bd-1 px-4">
-				{TABS.map((tb) => {
-				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onTabChange(tb);
-				  return (
-					<Button
-						key={tb}
-						onClick={handleClick}
-						className={cn(
-							"whitespace-nowrap border-b-2 px-2.5 py-2 text-[12px] font-medium transition-colors",
-							tb === tab
-								? "border-acc text-t-1"
-								: "border-transparent text-t-3 hover:text-t-2",
-						)}
-					>
-						{t(`admin.analytics.popularTexts.tab${tb.charAt(0).toUpperCase() + tb.slice(1)}`)}
-					</Button>
-				);
+				{TABS.map(tb => {
+					const handleClick: NonNullable<
+						ComponentProps<"button">["onClick"]
+					> = () => onTabChange(tb);
+					return (
+						<Button
+							key={tb}
+							onClick={handleClick}
+							className={cn(
+								"whitespace-nowrap border-b-2 px-2.5 py-2 text-[12px] font-medium transition-colors rounded-b-none",
+								tb === tab
+									? "border-acc text-t-1"
+									: "border-transparent text-t-3 hover:text-t-2",
+							)}
+						>
+							{t(
+								`admin.analytics.popularTexts.tab${tb.charAt(0).toUpperCase() + tb.slice(1)}`,
+							)}
+						</Button>
+					);
 				})}
 			</div>
 
@@ -97,7 +101,7 @@ export const AnalyticsPopularTexts = ({
 										</td>
 									</tr>
 								))
-							: items.map((item) => (
+							: items.map(item => (
 									<tr
 										key={item.rank}
 										className="border-b border-bd-1 transition-colors last:border-0 hover:bg-surf-2"
@@ -108,12 +112,15 @@ export const AnalyticsPopularTexts = ({
 										<td className="px-2 py-2.5">
 											<div className="font-medium text-t-1">{item.title}</div>
 											{item.author && (
-												<div className="text-[11.5px] text-t-3">{item.author}</div>
+												<div className="text-[11.5px] text-t-3">
+													{item.author}
+												</div>
 											)}
 										</td>
 										<td className="px-2 py-2.5">
 											{item.level && (
-												<Typography tag="span"
+												<Typography
+													tag="span"
 													className={cn(
 														"inline-flex h-5 w-8 items-center justify-center rounded-[5px] text-[10.5px] font-bold",
 														CEFR_LEVEL_BADGE_CLASS[item.level],

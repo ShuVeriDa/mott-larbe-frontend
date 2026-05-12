@@ -510,8 +510,10 @@
 		"freePlan": "Free план",
 		"freePlanDesc": "До 200 слов в словаре. Разблокируйте больше возможностей.",
 		"upgrade": "Улучшить план",
-		"darkTheme": "Тёмная тема",
-		"lightTheme": "Светлая тема",
+		"theme": "Тема",
+		"darkTheme": "Тёмная",
+		"lightTheme": "Светлая",
+		"collapse": "Свернуть",
 		"streak": "Серия",
 		"streakRecord": "Рекорд: {days} дн.",
 		"recentWords": "Последние слова",
@@ -3790,9 +3792,9 @@
 			},
 			"eventsChart": {
 				"title": "События обучения",
-				"openText": "OPEN_TEXT",
-				"addToDict": "ADD_TO_DICT",
-				"failLookup": "FAIL_LOOKUP"
+				"openText": "Открыли текст",
+				"addToDict": "Добавили в словарь",
+				"failLookup": "Не нашли слово"
 			},
 			"topUsers": {
 				"title": "Топ активных",

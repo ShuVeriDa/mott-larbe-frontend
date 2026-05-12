@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import type { ReactNode } from 'react';
+import { UserMenu } from "@/features/user-menu";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import type { ReactNode } from "react";
 import {
 	HomeIcon,
 	ProgressIcon,
@@ -74,6 +75,7 @@ export const BottomNav = () => {
 						</Link>
 					);
 				})}
+				<UserMenu bottomNav />
 			</div>
 		</nav>
 	);

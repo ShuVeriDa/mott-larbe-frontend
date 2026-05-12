@@ -510,8 +510,10 @@
 		"freePlan": "Free план",
 		"freePlanDesc": "200 дешнал т1аьхьа а дац. Дукхадар лело план хийца.",
 		"upgrade": "План тоьттур",
-		"darkTheme": "1аьржа тема",
-		"lightTheme": "К1айн тема",
+		"theme": "Тема",
+		"darkTheme": "1аьржа",
+		"lightTheme": "К1айн",
+		"collapse": "Сецо",
 		"streak": "Деношца",
 		"streakRecord": "Рекорд: {days} де",
 		"recentWords": "ТIаьхьарлера дешнаш",
@@ -3790,9 +3792,9 @@
 			},
 			"eventsChart": {
 				"title": "Хьехархой хиламаш",
-				"openText": "OPEN_TEXT",
-				"addToDict": "ADD_TO_DICT",
-				"failLookup": "FAIL_LOOKUP"
+				"openText": "Текст латIа оьцца",
+				"addToDict": "Дош дошаме т1етоха",
+				"failLookup": "Ца хааш долу дешнаш"
 			},
 			"topUsers": {
 				"title": "Жигара пайдахоь",

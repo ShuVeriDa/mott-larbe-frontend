@@ -219,6 +219,76 @@ const ProductCard = ({ product }: { product: Product }) => (
 
 Do **not** split a component into container + presentational just because it fetches data — a custom hook already solves that.
 
+### Component Composition — SRP-driven decomposition
+
+Split a component when it has **multiple independent reasons to change**. Always in combination with the Custom Hooks rule: logic goes into a hook, JSX is then split by visual section.
+
+```tsx
+// ✅ Step 1 — Custom Hooks rule: вся логика в хуке
+// model/use-admin-side-nav.ts
+export const useAdminSideNav = () => {
+	const [isExpandedOnSmall, setIsExpandedOnSmall] = useState(false);
+	const isCompactMode = !isExpandedOnSmall;
+	const handleToggleExpanded = () => setIsExpandedOnSmall(prev => !prev);
+	return { isCompactMode, isExpandedOnSmall, handleToggleExpanded };
+};
+
+// ❌ Step 2 — без декомпозиции: три независимых секции в одном файле,
+//    три причины для изменения — header / контент / toggle
+export const AdminSideNav = () => {
+	const { isCompactMode, isExpandedOnSmall, handleToggleExpanded } =
+		useAdminSideNav();
+	return (
+		<nav>
+			{/* 50 строк header JSX */}
+			{/* 60 строк content JSX */}
+			{/* 30 строк toggle JSX */}
+		</nav>
+	);
+};
+
+// ✅ Step 2 — SRP: каждая секция — отдельная причина для изменения
+// ui/admin-side-nav.tsx
+export const AdminSideNav = () => {
+	const { isCompactMode, isExpandedOnSmall, handleToggleExpanded } =
+		useAdminSideNav();
+	return (
+		<nav>
+			<AdminSideNavHeader isCompactMode={isCompactMode} />
+			<AdminSideNavContent isCompactMode={isCompactMode} />
+			<AdminSideNavToggle
+				isExpandedOnSmall={isExpandedOnSmall}
+				onToggle={handleToggleExpanded}
+			/>
+		</nav>
+	);
+};
+
+// ui/admin-side-nav-header.tsx — одна причина: изменился внешний вид header
+const AdminSideNavHeader = ({ isCompactMode }: { isCompactMode: boolean }) => (
+	<div>{/* header JSX */}</div>
+);
+
+// ui/admin-side-nav-content.tsx — одна причина: изменился внешний вид контента
+const AdminSideNavContent = ({ isCompactMode }: { isCompactMode: boolean }) => (
+	<div>{/* nav content JSX */}</div>
+);
+
+// ui/admin-side-nav-toggle.tsx — одна причина: изменился внешний вид toggle
+const AdminSideNavToggle = ({ isExpandedOnSmall, onToggle }: Props) => (
+	<button onClick={onToggle}>{/* toggle JSX */}</button>
+);
+```
+
+**Two rules, applied in order:**
+
+1. **Custom Hooks** — logic, state, handlers → `model/use-<name>.ts`
+2. **Component Composition** — if JSX still has distinct visual sections → split by SRP
+
+Size (~100–150 lines) is a signal, not the rule. A 200-line component with one visual section stays together; a 60-line component with three unrelated sections gets split.
+
+> **Отличие от Container/Presentational:** тот паттерн — про разные источники данных (см. выше). Этот — про визуальные секции с независимыми причинами изменения.
+
 ---
 
 ## React Imports

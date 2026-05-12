@@ -510,8 +510,10 @@
 		"freePlan": "Free plan",
 		"freePlanDesc": "Up to 200 words. Unlock more features.",
 		"upgrade": "Upgrade plan",
-		"darkTheme": "Dark theme",
-		"lightTheme": "Light theme",
+		"theme": "Theme",
+		"darkTheme": "Dark",
+		"lightTheme": "Light",
+		"collapse": "Collapse",
 		"streak": "Streak",
 		"streakRecord": "Record: {days} d.",
 		"recentWords": "Recent words",
@@ -3790,9 +3792,9 @@
 			},
 			"eventsChart": {
 				"title": "Learning events",
-				"openText": "OPEN_TEXT",
-				"addToDict": "ADD_TO_DICT",
-				"failLookup": "FAIL_LOOKUP"
+				"openText": "Opened text",
+				"addToDict": "Added to dictionary",
+				"failLookup": "Word lookup failed"
 			},
 			"topUsers": {
 				"title": "Top active",
