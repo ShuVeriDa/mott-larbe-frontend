@@ -53,11 +53,11 @@ export const AnalyticsLevelDist = ({
 									<div className="flex items-center gap-1.5 text-[12px] font-medium text-t-1">
 										<Typography tag="span"
 											className={cn(
-												"inline-flex h-5 w-8 items-center justify-center rounded-[5px] text-[10.5px] font-bold tracking-[0.3px]",
+												"inline-flex h-5 items-center justify-center rounded-[5px] px-1.5 text-[10.5px] font-bold tracking-[0.3px]",
 												CEFR_LEVEL_BADGE_CLASS[item.level],
 											)}
 										>
-											{item.level}
+											{t(`shared.cefrLevel.${item.level}`)}
 										</Typography>
 										{t(`admin.analytics.levelDist.${item.level.toLowerCase()}`)}
 									</div>

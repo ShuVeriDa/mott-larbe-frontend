@@ -2,12 +2,13 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { cn } from "@/shared/lib/cn";
-import { useI18n } from "@/shared/lib/i18n";
 import type { LibraryTextListItem } from "@/entities/library-text";
 import type { LibraryView } from "@/features/library-filters";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
 import { CEFR_LEVELS } from "@/shared/types";
+import { CefrBadge } from "@/shared/ui/cefr-badge";
 import { LibraryTextCard } from "./library-text-card";
 
 interface LibraryTextCardsProps {
@@ -16,13 +17,11 @@ interface LibraryTextCardsProps {
 	sort: string;
 }
 
-const getSectionConfig = (level: CefrLevel) => {
-	if (level === "A1" || level === "A2") return "bg-grn-bg text-grn-t";
-	if (level === "B1" || level === "B2") return "bg-amb-bg text-amb-t";
-	return "bg-red-bg text-red-t";
-};
-
-export const LibraryTextCards = ({ items, view, sort }: LibraryTextCardsProps) => {
+export const LibraryTextCards = ({
+	items,
+	view,
+	sort,
+}: LibraryTextCardsProps) => {
 	const { t } = useI18n();
 
 	if (items.length === 0) {
@@ -39,8 +38,12 @@ export const LibraryTextCards = ({ items, view, sort }: LibraryTextCardsProps) =
 				>
 					<path d="M4 8h28M4 16h20M4 24h14M4 32h8" />
 				</svg>
-				<Typography tag="p" className="text-sm font-medium text-t-2">{t("library.empty.title")}</Typography>
-				<Typography tag="p" className="text-xs">{t("library.empty.sub")}</Typography>
+				<Typography tag="p" className="text-sm font-medium text-t-2">
+					{t("library.empty.title")}
+				</Typography>
+				<Typography tag="p" className="text-xs">
+					{t("library.empty.sub")}
+				</Typography>
 			</div>
 		);
 	}
@@ -54,39 +57,39 @@ export const LibraryTextCards = ({ items, view, sort }: LibraryTextCardsProps) =
 	if (sort === "level") {
 		const groups = new Map<CefrLevel, LibraryTextListItem[]>();
 		for (const item of items) {
-			const lvl = (item.level ?? "A1") as CefrLevel;
+			const lvl = (item.level ?? "") as CefrLevel;
 			if (!groups.has(lvl)) groups.set(lvl, []);
 			groups.get(lvl)!.push(item);
 		}
-		const orderedLevels = CEFR_LEVELS.filter((l) => groups.has(l));
+		const orderedLevels = CEFR_LEVELS.filter(l => groups.has(l));
 
 		let globalIndex = 0;
 		return (
 			<div className="flex flex-col gap-0">
-				{orderedLevels.map((lvl) => {
+				{orderedLevels.map(lvl => {
 					const group = groups.get(lvl)!;
-					const sectionClass = getSectionConfig(lvl);
 					return (
 						<div key={lvl} className="mb-5">
 							<div className="mb-2.5 flex items-center gap-2.5">
-								<Typography tag="span"
-									className={cn(
-										"rounded-[5px] px-[9px] py-[3px] text-[11px] font-semibold uppercase tracking-[0.08em]",
-										sectionClass,
-									)}
-								>
-									{lvl}
-								</Typography>
+								<CefrBadge level={lvl} />
 								<div className="h-px flex-1 bg-bd-1" />
-								<Typography tag="span" className="shrink-0 text-[11px] text-t-3">
+								<Typography
+									tag="span"
+									className="shrink-0 text-[11px] text-t-3"
+								>
 									{group.length}
 								</Typography>
 							</div>
 							<div className={gridClass}>
-								{group.map((item) => {
+								{group.map(item => {
 									const idx = globalIndex++;
 									return (
-										<LibraryTextCard key={item.id} item={item} view={view} index={idx} />
+										<LibraryTextCard
+											key={item.id}
+											item={item}
+											view={view}
+											index={idx}
+										/>
 									);
 								})}
 							</div>

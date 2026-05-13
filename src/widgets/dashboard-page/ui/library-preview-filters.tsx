@@ -73,7 +73,7 @@ export const LibraryPreviewFilters = ({
 							active={filterLevel === levelFilter}
 							onClick={handleLevelClick}
 						>
-							{levelFilter}
+							{t(`shared.cefrLevel.${levelFilter}`)}
 						</LibraryPreviewFilterButton>
 					);
 				})}

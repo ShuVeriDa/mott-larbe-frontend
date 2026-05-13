@@ -10,7 +10,7 @@ import { useUserMenu } from "../model";
 import { UserMenuContent } from "./user-menu-content";
 
 const dropdownContentCls = cn(
-	"z-50 w-56 rounded-lg overflow-hidden",
+	"z-50 w-58 rounded-lg overflow-hidden",
 	"bg-surf border border-bd-1 shadow-lg",
 	"origin-[var(--radix-dropdown-menu-content-transform-origin)]",
 	"data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",

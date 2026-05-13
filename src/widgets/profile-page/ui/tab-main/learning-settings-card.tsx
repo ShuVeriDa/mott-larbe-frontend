@@ -1,12 +1,12 @@
 "use client";
-import { ComponentProps, useState } from "react";
+import type { UserLanguage, UserLevel, UserProfile } from "@/entities/user";
+import { useUpdateUser } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { InputLabel } from "@/shared/ui/input";
 import { Select } from "@/shared/ui/select";
-import { useUpdateUser } from "@/entities/user";
-import type { UserLanguage, UserLevel, UserProfile } from "@/entities/user";
+import { ComponentProps, useState } from "react";
 import { ProfileCard as SettingCard } from "../profile-card";
 
 const LANGUAGES: { value: UserLanguage; label: string }[] = [
@@ -15,26 +15,29 @@ const LANGUAGES: { value: UserLanguage; label: string }[] = [
 ];
 
 const LEVELS: { value: UserLevel; label: string }[] = [
-	{ value: "A1", label: "settings.learning.levelA1" },
-	{ value: "A2", label: "settings.learning.levelA2" },
-	{ value: "B1", label: "settings.learning.levelB1" },
-	{ value: "B2", label: "settings.learning.levelB2" },
-	{ value: "C1", label: "settings.learning.levelC1" },
-	{ value: "C2", label: "settings.learning.levelC2" },
+	{ value: "A", label: "settings.learning.levelA" },
+	// { value: "A", label: "settings.learning.levelA" },
+	{ value: "B", label: "settings.learning.levelB" },
+	// { value: "B", label: "settings.learning.levelB" },
+	// { value: "C", label: "settings.learning.levelC" },
+	{ value: "C", label: "settings.learning.levelC" },
 ];
-
 
 export interface LearningSettingsCardProps {
 	profile: UserProfile;
 }
 
-export const LearningSettingsCard = ({ profile }: LearningSettingsCardProps) => {
+export const LearningSettingsCard = ({
+	profile,
+}: LearningSettingsCardProps) => {
 	const { t } = useI18n();
 	const { success, error } = useToast();
 	const { mutateAsync, isPending } = useUpdateUser();
 
-	const [language, setLanguage] = useState<UserLanguage>(profile.language ?? "CHE");
-	const [level, setLevel] = useState<UserLevel>(profile.level ?? "A1");
+	const [language, setLanguage] = useState<UserLanguage>(
+		profile.language ?? "CHE",
+	);
+	const [level, setLevel] = useState<UserLevel>(profile.level ?? "A");
 
 	const handleSubmit = async () => {
 		try {
@@ -45,9 +48,11 @@ export const LearningSettingsCard = ({ profile }: LearningSettingsCardProps) => 
 		}
 	};
 
-		const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setLanguage(e.currentTarget.value as UserLanguage);
-	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setLevel(e.currentTarget.value as UserLevel);
-return (
+	const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = e =>
+		setLanguage(e.currentTarget.value as UserLanguage);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e =>
+		setLevel(e.currentTarget.value as UserLevel);
+	return (
 		<SettingCard title={t("profile.learningSettings.title")}>
 			<form action={handleSubmit} className="flex flex-col gap-3">
 				<div className="grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">

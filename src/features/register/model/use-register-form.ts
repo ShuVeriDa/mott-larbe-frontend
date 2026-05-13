@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { type ComponentProps, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { type CefrLevel } from "@/shared/types/cefr";
+import { useRouter } from "next/navigation";
+import { type ComponentProps, useState } from "react";
 import { useRegister } from "./use-register";
 
 interface RegisterErrors {
@@ -32,7 +32,7 @@ export const useRegisterForm = ({ successHref }: UseRegisterFormParams) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [password2, setPassword2] = useState("");
-	const [level, setLevel] = useState<CefrLevel>("A2");
+	const [level, setLevel] = useState<CefrLevel>("A");
 	const [showPw, setShowPw] = useState(false);
 	const [errors, setErrors] = useState<RegisterErrors>({});
 
@@ -82,31 +82,33 @@ export const useRegisterForm = ({ successHref }: UseRegisterFormParams) => {
 		}
 	};
 
-	const handleNameChange: NonNullable<ComponentProps<"input">["onChange"]> = (
-		event,
-	) => setName(event.currentTarget.value);
-	const handleSurnameChange: NonNullable<ComponentProps<"input">["onChange"]> = (
-		event,
-	) => setSurname(event.currentTarget.value);
+	const handleNameChange: NonNullable<
+		ComponentProps<"input">["onChange"]
+	> = event => setName(event.currentTarget.value);
+	const handleSurnameChange: NonNullable<
+		ComponentProps<"input">["onChange"]
+	> = event => setSurname(event.currentTarget.value);
 	const handleUsernameChange: NonNullable<
 		ComponentProps<"input">["onChange"]
-	> = (event) => setUsername(event.currentTarget.value);
-	const handleEmailChange: NonNullable<ComponentProps<"input">["onChange"]> = (
-		event,
-	) => setEmail(event.currentTarget.value);
+	> = event => setUsername(event.currentTarget.value);
+	const handleEmailChange: NonNullable<
+		ComponentProps<"input">["onChange"]
+	> = event => setEmail(event.currentTarget.value);
 	const handlePasswordChange: NonNullable<
 		ComponentProps<"input">["onChange"]
-	> = (event) => setPassword(event.currentTarget.value);
+	> = event => setPassword(event.currentTarget.value);
 	const handleTogglePasswordVisibility: NonNullable<
 		ComponentProps<"button">["onClick"]
-	> = () => setShowPw((value) => !value);
+	> = () => setShowPw(value => !value);
 	const handlePasswordConfirmChange: NonNullable<
 		ComponentProps<"input">["onChange"]
-	> = (event) => setPassword2(event.currentTarget.value);
-	const handleLevelClick: NonNullable<ComponentProps<"button">["onClick"]> = (
-		event,
-	) => {
-		const nextLevel = event.currentTarget.dataset.level as CefrLevel | undefined;
+	> = event => setPassword2(event.currentTarget.value);
+	const handleLevelClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = event => {
+		const nextLevel = event.currentTarget.dataset.level as
+			| CefrLevel
+			| undefined;
 		if (!nextLevel) return;
 		setLevel(nextLevel);
 	};

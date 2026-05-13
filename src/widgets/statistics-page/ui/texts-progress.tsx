@@ -63,7 +63,7 @@ const TextRow = ({
 					{item.title}
 				</Typography>
 				<div className="flex items-center gap-1.5 text-[11px] text-t-3">
-					<Typography tag="span">{item.level}</Typography>
+					<Typography tag="span">{item.level ? t(`shared.cefrLevel.${item.level}`) : "—"}</Typography>
 					<Typography tag="span" aria-hidden="true">·</Typography>
 					<Typography tag="span">{item.language}</Typography>
 					<Typography tag="span" aria-hidden="true">·</Typography>

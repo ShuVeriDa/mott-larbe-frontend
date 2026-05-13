@@ -532,7 +532,16 @@
 			"support": "Гӏо дар",
 			"subscription": "Подписка",
 			"language": "Мотт",
-			"logout": "Арахьара"
+			"logout": "Арахьара",
+			"freePlan": "Маьрша",
+			"roles": {
+				"superadmin": "Администратор",
+				"admin": "Администратор",
+				"linguist": "Лингвист",
+				"content": "Контент",
+				"support": "Гӏо дар",
+				"learner": "ХӀотамо"
+			}
 		}
 	},
 	"vocabulary": {
@@ -4175,6 +4184,13 @@
 				"receiptSent": "Чек email-е кхийтина",
 				"linkCopied": "Хьажкха копи хилла"
 			}
+		}
+	},
+	"shared": {
+		"cefrLevel": {
+			"A": "Юьхьехь",
+			"B": "Юккъе",
+			"C": "Лакхара"
 		}
 	}
 }

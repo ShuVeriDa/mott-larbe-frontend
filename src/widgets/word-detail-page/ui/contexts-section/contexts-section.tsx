@@ -51,22 +51,25 @@ const ContextItem = ({
 	ctx: DetailWordContext;
 	pattern: RegExp;
 	lang: string;
-}) => (
-	<li>
-		<Link
-			href={`/${lang}/reader/${ctx.text.id}`}
-			className="block rounded-[8px] border-hairline border-bd-1 bg-surf-2 px-3 py-2.5 transition-colors duration-150 hover:border-bd-2"
-		>
-			<Typography tag="p" className="mb-1 text-[13px] leading-[1.6] text-t-2">
-				«{ctx.snippet ? renderHighlighted(ctx.snippet, pattern) : pattern.source}»
-			</Typography>
-			<Typography tag="p" className="text-[11px] text-t-3">
-				{ctx.text.title}
-				{ctx.text.level ? ` · ${ctx.text.level}` : ""}
-			</Typography>
-		</Link>
-	</li>
-);
+}) => {
+	const { t } = useI18n();
+	return (
+		<li>
+			<Link
+				href={`/${lang}/reader/${ctx.text.id}`}
+				className="block rounded-[8px] border-hairline border-bd-1 bg-surf-2 px-3 py-2.5 transition-colors duration-150 hover:border-bd-2"
+			>
+				<Typography tag="p" className="mb-1 text-[13px] leading-[1.6] text-t-2">
+					«{ctx.snippet ? renderHighlighted(ctx.snippet, pattern) : pattern.source}»
+				</Typography>
+				<Typography tag="p" className="text-[11px] text-t-3">
+					{ctx.text.title}
+					{ctx.text.level ? ` · ${t(`shared.cefrLevel.${ctx.text.level}`)}` : ""}
+				</Typography>
+			</Link>
+		</li>
+	);
+};
 
 export const ContextsSection = ({
 	contexts,

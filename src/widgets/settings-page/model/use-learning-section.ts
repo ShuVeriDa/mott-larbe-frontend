@@ -13,7 +13,7 @@ import {
 } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
-import { type ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 export interface UseLearningSectionParams {
 	preferences: UserPreferences;
 	goals: UserGoals;
@@ -35,7 +35,7 @@ export const useLearningSection = ({
 	const [learningLang, setLearningLang] = useState<UserLanguage>(
 		user?.language ?? "CHE",
 	);
-	const [level, setLevel] = useState<UserLevel>(user?.level ?? "B1");
+	const [level, setLevel] = useState<UserLevel>(user?.level ?? "B");
 	const [transLang, setTransLang] = useState<TranslationLanguage>(
 		preferences.translationLanguage,
 	);

@@ -64,7 +64,7 @@ export const LibraryPreviewCard = ({ item, lang }: LibraryPreviewCardProps) => {
 							tag="span"
 							className={`inline-flex items-center rounded-[4px] px-1.5 py-[2px] text-[10px] font-bold ${colors.badge}`}
 						>
-							{item.level}
+							{t(`shared.cefrLevel.${item.level}`)}
 						</Typography>
 					) : null}
 					<Typography tag="span" className="text-[10px] font-medium text-t-3">

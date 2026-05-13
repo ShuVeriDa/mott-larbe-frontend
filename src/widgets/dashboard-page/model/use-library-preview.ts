@@ -1,17 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import {
 	type LibraryTextLanguage,
 	useLibraryTexts,
 } from "@/entities/library-text";
 import type { CefrLevel } from "@/shared/types";
+import { useState } from "react";
 
 const LANG_FILTERS: LibraryTextLanguage[] = ["CHE", "RU", "EN"];
-const LEVEL_FILTERS: CefrLevel[] = ["A1", "A2", "B1", "B2"];
+const LEVEL_FILTERS: CefrLevel[] = ["A", "B", "C"];
 
 export const useLibraryPreview = (lang: string) => {
-	const [filterLang, setFilterLang] = useState<LibraryTextLanguage | undefined>();
+	const [filterLang, setFilterLang] = useState<
+		LibraryTextLanguage | undefined
+	>();
 	const [filterLevel, setFilterLevel] = useState<CefrLevel | undefined>();
 
 	const { data: library } = useLibraryTexts({
@@ -33,11 +35,11 @@ export const useLibraryPreview = (lang: string) => {
 	const handleResetLevelFilter = () => setFilterLevel(undefined);
 
 	const handleLanguageFilterToggle = (value: LibraryTextLanguage) => {
-		setFilterLang((current) => (current === value ? undefined : value));
+		setFilterLang(current => (current === value ? undefined : value));
 	};
 
 	const handleLevelFilterToggle = (value: CefrLevel) => {
-		setFilterLevel((current) => (current === value ? undefined : value));
+		setFilterLevel(current => (current === value ? undefined : value));
 	};
 
 	return {

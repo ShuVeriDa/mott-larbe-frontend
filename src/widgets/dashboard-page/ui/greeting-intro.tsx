@@ -27,7 +27,7 @@ export const GreetingIntro = ({ user, lang }: GreetingIntroProps) => {
 				{user?.level ? (
 					<>
 						<Typography tag="span" className="size-[3px] rounded-full bg-t-4" />
-						<Typography tag="span">{t("dashboard.greeting.level")} {user.level}</Typography>
+						<Typography tag="span">{t("dashboard.greeting.level")} {t(`shared.cefrLevel.${user.level}`)}</Typography>
 					</>
 				) : null}
 				{user?.language ? (

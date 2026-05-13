@@ -1,21 +1,21 @@
 "use client";
 
 import type { TextLevel } from "@/entities/admin-text";
+import { CEFR_LEVELS } from "@/shared/types";
 import { Button } from "@/shared/ui/button";
 import { Select, type SelectProps } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
 import type { ComponentProps, InputHTMLAttributes, ReactNode } from "react";
-import { CEFR_LEVELS } from "@/shared/types";
 
 export const LEVELS: TextLevel[] = CEFR_LEVELS as TextLevel[];
 
 export const levelColorMap: Record<TextLevel, string> = {
-	A1: "bg-grn-bg border-grn/25 text-grn-t",
-	A2: "bg-[#d1fae5] border-[rgba(6,95,70,0.25)] text-grn-t dark:bg-[rgba(6,95,70,0.12)] dark:text-[#6ee7b7]",
-	B1: "bg-acc-bg border-acc/25 text-acc-t",
-	B2: "bg-pur-bg border-pur/20 text-pur-t",
-	C1: "bg-amb-bg border-amb/20 text-amb-t",
-	C2: "bg-red-bg border-red/20 text-red-t",
+	// A: "bg-grn-bg border-grn/25 text-grn-t",
+	A: "bg-[#d1fae5] border-[rgba(6,95,70,0.25)] text-grn-t dark:bg-[rgba(6,95,70,0.12)] dark:text-[#6ee7b7]",
+	// B: "bg-acc-bg border-acc/25 text-acc-t",
+	B: "bg-pur-bg border-pur/20 text-pur-t",
+	// C: "bg-amb-bg border-amb/20 text-amb-t",
+	C: "bg-red-bg border-red/20 text-red-t",
 };
 
 export const MetaSection = ({

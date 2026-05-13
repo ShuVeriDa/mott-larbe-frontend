@@ -4,11 +4,15 @@ import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
 
-import { ReactNode } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
+import type {
+	AdminTextDetail,
+	TextVersionListItem,
+} from "@/entities/admin-text";
 import { useAdminTextVersionDetail } from "@/entities/admin-text/model/use-admin-text-versions";
-import type { AdminTextDetail, TextVersionListItem } from "@/entities/admin-text";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import { CefrBadge } from "@/shared/ui/cefr-badge";
+import { ReactNode } from "react";
 
 const LangLabel: Record<string, string> = {
 	CHE: "admin.texts.versions.sidebar.langCHE",
@@ -23,14 +27,6 @@ const StatusBadgeClass: Record<string, string> = {
 	archived: "bg-amb-bg text-amb-t",
 };
 
-const LevelBadgeClass: Record<string, string> = {
-	A1: "bg-grn-bg text-grn-t",
-	A2: "bg-grn-bg text-grn-t",
-	B1: "bg-acc-bg text-acc-t",
-	B2: "bg-acc-bg text-acc-t",
-	C1: "bg-pur-bg text-pur-t",
-	C2: "bg-pur-bg text-pur-t",
-};
 
 const ProcessingStatusClass: Record<string, string> = {
 	COMPLETED: "bg-grn-bg text-grn-t",
@@ -66,8 +62,12 @@ interface InfoRowProps {
 
 const InfoRow = ({ label, children }: InfoRowProps) => (
 	<div className="flex items-start justify-between gap-2 border-b border-bd-1 px-3.5 py-2 text-[12px] last:border-none">
-		<Typography tag="span" className="shrink-0 text-t-3">{label}</Typography>
-		<Typography tag="span" className="text-right font-medium text-t-1">{children}</Typography>
+		<Typography tag="span" className="shrink-0 text-t-3">
+			{label}
+		</Typography>
+		<Typography tag="span" className="text-right font-medium text-t-1">
+			{children}
+		</Typography>
 	</div>
 );
 
@@ -80,11 +80,16 @@ interface SettingRowProps {
 
 const SettingRow = ({ label, value, onLabel, offLabel }: SettingRowProps) => (
 	<div className="flex items-center justify-between gap-2 px-3.5 py-2 text-[12px]">
-		<Typography tag="span" className="text-t-2">{label}</Typography>
-		<Typography tag="span" className={cn(
-			"rounded px-1.5 py-px text-[11px] font-semibold",
-			value ? "bg-grn-bg text-grn-t" : "bg-surf-3 text-t-3",
-		)}>
+		<Typography tag="span" className="text-t-2">
+			{label}
+		</Typography>
+		<Typography
+			tag="span"
+			className={cn(
+				"rounded px-1.5 py-px text-[11px] font-semibold",
+				value ? "bg-grn-bg text-grn-t" : "bg-surf-3 text-t-3",
+			)}
+		>
 			{value ? onLabel : offLabel}
 		</Typography>
 	</div>
@@ -98,7 +103,13 @@ interface VersionsSidebarProps {
 	isRunning: boolean;
 }
 
-export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokenization, isRunning }: VersionsSidebarProps) => {
+export const VersionsSidebar = ({
+	text,
+	currentVersion,
+	isLoading,
+	onRunTokenization,
+	isRunning,
+}: VersionsSidebarProps) => {
 	const { t } = useI18n();
 
 	const { data: currentVersionDetail } = useAdminTextVersionDetail(
@@ -109,15 +120,19 @@ export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokeniza
 	if (isLoading) {
 		return (
 			<div className="flex flex-col gap-3">
-				{[120, 96, 80].map((h) => (
-					<div key={h} className="animate-pulse rounded-card border border-bd-1 bg-surf" style={{ height: h }} />
+				{[120, 96, 80].map(h => (
+					<div
+						key={h}
+						className="animate-pulse rounded-card border border-bd-1 bg-surf"
+						style={{ height: h }}
+					/>
 				))}
 			</div>
 		);
 	}
 
 	const maxTokenCount = currentVersionDetail
-		? Math.max(...currentVersionDetail.pages.map((p) => p.tokenCount), 1)
+		? Math.max(...currentVersionDetail.pages.map(p => p.tokenCount), 1)
 		: 1;
 
 	return (
@@ -129,20 +144,28 @@ export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokeniza
 						<InfoRow label={t("admin.texts.versions.sidebar.versionNumber")}>
 							v{currentVersion.version}
 							{currentVersion.label && (
-								<Typography tag="span" className="ml-1 text-t-3 font-normal">— {currentVersion.label}</Typography>
+								<Typography tag="span" className="ml-1 text-t-3 font-normal">
+									— {currentVersion.label}
+								</Typography>
 							)}
 						</InfoRow>
 						<InfoRow label={t("admin.texts.versions.sidebar.processingStatus")}>
-							<Typography tag="span" className={cn(
-								"rounded px-1.5 py-px text-[10.5px] font-semibold",
-								ProcessingStatusClass[currentVersion.status] ?? "bg-surf-3 text-t-2",
-							)}>
+							<Typography
+								tag="span"
+								className={cn(
+									"rounded px-1.5 py-px text-[10.5px] font-semibold",
+									ProcessingStatusClass[currentVersion.status] ??
+										"bg-surf-3 text-t-2",
+								)}
+							>
 								{t(`admin.texts.versions.status.${currentVersion.status}`)}
 							</Typography>
 						</InfoRow>
 						<InfoRow label={t("admin.texts.versions.sidebar.updatedAt")}>
 							{new Date(currentVersion.updatedAt).toLocaleDateString([], {
-								day: "numeric", month: "short", year: "numeric",
+								day: "numeric",
+								month: "short",
+								year: "numeric",
 							})}
 						</InfoRow>
 						<InfoRow label={t("admin.texts.versions.sidebar.initiator")}>
@@ -163,20 +186,33 @@ export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokeniza
 				<div>
 					<InfoRow label={t("admin.texts.versions.sidebar.status")}>
 						{text ? (
-							<Typography tag="span" className={cn("rounded px-1.5 py-px text-[10.5px] font-semibold", StatusBadgeClass[text.status] ?? "bg-surf-3 text-t-2")}>
+							<Typography
+								tag="span"
+								className={cn(
+									"rounded px-1.5 py-px text-[10.5px] font-semibold",
+									StatusBadgeClass[text.status] ?? "bg-surf-3 text-t-2",
+								)}
+							>
 								{t(`admin.texts.status.${text.status}`)}
 							</Typography>
-						) : "—"}
+						) : (
+							"—"
+						)}
 					</InfoRow>
 					<InfoRow label={t("admin.texts.versions.sidebar.level")}>
 						{text?.level ? (
-							<Typography tag="span" className={cn("rounded px-1.5 py-px text-[10px] font-semibold uppercase", LevelBadgeClass[text.level] ?? "bg-surf-3 text-t-2")}>
-								{text.level}
-							</Typography>
-						) : t("admin.texts.versions.sidebar.noLevel")}
+							<CefrBadge level={text.level} />
+						) : (
+							t("admin.texts.versions.sidebar.noLevel")
+						)}
 					</InfoRow>
 					<InfoRow label={t("admin.texts.versions.sidebar.language")}>
-						{text?.language ? t(LangLabel[text.language] ?? "admin.texts.versions.sidebar.langEN") : "—"}
+						{text?.language
+							? t(
+									LangLabel[text.language] ??
+										"admin.texts.versions.sidebar.langEN",
+								)
+							: "—"}
 					</InfoRow>
 					<InfoRow label={t("admin.texts.versions.sidebar.pagesCount")}>
 						{text?.pages.length ?? "—"}
@@ -185,7 +221,13 @@ export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokeniza
 						{text?.author ?? t("admin.texts.versions.sidebar.noAuthor")}
 					</InfoRow>
 					<InfoRow label={t("admin.texts.versions.sidebar.createdAt")}>
-						{text ? new Date(text.createdAt).toLocaleDateString([], { day: "numeric", month: "short", year: "numeric" }) : "—"}
+						{text
+							? new Date(text.createdAt).toLocaleDateString([], {
+									day: "numeric",
+									month: "short",
+									year: "numeric",
+								})
+							: "—"}
 					</InfoRow>
 				</div>
 			</SectionCard>
@@ -194,20 +236,30 @@ export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokeniza
 			{currentVersionDetail && currentVersionDetail.pages.length > 0 && (
 				<SectionCard title={t("admin.texts.versions.sidebar.pageBreakdown")}>
 					<div className="flex flex-col gap-1.5 px-3.5 py-2.5">
-						{currentVersionDetail.pages.map((page) => {
+						{currentVersionDetail.pages.map(page => {
 							const pct = Math.round((page.tokenCount / maxTokenCount) * 100);
 							return (
 								<div key={page.pageId}>
 									<div className="mb-1 flex items-center justify-between">
 										<Typography tag="span" className="text-[11.5px] text-t-2">
-											{t("admin.texts.versions.sidebar.pageN").replace("{n}", String(page.pageNumber))}
+											{t("admin.texts.versions.sidebar.pageN").replace(
+												"{n}",
+												String(page.pageNumber),
+											)}
 										</Typography>
-										<Typography tag="span" className="text-[11px] tabular-nums text-t-3">
-											{page.tokenCount.toLocaleString()} {t("admin.texts.versions.item.tokens")}
+										<Typography
+											tag="span"
+											className="text-[11px] tabular-nums text-t-3"
+										>
+											{page.tokenCount.toLocaleString()}{" "}
+											{t("admin.texts.versions.item.tokens")}
 										</Typography>
 									</div>
 									<div className="h-1 overflow-hidden rounded-full bg-surf-3">
-										<div className="h-full rounded-full bg-acc transition-all" style={{ width: `${pct}%` }} />
+										<div
+											className="h-full rounded-full bg-acc transition-all"
+											style={{ width: `${pct}%` }}
+										/>
 									</div>
 								</div>
 							);
@@ -247,13 +299,22 @@ export const VersionsSidebar = ({ text, currentVersion, isLoading, onRunTokeniza
 						>
 							{isRunning ? (
 								<>
-									<Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />
+									<Typography
+										tag="span"
+										className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white"
+									/>
 									{t("admin.texts.versions.sidebar.runBtnRunning")}
 								</>
 							) : (
 								<>
 									<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-										<path d="M5 3.5l8 4.5-8 4.5V3.5z" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+										<path
+											d="M5 3.5l8 4.5-8 4.5V3.5z"
+											stroke="#fff"
+											strokeWidth="1.4"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										/>
 									</svg>
 									{t("admin.texts.versions.sidebar.runBtn")}
 								</>

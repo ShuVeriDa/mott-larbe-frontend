@@ -122,11 +122,11 @@ export const AnalyticsPopularTexts = ({
 												<Typography
 													tag="span"
 													className={cn(
-														"inline-flex h-5 w-8 items-center justify-center rounded-[5px] text-[10.5px] font-bold",
+														"inline-flex h-5 items-center justify-center rounded-[5px] px-1.5 text-[10.5px] font-bold",
 														CEFR_LEVEL_BADGE_CLASS[item.level],
 													)}
 												>
-													{item.level}
+													{t(`shared.cefrLevel.${item.level}`)}
 												</Typography>
 											)}
 										</td>

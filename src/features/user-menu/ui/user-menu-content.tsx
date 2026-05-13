@@ -1,5 +1,6 @@
 import { useUserMenu } from "../model";
 import { UserMenuAdminSection } from "./user-menu-admin-section";
+import { UserMenuHeader } from "./user-menu-header";
 import { UserMenuLanguageSection } from "./user-menu-language-section";
 import { UserMenuLogoutSection } from "./user-menu-logout-section";
 import { UserMenuNavSection } from "./user-menu-nav-section";
@@ -16,9 +17,14 @@ export const UserMenuContent = ({
 	const {
 		t,
 		lang,
+		user,
 		logout,
 		showAdmin,
 		theme,
+		initials,
+		displayName,
+		userRole,
+		subscription,
 		handleThemeItemSelect,
 		handleSetTheme,
 		handleLogout,
@@ -30,6 +36,17 @@ export const UserMenuContent = ({
 
 	return (
 		<>
+			{user && (
+				<UserMenuHeader
+					initials={initials}
+					displayName={displayName}
+					email={user.email}
+					avatarUrl={user.avatar}
+					role={userRole}
+					subscription={subscription}
+					t={t}
+				/>
+			)}
 			<UserMenuNavSection lang={lang} t={t} />
 			<UserMenuSupportSection lang={lang} t={t} />
 			{showAdmin && <UserMenuAdminSection lang={lang} t={t} />}

@@ -532,7 +532,16 @@
 			"support": "Support",
 			"subscription": "Subscription",
 			"language": "Language",
-			"logout": "Sign out"
+			"logout": "Sign out",
+			"freePlan": "Free",
+			"roles": {
+				"superadmin": "Super Admin",
+				"admin": "Admin",
+				"linguist": "Linguist",
+				"content": "Content",
+				"support": "Support",
+				"learner": "Learner"
+			}
 		}
 	},
 	"vocabulary": {
@@ -4175,6 +4184,13 @@
 				"receiptSent": "Receipt sent to email",
 				"linkCopied": "Link copied"
 			}
+		}
+	},
+	"shared": {
+		"cefrLevel": {
+			"A": "Beginner",
+			"B": "Intermediate",
+			"C": "Advanced"
 		}
 	}
 }

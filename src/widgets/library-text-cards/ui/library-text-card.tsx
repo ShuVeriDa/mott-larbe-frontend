@@ -7,6 +7,7 @@ import type { LibraryView } from "@/features/library-filters";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
+import { CefrBadge } from "@/shared/ui/cefr-badge";
 import Link from "next/link";
 import { ComponentProps } from "react";
 
@@ -16,13 +17,11 @@ interface LibraryTextCardProps {
 	index: number;
 }
 
-const getLevelConfig = (level: CefrLevel | null) => {
-	if (!level) return { badge: "bg-surf-3 text-t-3", bar: "from-t-4" };
-	if (level === "A1" || level === "A2")
-		return { badge: "bg-grn-bg text-grn-t", bar: "from-grn" };
-	if (level === "B1" || level === "B2")
-		return { badge: "bg-amb-bg text-amb-t", bar: "from-amb" };
-	return { badge: "bg-red-bg text-red-t", bar: "from-red" };
+const getLevelBar = (level: CefrLevel | null): string => {
+	if (!level) return "from-t-4";
+	if (level === "A") return "from-grn";
+	if (level === "B") return "from-amb";
+	return "from-red";
 };
 
 const getProgressConfig = (percent: number, status: string) => {
@@ -40,7 +39,7 @@ export const LibraryTextCard = ({
 	index,
 }: LibraryTextCardProps) => {
 	const { t, lang } = useI18n();
-	const levelConfig = getLevelConfig(item.level);
+	const levelBar = getLevelBar(item.level);
 	const progressConfig = getProgressConfig(
 		item.progressPercent,
 		item.progressStatus,
@@ -64,7 +63,7 @@ export const LibraryTextCard = ({
 					aria-hidden="true"
 					className={cn(
 						"absolute left-0 bottom-[5px] top-[5px] w-[2px] rounded-r-[2px] opacity-0 transition-opacity duration-150 group-hover:opacity-100 bg-linear-to-b",
-						levelConfig.bar,
+						levelBar,
 						"to-transparent",
 					)}
 				/>
@@ -76,17 +75,7 @@ export const LibraryTextCard = ({
 						{item.title}
 					</Typography>
 					<div className="mt-0.5 flex items-center gap-1 text-[11px] text-t-3">
-						{item.level && (
-							<Typography
-								tag="span"
-								className={cn(
-									"rounded px-1.5 py-0.5 text-[10px] font-bold",
-									levelConfig.badge,
-								)}
-							>
-								{item.level}
-							</Typography>
-						)}
+						<CefrBadge level={item.level} />
 						<Typography
 							tag="span"
 							className="h-[2px] w-[2px] rounded-full bg-t-4"
@@ -165,24 +154,14 @@ export const LibraryTextCard = ({
 				aria-hidden="true"
 				className={cn(
 					"absolute left-0 right-0 top-0 h-[2px] opacity-0 transition-opacity duration-150 group-hover:opacity-100 bg-linear-to-r",
-					levelConfig.bar,
+					levelBar,
 					"to-transparent",
 				)}
 			/>
 
 			<div className="flex items-start justify-between gap-2">
 				<div className="flex items-center gap-1">
-					{item.level && (
-						<Typography
-							tag="span"
-							className={cn(
-								"rounded px-[7px] py-[2px] text-[10px] font-bold tracking-[0.04em]",
-								levelConfig.badge,
-							)}
-						>
-							{item.level}
-						</Typography>
-					)}
+					<CefrBadge level={item.level} />
 					{/* <Typography
 						tag="span"
 						className="rounded border border-bd-1 bg-surf-2 px-[7px] py-[2px] text-[10px] text-t-3"

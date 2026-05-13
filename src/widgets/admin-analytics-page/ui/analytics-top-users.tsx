@@ -75,7 +75,7 @@ export const AnalyticsTopUsers = ({
 									{user.fullName}
 								</div>
 								<div className="text-[11px] text-t-3">
-									{user.level && `${user.level} · `}
+									{user.level && `${t(`shared.cefrLevel.${user.level}`)} · `}
 									{t("admin.analytics.topUsers.streak", {
 										count: user.streakDays,
 									})}

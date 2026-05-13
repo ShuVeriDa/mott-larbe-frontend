@@ -532,7 +532,16 @@
 			"support": "Поддержка",
 			"subscription": "Подписка",
 			"language": "Язык",
-			"logout": "Выйти"
+			"logout": "Выйти",
+			"freePlan": "Бесплатный",
+			"roles": {
+				"superadmin": "Суперадмин",
+				"admin": "Администратор",
+				"linguist": "Лингвист",
+				"content": "Контент",
+				"support": "Поддержка",
+				"learner": "Студент"
+			}
 		}
 	},
 	"vocabulary": {
@@ -4175,6 +4184,13 @@
 				"receiptSent": "Чек отправлен на email",
 				"linkCopied": "Ссылка скопирована"
 			}
+		}
+	},
+	"shared": {
+		"cefrLevel": {
+			"A": "Начальный",
+			"B": "Средний",
+			"C": "Продвинутый"
 		}
 	}
 }

@@ -52,7 +52,7 @@ export const LibraryFilterBarLevelGroup = ({
 						onClick={handleClick}
 						className={libraryFilterLevelPillClass(l, level === l)}
 					>
-						{l}
+						{t(`shared.cefrLevel.${l}`)}
 					</LibraryFilterPill>
 				);
 			})}

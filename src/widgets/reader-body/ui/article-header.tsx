@@ -25,7 +25,7 @@ export const ArticleHeader = ({ data, currentPage }: ArticleHeaderProps) => {
 						tag="span"
 						className={`${badgeClass} bg-amb-bg text-amb-t`}
 					>
-						{data.level}
+						{t(`shared.cefrLevel.${data.level}`)}
 					</Typography>
 				) : null}
 				<Typography tag="span" className={`${badgeClass} bg-surf-3 text-t-2`}>

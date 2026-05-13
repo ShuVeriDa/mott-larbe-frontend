@@ -6,7 +6,8 @@ import { useCurrentUser } from "@/entities/user";
 import { LOCALES, type Locale } from "@/i18n/locale-list";
 import { useI18n } from "@/shared/lib/i18n";
 import { useMounted } from "@/shared/lib/mounted";
-import { canAccessAdmin, getDisplayName, getUserInitials } from "../lib/user-helpers";
+import { canAccessAdmin, getDisplayName, getUserInitials, getUserRole } from "../lib/user-helpers";
+import { useMySubscription } from "@/entities/subscription";
 import { useLogout } from "./use-logout";
 import { useTheme } from "next-themes";
 
@@ -19,6 +20,7 @@ const LOCALE_SHORT: Record<Locale, string> = {
 export const useUserMenu = () => {
 	const { t, lang } = useI18n();
 	const { data: user } = useCurrentUser();
+	const { data: subscription } = useMySubscription();
 	const [open, setOpen] = useState(false);
 	const logout = useLogout();
 	const router = useRouter();
@@ -39,6 +41,7 @@ export const useUserMenu = () => {
 	const initials = user ? getUserInitials(user) : "";
 	const displayName = user ? getDisplayName(user) : "";
 	const showAdmin = user ? canAccessAdmin(user) : false;
+	const userRole = user ? getUserRole(user) : "learner";
 
 	const handleLogout = async () => {
 		setOpen(false);
@@ -68,6 +71,8 @@ export const useUserMenu = () => {
 		initials,
 		displayName,
 		showAdmin,
+		userRole,
+		subscription,
 		theme: mounted ? theme : undefined,
 		handleThemeItemSelect,
 		handleSetTheme,

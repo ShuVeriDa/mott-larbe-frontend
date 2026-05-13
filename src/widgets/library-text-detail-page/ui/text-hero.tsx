@@ -1,13 +1,17 @@
-import Link from "next/link";
-import { Badge } from "@/shared/ui/badge";
-import { buttonVariants } from "@/shared/ui/button";
+import type { LibraryTextLanguage } from "@/entities/library-text";
 import { cn } from "@/shared/lib/cn";
 import type { CefrLevel } from "@/shared/types";
-import type { LibraryTextLanguage } from "@/entities/library-text";
+import { Badge } from "@/shared/ui/badge";
+import { buttonVariants } from "@/shared/ui/button";
+import { CefrBadge } from "@/shared/ui/cefr-badge";
+import Link from "next/link";
 import { TextCover } from "./text-cover";
 
 import { Typography } from "@/shared/ui/typography";
-type Translator = (key: string, vars?: Record<string, string | number>) => string;
+type Translator = (
+	key: string,
+	vars?: Record<string, string | number>,
+) => string;
 
 interface TextHeroProps {
 	id: string;
@@ -24,15 +28,6 @@ interface TextHeroProps {
 	imageUrl: string | null;
 	t: Translator;
 }
-
-const CEFR_VARIANT: Record<CefrLevel, "acc" | "grn" | "amb" | "pur" | "red"> = {
-	A1: "acc",
-	A2: "grn",
-	B1: "amb",
-	B2: "pur",
-	C1: "red",
-	C2: "red",
-};
 
 export const TextHero = ({
 	id,
@@ -61,28 +56,35 @@ export const TextHero = ({
 
 			<div className="flex-1 min-w-0 flex flex-col gap-2.5">
 				<div className="flex items-center gap-1.5 flex-wrap">
-					{level && (
-						<Badge variant={CEFR_VARIANT[level]}>{level}</Badge>
-					)}
+					<CefrBadge level={level} />
 					<Badge variant="acc">{t(`library.lang.${language}`)}</Badge>
 					<Badge variant="neu">
 						{t("library.textDetail.status.published")}
 					</Badge>
 				</div>
 
-				<Typography tag="h1" className="font-display text-[22px] font-normal text-t-1 leading-[1.3] tracking-[-0.2px] max-sm:text-[18px]">
+				<Typography
+					tag="h1"
+					className="font-display text-[22px] font-normal text-t-1 leading-[1.3] tracking-[-0.2px] max-sm:text-[18px]"
+				>
 					{title}
 				</Typography>
 
 				<div className="flex items-center gap-2.5 text-xs text-t-3 flex-wrap max-sm:gap-1.5 max-sm:text-[11px]">
 					{author && <Typography tag="span">{author}</Typography>}
 					{author && (
-						<Typography tag="span" className="w-[2px] h-[2px] rounded-full bg-t-4" />
+						<Typography
+							tag="span"
+							className="w-[2px] h-[2px] rounded-full bg-t-4"
+						/>
 					)}
 					<Typography tag="span">
 						{wordCount.toLocaleString()} {t("library.card.wordsUnit")}
 					</Typography>
-					<Typography tag="span" className="w-[2px] h-[2px] rounded-full bg-t-4" />
+					<Typography
+						tag="span"
+						className="w-[2px] h-[2px] rounded-full bg-t-4"
+					/>
 					<Typography tag="span">
 						~{readingTime} {t("library.card.minUnit")}
 					</Typography>
@@ -90,7 +92,8 @@ export const TextHero = ({
 
 				<div className="flex items-center gap-2 mt-0.5 flex-wrap max-[380px]:gap-1.5">
 					{isNotReady ? (
-						<Typography tag="span"
+						<Typography
+							tag="span"
 							className={cn(
 								buttonVariants({ variant: "ghost", size: "lg" }),
 								"cursor-default opacity-50",
@@ -99,7 +102,8 @@ export const TextHero = ({
 							{t("library.textDetail.cta.notReady")}
 						</Typography>
 					) : isCompleted ? (
-						<Typography tag="span"
+						<Typography
+							tag="span"
 							className={cn(
 								buttonVariants({ variant: "ghost", size: "lg" }),
 								"cursor-default opacity-50",

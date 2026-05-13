@@ -54,7 +54,7 @@ export const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 						current: item.lastPageNumber,
 						total: item.totalPages,
 					})}
-					{item.level ? ` · ${item.level}` : ""}
+					{item.level ? ` · ${t(`shared.cefrLevel.${item.level}`)}` : ""}
 				</div>
 
 				<div className="flex items-center justify-between">
