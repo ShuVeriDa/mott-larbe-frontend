@@ -1,10 +1,11 @@
 "use client";
 
+import { UserMenu } from "@/features/user-menu";
 import { cn } from "@/shared/lib/cn";
+import { SideNavToggle } from "@/shared/ui/side-nav-toggle";
 import { useState } from "react";
 import { AdminSideNavContent } from "./admin-side-nav-content";
 import { AdminSideNavHeader } from "./admin-side-nav-header";
-import { SideNavToggle } from "@/shared/ui/side-nav-toggle";
 
 export const AdminSideNav = () => {
 	const [isExpandedOnSmall, setIsExpandedOnSmall] = useState(false);
@@ -21,6 +22,9 @@ export const AdminSideNav = () => {
 		>
 			<AdminSideNavHeader isCompactMode={isCompactMode} />
 			<AdminSideNavContent isCompactMode={isCompactMode} />
+			<div className="border-t border-bd-1">
+				<UserMenu isCompactMode={isCompactMode} />
+			</div>
 			<SideNavToggle
 				isExpandedOnSmall={isExpandedOnSmall}
 				onToggle={handleToggleExpanded}

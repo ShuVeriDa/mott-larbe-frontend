@@ -1,4 +1,3 @@
-import { type ReactNode } from "react";
 import {
 	Bookmark,
 	BookMarked,
@@ -9,6 +8,7 @@ import {
 	PanelRightOpen,
 	Settings,
 } from "lucide-react";
+import { type ReactNode } from "react";
 
 export type TopbarAction = {
 	key: string;
@@ -63,7 +63,9 @@ export const getTopbarActions = ({
 	const actions: (TopbarAction | null)[] = [
 		{
 			key: "word-panel",
-			renderIcon: () => <PanelRightOpen className="size-[15px]" strokeWidth={1.4} />,
+			renderIcon: () => (
+				<PanelRightOpen className="size-[15px]" strokeWidth={1.4} />
+			),
 			ariaLabel: t("reader.topbar.togglePanel"),
 			ariaPressed: wordPanelTogglePressed,
 			onClick: handleToggleWordPanel,
@@ -83,7 +85,7 @@ export const getTopbarActions = ({
 				<BookMarked
 					className="size-[15px]"
 					strokeWidth={1.4}
-					fill={isPageBookmarked ? "currentColor" : "none"}
+					// fill={isPageBookmarked ? "currentColor" : "none"}
 				/>
 			),
 			ariaLabel: t("reader.topbar.bookmarks"),
@@ -101,7 +103,9 @@ export const getTopbarActions = ({
 			: null,
 		{
 			key: "notes",
-			renderIcon: () => <NotebookPen className="size-[15px]" strokeWidth={1.4} />,
+			renderIcon: () => (
+				<NotebookPen className="size-[15px]" strokeWidth={1.4} />
+			),
 			ariaLabel: t("reader.topbar.notes"),
 			ariaPressed: notesOpen,
 			onClick: onToggleNotes,

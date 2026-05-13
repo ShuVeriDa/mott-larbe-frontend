@@ -1504,11 +1504,20 @@
 			"spacingTight": "Узкий",
 			"spacingNormal": "Обычный",
 			"spacingWide": "Широкий",
+			"paragraphSpacing": "Отступ между абзацами",
+			"paragraphSpacingNone": "Нет",
+			"paragraphSpacingCompact": "Маленький",
+			"paragraphSpacingNormal": "Обычный",
+			"paragraphSpacingRelaxed": "Большой",
 			"legend": "Обозначения",
 			"theme": "Фон",
 			"themeDefault": "Стандартный",
 			"themeSepia": "Сепия",
-			"themeCustom": "Свой цвет"
+			"themeCustom": "Свой цвет",
+			"highlights": "Цветовые метки",
+			"highlightsShow": "Показать метки",
+			"highlightsHide": "Скрыть метки",
+			"highlightsClearAll": "Удалить метки"
 		},
 		"notes": {
 			"title": "Заметки",
@@ -1537,12 +1546,16 @@
 		"highlight": {
 			"toolbar": "Выделить",
 			"remove": "Убрать выделение",
+			"addNote": "Добавить заметку",
 			"color": {
 				"yellow": "Жёлтый",
 				"green": "Зелёный",
 				"blue": "Синий",
 				"pink": "Розовый"
 			}
+		},
+		"inlineNote": {
+			"iconLabel": "Посмотреть заметку"
 		},
 		"footer": {
 			"size": "Размер"

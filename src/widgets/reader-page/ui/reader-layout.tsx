@@ -1,6 +1,6 @@
-import { ReaderBody } from "@/widgets/reader-body";
-import { cn } from "@/shared/lib/cn";
 import type { TextPageResponse } from "@/entities/text";
+import { cn } from "@/shared/lib/cn";
+import { ReaderBody } from "@/widgets/reader-body";
 import { ReaderRail } from "./reader-rail";
 
 interface ReaderLayoutProps {

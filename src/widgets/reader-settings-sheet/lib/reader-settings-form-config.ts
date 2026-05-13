@@ -2,6 +2,7 @@ import type {
 	ReaderLetterSpacing,
 	ReaderLineHeight,
 	ReaderPagePadding,
+	ReaderParagraphSpacing,
 } from "@/features/reader-text-width";
 
 export const READER_SETTINGS_LEGEND = [
@@ -26,6 +27,13 @@ export const LETTER_SPACING_OPTIONS: Array<{ value: ReaderLetterSpacing; labelKe
 	{ value: "tight", labelKey: "reader.settings.spacingTight" },
 	{ value: "normal", labelKey: "reader.settings.spacingNormal" },
 	{ value: "wide", labelKey: "reader.settings.spacingWide" },
+];
+
+export const PARAGRAPH_SPACING_OPTIONS: Array<{ value: ReaderParagraphSpacing; labelKey: string }> = [
+	{ value: "none", labelKey: "reader.settings.paragraphSpacingNone" },
+	{ value: "compact", labelKey: "reader.settings.paragraphSpacingCompact" },
+	{ value: "normal", labelKey: "reader.settings.paragraphSpacingNormal" },
+	{ value: "relaxed", labelKey: "reader.settings.paragraphSpacingRelaxed" },
 ];
 
 export const THEME_SWATCHES: Array<{

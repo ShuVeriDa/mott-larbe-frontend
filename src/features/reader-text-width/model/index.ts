@@ -4,8 +4,10 @@ export {
 	PAGE_PADDING_CLASS,
 	LINE_HEIGHT_VALUE,
 	LETTER_SPACING_VALUE,
+	PARAGRAPH_SPACING_VALUE,
 	type ReaderColumnWidth,
 	type ReaderPagePadding,
 	type ReaderLineHeight,
 	type ReaderLetterSpacing,
+	type ReaderParagraphSpacing,
 } from "./text-width-store";

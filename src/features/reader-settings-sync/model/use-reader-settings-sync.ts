@@ -13,7 +13,7 @@ const patchPreferences = (body: Record<string, unknown>) =>
 export const useReaderSettingsSync = () => {
 	const fontFamily = useReaderFontFamily((s) => s.family);
 	const fontSize = useReaderFontSize((s) => s.size);
-	const { columnWidth, pagePadding, lineHeight, letterSpacing } = useReaderTextLayout();
+	const { columnWidth, pagePadding, lineHeight, letterSpacing, paragraphSpacing } = useReaderTextLayout();
 	const theme = useReaderTheme((s) => s.theme);
 	const bgColor = useReaderTheme((s) => s.bgColor);
 
@@ -61,6 +61,11 @@ export const useReaderSettingsSync = () => {
 		if (!mounted.current) return;
 		schedule({ readerLetterSpacing: letterSpacing });
 	}, [letterSpacing]); // eslint-disable-line react-hooks/exhaustive-deps
+
+	useEffect(() => {
+		if (!mounted.current) return;
+		schedule({ readerParagraphSpacing: paragraphSpacing });
+	}, [paragraphSpacing]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		if (!mounted.current) return;

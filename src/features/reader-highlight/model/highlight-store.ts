@@ -1,5 +1,8 @@
 "use client";
 
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+
 export type HighlightColor = "yellow" | "green" | "blue" | "pink";
 
 export interface TextHighlight {
@@ -27,3 +30,18 @@ export const HIGHLIGHT_COLORS: Record<HighlightColor, string> = {
 	blue: "bg-blue-200/70 dark:bg-blue-400/30",
 	pink: "bg-pink-200/70 dark:bg-pink-400/30",
 };
+
+interface HighlightVisibilityState {
+	highlightsVisible: boolean;
+	setHighlightsVisible: (v: boolean) => void;
+}
+
+export const useHighlightVisibility = create<HighlightVisibilityState>()(
+	persist(
+		(set) => ({
+			highlightsVisible: true,
+			setHighlightsVisible: (highlightsVisible) => set({ highlightsVisible }),
+		}),
+		{ name: "reader-highlights-visible" },
+	),
+);

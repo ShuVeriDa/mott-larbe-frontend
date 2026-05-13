@@ -5,7 +5,6 @@ import {
 	RefreshCw,
 	WholeWord,
 } from "lucide-react";
-import { ChechenIcon, GrammarIcon } from "../ui/nav-icons";
 
 interface NavItem {
 	href: (lang: string) => string;
@@ -49,19 +48,19 @@ export const buildNavSections = (lang: string): NavSection[] => [
 			},
 		],
 	},
-	{
-		titleKey: "nav.language",
-		items: [
-			{
-				href: () => `/${lang}/language/chechen`,
-				icon: ChechenIcon,
-				labelKey: "nav.chechen",
-			},
-			{
-				href: () => `/${lang}/language/grammar`,
-				icon: GrammarIcon,
-				labelKey: "nav.grammar",
-			},
-		],
-	},
+	// {
+	// 	titleKey: "nav.language",
+	// 	items: [
+	// 		{
+	// 			href: () => `/${lang}/language/chechen`,
+	// 			icon: ChechenIcon,
+	// 			labelKey: "nav.chechen",
+	// 		},
+	// 		{
+	// 			href: () => `/${lang}/language/grammar`,
+	// 			icon: GrammarIcon,
+	// 			labelKey: "nav.grammar",
+	// 		},
+	// 	],
+	// },
 ];

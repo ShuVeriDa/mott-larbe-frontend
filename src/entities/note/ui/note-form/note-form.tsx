@@ -3,6 +3,7 @@
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { Textarea } from "@/shared/ui/textarea";
 import {
 	type ChangeEvent,
 	type FormEvent,
@@ -58,13 +59,13 @@ export const NoteForm = ({
 			onSubmit={handleSubmit}
 			className={cn("flex flex-col gap-2", className)}
 		>
-			<textarea
+			<Textarea
+				variant="reader"
 				value={value}
 				onChange={handleChange}
 				onKeyDown={handleKeyDown}
 				placeholder={placeholder ?? t("reader.notes.placeholder")}
 				rows={3}
-				className="w-full resize-none rounded-lg border border-bd-1 bg-surf px-3 py-2 text-[13px] text-t-1 placeholder:text-t-4 focus:border-acc/60 focus:outline-none"
 			/>
 			<div className="flex items-center gap-2">
 				<Button

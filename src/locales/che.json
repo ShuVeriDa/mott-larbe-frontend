@@ -1504,11 +1504,20 @@
 			"spacingTight": "Гуттаренна",
 			"spacingNormal": "Юккъера",
 			"spacingWide": "Шуьйра",
+			"paragraphSpacing": "Абзацийн юккъера меттиг",
+			"paragraphSpacingNone": "Доцу",
+			"paragraphSpacingCompact": "Жима",
+			"paragraphSpacingNormal": "Юккъера",
+			"paragraphSpacingRelaxed": "Доккха",
 			"legend": "Билгалонаш",
 			"theme": "Фон",
 			"themeDefault": "Стандартный",
 			"themeSepia": "Сепия",
-			"themeCustom": "Свой цвет"
+			"themeCustom": "Свой цвет",
+			"highlights": "Бӏаьрхиш",
+			"highlightsShow": "Гайта бӏаьрхиш",
+			"highlightsHide": "Дӏакъасто бӏаьрхиш",
+			"highlightsClearAll": "Дӏаяккха бӏаьрхиш"
 		},
 		"notes": {
 			"title": "Тептарш",
@@ -1537,12 +1546,16 @@
 		"highlight": {
 			"toolbar": "Нийсаде",
 			"remove": "Нийсаде дӀаяккха",
+			"addNote": "Тептар тIетохар",
 			"color": {
 				"yellow": "Можа",
 				"green": "Баьццара",
 				"blue": "СӀена",
 				"pink": "РозовӀе"
 			}
+		},
+		"inlineNote": {
+			"iconLabel": "Тептар хьажа"
 		},
 		"footer": {
 			"size": "Барам"

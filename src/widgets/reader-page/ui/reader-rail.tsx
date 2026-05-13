@@ -1,9 +1,9 @@
+import { cn } from "@/shared/lib/cn";
+import { ReaderBookmarksAside } from "@/widgets/reader-bookmarks-panel";
 import { ReaderNotesAside } from "@/widgets/reader-notes-panel";
 import { ReaderSettingsAside } from "@/widgets/reader-settings-sheet";
 import { ReaderTocAside } from "@/widgets/reader-toc-panel";
-import { ReaderBookmarksAside } from "@/widgets/reader-bookmarks-panel";
 import { WordPanel } from "@/widgets/word-panel";
-import { cn } from "@/shared/lib/cn";
 
 interface ReaderRailProps {
 	textId: string;
@@ -38,7 +38,7 @@ export const ReaderRail = ({
 		)}
 	>
 		<WordPanel textId={textId} />
-		<ReaderSettingsAside open={settingsOpen} onClose={onClose} />
+		<ReaderSettingsAside open={settingsOpen} onClose={onClose} textId={textId} pageNumber={pageNumber} />
 		<ReaderNotesAside
 			textId={textId}
 			pageNumber={pageNumber}

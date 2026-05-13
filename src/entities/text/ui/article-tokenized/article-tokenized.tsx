@@ -1,10 +1,10 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Fragment, type MouseEvent } from 'react';
 import { cn } from "@/shared/lib/cn";
-import { tokenizeContent } from "../../lib/tokenize-content";
+import { Typography } from "@/shared/ui/typography";
+import { Fragment, type MouseEvent } from "react";
 import type { TextToken } from "../../api";
+import { tokenizeContent } from "../../lib/tokenize-content";
 import { ArticleToken } from "../article-token";
 
 export interface ArticleTokenizedProps {
@@ -37,7 +37,11 @@ export const ArticleTokenized = ({
 			}}
 		>
 			{paragraphs.map((para, idx) => (
-				<Typography tag="p" key={idx} className="mb-5 last:mb-0 tracking-[0.01em]">
+				<Typography
+					tag="p"
+					key={idx}
+					className="mb-5 last:mb-0 tracking-[0.01em]"
+				>
 					{para.segments.map((segment, segIdx) => {
 						if (segment.kind === "text") {
 							return <Fragment key={segIdx}>{segment.value}</Fragment>;

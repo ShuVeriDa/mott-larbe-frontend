@@ -17,4 +17,5 @@ export {
 export { tokenStatusClass } from "./lib/status-class";
 export { ArticleToken } from "./ui/article-token";
 export { ArticleTokenized } from "./ui/article-tokenized";
-export { ArticleRich } from "./ui/article-rich";
+export { ArticleRich, type ArticleRichProps, type HighlightMark, type NoteMark } from "./ui/article-rich";
+export { useNoteLineGroups, type NoteLineGroup } from "./lib/note-line-groups";

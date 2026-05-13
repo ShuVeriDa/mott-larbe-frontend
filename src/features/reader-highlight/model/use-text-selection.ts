@@ -19,20 +19,11 @@ export const useTextSelection = (containerRef: React.RefObject<HTMLElement | nul
 	useEffect(() => {
 		const handleMouseUp = () => {
 			const sel = window.getSelection();
-			if (!sel || sel.isCollapsed || !sel.rangeCount) {
-				setSelection(null);
-				return;
-			}
+			if (!sel || sel.isCollapsed || !sel.rangeCount) return;
 			const text = sel.toString().trim();
-			if (!text) {
-				setSelection(null);
-				return;
-			}
+			if (!text) return;
 			const range = sel.getRangeAt(0);
-			if (!containerRef.current?.contains(range.commonAncestorContainer)) {
-				setSelection(null);
-				return;
-			}
+			if (!containerRef.current?.contains(range.commonAncestorContainer)) return;
 			const rect = range.getBoundingClientRect();
 			setSelection({ text, x: rect.left + rect.width / 2, y: rect.top });
 		};

@@ -15,12 +15,16 @@ import { ReaderSettingsChromeHeader } from "./reader-settings-chrome-header";
 export interface ReaderSettingsSheetProps {
 	open: boolean;
 	onClose: () => void;
+	textId?: string;
+	pageNumber?: number;
 }
 
 /** Desktop / tablet — same sliding rail styling as `WordPanel`. */
 export const ReaderSettingsAside = ({
 	open,
 	onClose,
+	textId,
+	pageNumber,
 }: ReaderSettingsSheetProps) => {
 	useReaderSettingsEscape(open, onClose);
 
@@ -35,7 +39,7 @@ export const ReaderSettingsAside = ({
 		>
 			<ReaderSettingsChromeHeader onClose={onClose} />
 			<div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 py-2">
-				<ReaderSettingsBody compact />
+				<ReaderSettingsBody compact textId={textId} pageNumber={pageNumber} />
 			</div>
 		</aside>
 	);
@@ -45,6 +49,8 @@ export const ReaderSettingsAside = ({
 export const ReaderSettingsSheet = ({
 	open,
 	onClose,
+	textId,
+	pageNumber,
 }: ReaderSettingsSheetProps) => {
 	const { t } = useI18n();
 	useReaderSettingsEscape(open, onClose);
@@ -75,7 +81,7 @@ export const ReaderSettingsSheet = ({
 					onClose={onClose}
 				/>
 				<div className="min-h-0 flex-1 overflow-y-auto p-4">
-					<ReaderSettingsBody />
+					<ReaderSettingsBody textId={textId} pageNumber={pageNumber} />
 				</div>
 			</div>
 		</div>,

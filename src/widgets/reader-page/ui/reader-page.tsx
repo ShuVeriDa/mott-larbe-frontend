@@ -76,7 +76,7 @@ export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
 			{!focusMode.active && <ReaderFooter />}
 			<WordPopup />
 			<WordBottomSheet textId={textId} />
-			<ReaderSettingsSheet open={settingsOpen} onClose={handleCloseRail} />
+			<ReaderSettingsSheet open={settingsOpen} onClose={handleCloseRail} textId={textId} pageNumber={pageNumber} />
 			<ReaderNotesSheet
 				textId={textId}
 				pageNumber={pageNumber}

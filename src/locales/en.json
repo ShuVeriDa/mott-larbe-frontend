@@ -1504,11 +1504,20 @@
 			"spacingTight": "Tight",
 			"spacingNormal": "Normal",
 			"spacingWide": "Wide",
+			"paragraphSpacing": "Paragraph spacing",
+			"paragraphSpacingNone": "None",
+			"paragraphSpacingCompact": "Compact",
+			"paragraphSpacingNormal": "Normal",
+			"paragraphSpacingRelaxed": "Relaxed",
 			"legend": "Legend",
 			"theme": "Background",
 			"themeDefault": "Default",
 			"themeSepia": "Sepia",
-			"themeCustom": "Custom"
+			"themeCustom": "Custom",
+			"highlights": "Color marks",
+			"highlightsShow": "Show marks",
+			"highlightsHide": "Hide marks",
+			"highlightsClearAll": "Remove marks"
 		},
 		"notes": {
 			"title": "Notes",
@@ -1537,12 +1546,16 @@
 		"highlight": {
 			"toolbar": "Highlight",
 			"remove": "Remove highlight",
+			"addNote": "Add note",
 			"color": {
 				"yellow": "Yellow",
 				"green": "Green",
 				"blue": "Blue",
 				"pink": "Pink"
 			}
+		},
+		"inlineNote": {
+			"iconLabel": "View note"
 		},
 		"footer": {
 			"size": "Size"

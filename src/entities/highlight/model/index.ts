@@ -1,1 +1,1 @@
-export { useHighlights, useCreateHighlight, useUpdateHighlight, useDeleteHighlight } from "./use-highlights";
+export { useHighlights, useCreateHighlight, useUpdateHighlight, useDeleteHighlight, useDeleteAllHighlights } from "./use-highlights";
