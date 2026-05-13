@@ -1,9 +1,9 @@
-import { ComponentProps } from 'react';
 import type { useCouponMutations } from "@/entities/admin-coupon";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { X } from "lucide-react";
+import { ComponentProps } from "react";
 interface Props {
 	couponId: string | null;
 	hasError: boolean;
@@ -27,18 +27,24 @@ export const DeleteCouponModal = ({
 
 	if (!couponId) return null;
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onDeactivate(couponId);
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onDelete(couponId);
-return (
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		onDeactivate(couponId);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		onDelete(couponId);
+	return (
 		<>
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
-				<Typography tag="h2" className="font-display text-[14px] font-semibold text-t-1">
+				<Typography
+					tag="h2"
+					className="font-display text-[14px] font-semibold text-t-1"
+				>
 					{hasError
 						? t("admin.coupons.deleteModal.errorTitle")
 						: t("admin.coupons.deleteModal.title")}
 				</Typography>
 				<Button
+					size={"bare"}
 					onClick={onClose}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>

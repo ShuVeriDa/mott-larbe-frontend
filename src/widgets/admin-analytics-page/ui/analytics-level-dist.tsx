@@ -9,12 +9,9 @@ import type { CefrLevel } from "@/shared/types";
 import { CEFR_LEVEL_BADGE_CLASS } from "@/shared/lib/cefr-colors";
 
 const LEVEL_BAR_COLOR: Record<CefrLevel, string> = {
-	A1: "bg-grn opacity-70",
-	A2: "bg-grn opacity-60",
-	B1: "bg-acc",
-	B2: "bg-pur",
-	C1: "bg-amb",
-	C2: "bg-red",
+	A: "bg-grn",
+	B: "bg-acc",
+	C: "bg-amb",
 };
 
 interface AnalyticsLevelDistProps {
@@ -41,7 +38,7 @@ export const AnalyticsLevelDist = ({
 
 			<div className="px-4 pb-4">
 				{isLoading || !items
-					? Array.from({ length: 6 }).map((_, i) => (
+					? Array.from({ length: 3 }).map((_, i) => (
 							<div key={i} className="mb-3 last:mb-0">
 								<div className="mb-1 flex items-center justify-between">
 									<div className="h-4 w-28 animate-pulse rounded bg-surf-3" />

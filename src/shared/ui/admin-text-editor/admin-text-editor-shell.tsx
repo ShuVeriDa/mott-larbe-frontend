@@ -61,8 +61,15 @@ export const AdminTextEditorShell = ({
 	findReplaceCharsPicker,
 }: AdminTextEditorShellProps) => {
 	const { t } = useI18n();
-	const [stats, setStats] = useState({ words: 0, chars: 0, paragraphs: 0 });
+	const currentDoc = pages[activePage]?.doc;
+	const [stats, setStats] = useState(() =>
+		currentDoc ? computeDocStats(currentDoc) : { words: 0, chars: 0, paragraphs: 0 },
+	);
 	const [editor, setEditor] = useState<Editor | null>(null);
+
+	useLayoutEffect(() => {
+		if (currentDoc) setStats(computeDocStats(currentDoc));
+	}, [currentDoc]); // eslint-disable-line react-hooks/exhaustive-deps
 	const findReplace = useFindReplace(editor);
 
 	useLayoutEffect(() => {

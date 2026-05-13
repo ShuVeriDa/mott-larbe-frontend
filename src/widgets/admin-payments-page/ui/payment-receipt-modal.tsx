@@ -1,9 +1,5 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Button } from "@/shared/ui/button";
-import { X } from "lucide-react";
-import { ReactNode } from 'react';
 import type {
 	AdminPaymentListItem,
 	PaymentBackendStatus,
@@ -11,6 +7,10 @@ import type {
 } from "@/entities/admin-payment";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
+import { X } from "lucide-react";
+import { ReactNode } from "react";
 
 const PROVIDER_COLORS: Record<PaymentProvider, string> = {
 	STRIPE: "#635bff",
@@ -109,8 +109,12 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 		{
 			key: t("admin.payments.receipt.provider"),
 			value: (
-				<Typography tag="span" className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[11px] font-medium text-t-2">
-					<Typography tag="span"
+				<Typography
+					tag="span"
+					className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[11px] font-medium text-t-2"
+				>
+					<Typography
+						tag="span"
 						className="size-1.5 rounded-full"
 						style={{ background: provColor }}
 					/>
@@ -121,13 +125,17 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 		{
 			key: t("admin.payments.receipt.status"),
 			value: (
-				<Typography tag="span"
+				<Typography
+					tag="span"
 					className={cn(
 						"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-px text-[10.5px] font-semibold",
 						sc.cls,
 					)}
 				>
-					<Typography tag="span" className={cn("size-[5px] rounded-full", sc.dotCls)} />
+					<Typography
+						tag="span"
+						className={cn("size-[5px] rounded-full", sc.dotCls)}
+					/>
 					{t(sc.i18nKey)}
 				</Typography>
 			),
@@ -138,10 +146,14 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 		<div className="overflow-hidden rounded-t-[14px] bg-surf sm:rounded-[14px]">
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
-				<Typography tag="span" className="font-display text-[14px] font-semibold text-t-1">
+				<Typography
+					tag="span"
+					className="font-display text-[14px] font-semibold text-t-1"
+				>
 					{t("admin.payments.receipt.title")}
 				</Typography>
 				<Button
+					size={"bare"}
 					onClick={onClose}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
@@ -157,14 +169,20 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 							key={i}
 							className="flex items-center justify-between border-b border-bd-1 px-3 py-2 text-[12.5px] last:border-b-0"
 						>
-							<Typography tag="span" className="text-t-3">{key}</Typography>
-							<Typography tag="span" className="font-medium text-t-1">{value}</Typography>
+							<Typography tag="span" className="text-t-3">
+								{key}
+							</Typography>
+							<Typography tag="span" className="font-medium text-t-1">
+								{value}
+							</Typography>
 						</div>
 					))}
 				</div>
 
 				<div className="flex items-center justify-between px-1 text-[13px] font-semibold text-t-1">
-					<Typography tag="span">{t("admin.payments.receipt.total")}</Typography>
+					<Typography tag="span">
+						{t("admin.payments.receipt.total")}
+					</Typography>
 					<Typography tag="span" className={amtColor}>
 						{payment.status === "REFUNDED" ? "−" : ""}
 						{amtStr}

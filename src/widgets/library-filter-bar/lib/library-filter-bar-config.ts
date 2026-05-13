@@ -5,12 +5,9 @@ import type {
 import type { CefrLevel } from "@/shared/types";
 
 export const LIBRARY_FILTER_BAR_CEFR_LEVELS: readonly CefrLevel[] = [
-	"A1",
-	"A2",
-	"B1",
-	"B2",
-	"C1",
-	"C2",
+	"A",
+	"B",
+	"C",
 ];
 
 /** Languages shown as filter pills (subset of `LibraryTextLanguage`). */
@@ -28,10 +25,8 @@ export const LIBRARY_FILTER_ACC_PILL_IDLE =
 
 export const libraryFilterLevelPillClass = (level: CefrLevel, active: boolean) => {
 	if (active) {
-		if (level === "A1" || level === "A2")
-			return "bg-grn-bg border-grn/25 text-grn-t";
-		if (level === "B1" || level === "B2")
-			return "bg-amb-bg border-amb/25 text-amb-t";
+		if (level === "A") return "bg-grn-bg border-grn/25 text-grn-t";
+		if (level === "B") return "bg-amb-bg border-amb/25 text-amb-t";
 		return "bg-red-bg border-red/25 text-red-t";
 	}
 	return LIBRARY_FILTER_ACC_PILL_IDLE;

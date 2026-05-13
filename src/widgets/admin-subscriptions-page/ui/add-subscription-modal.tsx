@@ -1,15 +1,15 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Button } from "@/shared/ui/button";
-import { X } from "lucide-react";
 import type { PaymentProvider } from "@/entities/admin-subscription";
 import { adminSubscriptionApi } from "@/entities/admin-subscription";
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
 import { useI18n } from "@/shared/lib/i18n";
-import { useQuery } from "@tanstack/react-query";
-import { ComponentProps, useState } from "react";
+import { Button } from "@/shared/ui/button";
 import { Select } from "@/shared/ui/select";
+import { Typography } from "@/shared/ui/typography";
+import { useQuery } from "@tanstack/react-query";
+import { X } from "lucide-react";
+import { ComponentProps, useState } from "react";
 interface Props {
 	mutations: ReturnType<typeof useAdminSubscriptionMutations>;
 	onClose: () => void;
@@ -48,18 +48,27 @@ export const AddSubscriptionModal = ({
 		);
 	};
 
-		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setEmail(e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => setPlanId(e.currentTarget.value);
-	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => setDurationDays(e.currentTarget.value);
-	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = e => setProvider(e.currentTarget.value as PaymentProvider);
-	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = e => setReason(e.currentTarget.value);
-return (
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+		setEmail(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e =>
+		setPlanId(e.currentTarget.value);
+	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e =>
+		setDurationDays(e.currentTarget.value);
+	const handleChange4: NonNullable<ComponentProps<"select">["onChange"]> = e =>
+		setProvider(e.currentTarget.value as PaymentProvider);
+	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+		setReason(e.currentTarget.value);
+	return (
 		<>
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
-				<Typography tag="span" className="font-display text-[14px] font-semibold text-t-1">
+				<Typography
+					tag="span"
+					className="font-display text-[14px] font-semibold text-t-1"
+				>
 					{t("admin.subscriptions.modal.addTitle")}
 				</Typography>
 				<Button
+					size={"bare"}
 					onClick={onClose}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
@@ -69,7 +78,10 @@ return (
 
 			<form action={handleSubmit} className="px-4 py-3.5">
 				<div className="mb-3">
-					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography
+						tag="label"
+						className="mb-1 block text-[11.5px] font-medium text-t-2"
+					>
 						{t("admin.subscriptions.modal.emailOrId")}
 					</Typography>
 					<input
@@ -81,7 +93,10 @@ return (
 				</div>
 
 				<div className="mb-3">
-					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography
+						tag="label"
+						className="mb-1 block text-[11.5px] font-medium text-t-2"
+					>
 						{t("admin.subscriptions.modal.plan")}
 					</Typography>
 					<Select
@@ -101,7 +116,10 @@ return (
 				</div>
 
 				<div className="mb-3">
-					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography
+						tag="label"
+						className="mb-1 block text-[11.5px] font-medium text-t-2"
+					>
 						{t("admin.subscriptions.modal.duration")}
 					</Typography>
 					<Select
@@ -110,15 +128,26 @@ return (
 						onChange={handleChange3}
 						className="rounded-lg focus:bg-surf"
 					>
-						<option value="30">{t("admin.subscriptions.modal.duration1m")}</option>
-						<option value="90">{t("admin.subscriptions.modal.duration3m")}</option>
-						<option value="180">{t("admin.subscriptions.modal.duration6m")}</option>
-						<option value="365">{t("admin.subscriptions.modal.duration1y")}</option>
+						<option value="30">
+							{t("admin.subscriptions.modal.duration1m")}
+						</option>
+						<option value="90">
+							{t("admin.subscriptions.modal.duration3m")}
+						</option>
+						<option value="180">
+							{t("admin.subscriptions.modal.duration6m")}
+						</option>
+						<option value="365">
+							{t("admin.subscriptions.modal.duration1y")}
+						</option>
 					</Select>
 				</div>
 
 				<div className="mb-3">
-					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography
+						tag="label"
+						className="mb-1 block text-[11.5px] font-medium text-t-2"
+					>
 						{t("admin.subscriptions.modal.provider")}
 					</Typography>
 					<Select
@@ -136,7 +165,10 @@ return (
 				</div>
 
 				<div className="mb-0">
-					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography
+						tag="label"
+						className="mb-1 block text-[11.5px] font-medium text-t-2"
+					>
 						{t("admin.subscriptions.modal.reason")}
 					</Typography>
 					<input

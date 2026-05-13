@@ -37,10 +37,15 @@ export const PARAGRAPH_SPACING_OPTIONS: Array<{ value: ReaderParagraphSpacing; l
 ];
 
 export const THEME_SWATCHES: Array<{
-	value: "default" | "sepia";
+	value: "default" | "paper" | "sepia" | "warm" | "night" | "green" | "slate";
 	color: string;
 	labelKey: string;
 }> = [
 	{ value: "default", color: "#ffffff", labelKey: "reader.settings.themeDefault" },
+	{ value: "paper", color: "#e8e6df", labelKey: "reader.settings.themePaper" },
 	{ value: "sepia", color: "#f4efe6", labelKey: "reader.settings.themeSepia" },
+	{ value: "warm", color: "#fdf3e3", labelKey: "reader.settings.themeWarm" },
+	{ value: "night", color: "#1a1a1e", labelKey: "reader.settings.themeNight" },
+	{ value: "green", color: "#1a2418", labelKey: "reader.settings.themeGreen" },
+	{ value: "slate", color: "#1e2430", labelKey: "reader.settings.themeSlate" },
 ];

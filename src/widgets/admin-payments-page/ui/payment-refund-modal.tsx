@@ -1,15 +1,15 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Button } from "@/shared/ui/button";
-import { X } from "lucide-react";
 import type {
 	AdminPaymentListItem,
 	RefundReason,
 } from "@/entities/admin-payment";
 import { useI18n } from "@/shared/lib/i18n";
-import { ComponentProps, useState } from "react";
+import { Button } from "@/shared/ui/button";
 import { Select } from "@/shared/ui/select";
+import { Typography } from "@/shared/ui/typography";
+import { X } from "lucide-react";
+import { ComponentProps, useState } from "react";
 const REASONS: RefundReason[] = [
 	"USER_REQUEST",
 	"DUPLICATE_TRANSACTION",
@@ -50,16 +50,22 @@ export const PaymentRefundModal = ({
 		maximumFractionDigits: 0,
 	}).format(maxRub);
 
-		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setAmount(e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => setReason(e.currentTarget.value as RefundReason);
-return (
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+		setAmount(e.currentTarget.value);
+	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e =>
+		setReason(e.currentTarget.value as RefundReason);
+	return (
 		<div className="overflow-hidden rounded-t-[14px] bg-surf sm:rounded-[14px]">
 			{/* Header */}
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
-				<Typography tag="span" className="font-display text-[14px] font-semibold text-t-1">
+				<Typography
+					tag="span"
+					className="font-display text-[14px] font-semibold text-t-1"
+				>
 					{t("admin.payments.refundModal.title")}
 				</Typography>
 				<Button
+					size={"bare"}
 					onClick={onClose}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
@@ -72,16 +78,23 @@ return (
 				<div className="px-4 py-3.5">
 					{/* Payment summary */}
 					<div className="mb-3 rounded-lg border border-bd-1 bg-surf-2 px-3 py-2.5 text-[12.5px] text-t-2">
-						<Typography tag="span" className="font-semibold text-t-1">{fmtUser}</Typography>
+						<Typography tag="span" className="font-semibold text-t-1">
+							{fmtUser}
+						</Typography>
 						{" · "}
 						{fmtPlan}
 						{" · "}
-						<Typography tag="span" className="font-semibold text-t-1">{fmtOrig}</Typography>
+						<Typography tag="span" className="font-semibold text-t-1">
+							{fmtOrig}
+						</Typography>
 					</div>
 
 					{/* Amount */}
 					<div className="mb-3">
-						<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+						<Typography
+							tag="label"
+							className="mb-1.5 block text-[11.5px] font-medium text-t-2"
+						>
 							{t("admin.payments.refundModal.amountLabel")}
 						</Typography>
 						<input
@@ -98,7 +111,10 @@ return (
 
 					{/* Reason */}
 					<div>
-						<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
+						<Typography
+							tag="label"
+							className="mb-1.5 block text-[11.5px] font-medium text-t-2"
+						>
 							{t("admin.payments.refundModal.reasonLabel")}
 						</Typography>
 						<Select

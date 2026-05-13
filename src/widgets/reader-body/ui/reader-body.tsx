@@ -96,11 +96,12 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 		<article
 			className={cn(
 				"flex-1 overflow-y-auto pt-8 pb-15 max-md:pt-4",
+				"bg-bg text-t-1 transition-colors duration-250",
 				"[&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded [&::-webkit-scrollbar-thumb]:bg-surf-4",
 				PAGE_PADDING_CLASS[pagePadding],
 				FONT_FAMILY_CLASS[fontFamily],
 			)}
-			data-reader-theme={theme === "default" ? undefined : theme}
+			data-reader-theme={theme}
 			style={fontVars}
 		>
 			<ReaderProgressBar progress={data.progress} />

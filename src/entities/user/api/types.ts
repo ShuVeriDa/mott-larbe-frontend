@@ -1,5 +1,5 @@
 export type UserLanguage = "CHE" | "RU";
-export type UserLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
+export type UserLevel = "A" | "B" | "C";
 
 export type PermissionCode =
 	| "CAN_EDIT_TEXTS"

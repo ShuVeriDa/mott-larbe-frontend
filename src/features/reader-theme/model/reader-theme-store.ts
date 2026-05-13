@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type ReaderTheme = "default" | "sepia" | "custom";
+export type ReaderTheme = "default" | "paper" | "sepia" | "warm" | "night" | "green" | "slate" | "custom";
 
 interface ReaderThemeState {
   theme: ReaderTheme;

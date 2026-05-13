@@ -79,12 +79,9 @@ export const LearningSection = ({
 								value={level}
 								onChange={handleLevelChange}
 							>
-								<option value="A1">{t("settings.learning.levelA1")}</option>
-								<option value="A2">{t("settings.learning.levelA2")}</option>
-								<option value="B1">{t("settings.learning.levelB1")}</option>
-								<option value="B2">{t("settings.learning.levelB2")}</option>
-								<option value="C1">{t("settings.learning.levelC1")}</option>
-								<option value="C2">{t("settings.learning.levelC2")}</option>
+								<option value="A">{t("settings.learning.levelA")}</option>
+								<option value="B">{t("settings.learning.levelB")}</option>
+								<option value="C">{t("settings.learning.levelC")}</option>
 							</Select>
 						</div>
 					</div>

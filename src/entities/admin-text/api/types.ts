@@ -1,6 +1,6 @@
 export type TextStatus = "draft" | "published" | "archived";
 export type ProcessingStatus = "IDLE" | "RUNNING" | "COMPLETED" | "ERROR";
-export type TextLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
+export type TextLevel = "A" | "B" | "C";
 export type TextLanguage = "CHE" | "RU" | "AR" | "EN";
 export type TextSortBy = "createdAt" | "title" | "level" | "readCount";
 export type TextSortOrder = "asc" | "desc";

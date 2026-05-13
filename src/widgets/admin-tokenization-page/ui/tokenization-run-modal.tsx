@@ -2,12 +2,12 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { Button } from "@/shared/ui/button";
-import { ComponentProps, useState } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
-import { X, Play } from "lucide-react";
 import type { RunScope, TokenizationStats } from "@/entities/token";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import { Play, X } from "lucide-react";
+import { ComponentProps, useState } from "react";
 
 interface TokenizationRunModalProps {
 	open: boolean;
@@ -29,31 +29,37 @@ export const TokenizationRunModal = ({
 
 	if (!open) return null;
 
-	const options: { value: RunScope; labelKey: string; subKey: string; count: number | undefined }[] =
-		[
-			{
-				value: "pending",
-				labelKey: "admin.tokenization.runModal.pending",
-				subKey: "admin.tokenization.runModal.pendingSub",
-				count: stats?.tabs.pending,
-			},
-			{
-				value: "errors",
-				labelKey: "admin.tokenization.runModal.errors",
-				subKey: "admin.tokenization.runModal.errorsSub",
-				count: stats?.tabs.issues,
-			},
-			{
-				value: "all",
-				labelKey: "admin.tokenization.runModal.all",
-				subKey: "admin.tokenization.runModal.allSub",
-				count: stats?.tabs.all,
-			},
-		];
+	const options: {
+		value: RunScope;
+		labelKey: string;
+		subKey: string;
+		count: number | undefined;
+	}[] = [
+		{
+			value: "pending",
+			labelKey: "admin.tokenization.runModal.pending",
+			subKey: "admin.tokenization.runModal.pendingSub",
+			count: stats?.tabs.pending,
+		},
+		{
+			value: "errors",
+			labelKey: "admin.tokenization.runModal.errors",
+			subKey: "admin.tokenization.runModal.errorsSub",
+			count: stats?.tabs.issues,
+		},
+		{
+			value: "all",
+			labelKey: "admin.tokenization.runModal.all",
+			subKey: "admin.tokenization.runModal.allSub",
+			count: stats?.tabs.all,
+		},
+	];
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onRun(scope);
-return (
+	const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e =>
+		e.stopPropagation();
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		onRun(scope);
+	return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"
 			onClick={onClose}
@@ -67,6 +73,7 @@ return (
 						{t("admin.tokenization.runModal.title")}
 					</Typography>
 					<Button
+						size={"bare"}
 						onClick={onClose}
 						className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
@@ -79,41 +86,52 @@ return (
 						{t("admin.tokenization.runModal.subtitle")}
 					</Typography>
 					<div className="flex flex-col gap-2">
-						{options.map((opt) => {
-						  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => setScope(opt.value);
-						  return (
-							<Typography tag="label"
-								key={opt.value}
-								className={cn(
-									"flex cursor-pointer items-start gap-2.5 rounded-[9px] border p-3 transition-colors",
-									scope === opt.value
-										? "border-acc bg-acc-bg"
-										: "border-bd-2 hover:border-bd-3 hover:bg-surf-2",
-								)}
-							>
-								<input
-									type="radio"
-									name="scope"
-									value={opt.value}
-									checked={scope === opt.value}
-									onChange={handleChange}
-									className="mt-0.5 size-[15px] shrink-0 accent-acc"
-								/>
-								<div className="min-w-0 flex-1">
-									<div className="flex items-center justify-between gap-2">
-										<Typography tag="span" className="text-[12.5px] font-medium text-t-1">
-											{t(opt.labelKey)}
-										</Typography>
-										{opt.count !== undefined && (
-											<Typography tag="span" className="shrink-0 rounded-full bg-surf-3 px-1.5 py-0.5 text-[10.5px] font-semibold tabular-nums text-t-2">
-												{opt.count}
+						{options.map(opt => {
+							const handleChange: NonNullable<
+								ComponentProps<"input">["onChange"]
+							> = () => setScope(opt.value);
+							return (
+								<Typography
+									tag="label"
+									key={opt.value}
+									className={cn(
+										"flex cursor-pointer items-start gap-2.5 rounded-[9px] border p-3 transition-colors",
+										scope === opt.value
+											? "border-acc bg-acc-bg"
+											: "border-bd-2 hover:border-bd-3 hover:bg-surf-2",
+									)}
+								>
+									<input
+										type="radio"
+										name="scope"
+										value={opt.value}
+										checked={scope === opt.value}
+										onChange={handleChange}
+										className="mt-0.5 size-[15px] shrink-0 accent-acc"
+									/>
+									<div className="min-w-0 flex-1">
+										<div className="flex items-center justify-between gap-2">
+											<Typography
+												tag="span"
+												className="text-[12.5px] font-medium text-t-1"
+											>
+												{t(opt.labelKey)}
 											</Typography>
-										)}
+											{opt.count !== undefined && (
+												<Typography
+													tag="span"
+													className="shrink-0 rounded-full bg-surf-3 px-1.5 py-0.5 text-[10.5px] font-semibold tabular-nums text-t-2"
+												>
+													{opt.count}
+												</Typography>
+											)}
+										</div>
+										<div className="mt-0.5 text-[11px] text-t-3">
+											{t(opt.subKey)}
+										</div>
 									</div>
-									<div className="mt-0.5 text-[11px] text-t-3">{t(opt.subKey)}</div>
-								</div>
-							</Typography>
-						);
+								</Typography>
+							);
 						})}
 					</div>
 				</div>
@@ -131,7 +149,10 @@ return (
 						className="flex h-[34px] flex-1 items-center justify-center gap-1.5 rounded-base bg-acc text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						{isLoading ? (
-							<Typography tag="span" className="size-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+							<Typography
+								tag="span"
+								className="size-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white"
+							/>
 						) : (
 							<Play className="size-3" />
 						)}

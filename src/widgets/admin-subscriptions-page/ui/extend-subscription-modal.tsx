@@ -1,12 +1,12 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Button } from "@/shared/ui/button";
-import { X } from "lucide-react";
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
 import { useI18n } from "@/shared/lib/i18n";
-import { ComponentProps, useState } from "react";
+import { Button } from "@/shared/ui/button";
 import { Select } from "@/shared/ui/select";
+import { Typography } from "@/shared/ui/typography";
+import { X } from "lucide-react";
+import { ComponentProps, useState } from "react";
 interface Props {
 	subscriptionId: string | null;
 	mutations: ReturnType<typeof useAdminSubscriptionMutations>;
@@ -40,15 +40,21 @@ export const ExtendSubscriptionModal = ({
 		);
 	};
 
-		const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setExtendDays(Number(e.currentTarget.value));
-	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e => setReason(e.currentTarget.value);
-return (
+	const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = e =>
+		setExtendDays(Number(e.currentTarget.value));
+	const handleChange2: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+		setReason(e.currentTarget.value);
+	return (
 		<>
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3.5">
-				<Typography tag="span" className="font-display text-[14px] font-semibold text-t-1">
+				<Typography
+					tag="span"
+					className="font-display text-[14px] font-semibold text-t-1"
+				>
 					{t("admin.subscriptions.modal.extendTitle")}
 				</Typography>
 				<Button
+					size={"bare"}
 					onClick={onClose}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
@@ -58,7 +64,10 @@ return (
 
 			<form action={handleConfirm} className="px-4 py-3.5">
 				<div className="mb-3">
-					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography
+						tag="label"
+						className="mb-1 block text-[11.5px] font-medium text-t-2"
+					>
 						{t("admin.subscriptions.modal.extendBy")}
 					</Typography>
 					<Select
@@ -76,7 +85,10 @@ return (
 				</div>
 
 				<div>
-					<Typography tag="label" className="mb-1 block text-[11.5px] font-medium text-t-2">
+					<Typography
+						tag="label"
+						className="mb-1 block text-[11.5px] font-medium text-t-2"
+					>
 						{t("admin.subscriptions.modal.reason")}
 					</Typography>
 					<input
