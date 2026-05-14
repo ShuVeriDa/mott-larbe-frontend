@@ -300,6 +300,7 @@ export const VersionItem = ({
 				<div className="flex shrink-0 flex-col justify-start gap-1 pt-0.5 opacity-0 transition-opacity group-hover:opacity-100 max-sm:opacity-100">
 					{item.status === "COMPLETED" && !item.isCurrent && (
 						<Button
+							size={"bare"}
 							onClick={handleRestoreClick}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.restore")}
@@ -309,6 +310,7 @@ export const VersionItem = ({
 					)}
 					{item.status === "ERROR" && (
 						<Button
+							size={"bare"}
 							onClick={handleRetryClick}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.retry")}
@@ -318,6 +320,7 @@ export const VersionItem = ({
 					)}
 					{item.status === "COMPLETED" && (
 						<Button
+							size={"bare"}
 							onClick={handleDownloadClick}
 							className={btnClass}
 							title={t("admin.texts.versions.actions.download")}

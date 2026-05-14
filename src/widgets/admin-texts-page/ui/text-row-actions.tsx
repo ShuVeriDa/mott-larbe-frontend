@@ -1,12 +1,12 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { ComponentProps, useEffect, useRef, useState } from 'react';
-import Link from "next/link";
-import { useI18n } from "@/shared/lib/i18n";
 import type { AdminTextListItem } from "@/entities/admin-text";
 import type { useAdminTextMutations } from "@/entities/admin-text/model/use-admin-text-mutations";
-import { Pencil, Play, RotateCcw, Clock, MoreVertical } from "lucide-react";
+import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import { Clock, MoreVertical, Pencil, Play, RotateCcw } from "lucide-react";
+import Link from "next/link";
+import { ComponentProps, useEffect, useRef, useState } from "react";
 
 interface TextRowActionsProps {
 	text: AdminTextListItem;
@@ -20,7 +20,13 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 
 	useEffect(() => {
 		const handler = (e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node /* intentional: outside-click target */)) setOpen(false);
+			if (
+				ref.current &&
+				!ref.current.contains(
+					e.target as Node /* intentional: outside-click target */,
+				)
+			)
+				setOpen(false);
 		};
 		document.addEventListener("mousedown", handler);
 		return () => document.removeEventListener("mousedown", handler);
@@ -29,7 +35,8 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 	const isPublished = text.status === "published";
 	const isRunning = text.processingStatus === "RUNNING";
 	const isError = text.processingStatus === "ERROR";
-	const notProcessed = text.processingStatus === "IDLE" && text.tokenCount === 0;
+	const notProcessed =
+		text.processingStatus === "IDLE" && text.tokenCount === 0;
 	const hasVersions = !notProcessed;
 
 	const btnClass =
@@ -38,16 +45,35 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 	const dropItemClass =
 		"flex w-full cursor-pointer items-center gap-2 rounded-[6px] px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2";
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.tokenize.mutate(text.id);
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.tokenize.mutate(text.id);
-	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
-	const handleClick4: NonNullable<ComponentProps<typeof Link>["onClick"]> = () => setOpen(false);
-	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => { mutations.tokenize.mutate(text.id); setOpen(false); };
-	const handleClick6: NonNullable<ComponentProps<"button">["onClick"]> = () => { mutations.unpublish.mutate(text.id); setOpen(false); };
-	const handleClick7: NonNullable<ComponentProps<"button">["onClick"]> = () => { mutations.publish.mutate(text.id); setOpen(false); };
-	const handleClick8: NonNullable<ComponentProps<typeof Link>["onClick"]> = () => setOpen(false);
-	const handleClick9: NonNullable<ComponentProps<"button">["onClick"]> = () => { mutations.remove.mutate(text.id); setOpen(false); };
-return (
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		mutations.tokenize.mutate(text.id);
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		mutations.tokenize.mutate(text.id);
+	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		setOpen(v => !v);
+	const handleClick4: NonNullable<
+		ComponentProps<typeof Link>["onClick"]
+	> = () => setOpen(false);
+	const handleClick5: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		mutations.tokenize.mutate(text.id);
+		setOpen(false);
+	};
+	const handleClick6: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		mutations.unpublish.mutate(text.id);
+		setOpen(false);
+	};
+	const handleClick7: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		mutations.publish.mutate(text.id);
+		setOpen(false);
+	};
+	const handleClick8: NonNullable<
+		ComponentProps<typeof Link>["onClick"]
+	> = () => setOpen(false);
+	const handleClick9: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		mutations.remove.mutate(text.id);
+		setOpen(false);
+	};
+	return (
 		<div className="flex items-center gap-1">
 			{/* Edit */}
 			<Link
@@ -61,6 +87,7 @@ return (
 			{/* Tokenize — shown if not yet processed */}
 			{notProcessed && !isRunning && (
 				<Button
+					size={"bare"}
 					onClick={handleClick}
 					disabled={mutations.tokenize.isPending}
 					className={`${btnClass} text-acc`}
@@ -73,6 +100,7 @@ return (
 			{/* Retry — shown for errors */}
 			{isError && !isRunning && (
 				<Button
+					size={"bare"}
 					onClick={handleClick2}
 					disabled={mutations.tokenize.isPending}
 					className={`${btnClass} text-amb`}
@@ -95,10 +123,7 @@ return (
 
 			{/* Dropdown */}
 			<div ref={ref} className="relative">
-				<Button
-					onClick={handleClick3}
-					className={btnClass}
-				>
+				<Button size={"bare"} onClick={handleClick3} className={btnClass}>
 					<MoreVertical className="size-[14px]" />
 				</Button>
 
@@ -112,27 +137,18 @@ return (
 							{t("admin.texts.actions.versions")}
 						</Link>
 
-						<Button
-							onClick={handleClick5}
-							className={dropItemClass}
-						>
+						<Button onClick={handleClick5} className={dropItemClass}>
 							{t("admin.texts.actions.tokenize")}
 						</Button>
 
 						<div className="my-[3px] h-px bg-bd-1" />
 
 						{isPublished ? (
-							<Button
-								onClick={handleClick6}
-								className={dropItemClass}
-							>
+							<Button onClick={handleClick6} className={dropItemClass}>
 								{t("admin.texts.actions.unpublish")}
 							</Button>
 						) : (
-							<Button
-								onClick={handleClick7}
-								className={dropItemClass}
-							>
+							<Button onClick={handleClick7} className={dropItemClass}>
 								{t("admin.texts.actions.publish")}
 							</Button>
 						)}
@@ -148,6 +164,7 @@ return (
 						<div className="my-[3px] h-px bg-bd-1" />
 
 						<Button
+							size={"bare"}
 							onClick={handleClick9}
 							className="flex w-full cursor-pointer items-center gap-2 rounded-[6px] px-2.5 py-[7px] text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg"
 						>

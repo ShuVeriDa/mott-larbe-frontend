@@ -1,16 +1,19 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { ComponentProps } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
-import { AlertCircle, TrendingUp } from "lucide-react";
+import type {
+	AdminTextListItem,
+	ProcessingStatus,
+} from "@/entities/admin-text";
 import { useAdminTextSSE } from "@/entities/admin-text";
-import type { AdminTextListItem, ProcessingStatus } from "@/entities/admin-text";
 import type { useAdminTextMutations } from "@/entities/admin-text/model/use-admin-text-mutations";
+import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
+import { AlertCircle, TrendingUp } from "lucide-react";
+import { ComponentProps } from "react";
 import { TextLevelBadge } from "./text-level-badge";
-import { TextStatusBadge } from "./text-status-badge";
 import { TextProcessingBar } from "./text-processing-bar";
 import { TextRowActions } from "./text-row-actions";
+import { TextStatusBadge } from "./text-status-badge";
 
 interface TextsTableProps {
 	texts: AdminTextListItem[];
@@ -23,7 +26,11 @@ interface TextsTableProps {
 }
 
 const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" });
+	new Date(iso).toLocaleDateString("ru-RU", {
+		day: "numeric",
+		month: "short",
+		year: "numeric",
+	});
 
 interface TextTableRowProps {
 	text: AdminTextListItem;
@@ -32,18 +39,26 @@ interface TextTableRowProps {
 	mutations: ReturnType<typeof useAdminTextMutations>;
 }
 
-const TextTableRow = ({ text, selected, onToggle, mutations }: TextTableRowProps) => {
+const TextTableRow = ({
+	text,
+	selected,
+	onToggle,
+	mutations,
+}: TextTableRowProps) => {
 	const { t } = useI18n();
 	const sseData = useAdminTextSSE(text.id, text.processingStatus === "RUNNING");
 
-	const processingStatus: ProcessingStatus = (sseData?.status && sseData.status !== "NONE")
-		? (sseData.status as ProcessingStatus)
-		: text.processingStatus;
+	const processingStatus: ProcessingStatus =
+		sseData?.status && sseData.status !== "NONE"
+			? (sseData.status as ProcessingStatus)
+			: text.processingStatus;
 	const processingProgress = sseData?.progress ?? text.processingProgress;
 
-		const handleCheckboxClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-	const handleActionsClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-return (
+	const handleCheckboxClick: NonNullable<ComponentProps<"td">["onClick"]> = e =>
+		e.stopPropagation();
+	const handleActionsClick: NonNullable<ComponentProps<"td">["onClick"]> = e =>
+		e.stopPropagation();
+	return (
 		<tr className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2">
 			<td className="px-2.5 py-[10px] pl-3.5" onClick={handleCheckboxClick}>
 				<input
@@ -56,12 +71,21 @@ return (
 
 			<td className="px-2.5 py-[10px]">
 				<div className="flex flex-col gap-0.5">
-					<Typography tag="span" className="line-clamp-1 text-[13px] font-medium leading-[1.3] text-t-1">
+					<Typography
+						tag="span"
+						className="line-clamp-1 text-[13px] font-medium leading-[1.3] text-t-1"
+					>
 						{text.title}
 					</Typography>
-					<Typography tag="span" className="flex flex-wrap items-center gap-1.5 text-[11px] text-t-3">
+					<Typography
+						tag="span"
+						className="flex flex-wrap items-center gap-1.5 text-[11px] text-t-3"
+					>
 						{text.processingStatus === "ERROR" ? (
-							<Typography tag="span" className="flex items-center gap-1 text-red-t">
+							<Typography
+								tag="span"
+								className="flex items-center gap-1 text-red-t"
+							>
 								<AlertCircle className="size-[11px]" />
 								{t("admin.texts.table.errorMeta")}
 							</Typography>
@@ -74,7 +98,9 @@ return (
 							</Typography>
 						)}
 						{text.tags.length > 0 && (
-							<Typography tag="span">{text.tags.map((tag) => tag.name).join(", ")}</Typography>
+							<Typography tag="span">
+								{text.tags.map(tag => tag.name).join(", ")}
+							</Typography>
 						)}
 					</Typography>
 				</div>
@@ -89,12 +115,19 @@ return (
 			</td>
 
 			<td className="px-2.5 py-[10px]">
-				<TextProcessingBar status={processingStatus} progress={processingProgress} />
+				<TextProcessingBar
+					status={processingStatus}
+					progress={processingProgress}
+				/>
 			</td>
 
 			<td className="px-2.5 py-[10px] text-[12px] text-t-2">
-				{text.readCount > 0 ? text.readCount.toLocaleString("ru-RU") : (
-					<Typography tag="span" className="text-t-3">—</Typography>
+				{text.readCount > 0 ? (
+					text.readCount.toLocaleString("ru-RU")
+				) : (
+					<Typography tag="span" className="text-t-3">
+						—
+					</Typography>
 				)}
 			</td>
 
@@ -177,26 +210,38 @@ export const TextsTable = ({
 							/>
 						</th>
 						<th className={thClass}>{t("admin.texts.table.title")}</th>
-						<th className={thClass} style={{ width: 50 }}>{t("admin.texts.table.level")}</th>
-						<th className={thClass} style={{ width: 110 }}>{t("admin.texts.table.status")}</th>
-						<th className={thClass} style={{ width: 150 }}>{t("admin.texts.table.processing")}</th>
-						<th className={thClass} style={{ width: 85 }}>{t("admin.texts.table.reads")}</th>
-						<th className={`${thClass} max-md:hidden`} style={{ width: 90 }}>{t("admin.texts.table.date")}</th>
-						<th style={{ width: 90 }} />
+						<th className={thClass} style={{ width: 50 }}>
+							{t("admin.texts.table.level")}
+						</th>
+						<th className={thClass} style={{ width: 110 }}>
+							{t("admin.texts.table.status")}
+						</th>
+						<th className={thClass} style={{ width: 150 }}>
+							{t("admin.texts.table.processing")}
+						</th>
+						<th className={thClass} style={{ width: 85 }}>
+							{t("admin.texts.table.reads")}
+						</th>
+						<th className={`${thClass} max-md:hidden`} style={{ width: 90 }}>
+							{t("admin.texts.table.date")}
+						</th>
+						<th className={thClass} style={{ width: 90 }} />
 					</tr>
 				</thead>
 				<tbody>
-					{texts.map((text) => {
-					  const handleToggle: NonNullable<ComponentProps<typeof TextTableRow>["onToggle"]> = () => onToggleRow(text.id);
-					  return (
-						<TextTableRow
-							key={text.id}
-							text={text}
-							selected={selectedIds.has(text.id)}
-							onToggle={handleToggle}
-							mutations={mutations}
-						/>
-					);
+					{texts.map(text => {
+						const handleToggle: NonNullable<
+							ComponentProps<typeof TextTableRow>["onToggle"]
+						> = () => onToggleRow(text.id);
+						return (
+							<TextTableRow
+								key={text.id}
+								text={text}
+								selected={selectedIds.has(text.id)}
+								onToggle={handleToggle}
+								mutations={mutations}
+							/>
+						);
 					})}
 				</tbody>
 			</table>

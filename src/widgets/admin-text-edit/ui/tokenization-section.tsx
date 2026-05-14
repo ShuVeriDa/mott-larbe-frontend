@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
-import { ComponentProps } from "react";
+import { ComponentProps, useState } from "react";
 import type { ProcessingStatus } from "@/entities/admin-text";
+import { adminTextApi } from "@/entities/admin-text";
 import { MetaSection, MetaToggle } from "@/shared/ui/admin-text-meta-fields";
 import { useI18n } from "@/shared/lib/i18n";
-import { Clock, History } from "lucide-react";
+import { Clock, History, Trash2 } from "lucide-react";
 
 interface Props {
 	processingStatus: ProcessingStatus;
@@ -48,10 +49,24 @@ export const TokenizationSection = ({
 					? "bg-red-muted text-red-strong"
 					: "bg-surf-3 text-t-3";
 
+	const [clearingCache, setClearingCache] = useState(false);
+	const [cacheCleared, setCacheCleared] = useState<number | null>(null);
+
 	const handleTokenize: NonNullable<ComponentProps<"button">["onClick"]> = () => onTokenize();
 	const handleAutoTokenizeChange = (v: boolean) => onAutoTokenizeChange(v);
 	const handleNormalizationChange = (v: boolean) => onNormalizationChange(v);
 	const handleMorphAnalysisChange = (v: boolean) => onMorphAnalysisChange(v);
+
+	const handleClearCache = async () => {
+		setClearingCache(true);
+		setCacheCleared(null);
+		try {
+			const result = await adminTextApi.clearDictionaryCache(textId);
+			setCacheCleared(result.deleted);
+		} finally {
+			setClearingCache(false);
+		}
+	};
 
 	return (
 		<MetaSection title={t("admin.texts.editPage.sections.tokenization")}>
@@ -88,6 +103,21 @@ export const TokenizationSection = ({
 				<History className="size-3" />
 				{t("admin.texts.editPage.tokenHistoryLink")}
 			</Link>
+
+			<button
+				type="button"
+				onClick={handleClearCache}
+				disabled={clearingCache}
+				className="mb-3 flex w-full items-center justify-center gap-1.5 rounded-base border border-red/25 bg-red-muted px-3 py-[7px] text-[11.5px] font-medium text-red transition-opacity hover:opacity-80 disabled:opacity-50"
+			>
+				<Trash2 className="size-3" />
+				{clearingCache ? "Очищаем..." : "Очистить кэш слов"}
+			</button>
+			{cacheCleared !== null ? (
+				<Typography tag="p" className="mb-2 text-[11px] text-t-3">
+					Удалено записей: {cacheCleared}
+				</Typography>
+			) : null}
 
 			<div className="mb-2.5 flex items-center justify-between gap-2">
 				<div>

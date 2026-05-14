@@ -2,18 +2,44 @@ import type { CefrLevel, LearningLevel } from "@/shared/types";
 
 export interface WordLookupExample {
 	text: string;
+	translation: string | null;
+}
+
+export interface WordLookupMeaning {
 	translation: string;
+	note: string | null;
+	examples: WordLookupExample[];
+}
+
+export interface WordLookupGrammar {
+	genitive?: string | null;
+	dative?: string | null;
+	ergative?: string | null;
+	instrumental?: string | null;
+	plural?: string | null;
+	pluralClass?: string | null;
+	obliqueStem?: string | null;
+	verbPresent?: string | null;
+	verbPast?: string | null;
+	verbParticiple?: string | null;
 }
 
 export interface WordLookupResponse {
-	lemmaId: string;
-	translation: string;
-	tranAlt: string | null;
+	lemmaId: string | null;
+	translation: string | null;
 	grammar: string | null;
-	baseForm: string;
+	grammarForms: WordLookupGrammar | null;
+	nounClass: string | null;
+	nounClassPlural: string | null;
+	baseForm: string | null;
 	forms: string[];
 	tags: string[];
-	examples: WordLookupExample[];
+	wordLevel: string | null;
+	variants: string[];
+	sources: string[];
+	attested: boolean;
+	setPhrases: { nah: string; ru: string }[] | null;
+	meanings: WordLookupMeaning[];
 	userStatus: LearningLevel | null;
 	inDictionary: boolean;
 	dictionaryEntryId: string | null;

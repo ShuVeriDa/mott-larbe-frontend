@@ -2,23 +2,21 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { Button } from "@/shared/ui/button";
-import { useEffect } from 'react';
-import { createPortal } from "react-dom";
-import { ExternalLink, Plus } from "lucide-react";
 import type { TextToken } from "@/entities/text";
 import { useWordLookup, type WordLookupResponse } from "@/entities/word";
 import {
 	useAddToVocabulary,
 	useRemoveFromVocabulary,
 } from "@/features/add-to-vocabulary";
-import {
-	useWordLookupStore,
-	type PopupAnchor,
-} from "@/features/word-lookup";
+import { useWordLookupStore, type PopupAnchor } from "@/features/word-lookup";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
+import { Button } from "@/shared/ui/button";
+import { ExternalLink, Languages, Plus } from "lucide-react";
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
+import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 
 const POPUP_WIDTH = 264;
 const ESTIMATED_HEIGHT = 220;
@@ -38,7 +36,9 @@ const computePosition = (anchor: PopupAnchor) => {
 	return { left, top };
 };
 
-const PopupBody = ({
+// ── Word popup body ───────────────────────────────────────────────────────────
+
+const WordPopupBody = ({
 	token,
 	lookup,
 	onOpenInPanel,
@@ -76,28 +76,40 @@ const PopupBody = ({
 	return (
 		<>
 			<div className="border-b border-hairline border-bd-1 px-3.5 pt-3.5 pb-2.5">
-				<div className="mb-1 text-[17px] font-semibold tracking-[-0.2px] text-t-1">
-					{token.original}
+				<div className="mb-1 flex items-start gap-2">
+					<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
+						{token.original}
+					</div>
+					{lookup.wordLevel ? (
+						<Typography
+							tag="span"
+							className={`mt-0.5 shrink-0 rounded-[4px] border-hairline px-1.5 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.4px] ${
+								lookup.wordLevel === "A" ? "bg-grn/15 text-grn border-grn/30" :
+								lookup.wordLevel === "B" ? "bg-acc/15 text-acc border-acc/30" :
+								"bg-red/15 text-red border-red/30"
+							}`}
+						>
+							{lookup.wordLevel}
+						</Typography>
+					) : null}
 				</div>
 				<div className="text-[11.5px] text-t-3">
 					{t("reader.panel.baseForm")}:{" "}
-					<Typography tag="strong" className="font-medium text-t-2">{lookup.baseForm}</Typography>
+					<Typography tag="strong" className="font-medium text-t-2">
+						{lookup.baseForm}
+					</Typography>
 				</div>
 			</div>
 			<div className="border-b border-hairline border-bd-1 px-3.5 py-2.5">
 				<div className="mb-1 text-[14px] font-medium text-t-1">
 					{lookup.translation}
 				</div>
-				{lookup.tranAlt ? (
-					<div className="text-[12px] leading-[1.5] text-t-3">
-						{lookup.tranAlt}
-					</div>
-				) : null}
 			</div>
 			{lookup.tags.length > 0 ? (
 				<div className="flex flex-wrap gap-1 border-b border-hairline border-bd-1 px-3.5 py-2">
-					{lookup.tags.slice(0, 3).map((tag) => (
-						<Typography tag="span"
+					{lookup.tags.slice(0, 3).map(tag => (
+						<Typography
+							tag="span"
 							key={tag}
 							className="rounded-[4px] border-hairline border-bd-1 bg-surf-2 px-[7px] py-0.5 text-[10.5px] font-medium text-t-2"
 						>
@@ -121,6 +133,7 @@ const PopupBody = ({
 						: t("reader.popup.addToDictionary")}
 				</Button>
 				<Button
+					size={"bare"}
 					onClick={onOpenInPanel}
 					aria-label={t("reader.popup.openPanel")}
 					className="inline-flex h-[30px] w-[30px] items-center justify-center rounded-base border-hairline border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
@@ -132,14 +145,46 @@ const PopupBody = ({
 	);
 };
 
+// ── Phrase popup body ─────────────────────────────────────────────────────────
+
+const PhrasePopupBody = ({ phrase }: { phrase: PagePhraseOccurrence }) => {
+	const { t } = useI18n();
+	return (
+		<>
+			<div className="border-b border-hairline border-bd-1 px-3.5 pt-3.5 pb-2.5">
+				<div className="mb-1 flex items-center gap-1.5">
+					<span className="rounded-[4px] border-hairline border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
+						{t("reader.phrase.label")}
+					</span>
+				</div>
+				<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
+					{phrase.phrase.original}
+				</div>
+			</div>
+			<div className="px-3.5 py-2.5">
+				<div className="text-[14px] font-medium text-t-1">
+					{phrase.phrase.translation}
+				</div>
+				{phrase.phrase.notes && (
+					<div className="mt-1 text-[12px] text-t-3">{phrase.phrase.notes}</div>
+				)}
+			</div>
+		</>
+	);
+};
+
+// ── Main popup ────────────────────────────────────────────────────────────────
+
 export const WordPopup = () => {
 	const { t } = useI18n();
-	const surface = useWordLookupStore((s) => s.surface);
-	const token = useWordLookupStore((s) => s.activeToken);
-	const anchor = useWordLookupStore((s) => s.anchor);
-	const closePopup = useWordLookupStore((s) => s.closePopup);
-	const openInPanel = useWordLookupStore((s) => s.openInPanel);
-	const isVisible = surface === "popup" && Boolean(token) && Boolean(anchor);
+	const surface = useWordLookupStore(s => s.surface);
+	const token = useWordLookupStore(s => s.activeToken);
+	const phrase = useWordLookupStore(s => s.activePhrase);
+	const anchor = useWordLookupStore(s => s.anchor);
+	const closePopup = useWordLookupStore(s => s.closePopup);
+	const openInPanel = useWordLookupStore(s => s.openInPanel);
+
+	const isVisible = surface === "popup" && Boolean(anchor) && (Boolean(token) || Boolean(phrase));
 
 	const { data, isLoading } = useWordLookup(
 		isVisible && token ? token.id : null,
@@ -156,39 +201,39 @@ export const WordPopup = () => {
 		return () => document.removeEventListener("keydown", onKey);
 	}, [isVisible, closePopup]);
 
-	if (!isVisible || !token || typeof window === "undefined") return null;
-
-	const onOpenInPanel = () => {
-		openInPanel(token);
-	};
+	if (!isVisible || typeof window === "undefined") return null;
 
 	return createPortal(
 		<>
 			<div
-				className="fixed inset-0 z-[199]"
+				className="fixed inset-0 z-199"
 				onClick={closePopup}
 				aria-hidden="true"
 			/>
 			<div
 				role="dialog"
-				aria-label={token.original}
-				className="fixed z-[200] w-[264px] overflow-hidden rounded-card border-hairline border-bd-2 bg-surf shadow-lg"
+				aria-label={token?.original ?? phrase?.phrase.original}
+				className="fixed z-200 w-[264px] overflow-hidden rounded-card border-hairline border-bd-2 bg-surf shadow-lg"
 				style={{ left: position.left, top: position.top }}
 			>
-				{isLoading || !data ? (
-					<div className="flex flex-col items-center justify-center gap-2 p-6">
-						<div className="size-[18px] animate-spin rounded-full border-2 border-surf-3 border-t-acc" />
-						<div className="text-[12px] text-t-3">
-							{t("reader.popup.loading")}
+				{phrase ? (
+					<PhrasePopupBody phrase={phrase} />
+				) : token ? (
+					isLoading || !data ? (
+						<div className="flex flex-col items-center justify-center gap-2 p-6">
+							<div className="size-[18px] animate-spin rounded-full border-2 border-surf-3 border-t-acc" />
+							<div className="text-[12px] text-t-3">
+								{t("reader.popup.loading")}
+							</div>
 						</div>
-					</div>
-				) : (
-					<PopupBody
-						token={token}
-						lookup={data}
-						onOpenInPanel={onOpenInPanel}
-					/>
-				)}
+					) : (
+						<WordPopupBody
+							token={token}
+							lookup={data}
+							onOpenInPanel={() => openInPanel(token)}
+						/>
+					)
+				) : null}
 			</div>
 		</>,
 		document.body,

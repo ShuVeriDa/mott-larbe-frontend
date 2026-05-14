@@ -4,6 +4,7 @@ import type {
 	TextPageResponse,
 	TextProgressResponse,
 } from "./types";
+import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 
 export const textApi = {
 	getPage: async (
@@ -26,6 +27,16 @@ export const textApi = {
 	toggleBookmark: async (textId: string): Promise<BookmarkResponse> => {
 		const { data } = await http.post<BookmarkResponse>(
 			`/texts/${textId}/bookmark`,
+		);
+		return data;
+	},
+
+	getPagePhrases: async (
+		textId: string,
+		pageNumber: number,
+	): Promise<PagePhraseOccurrence[]> => {
+		const { data } = await http.get<PagePhraseOccurrence[]>(
+			`/texts/${textId}/pages/${pageNumber}/phrases`,
 		);
 		return data;
 	},

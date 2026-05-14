@@ -61,6 +61,11 @@ export const adminTextApi = {
 		return data;
 	},
 
+	clearDictionaryCache: async (id: string): Promise<{ deleted: number }> => {
+		const { data } = await http.post<{ deleted: number }>(`/admin/texts/${id}/clear-cache`);
+		return data;
+	},
+
 	remove: async (id: string): Promise<void> => {
 		await http.delete(`/admin/texts/${id}`);
 	},

@@ -8,9 +8,12 @@ import {
 	Bold,
 	Code,
 	Italic,
+	Languages,
+	Pencil,
 	Strikethrough,
 	Subscript,
 	Superscript,
+	Trash2,
 	Underline,
 } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
@@ -61,9 +64,13 @@ const Btn = ({
 export const BubbleMenuContent = ({
 	editor,
 	extraToolbarItems,
+	onEditPhrase,
+	onDeletePhrase,
 }: {
 	editor: Editor;
 	extraToolbarItems?: ReactNode;
+	onEditPhrase?: () => void;
+	onDeletePhrase?: () => void;
 }) => {
 	const { t } = useI18n();
 	const [colorOpen, setColorOpen] = useState(false);
@@ -104,7 +111,7 @@ export const BubbleMenuContent = ({
 
 	return (
 		<>
-			<div className="flex items-center gap-0.5 rounded-[11px] border border-bd-2 bg-surf px-1.5 py-1.5 shadow-lg backdrop-blur-sm">
+			<div className="flex items-center gap-0.5 rounded-card border border-bd-2 bg-surf px-1.5 py-1.5 shadow-lg backdrop-blur-sm">
 				<BlockTypeDropdown editor={editor} />
 				<Sep />
 				<Btn title="Bold" active={editor.isActive("bold")} onExec={handleBold}>
@@ -171,6 +178,33 @@ export const BubbleMenuContent = ({
 						}}
 					/>
 				</Button>
+				{(onEditPhrase || onDeletePhrase) && (
+					<>
+						<Sep />
+						<Languages
+							className="mx-1 size-3.5 shrink-0 text-pur-t"
+							strokeWidth={1.6}
+						/>
+						{onEditPhrase && (
+							<Btn
+								title={t("admin.texts.editPage.phraseEditTitle")}
+								onExec={onEditPhrase}
+								wide
+							>
+								<Pencil className="size-[12px]" />
+								{/* <span>{t("admin.texts.editPage.phraseEditTitle")}</span> */}
+							</Btn>
+						)}
+						{onDeletePhrase && (
+							<Btn
+								title={t("admin.texts.editPage.phraseDeleteConfirm")}
+								onExec={onDeletePhrase}
+							>
+								<Trash2 className="size-[12px] text-red" />
+							</Btn>
+						)}
+					</>
+				)}
 				{extraToolbarItems && (
 					<>
 						<Sep />

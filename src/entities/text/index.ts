@@ -8,7 +8,7 @@ export type {
 	TextProgressResponse,
 	TextToken,
 } from "./api";
-export { useTextPage, useTextProgress } from "./model";
+export { useTextPage, useTextProgress, usePagePhrases } from "./model";
 export {
 	tokenizeContent,
 	type ParagraphSegment,

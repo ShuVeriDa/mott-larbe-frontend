@@ -1,8 +1,5 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Button } from "@/shared/ui/button";
-import { ComponentProps } from 'react';
 import type {
 	ProcessingStatus,
 	TokenSource,
@@ -11,10 +8,13 @@ import type {
 } from "@/entities/token";
 import { tokenizationApi, tokenizationKeys } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 import { useQuery } from "@tanstack/react-query";
+import { Play, X } from "lucide-react";
+import { ComponentProps } from "react";
 import { TokenizationLevelBadge } from "./tokenization-level-badge";
 import { TokenizationStatusBadge } from "./tokenization-status-badge";
-import { X, Play } from "lucide-react";
 
 interface TokenizationTextDetailModalProps {
 	textId: string | null;
@@ -71,7 +71,9 @@ const TokenMetaGrid = ({
 					v{detail.version.version}
 				</Typography>
 			) : (
-				<Typography tag="span" className="text-t-4">—</Typography>
+				<Typography tag="span" className="text-t-4">
+					—
+				</Typography>
 			),
 		},
 		{
@@ -94,7 +96,8 @@ const TokenMetaGrid = ({
 		{
 			label: t("admin.tokenization.detail.notFound"),
 			value: (
-				<Typography tag="span"
+				<Typography
+					tag="span"
 					className={
 						detail.tokenStats.notFound > 0
 							? "font-medium text-red-t"
@@ -110,7 +113,8 @@ const TokenMetaGrid = ({
 		{
 			label: t("admin.tokenization.detail.ambiguous"),
 			value: (
-				<Typography tag="span"
+				<Typography
+					tag="span"
 					className={
 						detail.tokenStats.ambiguous > 0
 							? "font-medium text-amb-t"
@@ -130,7 +134,9 @@ const TokenMetaGrid = ({
 					{new Date(detail.version.processedAt).toLocaleDateString()}
 				</Typography>
 			) : (
-				<Typography tag="span" className="text-t-4">—</Typography>
+				<Typography tag="span" className="text-t-4">
+					—
+				</Typography>
 			),
 		},
 	];
@@ -188,7 +194,8 @@ const TokensTable = ({
 							className="border-b border-bd-1 last:border-b-0 hover:bg-surf-2"
 						>
 							<td className="px-2.5 py-2">
-								<Typography tag="span"
+								<Typography
+									tag="span"
 									className={`inline-flex items-center rounded-[4px] px-1.5 py-0.5 font-mono text-[11.5px] font-semibold ${TOKEN_STATUS_STYLES[token.status]}`}
 								>
 									{token.original}
@@ -198,7 +205,8 @@ const TokensTable = ({
 								{token.normalized}
 							</td>
 							<td className="px-2.5 py-2">
-								<Typography tag="span"
+								<Typography
+									tag="span"
 									className={`inline-flex items-center rounded-[4px] px-1.5 py-0.5 text-[10px] font-semibold ${SOURCE_STYLES[token.source]}`}
 								>
 									{token.source}
@@ -245,9 +253,13 @@ export const TokenizationTextDetailModal = ({
 		ERROR: t("admin.tokenization.status.ERROR"),
 	};
 
-	const handleInnerClick: NonNullable<ComponentProps<"div">["onClick"]> = e => e.stopPropagation();
-	const handleRunClick: NonNullable<ComponentProps<"button">["onClick"]> = () => textId && mutations.runText.mutate(textId);
-	const handleResetClick: NonNullable<ComponentProps<"button">["onClick"]> = () => textId && mutations.resetText.mutate(textId);
+	const handleInnerClick: NonNullable<ComponentProps<"div">["onClick"]> = e =>
+		e.stopPropagation();
+	const handleRunClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		textId && mutations.runText.mutate(textId);
+	const handleResetClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => textId && mutations.resetText.mutate(textId);
 
 	return (
 		<div
@@ -264,6 +276,7 @@ export const TokenizationTextDetailModal = ({
 						{t("admin.tokenization.detail.title")}
 					</Typography>
 					<Button
+						size={"bare"}
 						onClick={onClose}
 						className="flex size-[26px] items-center justify-center rounded-[6px] bg-surf-2 text-t-2 hover:bg-surf-3"
 					>
@@ -284,7 +297,11 @@ export const TokenizationTextDetailModal = ({
 						</div>
 					) : (
 						<>
-							<TokenMetaGrid detail={detail} statusLabels={statusLabels} t={t} />
+							<TokenMetaGrid
+								detail={detail}
+								statusLabels={statusLabels}
+								t={t}
+							/>
 
 							<div className="mb-1 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.tokenization.detail.tokensTitle")}

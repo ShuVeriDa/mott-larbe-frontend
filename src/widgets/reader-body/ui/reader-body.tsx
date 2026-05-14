@@ -1,5 +1,5 @@
 "use client";
-import { ArticleRich, useNoteLineGroups, type TextPageResponse } from "@/entities/text";
+import { ArticleRich, useNoteLineGroups, usePagePhrases, type TextPageResponse } from "@/entities/text";
 import {
 	FONT_FAMILY_CLASS,
 	useReaderFontFamily,
@@ -20,9 +20,10 @@ import {
 } from "@/features/reader-text-width";
 import { useReaderTheme } from "@/features/reader-theme";
 import { useSelectToken, useWordLookupStore } from "@/features/word-lookup";
+import { usePhraseMap } from "@/features/phrase-lookup";
 import { cn } from "@/shared/lib/cn";
 import { MessageSquareMoreIcon } from "lucide-react";
-import { type MouseEvent, useRef } from "react";
+import { type MouseEvent, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useInlineNotes } from "../model/use-inline-notes";
 import { useReaderHighlights } from "../model/use-reader-highlights";
@@ -30,6 +31,7 @@ import { ArticleHeader } from "./article-header";
 import { NoteGroupPopup } from "./note-group-popup";
 import { NoteInlinePopup } from "./note-inline-popup";
 import { ReaderProgressBar } from "./reader-progress-bar";
+import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 
 export interface ReaderBodyProps {
 	data: TextPageResponse;
@@ -39,6 +41,17 @@ export interface ReaderBodyProps {
 export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 	const onSelectToken = useSelectToken();
 	const activeToken = useWordLookupStore(s => s.activeToken);
+
+	// Phrase lookup
+	const { data: phrasesData } = usePagePhrases(data.id, data.page.pageNumber);
+	const phraseMap = usePhraseMap(phrasesData);
+	const openPhraseInPopup = useWordLookupStore(s => s.openPhraseInPopup);
+	const handleSelectPhrase = useCallback(
+		(phrase: PagePhraseOccurrence, anchor: { left: number; top: number; width: number; height: number }) => {
+			openPhraseInPopup(phrase, anchor);
+		},
+		[openPhraseInPopup],
+	);
 	const highlightsVisible = useHighlightVisibility(s => s.highlightsVisible);
 	const theme = useReaderTheme(s => s.theme);
 	const bgColor = useReaderTheme(s => s.bgColor);
@@ -118,8 +131,9 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 				highlights={highlightMarks}
 				noteMarks={noteMarks}
 				onNoteGroupClick={handleNoteGroupClick}
+				phraseMap={phraseMap}
+				onSelectPhrase={handleSelectPhrase}
 			/>
-
 			{/* Note line group icons — rendered via portal at measured positions */}
 			{typeof window !== "undefined" && noteGroups.length > 0 &&
 				createPortal(

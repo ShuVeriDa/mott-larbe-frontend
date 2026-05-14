@@ -5,6 +5,7 @@ import { THEME_SWATCHES } from "../lib/reader-settings-form-config";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { ReaderCustomColorSwatch } from "./reader-custom-color-swatch";
+import { useTheme } from "next-themes";
 
 export interface ReaderThemeSelectorProps {
 	compact: boolean;
@@ -12,6 +13,7 @@ export interface ReaderThemeSelectorProps {
 
 export const ReaderThemeSelector = ({ compact }: ReaderThemeSelectorProps) => {
 	const { t } = useI18n();
+	const { resolvedTheme } = useTheme();
 	const theme = useReaderTheme(s => s.theme);
 	const setTheme = useReaderTheme(s => s.setTheme);
 
@@ -22,6 +24,10 @@ export const ReaderThemeSelector = ({ compact }: ReaderThemeSelectorProps) => {
 			{THEME_SWATCHES.map(swatch => {
 				const isActive = theme === swatch.value;
 				const handleClick = () => setTheme(swatch.value);
+				const color =
+					swatch.value === "default" && resolvedTheme === "dark"
+						? "#1a1a1e"
+						: swatch.color;
 				return (
 					<button
 						key={swatch.value}
@@ -34,7 +40,7 @@ export const ReaderThemeSelector = ({ compact }: ReaderThemeSelectorProps) => {
 							size,
 							isActive ? "border-acc" : "border-bd-2 hover:border-bd-3",
 						)}
-						style={{ backgroundColor: swatch.color }}
+						style={{ backgroundColor: color }}
 					/>
 				);
 			})}

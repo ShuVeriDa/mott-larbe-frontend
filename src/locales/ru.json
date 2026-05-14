@@ -1565,6 +1565,9 @@
 				"pink": "Розовый"
 			}
 		},
+		"phrase": {
+			"label": "Фраза"
+		},
 		"inlineNote": {
 			"iconLabel": "Посмотреть заметку"
 		},
@@ -3262,7 +3265,27 @@
 				"dangerZone": "Опасная зона",
 				"deleteText": "Удалить текст",
 				"versionCurrent": "Текущая версия",
-				"allVersions": "Все версии"
+				"allVersions": "Все версии",
+				"addPhraseTranslation": "Перевод фразы",
+				"phraseOriginal": "Фраза",
+				"phraseTranslation": "Перевод",
+				"phraseTranslationPlaceholder": "Введите перевод…",
+				"phraseNotes": "Примечания",
+				"phraseNotesPlaceholder": "Необязательно",
+				"phraseSave": "Сохранить",
+				"phraseCancel": "Отмена",
+				"phraseAdded": "Перевод фразы сохранён",
+				"phraseFailed": "Не удалось сохранить перевод фразы",
+				"phraseListBtn": "Фразы",
+				"phraseListTitle": "Фразы на странице",
+				"phraseListEmpty": "Переводов фраз на этой странице нет",
+				"phraseEditTitle": "Редактировать перевод",
+				"phraseUpdate": "Обновить",
+				"phraseUpdated": "Перевод обновлён",
+				"phraseUpdateFailed": "Не удалось обновить перевод",
+				"phraseDeleteConfirm": "Удалить?",
+				"phraseDeleted": "Фраза удалена",
+				"phraseDeleteFailed": "Не удалось удалить фразу"
 			}
 		},
 		"morphology": {

@@ -3,6 +3,7 @@
 import { useI18n } from "@/shared/lib/i18n";
 import type { Editor, TipTapDoc } from "@/shared/ui/notion-editor";
 import { NotionEditor } from "@/shared/ui/notion-editor";
+import type { Extension } from "@tiptap/core";
 import type { ReactNode, RefObject } from "react";
 import { useLayoutEffect, useState } from "react";
 import { AdminTextEditorFooter } from "./admin-text-editor-footer";
@@ -36,6 +37,10 @@ interface AdminTextEditorShellProps {
 	onEditorReady?: (editor: Editor) => void;
 	findReplaceCharHandlerRef?: RefObject<((char: string) => boolean) | null>;
 	findReplaceCharsPicker?: ReactNode;
+	extraExtensions?: Extension[];
+	isSelectedPhrase?: (text: string) => boolean;
+	onBubbleEditPhrase?: (selectedText: string) => void;
+	onBubbleDeletePhrase?: (selectedText: string) => void;
 }
 
 export const AdminTextEditorShell = ({
@@ -59,6 +64,10 @@ export const AdminTextEditorShell = ({
 	onEditorReady,
 	findReplaceCharHandlerRef,
 	findReplaceCharsPicker,
+	extraExtensions = [],
+	isSelectedPhrase,
+	onBubbleEditPhrase,
+	onBubbleDeletePhrase,
 }: AdminTextEditorShellProps) => {
 	const { t } = useI18n();
 	const currentDoc = pages[activePage]?.doc;
@@ -193,10 +202,14 @@ export const AdminTextEditorShell = ({
 							limit: PAGE_CHAR_LIMIT,
 							markerTitle: t("admin.texts.createPage.charLimitMarker"),
 						}),
+						...extraExtensions,
 					]}
 					onUpdate={handleUpdate}
 					onKeyDown={handleKeyDown}
 					onEditorReady={handleEditorReady}
+					isSelectedPhrase={isSelectedPhrase}
+					onBubbleEditPhrase={onBubbleEditPhrase}
+					onBubbleDeletePhrase={onBubbleDeletePhrase}
 				/>
 			</div>
 

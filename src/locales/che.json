@@ -1565,6 +1565,9 @@
 				"pink": "РозовӀе"
 			}
 		},
+		"phrase": {
+			"label": "Дош"
+		},
 		"inlineNote": {
 			"iconLabel": "Тептар хьажа"
 		},
@@ -3262,7 +3265,27 @@
 				"dangerZone": "Дерзарна меттиг",
 				"deleteText": "Йозанаш даккха",
 				"versionCurrent": "Хиллачу версин",
-				"allVersions": "Хьалха версеш"
+				"allVersions": "Хьалха версеш",
+				"addPhraseTranslation": "Дешнийн гайтам",
+				"phraseOriginal": "Дош",
+				"phraseTranslation": "Гайтам",
+				"phraseTranslationPlaceholder": "Гайтам язде…",
+				"phraseNotes": "Тептарш",
+				"phraseNotesPlaceholder": "Лазамза",
+				"phraseSave": "Ларъян",
+				"phraseCancel": "ДIадаккха",
+				"phraseAdded": "Дешнийн гайтам ларъяьлла",
+				"phraseFailed": "Гайтам ларъен ца хилира",
+				"phraseListBtn": "Дешнаш",
+				"phraseListTitle": "Агlонан дешнаш",
+				"phraseListEmpty": "Хlара агlо тlера гайтамаш яц",
+				"phraseEditTitle": "Гайтам нисъян",
+				"phraseUpdate": "Нисъян",
+				"phraseUpdated": "Гайтам нисъяьлла",
+				"phraseUpdateFailed": "Гайтам нисъен ца хилира",
+				"phraseDeleteConfirm": "ДIадаккха?",
+				"phraseDeleted": "Дош дIадаьккхина",
+				"phraseDeleteFailed": "Дош дIадаккха ца хилира"
 			}
 		},
 		"morphology": {

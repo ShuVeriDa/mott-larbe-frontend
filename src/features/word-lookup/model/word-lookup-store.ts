@@ -2,6 +2,7 @@
 
 import { create } from "zustand";
 import type { TextToken } from "@/entities/text";
+import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 
 export type WordLookupSurface = "popup" | "panel" | "sheet" | null;
 
@@ -14,11 +15,13 @@ export interface PopupAnchor {
 
 export interface WordLookupState {
 	activeToken: TextToken | null;
+	activePhrase: PagePhraseOccurrence | null;
 	surface: WordLookupSurface;
 	anchor: PopupAnchor | null;
 	panelOpen: boolean;
 	panelPinned: boolean;
 	openInPopup: (token: TextToken, anchor: PopupAnchor) => void;
+	openPhraseInPopup: (phrase: PagePhraseOccurrence, anchor: PopupAnchor) => void;
 	openInPanel: (token: TextToken | null) => void;
 	openInSheet: (token: TextToken) => void;
 	/** Narrow layout: word tray open with no token (empty hint UI). */
@@ -32,6 +35,7 @@ export interface WordLookupState {
 
 export const useWordLookupStore = create<WordLookupState>((set) => ({
 	activeToken: null,
+	activePhrase: null,
 	surface: null,
 	anchor: null,
 	panelOpen: false,
@@ -39,6 +43,14 @@ export const useWordLookupStore = create<WordLookupState>((set) => ({
 	openInPopup: (token, anchor) =>
 		set({
 			activeToken: token,
+			activePhrase: null,
+			surface: "popup",
+			anchor,
+		}),
+	openPhraseInPopup: (phrase, anchor) =>
+		set({
+			activePhrase: phrase,
+			activeToken: null,
 			surface: "popup",
 			anchor,
 		}),
@@ -72,7 +84,7 @@ export const useWordLookupStore = create<WordLookupState>((set) => ({
 	closePopup: () =>
 		set((state) =>
 			state.surface === "popup"
-				? { surface: null, activeToken: null, anchor: null }
+				? { surface: null, activeToken: null, activePhrase: null, anchor: null }
 				: state,
 		),
 	closeSheet: () =>
@@ -84,6 +96,7 @@ export const useWordLookupStore = create<WordLookupState>((set) => ({
 	clear: () =>
 		set({
 			activeToken: null,
+			activePhrase: null,
 			surface: null,
 			anchor: null,
 		}),

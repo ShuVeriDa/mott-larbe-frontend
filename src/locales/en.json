@@ -1565,6 +1565,9 @@
 				"pink": "Pink"
 			}
 		},
+		"phrase": {
+			"label": "Phrase"
+		},
 		"inlineNote": {
 			"iconLabel": "View note"
 		},
@@ -3262,7 +3265,27 @@
 				"dangerZone": "Danger zone",
 				"deleteText": "Delete text",
 				"versionCurrent": "Current version",
-				"allVersions": "All versions"
+				"allVersions": "All versions",
+				"addPhraseTranslation": "Phrase translation",
+				"phraseOriginal": "Phrase",
+				"phraseTranslation": "Translation",
+				"phraseTranslationPlaceholder": "Enter translation…",
+				"phraseNotes": "Notes",
+				"phraseNotesPlaceholder": "Optional",
+				"phraseSave": "Save",
+				"phraseCancel": "Cancel",
+				"phraseAdded": "Phrase translation saved",
+				"phraseFailed": "Failed to save phrase translation",
+				"phraseListBtn": "Phrases",
+				"phraseListTitle": "Phrases on this page",
+				"phraseListEmpty": "No phrase translations on this page",
+				"phraseEditTitle": "Edit translation",
+				"phraseUpdate": "Update",
+				"phraseUpdated": "Translation updated",
+				"phraseUpdateFailed": "Failed to update translation",
+				"phraseDeleteConfirm": "Delete?",
+				"phraseDeleted": "Phrase deleted",
+				"phraseDeleteFailed": "Failed to delete phrase"
 			}
 		},
 		"morphology": {

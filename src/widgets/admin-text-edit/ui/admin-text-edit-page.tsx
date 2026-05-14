@@ -12,6 +12,8 @@ import { useAdminTextEditPage } from "../model/use-admin-text-edit-page";
 import { TextEditEditor } from "./text-edit-editor";
 import { TextEditMetaPanel } from "./text-edit-meta-panel";
 import { TextEditTopbar } from "./text-edit-topbar";
+import { PhraseTranslationPanel } from "./phrase-translation-panel";
+import { PhrasesListPanel } from "./phrases-list-panel";
 
 interface AdminTextEditPageProps {
 	textId: string;
@@ -151,6 +153,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 	const handleToggleMetaPanel = () => setIsMetaPanelVisible(v => !v);
 
 	return (
+		<>
 		<AdminTextPageShell
 			isMetaPanelVisible={isMetaPanelVisible}
 			topbar={
@@ -242,5 +245,8 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 				) : null
 			}
 		/>
+		<PhraseTranslationPanel textId={textId} pageNumber={activePage + 1} language={language} />
+		<PhrasesListPanel textId={textId} pageNumber={activePage + 1} />
+		</>
 	);
 };

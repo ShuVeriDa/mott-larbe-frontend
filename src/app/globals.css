@@ -172,7 +172,7 @@
 }
 
 /* ═══════════════════════════════════════════
-   DESIGN TOKENS — DEFAULT (WHITE) READER THEME
+   DESIGN TOKENS — DEFAULT READER THEME (light site = white, dark site = dark)
    ═══════════════════════════════════════════ */
 [data-reader-theme="default"] {
 	--bg: #ffffff;
@@ -190,6 +190,24 @@
 	--bd-1: rgba(0, 0, 0, 0.08);
 	--bd-2: rgba(0, 0, 0, 0.14);
 	--bd-3: rgba(0, 0, 0, 0.22);
+}
+
+[data-theme="dark"] [data-reader-theme="default"] {
+	--bg: #1a1a1e;
+	--panel: #222228;
+	--surf: #222228;
+	--surf-2: #2a2a32;
+	--surf-3: #32323c;
+	--surf-4: #3c3c48;
+	--t-1: #e8e8f0;
+	--t-2: #9898aa;
+	--t-3: #66667a;
+	--t-4: #3e3e50;
+	--reader-hl-fg: #e8e8f0;
+
+	--bd-1: rgba(255, 255, 255, 0.07);
+	--bd-2: rgba(255, 255, 255, 0.12);
+	--bd-3: rgba(255, 255, 255, 0.2);
 }
 
 /* ═══════════════════════════════════════════
@@ -539,5 +557,13 @@
 	.char-limit-overflow {
 		background-color: color-mix(in srgb, var(--destructive) 14%, transparent);
 		border-radius: 2px;
+	}
+
+	/* Phrase hover: hovering the gap highlights the whole phrase as one block */
+	[data-phrase]:has([data-phrase-gap]:hover) {
+		background-color: var(--pur-bg);
+		color: var(--pur-t);
+		border-radius: 3px;
+		transition: background-color 100ms, color 100ms;
 	}
 }

@@ -55,6 +55,10 @@ export interface NotionEditorProps {
 	onEditorReady?: (editor: Editor) => void;
 	minHeight?: string;
 	extraExtensions?: Extension[];
+	/** Called on each selection change with the selected text; return true to show phrase buttons in bubble menu */
+	isSelectedPhrase?: (text: string) => boolean;
+	onBubbleEditPhrase?: (selectedText: string) => void;
+	onBubbleDeletePhrase?: (selectedText: string) => void;
 }
 
 // ── Slash portal state ────────────────────────────────────────────────────────
@@ -77,10 +81,16 @@ export const NotionEditor = ({
 	onEditorReady,
 	minHeight = "360px",
 	extraExtensions = [],
+	isSelectedPhrase,
+	onBubbleEditPhrase,
+	onBubbleDeletePhrase,
 }: NotionEditorProps) => {
 	const swappingRef = useRef(false);
 	const slashMenuRef = useRef<SlashMenuHandle>(null);
 	const [slashPortal, setSlashPortal] = useState<SlashPortalState | null>(null);
+	const bubbleMenuEnabledRef = useRef(true);
+	const [bubbleMenuEnabled, setBubbleMenuEnabled] = useState(true);
+	const [selectionText, setSelectionText] = useState("");
 
 	const hideSlash = () => setSlashPortal(null);
 
@@ -180,6 +190,12 @@ export const NotionEditor = ({
 			},
 		},
 		content,
+		onSelectionUpdate({ editor: ed }) {
+			if (!isSelectedPhrase) return;
+			const { from, to } = ed.state.selection;
+			const text = from === to ? "" : ed.state.doc.textBetween(from, to, " ").trim();
+			setSelectionText(text);
+		},
 		onUpdate({ editor: ed }) {
 			if (swappingRef.current) return;
 			onUpdate(ed.getJSON() as TipTapDoc);
@@ -213,6 +229,17 @@ export const NotionEditor = ({
 		editor.chain().focus().insertContent("/").run();
 	};
 
+	useEffect(() => {
+		const hide = () => { bubbleMenuEnabledRef.current = false; setBubbleMenuEnabled(false); };
+		const show = () => { bubbleMenuEnabledRef.current = true; setBubbleMenuEnabled(true); };
+		document.addEventListener("admin:open-phrase-form", hide);
+		document.addEventListener("admin:close-phrase-form", show);
+		return () => {
+			document.removeEventListener("admin:open-phrase-form", hide);
+			document.removeEventListener("admin:close-phrase-form", show);
+		};
+	}, []);
+
 	const handleBubbleAppendTo = () => document.body;
 	const handleSlashCommand = (item: SlashMenuItem) => {
 		if (!slashPortal) return;
@@ -227,12 +254,26 @@ export const NotionEditor = ({
 					editor={editor}
 					appendTo={handleBubbleAppendTo}
 					options={{ placement: "top" }}
+					shouldShow={() => bubbleMenuEnabledRef.current && editor.state.selection.content().size > 0}
 					className="z-9997"
 				>
-					<BubbleMenuContent
-						editor={editor}
-						extraToolbarItems={extraToolbarItems}
-					/>
+					{(() => {
+						const isPhrase = isSelectedPhrase && selectionText
+							? isSelectedPhrase(selectionText)
+							: false;
+						return (
+							<BubbleMenuContent
+								editor={editor}
+								extraToolbarItems={isPhrase ? undefined : extraToolbarItems}
+								onEditPhrase={isPhrase && onBubbleEditPhrase
+									? () => onBubbleEditPhrase(selectionText)
+									: undefined}
+								onDeletePhrase={isPhrase && onBubbleDeletePhrase
+									? () => onBubbleDeletePhrase(selectionText)
+									: undefined}
+							/>
+						);
+					})()}
 				</BubbleMenu>
 			)}
 
@@ -276,7 +317,7 @@ export const NotionEditor = ({
 			)}
 
 			<div
-				className="[&_.tiptap]:cursor-text [&_.tiptap]:outline-none [&_.tiptap_blockquote]:my-3 [&_.tiptap_blockquote]:border-l-[3px] [&_.tiptap_blockquote]:border-acc-muted [&_.tiptap_blockquote]:pl-3.5 [&_.tiptap_blockquote]:text-t-2 [&_.tiptap_blockquote_p]:mb-0 [&_.tiptap_h1]:mb-2 [&_.tiptap_h1]:mt-8 [&_.tiptap_h1]:font-display [&_.tiptap_h1]:text-[26px] [&_.tiptap_h1]:font-semibold [&_.tiptap_h1]:text-t-1 [&_.tiptap_h2]:mb-1.5 [&_.tiptap_h2]:mt-6 [&_.tiptap_h2]:font-display [&_.tiptap_h2]:text-[18px] [&_.tiptap_h2]:font-medium [&_.tiptap_h2]:text-t-1 [&_.tiptap_h3]:mb-1 [&_.tiptap_h3]:mt-4 [&_.tiptap_h3]:text-[15px] [&_.tiptap_h3]:font-semibold [&_.tiptap_h3]:text-t-1 [&_.tiptap_h4]:mb-1 [&_.tiptap_h4]:mt-3 [&_.tiptap_h4]:text-[13.5px] [&_.tiptap_h4]:font-semibold [&_.tiptap_h4]:uppercase [&_.tiptap_h4]:tracking-wide [&_.tiptap_h4]:text-t-2 [&_.tiptap_li]:mb-1 [&_.tiptap_ol]:mb-3 [&_.tiptap_ol]:pl-5 [&_.tiptap_p:last-child]:mb-0 [&_.tiptap_p]:mb-2.5 [&_.tiptap_ul]:mb-3 [&_.tiptap_ul]:pl-5 [&_.tiptap_p.is-editor-empty:first-child]:before:pointer-events-none [&_.tiptap_p.is-editor-empty:first-child]:before:float-left [&_.tiptap_p.is-editor-empty:first-child]:before:h-0 [&_.tiptap_p.is-editor-empty:first-child]:before:text-t-4 [&_.tiptap_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)] [&_.tiptap_mark]:rounded-[2px] [&_.tiptap_mark]:px-px [&_.tiptap_.palochka-editor-char-upper]:rounded-[2px] [&_.tiptap_.palochka-editor-char-upper]:bg-acc-bg [&_.tiptap_.palochka-editor-char-upper]:px-px [&_.tiptap_.palochka-editor-char-upper]:text-acc-t [&_.tiptap_.palochka-editor-char-upper]:[box-decoration-break:clone] [&_.tiptap_.palochka-editor-char-lower]:rounded-[2px] [&_.tiptap_.palochka-editor-char-lower]:bg-pur-bg [&_.tiptap_.palochka-editor-char-lower]:px-px [&_.tiptap_.palochka-editor-char-lower]:text-pur-t [&_.tiptap_.palochka-editor-char-lower]:[box-decoration-break:clone] [&_.tiptap_.chechen-spell]:rounded-[2px] [&_.tiptap_.chechen-spell]:px-px [&_.tiptap_.chechen-spell]:[box-decoration-break:clone] [&_.tiptap_.chechen-spell-ya-yu-certain]:bg-amber-200 [&_.tiptap_.chechen-spell-ya-yu-certain]:text-amber-900 [&_.tiptap_.chechen-spell-ya-yu-likely]:bg-amber-100 [&_.tiptap_.chechen-spell-ya-yu-likely]:text-amber-800 [&_.tiptap_.chechen-spell-ya-yu-disputed]:bg-amber-50 [&_.tiptap_.chechen-spell-ya-yu-disputed]:text-amber-700 [&_.tiptap_.chechen-spell-diphthong-certain]:bg-sky-200 [&_.tiptap_.chechen-spell-diphthong-certain]:text-sky-900 [&_.tiptap_.chechen-spell-diphthong-likely]:bg-sky-100 [&_.tiptap_.chechen-spell-diphthong-likely]:text-sky-800 [&_.tiptap_.chechen-spell-diphthong-disputed]:bg-sky-50 [&_.tiptap_.chechen-spell-diphthong-disputed]:text-sky-700"
+				className="[&_.tiptap]:cursor-text [&_.tiptap]:outline-none [&_.tiptap_blockquote]:my-3 [&_.tiptap_blockquote]:border-l-[3px] [&_.tiptap_blockquote]:border-acc-muted [&_.tiptap_blockquote]:pl-3.5 [&_.tiptap_blockquote]:text-t-2 [&_.tiptap_blockquote_p]:mb-0 [&_.tiptap_h1]:mb-2 [&_.tiptap_h1]:mt-8 [&_.tiptap_h1]:font-display [&_.tiptap_h1]:text-[26px] [&_.tiptap_h1]:font-semibold [&_.tiptap_h1]:text-t-1 [&_.tiptap_h2]:mb-1.5 [&_.tiptap_h2]:mt-6 [&_.tiptap_h2]:font-display [&_.tiptap_h2]:text-[18px] [&_.tiptap_h2]:font-medium [&_.tiptap_h2]:text-t-1 [&_.tiptap_h3]:mb-1 [&_.tiptap_h3]:mt-4 [&_.tiptap_h3]:text-[15px] [&_.tiptap_h3]:font-semibold [&_.tiptap_h3]:text-t-1 [&_.tiptap_h4]:mb-1 [&_.tiptap_h4]:mt-3 [&_.tiptap_h4]:text-[13.5px] [&_.tiptap_h4]:font-semibold [&_.tiptap_h4]:uppercase [&_.tiptap_h4]:tracking-wide [&_.tiptap_h4]:text-t-2 [&_.tiptap_li]:mb-1 [&_.tiptap_ol]:mb-3 [&_.tiptap_ol]:pl-5 [&_.tiptap_p:last-child]:mb-0 [&_.tiptap_p]:mb-2.5 [&_.tiptap_ul]:mb-3 [&_.tiptap_ul]:pl-5 [&_.tiptap_p.is-editor-empty:first-child]:before:pointer-events-none [&_.tiptap_p.is-editor-empty:first-child]:before:float-left [&_.tiptap_p.is-editor-empty:first-child]:before:h-0 [&_.tiptap_p.is-editor-empty:first-child]:before:text-t-4 [&_.tiptap_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)] [&_.tiptap_mark]:rounded-[2px] [&_.tiptap_mark]:px-px [&_.tiptap_.palochka-editor-char-upper]:rounded-[2px] [&_.tiptap_.palochka-editor-char-upper]:bg-acc-bg [&_.tiptap_.palochka-editor-char-upper]:px-px [&_.tiptap_.palochka-editor-char-upper]:text-acc-t [&_.tiptap_.palochka-editor-char-upper]:[box-decoration-break:clone] [&_.tiptap_.palochka-editor-char-lower]:rounded-[2px] [&_.tiptap_.palochka-editor-char-lower]:bg-pur-bg [&_.tiptap_.palochka-editor-char-lower]:px-px [&_.tiptap_.palochka-editor-char-lower]:text-pur-t [&_.tiptap_.palochka-editor-char-lower]:[box-decoration-break:clone] [&_.tiptap_.chechen-spell]:rounded-[2px] [&_.tiptap_.chechen-spell]:px-px [&_.tiptap_.chechen-spell]:[box-decoration-break:clone] [&_.tiptap_.chechen-spell-ya-yu-certain]:bg-amber-200 [&_.tiptap_.chechen-spell-ya-yu-certain]:text-amber-900 [&_.tiptap_.chechen-spell-ya-yu-likely]:bg-amber-100 [&_.tiptap_.chechen-spell-ya-yu-likely]:text-amber-800 [&_.tiptap_.chechen-spell-ya-yu-disputed]:bg-amber-50 [&_.tiptap_.chechen-spell-ya-yu-disputed]:text-amber-700 [&_.tiptap_.chechen-spell-diphthong-certain]:bg-sky-200 [&_.tiptap_.chechen-spell-diphthong-certain]:text-sky-900 [&_.tiptap_.chechen-spell-diphthong-likely]:bg-sky-100 [&_.tiptap_.chechen-spell-diphthong-likely]:text-sky-800 [&_.tiptap_.chechen-spell-diphthong-disputed]:bg-sky-50 [&_.tiptap_.chechen-spell-diphthong-disputed]:text-sky-700 [&_.tiptap_.phrase-editor-highlight]:rounded-[2px] [&_.tiptap_.phrase-editor-highlight]:bg-pur-bg [&_.tiptap_.phrase-editor-highlight]:px-px [&_.tiptap_.phrase-editor-highlight]:text-pur-t [&_.tiptap_.phrase-editor-highlight]:[box-decoration-break:clone] [&_.tiptap_.phrase-editor-highlight]:cursor-pointer [&_.tiptap_.phrase-editor-highlight]:transition-opacity [&_.tiptap_.phrase-editor-highlight]:hover:opacity-75"
 				style={{ "--editor-min-h": minHeight } as CSSProperties}
 			>
 				{editor && (
