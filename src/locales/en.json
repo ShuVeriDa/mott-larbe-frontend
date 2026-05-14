@@ -2056,6 +2056,8 @@
 			"title": "Text library",
 			"viewAll": "all →",
 			"newText": "New",
+			"emptyTitle": "Nothing found",
+			"emptyDesc": "Try adjusting the filters",
 			"words": "{count} words",
 			"langAll": "All",
 			"levelAll": "All"

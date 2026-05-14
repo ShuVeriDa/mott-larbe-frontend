@@ -4,13 +4,16 @@ import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
+import type {
+	ProcessingStatus,
+	TokenizationTextItem,
+	useTokenizationMutations,
+} from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
-import type { ProcessingStatus, TokenizationTextItem } from "@/entities/token";
-import type { useTokenizationMutations } from "@/entities/token";
+import { Play, RotateCcw, Square } from "lucide-react";
+import { ComponentProps } from "react";
 import { TokenizationLevelBadge } from "./tokenization-level-badge";
 import { TokenizationStatusBadge } from "./tokenization-status-badge";
-import { Square, Play, RotateCcw } from "lucide-react";
 
 interface TokenizationTableProps {
 	items: TokenizationTextItem[];
@@ -32,16 +35,22 @@ const TokenBar = ({
 	max: number | null | undefined;
 	color: string;
 }) => {
-	const normalizedValue = typeof value === "number" && Number.isFinite(value) ? value : 0;
-	const normalizedMax = typeof max === "number" && Number.isFinite(max) ? max : 0;
-	const pct = normalizedMax > 0 ? Math.round((normalizedValue / normalizedMax) * 100) : 0;
+	const normalizedValue =
+		typeof value === "number" && Number.isFinite(value) ? value : 0;
+	const normalizedMax =
+		typeof max === "number" && Number.isFinite(max) ? max : 0;
+	const pct =
+		normalizedMax > 0 ? Math.round((normalizedValue / normalizedMax) * 100) : 0;
 	return (
 		<div className="flex items-center gap-1.5">
 			<Typography tag="span" className="tabular-nums text-[12.5px] text-t-1">
 				{normalizedValue.toLocaleString()}
 			</Typography>
 			<div className="h-1.5 w-14 overflow-hidden rounded-full bg-surf-3">
-				<div className={`h-full rounded-full ${color}`} style={{ width: `${pct}%` }} />
+				<div
+					className={`h-full rounded-full ${color}`}
+					style={{ width: `${pct}%` }}
+				/>
 			</div>
 		</div>
 	);
@@ -99,7 +108,10 @@ export const TokenizationTable = ({
 			<table className="w-full border-collapse text-[12.5px]">
 				<thead>
 					<tr>
-						<th className="bg-surf-2 py-2.5 pl-3.5 pr-2 border-b border-bd-1" style={{ width: 30 }}>
+						<th
+							className="bg-surf-2 py-2.5 pl-3.5 pr-2 border-b border-bd-1"
+							style={{ width: 30 }}
+						>
 							<input
 								type="checkbox"
 								checked={allSelected}
@@ -110,126 +122,185 @@ export const TokenizationTable = ({
 						<th className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1">
 							{t("admin.tokenization.table.textTitle")}
 						</th>
-						<th className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1" style={{ width: 44 }}>
+						<th
+							className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1"
+							style={{ width: 44 }}
+						>
 							{t("admin.tokenization.table.level")}
 						</th>
-						<th className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1" style={{ width: 140 }}>
+						<th
+							className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1"
+							style={{ width: 140 }}
+						>
 							{t("admin.tokenization.table.tokens")}
 						</th>
-						<th className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1" style={{ width: 90 }}>
+						<th
+							className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1"
+							style={{ width: 90 }}
+						>
 							{t("admin.tokenization.table.notFound")}
 						</th>
-						<th className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1" style={{ width: 90 }}>
+						<th
+							className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1"
+							style={{ width: 90 }}
+						>
 							{t("admin.tokenization.table.ambiguous")}
 						</th>
-						<th className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1" style={{ width: 88 }}>
+						<th
+							className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1"
+							style={{ width: 88 }}
+						>
 							{t("admin.tokenization.table.version")}
 						</th>
-						<th className="bg-surf-2 border-b border-bd-1" style={{ width: 66 }} />
+						<th
+							className="bg-surf-2 border-b border-bd-1"
+							style={{ width: 66 }}
+						/>
 					</tr>
 				</thead>
 				<tbody>
-					{items.map((item) => {
-					  const handleRowClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onRowClick(item.id);
-					  const handleCheckboxClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleToggleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onToggleRow(item.id);
-					  const handleActionsClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
-					  const handleCancelClick: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.cancelText.mutate(item.id);
-					  const handleRunClick: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.runText.mutate(item.id);
-					  const handleResetClick: NonNullable<ComponentProps<"button">["onClick"]> = () => mutations.resetText.mutate(item.id);
-					  return (
-						<tr
-							key={item.id}
-							onClick={handleRowClick}
-							className="cursor-pointer border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2 group"
-						>
-							<td className="py-2.5 pl-3.5 pr-2" onClick={handleCheckboxClick}>
-								<input
-									type="checkbox"
-									checked={selectedIds.has(item.id)}
-									onChange={handleToggleChange}
-									className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
-								/>
-							</td>
-							<td className="px-2.5 py-2.5">
-								<div className="text-[13px] font-medium text-t-1 leading-snug line-clamp-1">
-									{item.title}
-								</div>
-								<div className="mt-0.5 flex items-center gap-1.5 text-[11px] text-t-3">
-									<TokenizationStatusBadge
-										status={item.processingStatus}
-										label={statusLabels[item.processingStatus]}
-										progress={item.processingProgress}
+					{items.map(item => {
+						const handleRowClick: NonNullable<
+							ComponentProps<"tr">["onClick"]
+						> = () => onRowClick(item.id);
+						const handleCheckboxClick: NonNullable<
+							ComponentProps<"td">["onClick"]
+						> = e => e.stopPropagation();
+						const handleToggleChange: NonNullable<
+							ComponentProps<"input">["onChange"]
+						> = () => onToggleRow(item.id);
+						const handleActionsClick: NonNullable<
+							ComponentProps<"td">["onClick"]
+						> = e => e.stopPropagation();
+						const handleCancelClick: NonNullable<
+							ComponentProps<"button">["onClick"]
+						> = () => mutations.cancelText.mutate(item.id);
+						const handleRunClick: NonNullable<
+							ComponentProps<"button">["onClick"]
+						> = () => mutations.runText.mutate(item.id);
+						const handleResetClick: NonNullable<
+							ComponentProps<"button">["onClick"]
+						> = () => mutations.resetText.mutate(item.id);
+						return (
+							<tr
+								key={item.id}
+								onClick={handleRowClick}
+								className="cursor-pointer border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2 group"
+							>
+								<td
+									className="py-2.5 pl-3.5 pr-2"
+									onClick={handleCheckboxClick}
+								>
+									<input
+										type="checkbox"
+										checked={selectedIds.has(item.id)}
+										onChange={handleToggleChange}
+										className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
 									/>
-									<Typography tag="span">{item.pagesCount} {t("admin.tokenization.table.pages")}</Typography>
-								</div>
-							</td>
-							<td className="px-2.5 py-2.5">
-								<TokenizationLevelBadge level={item.level} />
-							</td>
-							<td className="px-2.5 py-2.5">
-								<TokenBar value={item.totalTokens} max={item.totalTokens} color="bg-acc" />
-							</td>
-							<td className="px-2.5 py-2.5">
-								{item.notFoundCount > 0 ? (
-									<Typography tag="span" className="font-semibold text-red-t tabular-nums">
-										{item.notFoundCount.toLocaleString()}
-									</Typography>
-								) : (
-									<Typography tag="span" className="text-t-4">—</Typography>
-								)}
-							</td>
-							<td className="px-2.5 py-2.5">
-								{item.ambiguousCount > 0 ? (
-									<Typography tag="span" className="font-semibold text-amb-t tabular-nums">
-										{item.ambiguousCount.toLocaleString()}
-									</Typography>
-								) : (
-									<Typography tag="span" className="text-t-4">—</Typography>
-								)}
-							</td>
-							<td className="px-2.5 py-2.5">
-								{item.tokenizationVersion !== null ? (
-									<Typography tag="span" className="font-mono text-[11.5px] text-t-3">
-										v{item.tokenizationVersion}
-									</Typography>
-								) : (
-									<Typography tag="span" className="text-t-4">—</Typography>
-								)}
-							</td>
-							<td className="px-2 py-2.5" onClick={handleActionsClick}>
-								<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
-									{item.processingStatus === "RUNNING" ? (
-										<Button
-											onClick={handleCancelClick}
-											disabled={mutations.cancelText.isPending}
-											title={t("admin.tokenization.row.cancel")}
-											className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
+								</td>
+								<td className="px-2.5 py-2.5">
+									<div className="text-[13px] font-medium text-t-1 leading-snug line-clamp-1">
+										{item.title}
+									</div>
+									<div className="mt-0.5 flex items-center gap-1.5 text-[11px] text-t-3">
+										<TokenizationStatusBadge
+											status={item.processingStatus}
+											label={statusLabels[item.processingStatus]}
+											progress={item.processingProgress}
+										/>
+										<Typography tag="span">
+											{item.pagesCount} {t("admin.tokenization.table.pages")}
+										</Typography>
+									</div>
+								</td>
+								<td className="px-2.5 py-2.5">
+									<TokenizationLevelBadge level={item.level} />
+								</td>
+								<td className="px-2.5 py-2.5">
+									<TokenBar
+										value={item.totalTokens}
+										max={item.totalTokens}
+										color="bg-acc"
+									/>
+								</td>
+								<td className="px-2.5 py-2.5">
+									{item.notFoundCount > 0 ? (
+										<Typography
+											tag="span"
+											className="font-semibold text-red-t tabular-nums"
 										>
-											<Square className="size-[13px]" />
-										</Button>
+											{item.notFoundCount.toLocaleString()}
+										</Typography>
 									) : (
+										<Typography tag="span" className="text-t-4">
+											—
+										</Typography>
+									)}
+								</td>
+								<td className="px-2.5 py-2.5">
+									{item.ambiguousCount > 0 ? (
+										<Typography
+											tag="span"
+											className="font-semibold text-amb-t tabular-nums"
+										>
+											{item.ambiguousCount.toLocaleString()}
+										</Typography>
+									) : (
+										<Typography tag="span" className="text-t-4">
+											—
+										</Typography>
+									)}
+								</td>
+								<td className="px-2.5 py-2.5">
+									{item.tokenizationVersion !== null ? (
+										<Typography
+											tag="span"
+											className="font-mono text-[11.5px] text-t-3"
+										>
+											v{item.tokenizationVersion}
+										</Typography>
+									) : (
+										<Typography tag="span" className="text-t-4">
+											—
+										</Typography>
+									)}
+								</td>
+								<td className="px-2 py-2.5" onClick={handleActionsClick}>
+									<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+										{item.processingStatus === "RUNNING" ? (
+											<Button
+												size="bare"
+												onClick={handleCancelClick}
+												disabled={mutations.cancelText.isPending}
+												title={t("admin.tokenization.row.cancel")}
+												className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
+											>
+												<Square className="size-[13px]" />
+											</Button>
+										) : (
+											<Button
+												size="bare"
+												onClick={handleRunClick}
+												disabled={mutations.runText.isPending}
+												title={t("admin.tokenization.row.run")}
+												className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
+											>
+												<Play className="size-[13px]" />
+											</Button>
+										)}
 										<Button
-											onClick={handleRunClick}
-											disabled={mutations.runText.isPending}
-											title={t("admin.tokenization.row.run")}
+											size="bare"
+											onClick={handleResetClick}
+											disabled={mutations.resetText.isPending}
+											title={t("admin.tokenization.row.reset")}
 											className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 										>
-											<Play className="size-[13px]" />
+											<RotateCcw className="size-[13px]" />
 										</Button>
-									)}
-									<Button
-										onClick={handleResetClick}
-										disabled={mutations.resetText.isPending}
-										title={t("admin.tokenization.row.reset")}
-										className="flex size-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
-									>
-										<RotateCcw className="size-[13px]" />
-									</Button>
-								</div>
-							</td>
-						</tr>
-					);
+									</div>
+								</td>
+							</tr>
+						);
 					})}
 				</tbody>
 			</table>

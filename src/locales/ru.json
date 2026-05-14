@@ -2056,6 +2056,8 @@
 			"title": "Библиотека текстов",
 			"viewAll": "все →",
 			"newText": "Новый",
+			"emptyTitle": "Ничего не найдено",
+			"emptyDesc": "Попробуйте изменить фильтры",
 			"words": "{count} слов",
 			"langAll": "Все",
 			"levelAll": "Все"
