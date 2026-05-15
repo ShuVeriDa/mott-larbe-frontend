@@ -2,19 +2,33 @@ import type { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 
 import { Typography } from "@/shared/ui/typography";
-export type InputProps = ComponentProps<"input">;
 
-export const Input = ({ className, type = "text", ...props }: InputProps) => (
+export type InputVariant = "default" | "search-toolbar" | "search-panel";
+
+export type InputProps = ComponentProps<"input"> & {
+	variant?: InputVariant;
+};
+
+export const Input = ({ className, type = "text", variant = "default", ...props }: InputProps) => (
 	<input
 		data-slot="input"
 		type={type}
 		className={cn(
-			"h-[34px] w-full px-[10px] bg-surf-2 border-hairline border-bd-2 rounded-base",
-			"text-[13px] text-t-1 font-[inherit] outline-none",
-			"transition-colors duration-100",
-			"placeholder:text-t-3",
-			"focus:border-acc",
+			"w-full rounded-base border outline-none transition-colors font-[inherit]",
+			"text-t-1 placeholder:text-t-3",
 			"disabled:opacity-40 disabled:cursor-not-allowed",
+			variant === "default" && [
+				"h-[34px] px-[10px] bg-surf-2 border-hairline border-bd-2",
+				"text-[13px]",
+				"focus:border-acc",
+			],
+			(variant === "search-toolbar" || variant === "search-panel") && [
+				"h-full pl-[30px] pr-2.5 text-[12.5px]",
+				"[&::-webkit-search-cancel-button]:appearance-none",
+				"focus:border-acc",
+			],
+			variant === "search-toolbar" && "border-bd-2 bg-surf",
+			variant === "search-panel" && "border-bd-1 bg-surf-2 focus:bg-surf",
 			className,
 		)}
 		{...props}

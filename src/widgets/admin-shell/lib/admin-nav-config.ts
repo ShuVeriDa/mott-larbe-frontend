@@ -14,6 +14,7 @@ import {
 	Ticket,
 	Settings,
 	ScrollText,
+	Quote,
 } from "lucide-react";
 
 export interface AdminNavItem {
@@ -52,6 +53,11 @@ export const buildAdminNavSections = (t: (key: string) => string, lang: string):
 				href: () => `/${lang}/admin/texts`,
 				label: () => t("admin.nav.texts"),
 				icon: FileText,
+			},
+			{
+				href: () => `/${lang}/admin/text-phrases`,
+				label: () => t("admin.nav.textPhrases"),
+				icon: Quote,
 			},
 			{
 				href: () => `/${lang}/admin/tokenization`,

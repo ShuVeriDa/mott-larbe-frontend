@@ -1,6 +1,7 @@
 import type { ComponentProps } from 'react';
 import { Search } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
+import { Input } from "@/shared/ui/input";
 
 export type SearchBoxVariant = "toolbar" | "panel";
 
@@ -31,17 +32,12 @@ export const SearchBox = ({
 			strokeWidth={1.4}
 			aria-hidden="true"
 		/>
-		<input
+		<Input
 			data-slot="search-box-input"
 			type="text"
 			autoComplete="off"
-			className={cn(
-				"h-full w-full rounded-base border pl-[30px] pr-2.5 text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3",
-				variant === "toolbar" && "border-bd-2 bg-surf focus:border-acc",
-				variant === "panel" && "border-bd-1 bg-surf-2 focus:border-acc focus:bg-surf",
-				"[&::-webkit-search-cancel-button]:appearance-none",
-				className,
-			)}
+			variant={variant === "toolbar" ? "search-toolbar" : "search-panel"}
+			className={className}
 			{...props}
 		/>
 	</div>

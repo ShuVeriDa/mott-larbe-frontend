@@ -258,10 +258,7 @@
 						"Up to 50 translations per day",
 						"Personal vocabulary up to 500 words"
 					],
-					"disabled": [
-						"No spaced repetition",
-						"No advanced statistics"
-					]
+					"disabled": ["No spaced repetition", "No advanced statistics"]
 				},
 				"premium": {
 					"name": "Premium",
@@ -357,143 +354,105 @@
 				"pos": "verb",
 				"trans": "living",
 				"extra": "dwelling, residing",
-				"tags": [
-					"part.",
-					"pres."
-				]
+				"tags": ["part.", "pres."]
 			},
 			"хилла": {
 				"base": "хила",
 				"pos": "verb",
 				"trans": "was, existed",
 				"extra": "happened, occurred",
-				"tags": [
-					"past",
-					"3rd p."
-				]
+				"tags": ["past", "3rd p."]
 			},
 			"кIант": {
 				"base": "кIант",
 				"pos": "noun",
 				"trans": "boy, young man",
 				"extra": "lad, son",
-				"tags": [
-					"cl. 1",
-					"sg."
-				]
+				"tags": ["cl. 1", "sg."]
 			},
 			"да-нана": {
 				"base": "да-нана",
 				"pos": "noun",
 				"trans": "parents",
 				"extra": "lit. «father-mother»",
-				"tags": [
-					"sg."
-				]
+				"tags": ["sg."]
 			},
 			"доттагIий": {
 				"base": "доттагI",
 				"pos": "noun",
 				"trans": "friends",
 				"extra": "companions, mates",
-				"tags": [
-					"pl."
-				]
+				"tags": ["pl."]
 			},
 			"хIорда": {
 				"base": "хIорд",
 				"pos": "noun",
 				"trans": "sea",
 				"extra": "body of water",
-				"tags": [
-					"sg.",
-					"erg."
-				]
+				"tags": ["sg.", "erg."]
 			},
 			"маьлхан": {
 				"base": "малх",
 				"pos": "adj.",
 				"trans": "solar, sunny",
 				"extra": "related to the sun",
-				"tags": [
-					"sg.",
-					"gen."
-				]
+				"tags": ["sg.", "gen."]
 			},
 			"олхазарш": {
 				"base": "олхазар",
 				"pos": "noun",
 				"trans": "birds",
 				"extra": "winged ones",
-				"tags": [
-					"pl."
-				]
+				"tags": ["pl."]
 			},
 			"волавелла": {
 				"base": "дIавала",
 				"pos": "verb",
 				"trans": "set off",
 				"extra": "started on the way",
-				"tags": [
-					"past",
-					"3rd p."
-				]
+				"tags": ["past", "3rd p."]
 			},
 			"вала": {
 				"base": "вала",
 				"pos": "verb",
 				"trans": "to go, set off",
 				"extra": "to head to",
-				"tags": [
-					"inf."
-				]
+				"tags": ["inf."]
 			},
 			"кхечу": {
 				"base": "кхин",
 				"pos": "pron.",
 				"trans": "another, other",
 				"extra": "not this one",
-				"tags": [
-					"erg.",
-					"sg."
-				]
+				"tags": ["erg.", "sg."]
 			},
 			"тарх": {
 				"base": "тарх",
 				"pos": "noun",
 				"trans": "rock, cliff",
 				"extra": "stone slab",
-				"tags": [
-					"sg."
-				]
+				"tags": ["sg."]
 			},
 			"шиъ": {
 				"base": "шиъ",
 				"pos": "num.",
 				"trans": "two",
 				"extra": "",
-				"tags": [
-					"card."
-				]
+				"tags": ["card."]
 			},
 			"кхета": {
 				"base": "кхета",
 				"pos": "verb",
 				"trans": "to understand",
 				"extra": "to grasp, to realize",
-				"tags": [
-					"pres.",
-					"3rd p."
-				]
+				"tags": ["pres.", "3rd p."]
 			},
 			"бала": {
 				"base": "бала",
 				"pos": "noun",
 				"trans": "grief, woe",
 				"extra": "suffering, misfortune",
-				"tags": [
-					"sg."
-				]
+				"tags": ["sg."]
 			}
 		}
 	},
@@ -2563,6 +2522,7 @@
 			"dashboard": "Dashboard",
 			"analytics": "Analytics",
 			"texts": "Library",
+			"textPhrases": "Phrase translations",
 			"tokenization": "Tokenization",
 			"dictionary": "Dictionary",
 			"morphology": "Morphology",
@@ -3286,6 +3246,75 @@
 				"phraseDeleteConfirm": "Delete?",
 				"phraseDeleted": "Phrase deleted",
 				"phraseDeleteFailed": "Failed to delete phrase"
+			}
+		},
+		"textPhrases": {
+			"title": "Phrase Translations",
+			"subtitle": "{total} phrases",
+			"newPhrase": "New phrase",
+			"searchPlaceholder": "Search by phrase or translation…",
+			"empty": "No phrases yet. Add the first one.",
+			"emptySearch": "Nothing found",
+			"selectPhrase": "Select a phrase from the list",
+			"edit": "Edit",
+			"delete": "Delete",
+			"save": "Save",
+			"saving": "Saving…",
+			"cancel": "Cancel",
+			"originalLabel": "Original",
+			"translationLabel": "Translation",
+			"notesLabel": "Note",
+			"notesPlaceholder": "Fixed expression",
+			"originalReadonly": "Cannot change",
+			"editingMode": "Editing mode",
+			"addedAt": "Added: {date}",
+			"occurrencesSection": {
+				"title": "Occurrences",
+				"empty": "This phrase has not been added to any text yet",
+				"page": "p.",
+				"pos": "pos.",
+				"openInEditor": "Open in editor",
+				"deleteOccurrence": "Remove occurrence"
+			},
+			"createModal": {
+				"title": "New phrase",
+				"subtitle": "Add a phrase to the global reference",
+				"languageLabel": "Language",
+				"originalLabel": "Phrase *",
+				"originalPlaceholder": "доттагIалла деш",
+				"translationLabel": "Translation *",
+				"translationPlaceholder": "in friendship",
+				"notesLabel": "Note",
+				"notesPlaceholder": "Fixed expression",
+				"originalRequired": "Enter the phrase",
+				"translationRequired": "Enter the translation",
+				"cancel": "Cancel",
+				"create": "Create",
+				"creating": "Creating…"
+			},
+			"deleteModal": {
+				"title": "Delete phrase?",
+				"subtitle": "The phrase and {count} occurrences in texts will be deleted. This action is irreversible.",
+				"cancel": "Cancel",
+				"confirm": "Delete",
+				"deleting": "Deleting…"
+			},
+			"deleteOccurrenceModal": {
+				"title": "Remove occurrence?",
+				"subtitle": "Remove occurrence from text «{title}»? This cannot be undone.",
+				"cancel": "Cancel",
+				"confirm": "Delete",
+				"deleting": "Deleting…"
+			},
+			"pagination": {
+				"showing": "{from}–{to} of {total}"
+			},
+			"toast": {
+				"created": "Phrase created",
+				"updated": "Phrase updated",
+				"deleted": "Phrase deleted",
+				"occurrenceDeleted": "Occurrence removed",
+				"error": "An error occurred. Please try again."
 			}
 		},
 		"morphology": {

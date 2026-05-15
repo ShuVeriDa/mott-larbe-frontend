@@ -66,6 +66,57 @@ features/search/model/
 
 ---
 
+## shared/ui — Component Reuse
+
+**Never rewrite UI primitives that already exist in `shared/ui`.**
+Before writing any UI element — button, input, table, badge, modal, tooltip, avatar, spinner, dropdown, etc. — first check `shared/ui`. If it exists there, import it. Never use bare HTML elements in feature/widget/page JSX directly.
+
+```tsx
+// ❌ wrong — bare HTML, bypasses the design system
+const SaveButton = () => (
+	<button className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
+);
+
+const SearchField = () => (
+	<input
+		type="text"
+		className="border rounded px-3 py-2"
+		placeholder="Search..."
+	/>
+);
+
+// ✅ correct — reuse from shared/ui
+import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
+
+const SaveButton = () => <Button variant="primary">Save</Button>;
+
+const SearchField = () => <Input type="text" placeholder="Search..." />;
+```
+
+### Polymorphic rendering — use `asChild` (Radix/shadcn pattern)
+
+Never create wrapper variants (`LinkButton`, `AnchorButton`). Use `asChild` to delegate rendering to another element.
+
+```tsx
+// ❌ wrong — unnecessary wrapper component
+const LinkButton = ({ href, children }) => (
+	<a href={href} className="btn btn-primary">
+		{children}
+	</a>
+);
+
+// ✅ correct — asChild delegates Button styles to Link
+import { Button } from "@/shared/ui/button";
+import Link from "next/link";
+
+const ProfileLink = () => (
+	<Button asChild>
+		<Link href="/profile">Profile</Link>
+	</Button>
+);
+```
+
 ## Functions & Components
 
 - **Always use Arrow Functions** — never `function` declarations for components, hooks, or utilities.
