@@ -9,6 +9,7 @@ import {
 	Code,
 	Italic,
 	Languages,
+	Link2,
 	Pencil,
 	Strikethrough,
 	Subscript,
@@ -66,11 +67,15 @@ export const BubbleMenuContent = ({
 	extraToolbarItems,
 	onEditPhrase,
 	onDeletePhrase,
+	onEditAnnotation,
+	onDeleteAnnotation,
 }: {
 	editor: Editor;
 	extraToolbarItems?: ReactNode;
 	onEditPhrase?: () => void;
 	onDeletePhrase?: () => void;
+	onEditAnnotation?: () => void;
+	onDeleteAnnotation?: () => void;
 }) => {
 	const { t } = useI18n();
 	const [colorOpen, setColorOpen] = useState(false);
@@ -192,13 +197,38 @@ export const BubbleMenuContent = ({
 								wide
 							>
 								<Pencil className="size-[12px]" />
-								{/* <span>{t("admin.texts.editPage.phraseEditTitle")}</span> */}
 							</Btn>
 						)}
 						{onDeletePhrase && (
 							<Btn
 								title={t("admin.texts.editPage.phraseDeleteConfirm")}
 								onExec={onDeletePhrase}
+							>
+								<Trash2 className="size-[12px] text-red" />
+							</Btn>
+						)}
+					</>
+				)}
+				{(onEditAnnotation || onDeleteAnnotation) && (
+					<>
+						<Sep />
+						<Link2
+							className="mx-1 size-3.5 shrink-0 text-acc"
+							strokeWidth={1.6}
+						/>
+						{onEditAnnotation && (
+							<Btn
+								title={t("admin.texts.editPage.wordAnnotation.edit")}
+								onExec={onEditAnnotation}
+								wide
+							>
+								<Pencil className="size-[12px]" />
+							</Btn>
+						)}
+						{onDeleteAnnotation && (
+							<Btn
+								title={t("admin.texts.editPage.wordAnnotation.delete")}
+								onExec={onDeleteAnnotation}
 							>
 								<Trash2 className="size-[12px] text-red" />
 							</Btn>

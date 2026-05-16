@@ -27,6 +27,7 @@ export interface WordLookupGrammar {
 export interface WordLookupResponse {
 	lemmaId: string | null;
 	translation: string | null;
+	lemmaTranslation: string | null;
 	grammar: string | null;
 	grammarForms: WordLookupGrammar | null;
 	nounClass: string | null;

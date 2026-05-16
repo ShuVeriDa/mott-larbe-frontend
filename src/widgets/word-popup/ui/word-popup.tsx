@@ -13,7 +13,7 @@ import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
-import { ExternalLink, Languages, Plus } from "lucide-react";
+import { ExternalLink, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
@@ -101,9 +101,17 @@ const WordPopupBody = ({
 				</div>
 			</div>
 			<div className="border-b border-hairline border-bd-1 px-3.5 py-2.5">
-				<div className="mb-1 text-[14px] font-medium text-t-1">
+				<div className={lookup.lemmaTranslation ? "mb-1 text-[14px] font-medium text-t-1" : "text-[14px] font-medium text-t-1"}>
 					{lookup.translation}
 				</div>
+				{lookup.lemmaTranslation ? (
+					<div className="text-[11.5px] text-t-3">
+						{t("reader.panel.baseForm")}:{" "}
+						<Typography tag="span" className="font-medium text-t-2">
+							{lookup.lemmaTranslation}
+						</Typography>
+					</div>
+				) : null}
 			</div>
 			{lookup.tags.length > 0 ? (
 				<div className="flex flex-wrap gap-1 border-b border-hairline border-bd-1 px-3.5 py-2">
@@ -201,41 +209,45 @@ export const WordPopup = () => {
 		return () => document.removeEventListener("keydown", onKey);
 	}, [isVisible, closePopup]);
 
-	if (!isVisible || typeof window === "undefined") return null;
+	if (typeof window === "undefined") return null;
 
-	return createPortal(
+	return (
 		<>
-			<div
-				className="fixed inset-0 z-199"
-				onClick={closePopup}
-				aria-hidden="true"
-			/>
-			<div
-				role="dialog"
-				aria-label={token?.original ?? phrase?.phrase.original}
-				className="fixed z-200 w-[264px] overflow-hidden rounded-card border-hairline border-bd-2 bg-surf shadow-lg"
-				style={{ left: position.left, top: position.top }}
-			>
-				{phrase ? (
-					<PhrasePopupBody phrase={phrase} />
-				) : token ? (
-					isLoading || !data ? (
-						<div className="flex flex-col items-center justify-center gap-2 p-6">
-							<div className="size-[18px] animate-spin rounded-full border-2 border-surf-3 border-t-acc" />
-							<div className="text-[12px] text-t-3">
-								{t("reader.popup.loading")}
-							</div>
-						</div>
-					) : (
-						<WordPopupBody
-							token={token}
-							lookup={data}
-							onOpenInPanel={() => openInPanel(token)}
-						/>
-					)
-				) : null}
-			</div>
-		</>,
-		document.body,
+			{isVisible && createPortal(
+				<>
+					<div
+						className="fixed inset-0 z-199"
+						onClick={closePopup}
+						aria-hidden="true"
+					/>
+					<div
+						role="dialog"
+						aria-label={token?.original ?? phrase?.phrase.original}
+						className="fixed z-200 w-[264px] overflow-hidden rounded-card border-hairline border-bd-2 bg-surf shadow-lg"
+						style={{ left: position.left, top: position.top }}
+					>
+						{phrase ? (
+							<PhrasePopupBody phrase={phrase} />
+						) : token ? (
+							isLoading || !data ? (
+								<div className="flex flex-col items-center justify-center gap-2 p-6">
+									<div className="size-[18px] animate-spin rounded-full border-2 border-surf-3 border-t-acc" />
+									<div className="text-[12px] text-t-3">
+										{t("reader.popup.loading")}
+									</div>
+								</div>
+							) : (
+								<WordPopupBody
+									token={token}
+									lookup={data}
+									onOpenInPanel={() => openInPanel(token)}
+								/>
+							)
+						) : null}
+					</div>
+				</>,
+				document.body,
+			)}
+		</>
 	);
 };

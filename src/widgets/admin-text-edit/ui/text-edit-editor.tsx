@@ -2,11 +2,12 @@
 
 import type { ProcessingStatus } from "@/entities/admin-text";
 import { useAdminPagePhrases } from "@/entities/admin-text-phrase";
+import { useAnnotatedFormsByPage } from "@/features/word-annotation";
 import { useI18n } from "@/shared/lib/i18n";
 import { AdminTextEditorShell } from "@/shared/ui/admin-text-editor";
 import type { Editor, TipTapDoc } from "@/shared/ui/notion-editor";
-import { PhraseHighlightExtension } from "@/shared/ui/notion-editor";
-import { Languages } from "lucide-react";
+import { PhraseHighlightExtension, WordAnnotationHighlightExtension } from "@/shared/ui/notion-editor";
+import { Languages, Link2 } from "lucide-react";
 import { type ComponentProps, useEffect, useMemo, useRef } from "react";
 import type { PageContent } from "../model/use-admin-text-edit-page";
 import { CharsPopup } from "./chars-popup";
@@ -18,6 +19,9 @@ import {
 } from "./phrases-list-panel";
 import { TextEditRetokenizeBar } from "./text-edit-retokenize-bar";
 import { TextEditTokenStatusBar } from "./text-edit-token-status-bar";
+import { WORD_ANNOTATIONS_PANEL_EVENT } from "./word-annotations-panel";
+
+export const ANNOTATE_WORD_FORM_EVENT = "admin:annotate-word-form";
 
 interface TextEditEditorProps {
 	title: string;
@@ -69,13 +73,26 @@ export const TextEditEditor = ({
 		phraseTextsRef.current = phraseTexts;
 	}, [phraseTexts]);
 
-	const phraseExtensions = useMemo(() => [PhraseHighlightExtension], []);
+	// Load annotated word forms for current page to highlight in editor
+	const { data: annotatedFormsData } = useAnnotatedFormsByPage(textId, activePage + 1);
+	const annotatedForms = useMemo(
+		() => (annotatedFormsData ?? []).map(f => f.normalized).filter(Boolean),
+		[annotatedFormsData],
+	);
+
+	const editorExtensions = useMemo(() => [PhraseHighlightExtension, WordAnnotationHighlightExtension], []);
 
 	useEffect(() => {
 		const editor = editorRef.current;
 		if (!editor) return;
 		editor.commands.setPhraseHighlights(phraseTexts);
 	}, [phraseTexts]);
+
+	useEffect(() => {
+		const editor = editorRef.current;
+		if (!editor) return;
+		editor.commands.setWordAnnotationHighlights(annotatedForms);
+	}, [annotatedForms]);
 
 	const handleInsertChar: NonNullable<
 		ComponentProps<typeof CharsPopup>["onInsert"]
@@ -90,6 +107,9 @@ export const TextEditEditor = ({
 		editorRef.current = ed;
 		if (phraseTexts.length) {
 			ed.commands.setPhraseHighlights(phraseTexts);
+		}
+		if (annotatedForms.length) {
+			ed.commands.setWordAnnotationHighlights(annotatedForms);
 		}
 	};
 
@@ -147,6 +167,32 @@ export const TextEditEditor = ({
 		</button>
 	);
 
+	const handleAnnotateBtnMouseDown = (e: React.MouseEvent) => {
+		const editor = editorRef.current;
+		if (!editor) return;
+		const { from, to } = editor.state.selection;
+		const text = editor.state.doc.textBetween(from, to, " ").trim();
+		if (!text) return;
+		e.preventDefault();
+		document.dispatchEvent(
+			new CustomEvent<string>(ANNOTATE_WORD_FORM_EVENT, { detail: text }),
+		);
+		setTimeout(() => {
+			editor.commands.setTextSelection(to);
+			editor.commands.blur();
+		}, 0);
+	};
+
+	const annotateBtn = (
+		<button
+			title={t("admin.texts.editPage.wordAnnotation.bubbleBtn")}
+			onMouseDown={handleAnnotateBtnMouseDown}
+			className="flex h-7 shrink-0 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-all duration-100 select-none hover:bg-surf-3 hover:text-t-1 active:scale-95"
+		>
+			<Link2 className="size-[13px]" strokeWidth={1.7} />
+		</button>
+	);
+
 	const phraseListBtn = (
 		<button
 			title={t("admin.texts.editPage.phraseListBtn")}
@@ -158,6 +204,22 @@ export const TextEditEditor = ({
 		>
 			<Languages className="size-[13px] text-violet-400" strokeWidth={1.7} />
 			<span>{t("admin.texts.editPage.phraseListBtn")}</span>
+		</button>
+	);
+
+	const handleWordAnnotationListBtnMouseDown = (e: React.MouseEvent) => {
+		e.preventDefault();
+		document.dispatchEvent(new Event(WORD_ANNOTATIONS_PANEL_EVENT));
+	};
+
+	const wordAnnotationListBtn = (
+		<button
+			title={t("admin.texts.editPage.wordAnnotation.panelListBtn")}
+			onMouseDown={handleWordAnnotationListBtnMouseDown}
+			className="flex h-7 shrink-0 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-all duration-100 select-none hover:bg-surf-3 hover:text-t-1 active:scale-95"
+		>
+			<Link2 className="size-[13px] text-acc" strokeWidth={1.7} />
+			<span>{t("admin.texts.editPage.wordAnnotation.panelListBtn")}</span>
 		</button>
 	);
 
@@ -205,18 +267,20 @@ export const TextEditEditor = ({
 				<>
 					{charsPopup}
 					{phraseListBtn}
+					{wordAnnotationListBtn}
 				</>
 			}
 			notionExtraToolbarItems={
 				<>
 					{charsPopup}
 					{phraseBtn}
+					{annotateBtn}
 				</>
 			}
 			findReplaceCharHandlerRef={findReplaceInsertRef}
 			findReplaceCharsPicker={charsPopup}
 			onEditorReady={handleEditorReady}
-			extraExtensions={phraseExtensions}
+			extraExtensions={editorExtensions}
 			isSelectedPhrase={isSelectedPhrase}
 			onBubbleEditPhrase={handleBubbleEditPhrase}
 			onBubbleDeletePhrase={handleBubbleDeletePhrase}

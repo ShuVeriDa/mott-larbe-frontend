@@ -10,7 +10,10 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { InputLabel } from "@/shared/ui/input";
-import { PHRASE_CLICK_EVENT, type PhraseClickDetail } from "@/shared/ui/notion-editor";
+import {
+	PHRASE_CLICK_EVENT,
+	type PhraseClickDetail,
+} from "@/shared/ui/notion-editor";
 import { Languages, Pencil, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -34,7 +37,12 @@ interface EditModalProps {
 	onClose: () => void;
 }
 
-const EditModal = ({ occurrence, textId, pageNumber, onClose }: EditModalProps) => {
+const EditModal = ({
+	occurrence,
+	textId,
+	pageNumber,
+	onClose,
+}: EditModalProps) => {
 	const { t } = useI18n();
 	const { success, error: toastError } = useToast();
 	const { mutate: update, isPending } = useUpdatePhrase(textId, pageNumber);
@@ -56,7 +64,10 @@ const EditModal = ({ occurrence, textId, pageNumber, onClose }: EditModalProps) 
 		update(
 			{
 				phraseId: occurrence.phrase.id,
-				dto: { translation: translation.trim(), notes: notes.trim() || undefined },
+				dto: {
+					translation: translation.trim(),
+					notes: notes.trim() || undefined,
+				},
 			},
 			{
 				onSuccess: () => {
@@ -112,8 +123,12 @@ const EditModal = ({ occurrence, textId, pageNumber, onClose }: EditModalProps) 
 							ref={inputRef}
 							value={translation}
 							onChange={e => setTranslation(e.target.value)}
-							onKeyDown={e => { if (e.key === "Enter") handleSave(); }}
-							placeholder={t("admin.texts.editPage.phraseTranslationPlaceholder")}
+							onKeyDown={e => {
+								if (e.key === "Enter") handleSave();
+							}}
+							placeholder={t(
+								"admin.texts.editPage.phraseTranslationPlaceholder",
+							)}
 							className="h-[34px] w-full rounded-base border-hairline border-bd-2 bg-surf-2 px-[10px] text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc"
 						/>
 					</div>
@@ -162,7 +177,12 @@ interface PhraseItemProps {
 	isDeleting: boolean;
 }
 
-const PhraseItem = ({ occurrence, onEdit, onDelete, isDeleting }: PhraseItemProps) => {
+const PhraseItem = ({
+	occurrence,
+	onEdit,
+	onDelete,
+	isDeleting,
+}: PhraseItemProps) => {
 	const { t } = useI18n();
 	const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -190,7 +210,10 @@ const PhraseItem = ({ occurrence, onEdit, onDelete, isDeleting }: PhraseItemProp
 						</button>
 					) : (
 						<button
-							onClick={() => { onDelete(occurrence.id); setConfirmDelete(false); }}
+							onClick={() => {
+								onDelete(occurrence.id);
+								setConfirmDelete(false);
+							}}
 							disabled={isDeleting}
 							className="rounded px-1.5 py-0.5 text-[10px] font-semibold text-red transition-colors hover:bg-red/10 disabled:opacity-60"
 						>
@@ -199,9 +222,13 @@ const PhraseItem = ({ occurrence, onEdit, onDelete, isDeleting }: PhraseItemProp
 					)}
 				</div>
 			</div>
-			<div className="text-[12px] text-t-2">{occurrence.phrase.translation}</div>
+			<div className="text-[12px] text-t-2">
+				{occurrence.phrase.translation}
+			</div>
 			{occurrence.phrase.notes && (
-				<div className="mt-1 text-[11px] text-t-3">{occurrence.phrase.notes}</div>
+				<div className="mt-1 text-[11px] text-t-3">
+					{occurrence.phrase.notes}
+				</div>
 			)}
 		</div>
 	);
@@ -217,24 +244,45 @@ interface PopupState {
 
 // ── Main panel ────────────────────────────────────────────────────────────────
 
-export const PhrasesListPanel = ({ textId, pageNumber }: PhrasesListPanelProps) => {
+export const PhrasesListPanel = ({
+	textId,
+	pageNumber,
+}: PhrasesListPanelProps) => {
 	const { t } = useI18n();
 	const { success, error: toastError } = useToast();
 	const [isOpen, setIsOpen] = useState(false);
-	const [editingOccurrence, setEditingOccurrence] = useState<PagePhraseOccurrence | null>(null);
+	const [editingOccurrence, setEditingOccurrence] =
+		useState<PagePhraseOccurrence | null>(null);
 	const [popup, setPopup] = useState<PopupState | null>(null);
 
-	const { data: phrases = [], isLoading } = useAdminPagePhrases(textId, pageNumber);
-	const { mutate: deleteOccurrence, isPending: isDeleting } = useDeletePhraseOccurrence(textId, pageNumber);
+	const { data: phrases = [], isLoading } = useAdminPagePhrases(
+		textId,
+		pageNumber,
+	);
+	const { mutate: deleteOccurrence, isPending: isDeleting } =
+		useDeletePhraseOccurrence(textId, pageNumber);
+
+	const handleDelete = (occurrenceId: string) => {
+		deleteOccurrence(occurrenceId, {
+			onSuccess: () => {
+				success(t("admin.texts.editPage.phraseDeleted"));
+				setPopup(null);
+			},
+			onError: () => toastError(t("admin.texts.editPage.phraseDeleteFailed")),
+		});
+	};
 
 	useEffect(() => {
 		const handleToggle = () => setIsOpen(v => !v);
 		document.addEventListener(PHRASES_PANEL_EVENT, handleToggle);
-		return () => document.removeEventListener(PHRASES_PANEL_EVENT, handleToggle);
+		return () =>
+			document.removeEventListener(PHRASES_PANEL_EVENT, handleToggle);
 	}, []);
 
 	const findOccurrence = (phraseText: string) =>
-		phrases.find(p => p.phrase.original.toLowerCase() === phraseText.toLowerCase());
+		phrases.find(
+			p => p.phrase.original.toLowerCase() === phraseText.toLowerCase(),
+		);
 
 	// Click on phrase highlight in editor → open edit modal
 	useEffect(() => {
@@ -245,7 +293,7 @@ export const PhrasesListPanel = ({ textId, pageNumber }: PhrasesListPanelProps) 
 		};
 		document.addEventListener(PHRASE_CLICK_EVENT, handle);
 		return () => document.removeEventListener(PHRASE_CLICK_EVENT, handle);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [phrases]);
 
 	// Direct delete from bubble menu
@@ -257,7 +305,7 @@ export const PhrasesListPanel = ({ textId, pageNumber }: PhrasesListPanelProps) 
 		};
 		document.addEventListener(PHRASE_DELETE_EVENT, handle);
 		return () => document.removeEventListener(PHRASE_DELETE_EVENT, handle);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [phrases]);
 
 	// Direct edit from bubble menu → skip intermediate popup, open EditModal
@@ -269,18 +317,8 @@ export const PhrasesListPanel = ({ textId, pageNumber }: PhrasesListPanelProps) 
 		};
 		document.addEventListener(PHRASE_EDIT_EVENT, handle);
 		return () => document.removeEventListener(PHRASE_EDIT_EVENT, handle);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [phrases]);
-
-	const handleDelete = (occurrenceId: string) => {
-		deleteOccurrence(occurrenceId, {
-			onSuccess: () => {
-				success(t("admin.texts.editPage.phraseDeleted"));
-				setPopup(null);
-			},
-			onError: () => toastError(t("admin.texts.editPage.phraseDeleteFailed")),
-		});
-	};
 
 	const handlePopupEdit = () => {
 		if (!popup) return;

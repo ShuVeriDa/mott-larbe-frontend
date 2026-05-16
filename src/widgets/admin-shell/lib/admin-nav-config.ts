@@ -15,6 +15,7 @@ import {
 	Settings,
 	ScrollText,
 	Quote,
+	Link2,
 } from "lucide-react";
 
 export interface AdminNavItem {
@@ -58,6 +59,11 @@ export const buildAdminNavSections = (t: (key: string) => string, lang: string):
 				href: () => `/${lang}/admin/text-phrases`,
 				label: () => t("admin.nav.textPhrases"),
 				icon: Quote,
+			},
+			{
+				href: () => `/${lang}/admin/word-annotations`,
+				label: () => t("admin.nav.wordAnnotations"),
+				icon: Link2,
 			},
 			{
 				href: () => `/${lang}/admin/tokenization`,

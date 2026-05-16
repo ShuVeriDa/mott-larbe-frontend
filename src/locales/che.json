@@ -1447,7 +1447,24 @@
 			"loading": "Ч1ог1а ду…",
 			"addToDictionary": "Тохкара",
 			"inDictionary": "Чохь ду",
-			"openPanel": "Панеле схьадилла"
+			"openPanel": "Панеле схьадилла",
+			"annotate": "Нийса дан"
+		},
+		"annotate": {
+			"title": "Нийса дан: {word}",
+			"searchPlaceholder": "Словарехь лаха…",
+			"searchHint": "2 элп яздан",
+			"noResults": "Дало дац. Дош лемма санна Admin Dictionary-хь хlоттийна вац — хlетта дIаяздан деза.",
+			"scopeLocal": "Хlокху токене бен",
+			"scopeLocalDesc": "Хlокху меттехь бен нийса дийр дац",
+			"scopeGlobal": "Массанхьа «{word}» хьокхург",
+			"scopeGlobalDesc": "Морфологине тlе оьцур ду — массо а текстехь лоьхур ду",
+			"save": "Сохранить",
+			"saving": "Яздо…",
+			"cancel": "Д1адаха",
+			"successLocal": "Хlокху токенна яздина",
+			"successGlobal": "«{word}» морфологине тlетуьйхира",
+			"error": "Сохранить ца хилира"
 		},
 		"sheet": {
 			"close": "Д1акъовла"
@@ -2523,6 +2540,7 @@
 			"analytics": "Аналитика",
 			"texts": "Библиотека",
 			"textPhrases": "Дешнийн гIиллакхаш",
+			"wordAnnotations": "Дешнийн аннотацеш",
 			"tokenization": "Токенизаци",
 			"dictionary": "Словарь",
 			"morphology": "Морфологи",
@@ -3204,7 +3222,37 @@
 				},
 				"sections": {
 					"tokenization": "Токенизаци",
+					"wordAnnotation": "Дешнийн аннотаци",
 					"versions": "ТIаьхьарчу хийцамаш"
+				},
+				"wordAnnotation": {
+					"dialogTitle": "Дешан хIоттам леммица вовшахтохан",
+					"wordFormPlaceholder": "Дешан хIоттам (мис. элира)",
+					"formTranslationPlaceholder": "Хьехам хIокху хIоттаман (хIума доцуш)",
+					"lemmaSearchPlaceholder": "Лемма лаха (мис. ала)…",
+					"noResults": "Лемманаш карийна цIе",
+					"save": "Глобально яздан",
+					"saving": "Яздош…",
+					"success": "«{word}» морфологина тIейоьжна",
+					"successBatch": "{count} токен аннотировано → {lemma}",
+					"error": "Яздан бала хилла",
+					"bubbleBtn": "Леммица вовшахтоха",
+					"occurrences": "Хьан текстехь ({count}):",
+					"occurrencesLoading": "Лоьхуш…",
+					"noOccurrences": "Токенизированни дешнаш карийна цIе",
+					"selectAll": "Дерриг а харжа",
+					"deselectAll": "Дерриг а дIадаккха",
+					"saveTokens": "Яздан ({count})",
+					"panelTitle": "Дешнийн аннотацеш",
+					"panelListBtn": "Аннотацеш",
+					"panelEmpty": "Хьан агIонехь аннотацеш яц",
+					"editTitle": "Аннотаци хийца",
+					"wordFormLabel": "Дешан хIоттам",
+					"lemmaLabel": "Лемман буха хIоттам",
+					"updateSuccess": "Аннотаци хийцна",
+					"deleteSuccess": "Аннотаци дIаяьккхна",
+					"edit": "Хийца",
+					"delete": "ДIаяккха"
 				},
 				"tokenStatus": {
 					"COMPLETED": "Чекхйаьлла",
@@ -3315,6 +3363,41 @@
 				"deleted": "ГIиллакх дIаяьккхина",
 				"occurrenceDeleted": "ХIиттаялар дIаяьккхина",
 				"error": "Гаш хилира. Юха а гIойла."
+			}
+		},
+		"wordAnnotations": {
+			"title": "Дешнийн аннотацеш",
+			"subtitle": "{total} аннотаци",
+			"searchPlaceholder": "Дешан хIоттам я лемма лаха…",
+			"empty": "Аннотацеш дац хIокху хенахь",
+			"emptySearch": "Хьалха дац",
+			"selectForm": "Дешан хIоттам харжа аьрра кепара",
+			"normalizedLabel": "Дешан хIоттам",
+			"lemmaLabel": "Лемман буха хIоттам",
+			"posLabel": "Дешан дакъа",
+			"translationLabel": "Хьехам",
+			"translationPlaceholder": "Хьехам (хIума доцуш)",
+			"tokenCountLabel": "Аннотировано токенаш",
+			"addedAt": "ТIетоьхна: {date}",
+			"edit": "Хийца",
+			"delete": "ДIаяккха",
+			"save": "Яздан",
+			"saving": "Яздош…",
+			"cancel": "Юха",
+			"deleteModal": {
+				"title": "Аннотаци дIаяккха?",
+				"subtitle": "Дешан хIоттаман аннотаци сабаре дIайоху.",
+				"cancel": "Юха",
+				"confirm": "ДIаяккха",
+				"deleting": "ДIайоккхуш…"
+			},
+			"toast": {
+				"updated": "Аннотаци хийцна",
+				"deleted": "Аннотаци дIаяьккхна",
+				"error": "Гаш хилира. Юха а гIойла."
+			},
+			"pagination": {
+				"showing": "{from}–{to} {total} чуьра"
 			}
 		},
 		"morphology": {

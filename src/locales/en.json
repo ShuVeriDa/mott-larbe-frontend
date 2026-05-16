@@ -1447,7 +1447,24 @@
 			"loading": "Loading…",
 			"addToDictionary": "Add",
 			"inDictionary": "Saved",
-			"openPanel": "Open in panel"
+			"openPanel": "Open in panel",
+			"annotate": "Fix translation"
+		},
+		"annotate": {
+			"title": "Fix: {word}",
+			"searchPlaceholder": "Search dictionary…",
+			"searchHint": "Type at least 2 characters",
+			"noResults": "No results. The word may not have a lemma record yet — add it to the Admin Dictionary first.",
+			"scopeLocal": "This token only",
+			"scopeLocalDesc": "Fixes translation for this specific occurrence only (use for homographs)",
+			"scopeGlobal": "Globally for form «{word}»",
+			"scopeGlobalDesc": "Adds the word form to morphology — the word will be found in all texts",
+			"save": "Save",
+			"saving": "Saving…",
+			"cancel": "Cancel",
+			"successLocal": "Annotation saved for this token",
+			"successGlobal": "Form «{word}» added to morphology",
+			"error": "Failed to save annotation"
 		},
 		"sheet": {
 			"close": "Close"
@@ -2523,6 +2540,7 @@
 			"analytics": "Analytics",
 			"texts": "Library",
 			"textPhrases": "Phrase translations",
+			"wordAnnotations": "Word Annotations",
 			"tokenization": "Tokenization",
 			"dictionary": "Dictionary",
 			"morphology": "Morphology",
@@ -3204,7 +3222,37 @@
 				},
 				"sections": {
 					"tokenization": "Tokenization",
+					"wordAnnotation": "Word Annotation",
 					"versions": "Recent changes"
+				},
+				"wordAnnotation": {
+					"dialogTitle": "Link word form to lemma",
+					"wordFormPlaceholder": "Word form (e.g. элира)",
+					"formTranslationPlaceholder": "Translation of this form (optional)",
+					"lemmaSearchPlaceholder": "Search lemma (e.g. ала)…",
+					"noResults": "No lemmas found",
+					"save": "Save globally",
+					"saving": "Saving…",
+					"success": "Form «{word}» linked to morphology",
+					"successBatch": "Annotated {count} tokens → {lemma}",
+					"error": "Failed to save",
+					"bubbleBtn": "Link to lemma",
+					"occurrences": "In this text ({count}):",
+					"occurrencesLoading": "Loading occurrences…",
+					"noOccurrences": "No tokenized occurrences found",
+					"selectAll": "Select all",
+					"deselectAll": "Deselect all",
+					"saveTokens": "Save ({count})",
+					"panelTitle": "Word Annotations",
+					"panelListBtn": "Annotations",
+					"panelEmpty": "No annotations on this page",
+					"editTitle": "Edit annotation",
+					"wordFormLabel": "Word form",
+					"lemmaLabel": "Base form (lemma)",
+					"updateSuccess": "Annotation updated",
+					"deleteSuccess": "Annotation deleted",
+					"edit": "Edit",
+					"delete": "Delete"
 				},
 				"tokenStatus": {
 					"COMPLETED": "Done",
@@ -3315,6 +3363,41 @@
 				"deleted": "Phrase deleted",
 				"occurrenceDeleted": "Occurrence removed",
 				"error": "An error occurred. Please try again."
+			}
+		},
+		"wordAnnotations": {
+			"title": "Word Annotations",
+			"subtitle": "{total} annotations",
+			"searchPlaceholder": "Search by word form or lemma…",
+			"empty": "No word annotations yet",
+			"emptySearch": "Nothing found",
+			"selectForm": "Select a word form from the list",
+			"normalizedLabel": "Word form",
+			"lemmaLabel": "Base form (lemma)",
+			"posLabel": "Part of speech",
+			"translationLabel": "Translation",
+			"translationPlaceholder": "Optional translation",
+			"tokenCountLabel": "Tokens annotated",
+			"addedAt": "Added: {date}",
+			"edit": "Edit",
+			"delete": "Delete",
+			"save": "Save",
+			"saving": "Saving…",
+			"cancel": "Cancel",
+			"deleteModal": {
+				"title": "Delete annotation?",
+				"subtitle": "The word form annotation will be permanently deleted.",
+				"cancel": "Cancel",
+				"confirm": "Delete",
+				"deleting": "Deleting…"
+			},
+			"toast": {
+				"updated": "Annotation updated",
+				"deleted": "Annotation deleted",
+				"error": "An error occurred. Please try again."
+			},
+			"pagination": {
+				"showing": "{from}–{to} of {total}"
 			}
 		},
 		"morphology": {

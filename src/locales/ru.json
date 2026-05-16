@@ -1450,7 +1450,24 @@
 			"loading": "Загрузка…",
 			"addToDictionary": "В словарь",
 			"inDictionary": "В словаре",
-			"openPanel": "Открыть в панели"
+			"openPanel": "Открыть в панели",
+			"annotate": "Исправить перевод"
+		},
+		"annotate": {
+			"title": "Исправить: {word}",
+			"searchPlaceholder": "Поиск в словаре…",
+			"searchHint": "Введите от 2 символов",
+			"noResults": "Ничего не найдено. Возможно, слово ещё не добавлено в Admin Dictionary как лемма — сначала добавьте его там.",
+			"scopeLocal": "Только этот токен",
+			"scopeLocalDesc": "Исправит перевод только для этого места в тексте (подходит для омографов)",
+			"scopeGlobal": "Глобально для формы «{word}»",
+			"scopeGlobalDesc": "Добавит словоформу в морфологию — слово будет находиться во всех текстах",
+			"save": "Сохранить",
+			"saving": "Сохраняем…",
+			"cancel": "Отмена",
+			"successLocal": "Привязка сохранена для этого токена",
+			"successGlobal": "Форма «{word}» добавлена в морфологию",
+			"error": "Не удалось сохранить привязку"
 		},
 		"sheet": {
 			"close": "Закрыть"
@@ -2526,6 +2543,7 @@
 			"analytics": "Аналитика",
 			"texts": "Библиотека",
 			"textPhrases": "Переводы фраз",
+			"wordAnnotations": "Аннотации слов",
 			"tokenization": "Токенизация",
 			"dictionary": "Словарь",
 			"morphology": "Морфология",
@@ -3207,7 +3225,37 @@
 				},
 				"sections": {
 					"tokenization": "Токенизация",
+					"wordAnnotation": "Аннотация слов",
 					"versions": "Последние изменения"
+				},
+				"wordAnnotation": {
+					"dialogTitle": "Привязать словоформу к лемме",
+					"wordFormPlaceholder": "Словоформа (напр. элира)",
+					"formTranslationPlaceholder": "Перевод этой формы (необязательно)",
+					"lemmaSearchPlaceholder": "Поиск леммы (напр. ала)…",
+					"noResults": "Леммы не найдены",
+					"save": "Сохранить глобально",
+					"saving": "Сохраняем…",
+					"success": "Форма «{word}» добавлена в морфологию",
+					"successBatch": "Аннотировано {count} токенов → {lemma}",
+					"error": "Не удалось сохранить",
+					"bubbleBtn": "Привязать к лемме",
+					"occurrences": "В этом тексте ({count}):",
+					"occurrencesLoading": "Загружаем вхождения…",
+					"noOccurrences": "Токенизированных вхождений не найдено",
+					"selectAll": "Выбрать все",
+					"deselectAll": "Снять все",
+					"saveTokens": "Сохранить ({count})",
+					"panelTitle": "Аннотации слов",
+					"panelListBtn": "Аннотации",
+					"panelEmpty": "На этой странице нет аннотаций",
+					"editTitle": "Редактировать аннотацию",
+					"wordFormLabel": "Словоформа",
+					"lemmaLabel": "Базовая форма (лемма)",
+					"updateSuccess": "Аннотация обновлена",
+					"deleteSuccess": "Аннотация удалена",
+					"edit": "Редактировать",
+					"delete": "Удалить"
 				},
 				"tokenStatus": {
 					"COMPLETED": "Завершена",
@@ -3318,6 +3366,41 @@
 				"deleted": "Фраза удалена",
 				"occurrenceDeleted": "Вхождение удалено",
 				"error": "Произошла ошибка. Попробуйте снова."
+			}
+		},
+		"wordAnnotations": {
+			"title": "Аннотации слов",
+			"subtitle": "{total} аннотаций",
+			"searchPlaceholder": "Поиск по словоформе или лемме…",
+			"empty": "Аннотаций пока нет",
+			"emptySearch": "Ничего не найдено",
+			"selectForm": "Выберите словоформу из списка",
+			"normalizedLabel": "Словоформа",
+			"lemmaLabel": "Базовая форма (лемма)",
+			"posLabel": "Часть речи",
+			"translationLabel": "Перевод",
+			"translationPlaceholder": "Перевод (необязательно)",
+			"tokenCountLabel": "Токенов аннотировано",
+			"addedAt": "Добавлено: {date}",
+			"edit": "Редактировать",
+			"delete": "Удалить",
+			"save": "Сохранить",
+			"saving": "Сохраняем…",
+			"cancel": "Отмена",
+			"deleteModal": {
+				"title": "Удалить аннотацию?",
+				"subtitle": "Аннотация словоформы будет удалена безвозвратно.",
+				"cancel": "Отмена",
+				"confirm": "Удалить",
+				"deleting": "Удаляем…"
+			},
+			"toast": {
+				"updated": "Аннотация обновлена",
+				"deleted": "Аннотация удалена",
+				"error": "Произошла ошибка. Попробуйте снова."
+			},
+			"pagination": {
+				"showing": "{from}–{to} из {total}"
 			}
 		},
 		"morphology": {

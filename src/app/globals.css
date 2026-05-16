@@ -527,6 +527,14 @@
 	::-webkit-scrollbar-thumb:hover {
 		background: var(--bd-2);
 	}
+	* {
+		cursor: default;
+	}
+	input:not(:disabled):not([readonly]),
+	textarea:not(:disabled):not([readonly]),
+	[contenteditable="true"] {
+		cursor: text;
+	}
 	button:not(:disabled),
 	a,
 	[role="button"]:not([aria-disabled="true"]) {

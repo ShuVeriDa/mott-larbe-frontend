@@ -22,6 +22,7 @@ import { useState } from "react";
 import type { PageContent } from "../model/use-admin-text-edit-page";
 import { TextEditMetaVersionsSection } from "./text-edit-meta-versions-section";
 import { TokenizationSection } from "./tokenization-section";
+import { WordAnnotationSection } from "./word-annotation-section";
 
 interface TextEditMetaPanelProps {
 	textId: string;
@@ -165,6 +166,8 @@ export const TextEditMetaPanel = ({
 				onNormalizationChange={onNormalizationChange}
 				onMorphAnalysisChange={onMorphAnalysisChange}
 			/>
+
+			<WordAnnotationSection />
 
 			<AdminTextMetaPageStatsSection
 				pages={pages}

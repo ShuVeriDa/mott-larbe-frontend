@@ -6,14 +6,16 @@ import {
 } from "@/shared/ui/admin-text-editor";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { AnnotateWordFormDialog } from "@/features/word-annotation";
 import Link from "next/link";
-import { type ComponentProps, useState } from "react";
+import { type ComponentProps, useEffect, useState } from "react";
 import { useAdminTextEditPage } from "../model/use-admin-text-edit-page";
-import { TextEditEditor } from "./text-edit-editor";
+import { TextEditEditor, ANNOTATE_WORD_FORM_EVENT } from "./text-edit-editor";
 import { TextEditMetaPanel } from "./text-edit-meta-panel";
 import { TextEditTopbar } from "./text-edit-topbar";
 import { PhraseTranslationPanel } from "./phrase-translation-panel";
 import { PhrasesListPanel } from "./phrases-list-panel";
+import { WordAnnotationsPanel } from "./word-annotations-panel";
 
 interface AdminTextEditPageProps {
 	textId: string;
@@ -22,6 +24,16 @@ interface AdminTextEditPageProps {
 export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 	const { t, lang } = useI18n();
 	const [isMetaPanelVisible, setIsMetaPanelVisible] = useState(true);
+	const [annotateWordForm, setAnnotateWordForm] = useState<string | null>(null);
+
+	useEffect(() => {
+		const handler = (e: Event) => {
+			const text = (e as CustomEvent<string>).detail;
+			if (text) setAnnotateWordForm(text);
+		};
+		document.addEventListener(ANNOTATE_WORD_FORM_EVENT, handler);
+		return () => document.removeEventListener(ANNOTATE_WORD_FORM_EVENT, handler);
+	}, []);
 
 	const {
 		textData,
@@ -247,6 +259,15 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 		/>
 		<PhraseTranslationPanel textId={textId} pageNumber={activePage + 1} language={language} />
 		<PhrasesListPanel textId={textId} pageNumber={activePage + 1} />
-		</>
+		<WordAnnotationsPanel textId={textId} pageNumber={activePage + 1} />
+		{annotateWordForm !== null && (
+			<AnnotateWordFormDialog
+				wordForm={annotateWordForm}
+				textId={textId}
+				open
+				onOpenChange={open => { if (!open) setAnnotateWordForm(null); }}
+			/>
+		)}
+</>
 	);
 };

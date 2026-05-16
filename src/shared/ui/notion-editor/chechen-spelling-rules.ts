@@ -101,6 +101,20 @@ export const CHECHEN_SPELLING_RULES: SpellingRule[] = [
 		category: RuleCategory.Diphthong,
 	},
 	{
+		name: "цо → цуо",
+		description: "ло → луо",
+		pattern: /цо/gu,
+		confidence: RuleConfidence.Certain,
+		category: RuleCategory.Diphthong,
+	},
+	{
+		name: "жоп → жуоп",
+		description: "жоп → жуоп",
+		pattern: /жоп/gu,
+		confidence: RuleConfidence.Certain,
+		category: RuleCategory.Diphthong,
+	},
+	{
 		name: "до → дуо",
 		description: "до → дуо",
 		pattern: /до/gu,
@@ -266,6 +280,13 @@ export const CHECHEN_SPELLING_RULES: SpellingRule[] = [
 		category: RuleCategory.Diphthong,
 	},
 	{
+		name: "бакъо → бакъуо",
+		description: "бакъо → бакъуо (о → уо)",
+		pattern: /бакъо/gu,
+		confidence: RuleConfidence.Likely,
+		category: RuleCategory.Diphthong,
+	},
+	{
 		name: "хьалона → хьалуона",
 		description: "хьалона → хьалуона (о → уо)",
 		pattern: /хьалона/gu,
@@ -319,6 +340,20 @@ export const CHECHEN_SPELLING_RULES: SpellingRule[] = [
 		pattern: /(?<!\p{L})ехка/gu,
 		confidence: RuleConfidence.Likely,
 		category: RuleCategory.YaYu,
+	},
+	{
+		name: "бел → биэл",
+		description: "бел → биэл (е → иэ)",
+		pattern: /бел/gu,
+		confidence: RuleConfidence.Likely,
+		category: RuleCategory.Diphthong,
+	},
+	{
+		name: "бе → биэ",
+		description: "бе → биэ (е → иэ)",
+		pattern: /бе/gu,
+		confidence: RuleConfidence.Likely,
+		category: RuleCategory.Diphthong,
 	},
 	{
 		name: "еша → йиэша",
