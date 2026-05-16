@@ -89,7 +89,7 @@ export const AnnotateTokenDialog = ({
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
-			<DialogContent className="max-w-md gap-4 p-0">
+			<DialogContent aria-describedby={undefined} className="max-w-md gap-4 p-0">
 				<DialogHeader className="px-5 pt-5 pb-0">
 					<DialogTitle>
 						{t("reader.annotate.title", { word: token.original })}

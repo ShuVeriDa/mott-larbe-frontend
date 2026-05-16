@@ -2,21 +2,19 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { annotationApi } from "../api/annotation-api";
-import { annotationKeys } from "../api/annotation-keys";
-import type { BatchAnnotateDto } from "../api/types";
+import type { UnannotateTokensDto } from "../api/types";
 
-export const useBatchAnnotate = (textId?: string) => {
+export const useUnannotateTokens = (textId?: string) => {
 	const qc = useQueryClient();
 	return useMutation({
-		mutationFn: (dto: BatchAnnotateDto) => annotationApi.batchAnnotate(dto),
-		onSuccess: (_data, dto) => {
+		mutationFn: (dto: UnannotateTokensDto) => annotationApi.unannotateTokens(dto),
+		onSuccess: () => {
 			if (textId) {
 				void qc.invalidateQueries({ queryKey: ["annotation", "annotated-forms", textId] });
-				void qc.invalidateQueries({
-					queryKey: annotationKeys.tokenOccurrences(dto.normalized, textId),
-				});
+				void qc.invalidateQueries({ queryKey: ["annotation", "occurrences", textId] });
 			} else {
 				void qc.invalidateQueries({ queryKey: ["annotation", "annotated-forms"] });
+				void qc.invalidateQueries({ queryKey: ["annotation", "occurrences"] });
 			}
 		},
 	});

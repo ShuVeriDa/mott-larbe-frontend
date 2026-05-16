@@ -34,6 +34,7 @@ export interface TokenOccurrence {
 	word: string;
 	before: string;
 	after: string;
+	isAnnotated: boolean;
 }
 
 export interface BatchAnnotateDto {
@@ -49,13 +50,25 @@ export interface BatchAnnotateResponse {
 	lemmaBaseForm: string;
 }
 
+export interface TokenOccurrenceOnPage {
+	tokenId: string;
+	isAnnotated: boolean;
+}
+
 export interface AnnotatedFormOnPage {
 	morphFormId: string;
+	hasMorphForm: boolean;
 	normalized: string;
 	form: string;
 	lemmaId: string;
 	lemmaBaseForm: string;
 	translation: string | null;
+	/** Occurrences on the current page only — used for editor highlights (no context needed) */
+	pageOccurrences: TokenOccurrenceOnPage[];
+	/** Occurrences across all pages with before/after context — used for edit dialog */
+	allOccurrences: TokenOccurrence[];
+	/** Whether this form should appear in the annotations panel (has annotated tokens on this page) */
+	inPanel: boolean;
 }
 
 export interface MorphFormLemma {
@@ -86,4 +99,13 @@ export interface MorphFormListResponse {
 
 export interface PatchMorphFormDto {
 	translation?: string;
+}
+
+export interface UnannotateTokensDto {
+	tokenIds: string[];
+}
+
+export interface UnannotateTokensResponse {
+	success: boolean;
+	updatedTokens: number;
 }

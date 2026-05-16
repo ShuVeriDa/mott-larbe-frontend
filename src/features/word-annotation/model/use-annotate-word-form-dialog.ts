@@ -3,7 +3,7 @@
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import type { ChangeEvent } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { LemmaSearchResult } from "../api";
 import { useBatchAnnotate } from "./use-batch-annotate";
 import { useLemmaSearch } from "./use-lemma-search";
@@ -12,12 +12,14 @@ import { useTokenOccurrences } from "./use-token-occurrences";
 interface UseAnnotateWordFormDialogProps {
 	initialWordForm: string;
 	textId?: string;
+	initialSelectedTokenId?: string;
 	onOpenChange: (open: boolean) => void;
 }
 
 export const useAnnotateWordFormDialog = ({
 	initialWordForm,
 	textId,
+	initialSelectedTokenId,
 	onOpenChange,
 }: UseAnnotateWordFormDialogProps) => {
 	const { t } = useI18n();
@@ -33,7 +35,13 @@ export const useAnnotateWordFormDialog = ({
 	const { data: results = [], isLoading: isSearching } = useLemmaSearch(query);
 	const { data: occurrences = [], isLoading: isLoadingOccurrences } =
 		useTokenOccurrences(normalized, textId);
-	const { mutate: batchAnnotate, isPending } = useBatchAnnotate();
+	const { mutate: batchAnnotate, isPending } = useBatchAnnotate(textId);
+
+	// When opened for a specific token, pre-deselect all others
+	useEffect(() => {
+		if (!initialSelectedTokenId || occurrences.length === 0) return;
+		setDeselected(new Set(occurrences.filter(o => o.tokenId !== initialSelectedTokenId).map(o => o.tokenId)));
+	}, [initialSelectedTokenId, occurrences]);
 
 	const selectedIds = occurrences.filter(o => !deselected.has(o.tokenId)).map(o => o.tokenId);
 	const selectedCount = selectedIds.length;

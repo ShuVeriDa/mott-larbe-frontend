@@ -527,7 +527,7 @@
 	::-webkit-scrollbar-thumb:hover {
 		background: var(--bd-2);
 	}
-	* {
+	html {
 		cursor: default;
 	}
 	input:not(:disabled):not([readonly]),

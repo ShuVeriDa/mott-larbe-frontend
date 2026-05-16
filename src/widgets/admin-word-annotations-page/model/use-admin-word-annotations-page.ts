@@ -7,7 +7,7 @@ import { useDebounce } from "@/shared/lib/debounce";
 import { useToast } from "@/shared/lib/toast";
 import { useI18n } from "@/shared/lib/i18n";
 import { annotationApi, annotationKeys } from "@/features/word-annotation";
-import type { MorphFormListItem, PatchMorphFormDto } from "@/features/word-annotation";
+import type { MorphFormListItem } from "@/features/word-annotation";
 
 const LIMIT = 50;
 
@@ -29,8 +29,6 @@ export const useAdminWordAnnotationsPage = () => {
 	const debouncedSearch = useDebounce(localSearch, 300);
 
 	const [deleteTarget, setDeleteTarget] = useState<MorphFormListItem | null>(null);
-	const [editMode, setEditMode] = useState(false);
-	const [editTranslation, setEditTranslation] = useState("");
 
 	const push = (updates: Record<string, string | null>) => {
 		const params = new URLSearchParams(searchParams.toString());
@@ -49,12 +47,11 @@ export const useAdminWordAnnotationsPage = () => {
 		push({ q: v, page: null, id: null });
 	};
 
-	const handleSelectForm = (id: string) => {
-		push({ id });
-		setEditMode(false);
-	};
+	const handleSelectForm = (id: string) => push({ id });
 
 	const handleSetPage = (p: number) => push({ page: p === 1 ? null : String(p) });
+
+	const handleClearSelected = () => push({ id: null });
 
 	const listQuery = useQuery({
 		queryKey: annotationKeys.morphForms.list({ q: debouncedSearch || undefined, page, limit: LIMIT }),
@@ -63,25 +60,11 @@ export const useAdminWordAnnotationsPage = () => {
 		staleTime: 15_000,
 	});
 
-	const detailQuery = useQuery({
-		queryKey: annotationKeys.morphForms.detail(selectedId),
-		queryFn: () => annotationApi.getMorphForm(selectedId),
-		enabled: Boolean(selectedId),
-		staleTime: 15_000,
-	});
-
-	const invalidateAll = () => {
-		void qc.invalidateQueries({ queryKey: annotationKeys.morphForms.all });
-	};
-
-	const updateMutation = useMutation({
-		mutationFn: ({ id, dto }: { id: string; dto: PatchMorphFormDto }) =>
-			annotationApi.updateMorphForm(id, dto),
-		onSuccess: () => {
-			void qc.invalidateQueries({ queryKey: annotationKeys.morphForms.detail(selectedId) });
-			invalidateAll();
-			setEditMode(false);
-			success(t("admin.wordAnnotations.toast.updated"));
+	const syncMutation = useMutation({
+		mutationFn: () => annotationApi.syncMorphForms(),
+		onSuccess: (data) => {
+			void qc.invalidateQueries({ queryKey: annotationKeys.morphForms.all });
+			success(t("admin.wordAnnotations.toast.synced", { count: data.synced }));
 		},
 		onError: () => showError(t("admin.wordAnnotations.toast.error")),
 	});
@@ -89,29 +72,13 @@ export const useAdminWordAnnotationsPage = () => {
 	const deleteMutation = useMutation({
 		mutationFn: (id: string) => annotationApi.deleteMorphForm(id),
 		onSuccess: () => {
-			invalidateAll();
+			void qc.invalidateQueries({ queryKey: annotationKeys.morphForms.all });
 			setDeleteTarget(null);
 			push({ id: null });
 			success(t("admin.wordAnnotations.toast.deleted"));
 		},
 		onError: () => showError(t("admin.wordAnnotations.toast.error")),
 	});
-
-	const handleStartEdit = () => {
-		if (!detailQuery.data) return;
-		setEditTranslation(detailQuery.data.translation ?? "");
-		setEditMode(true);
-	};
-
-	const handleCancelEdit = () => setEditMode(false);
-
-	const handleSaveEdit = () => {
-		if (!selectedId) return;
-		updateMutation.mutate({
-			id: selectedId,
-			dto: { translation: editTranslation.trim() || undefined },
-		});
-	};
 
 	const handleDeleteConfirm = () => {
 		if (deleteTarget) deleteMutation.mutate(deleteTarget.id);
@@ -125,23 +92,18 @@ export const useAdminWordAnnotationsPage = () => {
 		page,
 		localSearch,
 		deleteTarget,
-		editMode,
-		editTranslation,
 		listQuery,
-		detailQuery,
 		total,
 		totalPages,
 		LIMIT,
-		isUpdating: updateMutation.isPending,
 		isDeleting: deleteMutation.isPending,
+		isSyncing: syncMutation.isPending,
 		setDeleteTarget,
-		setEditTranslation,
 		handleSearchChange,
 		handleSelectForm,
 		handleSetPage,
-		handleStartEdit,
-		handleCancelEdit,
-		handleSaveEdit,
+		handleClearSelected,
 		handleDeleteConfirm,
+		handleSync: () => syncMutation.mutate(),
 	};
 };

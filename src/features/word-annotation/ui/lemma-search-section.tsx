@@ -14,6 +14,7 @@ interface LemmaSearchSectionProps {
 	selectedLemmaId: string | null;
 	onQueryChange: (e: ChangeEvent<HTMLInputElement>) => void;
 	onSelectLemma: (lemma: LemmaSearchResult) => void;
+	autoFocus?: boolean;
 }
 
 export const LemmaSearchSection = ({
@@ -23,6 +24,7 @@ export const LemmaSearchSection = ({
 	selectedLemmaId,
 	onQueryChange,
 	onSelectLemma,
+	autoFocus = true,
 }: LemmaSearchSectionProps) => {
 	const { t } = useI18n();
 
@@ -35,7 +37,7 @@ export const LemmaSearchSection = ({
 					onChange={onQueryChange}
 					placeholder={t("reader.annotate.searchPlaceholder")}
 					className="bg-white pl-8"
-					autoFocus
+					autoFocus={autoFocus}
 				/>
 			</div>
 			<div className="max-h-[150px] overflow-y-auto rounded-base border border-hairline border-bd-1">

@@ -10,5 +10,6 @@ export const annotationKeys = {
 		list: (params: { q?: string; page?: number; limit?: number }) =>
 			["annotation", "morph-forms", "list", params] as const,
 		detail: (id: string) => ["annotation", "morph-forms", "detail", id] as const,
+		occurrences: (id: string) => ["annotation", "morph-forms", "occurrences", id] as const,
 	},
 };

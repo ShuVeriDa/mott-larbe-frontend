@@ -1,11 +1,11 @@
 "use client";
 
+import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import {
 	READER_MOBILE_SHEET_OVERLAY_CLASSES,
 	ReaderMobileSheetHeader,
 } from "@/shared/ui/reader-mobile-sheet-header";
-import { cn } from "@/shared/lib/cn";
 import type { MouseEvent } from "react";
 import { createPortal } from "react-dom";
 import { useReaderSettingsEscape } from "../model/use-reader-settings-escape";
@@ -40,6 +40,13 @@ export const ReaderSettingsAside = ({
 			<ReaderSettingsChromeHeader onClose={onClose} />
 			<div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 py-2">
 				<ReaderSettingsBody compact textId={textId} pageNumber={pageNumber} />
+
+				<p
+					className="text-sm
+				 text-red-500 mt-1"
+				>
+					Добавь возможность показывать/скрывать переведенные фразы
+				</p>
 			</div>
 		</aside>
 	);

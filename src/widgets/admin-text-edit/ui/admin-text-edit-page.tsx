@@ -25,14 +25,30 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 	const { t, lang } = useI18n();
 	const [isMetaPanelVisible, setIsMetaPanelVisible] = useState(true);
 	const [annotateWordForm, setAnnotateWordForm] = useState<string | null>(null);
+	const [annotateInitialTokenId, setAnnotateInitialTokenId] = useState<string | undefined>(undefined);
 
 	useEffect(() => {
 		const handler = (e: Event) => {
 			const text = (e as CustomEvent<string>).detail;
-			if (text) setAnnotateWordForm(text);
+			if (text) {
+				setAnnotateInitialTokenId(undefined);
+				setAnnotateWordForm(text);
+			}
 		};
 		document.addEventListener(ANNOTATE_WORD_FORM_EVENT, handler);
 		return () => document.removeEventListener(ANNOTATE_WORD_FORM_EVENT, handler);
+	}, []);
+
+	useEffect(() => {
+		const handler = (e: Event) => {
+			const { tokenId, normalized } = (e as CustomEvent<{ tokenId: string; normalized: string }>).detail;
+			if (normalized) {
+				setAnnotateInitialTokenId(tokenId);
+				setAnnotateWordForm(normalized);
+			}
+		};
+		document.addEventListener("admin:annotate-token", handler);
+		return () => document.removeEventListener("admin:annotate-token", handler);
 	}, []);
 
 	const {
@@ -264,8 +280,9 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 			<AnnotateWordFormDialog
 				wordForm={annotateWordForm}
 				textId={textId}
+				initialSelectedTokenId={annotateInitialTokenId}
 				open
-				onOpenChange={open => { if (!open) setAnnotateWordForm(null); }}
+				onOpenChange={open => { if (!open) { setAnnotateWordForm(null); setAnnotateInitialTokenId(undefined); } }}
 			/>
 		)}
 </>

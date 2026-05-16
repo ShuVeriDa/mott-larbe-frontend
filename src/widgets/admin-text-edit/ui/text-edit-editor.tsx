@@ -6,9 +6,12 @@ import { useAnnotatedFormsByPage } from "@/features/word-annotation";
 import { useI18n } from "@/shared/lib/i18n";
 import { AdminTextEditorShell } from "@/shared/ui/admin-text-editor";
 import type { Editor, TipTapDoc } from "@/shared/ui/notion-editor";
-import { PhraseHighlightExtension, WordAnnotationHighlightExtension } from "@/shared/ui/notion-editor";
+import {
+	PhraseHighlightExtension,
+	WordAnnotationHighlightExtension,
+} from "@/shared/ui/notion-editor";
 import { Languages, Link2 } from "lucide-react";
-import { type ComponentProps, useEffect, useMemo, useRef } from "react";
+import { type ComponentProps, useEffect, useMemo, useRef, useState } from "react";
 import type { PageContent } from "../model/use-admin-text-edit-page";
 import { CharsPopup } from "./chars-popup";
 import { PHRASE_FORM_EVENT } from "./phrase-translation-panel";
@@ -19,7 +22,11 @@ import {
 } from "./phrases-list-panel";
 import { TextEditRetokenizeBar } from "./text-edit-retokenize-bar";
 import { TextEditTokenStatusBar } from "./text-edit-token-status-bar";
-import { WORD_ANNOTATIONS_PANEL_EVENT } from "./word-annotations-panel";
+import {
+	WORD_ANNOTATIONS_PANEL_EVENT,
+	WORD_ANNOTATION_DELETE_EVENT,
+	WORD_ANNOTATION_EDIT_FORM_EVENT,
+} from "./word-annotations-panel";
 
 export const ANNOTATE_WORD_FORM_EVENT = "admin:annotate-word-form";
 
@@ -61,6 +68,7 @@ export const TextEditEditor = ({
 	const { t, lang } = useI18n();
 	const editorRef = useRef<Editor | null>(null);
 	const findReplaceInsertRef = useRef<((char: string) => boolean) | null>(null);
+	const [editorVersion, setEditorVersion] = useState(0);
 
 	// Load phrases for current page to highlight in editor
 	const { data: phrasesData } = useAdminPagePhrases(textId, activePage + 1);
@@ -75,10 +83,11 @@ export const TextEditEditor = ({
 
 	// Load annotated word forms for current page to highlight in editor
 	const { data: annotatedFormsData } = useAnnotatedFormsByPage(textId, activePage + 1);
-	const annotatedForms = useMemo(
-		() => (annotatedFormsData ?? []).map(f => f.normalized).filter(Boolean),
-		[annotatedFormsData],
-	);
+	const annotatedForms = annotatedFormsData ?? [];
+	const annotatedFormsRef = useRef(annotatedForms);
+	useEffect(() => {
+		annotatedFormsRef.current = annotatedForms;
+	}, [annotatedForms]);
 
 	const editorExtensions = useMemo(() => [PhraseHighlightExtension, WordAnnotationHighlightExtension], []);
 
@@ -86,13 +95,13 @@ export const TextEditEditor = ({
 		const editor = editorRef.current;
 		if (!editor) return;
 		editor.commands.setPhraseHighlights(phraseTexts);
-	}, [phraseTexts]);
+	}, [phraseTexts, editorVersion]);
 
 	useEffect(() => {
 		const editor = editorRef.current;
 		if (!editor) return;
 		editor.commands.setWordAnnotationHighlights(annotatedForms);
-	}, [annotatedForms]);
+	}, [annotatedForms, editorVersion]);
 
 	const handleInsertChar: NonNullable<
 		ComponentProps<typeof CharsPopup>["onInsert"]
@@ -105,12 +114,7 @@ export const TextEditEditor = ({
 		ComponentProps<typeof AdminTextEditorShell>["onEditorReady"]
 	> = ed => {
 		editorRef.current = ed;
-		if (phraseTexts.length) {
-			ed.commands.setPhraseHighlights(phraseTexts);
-		}
-		if (annotatedForms.length) {
-			ed.commands.setWordAnnotationHighlights(annotatedForms);
-		}
+		setEditorVersion(v => v + 1);
 	};
 
 	const isSelectedPhrase = (text: string) =>
@@ -136,6 +140,36 @@ export const TextEditEditor = ({
 			new CustomEvent<string>(PHRASE_DELETE_EVENT, { detail: text }),
 		);
 	};
+
+	const isSelectedAnnotation = (text: string) =>
+		annotatedFormsRef.current.some(f => f.normalized === text.trim().toLowerCase());
+
+	const handleBubbleEditAnnotation = (text: string) => {
+		const normalized = text.trim().toLowerCase();
+		const editor = editorRef.current;
+		if (editor) {
+			const { to } = editor.state.selection;
+			editor.commands.setTextSelection(to);
+			editor.commands.blur();
+		}
+		document.dispatchEvent(
+			new CustomEvent<string>(WORD_ANNOTATION_EDIT_FORM_EVENT, { detail: normalized }),
+		);
+	};
+
+	const handleBubbleDeleteAnnotation = (text: string) => {
+		const normalized = text.trim().toLowerCase();
+		const editor = editorRef.current;
+		if (editor) {
+			const { to } = editor.state.selection;
+			editor.commands.setTextSelection(to);
+			editor.commands.blur();
+		}
+		document.dispatchEvent(
+			new CustomEvent(WORD_ANNOTATION_DELETE_EVENT, { detail: { normalized } }),
+		);
+	};
+
 	const charsPopup = <CharsPopup onInsert={handleInsertChar} />;
 
 	const handlePhraseBtnMouseDown = (e: React.MouseEvent) => {
@@ -284,6 +318,9 @@ export const TextEditEditor = ({
 			isSelectedPhrase={isSelectedPhrase}
 			onBubbleEditPhrase={handleBubbleEditPhrase}
 			onBubbleDeletePhrase={handleBubbleDeletePhrase}
+			isSelectedAnnotation={isSelectedAnnotation}
+			onBubbleEditAnnotation={handleBubbleEditAnnotation}
+			onBubbleDeleteAnnotation={handleBubbleDeleteAnnotation}
 		/>
 	);
 };

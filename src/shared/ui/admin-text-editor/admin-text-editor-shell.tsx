@@ -41,6 +41,9 @@ interface AdminTextEditorShellProps {
 	isSelectedPhrase?: (text: string) => boolean;
 	onBubbleEditPhrase?: (selectedText: string) => void;
 	onBubbleDeletePhrase?: (selectedText: string) => void;
+	isSelectedAnnotation?: (text: string) => boolean;
+	onBubbleEditAnnotation?: (selectedText: string) => void;
+	onBubbleDeleteAnnotation?: (selectedText: string) => void;
 }
 
 export const AdminTextEditorShell = ({
@@ -68,6 +71,9 @@ export const AdminTextEditorShell = ({
 	isSelectedPhrase,
 	onBubbleEditPhrase,
 	onBubbleDeletePhrase,
+	isSelectedAnnotation,
+	onBubbleEditAnnotation,
+	onBubbleDeleteAnnotation,
 }: AdminTextEditorShellProps) => {
 	const { t } = useI18n();
 	const currentDoc = pages[activePage]?.doc;
@@ -210,6 +216,9 @@ export const AdminTextEditorShell = ({
 					isSelectedPhrase={isSelectedPhrase}
 					onBubbleEditPhrase={onBubbleEditPhrase}
 					onBubbleDeletePhrase={onBubbleDeletePhrase}
+					isSelectedAnnotation={isSelectedAnnotation}
+					onBubbleEditAnnotation={onBubbleEditAnnotation}
+					onBubbleDeleteAnnotation={onBubbleDeleteAnnotation}
 				/>
 			</div>
 

@@ -3232,6 +3232,7 @@
 					"lemmaSearchPlaceholder": "Лемма лаха (мис. ала)…",
 					"noResults": "Лемманаш карийна цIе",
 					"save": "Глобально яздан",
+			"saveTokens": "Йаздийта ({count} токен)",
 					"saving": "Яздош…",
 					"success": "«{word}» морфологина тIейоьжна",
 					"successBatch": "{count} токен аннотировано → {lemma}",
@@ -3251,7 +3252,13 @@
 					"lemmaLabel": "Лемман буха хIоттам",
 					"updateSuccess": "Аннотаци хийцна",
 					"deleteSuccess": "Аннотаци дIаяьккхна",
+					"unannotateSuccess": "{count} аннотаци дIаяьккхна",
+					"deleteDialogTitle": "«{word}» аннотаци дIаяккха",
+					"deleteDialogHint": "Аннотаци дIаяккхаран хIуттам харжа. Массарел дIаяккхахь — хIоттам дуьззина дIаяккхо.",
+					"deleteAll": "Масса дIаяккха",
+					"deleteSelected": "{count} хIуттамера дIаяккха",
 					"edit": "Хийца",
+					"annotate": "ДӀаозо",
 					"delete": "ДIаяккха"
 				},
 				"tokenStatus": {
@@ -3382,6 +3389,7 @@
 			"edit": "Хийца",
 			"delete": "ДIаяккха",
 			"save": "Яздан",
+			"saveTokens": "Йаздийта ({count} токен)",
 			"saving": "Яздош…",
 			"cancel": "Юха",
 			"deleteModal": {
@@ -3391,10 +3399,13 @@
 				"confirm": "ДIаяккха",
 				"deleting": "ДIайоккхуш…"
 			},
+			"sync": "Синхронизировать",
+			"syncing": "Синхронизация…",
 			"toast": {
 				"updated": "Аннотаци хийцна",
 				"deleted": "Аннотаци дIаяьккхна",
-				"error": "Гаш хилира. Юха а гIойла."
+				"error": "Гаш хилира. Юха а гIойла.",
+				"synced": "Йина {count} запись"
 			},
 			"pagination": {
 				"showing": "{from}–{to} {total} чуьра"

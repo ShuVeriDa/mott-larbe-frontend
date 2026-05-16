@@ -16,6 +16,7 @@ import { WordFormRow } from "./word-form-row";
 interface AnnotateWordFormDialogProps {
 	wordForm: string;
 	textId?: string;
+	initialSelectedTokenId?: string;
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 }
@@ -23,6 +24,7 @@ interface AnnotateWordFormDialogProps {
 export const AnnotateWordFormDialog = ({
 	wordForm,
 	textId,
+	initialSelectedTokenId,
 	open,
 	onOpenChange,
 }: AnnotateWordFormDialogProps) => {
@@ -48,13 +50,13 @@ export const AnnotateWordFormDialog = ({
 		handleToggleOccurrence,
 		handleToggleAll,
 		handleSave,
-	} = useAnnotateWordFormDialog({ initialWordForm: wordForm, textId, onOpenChange });
+	} = useAnnotateWordFormDialog({ initialWordForm: wordForm, textId, initialSelectedTokenId, onOpenChange });
 
 	const handleCancel = () => handleOpenChange(false);
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
-			<DialogContent className="max-w-lg gap-0 p-0">
+			<DialogContent aria-describedby={undefined} className="max-w-lg gap-0 p-0">
 				<DialogHeader className="px-5 pt-5 pb-4">
 					<DialogTitle>
 						{t("admin.texts.editPage.wordAnnotation.dialogTitle")}

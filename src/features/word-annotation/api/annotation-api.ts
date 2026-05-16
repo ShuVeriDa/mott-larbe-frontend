@@ -12,6 +12,8 @@ import type {
 	MorphFormListResponse,
 	PatchMorphFormDto,
 	TokenOccurrence,
+	UnannotateTokensDto,
+	UnannotateTokensResponse,
 } from "./types";
 
 export const annotationApi = {
@@ -76,6 +78,16 @@ export const annotationApi = {
 		return data;
 	},
 
+	getMorphFormOccurrences: async (id: string): Promise<TokenOccurrence[]> => {
+		const { data } = await http.get<TokenOccurrence[]>(`/admin/morph-forms/${id}/occurrences`);
+		return data;
+	},
+
+	syncMorphForms: async (): Promise<{ synced: number; total: number }> => {
+		const { data } = await http.post<{ synced: number; total: number }>("/admin/morph-forms/sync");
+		return data;
+	},
+
 	listMorphForms: async (params: {
 		q?: string;
 		page?: number;
@@ -99,6 +111,11 @@ export const annotationApi = {
 
 	deleteMorphForm: async (id: string): Promise<{ success: boolean }> => {
 		const { data } = await http.delete<{ success: boolean }>(`/admin/morph-forms/${id}`);
+		return data;
+	},
+
+	unannotateTokens: async (dto: UnannotateTokensDto): Promise<UnannotateTokensResponse> => {
+		const { data } = await http.post<UnannotateTokensResponse>("/admin/tokens/unannotate", dto);
 		return data;
 	},
 };

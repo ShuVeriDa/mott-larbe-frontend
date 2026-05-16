@@ -2,10 +2,10 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminWordAnnotationsPage } from "../model/use-admin-word-annotations-page";
-import { AnnotationsTopbar } from "./annotations-topbar";
-import { AnnotationsLeftColumn } from "./annotations-left-column";
 import { AnnotationCard } from "./annotation-card";
 import { AnnotationDeleteModal } from "./annotation-delete-modal";
+import { AnnotationsLeftColumn } from "./annotations-left-column";
+import { AnnotationsTopbar } from "./annotations-topbar";
 
 export const AdminWordAnnotationsPage = () => {
 	const { t } = useI18n();
@@ -15,24 +15,19 @@ export const AdminWordAnnotationsPage = () => {
 		page,
 		localSearch,
 		deleteTarget,
-		editMode,
-		editTranslation,
 		listQuery,
-		detailQuery,
 		total,
 		totalPages,
 		LIMIT,
-		isUpdating,
 		isDeleting,
+		isSyncing,
 		setDeleteTarget,
-		setEditTranslation,
 		handleSearchChange,
 		handleSelectForm,
 		handleSetPage,
-		handleStartEdit,
-		handleCancelEdit,
-		handleSaveEdit,
+		handleClearSelected,
 		handleDeleteConfirm,
+		handleSync,
 	} = useAdminWordAnnotationsPage();
 
 	const items = listQuery.data?.items ?? [];
@@ -41,7 +36,7 @@ export const AdminWordAnnotationsPage = () => {
 
 	return (
 		<div className="flex h-full flex-col overflow-hidden">
-			<AnnotationsTopbar total={total} isLoading={listQuery.isLoading} t={t} />
+			<AnnotationsTopbar total={total} isLoading={listQuery.isLoading} isSyncing={isSyncing} onSync={handleSync} t={t} />
 
 			<div className="flex flex-1 overflow-hidden max-sm:flex-col">
 				<div className="flex w-[320px] shrink-0 flex-col overflow-hidden bg-surf max-sm:h-[50vh] max-sm:w-full max-sm:border-b max-sm:border-bd-1">
@@ -64,17 +59,9 @@ export const AdminWordAnnotationsPage = () => {
 
 				<div className="min-w-0 flex-1 overflow-y-auto bg-surf max-sm:flex-1">
 					<AnnotationCard
-						form={detailQuery.data}
-						isLoading={detailQuery.isLoading && Boolean(selectedId)}
-						editMode={editMode}
-						editTranslation={editTranslation}
-						isSaving={isUpdating}
-						onStartEdit={handleStartEdit}
-						onCancelEdit={handleCancelEdit}
-						onSaveEdit={handleSaveEdit}
-						onTranslationChange={setEditTranslation}
-						onDelete={setDeleteTarget}
-						t={t}
+						morphFormId={selectedId || null}
+						onDeleted={handleClearSelected}
+						onRequestDelete={setDeleteTarget}
 					/>
 				</div>
 			</div>

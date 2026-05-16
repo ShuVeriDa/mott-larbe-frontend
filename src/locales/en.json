@@ -3251,8 +3251,14 @@
 					"lemmaLabel": "Base form (lemma)",
 					"updateSuccess": "Annotation updated",
 					"deleteSuccess": "Annotation deleted",
+					"unannotateSuccess": "{count} annotations removed",
+					"deleteDialogTitle": "Delete annotation «{word}»",
+					"deleteDialogHint": "Select the occurrences to remove the annotation from. Removing all will delete the word form entirely.",
+					"deleteAll": "Delete all",
+					"deleteSelected": "Remove from {count} occurrences",
 					"edit": "Edit",
-					"delete": "Delete"
+					"delete": "Delete",
+					"annotate": "Link"
 				},
 				"tokenStatus": {
 					"COMPLETED": "Done",
@@ -3381,7 +3387,8 @@
 			"addedAt": "Added: {date}",
 			"edit": "Edit",
 			"delete": "Delete",
-			"save": "Save",
+			"save": "Save changes",
+			"saveTokens": "Save ({count} tokens)",
 			"saving": "Saving…",
 			"cancel": "Cancel",
 			"deleteModal": {
@@ -3391,10 +3398,13 @@
 				"confirm": "Delete",
 				"deleting": "Deleting…"
 			},
+			"sync": "Sync",
+			"syncing": "Syncing…",
 			"toast": {
 				"updated": "Annotation updated",
 				"deleted": "Annotation deleted",
-				"error": "An error occurred. Please try again."
+				"error": "An error occurred. Please try again.",
+				"synced": "Created {count} records"
 			},
 			"pagination": {
 				"showing": "{from}–{to} of {total}"
