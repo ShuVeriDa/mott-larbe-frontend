@@ -2,11 +2,16 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { ReactNode } from 'react';
 import type { TextToken } from "@/entities/text";
-import { useWordLookup, type WordLookupMeaning, type WordLookupGrammar, type WordLookupResponse } from "@/entities/word";
+import {
+	useWordLookup,
+	type WordLookupGrammar,
+	type WordLookupMeaning,
+	type WordLookupResponse,
+} from "@/entities/word";
 import { LearnStatusRow } from "@/features/learn-status";
 import { useI18n } from "@/shared/lib/i18n";
+import { ReactNode } from "react";
 import { AddToDictionaryButton } from "./add-to-dictionary-button";
 import { WordExamplesList } from "./word-examples-list";
 import { WordFormsChips } from "./word-forms-chips";
@@ -66,12 +71,16 @@ const PanelHeader = ({
 			) : null}
 		</div>
 		<div className="mb-2 text-[12px] text-t-3">
-			{baseLabel}: <Typography tag="strong" className="font-medium text-t-2">{baseForm}</Typography>
+			{baseLabel}:{" "}
+			<Typography tag="strong" className="font-medium text-t-2">
+				{baseForm}
+			</Typography>
 		</div>
 		{tags.length > 0 ? (
 			<div className="flex flex-wrap gap-1">
-				{tags.map((tag) => (
-					<Typography tag="span"
+				{tags.map(tag => (
+					<Typography
+						tag="span"
 						key={tag}
 						className="rounded-[5px] border-hairline border-bd-1 bg-surf-2 px-2 py-0.5 text-[10.5px] font-medium text-t-2"
 					>
@@ -83,12 +92,19 @@ const PanelHeader = ({
 	</div>
 );
 
-const MeaningsList = ({ meanings }: { meanings: readonly WordLookupMeaning[] }) => (
+const MeaningsList = ({
+	meanings,
+}: {
+	meanings: readonly WordLookupMeaning[];
+}) => (
 	<div className="space-y-3">
 		{meanings.map((meaning, idx) => (
 			<div key={idx} className="flex gap-2">
 				{meanings.length > 1 ? (
-					<Typography tag="span" className="mt-0.5 shrink-0 text-[11px] font-semibold tabular-nums text-t-3">
+					<Typography
+						tag="span"
+						className="mt-0.5 shrink-0 text-[11px] font-semibold tabular-nums text-t-3"
+					>
 						{idx + 1}.
 					</Typography>
 				) : null}
@@ -97,15 +113,21 @@ const MeaningsList = ({ meanings }: { meanings: readonly WordLookupMeaning[] }) 
 						{meaning.translation}
 					</div>
 					{meaning.note ? (
-						<div className="mt-0.5 text-[12px] italic text-t-3">{meaning.note}</div>
+						<div className="mt-0.5 text-[12px] italic text-t-3">
+							{meaning.note}
+						</div>
 					) : null}
 					{meaning.examples.length > 0 ? (
 						<div className="mt-1.5 space-y-1.5">
 							{meaning.examples.map((ex, exIdx) => (
 								<div key={exIdx}>
-									<div className="text-[12.5px] leading-[1.55] text-t-2">{ex.text}</div>
+									<div className="text-[12.5px] leading-[1.55] text-t-2">
+										{ex.text}
+									</div>
 									{ex.translation ? (
-										<div className="text-[11.5px] italic text-t-3">{ex.translation}</div>
+										<div className="text-[11.5px] italic text-t-3">
+											{ex.translation}
+										</div>
 									) : null}
 								</div>
 							))}
@@ -134,14 +156,20 @@ const GRAMMAR_LABELS: Record<string, string> = {
 };
 
 const GrammarFormsList = ({ forms }: { forms: WordLookupGrammar }) => {
-	const entries = Object.entries(forms).filter(([, v]) => v != null && v !== "");
+	const entries = Object.entries(forms).filter(
+		([, v]) => v != null && v !== "",
+	);
 	if (!entries.length) return null;
 	return (
 		<div className="grid grid-cols-2 gap-x-3 gap-y-1">
 			{entries.map(([key, value]) => (
 				<div key={key} className="flex gap-1.5">
-					<Typography tag="span" className="shrink-0 text-[10.5px] text-t-3">{GRAMMAR_LABELS[key] ?? key}</Typography>
-					<Typography tag="span" className="text-[11.5px] text-t-1">{value}</Typography>
+					<Typography tag="span" className="shrink-0 text-[10.5px] text-t-3">
+						{GRAMMAR_LABELS[key] ?? key}
+					</Typography>
+					<Typography tag="span" className="text-[11.5px] text-t-1">
+						{value as string}
+					</Typography>
 				</div>
 			))}
 		</div>
@@ -191,7 +219,9 @@ const PanelBody = ({
 				</Section>
 			) : lookup.grammar ? (
 				<Section title={t("reader.panel.sections.grammar")}>
-					<div className="text-[12.5px] leading-[1.55] text-t-2">{lookup.grammar}</div>
+					<div className="text-[12.5px] leading-[1.55] text-t-2">
+						{lookup.grammar}
+					</div>
 				</Section>
 			) : null}
 
@@ -205,7 +235,7 @@ const PanelBody = ({
 				<Section title={t("reader.panel.sections.examples")}>
 					<WordExamplesList
 						lemmaId={lookup.lemmaId}
-						fallback={lookup.meanings.flatMap((m) => m.examples)}
+						fallback={lookup.meanings.flatMap(m => m.examples)}
 						highlight={token.original}
 					/>
 				</Section>
