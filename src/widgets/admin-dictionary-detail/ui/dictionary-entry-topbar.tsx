@@ -130,6 +130,7 @@ return (
 							<Button
 								className="flex w-full items-center gap-2 rounded-md px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 								onClick={handleAddLemmaClick}
+								title={t("admin.dictionaryDetail.addLemma")}
 							>
 								<Plus className="size-3" />
 								{t("admin.dictionaryDetail.addLemma")}
@@ -137,6 +138,7 @@ return (
 							<Button
 								className="flex w-full items-center gap-2 rounded-md px-2.5 py-[7px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 								onClick={handleExport}
+								title={t("admin.dictionaryDetail.export")}
 							>
 								<Download className="size-[13px]" />
 								{t("admin.dictionaryDetail.export")}
@@ -146,6 +148,7 @@ return (
 								className="flex w-full items-center gap-2 rounded-md px-2.5 py-[7px] text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
 								onClick={onDelete}
 								disabled={isDeleting}
+								title={t("admin.dictionaryDetail.deleteEntry")}
 							>
 								<Trash2 className="size-[13px]" />
 								{t("admin.dictionaryDetail.deleteEntry")}

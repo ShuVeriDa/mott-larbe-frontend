@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 
 import { Eye, EyeOff } from "lucide-react";
 import { type ChangeEvent, ComponentProps, useState } from 'react';
@@ -43,7 +44,7 @@ return (
 				{label}
 			</Typography>
 			<div className="relative flex items-center">
-				<input
+				<Input
 					id={id}
 					type={visible ? "text" : "password"}
 					value={value}
@@ -52,9 +53,9 @@ return (
 					autoComplete={autoComplete}
 					required
 					aria-invalid={hasError ? true : undefined}
+					aria-describedby={hasError ? `${id}-error` : undefined}
 					className={cn(
-						"h-[42px] w-full rounded-[9px] border border-bd-2 bg-panel px-[14px] pr-[42px] text-[14px] text-t-1 outline-none transition-colors",
-						"placeholder:text-t-3 hover:border-bd-3 focus:border-acc",
+						"h-[42px] rounded-[9px] border bg-panel px-[14px] pr-[42px] text-[14px] hover:border-bd-3",
 						hasError && "border-red focus:border-red",
 					)}
 				/>

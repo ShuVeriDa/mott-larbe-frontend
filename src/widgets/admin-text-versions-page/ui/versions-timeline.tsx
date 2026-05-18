@@ -105,6 +105,7 @@ export const VersionsTimeline = ({
 						<Button
 							key={key}
 							onClick={handleClick}
+							title={label}
 							className={cn(
 								"rounded-[5px] px-3 py-1 text-[12px] font-medium transition-colors",
 								statusFilter === key

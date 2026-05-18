@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
@@ -75,66 +75,66 @@ export const BillingSubscriptionsTable = ({
 			</div>
 
 			<div className="overflow-x-auto [&::-webkit-scrollbar]:h-0">
-				<table className="w-full border-collapse text-[12.5px]">
-					<thead>
-						<tr>
-							<th className="border-b border-bd-1 px-4 py-2.5 text-left text-[11px] font-medium uppercase tracking-[0.4px] text-t-3">
+				<Table className="border-collapse text-[12.5px]" aria-label={t("admin.plans.subscriptions.title")}>
+					<TableHeader>
+						<TableRow>
+							<TableHead className="border-b border-bd-1 px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.4px] text-t-3">
 								ID
-							</th>
-							<th className="border-b border-bd-1 px-4 py-2.5 text-left text-[11px] font-medium uppercase tracking-[0.4px] text-t-3">
+							</TableHead>
+							<TableHead className="border-b border-bd-1 px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.4px] text-t-3">
 								{t("admin.plans.subscriptions.user")}
-							</th>
-							<th className="border-b border-bd-1 px-4 py-2.5 text-left text-[11px] font-medium uppercase tracking-[0.4px] text-t-3">
+							</TableHead>
+							<TableHead className="border-b border-bd-1 px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.4px] text-t-3">
 								{t("admin.plans.subscriptions.plan")}
-							</th>
-							<th className="hidden border-b border-bd-1 px-4 py-2.5 text-left text-[11px] font-medium uppercase tracking-[0.4px] text-t-3 lg:table-cell">
+							</TableHead>
+							<TableHead className="hidden border-b border-bd-1 px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.4px] text-t-3 lg:table-cell">
 								{t("admin.plans.subscriptions.provider")}
-							</th>
-							<th className="border-b border-bd-1 px-4 py-2.5 text-left text-[11px] font-medium uppercase tracking-[0.4px] text-t-3">
+							</TableHead>
+							<TableHead className="border-b border-bd-1 px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.4px] text-t-3">
 								{t("admin.plans.subscriptions.amount")}
-							</th>
-							<th className="border-b border-bd-1 px-4 py-2.5 text-left text-[11px] font-medium uppercase tracking-[0.4px] text-t-3">
+							</TableHead>
+							<TableHead className="border-b border-bd-1 px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.4px] text-t-3">
 								{t("admin.plans.subscriptions.status")}
-							</th>
-							<th className="hidden border-b border-bd-1 px-4 py-2.5 text-right text-[11px] font-medium uppercase tracking-[0.4px] text-t-3 lg:table-cell">
+							</TableHead>
+							<TableHead className="hidden border-b border-bd-1 px-4 py-2.5 text-right text-[11px] font-medium uppercase tracking-[0.4px] text-t-3 lg:table-cell">
 								{t("admin.plans.subscriptions.date")}
-							</th>
-						</tr>
-					</thead>
-					<tbody>
+							</TableHead>
+						</TableRow>
+					</TableHeader>
+					<TableBody>
 						{isLoading ? (
 							Array.from({ length: 5 }).map((_, i) => (
-								<tr key={i} className="border-b border-bd-1 last:border-b-0">
+								<TableRow key={i} className="border-b border-bd-1 last:border-b-0">
 									{Array.from({ length: 7 }).map((_, j) => (
-										<td key={j} className="px-4 py-3">
+										<TableCell key={j} className="px-4 py-3">
 											<div className="h-3 animate-pulse rounded bg-surf-3" />
-										</td>
+										</TableCell>
 									))}
-								</tr>
+								</TableRow>
 							))
 						) : items.length === 0 ? (
-							<tr>
-								<td colSpan={7} className="px-4 py-6 text-center text-[12.5px] text-t-3">
+							<TableRow>
+								<TableCell colSpan={7} className="px-4 py-6 text-center text-[12.5px] text-t-3">
 									{t("admin.plans.subscriptions.noData")}
-								</td>
-							</tr>
+								</TableCell>
+							</TableRow>
 						) : (
 							items.map((item) => (
-								<tr
+								<TableRow
 									key={item.id}
 									className="border-b border-bd-1 last:border-b-0"
 								>
-									<td className="px-4 py-2.5">
+									<TableCell className="px-4 py-2.5">
 										<Typography tag="span" className="font-mono text-[11px] text-t-3">
 											{item.id.slice(0, 8)}…
 										</Typography>
-									</td>
-									<td className="px-4 py-2.5">
+									</TableCell>
+									<TableCell className="px-4 py-2.5">
 										<div className="text-t-1">{item.user.name}</div>
 										<div className="text-[11px] text-t-3">{item.user.email}</div>
-									</td>
-									<td className="px-4 py-2.5 text-t-1">{item.plan.name}</td>
-									<td className="hidden px-4 py-2.5 lg:table-cell">
+									</TableCell>
+									<TableCell className="px-4 py-2.5 text-t-1">{item.plan.name}</TableCell>
+									<TableCell className="hidden px-4 py-2.5 lg:table-cell">
 										{item.provider ? (
 											<Typography tag="span" className="inline-flex items-center gap-1 rounded-[5px] border border-bd-2 bg-surf-2 px-1.5 py-0.5 text-[11px] font-medium text-t-2">
 												<Typography tag="span" className="size-1.5 rounded-full bg-acc" />
@@ -143,11 +143,11 @@ export const BillingSubscriptionsTable = ({
 										) : (
 											<Typography tag="span" className="text-t-3">—</Typography>
 										)}
-									</td>
-									<td className="px-4 py-2.5 font-medium text-t-1">
+									</TableCell>
+									<TableCell className="px-4 py-2.5 font-medium text-t-1">
 										{fmtAmount(item.amountCents, item.currency)}
-									</td>
-									<td className="px-4 py-2.5">
+									</TableCell>
+									<TableCell className="px-4 py-2.5">
 										<Typography tag="span"
 											className={cn(
 												"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold",
@@ -156,15 +156,15 @@ export const BillingSubscriptionsTable = ({
 										>
 											{t(`admin.plans.status.${item.status.toLowerCase()}`)}
 										</Typography>
-									</td>
-									<td className="hidden px-4 py-2.5 text-right text-[11.5px] text-t-3 lg:table-cell">
+									</TableCell>
+									<TableCell className="hidden px-4 py-2.5 text-right text-[11.5px] text-t-3 lg:table-cell">
 										{fmtDate(item.createdAt)}
-									</td>
-								</tr>
+									</TableCell>
+								</TableRow>
 							))
 						)}
-					</tbody>
-				</table>
+					</TableBody>
+				</Table>
 			</div>
 		</div>
 	);

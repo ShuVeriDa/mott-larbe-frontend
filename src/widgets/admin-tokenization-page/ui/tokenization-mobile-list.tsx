@@ -57,7 +57,7 @@ export const TokenizationMobileList = ({
 								/>
 							</div>
 						</div>
-						<Button className="flex size-8 shrink-0 items-center justify-center rounded-base bg-surf-2 text-t-2">
+						<Button title={t("admin.tokenization.table.open")} className="flex size-8 shrink-0 items-center justify-center rounded-base bg-surf-2 text-t-2">
 							<ChevronRight className="size-[14px]" />
 						</Button>
 					</div>

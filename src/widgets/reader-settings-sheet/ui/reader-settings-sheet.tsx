@@ -40,13 +40,6 @@ export const ReaderSettingsAside = ({
 			<ReaderSettingsChromeHeader onClose={onClose} />
 			<div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 py-2">
 				<ReaderSettingsBody compact textId={textId} pageNumber={pageNumber} />
-
-				<p
-					className="text-sm
-				 text-red-500 mt-1"
-				>
-					Добавь возможность показывать/скрывать переведенные фразы
-				</p>
 			</div>
 		</aside>
 	);

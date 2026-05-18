@@ -61,6 +61,7 @@ export const AdminTextMetaCoverSection = ({
 			/>
 			<Button
 				onClick={handleCoverClick}
+				title={uploadLabel}
 				className="flex h-[82px] w-full flex-col items-center justify-center gap-1.5 rounded-[8px] border border-dashed border-bd-2 bg-surf transition-colors hover:border-acc hover:bg-acc-muted"
 			>
 				{coverPreviewUrl ? (
@@ -88,6 +89,7 @@ export const AdminTextMetaCoverSection = ({
 					variant="bare"
 					size={null}
 					onClick={handleCoverRemoveClick}
+					title={removeLabel}
 					className="mt-2 flex h-7 w-full items-center justify-center gap-1.5 rounded-[6px] border border-bd-2 bg-surf-2 text-[11px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-3 hover:text-t-1"
 				>
 					<Trash2 className="size-3.5" />

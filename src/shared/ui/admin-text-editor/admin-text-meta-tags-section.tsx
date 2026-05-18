@@ -122,6 +122,7 @@ export const AdminTextMetaTagsSection = ({
 								</Typography>
 								<Button
 									onClick={handleTagRemove}
+									title={tag.name}
 									className="flex items-center border-none bg-none p-0 text-acc-t text-[13px] leading-none opacity-60 h-fit hover:opacity-100"
 								>
 									×
@@ -146,6 +147,7 @@ export const AdminTextMetaTagsSection = ({
 								key={tag.id}
 								onMouseDown={handleSuggestionMouseDown}
 								onClick={handleSuggestionClick(tag.name, tag.id)}
+								title={tag.name}
 								className="flex w-full items-center gap-2 px-3 py-[9px] text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 							>
 								<Typography tag="span" className="flex-1">

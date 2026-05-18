@@ -7,9 +7,11 @@ import {
 	useAnnotatedFormsByPage,
 } from "@/features/word-annotation";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
 import type { WordAnnotationClickDetail } from "@/shared/ui/notion-editor";
 import { WORD_ANNOTATION_CLICK_EVENT } from "@/shared/ui/notion-editor";
 import { Link2, Pencil, Trash2, X } from "lucide-react";
+import { Typography } from "@/shared/ui/typography";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { WordAnnotationEditorPopup } from "./word-annotation-editor-popup";
@@ -47,6 +49,7 @@ interface AnnotationItemProps {
 }
 
 const AnnotationItem = ({ form, onEdit, onDelete }: AnnotationItemProps) => {
+	const { t } = useI18n();
 	const handleEdit = () => onEdit(form);
 	const handleDelete = () => onDelete(form);
 
@@ -54,22 +57,24 @@ const AnnotationItem = ({ form, onEdit, onDelete }: AnnotationItemProps) => {
 		<div className="group relative rounded-lg border-hairline border-bd-1 bg-surf-2 p-3 transition-colors hover:border-bd-2">
 			<div className="mb-1 flex items-start justify-between gap-2">
 				<div className="min-w-0">
-					<span className="text-[13px] font-semibold text-t-1">{form.normalized}</span>
-					<span className="ml-1.5 text-[11px] text-t-3">→ {form.lemmaBaseForm}</span>
+					<Typography tag="span" className="text-[13px] font-semibold text-t-1">{form.normalized}</Typography>
+					<Typography tag="span" className="ml-1.5 text-[11px] text-t-3">→ {form.lemmaBaseForm}</Typography>
 				</div>
 				<div className="flex shrink-0 items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
-					<button
+					<Button
 						onClick={handleEdit}
+						title={t("admin.texts.editPage.wordAnnotation.edit")}
 						className="rounded p-1 text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
 						<Pencil className="size-3" />
-					</button>
-					<button
+					</Button>
+					<Button
 						onClick={handleDelete}
+						title={t("admin.texts.editPage.wordAnnotation.delete")}
 						className="rounded p-1 text-t-3 transition-colors hover:bg-red/10 hover:text-red"
 					>
 						<Trash2 className="size-3" />
-					</button>
+					</Button>
 				</div>
 			</div>
 			{form.translation && (
@@ -190,21 +195,22 @@ export const WordAnnotationsPanel = ({ textId, pageNumber }: WordAnnotationsPane
 				<div className="flex items-center justify-between border-b border-hairline border-bd-1 px-4 py-3">
 					<div className="flex items-center gap-2">
 						<Link2 className="size-4 text-acc" strokeWidth={1.6} />
-						<span className="text-[13.5px] font-semibold text-t-1">
+						<Typography tag="span" className="text-[13.5px] font-semibold text-t-1">
 							{t("admin.texts.editPage.wordAnnotation.panelTitle")}
-						</span>
+						</Typography>
 						{forms.length > 0 && (
-							<span className="rounded-full bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
+							<Typography tag="span" className="rounded-full bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
 								{forms.length}
-							</span>
+							</Typography>
 						)}
 					</div>
-					<button
+					<Button
 						onClick={handleClosePanel}
+						title={t("reader.panel.close")}
 						className="rounded-md p-1 text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						<X className="size-4" />
-					</button>
+					</Button>
 				</div>
 
 				<div className="flex-1 overflow-y-auto p-3">

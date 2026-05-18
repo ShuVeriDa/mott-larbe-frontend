@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import type { DetailMorphForm } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
 import { CardSection } from "../card-section";
@@ -33,41 +33,41 @@ export const MorphologySection = ({
 			}
 		>
 			<div className="overflow-x-auto -webkit-overflow-scrolling-touch">
-				<table className="w-full min-w-[280px] border-collapse">
-					<thead>
-						<tr>
-							<th className="pb-1.5 pr-2 text-left text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+				<Table className="w-full min-w-[280px] border-collapse" aria-label={t("vocabulary.wordDetail.sections.morphology")}>
+					<TableHeader>
+						<TableRow>
+							<TableHead className="pb-1.5 pr-2 text-left text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("vocabulary.wordDetail.morphTable.case")}
-							</th>
-							<th className="pb-1.5 pr-2 text-left text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="pb-1.5 pr-2 text-left text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("vocabulary.wordDetail.morphTable.form")}
-							</th>
-							<th className="pb-1.5 pr-2 text-left text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="pb-1.5 pr-2 text-left text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("vocabulary.wordDetail.morphTable.meaning")}
-							</th>
-						</tr>
-					</thead>
-					<tbody>
+							</TableHead>
+						</TableRow>
+					</TableHeader>
+					<TableBody>
 						{forms.map((form, idx) => (
-							<tr
+							<TableRow
 								key={`${form.form}-${idx}`}
 								className="border-t border-hairline border-bd-1"
 							>
-								<td className="py-1.5 pr-2 text-[12px] text-t-3">
+								<TableCell className="py-1.5 pr-2 text-[12px] text-t-3">
 									{form.caseLabel ?? form.gramCase ?? form.grammarTag ?? "—"}
-								</td>
-								<td className="py-1.5 pr-2">
+								</TableCell>
+								<TableCell className="py-1.5 pr-2">
 									<Typography tag="span" className="inline-flex items-center rounded-[5px] border-hairline border-bd-1 bg-surf-2 px-2 py-[2px] font-display text-[12px] italic text-t-1">
 										{form.form}
 									</Typography>
-								</td>
-								<td className="py-1.5 pr-2 text-[12px] text-t-3">
+								</TableCell>
+								<TableCell className="py-1.5 pr-2 text-[12px] text-t-3">
 									{form.translation ?? "—"}
-								</td>
-							</tr>
+								</TableCell>
+							</TableRow>
 						))}
-					</tbody>
-				</table>
+					</TableBody>
+				</Table>
 			</div>
 		</CardSection>
 	);

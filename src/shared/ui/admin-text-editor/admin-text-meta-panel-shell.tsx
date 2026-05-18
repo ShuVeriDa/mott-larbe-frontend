@@ -129,6 +129,7 @@ export const AdminTextMetaPanelShell = ({
 								key={lvl}
 								variant="bare"
 								size={null}
+								title={lvl}
 								data-level={lvl}
 								onClick={handleLevelClick}
 								className={`flex h-[30px] items-center justify-center rounded-[6px] border text-[11.5px] font-semibold transition-colors ${
@@ -193,6 +194,7 @@ export const AdminTextMetaPanelShell = ({
 				<Button
 					variant="bare"
 					size={null}
+					title={t("admin.texts.createPage.sections.settings")}
 					onClick={handleToggleMeta}
 					className="flex h-10 items-center gap-2 rounded-full border border-bd-2 bg-surf/95 px-3.5 text-t-2 shadow-sm backdrop-blur transition-colors hover:border-bd-3 hover:bg-surf"
 				>
@@ -228,6 +230,7 @@ export const AdminTextMetaPanelShell = ({
 							<Button
 								variant="bare"
 								size={null}
+								title="Close"
 								onClick={handleCloseMeta}
 								className="flex h-7 w-7 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 							>

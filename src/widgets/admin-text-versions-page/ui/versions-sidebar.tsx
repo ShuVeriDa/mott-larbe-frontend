@@ -295,6 +295,7 @@ export const VersionsSidebar = ({
 						<Button
 							onClick={onRunTokenization}
 							disabled={isRunning}
+							title={isRunning ? t("admin.texts.versions.sidebar.runBtnRunning") : t("admin.texts.versions.sidebar.runBtn")}
 							className="flex h-[34px] w-full cursor-pointer items-center justify-center gap-1.5 rounded-[8px] bg-acc font-sans text-[12.5px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 						>
 							{isRunning ? (

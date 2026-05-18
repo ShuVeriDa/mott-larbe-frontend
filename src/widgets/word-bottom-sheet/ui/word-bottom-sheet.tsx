@@ -114,6 +114,7 @@ const SheetBody = ({
 				<Button
 					onClick={handlePrimaryClick}
 					disabled={isPending}
+					title={lookup.inDictionary ? t("reader.popup.inDictionary") : t("reader.popup.addToDictionary")}
 					className={cn(
 						"flex h-11 flex-1 items-center justify-center gap-1.5 rounded-[10px] text-[14px] font-semibold text-white shadow-sm transition-opacity hover:opacity-90 disabled:opacity-60",
 						lookup.inDictionary ? "bg-grn" : "bg-acc",
@@ -127,6 +128,7 @@ const SheetBody = ({
 				<Button
 					onClick={onClose}
 					aria-label={t("reader.sheet.close")}
+					title={t("reader.sheet.close")}
 					className="inline-flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-[10px] border border-bd-2 bg-surf-2 px-4 text-[14px] font-semibold text-t-2"
 				>
 					<X className="size-4" strokeWidth={1.6} />

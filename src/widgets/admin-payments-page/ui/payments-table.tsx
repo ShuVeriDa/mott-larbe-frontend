@@ -2,6 +2,7 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminPaymentListItem } from "@/entities/admin-payment";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { PaymentsTableSkeleton } from "./payments-table-skeleton";
 import { PaymentsTableRow } from "./payments-table-row";
 
@@ -41,43 +42,43 @@ export const PaymentsTable = ({
 
 	return (
 		<div className="overflow-x-auto [&::-webkit-scrollbar]:h-0">
-			<table className="w-full border-collapse text-[12.5px]">
-				<thead>
-					<tr className="border-b border-bd-1">
-						<th className="col-txid px-3 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 max-md:hidden">
+			<Table className="border-collapse text-[12.5px]" aria-label={t("admin.payments.table.transaction")}>
+				<TableHeader>
+					<TableRow className="border-b border-bd-1">
+						<TableHead className="col-txid px-3 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 max-md:hidden">
 							{t("admin.payments.table.transaction")}
-						</th>
-						<th className="px-3 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3">
+						</TableHead>
+						<TableHead className="px-3 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3">
 							{t("admin.payments.table.user")}
-						</th>
-						<th className="px-3 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3">
+						</TableHead>
+						<TableHead className="px-3 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3">
 							{t("admin.payments.table.plan")}
-						</th>
-						<th className="px-3 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 max-md:hidden">
+						</TableHead>
+						<TableHead className="px-3 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 max-md:hidden">
 							{t("admin.payments.table.provider")}
-						</th>
-						<th className="px-3 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-acc-t max-sm:hidden">
+						</TableHead>
+						<TableHead className="px-3 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.3px] text-acc-t max-sm:hidden">
 							{t("admin.payments.table.date")}
-						</th>
-						<th className="px-3 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3">
+						</TableHead>
+						<TableHead className="px-3 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3">
 							{t("admin.payments.table.status")}
-						</th>
-						<th className="px-3 py-2.5 text-right text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3">
+						</TableHead>
+						<TableHead className="px-3 py-2.5 text-right text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3">
 							{t("admin.payments.table.amount")}
-						</th>
-						<th className="w-[90px] px-3 py-2.5" />
-					</tr>
-				</thead>
-				<tbody>
+						</TableHead>
+						<TableHead className="w-[90px] px-3 py-2.5" />
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{items.length === 0 ? (
-						<tr>
-							<td
+						<TableRow>
+							<TableCell
 								colSpan={8}
 								className="px-3 py-7 text-center text-[12.5px] text-t-3"
 							>
 								{t("admin.payments.table.empty")}
-							</td>
-						</tr>
+							</TableCell>
+						</TableRow>
 					) : (
 						items.map((item) => (
 							<PaymentsTableRow
@@ -94,8 +95,8 @@ export const PaymentsTable = ({
 							/>
 						))
 					)}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	);
 };

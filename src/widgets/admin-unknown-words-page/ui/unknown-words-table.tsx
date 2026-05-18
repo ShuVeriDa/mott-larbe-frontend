@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { UnknownWordItem } from "@/entities/admin-unknown-word";
@@ -40,81 +40,82 @@ export const UnknownWordsTable = ({
 	if (isLoading) {
 		return (
 			<div className="overflow-x-auto [&::-webkit-scrollbar]:h-0 max-sm:hidden">
-				<table className="w-full border-collapse text-[12.5px]">
-					<tbody>
+				<Table className="w-full border-collapse text-[12.5px]" aria-busy="true" aria-label="Loading unknown words">
+					<TableBody>
 						{Array.from({ length: 8 }).map((_, i) => (
-							<tr key={i} className="border-b border-bd-1">
-								<td className="px-2.5 py-[10px] pl-3.5" style={{ width: 32 }}>
+							<TableRow key={i} className="border-b border-bd-1">
+								<TableCell className="px-2.5 py-[10px] pl-3.5" style={{ width: 32 }}>
 									<div className="size-3.5 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-[10px]">
+								</TableCell>
+								<TableCell className="px-2.5 py-[10px]">
 									<div className="space-y-1">
 										<div className="h-3.5 w-24 animate-pulse rounded bg-surf-3" />
 										<div className="h-2.5 w-16 animate-pulse rounded bg-surf-3" />
 									</div>
-								</td>
-								<td className="px-2.5 py-[10px]">
+								</TableCell>
+								<TableCell className="px-2.5 py-[10px]">
 									<div className="h-3 w-48 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-[10px]" style={{ width: 90 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-[10px]" style={{ width: 90 }}>
 									<div className="h-5 w-8 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-[10px]" style={{ width: 80 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-[10px]" style={{ width: 80 }}>
 									<div className="h-3 w-14 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-[10px]" style={{ width: 80 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-[10px]" style={{ width: 80 }}>
 									<div className="h-3 w-14 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td style={{ width: 90 }} />
-							</tr>
+								</TableCell>
+								<TableCell style={{ width: 90 }} />
+							</TableRow>
 						))}
-					</tbody>
-				</table>
+					</TableBody>
+				</Table>
 			</div>
 		);
 	}
 
 	return (
 		<div className="overflow-x-auto [&::-webkit-scrollbar]:h-[3px] [&::-webkit-scrollbar-thumb]:rounded-sm [&::-webkit-scrollbar-thumb]:bg-bd-3 max-sm:hidden">
-			<table className="w-full border-collapse text-[12.5px]">
-				<thead>
-					<tr className="border-b border-bd-1 bg-surf-2">
-						<th className="px-2.5 py-[10px] pl-3.5" style={{ width: 32 }}>
+			<Table className="w-full border-collapse text-[12.5px]" aria-label={t("admin.unknownWords.table.word")}>
+				<TableHeader>
+					<TableRow className="border-b border-bd-1 bg-surf-2">
+						<TableHead className="px-2.5 py-[10px] pl-3.5" style={{ width: 32 }}>
 							<input
 								type="checkbox"
 								checked={allSelected}
 								onChange={onToggleAll}
+								aria-label={t("admin.unknownWords.table.selectAll")}
 								className="size-3.5 cursor-pointer accent-acc"
 							/>
-						</th>
-						<th className="px-2.5 py-[10px] text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap">
+						</TableHead>
+						<TableHead className="px-2.5 py-[10px] text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap">
 							{t("admin.unknownWords.table.word")}
-						</th>
-						<th className="px-2.5 py-[10px] text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+						</TableHead>
+						<TableHead className="px-2.5 py-[10px] text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 							{t("admin.unknownWords.table.context")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="px-2.5 py-[10px] text-center text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap"
 							style={{ width: 90 }}
 						>
 							{t("admin.unknownWords.table.count")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="px-2.5 py-[10px] text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap max-md:hidden"
 							style={{ width: 90 }}
 						>
 							{t("admin.unknownWords.table.first")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="px-2.5 py-[10px] text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap max-md:hidden"
 							style={{ width: 90 }}
 						>
 							{t("admin.unknownWords.table.last")}
-						</th>
-						<th style={{ width: 90 }} />
-					</tr>
-				</thead>
-				<tbody>
+						</TableHead>
+						<TableHead style={{ width: 90 }} />
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{words.map((word) => {
 					  const handleCheckboxClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
 					  const handleToggleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onToggleRow(word.id);
@@ -124,11 +125,11 @@ export const UnknownWordsTable = ({
 					  const handleLinkToLemma: NonNullable<ComponentProps<typeof UnknownWordRowActions>["onLinkToLemma"]> = () => onLinkToLemma(word);
 					  const handleViewContexts: NonNullable<ComponentProps<typeof UnknownWordRowActions>["onViewContexts"]> = () => onViewContexts(word);
 					  return (
-						<tr
+						<TableRow
 							key={word.id}
 							className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2"
 						>
-							<td
+							<TableCell
 								className="px-2.5 py-[10px] pl-3.5"
 								onClick={handleCheckboxClick}
 							>
@@ -136,12 +137,13 @@ export const UnknownWordsTable = ({
 									type="checkbox"
 									checked={selectedIds.has(word.id)}
 									onChange={handleToggleChange}
+									aria-label={word.word}
 									className="size-3.5 cursor-pointer accent-acc"
 								/>
-							</td>
+							</TableCell>
 
 							{/* Word */}
-							<td className="px-2.5 py-[10px]">
+							<TableCell className="px-2.5 py-[10px]">
 								<div className="flex flex-col gap-0.5">
 									<Typography tag="span" className="font-display text-[13.5px] font-semibold text-t-1">
 										{word.word}
@@ -150,10 +152,10 @@ export const UnknownWordsTable = ({
 										<Typography tag="span" className="text-[11px] text-t-3">{word.normalized}</Typography>
 									)}
 								</div>
-							</td>
+							</TableCell>
 
 							{/* Context */}
-							<td className="max-w-[260px] px-2.5 py-[10px]">
+							<TableCell className="max-w-[260px] px-2.5 py-[10px]">
 								{word.firstContext?.snippet ? (
 									<div className="line-clamp-2 text-[12px] leading-normal text-t-2">
 										{word.firstContext.snippet}
@@ -166,25 +168,25 @@ export const UnknownWordsTable = ({
 										«{word.firstContext.textTitle}»{word.firstContext.pageNumber ? `, с. ${word.firstContext.pageNumber}` : ""}
 									</div>
 								)}
-							</td>
+							</TableCell>
 
 							{/* Count */}
-							<td className="px-2.5 py-[10px] text-center" onClick={handleCountClick}>
+							<TableCell className="px-2.5 py-[10px] text-center" onClick={handleCountClick}>
 								<CountBadge count={word.seenCount} />
-							</td>
+							</TableCell>
 
 							{/* First seen */}
-							<td className="px-2.5 py-[10px] text-[11.5px] text-t-3 whitespace-nowrap max-md:hidden">
+							<TableCell className="px-2.5 py-[10px] text-[11.5px] text-t-3 whitespace-nowrap max-md:hidden">
 								{formatShortDate(word.firstSeen)}
-							</td>
+							</TableCell>
 
 							{/* Last seen */}
-							<td className="px-2.5 py-[10px] text-[11.5px] text-t-3 whitespace-nowrap max-md:hidden">
+							<TableCell className="px-2.5 py-[10px] text-[11.5px] text-t-3 whitespace-nowrap max-md:hidden">
 								{formatShortDate(word.lastSeen)}
-							</td>
+							</TableCell>
 
 							{/* Actions */}
-							<td className="px-2.5 py-[10px]" onClick={handleActionsClick}>
+							<TableCell className="px-2.5 py-[10px]" onClick={handleActionsClick}>
 								<UnknownWordRowActions
 									word={word}
 									mutations={mutations}
@@ -192,12 +194,12 @@ export const UnknownWordsTable = ({
 									onLinkToLemma={handleLinkToLemma}
 									onViewContexts={handleViewContexts}
 								/>
-							</td>
-						</tr>
+							</TableCell>
+						</TableRow>
 					);
 					})}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	);
 };

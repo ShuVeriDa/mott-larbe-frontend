@@ -97,7 +97,7 @@ export const AnnotationsLeftColumn = ({
 						{t("admin.wordAnnotations.pagination.showing", { from, to, total })}
 					</Typography>
 					<div className="flex items-center gap-1">
-						<Button size="bare" className={btnCls} onClick={handlePrev} disabled={page <= 1}>
+						<Button size="bare" title={t("admin.wordAnnotations.pagination.prev")} className={btnCls} onClick={handlePrev} disabled={page <= 1}>
 							<ChevronLeft className="size-2.5" />
 						</Button>
 						{Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
@@ -115,6 +115,7 @@ export const AnnotationsLeftColumn = ({
 								<Button
 									key={pg}
 									onClick={handlePageClick}
+									title={String(pg)}
 									className={cn(
 										"flex size-6 cursor-pointer items-center justify-center rounded-[5px] border text-[11px] transition-colors",
 										pg === page
@@ -126,7 +127,7 @@ export const AnnotationsLeftColumn = ({
 								</Button>
 							);
 						})}
-						<Button size="bare" className={btnCls} onClick={handleNext} disabled={page >= totalPages}>
+						<Button size="bare" title={t("admin.wordAnnotations.pagination.next")} className={btnCls} onClick={handleNext} disabled={page >= totalPages}>
 							<ChevronRight className="size-2.5" />
 						</Button>
 					</div>

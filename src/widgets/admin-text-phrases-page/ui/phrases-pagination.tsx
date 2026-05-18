@@ -45,6 +45,7 @@ export const PhrasesPagination = ({
 					className={btnCls}
 					onClick={handlePrev}
 					disabled={page <= 1}
+					title={t("admin.textPhrases.pagination.prev")}
 				>
 					<ChevronLeft className="size-2.5" />
 				</Button>
@@ -58,6 +59,7 @@ export const PhrasesPagination = ({
 					className={btnCls}
 					onClick={handleNext}
 					disabled={page >= totalPages}
+					title={t("admin.textPhrases.pagination.next")}
 				>
 					<ChevronRight className="size-2.5" />
 				</Button>

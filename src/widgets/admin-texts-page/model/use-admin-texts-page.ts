@@ -12,6 +12,7 @@ export const useAdminTextsPage = () => {
 	const [page, setPage] = useState(1);
 	const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 	const [importOpen, setImportOpen] = useState(false);
+	const [exportOpen, setExportOpen] = useState(false);
 
 	const query: FetchAdminTextsQuery = {
 		...(search ? { search } : {}),
@@ -87,10 +88,12 @@ export const useAdminTextsPage = () => {
 		tagId,
 		sortBy,
 		page,
+		query,
 		selectedIds,
 		allSelected,
 		someSelected,
 		importOpen,
+		exportOpen,
 		data,
 		stats,
 		isLoading,
@@ -107,5 +110,6 @@ export const useAdminTextsPage = () => {
 		clearSelection,
 		setPage,
 		setImportOpen,
+		setExportOpen,
 	};
 };

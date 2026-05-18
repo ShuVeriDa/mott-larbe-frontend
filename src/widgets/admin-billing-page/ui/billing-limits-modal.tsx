@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { X } from "lucide-react";
 import type { AdminPlan, PlanLimits } from "@/entities/admin-billing";
 import { useBillingLimitsModal } from "../model/use-billing-limits-modal";
@@ -80,13 +81,14 @@ export const BillingLimitsModal = ({
 							  return (
 								<div key={key as string} className="flex items-center gap-3">
 									<Typography tag="label" className="w-40 shrink-0 text-[12.5px] text-t-1">{label}</Typography>
-									<input
+									<Input
 										type="number"
 										min={-1}
 										value={numeric[key as string] ?? "-1"}
 										data-field={key as string}
 										onChange={handleNumericChange}
-										className="h-[32px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
+										aria-label={label}
+										className="h-[32px] rounded-[8px] focus:bg-surf"
 									/>
 								</div>
 							);

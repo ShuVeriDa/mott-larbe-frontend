@@ -3,6 +3,7 @@
 import { Typography } from "@/shared/ui/typography";
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { Input } from "@/shared/ui/input";
 import { Select } from "@/shared/ui/select";
 import { CEFR_LEVELS } from "@/shared/types";
 
@@ -49,12 +50,13 @@ export const NewEntryForm = ({
 					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.unknownWords.addModal.headword")}
 					</Typography>
-					<input
+					<Input
 						type="text"
 						value={headword}
 						onChange={onHeadwordChange}
 						placeholder={placeholder}
-						className={inputCls}
+						aria-label={t("admin.unknownWords.addModal.headword")}
+						className="h-9 rounded-lg focus:bg-surf"
 					/>
 				</div>
 				<div className="mb-3">
@@ -81,12 +83,13 @@ export const NewEntryForm = ({
 				<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 					{t("admin.unknownWords.addModal.translation")}
 				</Typography>
-				<input
+				<Input
 					type="text"
 					value={translation}
 					onChange={onTranslationChange}
 					placeholder={t("admin.unknownWords.addModal.translationPlaceholder")}
-					className={inputCls}
+					aria-label={t("admin.unknownWords.addModal.translation")}
+					className="h-9 rounded-lg focus:bg-surf"
 				/>
 			</div>
 
@@ -111,12 +114,13 @@ export const NewEntryForm = ({
 					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.unknownWords.addModal.domain")}
 					</Typography>
-					<input
+					<Input
 						type="text"
 						value={domain}
 						onChange={onDomainChange}
 						placeholder={t("admin.unknownWords.addModal.domainPlaceholder")}
-						className={inputCls}
+						aria-label={t("admin.unknownWords.addModal.domain")}
+						className="h-9 rounded-lg focus:bg-surf"
 					/>
 				</div>
 			</div>
@@ -125,12 +129,13 @@ export const NewEntryForm = ({
 				<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 					{t("admin.unknownWords.addModal.forms")}
 				</Typography>
-				<input
+				<Input
 					type="text"
 					value={formsRaw}
 					onChange={onFormsRawChange}
 					placeholder={t("admin.unknownWords.addModal.formsPlaceholder")}
-					className={inputCls}
+					aria-label={t("admin.unknownWords.addModal.forms")}
+					className="h-9 rounded-lg focus:bg-surf"
 				/>
 				<Typography tag="p" className="mt-1 text-[11px] text-t-3">
 					{t("admin.unknownWords.addModal.formsHint")}

@@ -35,8 +35,8 @@ export const UserMenu = ({
 		return (
 			<DropdownMenuPrimitive.Root open={open} onOpenChange={setOpen}>
 				<DropdownMenuPrimitive.Trigger asChild>
-					<button
-						type="button"
+					<Button
+						title={displayName}
 						className={cn(
 							"flex flex-1 flex-col items-center justify-center gap-[3px] text-[10px] transition-colors focus-visible:outline-none",
 							open ? "text-acc" : "text-t-3",
@@ -44,7 +44,7 @@ export const UserMenu = ({
 					>
 						<CircleUserRound size={20} />
 						<Typography tag="span">{displayName}</Typography>
-					</button>
+					</Button>
 				</DropdownMenuPrimitive.Trigger>
 				<DropdownMenuPrimitive.Portal>
 					<DropdownMenuPrimitive.Content

@@ -10,6 +10,7 @@ import type {
 } from "@/entities/dictionary";
 import { cn } from "@/shared/lib/cn";
 import { CEFR_LEVELS } from "@/shared/types";
+import { Input } from "@/shared/ui/input";
 import { Select } from "@/shared/ui/select";
 import { ComponentProps, useEffect, useState } from 'react';
 const POS_OPTIONS = [
@@ -106,7 +107,7 @@ export const DictionaryCreateModal = ({
 	const handleNotesChange: NonNullable<ComponentProps<"textarea">["onChange"]> = e => setNotes(e.currentTarget.value);
 return (
 		<div
-			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
+			className="fixed inset-0 z-200 flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
 			onClick={handleBackdropClick}
 		>
 			<div className="w-[500px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-h-[90vh] overflow-y-auto max-sm:w-full max-sm:max-h-[92vh] max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
@@ -129,6 +130,7 @@ return (
 							<Button
 								key={l}
 								onClick={handleClick}
+								title={l === "CHE" ? t("admin.dictionary.createModal.langChe") : t("admin.dictionary.createModal.langRu")}
 								className={cn(
 									"flex h-[34px] cursor-pointer items-center gap-1.5 rounded-[8px] border px-3 text-[12.5px] transition-colors select-none",
 									language === l
@@ -151,28 +153,32 @@ return (
 						<Typography tag="label" className={labelCls}>
 							{t("admin.dictionary.createModal.wordLabel")} *
 						</Typography>
-						<input
-							className={cn(inputCls, errors.word && "border-red-400")}
+						<Input
+							className={cn("rounded-[8px]", errors.word && "border-red-400")}
 							placeholder={t("admin.dictionary.createModal.wordPlaceholder")}
 							value={word}
 							onChange={handleWordChange}
+							aria-label={t("admin.dictionary.createModal.wordLabel")}
+							aria-invalid={Boolean(errors.word)}
+							aria-describedby={errors.word ? "dict-word-error" : undefined}
 						/>
 						{errors.word && (
-							<Typography tag="p" className="mt-1 text-[11px] text-red-t">{errors.word}</Typography>
+							<Typography id="dict-word-error" tag="p" className="mt-1 text-[11px] text-red-t">{errors.word}</Typography>
 						)}
 					</div>
 					<div>
 						<Typography tag="label" className={labelCls}>
 							{t("admin.dictionary.createModal.normalizedLabel")}
 						</Typography>
-						<input
-							className={inputCls}
+						<Input
+							className="rounded-[8px]"
 							placeholder={
 								word.toLowerCase() ||
 								t("admin.dictionary.createModal.normalizedPlaceholder")
 							}
 							value={normalized}
 							onChange={handleNormalizedChange}
+							aria-label={t("admin.dictionary.createModal.normalizedLabel")}
 						/>
 					</div>
 				</div>
@@ -182,16 +188,19 @@ return (
 					<Typography tag="label" className={labelCls}>
 						{t("admin.dictionary.createModal.translationLabel")} *
 					</Typography>
-					<input
-						className={cn(inputCls, errors.translation && "border-red-400")}
+					<Input
+						className={cn("rounded-[8px]", errors.translation && "border-red-400")}
 						placeholder={t(
 							"admin.dictionary.createModal.translationPlaceholder",
 						)}
 						value={translation}
 						onChange={handleTranslationChange}
+						aria-label={t("admin.dictionary.createModal.translationLabel")}
+						aria-invalid={Boolean(errors.translation)}
+						aria-describedby={errors.translation ? "dict-translation-error" : undefined}
 					/>
 					{errors.translation && (
-						<Typography tag="p" className="mt-1 text-[11px] text-red-t">{errors.translation}</Typography>
+						<Typography id="dict-translation-error" tag="p" className="mt-1 text-[11px] text-red-t">{errors.translation}</Typography>
 					)}
 				</div>
 
@@ -254,6 +263,7 @@ return (
 					<Button
 						onClick={onClose}
 						disabled={isSubmitting}
+						title={t("admin.dictionary.createModal.cancel")}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
 					>
 						{t("admin.dictionary.createModal.cancel")}
@@ -261,6 +271,7 @@ return (
 					<Button
 						onClick={handleSubmit}
 						disabled={isSubmitting}
+						title={isSubmitting ? t("admin.dictionary.createModal.creating") : t("admin.dictionary.createModal.create")}
 						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
 					>
 						{isSubmitting

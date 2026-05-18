@@ -1,4 +1,13 @@
-export type HighlightColor = "yellow" | "green" | "blue" | "pink";
+export type HighlightColor =
+	| "yellow"
+	| "green"
+	| "blue"
+	| "pink"
+	| "orange"
+	| "purple"
+	| "teal"
+	| "red"
+	| string; // custom hex color from palette
 
 export interface Highlight {
 	id: string;

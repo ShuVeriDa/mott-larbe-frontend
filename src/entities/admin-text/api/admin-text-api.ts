@@ -157,6 +157,53 @@ export const adminTextApi = {
 		URL.revokeObjectURL(url);
 	},
 
+	exportTexts: async (query: FetchAdminTextsQuery, format: "json" | "csv", selectedIds?: string[]): Promise<void> => {
+		const params: Record<string, unknown> = { format };
+		if (query.search) params.search = query.search;
+		if (query.level) params.level = query.level;
+		if (query.tagId) params.tagId = query.tagId;
+		if (query.status && query.status !== "all") params.status = query.status;
+		if (query.sortBy) params.sortBy = query.sortBy;
+		if (query.sortOrder) params.sortOrder = query.sortOrder;
+		if (selectedIds?.length) params.ids = selectedIds.join(",");
+
+		const response = await http.get<Blob>("/admin/texts/export", {
+			params,
+			responseType: "blob",
+		});
+		const contentDisposition = (response.headers as Record<string, string>)["content-disposition"] ?? "";
+		const serverFilename = contentDisposition.match(/filename="?([^";\n]+)"?/)?.[1];
+		const ts = new Date().toISOString().slice(0, 10);
+		const fallbackFilename = `texts-export-${ts}.${format}`;
+		const url = URL.createObjectURL(response.data);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = serverFilename ?? fallbackFilename;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		URL.revokeObjectURL(url);
+	},
+
+	exportTextById: async (textId: string, format: "json" | "csv"): Promise<void> => {
+		const response = await http.get<Blob>(`/admin/texts/${textId}/export`, {
+			params: { format },
+			responseType: "blob",
+		});
+		const contentDisposition = (response.headers as Record<string, string>)["content-disposition"] ?? "";
+		const serverFilename = contentDisposition.match(/filename="?([^";\n]+)"?/)?.[1];
+		const ts = new Date().toISOString().slice(0, 10);
+		const fallbackFilename = `text-${textId}-${ts}.${format}`;
+		const url = URL.createObjectURL(response.data);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = serverFilename ?? fallbackFilename;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		URL.revokeObjectURL(url);
+	},
+
 	bulkImport: async (items: CreateTextDto[]): Promise<BulkImportResult> => {
 		const { data } = await http.post<BulkImportResult>("/admin/texts/bulk-import", { items });
 		return data;

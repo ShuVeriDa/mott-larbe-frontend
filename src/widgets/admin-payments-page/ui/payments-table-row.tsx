@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
+import { TableRow, TableCell } from "@/shared/ui/table";
 import { ComponentProps } from "react";
 import { cn } from "@/shared/lib/cn";
 import type {
@@ -131,20 +132,20 @@ export const PaymentsTableRow = ({
 	};
 
 	return (
-		<tr
+		<TableRow
 			onClick={handleClick}
 			className={cn(
 				"group cursor-pointer border-b border-bd-1 transition-colors last:border-b-0",
 				isSelected ? "bg-acc-bg" : "hover:bg-surf-2",
 			)}
 		>
-			<td className="px-3 py-2.5 max-md:hidden">
+			<TableCell className="px-3 py-2.5 max-md:hidden">
 				<Typography tag="span" className="font-mono text-[11px] text-t-3">
 					{item.providerPaymentId}
 				</Typography>
-			</td>
+			</TableCell>
 
-			<td className="px-3 py-2.5">
+			<TableCell className="px-3 py-2.5">
 				<div className="flex items-center gap-2">
 					<div className="flex size-[26px] shrink-0 items-center justify-center rounded-full bg-surf-3 text-[9.5px] font-bold text-t-2">
 						{init}
@@ -156,9 +157,9 @@ export const PaymentsTableRow = ({
 						<div className="text-[11px] text-t-3">{item.user.email}</div>
 					</div>
 				</div>
-			</td>
+			</TableCell>
 
-			<td className="px-3 py-2.5">
+			<TableCell className="px-3 py-2.5">
 				<Typography tag="span"
 					className={cn(
 						"inline-block rounded px-1.5 py-px text-[10px] font-semibold whitespace-nowrap",
@@ -167,9 +168,9 @@ export const PaymentsTableRow = ({
 				>
 					{planName} · {period}
 				</Typography>
-			</td>
+			</TableCell>
 
-			<td className="px-3 py-2.5 max-md:hidden">
+			<TableCell className="px-3 py-2.5 max-md:hidden">
 				<Typography tag="span" className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[11px] font-medium text-t-2">
 					<Typography tag="span"
 						className="size-1.5 rounded-full"
@@ -177,13 +178,13 @@ export const PaymentsTableRow = ({
 					/>
 					{item.provider}
 				</Typography>
-			</td>
+			</TableCell>
 
-			<td className="px-3 py-2.5 text-[11px] text-t-3 max-sm:hidden">
+			<TableCell className="px-3 py-2.5 text-[11px] text-t-3 max-sm:hidden">
 				{fmtDate(item.createdAt)}
-			</td>
+			</TableCell>
 
-			<td className="px-3 py-2.5">
+			<TableCell className="px-3 py-2.5">
 				<Typography tag="span"
 					className={cn(
 						"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-px text-[10.5px] font-semibold",
@@ -193,9 +194,9 @@ export const PaymentsTableRow = ({
 					<Typography tag="span" className={cn("size-[5px] rounded-full", sc.dotCls)} />
 					{t(sc.i18nKey)}
 				</Typography>
-			</td>
+			</TableCell>
 
-			<td className="px-3 py-2.5 text-right">
+			<TableCell className="px-3 py-2.5 text-right">
 				<Typography tag="span"
 					className={cn(
 						"font-semibold",
@@ -209,9 +210,9 @@ export const PaymentsTableRow = ({
 					{item.status === "REFUNDED" ? "−" : ""}
 					{amtStr}
 				</Typography>
-			</td>
+			</TableCell>
 
-			<td className="px-3 py-2.5">
+			<TableCell className="px-3 py-2.5">
 				<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100 [tr.bg-acc-bg_&]:opacity-100">
 					<Button
 						onClick={handleReceiptClick}
@@ -228,7 +229,7 @@ export const PaymentsTableRow = ({
 						</Button>
 					)}
 				</div>
-			</td>
-		</tr>
+			</TableCell>
+		</TableRow>
 	);
 };

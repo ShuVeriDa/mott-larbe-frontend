@@ -2,8 +2,9 @@
 
 import { useDeleteAllHighlights, useHighlights } from "@/entities/highlight";
 import { FontFamilyGroup } from "@/features/reader-font-family";
+import { Button } from "@/shared/ui/button";
 import { FontSizeGroup } from "@/features/reader-font-size";
-import { useHighlightVisibility } from "@/features/reader-highlight";
+import { useHighlightVisibility, usePhraseColorVisibility } from "@/features/reader-highlight";
 import {
 	ColumnWidthGroup,
 	SegmentedGroup,
@@ -12,7 +13,7 @@ import {
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
-import { Eye, EyeOff, Trash2 } from "lucide-react";
+import { Eye, EyeOff, Languages, Trash2 } from "lucide-react";
 import {
 	LETTER_SPACING_OPTIONS,
 	LINE_HEIGHT_OPTIONS,
@@ -39,6 +40,7 @@ export const ReaderSettingsBody = ({
 	const gap = compact ? "mb-3" : "mb-5";
 	const btnH = compact ? "h-8" : "h-10";
 	const { highlightsVisible, setHighlightsVisible } = useHighlightVisibility();
+	const { phraseColorVisible, setPhraseColorVisible } = usePhraseColorVisibility();
 	const { data: highlights = [] } = useHighlights(
 		textId ?? "",
 		pageNumber ?? 0,
@@ -50,6 +52,7 @@ export const ReaderSettingsBody = ({
 	const hasHighlights = !!textId && !!pageNumber && highlights.length > 0;
 
 	const handleToggleHighlights = () => setHighlightsVisible(!highlightsVisible);
+	const handleTogglePhraseColor = () => setPhraseColorVisible(!phraseColorVisible);
 	const handleDeleteAllHighlights = () => {
 		if (!hasHighlights) return;
 		deleteAll(highlights.map(h => h.id));
@@ -78,7 +81,6 @@ export const ReaderSettingsBody = ({
 			/>
 			<FontFamilyGroup
 				className={cn("flex", gap, compact ? "gap-1" : "gap-1.5")}
-				buttonClassName={btnH}
 			/>
 
 			<ReaderSettingsSectionLabel
@@ -158,8 +160,9 @@ export const ReaderSettingsBody = ({
 				compact={compact}
 			/>
 			<div className={cn("flex", gap, compact ? "gap-1" : "gap-1.5")}>
-				<button
+				<Button
 					onClick={handleToggleHighlights}
+					title={highlightsVisible ? t("reader.settings.highlightsHide") : t("reader.settings.highlightsShow")}
 					aria-pressed={highlightsVisible}
 					className={cn(
 						"flex flex-1 items-center justify-center gap-1.5 rounded-base border border-bd-1 text-t-2 transition-colors",
@@ -183,9 +186,10 @@ export const ReaderSettingsBody = ({
 					{highlightsVisible
 						? t("reader.settings.highlightsHide")
 						: t("reader.settings.highlightsShow")}
-				</button>
-				<button
+				</Button>
+				<Button
 					onClick={handleDeleteAllHighlights}
+					title={t("reader.settings.highlightsClearAll")}
 					disabled={!hasHighlights || isDeletingAll}
 					className={cn(
 						"flex flex-1 items-center justify-center gap-1.5 rounded-base border border-bd-1 text-t-3 transition-colors",
@@ -200,8 +204,30 @@ export const ReaderSettingsBody = ({
 						strokeWidth={1.6}
 					/>
 					{t("reader.settings.highlightsClearAll")}
-				</button>
+				</Button>
 			</div>
+
+			<ReaderSettingsSectionLabel
+				label={t("reader.settings.phraseColor")}
+				compact={compact}
+			/>
+			<Button
+				onClick={handleTogglePhraseColor}
+				title={phraseColorVisible ? t("reader.settings.phraseColorHide") : t("reader.settings.phraseColorShow")}
+				aria-pressed={phraseColorVisible}
+				className={cn(
+					"flex w-full items-center justify-center gap-1.5 rounded-base border border-bd-1 text-t-2 transition-colors",
+					"hover:bg-surf-2 hover:text-t-1",
+					"aria-pressed:bg-acc-bg aria-pressed:text-acc-t aria-pressed:border-acc/30",
+					btnH,
+					compact ? "text-[11px] mb-3" : "text-[12.5px] mb-5",
+				)}
+			>
+				<Languages className={compact ? "size-3" : "size-3.5"} strokeWidth={1.6} />
+				{phraseColorVisible
+					? t("reader.settings.phraseColorHide")
+					: t("reader.settings.phraseColorShow")}
+			</Button>
 
 			<ReaderSettingsSectionLabel
 				label={t("reader.settings.legend")}

@@ -67,6 +67,7 @@ export const MobileMenu = ({
 					<Button
 						onClick={onClose}
 						aria-label={t("landing.nav.close")}
+						title={t("landing.nav.close")}
 						className="flex h-8 w-8 items-center justify-center rounded-base border-hairline border-bd-2 bg-transparent text-t-1 transition-colors hover:bg-surf-2"
 					>
 						<X size={14} strokeWidth={1.8} />

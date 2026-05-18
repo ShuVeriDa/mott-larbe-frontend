@@ -36,6 +36,7 @@ return (
 				<Button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 					onClick={handleClick}
+					title={t("admin.dictionaryDetail.add")}
 				>
 					<Plus className="size-[11px]" />
 					{t("admin.dictionaryDetail.add")}
@@ -71,6 +72,7 @@ return (
 								<Button
 									className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 									onClick={handleClick}
+									title={t("admin.dictionaryDetail.delete")}
 								>
 									<Trash2 className="size-[13px]" />
 								</Button>

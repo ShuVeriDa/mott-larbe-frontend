@@ -3,6 +3,7 @@
 import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 
 import { useI18n } from "@/shared/lib/i18n";
 import { ComponentProps, useEffect, useRef, useState } from "react";
@@ -60,13 +61,14 @@ return (
 						<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
 							{t("admin.dictionaryDetail.headword")}
 						</div>
-						<input
+						<Input
 							ref={inputRef}
-							className="w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] font-display text-[14px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc"
+							className="rounded-lg font-display text-[14px]"
 							type="text"
 							placeholder={t("admin.dictionaryDetail.headwordPlaceholder")}
 							value={word}
 							onChange={handleChange}
+							aria-label={t("admin.dictionaryDetail.headword")}
 						/>
 					</div>
 					<Typography tag="label" className="flex cursor-pointer items-center gap-2.5">

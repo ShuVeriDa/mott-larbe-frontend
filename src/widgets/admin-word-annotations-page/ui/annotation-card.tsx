@@ -89,7 +89,7 @@ export const AnnotationCard = ({
 						</Typography>
 						{form.lemma.partOfSpeech && (
 							<>
-								<span className="text-bd-3">·</span>
+								<Typography tag="span" className="text-bd-3">·</Typography>
 								<Typography
 									tag="span"
 									className="text-[11px] uppercase tracking-wide text-t-4"
@@ -107,6 +107,7 @@ export const AnnotationCard = ({
 				<Button
 					variant="bare"
 					size="bare"
+					title={t("admin.wordAnnotations.deleteModal.confirm")}
 					onClick={handleDelete}
 					className="flex h-7 shrink-0 items-center justify-center rounded-[6px] border border-bd-2 px-2 text-t-3 transition-colors hover:border-red/30 hover:bg-red/5 hover:text-red"
 				>
@@ -154,6 +155,7 @@ export const AnnotationCard = ({
 			<div className="flex gap-2 border-t border-bd-1 px-4 py-3">
 				<Button
 					size="bare"
+					title={saveLabel}
 					disabled={!canSave || selectedCount === 0}
 					onClick={handleSave}
 					className="flex px-6 h-[36px] items-center justify-center rounded-base bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-40"

@@ -97,6 +97,7 @@ export const LearningSettingsCard = ({
 						type="submit"
 						variant="action"
 						disabled={isPending}
+						title={isPending ? t("profile.toasts.saving") : t("profile.common.save")}
 						className="max-sm:w-full max-sm:h-10 max-sm:text-[13px] max-sm:rounded-[8px]"
 					>
 						{isPending ? t("profile.toasts.saving") : t("profile.common.save")}

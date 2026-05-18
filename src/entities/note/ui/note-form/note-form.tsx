@@ -4,6 +4,7 @@ import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Textarea } from "@/shared/ui/textarea";
+import { Typography } from "@/shared/ui/typography";
 import {
 	type ChangeEvent,
 	type FormEvent,
@@ -73,6 +74,7 @@ export const NoteForm = ({
 					disabled={!value.trim()}
 					variant="bare"
 					size={null}
+					title={t("reader.notes.save")}
 					className="block h-7 px-3 rounded-md bg-acc text-center text-[11.5px] font-semibold leading-7 text-white transition-opacity hover:opacity-[0.88]disabled:opacity-40"
 				>
 					{t("reader.notes.save")}
@@ -83,12 +85,13 @@ export const NoteForm = ({
 						variant="bare"
 						size={null}
 						onClick={onCancel}
+						title={t("reader.notes.cancel")}
 						className="h-7 rounded-md px-3 text-[12px] text-t-3 hover:bg-surf-2 hover:text-t-1"
 					>
 						{t("reader.notes.cancel")}
 					</Button>
 				)}
-				<span className="ml-auto text-[11px] text-t-4">⌘↵</span>
+				<Typography tag="span" className="ml-auto text-[11px] text-t-4">⌘↵</Typography>
 			</div>
 		</form>
 	);

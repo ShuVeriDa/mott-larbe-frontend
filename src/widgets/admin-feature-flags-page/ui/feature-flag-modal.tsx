@@ -11,6 +11,7 @@ import type {
 	UpdateFeatureFlagDto,
 } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
+import { Input } from "@/shared/ui/input";
 import { useFeatureFlagModal } from "../model/use-feature-flag-modal";
 import { Select } from "@/shared/ui/select";
 import { FlagToggle } from "./flag-toggle";
@@ -77,7 +78,7 @@ export const FeatureFlagModal = ({
 
 	return (
 		<div
-			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
+			className="fixed inset-0 z-200 flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
 			onClick={handleBackdropClick}
 		>
 			<div className="w-[480px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08),0_2px_4px_rgba(0,0,0,0.04)] max-sm:w-full max-sm:max-h-[92vh] max-sm:overflow-y-auto max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
@@ -97,17 +98,20 @@ export const FeatureFlagModal = ({
 					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.featureFlags.modal.keyLabel")} *
 					</Typography>
-					<input
-						className={cn(inputCls, keyError && "border-red-400")}
+					<Input
+						className={cn("rounded-[8px]", keyError && "border-red-400")}
 						placeholder="category.feature_name"
 						value={key}
 						onChange={handleKeyChange}
 						disabled={isEdit}
+						aria-label={t("admin.featureFlags.modal.keyLabel")}
+						aria-invalid={Boolean(keyError)}
+						aria-describedby="flag-key-hint"
 					/>
 					{keyError ? (
-						<Typography tag="p" className="mt-1 text-[11px] text-red-t">{keyError}</Typography>
+						<Typography id="flag-key-hint" tag="p" className="mt-1 text-[11px] text-red-t">{keyError}</Typography>
 					) : (
-						<Typography tag="p" className="mt-1 text-[11px] text-t-3">
+						<Typography id="flag-key-hint" tag="p" className="mt-1 text-[11px] text-t-3">
 							{t("admin.featureFlags.modal.keyHint")}
 						</Typography>
 					)}
@@ -149,13 +153,14 @@ export const FeatureFlagModal = ({
 						<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 							{t("admin.featureFlags.modal.rolloutLabel")}
 						</Typography>
-						<input
+						<Input
 							type="number"
 							min={0}
 							max={100}
-							className={inputCls}
+							className="rounded-[8px]"
 							value={rolloutPercent}
 							onChange={handleRolloutPercentChange}
+							aria-label={t("admin.featureFlags.modal.rolloutLabel")}
 						/>
 					</div>
 				</div>
@@ -173,6 +178,7 @@ return (
 									key={env}
 									data-environment={env}
 									onClick={handleEnvironmentClick}
+									title={env}
 									className={cn(
 										"flex cursor-pointer items-center gap-1.5 rounded-[6px] border px-2.5 py-[5px] text-[12px] transition-all select-none",
 										selected
@@ -206,6 +212,7 @@ return (
 					<Button
 						onClick={onClose}
 						disabled={isSubmitting}
+						title={t("admin.featureFlags.modal.cancel")}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
 					>
 						{t("admin.featureFlags.modal.cancel")}
@@ -213,6 +220,7 @@ return (
 					<Button
 						onClick={handleSubmit}
 						disabled={isSubmitting || !key || environments.length === 0}
+						title={isSubmitting ? t("admin.featureFlags.modal.saving") : isEdit ? t("admin.featureFlags.modal.save") : t("admin.featureFlags.modal.create")}
 						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
 					>
 						{isSubmitting

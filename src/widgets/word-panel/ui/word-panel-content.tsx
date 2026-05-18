@@ -118,10 +118,14 @@ const MeaningsList = ({ meanings }: { meanings: readonly WordLookupMeaning[] }) 
 );
 
 const GRAMMAR_LABELS: Record<string, string> = {
-	genitive: "Род.",
-	dative: "Дат.",
-	ergative: "Эрг.",
-	instrumental: "Инстр.",
+	nominative: "ЦIерниг",
+	genitive: "Доланиг",
+	dative: "Лерг",
+	ergative: "Дийриг",
+	instrumental: "Коьчалниг",
+	substantive: "Хотталург",
+	locative: "Меттигниг",
+	comparative: "Дустург",
 	plural: "Мн.ч.",
 	obliqueStem: "Косв.",
 	verbPresent: "Наст.",
@@ -136,8 +140,8 @@ const GrammarFormsList = ({ forms }: { forms: WordLookupGrammar }) => {
 		<div className="grid grid-cols-2 gap-x-3 gap-y-1">
 			{entries.map(([key, value]) => (
 				<div key={key} className="flex gap-1.5">
-					<span className="shrink-0 text-[10.5px] text-t-3">{GRAMMAR_LABELS[key] ?? key}</span>
-					<span className="text-[11.5px] text-t-1">{value}</span>
+					<Typography tag="span" className="shrink-0 text-[10.5px] text-t-3">{GRAMMAR_LABELS[key] ?? key}</Typography>
+					<Typography tag="span" className="text-[11.5px] text-t-1">{value}</Typography>
 				</div>
 			))}
 		</div>

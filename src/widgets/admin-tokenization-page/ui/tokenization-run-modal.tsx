@@ -75,6 +75,7 @@ export const TokenizationRunModal = ({
 					<Button
 						size={"bare"}
 						onClick={onClose}
+						title={t("admin.tokenization.runModal.cancelBtn")}
 						className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
 						<X className="size-3" />
@@ -139,6 +140,7 @@ export const TokenizationRunModal = ({
 				<div className="flex gap-2 border-t border-bd-1 px-4 py-3.5">
 					<Button
 						onClick={onClose}
+						title={t("admin.tokenization.runModal.cancelBtn")}
 						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-bd-2 text-[12.5px] text-t-2 transition-colors hover:bg-surf-2"
 					>
 						{t("admin.tokenization.runModal.cancelBtn")}
@@ -146,6 +148,7 @@ export const TokenizationRunModal = ({
 					<Button
 						onClick={handleClick2}
 						disabled={isLoading}
+						title={t("admin.tokenization.runModal.runBtn")}
 						className="flex h-[34px] flex-1 items-center justify-center gap-1.5 rounded-base bg-acc text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						{isLoading ? (

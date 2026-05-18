@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 
 import { AlertCircle, ArrowLeft, ArrowRight, Lock } from "lucide-react";
 import Link from "next/link";
@@ -72,7 +73,7 @@ return (
 					>
 						{t("auth.resetPassword.step1.emailLabel")}
 					</Typography>
-					<input
+					<Input
 						id="reset-email"
 						type="email"
 						name="email"
@@ -84,8 +85,7 @@ return (
 						aria-invalid={Boolean(errorMessage)}
 						aria-describedby={errorMessage ? "reset-email-error" : undefined}
 						className={cn(
-							"h-[42px] w-full rounded-[9px] border border-bd-2 bg-panel px-[14px] text-[14px] text-t-1 outline-none transition-colors",
-							"placeholder:text-t-3 hover:border-bd-3 focus:border-acc",
+							"h-[42px] rounded-[9px] border bg-panel px-[14px] text-[14px] hover:border-bd-3",
 							errorMessage && "border-red focus:border-red",
 						)}
 					/>

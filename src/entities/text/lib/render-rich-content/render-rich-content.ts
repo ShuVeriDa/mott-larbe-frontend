@@ -4,6 +4,7 @@ export interface MarkAttrs {
 	bold?: boolean;
 	italic?: boolean;
 	underline?: boolean;
+	superscript?: boolean;
 	color?: string;
 }
 
@@ -45,6 +46,7 @@ const resolveMarks = (marks: TipTapMark[] | undefined): MarkAttrs => {
 		if (m.type === "bold") result.bold = true;
 		if (m.type === "italic") result.italic = true;
 		if (m.type === "underline") result.underline = true;
+		if (m.type === "superscript") result.superscript = true;
 		if (m.type === "textStyle") {
 			const color = (m.attrs as { color?: string } | undefined)?.color;
 			if (color) result.color = color;
@@ -113,6 +115,22 @@ export const renderRichContent = (
 			rawCursor = segEnd;
 			let cursor = 0;
 
+			// Advance past tokens that fully ended before this segment
+			while (tokenIdx < sorted.length && sorted[tokenIdx].endOffset <= segStart) {
+				tokenIdx++;
+			}
+
+			// Cross-node token: started in a previous text node, overlaps into this one.
+			// Emit the overlapping portion as a text segment preserving current marks (e.g. superscript).
+			const leadingTok = sorted[tokenIdx];
+			if (leadingTok && leadingTok.startOffset < segStart && leadingTok.endOffset > segStart) {
+				const overlapEnd = Math.min(leadingTok.endOffset - segStart, text.length);
+				segments.push({ kind: "text", value: text.slice(0, overlapEnd), marks });
+				cursor = overlapEnd;
+				if (leadingTok.endOffset <= segEnd) tokenIdx++;
+				if (cursor >= text.length) return;
+			}
+
 			while (cursor < text.length) {
 				const absPos = segStart + cursor;
 
@@ -123,13 +141,13 @@ export const renderRichContent = (
 				const tok = sorted[tokenIdx];
 				if (tok && tok.startOffset >= absPos && tok.startOffset < segEnd) {
 					const relStart = tok.startOffset - segStart;
-					const relEnd = tok.endOffset - segStart;
+					const relEnd = Math.min(tok.endOffset - segStart, text.length);
 					if (cursor < relStart) {
 						segments.push({ kind: "text", value: text.slice(cursor, relStart), marks });
 					}
 					segments.push({ kind: "token", value: text.slice(relStart, relEnd), token: tok, marks });
 					cursor = relEnd;
-					tokenIdx++;
+					if (tok.endOffset <= segEnd) tokenIdx++;
 				} else {
 					segments.push({ kind: "text", value: text.slice(cursor), marks });
 					cursor = text.length;

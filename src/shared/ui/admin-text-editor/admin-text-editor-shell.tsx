@@ -32,6 +32,7 @@ interface AdminTextEditorShellProps {
 	getPageLabel: (index: number) => string;
 	onDeletePage?: (index: number) => void;
 	topContent?: ReactNode;
+	pageHeaderContent?: ReactNode;
 	toolbarExtraItems?: ReactNode;
 	notionExtraToolbarItems?: ReactNode;
 	onEditorReady?: (editor: Editor) => void;
@@ -62,6 +63,7 @@ export const AdminTextEditorShell = ({
 	getPageLabel,
 	onDeletePage,
 	topContent,
+	pageHeaderContent,
 	toolbarExtraItems,
 	notionExtraToolbarItems,
 	onEditorReady,
@@ -139,6 +141,8 @@ export const AdminTextEditorShell = ({
 				placeholder={t("admin.texts.createPage.titlePlaceholder")}
 				onChange={onTitleChange}
 			/>
+
+			{pageHeaderContent}
 
 			<EditorToolbar
 				editor={editor}

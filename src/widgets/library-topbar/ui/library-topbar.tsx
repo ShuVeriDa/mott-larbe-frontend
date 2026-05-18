@@ -50,6 +50,7 @@ export const LibraryTopbar = ({
 					size={"bare"}
 					onClick={onRefresh}
 					aria-label={t("library.refresh")}
+					title={t("library.refresh")}
 					className=" h-[30px] w-[30px] shrink-0 items-center justify-center rounded-base border border-bd-2 bg-transparent text-t-2 transition-colors duration-100 hover:bg-surf-2 hover:text-t-1 sm:flex"
 				>
 					<RefreshIcon />

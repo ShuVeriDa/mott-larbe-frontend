@@ -83,6 +83,7 @@ export const UnknownWordRowActions = ({
 				<Button
 					size={"bare"}
 					onClick={handleClick2}
+					title={t("admin.unknownWords.row.more")}
 					className="flex size-[30px] cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-2"
 				>
 					<MoreVertical className="size-3.5" />
@@ -93,6 +94,7 @@ export const UnknownWordRowActions = ({
 						<Button
 							size={"bare"}
 							onClick={handleClick3}
+							title={t("admin.unknownWords.row.addToDictionary")}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
 							<Plus className="size-3.5 shrink-0 text-t-3" />
@@ -101,6 +103,7 @@ export const UnknownWordRowActions = ({
 						<Button
 							size={"bare"}
 							onClick={handleClick4}
+							title={t("admin.unknownWords.row.linkToLemma")}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
 							<Clock className="size-3.5 shrink-0 text-t-3" />
@@ -109,6 +112,7 @@ export const UnknownWordRowActions = ({
 						<Button
 							size={"bare"}
 							onClick={handleClick5}
+							title={t("admin.unknownWords.row.allContexts")}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2"
 						>
 							<FileText className="size-3.5 shrink-0 text-t-3" />
@@ -119,6 +123,7 @@ export const UnknownWordRowActions = ({
 							size={"bare"}
 							disabled={isDeleting}
 							onClick={handleClick6}
+							title={t("admin.unknownWords.row.delete")}
 							className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
 						>
 							<Trash2 className="size-3.5 shrink-0 text-red-t" />

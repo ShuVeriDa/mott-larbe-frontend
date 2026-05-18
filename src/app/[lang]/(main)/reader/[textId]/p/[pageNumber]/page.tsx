@@ -6,8 +6,10 @@ import {
 	getDictionary,
 	hasLocale,
 } from "@/i18n/locales";
-import { textApi } from "@/entities/text";
+import { textApi, textKeys } from "@/entities/text";
 import { ReaderPage } from "@/widgets/reader-page";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
+import { getQueryClient } from "@/shared/lib/query-client";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
 
@@ -99,7 +101,17 @@ const ReaderTextPageRoutePage = async ({
 	const page = parsePage(pageNumber);
 	if (!page) notFound();
 
-	return <ReaderPage textId={textId} pageNumber={page} />;
+	const queryClient = getQueryClient();
+	await queryClient.prefetchQuery({
+		queryKey: textKeys.page(textId, page),
+		queryFn: () => textApi.getPage(textId, page),
+	});
+
+	return (
+		<HydrationBoundary state={dehydrate(queryClient)}>
+			<ReaderPage textId={textId} pageNumber={page} />
+		</HydrationBoundary>
+	);
 };
 
 export default ReaderTextPageRoutePage;

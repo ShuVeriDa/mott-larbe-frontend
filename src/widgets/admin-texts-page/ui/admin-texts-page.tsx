@@ -2,6 +2,7 @@
 
 import { ComponentProps } from 'react';
 import { useAdminTextsPage } from "../model/use-admin-texts-page";
+import { ExportTextsModal } from "./export-texts-modal";
 import { ImportTextsModal } from "./import-texts-modal";
 import { TextsBulkBar } from "./texts-bulk-bar";
 import { TextsMobileList } from "./texts-mobile-list";
@@ -25,6 +26,7 @@ export const AdminTextsPage = () => {
 		selectedIds,
 		allSelected,
 		importOpen,
+		exportOpen,
 		data,
 		stats,
 		isLoading,
@@ -40,6 +42,7 @@ export const AdminTextsPage = () => {
 		clearSelection,
 		setPage,
 		setImportOpen,
+		setExportOpen,
 	} = state;
 
 	const selectedArray = Array.from(selectedIds);
@@ -49,6 +52,7 @@ export const AdminTextsPage = () => {
 		mutations.bulkDelete.isPending;
 
 		const handleImportClick: NonNullable<ComponentProps<typeof TextsTopbar>["onImportClick"]> = () => setImportOpen(true);
+	const handleExportClick: NonNullable<ComponentProps<typeof TextsTopbar>["onExportClick"]> = () => setExportOpen(true);
 	const handlePublish: NonNullable<ComponentProps<typeof TextsBulkBar>["onPublish"]> = () =>
 							mutations.bulkPublish.mutate(selectedArray, {
 								onSuccess: clearSelection,
@@ -64,7 +68,7 @@ export const AdminTextsPage = () => {
 	const handleClose: NonNullable<ComponentProps<typeof ImportTextsModal>["onClose"]> = () => setImportOpen(false);
 return (
 		<div className="flex min-h-0 flex-1 flex-col">
-			<TextsTopbar onImportClick={handleImportClick} />
+			<TextsTopbar onImportClick={handleImportClick} onExportClick={handleExportClick} />
 
 			<div className="overflow-y-auto px-[22px] py-4 pb-8 max-sm:px-3.5 max-sm:pb-6">
 				<TextsStatsRow stats={stats} isLoading={statsLoading} />
@@ -123,6 +127,12 @@ return (
 			</div>
 
 			{importOpen && <ImportTextsModal onClose={handleClose} />}
+			{exportOpen && (
+				<ExportTextsModal
+					preselectedIds={Array.from(selectedIds)}
+					onClose={() => setExportOpen(false)}
+				/>
+			)}
 		</div>
 	);
 };

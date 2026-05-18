@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 
 import { cn } from "@/shared/lib/cn";
 import { CEFR_LEVELS } from "@/shared/types/cefr";
@@ -63,7 +64,7 @@ export const RegisterForm = ({
 
 			<div className="mb-3.5 grid grid-cols-2 gap-3 max-[640px]:grid-cols-1">
 				<FormField label={t("auth.fields.name")} error={errors.name}>
-					<input
+					<Input
 						id="register-name"
 						type="text"
 						autoComplete="given-name"
@@ -71,12 +72,12 @@ export const RegisterForm = ({
 						placeholder={t("auth.placeholders.name")}
 						value={name}
 						onChange={handleNameChange}
-						className={cn(inputCls, errors.name && "border-red")}
+						className={cn("h-[42px] rounded-[9px] border-[0.5px] bg-surf px-3.5 text-[14px] hover:border-bd-3 max-[640px]:h-11 max-[640px]:text-[16px]", errors.name && "border-red")}
 						aria-invalid={Boolean(errors.name)}
 					/>
 				</FormField>
 				<FormField label={t("auth.fields.surname")} error={errors.surname}>
-					<input
+					<Input
 						id="register-surname"
 						type="text"
 						autoComplete="family-name"
@@ -84,7 +85,7 @@ export const RegisterForm = ({
 						placeholder={t("auth.placeholders.surname")}
 						value={surname}
 						onChange={handleSurnameChange}
-						className={cn(inputCls, errors.surname && "border-red")}
+						className={cn("h-[42px] rounded-[9px] border-[0.5px] bg-surf px-3.5 text-[14px] hover:border-bd-3 max-[640px]:h-11 max-[640px]:text-[16px]", errors.surname && "border-red")}
 						aria-invalid={Boolean(errors.surname)}
 					/>
 				</FormField>
@@ -92,7 +93,7 @@ export const RegisterForm = ({
 
 			<div className="mb-3.5">
 				<FormField label={t("auth.fields.username")} error={errors.username}>
-					<input
+					<Input
 						id="register-username"
 						type="text"
 						autoComplete="username"
@@ -100,7 +101,7 @@ export const RegisterForm = ({
 						placeholder={t("auth.placeholders.username")}
 						value={username}
 						onChange={handleUsernameChange}
-						className={cn(inputCls, errors.username && "border-red")}
+						className={cn("h-[42px] rounded-[9px] border-[0.5px] bg-surf px-3.5 text-[14px] hover:border-bd-3 max-[640px]:h-11 max-[640px]:text-[16px]", errors.username && "border-red")}
 						aria-invalid={Boolean(errors.username)}
 					/>
 				</FormField>
@@ -108,7 +109,7 @@ export const RegisterForm = ({
 
 			<div className="mb-3.5">
 				<FormField label={t("auth.fields.email")} error={errors.email}>
-					<input
+					<Input
 						id="register-email"
 						type="email"
 						inputMode="email"
@@ -117,7 +118,7 @@ export const RegisterForm = ({
 						placeholder="you@example.com"
 						value={email}
 						onChange={handleEmailChange}
-						className={cn(inputCls, errors.email && "border-red")}
+						className={cn("h-[42px] rounded-[9px] border-[0.5px] bg-surf px-3.5 text-[14px] hover:border-bd-3 max-[640px]:h-11 max-[640px]:text-[16px]", errors.email && "border-red")}
 						aria-invalid={Boolean(errors.email)}
 					/>
 				</FormField>
@@ -126,7 +127,7 @@ export const RegisterForm = ({
 			<div className="mb-3.5">
 				<FormField label={t("auth.fields.password")} error={errors.password}>
 					<div className="relative flex items-center">
-						<input
+						<Input
 							id="register-password"
 							type={showPw ? "text" : "password"}
 							autoComplete="new-password"
@@ -134,7 +135,7 @@ export const RegisterForm = ({
 							placeholder="••••••••••"
 							value={password}
 							onChange={handlePasswordChange}
-							className={cn(inputCls, "pr-11", errors.password && "border-red")}
+							className={cn("h-[42px] rounded-[9px] border-[0.5px] bg-surf px-3.5 text-[14px] hover:border-bd-3 max-[640px]:h-11 max-[640px]:text-[16px] pr-11", errors.password && "border-red")}
 							aria-invalid={Boolean(errors.password)}
 						/>
 						<Button
@@ -162,7 +163,7 @@ export const RegisterForm = ({
 					label={t("auth.fields.passwordConfirm")}
 					error={errors.password2}
 				>
-					<input
+					<Input
 						id="register-password2"
 						type={showPw ? "text" : "password"}
 						autoComplete="new-password"
@@ -170,7 +171,7 @@ export const RegisterForm = ({
 						placeholder="••••••••••"
 						value={password2}
 						onChange={handlePasswordConfirmChange}
-						className={cn(inputCls, errors.password2 && "border-red")}
+						className={cn("h-[42px] rounded-[9px] border-[0.5px] bg-surf px-3.5 text-[14px] hover:border-bd-3 max-[640px]:h-11 max-[640px]:text-[16px]", errors.password2 && "border-red")}
 						aria-invalid={Boolean(errors.password2)}
 					/>
 				</FormField>

@@ -1,5 +1,12 @@
 "use client";
-import { ArticleRich, useNoteLineGroups, usePagePhrases, type TextPageResponse } from "@/entities/text";
+import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
+import {
+	ArticleRich,
+	useNoteLineGroups,
+	usePagePhrases,
+	type TextPageResponse,
+} from "@/entities/text";
+import { usePhraseMap } from "@/features/phrase-lookup";
 import {
 	FONT_FAMILY_CLASS,
 	useReaderFontFamily,
@@ -9,6 +16,7 @@ import {
 	HIGHLIGHT_COLOR_HEX,
 	HighlightColorPicker,
 	useHighlightVisibility,
+	usePhraseColorVisibility,
 } from "@/features/reader-highlight";
 import {
 	COLUMN_WIDTH_PX,
@@ -20,18 +28,15 @@ import {
 } from "@/features/reader-text-width";
 import { useReaderTheme } from "@/features/reader-theme";
 import { useSelectToken, useWordLookupStore } from "@/features/word-lookup";
-import { usePhraseMap } from "@/features/phrase-lookup";
 import { cn } from "@/shared/lib/cn";
-import { MessageSquareMoreIcon } from "lucide-react";
-import { type MouseEvent, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useInlineNotes } from "../model/use-inline-notes";
 import { useReaderHighlights } from "../model/use-reader-highlights";
 import { ArticleHeader } from "./article-header";
+import { NoteGroupIcon } from "./note-group-icon";
 import { NoteGroupPopup } from "./note-group-popup";
 import { NoteInlinePopup } from "./note-inline-popup";
 import { ReaderProgressBar } from "./reader-progress-bar";
-import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 
 export interface ReaderBodyProps {
 	data: TextPageResponse;
@@ -46,19 +51,27 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 	const { data: phrasesData } = usePagePhrases(data.id, data.page.pageNumber);
 	const phraseMap = usePhraseMap(phrasesData);
 	const openPhraseInPopup = useWordLookupStore(s => s.openPhraseInPopup);
-	const handleSelectPhrase = useCallback(
-		(phrase: PagePhraseOccurrence, anchor: { left: number; top: number; width: number; height: number }) => {
-			openPhraseInPopup(phrase, anchor);
-		},
-		[openPhraseInPopup],
-	);
+	const handleSelectPhrase = (
+		phrase: PagePhraseOccurrence,
+		anchor: { left: number; top: number; width: number; height: number },
+	) => {
+		openPhraseInPopup(phrase, anchor);
+	};
 	const highlightsVisible = useHighlightVisibility(s => s.highlightsVisible);
+	const phraseColorVisible = usePhraseColorVisibility(
+		s => s.phraseColorVisible,
+	);
 	const theme = useReaderTheme(s => s.theme);
 	const bgColor = useReaderTheme(s => s.bgColor);
 	const fontSize = useReaderFontSize(s => s.size);
 	const fontFamily = useReaderFontFamily(s => s.family);
-	const { columnWidth, pagePadding, lineHeight, letterSpacing, paragraphSpacing } =
-		useReaderTextLayout();
+	const {
+		columnWidth,
+		pagePadding,
+		lineHeight,
+		letterSpacing,
+		paragraphSpacing,
+	} = useReaderTextLayout();
 
 	const {
 		articleRef,
@@ -95,7 +108,9 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 		? highlights.map(h => ({
 				id: h.id,
 				selectedText: h.selectedText,
-				color: HIGHLIGHT_COLOR_HEX[h.color],
+				color:
+					HIGHLIGHT_COLOR_HEX[h.color as keyof typeof HIGHLIGHT_COLOR_HEX] ??
+					h.color,
 			}))
 		: [];
 
@@ -133,9 +148,11 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 				onNoteGroupClick={handleNoteGroupClick}
 				phraseMap={phraseMap}
 				onSelectPhrase={handleSelectPhrase}
+				phraseColorVisible={phraseColorVisible}
 			/>
 			{/* Note line group icons — rendered via portal at measured positions */}
-			{typeof window !== "undefined" && noteGroups.length > 0 &&
+			{typeof window !== "undefined" &&
+				noteGroups.length > 0 &&
 				createPortal(
 					<>
 						{noteGroups.map(group => (
@@ -147,8 +164,7 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 						))}
 					</>,
 					document.body,
-				)
-			}
+				)}
 
 			{typeof window !== "undefined" &&
 				selection &&
@@ -184,43 +200,3 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 	);
 };
 
-interface NoteGroupIconProps {
-	group: { noteIds: string[]; x: number; y: number };
-	onNoteGroupClick: (noteIds: string[], x: number, y: number) => void;
-}
-
-const NoteGroupIcon = ({ group, onNoteGroupClick }: NoteGroupIconProps) => {
-	const iconRef = useRef<HTMLButtonElement>(null);
-
-	const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-		e.stopPropagation();
-		const rect = e.currentTarget.getBoundingClientRect();
-		onNoteGroupClick(group.noteIds, rect.left + rect.width / 2, rect.bottom);
-	};
-
-	return (
-		<button
-			ref={iconRef}
-			data-note-icon="true"
-			onMouseDown={e => e.preventDefault()}
-			onClick={handleClick}
-			style={{
-				position: "fixed",
-				left: group.x,
-				top: group.y,
-				zIndex: 50,
-			}}
-			className={cn(
-				"flex items-center gap-0.5 rounded p-0.5",
-				"text-amber-400 transition-colors hover:bg-amber-50 hover:text-amber-600",
-			)}
-		>
-			<MessageSquareMoreIcon size={14} strokeWidth={1.8} />
-			{group.noteIds.length > 1 && (
-				<span className="text-[10px] font-semibold leading-none">
-					{group.noteIds.length}
-				</span>
-			)}
-		</button>
-	);
-};

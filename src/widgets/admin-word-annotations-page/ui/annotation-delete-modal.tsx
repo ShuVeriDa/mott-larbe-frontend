@@ -51,7 +51,7 @@ export const AnnotationDeleteModal = ({
 				</div>
 
 				<div className="flex justify-end gap-2 max-sm:flex-col-reverse">
-					<Button variant="ghost" size="default" onClick={onClose} disabled={isDeleting}>
+					<Button variant="ghost" size="default" title={t("admin.wordAnnotations.deleteModal.cancel")} onClick={onClose} disabled={isDeleting}>
 						{t("admin.wordAnnotations.deleteModal.cancel")}
 					</Button>
 					<Button
@@ -59,6 +59,7 @@ export const AnnotationDeleteModal = ({
 						size="default"
 						onClick={onConfirm}
 						disabled={isDeleting}
+						title={isDeleting ? t("admin.wordAnnotations.deleteModal.deleting") : t("admin.wordAnnotations.deleteModal.confirm")}
 						className="h-[30px] cursor-pointer rounded-base bg-red-500 px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50"
 					>
 						{isDeleting

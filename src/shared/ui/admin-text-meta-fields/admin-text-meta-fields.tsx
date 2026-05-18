@@ -67,6 +67,7 @@ export const MetaToggle = ({
 			role="switch"
 			aria-checked={checked}
 			onClick={handleClick}
+			title={checked ? "On" : "Off"}
 			className={`relative h-[18px] w-[34px] shrink-0 rounded-full border-none p-0 transition-colors ${checked ? "bg-acc" : "bg-surf-3"}`}
 		>
 			<Typography

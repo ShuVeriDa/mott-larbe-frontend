@@ -4,6 +4,7 @@ import type { ProcessingStatus } from "@/entities/admin-text";
 import { useAdminPagePhrases } from "@/entities/admin-text-phrase";
 import { useAnnotatedFormsByPage } from "@/features/word-annotation";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
 import { AdminTextEditorShell } from "@/shared/ui/admin-text-editor";
 import type { Editor, TipTapDoc } from "@/shared/ui/notion-editor";
 import {
@@ -11,7 +12,14 @@ import {
 	WordAnnotationHighlightExtension,
 } from "@/shared/ui/notion-editor";
 import { Languages, Link2 } from "lucide-react";
-import { type ComponentProps, useEffect, useMemo, useRef, useState } from "react";
+import { Typography } from "@/shared/ui/typography";
+import {
+	type ComponentProps,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import type { PageContent } from "../model/use-admin-text-edit-page";
 import { CharsPopup } from "./chars-popup";
 import { PHRASE_FORM_EVENT } from "./phrase-translation-panel";
@@ -23,9 +31,9 @@ import {
 import { TextEditRetokenizeBar } from "./text-edit-retokenize-bar";
 import { TextEditTokenStatusBar } from "./text-edit-token-status-bar";
 import {
-	WORD_ANNOTATIONS_PANEL_EVENT,
 	WORD_ANNOTATION_DELETE_EVENT,
 	WORD_ANNOTATION_EDIT_FORM_EVENT,
+	WORD_ANNOTATIONS_PANEL_EVENT,
 } from "./word-annotations-panel";
 
 export const ANNOTATE_WORD_FORM_EVENT = "admin:annotate-word-form";
@@ -41,6 +49,7 @@ interface TextEditEditorProps {
 	textId: string;
 	onTitleChange: (value: string) => void;
 	onPageContentChange: (doc: TipTapDoc, wordCount: number) => void;
+	onPageTitleChange: (value: string) => void;
 	onAddPage: () => void;
 	onSelectPage: (index: number) => void;
 	onSaveDraft: () => void;
@@ -59,6 +68,7 @@ export const TextEditEditor = ({
 	textId,
 	onTitleChange,
 	onPageContentChange,
+	onPageTitleChange,
 	onAddPage,
 	onSelectPage,
 	onSaveDraft,
@@ -82,14 +92,20 @@ export const TextEditEditor = ({
 	}, [phraseTexts]);
 
 	// Load annotated word forms for current page to highlight in editor
-	const { data: annotatedFormsData } = useAnnotatedFormsByPage(textId, activePage + 1);
+	const { data: annotatedFormsData } = useAnnotatedFormsByPage(
+		textId,
+		activePage + 1,
+	);
 	const annotatedForms = annotatedFormsData ?? [];
 	const annotatedFormsRef = useRef(annotatedForms);
 	useEffect(() => {
 		annotatedFormsRef.current = annotatedForms;
 	}, [annotatedForms]);
 
-	const editorExtensions = useMemo(() => [PhraseHighlightExtension, WordAnnotationHighlightExtension], []);
+	const editorExtensions = useMemo(
+		() => [PhraseHighlightExtension, WordAnnotationHighlightExtension],
+		[],
+	);
 
 	useEffect(() => {
 		const editor = editorRef.current;
@@ -142,7 +158,9 @@ export const TextEditEditor = ({
 	};
 
 	const isSelectedAnnotation = (text: string) =>
-		annotatedFormsRef.current.some(f => f.normalized === text.trim().toLowerCase());
+		annotatedFormsRef.current.some(
+			f => f.normalized === text.trim().toLowerCase(),
+		);
 
 	const handleBubbleEditAnnotation = (text: string) => {
 		const normalized = text.trim().toLowerCase();
@@ -153,7 +171,9 @@ export const TextEditEditor = ({
 			editor.commands.blur();
 		}
 		document.dispatchEvent(
-			new CustomEvent<string>(WORD_ANNOTATION_EDIT_FORM_EVENT, { detail: normalized }),
+			new CustomEvent<string>(WORD_ANNOTATION_EDIT_FORM_EVENT, {
+				detail: normalized,
+			}),
 		);
 	};
 
@@ -192,13 +212,13 @@ export const TextEditEditor = ({
 	};
 
 	const phraseBtn = (
-		<button
+		<Button
 			title={t("admin.texts.editPage.addPhraseTranslation")}
 			onMouseDown={handlePhraseBtnMouseDown}
 			className="flex h-7 shrink-0 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-all duration-100 select-none hover:bg-surf-3 hover:text-t-1 active:scale-95"
 		>
 			<Languages className="size-[13px]" strokeWidth={1.7} />
-		</button>
+		</Button>
 	);
 
 	const handleAnnotateBtnMouseDown = (e: React.MouseEvent) => {
@@ -218,17 +238,17 @@ export const TextEditEditor = ({
 	};
 
 	const annotateBtn = (
-		<button
+		<Button
 			title={t("admin.texts.editPage.wordAnnotation.bubbleBtn")}
 			onMouseDown={handleAnnotateBtnMouseDown}
 			className="flex h-7 shrink-0 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-all duration-100 select-none hover:bg-surf-3 hover:text-t-1 active:scale-95"
 		>
 			<Link2 className="size-[13px]" strokeWidth={1.7} />
-		</button>
+		</Button>
 	);
 
 	const phraseListBtn = (
-		<button
+		<Button
 			title={t("admin.texts.editPage.phraseListBtn")}
 			onMouseDown={e => {
 				e.preventDefault();
@@ -237,8 +257,8 @@ export const TextEditEditor = ({
 			className="flex h-7 shrink-0 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-all duration-100 select-none hover:bg-surf-3 hover:text-t-1 active:scale-95"
 		>
 			<Languages className="size-[13px] text-violet-400" strokeWidth={1.7} />
-			<span>{t("admin.texts.editPage.phraseListBtn")}</span>
-		</button>
+			<Typography tag="span">{t("admin.texts.editPage.phraseListBtn")}</Typography>
+		</Button>
 	);
 
 	const handleWordAnnotationListBtnMouseDown = (e: React.MouseEvent) => {
@@ -247,15 +267,20 @@ export const TextEditEditor = ({
 	};
 
 	const wordAnnotationListBtn = (
-		<button
+		<Button
 			title={t("admin.texts.editPage.wordAnnotation.panelListBtn")}
 			onMouseDown={handleWordAnnotationListBtnMouseDown}
 			className="flex h-7 shrink-0 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-all duration-100 select-none hover:bg-surf-3 hover:text-t-1 active:scale-95"
 		>
 			<Link2 className="size-[13px] text-acc" strokeWidth={1.7} />
-			<span>{t("admin.texts.editPage.wordAnnotation.panelListBtn")}</span>
-		</button>
+			<Typography tag="span">{t("admin.texts.editPage.wordAnnotation.panelListBtn")}</Typography>
+		</Button>
 	);
+
+	const currentPageTitle = pages[activePage]?.title ?? "";
+	const handlePageTitleInputChange: NonNullable<
+		ComponentProps<"input">["onChange"]
+	> = e => onPageTitleChange(e.currentTarget.value);
 
 	return (
 		<AdminTextEditorShell
@@ -274,6 +299,18 @@ export const TextEditEditor = ({
 			primaryShortcutLabel={t("admin.texts.editPage.saveUpdate")}
 			onTitleChange={onTitleChange}
 			onPageContentChange={onPageContentChange}
+			pageHeaderContent={
+				<div className="border-b border-bd-1 bg-surf px-[22px] pb-2 pt-2 max-sm:px-4">
+					<input
+						type="text"
+						value={currentPageTitle}
+						onChange={handlePageTitleInputChange}
+						placeholder={t("admin.texts.editPage.pageTitlePlaceholder")}
+						maxLength={100}
+						className="w-full border-none bg-transparent text-[14px] font-normal leading-snug text-t-1 outline-none placeholder:text-t-4"
+					/>
+				</div>
+			}
 			onAddPage={onAddPage}
 			onSelectPage={onSelectPage}
 			onSaveDraft={onSaveDraft}

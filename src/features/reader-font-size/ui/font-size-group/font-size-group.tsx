@@ -47,6 +47,7 @@ export const FontSizeGroup = ({
 						size={null}
 						onClick={handleClick}
 						aria-pressed={active}
+						title={item.label}
 						className={cn(
 							"h-[26px] rounded-[5px] border-hairline border-bd-1 px-[9px]",
 							"text-[11px] font-medium leading-none transition-colors duration-100",

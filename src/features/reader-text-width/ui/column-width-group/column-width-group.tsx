@@ -7,10 +7,10 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useReaderTextLayout, type ReaderColumnWidth } from "../../model";
 
 const OPTIONS: Array<{ value: ReaderColumnWidth; label: string }> = [
-	{ value: "xs", label: "480" },
-	{ value: "sm", label: "600" },
-	{ value: "md", label: "720" },
-	{ value: "lg", label: "860" },
+	{ value: "xs", label: "XS" },
+	{ value: "sm", label: "S" },
+	{ value: "md", label: "M" },
+	{ value: "lg", label: "L" },
 	{ value: "full", label: "∞" },
 ];
 
@@ -39,6 +39,7 @@ export const ColumnWidthGroup = ({ className, buttonClassName }: ColumnWidthGrou
 						key={item.value}
 						variant="bare"
 						size={null}
+						title={item.label}
 						onClick={handleClick}
 						aria-pressed={active}
 						className={cn(

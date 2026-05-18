@@ -1,9 +1,8 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import type {
 	ProcessingStatus,
 	TokenizationTextItem,
@@ -78,37 +77,37 @@ export const TokenizationTable = ({
 	if (isLoading) {
 		return (
 			<div className="overflow-x-auto max-sm:hidden">
-				<table className="w-full border-collapse text-[12.5px]">
-					<tbody>
+				<Table className="w-full border-collapse text-[12.5px]" aria-busy="true" aria-label="Loading tokenization">
+					<TableBody>
 						{Array.from({ length: 8 }).map((_, i) => (
-							<tr key={i} className="border-b border-bd-1">
-								<td className="py-2.5 pl-3.5 pr-2" style={{ width: 30 }}>
+							<TableRow key={i} className="border-b border-bd-1">
+								<TableCell className="py-2.5 pl-3.5 pr-2" style={{ width: 30 }}>
 									<div className="size-3.5 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-2.5">
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5">
 									<div className="h-3 w-48 animate-pulse rounded bg-surf-3" />
 									<div className="mt-1.5 h-2 w-32 animate-pulse rounded bg-surf-3" />
-								</td>
+								</TableCell>
 								{Array.from({ length: 5 }).map((_, j) => (
-									<td key={j} className="px-2.5 py-2.5">
+									<TableCell key={j} className="px-2.5 py-2.5">
 										<div className="h-3 w-14 animate-pulse rounded bg-surf-3" />
-									</td>
+									</TableCell>
 								))}
-								<td style={{ width: 70 }} />
-							</tr>
+								<TableCell style={{ width: 70 }} />
+							</TableRow>
 						))}
-					</tbody>
-				</table>
+					</TableBody>
+				</Table>
 			</div>
 		);
 	}
 
 	return (
 		<div className="overflow-x-auto [&::-webkit-scrollbar]:h-[3px] [&::-webkit-scrollbar-thumb]:rounded bg-surf-4 max-sm:hidden">
-			<table className="w-full border-collapse text-[12.5px]">
-				<thead>
-					<tr>
-						<th
+			<Table className="w-full border-collapse text-[12.5px]" aria-label={t("admin.tokenization.table.textTitle")}>
+				<TableHeader>
+					<TableRow>
+						<TableHead
 							className="bg-surf-2 py-2.5 pl-3.5 pr-2 border-b border-bd-1"
 							style={{ width: 30 }}
 						>
@@ -116,49 +115,50 @@ export const TokenizationTable = ({
 								type="checkbox"
 								checked={allSelected}
 								onChange={onToggleAll}
+								aria-label={t("admin.tokenization.table.selectAll")}
 								className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
 							/>
-						</th>
-						<th className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1">
+						</TableHead>
+						<TableHead className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1">
 							{t("admin.tokenization.table.textTitle")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1"
 							style={{ width: 44 }}
 						>
 							{t("admin.tokenization.table.level")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1"
 							style={{ width: 140 }}
 						>
 							{t("admin.tokenization.table.tokens")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1"
 							style={{ width: 90 }}
 						>
 							{t("admin.tokenization.table.notFound")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1"
 							style={{ width: 90 }}
 						>
 							{t("admin.tokenization.table.ambiguous")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="bg-surf-2 px-2.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 whitespace-nowrap border-b border-bd-1"
 							style={{ width: 88 }}
 						>
 							{t("admin.tokenization.table.version")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="bg-surf-2 border-b border-bd-1"
 							style={{ width: 66 }}
 						/>
-					</tr>
-				</thead>
-				<tbody>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{items.map(item => {
 						const handleRowClick: NonNullable<
 							ComponentProps<"tr">["onClick"]
@@ -182,12 +182,12 @@ export const TokenizationTable = ({
 							ComponentProps<"button">["onClick"]
 						> = () => mutations.resetText.mutate(item.id);
 						return (
-							<tr
+							<TableRow
 								key={item.id}
 								onClick={handleRowClick}
 								className="cursor-pointer border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2 group"
 							>
-								<td
+								<TableCell
 									className="py-2.5 pl-3.5 pr-2"
 									onClick={handleCheckboxClick}
 								>
@@ -195,10 +195,11 @@ export const TokenizationTable = ({
 										type="checkbox"
 										checked={selectedIds.has(item.id)}
 										onChange={handleToggleChange}
+										aria-label={item.title}
 										className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
 									/>
-								</td>
-								<td className="px-2.5 py-2.5">
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5">
 									<div className="text-[13px] font-medium text-t-1 leading-snug line-clamp-1">
 										{item.title}
 									</div>
@@ -212,18 +213,18 @@ export const TokenizationTable = ({
 											{item.pagesCount} {t("admin.tokenization.table.pages")}
 										</Typography>
 									</div>
-								</td>
-								<td className="px-2.5 py-2.5">
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5">
 									<TokenizationLevelBadge level={item.level} />
-								</td>
-								<td className="px-2.5 py-2.5">
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5">
 									<TokenBar
 										value={item.totalTokens}
 										max={item.totalTokens}
 										color="bg-acc"
 									/>
-								</td>
-								<td className="px-2.5 py-2.5">
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5">
 									{item.notFoundCount > 0 ? (
 										<Typography
 											tag="span"
@@ -236,8 +237,8 @@ export const TokenizationTable = ({
 											—
 										</Typography>
 									)}
-								</td>
-								<td className="px-2.5 py-2.5">
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5">
 									{item.ambiguousCount > 0 ? (
 										<Typography
 											tag="span"
@@ -250,8 +251,8 @@ export const TokenizationTable = ({
 											—
 										</Typography>
 									)}
-								</td>
-								<td className="px-2.5 py-2.5">
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5">
 									{item.tokenizationVersion !== null ? (
 										<Typography
 											tag="span"
@@ -264,8 +265,8 @@ export const TokenizationTable = ({
 											—
 										</Typography>
 									)}
-								</td>
-								<td className="px-2 py-2.5" onClick={handleActionsClick}>
+								</TableCell>
+								<TableCell className="px-2 py-2.5" onClick={handleActionsClick}>
 									<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
 										{item.processingStatus === "RUNNING" ? (
 											<Button
@@ -298,12 +299,12 @@ export const TokenizationTable = ({
 											<RotateCcw className="size-[13px]" />
 										</Button>
 									</div>
-								</td>
-							</tr>
+								</TableCell>
+							</TableRow>
 						);
 					})}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	);
 };

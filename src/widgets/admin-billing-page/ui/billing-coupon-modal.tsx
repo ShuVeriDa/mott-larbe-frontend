@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { ComponentProps, useEffect, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { X } from "lucide-react";
@@ -89,6 +90,7 @@ return (
 					</Typography>
 					<Button
 						onClick={onClose}
+						title={t("admin.plans.couponModal.cancel")}
 						className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
 						<X className="size-3" />
@@ -102,11 +104,12 @@ return (
 							<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 								{t("admin.plans.couponModal.code")}
 							</Typography>
-							<input
+							<Input
 								value={form.code}
 								onChange={handleCodeChange}
 								placeholder={t("admin.plans.couponModal.codePlaceholder")}
-								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] uppercase text-t-1 outline-none placeholder:normal-case placeholder:text-t-3 focus:border-acc focus:bg-surf"
+								aria-label={t("admin.plans.couponModal.code")}
+								className="rounded-[8px] font-mono uppercase placeholder:normal-case focus:bg-surf"
 							/>
 						</div>
 
@@ -114,11 +117,12 @@ return (
 							<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 								{t("admin.plans.couponModal.name")}
 							</Typography>
-							<input
+							<Input
 								value={form.name}
 								onChange={handleNameChange}
 								placeholder={t("admin.plans.couponModal.namePlaceholder")}
-								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
+								aria-label={t("admin.plans.couponModal.name")}
+								className="rounded-[8px] focus:bg-surf"
 							/>
 						</div>
 
@@ -141,7 +145,7 @@ return (
 									{t("admin.plans.couponModal.discount")}
 								</Typography>
 								<div className="relative">
-									<input
+									<Input
 										type="number"
 										min={1}
 										max={form.type === "PERCENT" ? 100 : undefined}
@@ -149,7 +153,8 @@ return (
 										value={form.amount}
 										onChange={handleAmountChange}
 										placeholder={form.type === "PERCENT" ? "10" : "500"}
-										className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 pr-7 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
+										aria-label={t("admin.plans.couponModal.discount")}
+										className="rounded-[8px] pr-7 focus:bg-surf"
 									/>
 									<Typography tag="span" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[12px] text-t-3">
 										{form.type === "PERCENT" ? "%" : "₽"}
@@ -163,24 +168,26 @@ return (
 								<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 									{t("admin.plans.couponModal.maxUses")}
 								</Typography>
-								<input
+								<Input
 									type="number"
 									min={1}
 									value={form.maxRedemptions}
 									onChange={handleMaxRedemptionsChange}
 									placeholder="∞"
-									className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
+									aria-label={t("admin.plans.couponModal.maxUses")}
+									className="rounded-[8px] focus:bg-surf"
 								/>
 							</div>
 							<div>
 								<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 									{t("admin.plans.couponModal.expiresAt")}
 								</Typography>
-								<input
+								<Input
 									type="date"
 									value={form.validUntil}
 									onChange={handleValidUntilChange}
-									className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none focus:border-acc focus:bg-surf"
+									aria-label={t("admin.plans.couponModal.expiresAt")}
+									className="rounded-[8px] focus:bg-surf"
 								/>
 							</div>
 						</div>
@@ -191,6 +198,7 @@ return (
 				<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-[18px] py-3">
 					<Button
 						onClick={onClose}
+						title={t("admin.plans.couponModal.cancel")}
 						className="h-8 rounded-[8px] border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 					>
 						{t("admin.plans.couponModal.cancel")}
@@ -199,6 +207,7 @@ return (
 						type="submit"
 						form="coupon-form"
 						disabled={isPending || !form.code.trim()}
+						title={t("admin.plans.couponModal.save")}
 						className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 					>
 						{t("admin.plans.couponModal.save")}

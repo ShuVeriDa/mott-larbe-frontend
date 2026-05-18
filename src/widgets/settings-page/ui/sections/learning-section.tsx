@@ -106,7 +106,7 @@ export const LearningSection = ({
 						</Typography>
 					</div>
 					<div className="mt-1 flex justify-end">
-						<Button type="submit" variant="action" disabled={isPrefSaving}>
+						<Button type="submit" variant="action" disabled={isPrefSaving} title={isPrefSaving ? t("settings.common.saving") : t("settings.common.save")}>
 							{isPrefSaving
 								? t("settings.common.saving")
 								: t("settings.common.save")}
@@ -152,7 +152,7 @@ export const LearningSection = ({
 						</Select>
 					</div>
 					<div className="mt-1 flex justify-end">
-						<Button type="submit" variant="action" disabled={isGoalsSaving}>
+						<Button type="submit" variant="action" disabled={isGoalsSaving} title={isGoalsSaving ? t("settings.common.saving") : t("settings.common.save")}>
 							{isGoalsSaving
 								? t("settings.common.saving")
 								: t("settings.common.save")}

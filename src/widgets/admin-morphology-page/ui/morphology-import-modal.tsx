@@ -174,6 +174,7 @@ return (
 						<div className="flex justify-end gap-2 max-sm:flex-col-reverse">
 							<Button
 								onClick={onClose}
+								title={t("admin.morphology.importModal.cancel")}
 								className="flex h-[30px] items-center justify-center rounded-base border border-bd-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
 							>
 								{t("admin.morphology.importModal.cancel")}
@@ -181,6 +182,7 @@ return (
 							<Button
 								type="submit"
 								disabled={isLoading || !file}
+								title={isLoading ? "…" : t("admin.morphology.importModal.submit")}
 								className="flex h-[30px] items-center justify-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
 							>
 								{isLoading ? "…" : t("admin.morphology.importModal.submit")}
@@ -193,6 +195,7 @@ return (
 					<div className="flex justify-end">
 						<Button
 							onClick={onClose}
+							title={t("admin.morphology.importModal.close")}
 							className="flex h-[30px] items-center justify-center rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 						>
 							{t("admin.morphology.importModal.close")}

@@ -3,6 +3,8 @@
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
+import { Typography } from "@/shared/ui/typography";
 import {
 	CaseSensitive,
 	ChevronDown,
@@ -158,7 +160,7 @@ export const AdminTextFindReplaceBar = ({
 					{/* Find / Replace — одна ширина колонки полей; справа — палочка + замена */}
 					<div className="grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 gap-y-1.5">
 						<div className="relative col-start-1 row-start-1 min-w-0">
-							<input
+							<Input
 								ref={searchInputRef}
 								type="text"
 								value={query}
@@ -168,21 +170,23 @@ export const AdminTextFindReplaceBar = ({
 								placeholder={t(
 									"admin.texts.createPage.findReplace.findPlaceholder",
 								)}
+								aria-label={t("admin.texts.createPage.findReplace.findPlaceholder")}
 								className={cn(
-									"h-[30px] w-full rounded-base border border-bd-2 bg-surf py-0 pl-[10px] text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc",
+									"h-[30px] rounded-base bg-surf py-0 pl-[10px] text-[12.5px]",
 									matchLabel ? "pr-48" : "pr-[4.5rem]",
 								)}
 							/>
 							<div className="pointer-events-none absolute inset-y-0 right-2 flex flex-row-reverse items-center gap-1">
 								{matchLabel ? (
-									<span
+									<Typography
+										tag="span"
 										className={cn(
 											"max-w-[7.25rem] shrink-0 truncate pl-1 text-right tabular-nums select-none text-[11px]",
 											hasMatches ? "text-t-3" : "text-amb",
 										)}
 									>
 										{matchLabel}
-									</span>
+									</Typography>
 								) : null}
 								<div className="pointer-events-auto flex shrink-0 items-center gap-px">
 									<Button
@@ -237,7 +241,7 @@ export const AdminTextFindReplaceBar = ({
 							{charsPicker}
 						</div>
 						{replacePanelOpen ? (
-							<input
+							<Input
 								ref={replacementInputRef}
 								type="text"
 								value={replacement}
@@ -247,27 +251,28 @@ export const AdminTextFindReplaceBar = ({
 								placeholder={t(
 									"admin.texts.createPage.findReplace.replacePlaceholder",
 								)}
-								className="col-start-1 row-start-2 h-[30px] min-w-0 w-full rounded-base border border-bd-2 bg-surf px-[10px] text-[12.5px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
+								aria-label={t("admin.texts.createPage.findReplace.replacePlaceholder")}
+								className="col-start-1 row-start-2 h-[30px] min-w-0 rounded-base bg-surf px-[10px] text-[12.5px]"
 							/>
 						) : null}
 					</div>
 
 					{/* Hints */}
 					<div className="flex items-center gap-2.5 pt-px">
-						<span className="flex items-center gap-1 text-[11px] text-t-3">
+						<Typography tag="span" className="flex items-center gap-1 text-[11px] text-t-3">
 							<KbdChip>Enter</KbdChip>
 							{t("admin.texts.createPage.findReplace.hintNext")}
-						</span>
-						<span className="h-3 w-px bg-bd-2" />
-						<span className="flex items-center gap-1 text-[11px] text-t-3">
+						</Typography>
+						<span aria-hidden className="h-3 w-px bg-bd-2" />
+						<Typography tag="span" className="flex items-center gap-1 text-[11px] text-t-3">
 							<KbdChip>Shift+Enter</KbdChip>
 							{t("admin.texts.createPage.findReplace.hintPrev")}
-						</span>
-						<span className="h-3 w-px bg-bd-2" />
-						<span className="flex items-center gap-1 text-[11px] text-t-3">
+						</Typography>
+						<span aria-hidden className="h-3 w-px bg-bd-2" />
+						<Typography tag="span" className="flex items-center gap-1 text-[11px] text-t-3">
 							<KbdChip>Esc</KbdChip>
 							{t("admin.texts.createPage.findReplace.hintClose")}
-						</span>
+						</Typography>
 					</div>
 				</div>
 
@@ -313,6 +318,7 @@ export const AdminTextFindReplaceBar = ({
 							<Button
 								size="bare"
 								type="button"
+								title={t("admin.texts.createPage.findReplace.replace")}
 								onMouseDown={handleReplaceActiveMouseDown}
 								disabled={!hasMatches}
 								className="h-[30px] rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[0.88] disabled:opacity-35"
@@ -322,6 +328,7 @@ export const AdminTextFindReplaceBar = ({
 							<Button
 								size="bare"
 								type="button"
+								title={t("admin.texts.createPage.findReplace.replaceAll")}
 								onMouseDown={handleReplaceAllMouseDown}
 								disabled={!hasMatches}
 								className="h-[30px] rounded-base border border-acc/30 bg-acc-bg px-3 text-[12px] font-medium text-acc-t transition-colors hover:border-acc/50 hover:bg-acc/10 disabled:opacity-35"

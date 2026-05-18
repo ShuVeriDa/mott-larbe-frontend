@@ -128,6 +128,7 @@ export const ReaderTopbar = ({
 						size="bare"
 						aria-pressed={action.ariaPressed}
 						aria-label={action.ariaLabel}
+						title={action.ariaLabel}
 						disabled={action.disabled}
 						className={iconBtnClass}
 					>

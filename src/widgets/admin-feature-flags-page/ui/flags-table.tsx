@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { ComponentProps, useState } from 'react';
 import { ChevronRight, User } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
@@ -39,13 +40,13 @@ interface FlagsTableProps {
 // ── Sub-components ─────────────────────────────────────────────────────────────
 
 const SkeletonRow = () => (
-	<tr>
+	<TableRow>
 		{Array.from({ length: 8 }).map((_, i) => (
-			<td key={i} className="px-3.5 py-3">
+			<TableCell key={i} className="px-3.5 py-3">
 				<div className="h-3 animate-pulse rounded bg-surf-3" />
-			</td>
+			</TableCell>
 		))}
-	</tr>
+	</TableRow>
 );
 
 const ExpandedRow = ({
@@ -59,8 +60,8 @@ const ExpandedRow = ({
 	const items = historyQuery.data ?? [];
 
 	return (
-		<tr className="bg-surf-2">
-			<td colSpan={8} className="px-3.5 pb-3.5 pt-2.5">
+		<TableRow className="bg-surf-2">
+			<TableCell colSpan={8} className="px-3.5 pb-3.5 pt-2.5">
 				<div className="flex flex-wrap gap-4 text-[12px] text-t-2 mb-3">
 					<div>
 						<Typography tag="span" className="text-t-3">{t("admin.featureFlags.table.category")}: </Typography>
@@ -115,8 +116,8 @@ const ExpandedRow = ({
 						))}
 					</div>
 				)}
-			</td>
-		</tr>
+			</TableCell>
+		</TableRow>
 	);
 };
 
@@ -146,17 +147,18 @@ const FlagRow = ({
 
 	return (
 		<>
-			<tr className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2">
-				<td className="pl-3.5">
+			<TableRow className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2">
+				<TableCell className="pl-3.5">
 					<Button
 						onClick={handleExpandClick}
 						aria-expanded={isExpanded}
+						aria-label={flag.key}
 						className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						<ChevronRight className={cn("size-3.5 transition-transform", isExpanded && "rotate-90")} />
 					</Button>
-				</td>
-				<td className="py-3 pl-3.5">
+				</TableCell>
+				<TableCell className="py-3 pl-3.5">
 					<Typography tag="span" className="rounded-[5px] border border-bd-1 bg-surf-2 px-1.5 py-0.5 font-mono text-[11.5px] text-t-1">
 						{flag.key}
 					</Typography>
@@ -165,18 +167,18 @@ const FlagRow = ({
 							{flag.description}
 						</Typography>
 					)}
-				</td>
-				<td className="py-3 pl-3.5">
+				</TableCell>
+				<TableCell className="py-3 pl-3.5">
 					<FlagToggle enabled={flag.isEnabled} onChange={handleToggleChange} />
-				</td>
-				<td className="py-3 pl-3.5">
+				</TableCell>
+				<TableCell className="py-3 pl-3.5">
 					<div className="flex flex-wrap gap-1">
 						{flag.environments.map((env) => (
 							<FlagEnvChip key={env} env={env} />
 						))}
 					</div>
-				</td>
-				<td className="py-3 pl-3.5">
+				</TableCell>
+				<TableCell className="py-3 pl-3.5">
 					<div className="flex items-center gap-2">
 						<div className="h-[5px] flex-1 overflow-hidden rounded-[3px] bg-surf-3">
 							<div
@@ -188,8 +190,8 @@ const FlagRow = ({
 							{flag.rolloutPercent}%
 						</Typography>
 					</div>
-				</td>
-				<td className="py-3 pl-3.5">
+				</TableCell>
+				<TableCell className="py-3 pl-3.5">
 					{flag.overridesCount > 0 ? (
 						<Typography tag="span" className="inline-flex cursor-pointer items-center gap-[3px] rounded px-1.5 py-[1.5px] text-[10.5px] bg-pur-bg text-pur-t hover:opacity-80">
 							<User className="size-2.5" />
@@ -198,11 +200,11 @@ const FlagRow = ({
 					) : (
 						<Typography tag="span" className="text-t-3">—</Typography>
 					)}
-				</td>
-				<td className="py-3 pl-3.5 text-[11.5px] text-t-3">
+				</TableCell>
+				<TableCell className="py-3 pl-3.5 text-[11.5px] text-t-3">
 					{formatDate(flag.updatedAt)}
-				</td>
-				<td className="py-3 pr-3.5">
+				</TableCell>
+				<TableCell className="py-3 pr-3.5">
 					<FlagRowActions
 						flag={flag}
 						onEdit={onEdit}
@@ -211,8 +213,8 @@ const FlagRow = ({
 						onAddOverride={onAddOverride}
 						t={t}
 					/>
-				</td>
-			</tr>
+				</TableCell>
+			</TableRow>
 			{isExpanded && <ExpandedRow key={`${flag.id}-exp`} flag={flag} t={t} />}
 		</>
 	);
@@ -245,38 +247,38 @@ export const FlagsTable = ({
 
 	return (
 		<div className="overflow-x-auto max-sm:hidden">
-			<table className="w-full border-collapse text-[12.5px]">
-				<thead>
-					<tr>
-						<th className="w-9 pb-2 pl-3.5" />
-						<th className="pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1">
+			<Table className="border-collapse text-[12.5px]" aria-label={t("admin.featureFlags.table.key")}>
+				<TableHeader>
+					<TableRow>
+						<TableHead className="w-9 pb-2 pl-3.5" />
+						<TableHead className="pb-2 pl-3.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1">
 							{t("admin.featureFlags.table.key")}
-						</th>
-						<th className="w-[100px] pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1">
+						</TableHead>
+						<TableHead className="w-[100px] pb-2 pl-3.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1">
 							{t("admin.featureFlags.table.status")}
-						</th>
-						<th className="w-[160px] pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1">
+						</TableHead>
+						<TableHead className="w-[160px] pb-2 pl-3.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1">
 							{t("admin.featureFlags.table.envs")}
-						</th>
-						<th className="w-[90px] pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1">
+						</TableHead>
+						<TableHead className="w-[90px] pb-2 pl-3.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1">
 							{t("admin.featureFlags.table.rollout")}
-						</th>
-						<th className="w-[76px] pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1">
+						</TableHead>
+						<TableHead className="w-[76px] pb-2 pl-3.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1">
 							{t("admin.featureFlags.table.overrides")}
-						</th>
-						<th className="w-[90px] pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1">
+						</TableHead>
+						<TableHead className="w-[90px] pb-2 pl-3.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1">
 							{t("admin.featureFlags.table.updated")}
-						</th>
-						<th className="w-16 pb-2 pr-3.5 border-b border-bd-1" />
-					</tr>
-				</thead>
-				<tbody>
+						</TableHead>
+						<TableHead className="w-16 pb-2 pr-3.5 border-b border-bd-1" />
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{isLoading
 						? Array.from({ length: 5 }).map((_, i) => <SkeletonRow key={i} />)
 						: grouped.map(([category, flags]) => (
 							<>
-								<tr key={`cat-${category}`} className="bg-surf-2">
-									<td
+								<TableRow key={`cat-${category}`} className="bg-surf-2">
+									<TableCell
 										colSpan={8}
 										className="border-b border-bd-1 px-3.5 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3"
 									>
@@ -284,8 +286,8 @@ export const FlagsTable = ({
 										<Typography tag="span" className="ml-2 text-t-3">
 											{t("admin.featureFlags.table.categoryCount", { count: flags.length })}
 										</Typography>
-									</td>
-								</tr>
+									</TableCell>
+								</TableRow>
 								{flags.map((flag) => (
 									<FlagRow
 										key={flag.id}
@@ -302,8 +304,8 @@ export const FlagsTable = ({
 								))}
 							</>
 						))}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	);
 };

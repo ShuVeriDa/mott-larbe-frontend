@@ -27,6 +27,7 @@ export const AdminTextMetaPrimaryActionsSection = ({
 			<Button
 				onClick={onPrimaryAction}
 				disabled={isSaving}
+				title={primaryLabel}
 				className="flex h-9 w-full items-center justify-center gap-1.5 rounded-[8px] bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				{primaryIcon}
@@ -35,6 +36,7 @@ export const AdminTextMetaPrimaryActionsSection = ({
 			<Button
 				onClick={onSecondaryAction}
 				disabled={isSaving}
+				title={secondaryLabel}
 				className="flex h-[34px] w-full items-center justify-center gap-1.5 rounded-[8px] border border-bd-2 bg-transparent text-[12.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-3 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				{secondaryIcon}

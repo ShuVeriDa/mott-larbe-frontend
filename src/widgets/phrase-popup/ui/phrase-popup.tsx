@@ -2,6 +2,7 @@
 
 import { usePhraseLookupStore, type PhrasePopupAnchor } from "@/features/phrase-lookup";
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
@@ -61,9 +62,9 @@ export const PhrasePopup = () => {
         {/* Header */}
         <div className="border-b border-hairline border-bd-1 px-3.5 pt-3.5 pb-2.5">
           <div className="mb-0.5 flex items-center gap-2">
-            <span className="rounded-[4px] border-hairline border-violet-300/40 bg-violet-50 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-violet-500 dark:border-violet-700/40 dark:bg-violet-950 dark:text-violet-400">
+            <Typography tag="span" className="rounded-[4px] border-hairline border-violet-300/40 bg-violet-50 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-violet-500 dark:border-violet-700/40 dark:bg-violet-950 dark:text-violet-400">
               {t("reader.phrase.label")}
-            </span>
+            </Typography>
           </div>
           <div className="text-[16px] font-semibold tracking-[-0.2px] text-t-1">
             {phrase.original}

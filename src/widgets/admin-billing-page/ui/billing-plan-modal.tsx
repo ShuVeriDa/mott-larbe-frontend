@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { ComponentProps, useEffect, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { X } from "lucide-react";
@@ -116,6 +117,7 @@ return (
 					</Typography>
 					<Button
 						onClick={onClose}
+						title={t("admin.plans.planModal.cancel")}
 						className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
 						<X className="size-3" />
@@ -129,11 +131,12 @@ return (
 							<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 								{t("admin.plans.planModal.name")}
 							</Typography>
-							<input
+							<Input
 								value={form.name}
 								onChange={handleNameChange}
 								placeholder={t("admin.plans.planModal.namePlaceholder")}
-								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
+								aria-label={t("admin.plans.planModal.name")}
+								className="rounded-[8px] focus:bg-surf"
 							/>
 						</div>
 
@@ -174,14 +177,15 @@ return (
 							<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 								{t("admin.plans.planModal.price")} ₽
 							</Typography>
-							<input
+							<Input
 								type="number"
 								min={0}
 								step="0.01"
 								value={form.priceCents}
 								onChange={handlePriceChange}
 								placeholder="690"
-								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
+								aria-label={`${t("admin.plans.planModal.price")} ₽`}
+								className="rounded-[8px] focus:bg-surf"
 							/>
 						</div>
 
@@ -189,11 +193,12 @@ return (
 							<Typography tag="label" className="mb-1.5 block text-[11.5px] font-medium text-t-2">
 								{t("admin.plans.planModal.description")}
 							</Typography>
-							<input
+							<Input
 								value={form.description}
 								onChange={handleDescriptionChange}
 								placeholder={t("admin.plans.planModal.descriptionPlaceholder")}
-								className="h-[34px] w-full rounded-[8px] border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc focus:bg-surf"
+								aria-label={t("admin.plans.planModal.description")}
+								className="rounded-[8px] focus:bg-surf"
 							/>
 						</div>
 
@@ -219,6 +224,7 @@ return (
 				<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-[18px] py-3">
 					<Button
 						onClick={onClose}
+						title={t("admin.plans.planModal.cancel")}
 						className="h-8 rounded-[8px] border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 					>
 						{t("admin.plans.planModal.cancel")}
@@ -227,6 +233,7 @@ return (
 						type="submit"
 						form="plan-form"
 						disabled={isPending || !form.name.trim()}
+						title={t("admin.plans.planModal.save")}
 						className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 					>
 						{t("admin.plans.planModal.save")}

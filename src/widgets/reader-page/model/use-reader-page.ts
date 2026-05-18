@@ -5,7 +5,7 @@ import { useReaderFocusMode } from "@/features/reader-focus-mode";
 import { useReaderSettingsSync } from "@/features/reader-settings-sync";
 import { useI18n } from "@/shared/lib/i18n";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type RailPanel = "word" | "settings" | "notes" | "toc" | "bookmarks" | null;
 
@@ -42,30 +42,24 @@ export const useReaderPage = (textId: string, pageNumber: number) => {
 		});
 	}, []);
 
-	const handleNavigate = useCallback(
-		(page: number) => {
-			router.push(`/${lang}/reader/${textId}/p/${page}`);
-		},
-		[router, lang, textId],
-	);
+	const handleNavigate = (page: number) => {
+		router.push(`/${lang}/reader/${textId}/p/${page}`);
+	};
 
-	const handleTogglePanel = useCallback(
-		(panel: "settings" | "notes" | "toc" | "bookmarks") => {
-			setRailPanel(prev => {
-				if (prev === panel) return null;
-				closePanel();
-				closeSheet();
-				return panel;
-			});
-		},
-		[closePanel, closeSheet],
-	);
+	const handleTogglePanel = (panel: "settings" | "notes" | "toc" | "bookmarks") => {
+		setRailPanel(prev => {
+			if (prev === panel) return null;
+			closePanel();
+			closeSheet();
+			return panel;
+		});
+	};
 
-	const handleToggleSettings = useCallback(() => handleTogglePanel("settings"), [handleTogglePanel]);
-	const handleToggleNotes = useCallback(() => handleTogglePanel("notes"), [handleTogglePanel]);
-	const handleToggleToc = useCallback(() => handleTogglePanel("toc"), [handleTogglePanel]);
-	const handleToggleBookmarks = useCallback(() => handleTogglePanel("bookmarks"), [handleTogglePanel]);
-	const handleCloseRail = useCallback(() => setRailPanel(null), []);
+	const handleToggleSettings = () => handleTogglePanel("settings");
+	const handleToggleNotes = () => handleTogglePanel("notes");
+	const handleToggleToc = () => handleTogglePanel("toc");
+	const handleToggleBookmarks = () => handleTogglePanel("bookmarks");
+	const handleCloseRail = () => setRailPanel(null);
 
 	const settingsOpen = railPanel === "settings";
 	const notesOpen = railPanel === "notes";

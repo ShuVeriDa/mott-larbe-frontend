@@ -10,6 +10,7 @@ import { AnnotateWordFormDialog } from "@/features/word-annotation";
 import Link from "next/link";
 import { type ComponentProps, useEffect, useState } from "react";
 import { useAdminTextEditPage } from "../model/use-admin-text-edit-page";
+import { ExportTextModal } from "./export-text-modal";
 import { TextEditEditor, ANNOTATE_WORD_FORM_EVENT } from "./text-edit-editor";
 import { TextEditMetaPanel } from "./text-edit-meta-panel";
 import { TextEditTopbar } from "./text-edit-topbar";
@@ -24,6 +25,7 @@ interface AdminTextEditPageProps {
 export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 	const { t, lang } = useI18n();
 	const [isMetaPanelVisible, setIsMetaPanelVisible] = useState(true);
+	const [exportOpen, setExportOpen] = useState(false);
 	const [annotateWordForm, setAnnotateWordForm] = useState<string | null>(null);
 	const [annotateInitialTokenId, setAnnotateInitialTokenId] = useState<string | undefined>(undefined);
 
@@ -78,6 +80,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 		showDeleteModal,
 		handleTitleChange,
 		handlePageContentChange,
+		handlePageTitleChange,
 		handleAddPage,
 		handleSelectPage,
 		handleCoverSelect,
@@ -179,6 +182,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 	> = () => setShowDeleteModal(true);
 	const handleCancel = () => setShowDeleteModal(false);
 	const handleToggleMetaPanel = () => setIsMetaPanelVisible(v => !v);
+	const handleExportClick: NonNullable<ComponentProps<typeof TextEditTopbar>["onExportClick"]> = () => setExportOpen(true);
 
 	return (
 		<>
@@ -195,6 +199,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					onSaveDraft={handleSaveDraft}
 					onSaveAndUpdate={handleSaveAndUpdate}
 					onToggleMetaPanel={handleToggleMetaPanel}
+					onExportClick={handleExportClick}
 				/>
 			}
 			editor={
@@ -209,6 +214,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					textId={textId}
 					onTitleChange={handleTitleChange}
 					onPageContentChange={handlePageContentChange}
+					onPageTitleChange={handlePageTitleChange}
 					onAddPage={handleAddPage}
 					onSelectPage={handleSelectPage}
 					onSaveDraft={handleSaveDraft}
@@ -283,6 +289,12 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 				initialSelectedTokenId={annotateInitialTokenId}
 				open
 				onOpenChange={open => { if (!open) { setAnnotateWordForm(null); setAnnotateInitialTokenId(undefined); } }}
+			/>
+		)}
+		{exportOpen && (
+			<ExportTextModal
+				textId={textId}
+				onClose={() => setExportOpen(false)}
 			/>
 		)}
 </>

@@ -48,6 +48,7 @@ return (
 						key={level}
 						disabled={isPending}
 						onClick={handleClick}
+						title={t(`reader.learnStatus.${level}`)}
 						className={cn(
 							"flex h-[30px] flex-1 items-center justify-center rounded-base",
 							"border-hairline border-bd-1 bg-surf-2 text-[11px] font-semibold",

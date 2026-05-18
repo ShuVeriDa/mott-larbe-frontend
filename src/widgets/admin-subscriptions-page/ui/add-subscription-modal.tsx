@@ -5,6 +5,7 @@ import { adminSubscriptionApi } from "@/entities/admin-subscription";
 import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { Select } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
 import { useQuery } from "@tanstack/react-query";
@@ -70,6 +71,7 @@ export const AddSubscriptionModal = ({
 				<Button
 					size={"bare"}
 					onClick={onClose}
+					title={t("admin.subscriptions.modal.cancel")}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
 					<X className="size-3" />
@@ -84,11 +86,13 @@ export const AddSubscriptionModal = ({
 					>
 						{t("admin.subscriptions.modal.emailOrId")}
 					</Typography>
-					<input
+					<Input
 						value={email}
 						onChange={handleChange}
 						placeholder="zargan.d@gmail.com"
-						className="h-[34px] w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc focus:bg-surf"
+						type="email"
+						aria-label={t("admin.subscriptions.modal.emailOrId")}
+						className="rounded-lg focus:bg-surf"
 					/>
 				</div>
 
@@ -171,11 +175,12 @@ export const AddSubscriptionModal = ({
 					>
 						{t("admin.subscriptions.modal.reason")}
 					</Typography>
-					<input
+					<Input
 						value={reason}
 						onChange={handleChange5}
 						placeholder={t("admin.subscriptions.modal.reasonPlaceholder")}
-						className="h-[34px] w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc focus:bg-surf"
+						aria-label={t("admin.subscriptions.modal.reason")}
+						className="rounded-lg focus:bg-surf"
 					/>
 				</div>
 			</form>
@@ -183,6 +188,7 @@ export const AddSubscriptionModal = ({
 			<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-4 py-3">
 				<Button
 					onClick={onClose}
+					title={t("admin.subscriptions.modal.cancel")}
 					className="h-8 rounded-lg border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 				>
 					{t("admin.subscriptions.modal.cancel")}
@@ -190,6 +196,7 @@ export const AddSubscriptionModal = ({
 				<Button
 					onClick={handleSubmit}
 					disabled={mutations.create.isPending || !planId || !email.trim()}
+					title={mutations.create.isPending ? t("admin.subscriptions.modal.saving") : t("admin.subscriptions.modal.addConfirm")}
 					className="h-8 rounded-lg bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 				>
 					{mutations.create.isPending

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 
 import type { Editor } from "@tiptap/react";
 import { type ReactNode, type Ref } from "react";
@@ -53,14 +54,14 @@ export const SlashMenu = ({ items, command, ref }: SlashMenuProps) => {
 								i === selectedIndex ? "bg-surf-2" : "hover:bg-surf-2"
 							}`}
 						>
-							<span className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-t-2">
+							<Typography tag="span" className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-t-2">
 								{item.icon}
-							</span>
-							<span className="flex-1 text-[13.5px] text-t-1">
+							</Typography>
+							<Typography tag="span" className="flex-1 text-[13.5px] text-t-1">
 								{item.title}
-							</span>
+							</Typography>
 							{item.hint && (
-								<span className="text-[11px] text-t-4">{item.hint}</span>
+								<Typography tag="span" className="text-[11px] text-t-4">{item.hint}</Typography>
 							)}
 						</Button>
 					</div>

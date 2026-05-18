@@ -159,10 +159,11 @@ export const PhraseCardHeaderEdit = ({
 					size="default"
 					onClick={onSave}
 					disabled={isSaving || !translation.trim()}
+					title={isSaving ? t("admin.textPhrases.saving") : t("admin.textPhrases.save")}
 				>
 					{isSaving ? t("admin.textPhrases.saving") : t("admin.textPhrases.save")}
 				</Button>
-				<Button variant="ghost" size="default" onClick={onCancel} disabled={isSaving}>
+				<Button variant="ghost" size="default" onClick={onCancel} disabled={isSaving} title={t("admin.textPhrases.cancel")}>
 					{t("admin.textPhrases.cancel")}
 				</Button>
 			</div>

@@ -2,6 +2,7 @@
 
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import type { AdminUserListItem, RoleName } from "@/entities/admin-user";
 import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
 import { UserAvatar } from "./user-avatar";
@@ -59,14 +60,14 @@ export const UsersTable = ({
 	if (isLoading) {
 		return (
 			<div className="overflow-x-auto max-sm:hidden">
-				<table className="w-full border-collapse text-[13px]">
-					<tbody>
+				<Table className="w-full border-collapse text-[13px]" aria-busy="true" aria-label="Loading users">
+					<TableBody>
 						{Array.from({ length: 8 }).map((_, i) => (
-							<tr key={i} className="border-b border-bd-1">
-								<td className="px-2.5 py-3 pl-3.5" style={{ width: 30 }}>
+							<TableRow key={i} className="border-b border-bd-1">
+								<TableCell className="px-2.5 py-3 pl-3.5" style={{ width: 30 }}>
 									<div className="size-3.5 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-3">
+								</TableCell>
+								<TableCell className="px-2.5 py-3">
 									<div className="flex items-center gap-2">
 										<div className="size-7 animate-pulse rounded-full bg-surf-3" />
 										<div className="space-y-1">
@@ -74,99 +75,101 @@ export const UsersTable = ({
 											<div className="h-2 w-36 animate-pulse rounded bg-surf-3" />
 										</div>
 									</div>
-								</td>
-								<td className="px-2.5 py-3" style={{ width: 110 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-3" style={{ width: 110 }}>
 									<div className="h-4 w-16 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-3" style={{ width: 140 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-3" style={{ width: 140 }}>
 									<div className="h-4 w-20 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-3" style={{ width: 90 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-3" style={{ width: 90 }}>
 									<div className="h-4 w-12 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-3" style={{ width: 100 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-3" style={{ width: 100 }}>
 									<div className="h-3 w-16 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-3 pr-3.5" style={{ width: 100 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-3 pr-3.5" style={{ width: 100 }}>
 									<div className="h-3 w-20 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td style={{ width: 70 }} />
-							</tr>
+								</TableCell>
+								<TableCell style={{ width: 70 }} />
+							</TableRow>
 						))}
-					</tbody>
-				</table>
+					</TableBody>
+				</Table>
 			</div>
 		);
 	}
 
 	return (
 		<div className="overflow-x-auto [&::-webkit-scrollbar]:h-0 max-sm:hidden">
-			<table className="w-full border-collapse text-[13px]">
-				<thead>
-					<tr className="border-b border-bd-1">
-						<th className="px-2.5 py-[9px] pl-3.5" style={{ width: 30 }}>
+			<Table className="w-full border-collapse text-[13px]" aria-label={t("admin.users.table.user")}>
+				<TableHeader>
+					<TableRow className="border-b border-bd-1">
+						<TableHead className="px-2.5 py-[9px] pl-3.5" style={{ width: 30 }}>
 							<input
 								type="checkbox"
 								checked={allSelected}
 								onChange={onToggleAll}
+								aria-label={t("admin.users.table.selectAll")}
 								className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
 							/>
-						</th>
-						<th className="px-2.5 py-[9px] text-left text-[11px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap">
+						</TableHead>
+						<TableHead className="px-2.5 py-[9px] text-left text-[11px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap">
 							{t("admin.users.table.user")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="px-2.5 py-[9px] text-left text-[11px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap"
 							style={{ width: 110 }}
 						>
 							{t("admin.users.table.status")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="px-2.5 py-[9px] text-left text-[11px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap"
 							style={{ width: 140 }}
 						>
 							{t("admin.users.table.roles")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="px-2.5 py-[9px] text-left text-[11px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap"
 							style={{ width: 90 }}
 						>
 							{t("admin.users.table.plan")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="px-2.5 py-[9px] text-left text-[11px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap"
 							style={{ width: 100 }}
 						>
 							{t("admin.users.table.activity")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="col-reg px-2.5 py-[9px] pr-3.5 text-left text-[11px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap max-md:hidden"
 							style={{ width: 100 }}
 						>
 							{t("admin.users.table.registered")}
-						</th>
-						<th style={{ width: 70 }} />
-					</tr>
-				</thead>
-				<tbody>
+						</TableHead>
+						<TableHead style={{ width: 70 }} />
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{users.map((user) => {
 					  const handleCheckboxClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
 					  const handleToggleChange: NonNullable<ComponentProps<"input">["onChange"]> = () => onToggleRow(user.id);
 					  const handleActionsClick: NonNullable<ComponentProps<"td">["onClick"]> = (e) => e.stopPropagation();
 					  return (
-						<tr
+						<TableRow
 							key={user.id}
 							className="cursor-pointer border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2"
 						>
-							<td className="px-2.5 py-[9px] pl-3.5" onClick={handleCheckboxClick}>
+							<TableCell className="px-2.5 py-[9px] pl-3.5" onClick={handleCheckboxClick}>
 								<input
 									type="checkbox"
 									checked={selectedIds.has(user.id)}
 									onChange={handleToggleChange}
+									aria-label={`${user.name} ${user.surname}`}
 									className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
 								/>
-							</td>
-							<td className="px-2.5 py-[9px]">
+							</TableCell>
+							<TableCell className="px-2.5 py-[9px]">
 								<div className="flex items-center gap-2.5">
 									<UserAvatar
 										name={user.name}
@@ -182,11 +185,11 @@ export const UsersTable = ({
 										<div className="mt-px text-[11px] text-t-3">{user.email}</div>
 									</div>
 								</div>
-							</td>
-							<td className="px-2.5 py-[9px]">
+							</TableCell>
+							<TableCell className="px-2.5 py-[9px]">
 								<UserStatusBadge status={user.status} labels={statusLabels} />
-							</td>
-							<td className="px-2.5 py-[9px]">
+							</TableCell>
+							<TableCell className="px-2.5 py-[9px]">
 								<div className="flex flex-wrap gap-[3px]">
 									{user.roles.map((role) => (
 										<UserRoleChip
@@ -196,32 +199,32 @@ export const UsersTable = ({
 										/>
 									))}
 								</div>
-							</td>
-							<td className="px-2.5 py-[9px]">
+							</TableCell>
+							<TableCell className="px-2.5 py-[9px]">
 								<UserPlanChip plan={user.plan} labels={planLabels} />
-							</td>
-							<td
+							</TableCell>
+							<TableCell
 								className={`px-2.5 py-[9px] text-[11.5px] ${user.status === "BLOCKED" || user.status === "DELETED" ? "text-t-4" : "text-t-3"}`}
 							>
 								{user.lastActiveAt
 									? formatActivity(user.lastActiveAt)
 									: "—"}
-							</td>
-							<td className="px-2.5 py-[9px] pr-3.5 text-[11.5px] text-t-3 max-md:hidden">
+							</TableCell>
+							<TableCell className="px-2.5 py-[9px] pr-3.5 text-[11.5px] text-t-3 max-md:hidden">
 								{new Date(user.signupAt).toLocaleDateString("ru-RU", {
 									day: "numeric",
 									month: "short",
 									year: "numeric",
 								})}
-							</td>
-							<td className="px-2.5 py-[9px]" onClick={handleActionsClick}>
+							</TableCell>
+							<TableCell className="px-2.5 py-[9px]" onClick={handleActionsClick}>
 								<UserRowActions user={user} mutations={mutations} />
-							</td>
-						</tr>
+							</TableCell>
+						</TableRow>
 					);
 					})}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	);
 };

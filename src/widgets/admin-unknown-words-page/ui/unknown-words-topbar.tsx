@@ -31,6 +31,7 @@ export const UnknownWordsTopbar = ({
 			<div className="ml-auto flex items-center gap-2">
 				<Button
 					onClick={onExport}
+					title={t("admin.unknownWords.export")}
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
 					<ArrowRight className="size-3" />
@@ -40,6 +41,7 @@ export const UnknownWordsTopbar = ({
 				</Button>
 				<Button
 					onClick={onClearAll}
+					title={t("admin.unknownWords.clearAll")}
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-red-t transition-colors hover:border-red/30 hover:bg-red-bg"
 				>
 					<Trash2 className="size-3" />

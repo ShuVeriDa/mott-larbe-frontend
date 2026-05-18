@@ -210,6 +210,7 @@ export const TextEditMetaPanel = ({
 				</div>
 				<Button
 					onClick={handleDeleteRequest}
+					title={t("admin.texts.editPage.deleteText")}
 					className="flex w-full items-center justify-center gap-1.5 rounded-[6px] border border-red/25 bg-transparent py-[7px] text-[11.5px] text-red transition-colors hover:border-red/40 hover:bg-red-muted"
 				>
 					<Trash2 className="size-3" />

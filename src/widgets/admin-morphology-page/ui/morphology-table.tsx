@@ -1,9 +1,8 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import type { MorphRule } from "@/entities/morph-rule";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -163,13 +162,13 @@ const StatusBadge = ({ isActive }: { isActive: boolean }) =>
 	);
 
 const SkeletonRow = () => (
-	<tr className="border-b border-bd-1">
+	<TableRow className="border-b border-bd-1">
 		{Array.from({ length: 10 }).map((_, i) => (
-			<td key={i} className="px-3.5 py-2.5">
+			<TableCell key={i} className="px-3.5 py-2.5">
 				<div className="h-3 animate-pulse rounded bg-surf-3" />
-			</td>
+			</TableCell>
 		))}
-	</tr>
+	</TableRow>
 );
 
 // ─── Main table ────────────────────────────────────────────────────────────
@@ -206,10 +205,10 @@ export const MorphologyTable = ({
 	return (
 		<div className="hidden overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors sm:block">
 			<div className="overflow-x-auto [-webkit-overflow-scrolling:touch]">
-				<table className="w-full border-collapse text-[12.5px]">
-					<thead>
-						<tr className="border-b border-bd-1 bg-surf-2">
-							<th className="w-8 py-2.5 pl-4">
+				<Table className="border-collapse text-[12.5px]" aria-label={t("admin.morphology.table.pattern")}>
+					<TableHeader>
+						<TableRow className="border-b border-bd-1 bg-surf-2">
+							<TableHead className="w-8 py-2.5 pl-4">
 								<input
 									type="checkbox"
 									checked={allSelected}
@@ -217,37 +216,38 @@ export const MorphologyTable = ({
 										if (el) el.indeterminate = someSelected;
 									}}
 									onChange={onToggleAll}
+									aria-label={t("admin.morphology.table.selectAll")}
 									className="size-[15px] cursor-pointer appearance-none rounded bg-surf accent-acc"
 								/>
-							</th>
-							<th className="w-8 px-3.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="w-8 px-3.5 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								#
-							</th>
-							<th className="px-3.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-3.5 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.morphology.table.pattern")}
-							</th>
-							<th className="px-3.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-3.5 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.morphology.table.replace")}
-							</th>
-							<th className="px-3.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-3.5 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.morphology.table.pos")}
-							</th>
-							<th className="px-3.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-3.5 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.morphology.table.type")}
-							</th>
-							<th className="px-3.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-3.5 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.morphology.table.priority")}
-							</th>
-							<th className="px-3.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-3.5 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.morphology.table.matches")}
-							</th>
-							<th className="px-3.5 py-2.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-3.5 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.morphology.table.status")}
-							</th>
-							<th className="px-3.5 py-2.5" />
-						</tr>
-					</thead>
-					<tbody>
+							</TableHead>
+							<TableHead className="px-3.5 py-2.5" />
+						</TableRow>
+					</TableHeader>
+					<TableBody>
 						{isLoading
 							? Array.from({ length: 8 }).map((_, i) => <SkeletonRow key={i} />)
 							: items.map((rule, idx) => {
@@ -264,47 +264,48 @@ export const MorphologyTable = ({
 										ComponentProps<"button">["onClick"]
 									> = () => onDelete(rule.id);
 									return (
-										<tr
+										<TableRow
 											key={rule.id}
 											className={cn(
 												"group border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2",
 												!rule.isActive && "opacity-50",
 											)}
 										>
-											<td className="py-2.5 pl-4">
+											<TableCell className="py-2.5 pl-4">
 												<input
 													type="checkbox"
 													checked={selectedIds.has(rule.id)}
 													onChange={handleChange}
+													aria-label={rule.suffix}
 													className="size-[15px] cursor-pointer appearance-none rounded border border-bd-2 bg-surf accent-acc checked:bg-acc"
 												/>
-											</td>
-											<td className="px-3.5 py-2.5 text-[12px] text-t-3">
+											</TableCell>
+											<TableCell className="px-3.5 py-2.5 text-[12px] text-t-3">
 												{idx + 1}
-											</td>
-											<td className="px-3.5 py-2.5">
+											</TableCell>
+											<TableCell className="px-3.5 py-2.5">
 												<PatternCell rule={rule} />
-											</td>
-											<td className="px-3.5 py-2.5">
+											</TableCell>
+											<TableCell className="px-3.5 py-2.5">
 												<ReplaceCell rule={rule} />
-											</td>
-											<td className="px-3.5 py-2.5">
+											</TableCell>
+											<TableCell className="px-3.5 py-2.5">
 												<PosCell pos={rule.pos} />
-											</td>
-											<td className="whitespace-nowrap px-3.5 py-2.5 text-[12px] text-t-3">
+											</TableCell>
+											<TableCell className="whitespace-nowrap px-3.5 py-2.5 text-[12px] text-t-3">
 												{t(`admin.morphology.ruleType.${rule.type}` as never) ||
 													rule.type}
-											</td>
-											<td className="px-3.5 py-2.5">
+											</TableCell>
+											<TableCell className="px-3.5 py-2.5">
 												<PriorityCell priority={rule.priority} />
-											</td>
-											<td className="px-3.5 py-2.5">
+											</TableCell>
+											<TableCell className="px-3.5 py-2.5">
 												<MatchBar count={rule.matchCount} max={maxMatches} />
-											</td>
-											<td className="px-3.5 py-2.5">
+											</TableCell>
+											<TableCell className="px-3.5 py-2.5">
 												<StatusBadge isActive={rule.isActive} />
-											</td>
-											<td className="px-3.5 py-2.5">
+											</TableCell>
+											<TableCell className="px-3.5 py-2.5">
 												<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
 													{!rule.isActive && (
 														<Button
@@ -333,12 +334,12 @@ export const MorphologyTable = ({
 														<Trash2 className="size-[14px]" />
 													</Button>
 												</div>
-											</td>
-										</tr>
+											</TableCell>
+										</TableRow>
 									);
 								})}
-					</tbody>
-				</table>
+					</TableBody>
+				</Table>
 			</div>
 		</div>
 	);

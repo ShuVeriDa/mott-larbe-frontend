@@ -166,6 +166,7 @@ export const MorphologyMobileList = ({
 							{!rule.isActive && (
 								<Button
 									onClick={handleToggleActiveClick}
+									title={t("admin.morphology.row.activate")}
 									className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf-2 px-2.5 text-[11.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 								>
 									{t("admin.morphology.row.activate")}
@@ -173,12 +174,14 @@ export const MorphologyMobileList = ({
 							)}
 							<Button
 								onClick={handleEditClick}
+								title={t("admin.morphology.row.edit")}
 								className="flex size-[30px] items-center justify-center rounded-base border border-bd-2 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 							>
 								<Pencil className="size-[13px]" />
 							</Button>
 							<Button
 								onClick={handleDeleteClick}
+								title={t("admin.morphology.row.delete")}
 								className="flex size-[30px] items-center justify-center rounded-base border border-red/20 bg-surf-2 text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 							>
 								<Trash2 className="size-[13px]" />

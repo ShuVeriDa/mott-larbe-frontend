@@ -21,6 +21,7 @@ export const UserMenuLogoutSection = ({
 			<Button
 				disabled={isPending}
 				onClick={onLogout}
+				title={t("nav.userMenu.logout")}
 				className={cn(
 					itemCls,
 					"justify-start hover:bg-danger/8 focus-visible:bg-danger/8 disabled:opacity-50",

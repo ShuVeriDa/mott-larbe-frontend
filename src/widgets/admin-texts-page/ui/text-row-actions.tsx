@@ -123,7 +123,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 
 			{/* Dropdown */}
 			<div ref={ref} className="relative">
-				<Button size={"bare"} onClick={handleClick3} className={btnClass}>
+				<Button size={"bare"} onClick={handleClick3} className={btnClass} title={t("admin.texts.actions.more")}>
 					<MoreVertical className="size-[14px]" />
 				</Button>
 
@@ -137,18 +137,18 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 							{t("admin.texts.actions.versions")}
 						</Link>
 
-						<Button onClick={handleClick5} className={dropItemClass}>
+						<Button onClick={handleClick5} className={dropItemClass} title={t("admin.texts.actions.tokenize")}>
 							{t("admin.texts.actions.tokenize")}
 						</Button>
 
 						<div className="my-[3px] h-px bg-bd-1" />
 
 						{isPublished ? (
-							<Button onClick={handleClick6} className={dropItemClass}>
+							<Button onClick={handleClick6} className={dropItemClass} title={t("admin.texts.actions.unpublish")}>
 								{t("admin.texts.actions.unpublish")}
 							</Button>
 						) : (
-							<Button onClick={handleClick7} className={dropItemClass}>
+							<Button onClick={handleClick7} className={dropItemClass} title={t("admin.texts.actions.publish")}>
 								{t("admin.texts.actions.publish")}
 							</Button>
 						)}
@@ -166,6 +166,7 @@ export const TextRowActions = ({ text, mutations }: TextRowActionsProps) => {
 						<Button
 							size={"bare"}
 							onClick={handleClick9}
+							title={t("admin.texts.actions.delete")}
 							className="flex w-full cursor-pointer items-center gap-2 rounded-[6px] px-2.5 py-[7px] text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg"
 						>
 							{t("admin.texts.actions.delete")}

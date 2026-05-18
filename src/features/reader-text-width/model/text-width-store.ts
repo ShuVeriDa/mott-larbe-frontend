@@ -9,18 +9,20 @@ export type ReaderLineHeight = "compact" | "normal" | "relaxed";
 export type ReaderLetterSpacing = "tight" | "normal" | "wide";
 export type ReaderParagraphSpacing = "none" | "compact" | "normal" | "relaxed";
 
+// Column width in ch units — scales proportionally with font size and screen
 export const COLUMN_WIDTH_PX: Record<ReaderColumnWidth, string> = {
-	xs: "480px",
-	sm: "600px",
-	md: "720px",
-	lg: "860px",
+	xs: "min(55ch, 100%)",
+	sm: "min(66ch, 100%)",
+	md: "min(76ch, 100%)",
+	lg: "min(90ch, 100%)",
 	full: "100%",
 };
 
+// Page padding as responsive tailwind classes with vw-based fallback for mobile
 export const PAGE_PADDING_CLASS: Record<ReaderPagePadding, string> = {
-	compact: "px-4 max-md:px-2",
-	normal: "px-12 max-md:px-4",
-	wide: "px-20 max-md:px-6",
+	compact: "px-[4vw] sm:px-[3vw] lg:px-[2vw]",
+	normal: "px-[8vw] sm:px-[6vw] lg:px-[4vw]",
+	wide: "px-[14vw] sm:px-[10vw] lg:px-[6vw]",
 };
 
 export const LINE_HEIGHT_VALUE: Record<ReaderLineHeight, number> = {

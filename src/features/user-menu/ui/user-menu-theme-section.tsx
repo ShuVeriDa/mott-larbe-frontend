@@ -33,6 +33,7 @@ export const UserMenuThemeSection = ({
 					role="radio"
 					aria-checked={active}
 					aria-label={t(labelKey)}
+					title={t(labelKey)}
 					onClick={onSetTheme}
 					className={cn(
 						"px-2 py-[5px] w-7.5 h-7.5 rounded-full transition-colors",

@@ -12,6 +12,7 @@ import { SubscriptionProviderBadge } from "./subscription-provider-badge";
 
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 interface Props {
 	items: AdminSubscriptionListItem[];
 	selectedId: string | null;
@@ -67,11 +68,11 @@ export const SubscriptionsTable = ({
 	if (isLoading) {
 		return (
 			<div className="overflow-x-auto [&::-webkit-scrollbar]:h-0 max-sm:hidden">
-				<table className="w-full border-collapse text-[13px]">
-					<tbody>
+				<Table className="border-collapse text-[13px]" aria-busy="true" aria-label="Loading subscriptions">
+					<TableBody>
 						{Array.from({ length: 10 }).map((_, i) => (
-							<tr key={i} className="border-b border-bd-1">
-								<td className="px-3.5 py-[9px]">
+							<TableRow key={i} className="border-b border-bd-1">
+								<TableCell className="px-3.5 py-[9px]">
 									<div className="flex items-center gap-2">
 										<div className="size-7 animate-pulse rounded-full bg-surf-3" />
 										<div className="space-y-1">
@@ -79,63 +80,63 @@ export const SubscriptionsTable = ({
 											<div className="h-2 w-36 animate-pulse rounded bg-surf-3" />
 										</div>
 									</div>
-								</td>
+								</TableCell>
 								{Array.from({ length: 5 }).map((_, j) => (
-									<td key={j} className="px-3.5 py-[9px]">
+									<TableCell key={j} className="px-3.5 py-[9px]">
 										<div className="h-4 w-16 animate-pulse rounded bg-surf-3" />
-									</td>
+									</TableCell>
 								))}
-								<td className="px-3.5 py-[9px]" />
-							</tr>
+								<TableCell className="px-3.5 py-[9px]" />
+							</TableRow>
 						))}
-					</tbody>
-				</table>
+					</TableBody>
+				</Table>
 			</div>
 		);
 	}
 
 	return (
 		<div className="overflow-x-auto [&::-webkit-scrollbar]:h-0 max-sm:hidden">
-			<table className="w-full border-collapse text-[12.5px]">
-				<thead>
-					<tr className="border-b border-bd-1">
-						<th
-							className="px-3.5 py-[9px] text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap"
+			<Table className="border-collapse text-[12.5px]" aria-label={t("admin.subscriptions.table.user")}>
+				<TableHeader>
+					<TableRow className="border-b border-bd-1">
+						<TableHead
+							className="px-3.5 py-[9px] text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap"
 							style={{ width: 200 }}
 						>
 							{t("admin.subscriptions.table.user")}
-						</th>
-						<th className="px-3.5 py-[9px] text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap">
+						</TableHead>
+						<TableHead className="px-3.5 py-[9px] text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap">
 							{t("admin.subscriptions.table.plan")}
-						</th>
-						<th className="px-3.5 py-[9px] text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap">
+						</TableHead>
+						<TableHead className="px-3.5 py-[9px] text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap">
 							{t("admin.subscriptions.table.status")}
-						</th>
-						<th className="px-3.5 py-[9px] text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap max-md:hidden">
+						</TableHead>
+						<TableHead className="px-3.5 py-[9px] text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap max-md:hidden">
 							{t("admin.subscriptions.table.provider")}
-						</th>
-						<th className="px-3.5 py-[9px] text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap max-sm:hidden">
+						</TableHead>
+						<TableHead className="px-3.5 py-[9px] text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap max-sm:hidden">
 							{t("admin.subscriptions.table.nextBilling")}
-						</th>
-						<th className="px-3.5 py-[9px] text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap">
+						</TableHead>
+						<TableHead className="px-3.5 py-[9px] text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 whitespace-nowrap">
 							{t("admin.subscriptions.table.amount")}
-						</th>
-						<th
+						</TableHead>
+						<TableHead
 							className="px-3.5 py-[9px] pr-3.5 text-right"
 							style={{ width: 120 }}
 						/>
-					</tr>
-				</thead>
-				<tbody>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{items.length === 0 ? (
-						<tr>
-							<td
+						<TableRow>
+							<TableCell
 								colSpan={7}
 								className="px-3.5 py-7 text-center text-[12.5px] text-t-3"
 							>
 								{t("admin.subscriptions.table.empty")}
-							</td>
-						</tr>
+							</TableCell>
+						</TableRow>
 					) : (
 						items.map((sub) => {
 							const isSelected = sub.id === selectedId;
@@ -149,7 +150,7 @@ export const SubscriptionsTable = ({
 							const handleExtendClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onExtend(sub.id);
 							const handleCancelClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onCancel(sub.id);
 							return (
-								<tr
+								<TableRow
 									key={sub.id}
 									onClick={handleRowClick}
 									className={cn(
@@ -158,7 +159,7 @@ export const SubscriptionsTable = ({
 									)}
 								>
 									{/* User */}
-									<td className="px-3.5 py-[9px]">
+									<TableCell className="px-3.5 py-[9px]">
 										<div className="flex items-center gap-2">
 											<div className="flex size-[26px] shrink-0 items-center justify-center rounded-full bg-surf-3 text-[9.5px] font-bold text-t-2">
 												{(sub.user.name[0] ?? "") + (sub.user.surname[0] ?? "")}
@@ -177,31 +178,31 @@ export const SubscriptionsTable = ({
 												</div>
 											</div>
 										</div>
-									</td>
+									</TableCell>
 
 									{/* Plan */}
-									<td className="px-3.5 py-[9px]">
+									<TableCell className="px-3.5 py-[9px]">
 										<SubscriptionPlanChip
 											plan={sub.plan.type}
 											label={sub.plan.type ? (planLabels[sub.plan.type] ?? sub.plan.name) : sub.plan.name}
 										/>
-									</td>
+									</TableCell>
 
 									{/* Status */}
-									<td className="px-3.5 py-[9px]">
+									<TableCell className="px-3.5 py-[9px]">
 										<SubscriptionStatusBadge
 											status={sub.status}
 											label={statusLabels[sub.status]}
 										/>
-									</td>
+									</TableCell>
 
 									{/* Provider */}
-									<td className="px-3.5 py-[9px] max-md:hidden">
+									<TableCell className="px-3.5 py-[9px] max-md:hidden">
 										<SubscriptionProviderBadge provider={sub.provider} />
-									</td>
+									</TableCell>
 
 									{/* Next billing */}
-									<td className="px-3.5 py-[9px] max-sm:hidden">
+									<TableCell className="px-3.5 py-[9px] max-sm:hidden">
 										<Typography tag="span"
 											className={cn(
 												"text-[12.5px]",
@@ -214,15 +215,15 @@ export const SubscriptionsTable = ({
 												? formatDate(sub.endDate)
 												: formatDate(sub.endDate)}
 										</Typography>
-									</td>
+									</TableCell>
 
 									{/* Amount */}
-									<td className="px-3.5 py-[9px] text-[12.5px] font-medium text-t-1">
+									<TableCell className="px-3.5 py-[9px] text-[12.5px] font-medium text-t-1">
 										{formatAmount(sub.payments)}
-									</td>
+									</TableCell>
 
 									{/* Actions */}
-									<td
+									<TableCell
 										className="px-3.5 py-[9px] pr-3.5 text-right"
 										onClick={handleActionsClick}
 									>
@@ -244,13 +245,13 @@ export const SubscriptionsTable = ({
 												</Button>
 											)}
 										</div>
-									</td>
-								</tr>
+									</TableCell>
+								</TableRow>
 							);
 						})
 					)}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	);
 };

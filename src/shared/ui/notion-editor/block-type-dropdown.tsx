@@ -59,6 +59,7 @@ export const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 		<div className="relative">
 			<Button
 				onMouseDown={handleMouseDown}
+				title={currentLabel}
 				className="flex h-7 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 select-none"
 			>
 				{currentLabel}
@@ -101,6 +102,7 @@ export const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 									<Button
 										key={b.value}
 										onMouseDown={handleItemMouseDown}
+										title={b.label}
 										className={`flex w-[calc(100%-8px)] items-center gap-2 mx-1 rounded-[6px] px-2 py-[5px] text-left transition-colors ${
 											current === b.value ? "bg-surf-2" : "hover:bg-surf-2"
 										}`}
@@ -113,9 +115,9 @@ export const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 												{b.iconLabel}
 											</Typography>
 										</span>
-										<span className="flex-1 text-[13.5px] text-t-1">{b.label}</span>
+										<Typography tag="span" className="flex-1 text-[13.5px] text-t-1">{b.label}</Typography>
 										{b.hint && (
-											<span className="text-[11px] text-t-4">{b.hint}</span>
+											<Typography tag="span" className="text-[11px] text-t-4">{b.hint}</Typography>
 										)}
 									</Button>
 								);

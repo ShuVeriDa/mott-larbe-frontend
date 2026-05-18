@@ -53,6 +53,7 @@ export const RunProcessModal = ({
 						</Typography>
 						<Button
 							onClick={onClose}
+							title={t("admin.texts.versions.runModal.cancel")}
 							className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 						>
 							<X className="size-3" />
@@ -90,6 +91,7 @@ export const RunProcessModal = ({
 						<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-4 py-3">
 							<Button
 								onClick={onClose}
+								title={t("admin.texts.versions.runModal.cancel")}
 								className="flex h-[30px] items-center rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							>
 								{t("admin.texts.versions.runModal.cancel")}
@@ -97,6 +99,7 @@ export const RunProcessModal = ({
 							<Button
 								type="submit"
 								disabled={isPending}
+								title={isPending ? t("admin.texts.versions.runModal.running") : t("admin.texts.versions.runModal.run")}
 								className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 							>
 								{isPending && (

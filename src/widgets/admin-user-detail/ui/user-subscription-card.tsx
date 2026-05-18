@@ -63,7 +63,7 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.userDetail.subscription.title")}
 				</Typography>
-				<Button onClick={onManage} className="border-none bg-transparent p-0 text-[11.5px] text-acc-t transition-opacity hover:opacity-70">
+				<Button onClick={onManage} title={t("admin.userDetail.subscription.manage")} className="border-none bg-transparent p-0 text-[11.5px] text-acc-t transition-opacity hover:opacity-70">
 					{t("admin.userDetail.subscription.manage")}
 				</Button>
 			</div>
@@ -110,6 +110,7 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 									<div className="flex gap-1">
 										<Button
 											onClick={handleExtendToggleClick}
+											title={t("admin.userDetail.subscription.extend")}
 											className="flex h-[26px] items-center rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 										>
 											{t("admin.userDetail.subscription.extend")}
@@ -117,6 +118,7 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 										<Button
 											onClick={handleCancelClick}
 											disabled={cancel.isPending}
+											title={t("admin.userDetail.subscription.cancel")}
 											className="flex h-[26px] items-center rounded-base border border-red/25 bg-transparent px-2.5 text-[11.5px] font-medium text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
 										>
 											{t("admin.userDetail.subscription.cancel")}
@@ -137,6 +139,7 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 											<Button
 												onClick={handleExtendConfirmClick}
 												disabled={extend.isPending}
+												title={t("admin.userDetail.subscription.extend")}
 												className="flex h-[26px] items-center rounded-base bg-acc px-2.5 text-[11.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 											>
 												OK

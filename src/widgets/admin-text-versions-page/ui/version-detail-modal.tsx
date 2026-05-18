@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { ComponentProps, ReactNode, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -101,9 +102,9 @@ const PagesTab = ({
 	version: VersionData;
 	t: ReturnType<typeof useI18n>["t"];
 }) => (
-	<table className="w-full border-collapse text-[12px]">
-		<thead>
-			<tr>
+	<Table className="w-full border-collapse text-[12px]" aria-label={t("admin.texts.versions.modal.pages")}>
+		<TableHeader>
+			<TableRow>
 				{[
 					t("admin.texts.versions.modal.colPage"),
 					t("admin.texts.versions.modal.colTokens"),
@@ -111,29 +112,29 @@ const PagesTab = ({
 					t("admin.texts.versions.modal.colChars"),
 					t("admin.texts.versions.modal.colStatus"),
 				].map((h) => (
-					<th
+					<TableHead
 						key={h}
 						className="border-b border-bd-1 bg-surf-2 px-2.5 py-1.5 text-left text-[10px] font-semibold uppercase tracking-[0.4px] text-t-3"
 					>
 						{h}
-					</th>
+					</TableHead>
 				))}
-			</tr>
-		</thead>
-		<tbody>
+			</TableRow>
+		</TableHeader>
+		<TableBody>
 			{version.pages.map((page) => (
-				<tr key={page.pageId} className="hover:bg-surf-2">
-					<td className="border-b border-bd-1 px-2.5 py-2 text-t-2">{page.pageNumber}</td>
-					<td className="border-b border-bd-1 px-2.5 py-2 tabular-nums text-t-2">{page.tokenCount.toLocaleString()}</td>
-					<td className="border-b border-bd-1 px-2.5 py-2 tabular-nums text-t-2">{page.wordCount.toLocaleString()}</td>
-					<td className="border-b border-bd-1 px-2.5 py-2 tabular-nums text-t-2">{page.charCount.toLocaleString()}</td>
-					<td className={cn("border-b border-bd-1 px-2.5 py-2 font-medium", PageStatusClass[page.status])}>
+				<TableRow key={page.pageId} className="hover:bg-surf-2">
+					<TableCell className="border-b border-bd-1 px-2.5 py-2 text-t-2">{page.pageNumber}</TableCell>
+					<TableCell className="border-b border-bd-1 px-2.5 py-2 tabular-nums text-t-2">{page.tokenCount.toLocaleString()}</TableCell>
+					<TableCell className="border-b border-bd-1 px-2.5 py-2 tabular-nums text-t-2">{page.wordCount.toLocaleString()}</TableCell>
+					<TableCell className="border-b border-bd-1 px-2.5 py-2 tabular-nums text-t-2">{page.charCount.toLocaleString()}</TableCell>
+					<TableCell className={cn("border-b border-bd-1 px-2.5 py-2 font-medium", PageStatusClass[page.status])}>
 						{page.status}
-					</td>
-				</tr>
+					</TableCell>
+				</TableRow>
 			))}
-		</tbody>
-	</table>
+		</TableBody>
+	</Table>
 );
 
 const LogTab = ({
@@ -230,6 +231,7 @@ export const VersionDetailModal = ({
 						</Typography>
 						<Button
 							onClick={onClose}
+							title={t("admin.texts.versions.modal.close")}
 							className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 						>
 							<X className="size-3" />
@@ -244,6 +246,7 @@ export const VersionDetailModal = ({
 								<Button
 									key={key}
 									onClick={handleTabClick}
+									title={label}
 									className={cn(
 										"-mb-px border-b-2 px-3 py-2.5 text-[12.5px] transition-colors",
 										tab === key
@@ -280,6 +283,7 @@ export const VersionDetailModal = ({
 					<div className="flex shrink-0 items-center justify-end gap-2 border-t border-bd-1 px-4 py-3 max-sm:px-4 max-sm:pb-5">
 						<Button
 							onClick={onClose}
+							title={t("admin.texts.versions.modal.close")}
 							className="flex h-[30px] items-center rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 						>
 							{t("admin.texts.versions.modal.close")}
@@ -287,6 +291,7 @@ export const VersionDetailModal = ({
 						{version && (
 							<Button
 								onClick={handleDownloadClick}
+								title={t("admin.texts.versions.modal.download")}
 								className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							>
 								<Download className="size-3" />
@@ -297,6 +302,7 @@ export const VersionDetailModal = ({
 							<Button
 								onClick={handleRetryClick}
 								disabled={isRetrying}
+								title={isRetrying ? t("admin.texts.versions.modal.retrying") : t("admin.texts.versions.modal.retry")}
 								className="flex h-[30px] items-center gap-1.5 rounded-base bg-amb px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 							>
 								{isRetrying && <Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
@@ -307,6 +313,7 @@ export const VersionDetailModal = ({
 							<Button
 								onClick={handleRestoreClick}
 								disabled={isRestoring}
+								title={isRestoring ? t("admin.texts.versions.modal.restoring") : t("admin.texts.versions.modal.restore")}
 								className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 							>
 								{isRestoring && <Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}

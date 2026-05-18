@@ -77,6 +77,7 @@ export const AdminTextPhrasesPage = () => {
 						variant="action"
 						size="default"
 						onClick={handleCreateOpen}
+						title={t("admin.textPhrases.newPhrase")}
 					>
 						<Plus className="size-[11px]" strokeWidth={2.5} />
 						{t("admin.textPhrases.newPhrase")}

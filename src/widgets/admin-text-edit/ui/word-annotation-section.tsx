@@ -89,6 +89,7 @@ export const WordAnnotationSection = () => {
 			<Button
 				disabled={!canSave}
 				onClick={handleSave}
+				title={isPending ? t("admin.texts.editPage.wordAnnotation.saving") : t("admin.texts.editPage.wordAnnotation.save")}
 				className="flex w-full items-center justify-center rounded-base bg-acc px-3 py-[7px] text-[11.5px] font-medium text-white transition-opacity hover:opacity-80 disabled:opacity-40"
 			>
 				{isPending

@@ -1,6 +1,7 @@
 "use client";
 
 import { Checkbox } from "@/shared/ui/checkbox";
+import { Typography } from "@/shared/ui/typography";
 import type { TokenOccurrence } from "../api/types";
 
 interface TokenOccurrenceItemProps {
@@ -23,15 +24,15 @@ export const TokenOccurrenceItem = ({
 				onCheckedChange={handleCheckedChange}
 				className="mt-0.5 shrink-0"
 			/>
-			<span className="text-[12px] leading-normal text-t-2">
+			<Typography tag="span" className="text-[12px] leading-normal text-t-2">
 				{occurrence.before ? (
-					<span className="text-t-3">{occurrence.before} </span>
+					<Typography tag="span" className="text-t-3">{occurrence.before} </Typography>
 				) : null}
-				<span className="font-semibold text-t-1">{occurrence.word}</span>
+				<Typography tag="span" className="font-semibold text-t-1">{occurrence.word}</Typography>
 				{occurrence.after ? (
-					<span className="text-t-3"> {occurrence.after}</span>
+					<Typography tag="span" className="text-t-3"> {occurrence.after}</Typography>
 				) : null}
-			</span>
+			</Typography>
 		</label>
 	);
 };

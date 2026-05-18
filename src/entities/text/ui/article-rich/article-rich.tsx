@@ -43,6 +43,7 @@ export interface ArticleRichProps {
 	onNoteGroupClick?: (noteIds: string[], x: number, y: number) => void;
 	phraseMap?: PhraseMap;
 	onSelectPhrase?: (phrase: PagePhraseOccurrence, anchor: { left: number; top: number; width: number; height: number }) => void;
+	phraseColorVisible?: boolean;
 }
 
 // ── Highlight ranges ──────────────────────────────────────────────────────────
@@ -126,10 +127,13 @@ interface ParagraphProps {
 	onSelectToken: (token: TextToken, event: MouseEvent<HTMLSpanElement>) => void;
 	phraseMap?: PhraseMap;
 	onSelectPhrase?: (phrase: PagePhraseOccurrence, anchor: { left: number; top: number; width: number; height: number }) => void;
+	phraseColorVisible?: boolean;
 	tag: "p" | "blockquote";
 	className?: string;
 	style?: CSSProperties;
 }
+
+const PHRASE_HIGHLIGHT_COLOR = "rgba(167, 139, 250, 0.18)"; // violet-400/18
 
 const Paragraph = ({
 	segments,
@@ -138,6 +142,7 @@ const Paragraph = ({
 	onSelectToken,
 	phraseMap,
 	onSelectPhrase,
+	phraseColorVisible,
 	tag: Tag,
 	className,
 	style,
@@ -146,6 +151,7 @@ const Paragraph = ({
 	let paraOffset = 0;
 	let keyCounter = 0;
 	let lastTokenPosition: number | null = null;
+	let lastToken: TextToken | null = null;
 
 	// Buffer for current phrase group
 	type PhraseSegment = { node: ReactNode; kind: "token" | "gap" };
@@ -164,7 +170,12 @@ const Paragraph = ({
 		};
 
 		nodes.push(
-			<span key={keyCounter++} data-phrase={phraseId} className="cursor-pointer rounded-sm">
+			<span
+				key={keyCounter++}
+				data-phrase={phraseId}
+				className="cursor-pointer rounded-sm"
+				style={phraseColorVisible ? { backgroundColor: PHRASE_HIGHLIGHT_COLOR, borderRadius: "3px", padding: "0 1px" } : undefined}
+			>
 				{phraseBuffer.map((seg, i) =>
 					seg.kind === "gap" ? (
 						<span
@@ -187,7 +198,8 @@ const Paragraph = ({
 		currentPhrase = null;
 	};
 
-	for (const seg of segments) {
+	for (let segIdx = 0; segIdx < segments.length; segIdx++) {
+		const seg = segments[segIdx];
 		const segText = seg.value;
 		const segLen = segText.length;
 		const segStart = paraOffset;
@@ -201,7 +213,7 @@ const Paragraph = ({
 			continue;
 		}
 
-		// Token segment
+		// Token segment — look ahead to collect any trailing superscript segments
 		if (seg.kind === "token") {
 			const tok = seg.token!;
 			const tokPhrase = phraseMap?.get(tok.position) ?? null;
@@ -212,14 +224,25 @@ const Paragraph = ({
 			// Start new phrase
 			if (tokPhrase && onSelectPhrase && !currentPhrase) currentPhrase = tokPhrase;
 
+			// Collect trailing superscript segments that belong to this token
+			const supParts: RichSegment[] = [];
+			let lookahead = segIdx + 1;
+			while (lookahead < segments.length && segments[lookahead].kind === "text" && segments[lookahead].marks.superscript) {
+				supParts.push(segments[lookahead]);
+				lookahead++;
+			}
+
 			const hlForToken = allRanges.find(r => r.start <= segStart && segEnd <= r.end);
 			const tokenEl = (
 				<ArticleToken
 					key={tok.id}
 					token={tok}
+					displayText={seg.value !== tok.original ? seg.value : undefined}
 					active={activeTokenId === tok.id}
 					onSelect={onSelectToken}
-				/>
+				>
+					{supParts.map((s, i) => <sup key={i}>{s.value}</sup>)}
+				</ArticleToken>
 			);
 			const wrapped = hlForToken
 				? <mark key={keyCounter++} {...makeMarkProps(hlForToken)}>{hasMarks(seg.marks) ? wrapMarksAround(tokenEl, seg.marks, keyCounter++) : tokenEl}</mark>
@@ -231,6 +254,16 @@ const Paragraph = ({
 				nodes.push(wrapped);
 			}
 			lastTokenPosition = tok.position;
+			lastToken = tok;
+			paraOffset += segLen;
+			// Skip the superscript segments we already consumed
+			for (const s of supParts) paraOffset += s.value.length;
+			segIdx += supParts.length;
+			continue;
+		}
+
+		// Superscript text segment not preceded by token (shouldn't normally occur, skip)
+		if (seg.kind === "text" && seg.marks.superscript) {
 			paraOffset += segLen;
 			continue;
 		}
@@ -302,6 +335,7 @@ export const ArticleRich = ({
 	onNoteGroupClick,
 	phraseMap,
 	onSelectPhrase,
+	phraseColorVisible = false,
 }: ArticleRichProps) => {
 	const paragraphs = renderRichContent(contentRich, tokens);
 
@@ -334,6 +368,7 @@ export const ArticleRich = ({
 						onSelectToken={onSelectToken}
 						phraseMap={phraseMap}
 						onSelectPhrase={onSelectPhrase}
+						phraseColorVisible={phraseColorVisible}
 						tag={isBlockquote ? "blockquote" : "p"}
 						className={cn(isBlockquote && "border-l-[3px] border-acc/40 pl-4 text-t-1")}
 						style={{
@@ -349,28 +384,34 @@ export const ArticleRich = ({
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-const hasMarks = (marks: { bold?: boolean; italic?: boolean; color?: string }) =>
-	marks.bold || marks.italic || !!marks.color;
+const hasMarks = (marks: { bold?: boolean; italic?: boolean; superscript?: boolean; color?: string }) =>
+	marks.bold || marks.italic || marks.superscript || !!marks.color;
 
 const wrapMarks = (
 	text: string,
-	marks: { bold?: boolean; italic?: boolean; color?: string },
+	marks: { bold?: boolean; italic?: boolean; superscript?: boolean; color?: string },
 	key: number,
 ): ReactNode => {
 	const style: CSSProperties = marks.color ? { color: marks.color } : {};
-	if (marks.bold && marks.italic) return <strong key={key}><em style={style}>{text}</em></strong>;
-	if (marks.bold) return <strong key={key} style={style}>{text}</strong>;
-	if (marks.italic) return <em key={key} style={style}>{text}</em>;
-	if (marks.color) return <span key={key} style={style}>{text}</span>;
-	return text;
+	let node: ReactNode = marks.superscript ? <sup key={key}>{text}</sup> : text;
+	if (marks.superscript && marks.bold) node = <strong key={key}><sup>{text}</sup></strong>;
+	else if (marks.superscript && marks.italic) node = <em key={key}><sup>{text}</sup></em>;
+	else if (marks.bold && marks.italic) node = <strong key={key}><em style={style}>{text}</em></strong>;
+	else if (marks.bold) node = <strong key={key} style={style}>{text}</strong>;
+	else if (marks.italic) node = <em key={key} style={style}>{text}</em>;
+	else if (marks.color) node = <span key={key} style={style}>{text}</span>;
+	return node;
 };
 
 const wrapMarksAround = (
 	child: ReactNode,
-	marks: { bold?: boolean; italic?: boolean; color?: string },
+	marks: { bold?: boolean; italic?: boolean; superscript?: boolean; color?: string },
 	key: number,
 ): ReactNode => {
 	const style: CSSProperties = marks.color ? { color: marks.color } : {};
+	if (marks.superscript && marks.bold) return <strong key={key}><sup>{child}</sup></strong>;
+	if (marks.superscript && marks.italic) return <em key={key}><sup>{child}</sup></em>;
+	if (marks.superscript) return <sup key={key}>{child}</sup>;
 	if (marks.bold && marks.italic) return <strong key={key}><em style={style}>{child}</em></strong>;
 	if (marks.bold) return <strong key={key} style={style}>{child}</strong>;
 	if (marks.italic) return <em key={key} style={style}>{child}</em>;

@@ -25,6 +25,7 @@ export const DictionaryBulkBar = ({
 		<div className="ml-auto flex items-center gap-1.5">
 			<Button
 				onClick={onExport}
+				title={t("admin.dictionary.bulk.export")}
 				className="flex h-[26px] cursor-pointer items-center gap-1 rounded-[6px] border border-bd-2 bg-surf px-2.5 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 			>
 				<Download className="size-[11px]" />
@@ -33,6 +34,7 @@ export const DictionaryBulkBar = ({
 			<Button
 				onClick={onDelete}
 				disabled={isDeleting}
+				title={t("admin.dictionary.bulk.delete")}
 				className="flex h-[26px] cursor-pointer items-center gap-1 rounded-[6px] bg-red-500 px-2.5 text-[12px] font-medium text-white transition-opacity hover:opacity-[.88] disabled:opacity-50"
 			>
 				<Trash2 className="size-[11px]" />
@@ -40,6 +42,7 @@ export const DictionaryBulkBar = ({
 			</Button>
 			<Button
 				onClick={onClear}
+				title={t("admin.dictionary.bulk.clear")}
 				className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-3 transition-colors hover:border-bd-3 hover:text-t-1"
 			>
 				<X className="size-3" />

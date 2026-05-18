@@ -4,6 +4,7 @@ import { useReaderTheme } from "@/features/reader-theme";
 import { THEME_SWATCHES } from "../lib/reader-settings-form-config";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
 import { ReaderCustomColorSwatch } from "./reader-custom-color-swatch";
 import { useTheme } from "next-themes";
 
@@ -29,10 +30,10 @@ export const ReaderThemeSelector = ({ compact }: ReaderThemeSelectorProps) => {
 						? "#1a1a1e"
 						: swatch.color;
 				return (
-					<button
+					<Button
 						key={swatch.value}
-						type="button"
 						onClick={handleClick}
+						title={t(swatch.labelKey)}
 						aria-label={t(swatch.labelKey)}
 						aria-pressed={isActive}
 						className={cn(

@@ -2,8 +2,9 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import { AdminTextTopbarShell } from "@/shared/ui/admin-text-editor";
+import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { Check, ExternalLink } from "lucide-react";
+import { Check, Download, ExternalLink } from "lucide-react";
 
 interface TextEditTopbarProps {
 	textId: string;
@@ -15,6 +16,7 @@ interface TextEditTopbarProps {
 	onSaveDraft: () => void;
 	onSaveAndUpdate: () => void;
 	onToggleMetaPanel: () => void;
+	onExportClick: () => void;
 }
 
 export const TextEditTopbar = ({
@@ -27,6 +29,7 @@ export const TextEditTopbar = ({
 	onSaveDraft,
 	onSaveAndUpdate,
 	onToggleMetaPanel,
+	onExportClick,
 }: TextEditTopbarProps) => {
 	const { t, lang } = useI18n();
 	const statusLabel = isSaving
@@ -58,6 +61,15 @@ export const TextEditTopbar = ({
 					{t("admin.texts.editPage.preview")}
 				</a>
 			) : null}
+			<Button
+				onClick={onExportClick}
+				title={t("admin.texts.export.button")}
+				aria-label={t("admin.texts.export.button")}
+				className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-xs text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 max-[767px]:hidden"
+			>
+				<Download className="size-3" />
+				{t("admin.texts.export.button")}
+			</Button>
 		</>
 	);
 

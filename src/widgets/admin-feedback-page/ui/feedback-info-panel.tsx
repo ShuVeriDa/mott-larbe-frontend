@@ -114,6 +114,7 @@ return (
 				<InfoRow label={t("admin.feedback.ticket.assignee")}>
 					<Button
 						onClick={onAssignOpen}
+						title={t("admin.feedback.ticket.assign")}
 						className="flex h-7 w-full items-center gap-1.5 rounded-[6px] border border-bd-2 bg-surf-2 px-2 text-[11.5px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
 						{thread.assignee ? (
@@ -149,6 +150,7 @@ return (
 							onClick={onReopen}
 							className="border-bd-2 bg-surf-2 text-t-2 hover:bg-surf-3 hover:text-t-1"
 							icon={<RotateCcw className="size-3" />}
+							title={t("admin.feedback.actions.reopen")}
 						>
 							{t("admin.feedback.actions.reopen")}
 						</ActionBtn>
@@ -157,6 +159,7 @@ return (
 							onClick={onClose}
 							className="border-[rgba(26,158,82,0.25)] bg-grn-bg text-grn-t hover:opacity-80"
 							icon={<Check className="size-3" />}
+							title={t("admin.feedback.actions.close")}
 						>
 							{t("admin.feedback.actions.close")}
 						</ActionBtn>
@@ -165,6 +168,7 @@ return (
 						onClick={onTransferOpen}
 						className="border-bd-2 bg-surf-2 text-t-2 hover:bg-surf-3 hover:text-t-1"
 						icon={<ArrowRight className="size-3" />}
+						title={t("admin.feedback.actions.transfer")}
 					>
 						{t("admin.feedback.actions.transfer")}
 					</ActionBtn>
@@ -172,6 +176,7 @@ return (
 						onClick={onDelete}
 						className="border-[rgba(220,38,38,0.2)] bg-red-bg text-red-t hover:opacity-80"
 						icon={<Trash2 className="size-3" />}
+						title={t("admin.feedback.actions.delete")}
 					>
 						{t("admin.feedback.actions.delete")}
 					</ActionBtn>
@@ -186,14 +191,17 @@ const ActionBtn = ({
 	icon,
 	onClick,
 	className,
+	title,
 }: {
 	children: ReactNode;
 	icon: ReactNode;
 	onClick: () => void;
 	className: string;
+	title?: string;
 }) => (
 	<Button
 		onClick={onClick}
+		title={title}
 		className={cn("flex h-[30px] w-full items-center justify-center gap-1.5 rounded-base border text-[12px] font-semibold transition-opacity", className)}
 	>
 		{icon}

@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
+import { TableRow, TableCell } from "@/shared/ui/table";
 import { ComponentProps, MouseEvent, useState } from 'react';
 import type { AdminCouponListItem } from "@/entities/admin-coupon";
 import { cn } from "@/shared/lib/cn";
@@ -91,7 +92,7 @@ export const CouponRow = ({
 	const handleDeleteClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => { e.stopPropagation(); onDelete(item.id); };
 
 	return (
-		<tr
+		<TableRow
 			onClick={handleRowClick}
 			className={cn(
 				"cursor-pointer border-b border-bd-1 transition-colors last:border-b-0",
@@ -99,27 +100,27 @@ export const CouponRow = ({
 			)}
 		>
 			{/* Code */}
-			<td className="px-3.5 py-2.5">
+			<TableCell className="px-3.5 py-2.5">
 				<CouponCodeChip code={item.code} />
-			</td>
+			</TableCell>
 
 			{/* Name */}
-			<td className="max-w-[140px] px-3.5 py-2.5">
+			<TableCell className="max-w-[140px] px-3.5 py-2.5">
 				<Typography tag="span" className="block truncate text-t-2">{item.name ?? "—"}</Typography>
-			</td>
+			</TableCell>
 
 			{/* Discount */}
-			<td className="px-3.5 py-2.5">
+			<TableCell className="px-3.5 py-2.5">
 				<Typography tag="span" className="text-[13.5px] font-bold text-t-1">
 					{item.amount}
 				</Typography>
 				<Typography tag="span" className="ml-0.5 text-[10.5px] text-t-3">
 					{item.type === "PERCENT" ? "%" : "₽"}
 				</Typography>
-			</td>
+			</TableCell>
 
 			{/* Plans */}
-			<td className="px-3.5 py-2.5 max-md:hidden">
+			<TableCell className="px-3.5 py-2.5 max-md:hidden">
 				{item.applicablePlans.length === 0 ? (
 					<Typography tag="span" className="rounded bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
 						{t("admin.coupons.table.planAll")}
@@ -141,10 +142,10 @@ export const CouponRow = ({
 						)}
 					</div>
 				)}
-			</td>
+			</TableCell>
 
 			{/* Uses */}
-			<td className="px-3.5 py-2.5 max-sm:hidden">
+			<TableCell className="px-3.5 py-2.5 max-sm:hidden">
 				<div className="flex items-center gap-2">
 					{maxR && (
 						<div className="h-[5px] min-w-[50px] flex-1 overflow-hidden rounded-full bg-surf-3 max-md:hidden">
@@ -159,25 +160,25 @@ export const CouponRow = ({
 						{maxR ? ` / ${maxR}` : ""}
 					</Typography>
 				</div>
-			</td>
+			</TableCell>
 
 			{/* Valid until */}
-			<td className="px-3.5 py-2.5 text-[12px] text-t-3 max-sm:hidden">
+			<TableCell className="px-3.5 py-2.5 text-[12px] text-t-3 max-sm:hidden">
 				{formatDate(item.validUntil)}
-			</td>
+			</TableCell>
 
 			{/* Status */}
-			<td className="px-3.5 py-2.5">
+			<TableCell className="px-3.5 py-2.5">
 				<Typography tag="span" className={cn("inline-flex items-center gap-1 rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold", STATUS_STYLES[item.computedStatus])}>
 					{item.computedStatus === "active" && (
 						<Typography tag="span" className="size-[5px] rounded-full bg-grn" />
 					)}
 					{t(`admin.coupons.status.${item.computedStatus}`)}
 				</Typography>
-			</td>
+			</TableCell>
 
 			{/* Actions */}
-			<td className="px-3.5 py-2.5">
+			<TableCell className="px-3.5 py-2.5">
 				<div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100 [tr:hover_&]:opacity-100 [tr.bg-acc-bg_&]:opacity-100">
 					<Button
 						onClick={handleEditClick}
@@ -192,7 +193,7 @@ export const CouponRow = ({
 						{t("admin.coupons.table.delete")}
 					</Button>
 				</div>
-			</td>
-		</tr>
+			</TableCell>
+		</TableRow>
 	);
 };

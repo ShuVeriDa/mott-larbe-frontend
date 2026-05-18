@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 
 import type {
 	AdminDictEntryCard,
@@ -89,13 +90,14 @@ return (
 						<div className={labelCls}>
 							{t("admin.dictionaryDetail.baseForm")}
 						</div>
-						<input
+						<Input
 							ref={inputRef}
-							className={`${inputCls} font-display text-[14px]`}
+							className="rounded-lg font-display text-[14px]"
 							type="text"
 							value={baseForm}
 							onChange={handleChange}
 							placeholder={t("admin.dictionaryDetail.baseFormPlaceholder")}
+							aria-label={t("admin.dictionaryDetail.baseForm")}
 						/>
 					</div>
 
@@ -142,24 +144,26 @@ return (
 						<div className={labelCls}>
 							{t("admin.dictionaryDetail.frequency")}
 						</div>
-						<input
-							className={inputCls}
+						<Input
+							className="rounded-lg"
 							type="number"
 							min={0}
 							value={frequency}
 							onChange={handleChange4}
 							placeholder="0"
+							aria-label={t("admin.dictionaryDetail.frequency")}
 						/>
 					</div>
 
 					<div className="mb-0">
 						<div className={labelCls}>{t("admin.dictionaryDetail.notes")}</div>
-						<input
-							className={inputCls}
+						<Input
+							className="rounded-lg"
 							type="text"
 							value={notes}
 							onChange={handleChange5}
 							placeholder={t("admin.dictionaryDetail.notesPlaceholder")}
+							aria-label={t("admin.dictionaryDetail.notes")}
 						/>
 					</div>
 
@@ -167,12 +171,14 @@ return (
 						<Button
 							className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
 							onClick={onClose}
+							title={t("admin.dictionaryDetail.cancel")}
 						>
 							{t("admin.dictionaryDetail.cancel")}
 						</Button>
 						<Button
 							type="submit"
 							disabled={isPending || !baseForm.trim()}
+							title={t("admin.dictionaryDetail.save")}
 							className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
 						>
 							{t("admin.dictionaryDetail.save")}

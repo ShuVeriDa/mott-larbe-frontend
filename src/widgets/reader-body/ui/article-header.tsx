@@ -37,7 +37,6 @@ export const ArticleHeader = ({ data, currentPage }: ArticleHeaderProps) => {
 						tag="span"
 						className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-t-2 transition-colors"
 					>
-						{/* <span aria-hidden="true" className="size-1 rounded-full bg-t-4" /> */}
 						#{tag.name}
 					</Typography>
 				))}
@@ -48,6 +47,14 @@ export const ArticleHeader = ({ data, currentPage }: ArticleHeaderProps) => {
 			>
 				{data.title}
 			</Typography>
+			{data.page.title ? (
+				<Typography
+					tag="h2"
+					className="mb-2.5 text-[clamp(1rem,2vw,1.25rem)] font-medium leading-snug tracking-[-0.1px] text-t-2"
+				>
+					{data.page.title}
+				</Typography>
+			) : null}
 			<div className="flex flex-wrap items-center gap-2">
 				{data.author ? (
 					<Typography tag="span" className="text-[12px] text-t-2">

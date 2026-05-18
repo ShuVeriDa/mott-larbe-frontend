@@ -2,6 +2,7 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 import type { TokenOccurrence } from "../api/types";
 import { TokenOccurrenceItem } from "./token-occurrence-item";
 
@@ -29,17 +30,18 @@ export const OccurrencesSection = ({
 	return (
 		<div className="border-t border-hairline border-bd-1">
 			<div className="flex items-center justify-between px-5 py-2">
-				<span className="text-[11.5px] font-medium text-t-2">
+				<Typography tag="span" className="text-[11.5px] font-medium text-t-2">
 					{isLoadingOccurrences
 						? t("admin.texts.editPage.wordAnnotation.occurrencesLoading")
 						: t("admin.texts.editPage.wordAnnotation.occurrences", {
 								count: String(occurrences.length),
 							})}
-				</span>
+				</Typography>
 				{occurrences.length > 1 && (
 					<Button
 						size="bare"
 						onClick={onToggleAll}
+						title={allChecked || someChecked ? t("admin.texts.editPage.wordAnnotation.deselectAll") : t("admin.texts.editPage.wordAnnotation.selectAll")}
 						className="text-[11px] text-acc hover:underline"
 					>
 						{allChecked || someChecked

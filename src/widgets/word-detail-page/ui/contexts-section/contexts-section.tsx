@@ -105,6 +105,7 @@ return (
 				lemmaId && !expanded ? (
 					<Button
 						onClick={handleClick}
+						title={t("vocabulary.wordDetail.sections.contextsAll")}
 						className="border-0 bg-transparent p-0 text-[11.5px] text-acc font-[inherit] hover:underline"
 					>
 						{isFetching

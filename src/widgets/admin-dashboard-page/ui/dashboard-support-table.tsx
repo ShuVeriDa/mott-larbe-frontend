@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
@@ -64,42 +64,42 @@ export const DashboardSupportTable = ({ support }: DashboardSupportTableProps) =
 			</div>
 
 			<div className="overflow-x-auto">
-				<table className="w-full border-collapse text-[12.5px]">
-					<thead>
-						<tr className="border-b border-bd-1">
-							<th className="px-4 pb-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+				<Table className="border-collapse text-[12.5px]" aria-label={t("admin.dashboard.support.title")}>
+					<TableHeader>
+						<TableRow className="border-b border-bd-1">
+							<TableHead className="px-4 pb-2 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.dashboard.support.id")}
-							</th>
-							<th className="px-4 pb-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-4 pb-2 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.dashboard.support.user")}
-							</th>
-							<th className="px-4 pb-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-4 pb-2 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.dashboard.support.subject")}
-							</th>
-							<th className="px-4 pb-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-4 pb-2 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.dashboard.support.status")}
-							</th>
-							<th className="px-4 pb-2 text-right text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-4 pb-2 text-right text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.dashboard.support.date")}
-							</th>
-						</tr>
-					</thead>
-					<tbody>
+							</TableHead>
+						</TableRow>
+					</TableHeader>
+					<TableBody>
 						{support.recentThreads.map((thread) => (
-							<tr
+							<TableRow
 								key={thread.id}
 								className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2"
 							>
-								<td className="px-4 py-2.5 text-t-2">
+								<TableCell className="px-4 py-2.5 text-t-2">
 									#{thread.id.slice(-6).toUpperCase()}
-								</td>
-								<td className="px-4 py-2.5 text-t-1">{thread.userName}</td>
-								<td className="max-w-[200px] px-4 py-2.5">
+								</TableCell>
+								<TableCell className="px-4 py-2.5 text-t-1">{thread.userName}</TableCell>
+								<TableCell className="max-w-[200px] px-4 py-2.5">
 									<Typography tag="span" className="block truncate text-t-1">
 										{thread.subject ?? t("admin.dashboard.support.noSubject")}
 									</Typography>
-								</td>
-								<td className="px-4 py-2.5">
+								</TableCell>
+								<TableCell className="px-4 py-2.5">
 									<Typography tag="span"
 										className={cn(
 											"inline-flex items-center rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold",
@@ -108,14 +108,14 @@ export const DashboardSupportTable = ({ support }: DashboardSupportTableProps) =
 									>
 										{statusLabel(thread.status)}
 									</Typography>
-								</td>
-								<td className="px-4 py-2.5 text-right text-[11.5px] whitespace-nowrap text-t-3">
+								</TableCell>
+								<TableCell className="px-4 py-2.5 text-right text-[11.5px] whitespace-nowrap text-t-3">
 									{formatDateTime(thread.createdAt)}
-								</td>
-							</tr>
+								</TableCell>
+							</TableRow>
 						))}
-					</tbody>
-				</table>
+					</TableBody>
+				</Table>
 			</div>
 		</div>
 	);
@@ -127,27 +127,27 @@ export const DashboardSupportTableSkeleton = () => (
 			<div className="h-3.5 w-36 animate-pulse rounded bg-surf-3" />
 			<div className="ml-auto h-3 w-12 animate-pulse rounded bg-surf-3" />
 		</div>
-		<table className="w-full border-collapse text-[12.5px]">
-			<thead>
-				<tr className="border-b border-bd-1">
+		<Table className="border-collapse text-[12.5px]" aria-busy="true" aria-label="Loading support tickets">
+			<TableHeader>
+				<TableRow className="border-b border-bd-1">
 					{Array.from({ length: 5 }).map((_, i) => (
-						<th key={i} className="px-4 pb-2">
+						<TableHead key={i} className="px-4 pb-2">
 							<div className="h-2.5 w-12 animate-pulse rounded bg-surf-3" />
-						</th>
+						</TableHead>
 					))}
-				</tr>
-			</thead>
-			<tbody>
+				</TableRow>
+			</TableHeader>
+			<TableBody>
 				{Array.from({ length: 5 }).map((_, i) => (
-					<tr key={i} className="border-b border-bd-1 last:border-b-0">
+					<TableRow key={i} className="border-b border-bd-1 last:border-b-0">
 						{Array.from({ length: 5 }).map((_, j) => (
-							<td key={j} className="px-4 py-2.5">
+							<TableCell key={j} className="px-4 py-2.5">
 								<div className="h-3 animate-pulse rounded bg-surf-3" style={{ width: j === 2 ? "80%" : "60%" }} />
-							</td>
+							</TableCell>
 						))}
-					</tr>
+					</TableRow>
 				))}
-			</tbody>
-		</table>
+			</TableBody>
+		</Table>
 	</div>
 );

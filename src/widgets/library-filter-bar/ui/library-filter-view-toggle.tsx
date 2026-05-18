@@ -58,6 +58,7 @@ const ViewBtn = ({
 		onClick={onClick}
 		size={"bare"}
 		aria-label={ariaLabel}
+		title={ariaLabel}
 		aria-pressed={active}
 		className={cn(
 			"flex h-[26px] w-[26px] items-center justify-center transition-all duration-100",

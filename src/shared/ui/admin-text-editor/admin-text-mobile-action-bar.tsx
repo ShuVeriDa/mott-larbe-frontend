@@ -27,6 +27,7 @@ export const AdminTextMobileActionBar = ({
 			<Button
 				onClick={onSecondaryClick}
 				disabled={isSaving}
+				title={secondaryLabel}
 				className="flex h-[38px] flex-1 items-center justify-center gap-1.5 rounded-[8px] border border-bd-2 bg-transparent text-sm text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				{secondaryIcon}
@@ -36,6 +37,7 @@ export const AdminTextMobileActionBar = ({
 			<Button
 				onClick={onPrimaryClick}
 				disabled={isSaving}
+				title={primaryLabel}
 				className="flex h-[38px] flex-1 items-center justify-center gap-1.5 rounded-[8px] bg-acc text-sm font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				{primaryIcon}

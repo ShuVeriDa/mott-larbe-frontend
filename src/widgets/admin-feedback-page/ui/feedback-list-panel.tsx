@@ -97,6 +97,7 @@ return (
 						<Button
 							key={key}
 							onClick={handleClick}
+							title={t(label)}
 							className={cn(
 								"flex flex-1 items-center justify-center gap-1 rounded-md py-[5px] text-[11.5px] font-medium transition-all",
 								tab === key
@@ -141,6 +142,7 @@ return (
 					<Button
 						key={key}
 						onClick={handleClick}
+						title={t(label)}
 						className={cn(
 							"h-6 shrink-0 rounded-[5px] border px-2 text-[11px] font-medium transition-all",
 							typeFilter === key

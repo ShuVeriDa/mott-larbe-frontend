@@ -179,6 +179,7 @@ export const UserEventsFeed = ({
 				<div className="flex justify-center border-t border-bd-1 p-2.5">
 					<Button
 						onClick={onLoadMore}
+						title={t("admin.userDetail.events.loadMore", { count: Math.min(25, total - shown) })}
 						className="border-none bg-transparent text-[12px] text-acc-t transition-opacity hover:opacity-70"
 					>
 						{t("admin.userDetail.events.loadMore", {

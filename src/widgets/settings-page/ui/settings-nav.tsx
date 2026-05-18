@@ -37,6 +37,7 @@ export const SettingsNav = ({ active, onChange }: SettingsNavProps) => {
 						key={section.id}
 						onClick={handleClick}
 						aria-current={isActive ? "page" : undefined}
+						title={t(section.labelKey)}
 						className={cn(
 							"flex items-center justify-start gap-2.5 rounded-base px-2.5 py-1.5 text-left font-[inherit] transition-colors duration-100",
 							"max-md:h-11 max-md:shrink-0 max-md:rounded-none max-md:border-b-2 max-md:border-transparent max-md:px-4 max-md:font-normal",

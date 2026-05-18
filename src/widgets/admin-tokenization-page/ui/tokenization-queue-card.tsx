@@ -77,6 +77,7 @@ export const TokenizationQueueCard = ({
 			<div className="border-t border-bd-1 p-3.5">
 				<Button
 					onClick={onRun}
+					title={t("admin.tokenization.sidePanel.runBtn")}
 					className="flex h-[34px] w-full items-center justify-center gap-1.5 rounded-base bg-acc text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
 					<Play className="size-[13px]" />

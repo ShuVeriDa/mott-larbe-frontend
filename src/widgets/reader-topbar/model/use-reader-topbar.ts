@@ -7,6 +7,7 @@ import {
 	useWordLookupStore,
 } from "@/features/word-lookup";
 import { useI18n } from "@/shared/lib/i18n";
+import { LANG_TAG } from "@/shared/lib/lang-tag";
 import { useToast } from "@/shared/lib/toast";
 
 export const useReaderTopbar = (
@@ -15,7 +16,8 @@ export const useReaderTopbar = (
 	data: TextPageResponse,
 ) => {
 	const { t } = useI18n();
-	const { mutate: toggleBookmark, isPending: bookmarking } = useToggleBookmark();
+	const { mutate: toggleBookmark, isPending: bookmarking } =
+		useToggleBookmark();
 	const { success, error } = useToast();
 
 	const snippet = data.page.contentRaw.slice(0, 100);
@@ -63,7 +65,16 @@ export const useReaderTopbar = (
 		});
 	};
 
-	const metaParts = [data.author, data.level, data.language].filter(Boolean);
+	const level =
+		data.level === "A"
+			? t("settings.learning.A")
+			: data.level === "B"
+				? t("shared.cefrLevel.B")
+				: t("shared.cefrLevel.C");
+
+	const metaParts = [data.author, level, LANG_TAG[data.language]].filter(
+		Boolean,
+	);
 
 	return {
 		t,

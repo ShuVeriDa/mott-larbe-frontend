@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 import { Link2, Pencil, Plus, Trash2 } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
@@ -57,7 +58,7 @@ export const WordAnnotationEditorPopup = ({
 			role="toolbar"
 		>
 			<Link2 className="mx-1 size-3.5 text-acc" strokeWidth={1.6} />
-			<span className="mr-1 text-[11px] font-medium text-t-2">{lemmaBaseForm}</span>
+			<Typography tag="span" className="mr-1 text-[11px] font-medium text-t-2">{lemmaBaseForm}</Typography>
 			{isAnnotated ? (
 				<>
 					<button

@@ -31,12 +31,14 @@ const ExampleItem = ({ example, onEdit, onDelete }: ExampleItemProps) => (
 			<Button
 				className="flex size-[26px] items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 				onClick={onEdit}
+				title="Edit"
 			>
 				<IconEdit />
 			</Button>
 			<Button
 				className="flex size-[26px] items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 				onClick={onDelete}
+				title="Delete"
 			>
 				<Trash2 className="size-[13px]" />
 			</Button>
@@ -81,12 +83,14 @@ return (
 					<Button
 						className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 						onClick={onEditSense}
+						title="Edit sense"
 					>
 						<Pencil className="size-[13px]" />
 					</Button>
 					<Button
 						className="flex size-[26px] items-center justify-center rounded-md bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 						onClick={onDeleteSense}
+						title="Delete sense"
 					>
 						<Trash2 className="size-[13px]" />
 					</Button>
@@ -116,6 +120,7 @@ return (
 				<Button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-dashed border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-3 transition-colors hover:border-solid hover:border-acc hover:bg-acc-bg hover:text-acc-t"
 					onClick={handleAddSenseClick}
+					title={t("admin.dictionaryDetail.addExample")}
 				>
 					<Plus className="size-[11px]" />
 					{t("admin.dictionaryDetail.addExample")}
@@ -182,6 +187,7 @@ export const LemmasSensesCard = ({
 				<Button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 					onClick={handleAddSenseClick}
+					title={t("admin.dictionaryDetail.addSense")}
 				>
 					<Plus className="size-[11px]" />
 					{t("admin.dictionaryDetail.addSense")}
@@ -207,6 +213,7 @@ export const LemmasSensesCard = ({
 										: "bg-transparent text-t-3 hover:text-t-2",
 								)}
 								onClick={handleAddSenseClick}
+								title={lemma.baseForm}
 							>
 								{lemma.baseForm}{" "}
 								{lemma.partOfSpeech && (
@@ -252,6 +259,7 @@ export const LemmasSensesCard = ({
 				<Button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-dashed border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-3 transition-colors hover:border-solid hover:border-acc hover:bg-acc-bg hover:text-acc-t"
 					onClick={handleClick2}
+					title={t("admin.dictionaryDetail.addSense")}
 				>
 					<Plus className="size-[11px]" />
 					{t("admin.dictionaryDetail.addSense")}

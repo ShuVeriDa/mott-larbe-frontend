@@ -30,6 +30,7 @@ export const PaginationPageButtons = ({
 				<Button
 					key={pg}
 					onClick={handleClick}
+					title={String(pg)}
 					className={cn(
 						"flex size-6 cursor-pointer items-center justify-center rounded-[5px] border text-[11px] transition-colors",
 						pg === page

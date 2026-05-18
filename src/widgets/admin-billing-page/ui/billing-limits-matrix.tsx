@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminPlan, PlanLimits, PlanType } from "@/entities/admin-billing";
 
@@ -82,14 +82,14 @@ export const BillingLimitsMatrix = ({ plans, isLoading }: BillingLimitsMatrixPro
 						))}
 					</div>
 				) : (
-					<table className="w-full border-collapse text-[12.5px]">
-						<thead>
-							<tr>
-								<th className="w-44 border-b border-bd-1 px-4 py-2.5 text-left text-[11px] font-medium uppercase tracking-[0.4px] text-t-3">
+					<Table className="border-collapse text-[12.5px]" aria-label={t("admin.plans.limitsMatrix.title")}>
+						<TableHeader>
+							<TableRow>
+								<TableHead className="w-44 border-b border-bd-1 px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.4px] text-t-3">
 									{t("admin.plans.limitsMatrix.parameter")}
-								</th>
+								</TableHead>
 								{plans.map((plan) => (
-									<th
+									<TableHead
 										key={plan.id}
 										className="border-b border-bd-1 px-2.5 py-2 text-center text-[11px]"
 									>
@@ -98,18 +98,18 @@ export const BillingLimitsMatrix = ({ plans, isLoading }: BillingLimitsMatrixPro
 										>
 											{plan.name}
 										</Typography>
-									</th>
+									</TableHead>
 								))}
-							</tr>
-						</thead>
-						<tbody>
+							</TableRow>
+						</TableHeader>
+						<TableBody>
 							{LIMIT_ROWS.map((row) => (
-								<tr key={row.key} className="border-b border-bd-1 last:border-b-0">
-									<td className="px-4 py-2.5 text-[12.5px] text-t-1">
+								<TableRow key={row.key} className="border-b border-bd-1 last:border-b-0">
+									<TableCell className="px-4 py-2.5 text-[12.5px] text-t-1">
 										{t(row.labelKey)}
-									</td>
+									</TableCell>
 									{plans.map((plan) => (
-										<td
+										<TableCell
 											key={plan.id}
 											className="px-2.5 py-2.5 text-center text-[12.5px]"
 										>
@@ -118,12 +118,12 @@ export const BillingLimitsMatrix = ({ plans, isLoading }: BillingLimitsMatrixPro
 												format={row.format}
 												unlimitedLabel={t("admin.plans.limitsMatrix.unlimited")}
 											/>
-										</td>
+										</TableCell>
 									))}
-								</tr>
+								</TableRow>
 							))}
-						</tbody>
-					</table>
+						</TableBody>
+					</Table>
 				)}
 			</div>
 		</div>

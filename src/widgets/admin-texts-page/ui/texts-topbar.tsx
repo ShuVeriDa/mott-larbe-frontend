@@ -3,14 +3,15 @@
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { useI18n } from "@/shared/lib/i18n";
-import { Download, Plus } from "lucide-react";
+import { Download, Upload, Plus } from "lucide-react";
 import Link from "next/link";
 
 interface TextsTopbarProps {
 	onImportClick: () => void;
+	onExportClick: () => void;
 }
 
-export const TextsTopbar = ({ onImportClick }: TextsTopbarProps) => {
+export const TextsTopbar = ({ onImportClick, onExportClick }: TextsTopbarProps) => {
 	const { t, lang } = useI18n();
 
 	return (
@@ -26,10 +27,21 @@ export const TextsTopbar = ({ onImportClick }: TextsTopbarProps) => {
 
 			<div className="ml-auto flex items-center gap-2">
 				<Button
-					onClick={onImportClick}
+					onClick={onExportClick}
+					title={t("admin.texts.export.button")}
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 max-sm:px-2"
 				>
 					<Download className="size-[13px]" />
+					<Typography tag="span" className="max-sm:hidden">
+						{t("admin.texts.export.button")}
+					</Typography>
+				</Button>
+				<Button
+					onClick={onImportClick}
+					title={t("admin.texts.import.button")}
+					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 max-sm:px-2"
+				>
+					<Upload className="size-[13px]" />
 					<Typography tag="span" className="max-sm:hidden">
 						{t("admin.texts.import.button")}
 					</Typography>

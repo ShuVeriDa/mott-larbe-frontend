@@ -22,6 +22,7 @@ export const AnnotationsTopbar = ({ total, isLoading, isSyncing, onSync, t }: An
 		</div>
 		<Button
 			size="bare"
+			title={isSyncing ? t("admin.wordAnnotations.syncing") : t("admin.wordAnnotations.sync")}
 			onClick={onSync}
 			disabled={isSyncing}
 			className="flex h-[30px] items-center gap-1.5 rounded-[6px] border border-bd-2 px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1 disabled:opacity-50"

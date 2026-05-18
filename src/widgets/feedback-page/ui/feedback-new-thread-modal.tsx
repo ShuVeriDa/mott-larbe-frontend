@@ -3,6 +3,7 @@
 import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { ComponentProps, MouseEvent, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { FeedbackType } from "@/entities/feedback";
@@ -151,13 +152,14 @@ return (
 					<Typography tag="label" className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
 						{t("feedback.modal.titleLabel")}
 					</Typography>
-					<input
+					<Input
 						type="text"
 						value={title}
 						onChange={handleChange}
 						placeholder={t("feedback.modal.titlePlaceholder")}
 						maxLength={200}
-						className="w-full rounded-[9px] border border-bd-2 bg-surf-2 px-3 py-2.5 font-[inherit] text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
+						aria-label={t("feedback.modal.titleLabel")}
+						className="rounded-[9px] border-bd-2 bg-surf-2 px-3 py-2.5 h-auto"
 					/>
 				</div>
 

@@ -10,6 +10,7 @@ import {
 	DialogTitle,
 } from "@/shared/ui/dialog";
 import { useEffect, useState } from "react";
+import { Typography } from "@/shared/ui/typography";
 import type { AnnotatedFormOnPage } from "../api/types";
 import { useDeleteMorphForm } from "../model/use-annotated-forms-by-page";
 import { useTokenOccurrences } from "../model/use-token-occurrences";
@@ -136,9 +137,9 @@ export const BatchDeleteAnnotationDialog = ({
 				</DialogHeader>
 
 				<div className="border-t border-hairline border-bd-1 px-5 py-3">
-					<span className="text-[12.5px] text-t-2">
+					<Typography tag="span" className="text-[12.5px] text-t-2">
 						{t("admin.texts.editPage.wordAnnotation.deleteDialogHint")}
-					</span>
+					</Typography>
 				</div>
 
 				<OccurrencesSection
@@ -154,6 +155,7 @@ export const BatchDeleteAnnotationDialog = ({
 				<div className="flex gap-2 border-t border-hairline border-bd-1 px-5 py-4">
 					<Button
 						size="bare"
+						title={t("reader.annotate.cancel")}
 						onClick={handleCancel}
 						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-hairline border-bd-2 bg-surf-2 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
 					>
@@ -161,6 +163,7 @@ export const BatchDeleteAnnotationDialog = ({
 					</Button>
 					<Button
 						size="bare"
+						title={confirmLabel}
 						disabled={selectedCount === 0 || isPending}
 						onClick={handleConfirm}
 						className="flex h-[34px] flex-1 items-center justify-center rounded-base bg-red text-[13px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-40"

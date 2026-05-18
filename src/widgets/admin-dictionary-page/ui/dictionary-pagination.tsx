@@ -39,6 +39,7 @@ return (
 					className={btn}
 					onClick={handleClick}
 					disabled={page <= 1}
+					title={t("admin.dictionary.pagination.prev")}
 				>
 					<ChevronLeft className="size-3" />
 				</Button>
@@ -57,6 +58,7 @@ return (
 						<Button
 							key={pg}
 							onClick={handleClick}
+							title={String(pg)}
 							className={cn(
 								"flex size-7 cursor-pointer items-center justify-center rounded-[6px] border text-[12px] transition-colors",
 								pg === page
@@ -73,6 +75,7 @@ return (
 					className={btn}
 					onClick={handleClick2}
 					disabled={page >= totalPages}
+					title={t("admin.dictionary.pagination.next")}
 				>
 					<ChevronRight className="size-3" />
 				</Button>

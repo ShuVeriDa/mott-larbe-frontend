@@ -291,6 +291,7 @@ export const EditAnnotationDialog = ({
 				<div className="flex gap-2 border-t border-hairline border-bd-1 px-5 py-4">
 					<Button
 						size="bare"
+						title={t("reader.annotate.cancel")}
 						onClick={handleCancel}
 						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-hairline border-bd-2 bg-surf-2 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
 					>
@@ -298,6 +299,7 @@ export const EditAnnotationDialog = ({
 					</Button>
 					<Button
 						size="bare"
+						title={saveLabel}
 						disabled={!canSave || isPending}
 						onClick={handleSave}
 						className="flex h-[34px] flex-1 items-center justify-center rounded-base bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-40"

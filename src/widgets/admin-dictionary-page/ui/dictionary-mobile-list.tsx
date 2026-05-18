@@ -77,6 +77,7 @@ export const DictionaryMobileList = ({
 					</div>
 					<Button
 						onClick={handleClick}
+						title={t("admin.dictionary.table.delete")}
 						className="shrink-0 mt-0.5 flex size-[30px] cursor-pointer items-center justify-center rounded-base border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 					>
 						<Trash2 className="size-3.5" />

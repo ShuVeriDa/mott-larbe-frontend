@@ -59,6 +59,7 @@ return (
 						disabled={
 							mutations.freeze.isPending || mutations.unfreeze.isPending
 						}
+						title={isFrozen ? t("admin.users.actions.unfreeze") : t("admin.users.actions.freeze")}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-amb/25 px-2.5 text-[12px] font-medium text-amb-t transition-colors hover:bg-amb-bg disabled:opacity-50"
 					>
 						{isFrozen
@@ -71,6 +72,7 @@ return (
 						onClick={handleClick2
 						}
 						disabled={mutations.block.isPending || mutations.unblock.isPending}
+						title={isBlocked ? t("admin.users.actions.unblock") : t("admin.users.actions.block")}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-red/25 px-2.5 text-[12px] font-medium text-red-t transition-colors hover:bg-red-bg disabled:opacity-50"
 					>
 						{isBlocked

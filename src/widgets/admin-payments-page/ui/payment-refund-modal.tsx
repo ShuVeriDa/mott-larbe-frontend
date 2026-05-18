@@ -6,6 +6,7 @@ import type {
 } from "@/entities/admin-payment";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { Select } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
 import { X } from "lucide-react";
@@ -67,6 +68,7 @@ export const PaymentRefundModal = ({
 				<Button
 					size={"bare"}
 					onClick={onClose}
+					title={t("admin.payments.refundModal.cancel")}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
 					<X className="size-3" />
@@ -97,7 +99,7 @@ export const PaymentRefundModal = ({
 						>
 							{t("admin.payments.refundModal.amountLabel")}
 						</Typography>
-						<input
+						<Input
 							type="number"
 							step="0.01"
 							min="0.01"
@@ -105,7 +107,8 @@ export const PaymentRefundModal = ({
 							value={amount}
 							onChange={handleChange}
 							required
-							className="h-[34px] w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 outline-none transition-colors focus:border-acc focus:bg-surf"
+							aria-label={t("admin.payments.refundModal.amountLabel")}
+							className="rounded-lg focus:bg-surf"
 						/>
 					</div>
 
@@ -137,6 +140,7 @@ export const PaymentRefundModal = ({
 					<Button
 						onClick={onClose}
 						disabled={isPending}
+						title={t("admin.payments.refundModal.cancel")}
 						className="flex h-[32px] items-center rounded-lg border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3 disabled:opacity-60"
 					>
 						{t("admin.payments.refundModal.cancel")}
@@ -144,6 +148,7 @@ export const PaymentRefundModal = ({
 					<Button
 						type="submit"
 						disabled={isPending}
+						title={isPending ? t("admin.payments.refundModal.loading") : t("admin.payments.refundModal.confirm")}
 						className="flex h-[32px] items-center rounded-lg bg-red px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
 					>
 						{isPending

@@ -63,6 +63,7 @@ export const AdminTextEditorPageTabs = ({
 					>
 						<Button
 							onClick={handleTabClick}
+							title={getPageLabel(index)}
 							className="flex items-center gap-1.5 text-xs"
 						>
 							<Typography

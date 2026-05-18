@@ -2,8 +2,8 @@
 
 import { useTextToc, type TocEntry } from "@/entities/text-toc";
 import { cn } from "@/shared/lib/cn";
-import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { useI18n } from "@/shared/lib/i18n";
 import {
 	READER_MOBILE_SHEET_OVERLAY_CLASSES,
 	ReaderMobileSheetHeader,
@@ -57,12 +57,12 @@ const TocPanelBody = ({
 	return (
 		<div className="flex min-h-0 flex-1 flex-col gap-3">
 			{isLoading && (
-				<p className="text-[12px] text-t-4">{t("reader.toc.loading")}</p>
+				<Typography className="text-[12px] text-t-4">{t("reader.toc.loading")}</Typography>
 			)}
 			{isEmpty && (
 				<div className="flex flex-col items-center gap-2 py-6 text-center">
 					<List className="size-8 text-t-4" strokeWidth={1.2} />
-					<p className="text-[13px] text-t-3">{t("reader.toc.empty")}</p>
+					<Typography className="text-[13px] text-t-3">{t("reader.toc.empty")}</Typography>
 				</div>
 			)}
 			<div className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto">
@@ -73,9 +73,9 @@ const TocPanelBody = ({
 					const handleClick = () => handleEntryClick(entry);
 
 					return (
-						<button
+						<Button
 							key={entry.pageNumber}
-							type="button"
+							title={label}
 							onClick={handleClick}
 							className={cn(
 								"flex w-full items-baseline gap-2 rounded-[6px] px-2.5 py-2 text-left text-[13px] transition-colors",
@@ -84,11 +84,11 @@ const TocPanelBody = ({
 									: "text-t-2 hover:bg-surf-2 hover:text-t-1",
 							)}
 						>
-							<span className="shrink-0 text-[11px] tabular-nums text-t-4">
+							<Typography tag="span" className="shrink-0 text-[11px] tabular-nums text-t-4">
 								{entry.pageNumber}
-							</span>
-							<span className="min-w-0 truncate">{label}</span>
-						</button>
+							</Typography>
+							<Typography tag="span" className="min-w-0 truncate">{label}</Typography>
+						</Button>
 					);
 				})}
 			</div>

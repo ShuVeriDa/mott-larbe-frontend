@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { ComponentProps, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useLemmaSearch } from "@/entities/admin-unknown-word";
 
@@ -46,14 +47,16 @@ export const LemmaAutocomplete = ({
 
 	return (
 		<div ref={ref} className="relative">
-			<input
+			<Input
 				type="text"
 				value={q}
 				onChange={handleChange}
 				onFocus={handleFocus}
 				placeholder={placeholder}
-				className={inputCls}
 				autoComplete="off"
+				aria-autocomplete="list"
+				aria-expanded={open && q.length >= 1}
+				className="h-9 rounded-lg focus:bg-surf"
 			/>
 			{open && q.length >= 1 && (
 				<div className="absolute left-0 top-[calc(100%+4px)] z-30 w-full max-h-[220px] overflow-y-auto [&::-webkit-scrollbar]:w-0 rounded-[9px] border border-bd-2 bg-surf shadow-[0_4px_12px_rgba(0,0,0,0.08)]">

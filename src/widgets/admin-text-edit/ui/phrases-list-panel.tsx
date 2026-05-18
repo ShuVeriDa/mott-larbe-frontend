@@ -9,13 +9,14 @@ import {
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
-import { InputLabel } from "@/shared/ui/input";
+import { Input, InputLabel } from "@/shared/ui/input";
 import {
 	PHRASE_CLICK_EVENT,
 	type PhraseClickDetail,
 } from "@/shared/ui/notion-editor";
 import { Languages, Pencil, Trash2, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Typography } from "@/shared/ui/typography";
+import { type ComponentProps, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { PhraseEditorPopup } from "./phrase-editor-popup";
 
@@ -59,6 +60,12 @@ const EditModal = ({
 		};
 	}, []);
 
+	const handleTranslationChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setTranslation(e.currentTarget.value);
+	const handleNotesChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setNotes(e.currentTarget.value);
+	const handleTranslationKeyDown: NonNullable<ComponentProps<"input">["onKeyDown"]> = e => {
+		if (e.key === "Enter") handleSave();
+	};
+
 	const handleSave = () => {
 		if (!translation.trim()) return;
 		update(
@@ -94,16 +101,17 @@ const EditModal = ({
 				<div className="flex items-center justify-between border-b border-hairline border-bd-1 px-4 py-3">
 					<div className="flex items-center gap-2">
 						<Languages className="size-4 text-violet-500" strokeWidth={1.6} />
-						<span className="text-[13px] font-semibold text-t-1">
+						<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 							{t("admin.texts.editPage.phraseEditTitle")}
-						</span>
+						</Typography>
 					</div>
-					<button
+					<Button
 						onClick={onClose}
+						title={t("reader.panel.close")}
 						className="rounded-md p-1 text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						<X className="size-4" />
-					</button>
+					</Button>
 				</div>
 
 				<div className="space-y-3 p-4">
@@ -118,18 +126,17 @@ const EditModal = ({
 						<InputLabel htmlFor="edit-phrase-translation">
 							{t("admin.texts.editPage.phraseTranslation")}
 						</InputLabel>
-						<input
+						<Input
 							id="edit-phrase-translation"
 							ref={inputRef}
 							value={translation}
-							onChange={e => setTranslation(e.target.value)}
-							onKeyDown={e => {
-								if (e.key === "Enter") handleSave();
-							}}
+							onChange={handleTranslationChange}
+							onKeyDown={handleTranslationKeyDown}
 							placeholder={t(
 								"admin.texts.editPage.phraseTranslationPlaceholder",
 							)}
-							className="h-[34px] w-full rounded-base border-hairline border-bd-2 bg-surf-2 px-[10px] text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc"
+							aria-label={t("admin.texts.editPage.phraseTranslation")}
+							className="h-[34px] rounded-base bg-surf-2 px-[10px] text-[13px]"
 						/>
 					</div>
 
@@ -137,12 +144,13 @@ const EditModal = ({
 						<InputLabel htmlFor="edit-phrase-notes">
 							{t("admin.texts.editPage.phraseNotes")}
 						</InputLabel>
-						<input
+						<Input
 							id="edit-phrase-notes"
 							value={notes}
-							onChange={e => setNotes(e.target.value)}
+							onChange={handleNotesChange}
 							placeholder={t("admin.texts.editPage.phraseNotesPlaceholder")}
-							className="h-[34px] w-full rounded-base border-hairline border-bd-2 bg-surf-2 px-[10px] text-[13px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc"
+							aria-label={t("admin.texts.editPage.phraseNotes")}
+							className="h-[34px] rounded-base bg-surf-2 px-[10px] text-[13px]"
 						/>
 					</div>
 
@@ -193,32 +201,33 @@ const PhraseItem = ({
 					{occurrence.phrase.original}
 				</div>
 				<div className="flex shrink-0 items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
-					<button
+					<Button
 						onClick={() => onEdit(occurrence)}
-						className="rounded p-1 text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 						title={t("admin.texts.editPage.phraseEditTitle")}
+						className="rounded p-1 text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
 						<Pencil className="size-3" />
-					</button>
+					</Button>
 					{!confirmDelete ? (
-						<button
+						<Button
 							onClick={() => setConfirmDelete(true)}
-							className="rounded p-1 text-t-3 transition-colors hover:bg-red/10 hover:text-red"
 							title={t("admin.texts.editPage.phraseDeleteConfirm")}
+							className="rounded p-1 text-t-3 transition-colors hover:bg-red/10 hover:text-red"
 						>
 							<Trash2 className="size-3" />
-						</button>
+						</Button>
 					) : (
-						<button
+						<Button
 							onClick={() => {
 								onDelete(occurrence.id);
 								setConfirmDelete(false);
 							}}
+							title={t("admin.texts.editPage.phraseDeleteConfirm")}
 							disabled={isDeleting}
 							className="rounded px-1.5 py-0.5 text-[10px] font-semibold text-red transition-colors hover:bg-red/10 disabled:opacity-60"
 						>
 							{isDeleting ? "…" : t("admin.texts.editPage.phraseDeleteConfirm")}
-						</button>
+						</Button>
 					)}
 				</div>
 			</div>
@@ -353,21 +362,22 @@ export const PhrasesListPanel = ({
 				<div className="flex items-center justify-between border-b border-hairline border-bd-1 px-4 py-3">
 					<div className="flex items-center gap-2">
 						<Languages className="size-4 text-violet-500" strokeWidth={1.6} />
-						<span className="text-[13.5px] font-semibold text-t-1">
+						<Typography tag="span" className="text-[13.5px] font-semibold text-t-1">
 							{t("admin.texts.editPage.phraseListTitle")}
-						</span>
+						</Typography>
 						{phrases.length > 0 && (
-							<span className="rounded-full bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
+							<Typography tag="span" className="rounded-full bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
 								{phrases.length}
-							</span>
+							</Typography>
 						)}
 					</div>
-					<button
+					<Button
 						onClick={() => setIsOpen(false)}
+						title={t("reader.panel.close")}
 						className="rounded-md p-1 text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						<X className="size-4" />
-					</button>
+					</Button>
 				</div>
 
 				<div className="flex-1 overflow-y-auto p-3">

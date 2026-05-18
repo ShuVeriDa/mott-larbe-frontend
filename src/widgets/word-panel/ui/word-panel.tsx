@@ -43,6 +43,7 @@ export const WordPanel = ({ textId }: WordPanelProps) => {
 				<Button
 					onClick={closePanel}
 					aria-label={t("reader.panel.close")}
+					title={t("reader.panel.close")}
 					className="inline-flex size-6 items-center justify-center rounded-[5px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 				>
 					<X className="size-3" strokeWidth={1.6} />

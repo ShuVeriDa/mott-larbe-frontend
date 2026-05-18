@@ -9,6 +9,7 @@ import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { useQueryClient } from "@tanstack/react-query";
 import { Languages, X } from "lucide-react";
+import { Typography } from "@/shared/ui/typography";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -104,16 +105,17 @@ export const PhraseTranslationPanel = ({
 				<div className="flex items-center justify-between border-b border-hairline border-bd-1 px-4 py-3">
 					<div className="flex items-center gap-2">
 						<Languages className="size-4 text-violet-500" strokeWidth={1.6} />
-						<span className="text-[13px] font-semibold text-t-1">
+						<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 							{t("admin.texts.editPage.addPhraseTranslation")}
-						</span>
+						</Typography>
 					</div>
-					<button
+					<Button
 						onClick={handleClose}
+						title={t("reader.panel.close")}
 						className="rounded-md p-1 text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						<X className="size-4" />
-					</button>
+					</Button>
 				</div>
 
 				<div className="space-y-3 p-4">

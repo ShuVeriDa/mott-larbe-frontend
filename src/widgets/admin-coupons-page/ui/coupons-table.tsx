@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { ComponentProps, MouseEvent, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -59,13 +60,13 @@ const SortIcon = ({ active, order }: { active: boolean; order: "asc" | "desc" })
 
 
 const SkeletonRow = () => (
-	<tr className="border-b border-bd-1">
+	<TableRow className="border-b border-bd-1">
 		{Array.from({ length: 8 }).map((_, i) => (
-			<td key={i} className="px-3.5 py-2.5">
+			<TableCell key={i} className="px-3.5 py-2.5">
 				<div className="h-4 animate-pulse rounded bg-surf-3" style={{ width: `${[80, 100, 60, 70, 90, 70, 60, 50][i]}px` }} />
-			</td>
+			</TableCell>
 		))}
-	</tr>
+	</TableRow>
 );
 
 // ── Main component ─────────────────────────────────────────────────────────────
@@ -86,37 +87,37 @@ export const CouponsTable = ({
 	const renderSortableTh = (key: CouponSortBy, label: string, extraClass?: string) => {
 		const handleClick: NonNullable<ComponentProps<"th">["onClick"]> = () => onSortChange(key);
 		return (
-			<th
+			<TableHead
 				key={key}
 				onClick={handleClick}
 				className={cn(
-					"cursor-pointer select-none whitespace-nowrap px-3.5 py-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 hover:text-t-1",
+					"cursor-pointer select-none whitespace-nowrap px-3.5 py-2 text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3 hover:text-t-1",
 					extraClass,
 				)}
 			>
 				{label}
 				<SortIcon active={sortBy === key} order={sortOrder} />
-			</th>
+			</TableHead>
 		);
 	};
 
 	const renderStaticTh = (label: string, extraClass?: string) => (
-		<th
+		<TableHead
 			key={label}
 			className={cn(
-				"whitespace-nowrap px-3.5 py-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3",
+				"whitespace-nowrap px-3.5 py-2 text-[10.5px] font-semibold uppercase tracking-[0.3px] text-t-3",
 				extraClass,
 			)}
 		>
 			{label}
-		</th>
+		</TableHead>
 	);
 
 	return (
 		<div className="overflow-x-auto [&::-webkit-scrollbar]:h-0">
-			<table className="w-full border-collapse text-[12.5px]">
-				<thead>
-					<tr className="border-b border-bd-1">
+			<Table className="border-collapse text-[12.5px]" aria-label={t("admin.coupons.table.code")}>
+				<TableHeader>
+					<TableRow className="border-b border-bd-1">
 						{renderSortableTh("code", t("admin.coupons.table.code"))}
 						{renderStaticTh(t("admin.coupons.table.name"))}
 						{renderStaticTh(t("admin.coupons.table.discount"))}
@@ -125,18 +126,18 @@ export const CouponsTable = ({
 						{renderSortableTh("validUntil", t("admin.coupons.table.validUntil"))}
 						{renderStaticTh(t("admin.coupons.table.status"))}
 						{renderStaticTh(t("admin.coupons.table.actions"))}
-					</tr>
-				</thead>
-				<tbody>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{isLoading
 						? Array.from({ length: 6 }).map((_, i) => <SkeletonRow key={i} />)
 						: items.length === 0
 						? (
-							<tr>
-								<td colSpan={8} className="py-12 text-center text-[12.5px] text-t-3">
+							<TableRow>
+								<TableCell colSpan={8} className="py-12 text-center text-[12.5px] text-t-3">
 									{t("admin.coupons.table.empty")}
-								</td>
-							</tr>
+								</TableCell>
+							</TableRow>
 						)
 						: items.map((item) => (
 							<CouponRow
@@ -149,8 +150,8 @@ export const CouponsTable = ({
 								t={t}
 							/>
 						))}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	);
 };

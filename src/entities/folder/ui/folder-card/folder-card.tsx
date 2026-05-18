@@ -142,6 +142,7 @@ export const FolderCard = ({
 					{onMenu ? (
 						<Button
 							aria-label={menuLabel}
+							title={menuLabel}
 							onClick={handleMenuClick}
 							className={cn(
 								"flex size-6 shrink-0 items-center justify-center rounded-[5px]",

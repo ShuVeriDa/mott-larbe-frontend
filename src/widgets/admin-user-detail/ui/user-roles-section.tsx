@@ -66,6 +66,7 @@ export const UserRolesSection = ({
 					<div className="relative">
 						<Button
 							onClick={handleClick}
+							title={t("admin.userDetail.addRole")}
 							className="flex h-[22px] items-center gap-1 rounded-[5px] bg-acc-bg px-2 text-[11px] font-semibold text-acc-t transition-colors hover:bg-acc-bg/80"
 						>
 							<Plus className="size-2.5" />
@@ -82,6 +83,7 @@ export const UserRolesSection = ({
 											key={role}
 											onClick={handleClick}
 											disabled={roleMutations.assign.isPending}
+											title={t(`admin.users.roles.${normalizeRole(role)}`)}
 											className="flex w-full rounded-none items-center px-3 py-1.5 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-2 disabled:opacity-50"
 										>
 											<Typography

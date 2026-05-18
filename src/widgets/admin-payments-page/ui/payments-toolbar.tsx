@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { SearchBox } from "@/shared/ui/search-box";
+import { Input } from "@/shared/ui/input";
 import { ComponentProps } from 'react';
 import type { AdminPlan } from "@/entities/admin-billing";
 import type { PaymentProvider } from "@/entities/admin-payment";
@@ -77,18 +78,20 @@ export const PaymentsToolbar = ({
 
 			{/* Date range */}
 			<div className="flex items-center gap-1.5 max-sm:hidden">
-				<input
+				<Input
 					type="date"
 					value={dateFrom}
 					onChange={handleChange4}
-					className="h-[30px] rounded-base border border-bd-1 bg-surf-2 px-2 text-[11.5px] text-t-2 outline-none transition-colors focus:border-acc focus:text-t-1"
+					aria-label="Date from"
+					className="h-[30px] border-bd-1 px-2 text-[11.5px] text-t-2 focus:text-t-1"
 				/>
 				<Typography tag="span" className="text-[11px] text-t-4">—</Typography>
-				<input
+				<Input
 					type="date"
 					value={dateTo}
 					onChange={handleChange5}
-					className="h-[30px] rounded-base border border-bd-1 bg-surf-2 px-2 text-[11.5px] text-t-2 outline-none transition-colors focus:border-acc focus:text-t-1"
+					aria-label="Date to"
+					className="h-[30px] border-bd-1 px-2 text-[11.5px] text-t-2 focus:text-t-1"
 				/>
 			</div>
 

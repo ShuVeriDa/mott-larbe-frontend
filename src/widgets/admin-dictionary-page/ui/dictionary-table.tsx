@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import type { AdminDictListItem, AdminDictSort } from "@/entities/dictionary";
 import { CefrBadge } from "@/entities/dictionary";
 import { cn } from "@/shared/lib/cn";
@@ -21,13 +21,13 @@ const formatDate = (iso: string) =>
 	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
 
 const SkeletonRow = () => (
-	<tr>
+	<TableRow>
 		{Array.from({ length: 9 }).map((_, i) => (
-			<td key={i} className="px-3.5 py-3">
+			<TableCell key={i} className="px-3.5 py-3">
 				<div className="h-3 animate-pulse rounded bg-surf-3" />
-			</td>
+			</TableCell>
 		))}
-	</tr>
+	</TableRow>
 );
 
 const IconSortable = ({
@@ -116,12 +116,14 @@ const RowDropdown = ({
 					</Link>
 					<Button
 						onClick={handleClick3}
+						title={t("admin.dictionary.row.addSense")}
 						className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						{t("admin.dictionary.row.addSense")}
 					</Button>
 					<Button
 						onClick={handleClick4}
+						title={t("admin.dictionary.row.addExample")}
 						className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						{t("admin.dictionary.row.addExample")}
@@ -129,6 +131,7 @@ const RowDropdown = ({
 					<div className="my-1 h-px bg-bd-1" />
 					<Button
 						onClick={handleClick5}
+						title={t("admin.dictionary.row.delete")}
 						className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-[12.5px] text-red-t transition-colors hover:bg-red-bg"
 					>
 						{t("admin.dictionary.row.delete")}
@@ -169,9 +172,9 @@ const SortableHeaderCell = ({
 	className,
 	onClick,
 }: SortableHeaderCellProps) => (
-	<th
+	<TableHead
 		className={cn(
-			"pb-2 pl-3.5 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1",
+			"pb-2 pl-3.5 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3 border-b border-bd-1",
 			"cursor-pointer select-none hover:text-t-2",
 			className,
 		)}
@@ -181,7 +184,7 @@ const SortableHeaderCell = ({
 			{label}
 			<IconSortable active={isActive} dir={dir} />
 		</Typography>
-	</th>
+	</TableHead>
 );
 
 export const DictionaryTable = ({
@@ -227,10 +230,10 @@ export const DictionaryTable = ({
 
 	return (
 		<div className="overflow-x-auto max-sm:hidden">
-			<table className="w-full border-collapse text-[12.5px]">
-				<thead>
-					<tr>
-						<th className="w-9 pb-2 pl-3.5 border-b border-bd-1">
+			<Table className="border-collapse text-[12.5px]" aria-label={t("admin.dictionary.table.headword")}>
+				<TableHeader>
+					<TableRow>
+						<TableHead className="w-9 pb-2 pl-3.5 border-b border-bd-1">
 							<input
 								type="checkbox"
 								checked={allSelected}
@@ -238,39 +241,40 @@ export const DictionaryTable = ({
 									if (el) el.indeterminate = someSelected && !allSelected;
 								}}
 								onChange={onSelectAll}
+								aria-label={t("admin.dictionary.table.selectAll")}
 								className="size-[13px] cursor-pointer accent-acc"
 							/>
-						</th>
+						</TableHead>
 						<SortableHeaderCell
 							label={t("admin.dictionary.table.headword")}
 							{...getSortableHeaderProps("alpha", undefined)}
 						/>
-						<th className={cn(thCls, "w-[80px]")}>
+						<TableHead className={cn(thCls, "w-[80px]")}>
 							{t("admin.dictionary.table.pos")}
-						</th>
-						<th className={cn(thCls, "w-[80px]")}>
+						</TableHead>
+						<TableHead className={cn(thCls, "w-[80px]")}>
 							{t("admin.dictionary.table.meanings")}
-						</th>
-						<th className={cn(thCls, "w-[72px]")}>
+						</TableHead>
+						<TableHead className={cn(thCls, "w-[72px]")}>
 							{t("admin.dictionary.table.level")}
-						</th>
+						</TableHead>
 						<SortableHeaderCell
 							label={t("admin.dictionary.table.frequency")}
 							{...getSortableHeaderProps(undefined, "frequency_desc")}
 							className="w-[100px]"
 						/>
-						<th className={cn(thCls, "w-[68px]")}>
+						<TableHead className={cn(thCls, "w-[68px]")}>
 							{t("admin.dictionary.table.forms")}
-						</th>
+						</TableHead>
 						<SortableHeaderCell
 							label={t("admin.dictionary.table.added")}
 							{...getSortableHeaderProps("oldest", "newest")}
 							className="w-[88px]"
 						/>
-						<th className="w-[60px] pb-2 pr-3.5 border-b border-bd-1" />
-					</tr>
-				</thead>
-				<tbody>
+						<TableHead className="w-[60px] pb-2 pr-3.5 border-b border-bd-1" />
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{isLoading
 						? Array.from({ length: 8 }).map((_, i) => <SkeletonRow key={i} />)
 						: items.map(item => {
@@ -278,22 +282,23 @@ export const DictionaryTable = ({
 									ComponentProps<"input">["onChange"]
 								> = () => onSelectId(item.id);
 								return (
-									<tr
+									<TableRow
 										key={item.id}
 										className={cn(
 											"border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2",
 											selectedIds.has(item.id) && "bg-acc-bg/30",
 										)}
 									>
-										<td className="pl-3.5 py-3">
+										<TableCell className="pl-3.5 py-3">
 											<input
 												type="checkbox"
 												checked={selectedIds.has(item.id)}
 												onChange={handleChange}
+												aria-label={item.baseForm}
 												className="size-[13px] cursor-pointer accent-acc"
 											/>
-										</td>
-										<td className="py-3 pl-3.5">
+										</TableCell>
+										<TableCell className="py-3 pl-3.5">
 											<Link
 												href={`/${lang}/admin/dictionary/${item.id}`}
 												className="font-medium text-t-1 hover:text-acc transition-colors"
@@ -308,8 +313,8 @@ export const DictionaryTable = ({
 													{item.translation}
 												</Typography>
 											)}
-										</td>
-										<td className="py-3 pl-3.5">
+										</TableCell>
+										<TableCell className="py-3 pl-3.5">
 											<PosBadge
 												pos={item.partOfSpeech}
 												label={
@@ -320,8 +325,8 @@ export const DictionaryTable = ({
 														: undefined
 												}
 											/>
-										</td>
-										<td className="py-3 pl-3.5">
+										</TableCell>
+										<TableCell className="py-3 pl-3.5">
 											{item.sensesCount > 0 ? (
 												<Typography tag="span" className="text-t-1">
 													{item.sensesCount}
@@ -334,8 +339,8 @@ export const DictionaryTable = ({
 													0
 												</Typography>
 											)}
-										</td>
-										<td className="py-3 pl-3.5">
+										</TableCell>
+										<TableCell className="py-3 pl-3.5">
 											{item.level ? (
 												<CefrBadge
 													level={
@@ -347,8 +352,8 @@ export const DictionaryTable = ({
 													—
 												</Typography>
 											)}
-										</td>
-										<td className="py-3 pl-3.5">
+										</TableCell>
+										<TableCell className="py-3 pl-3.5">
 											{item.frequency != null ? (
 												<div className="flex flex-col gap-0.5">
 													<Typography
@@ -371,14 +376,14 @@ export const DictionaryTable = ({
 													—
 												</Typography>
 											)}
-										</td>
-										<td className="py-3 pl-3.5 text-[12px] text-t-2">
+										</TableCell>
+										<TableCell className="py-3 pl-3.5 text-[12px] text-t-2">
 											{item.formsCount}
-										</td>
-										<td className="py-3 pl-3.5 text-[11.5px] text-t-3">
+										</TableCell>
+										<TableCell className="py-3 pl-3.5 text-[11.5px] text-t-3">
 											{formatDate(item.createdAt ?? "")}
-										</td>
-										<td className="py-3 pr-3.5">
+										</TableCell>
+										<TableCell className="py-3 pr-3.5">
 											<div className="flex items-center justify-end gap-0.5">
 												<Link
 													href={`/${lang}/admin/dictionary/${item.id}`}
@@ -396,12 +401,12 @@ export const DictionaryTable = ({
 													t={t}
 												/>
 											</div>
-										</td>
-									</tr>
+										</TableCell>
+									</TableRow>
 								);
 							})}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	);
 };

@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
@@ -95,22 +96,24 @@ return (
 					<div className="flex gap-2">
 						<div className="flex flex-1 flex-col gap-1">
 							<Typography tag="label" className="text-[10px] text-t-3">{t("admin.analytics.dateFrom")}</Typography>
-							<input
+							<Input
 								type="date"
 								value={localFrom}
 								max={localTo || undefined}
 								onChange={handleChange}
-								className="h-[28px] w-full rounded-md border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1"
+								aria-label={t("admin.analytics.dateFrom")}
+								className="h-[28px] rounded-md px-2 text-[12px]"
 							/>
 						</div>
 						<div className="flex flex-1 flex-col gap-1">
 							<Typography tag="label" className="text-[10px] text-t-3">{t("admin.analytics.dateTo")}</Typography>
-							<input
+							<Input
 								type="date"
 								value={localTo}
 								min={localFrom || undefined}
 								onChange={handleChange2}
-								className="h-[28px] w-full rounded-md border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1"
+								aria-label={t("admin.analytics.dateTo")}
+								className="h-[28px] rounded-md px-2 text-[12px]"
 							/>
 						</div>
 					</div>

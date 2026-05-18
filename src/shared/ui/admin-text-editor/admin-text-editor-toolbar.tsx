@@ -197,6 +197,7 @@ export const EditorToolbar = ({
 				<div className="relative shrink-0">
 					<Button
 						onMouseDown={handleBlockTypeMouseDown}
+						title={currentBlockTypeLabel}
 						className="flex h-7 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 select-none"
 					>
 						{currentBlockTypeLabel}
@@ -224,27 +225,28 @@ export const EditorToolbar = ({
 												onMouseDown={getHandleBlockTypeItemMouseDown(
 													option.value,
 												)}
+												title={option.label}
 												className={`flex w-[calc(100%-8px)] items-center gap-2 mx-1 rounded-[6px] px-2 py-[5px] text-left transition-colors ${
 													currentBlockType === option.value
 														? "bg-surf-2"
 														: "hover:bg-surf-2"
 												}`}
 											>
-												<span className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-t-2">
+												<Typography tag="span" className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-t-2">
 													<Typography
 														tag="span"
 														className="text-[11px] font-medium text-t-2"
 													>
 														{option.iconLabel}
 													</Typography>
-												</span>
-												<span className="flex-1 text-[13.5px] text-t-1">
+												</Typography>
+												<Typography tag="span" className="flex-1 text-[13.5px] text-t-1">
 													{option.label}
-												</span>
+												</Typography>
 												{option.hint && (
-													<span className="text-[11px] text-t-4">
+													<Typography tag="span" className="text-[11px] text-t-4">
 														{option.hint}
-													</span>
+													</Typography>
 												)}
 											</Button>
 										);

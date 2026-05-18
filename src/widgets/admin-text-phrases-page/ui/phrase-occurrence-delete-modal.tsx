@@ -47,6 +47,7 @@ export const PhraseOccurrenceDeleteModal = ({
 						size="default"
 						onClick={onClose}
 						disabled={isDeleting}
+						title={t("admin.textPhrases.deleteOccurrenceModal.cancel")}
 					>
 						{t("admin.textPhrases.deleteOccurrenceModal.cancel")}
 					</Button>
@@ -55,6 +56,7 @@ export const PhraseOccurrenceDeleteModal = ({
 						size="default"
 						onClick={onConfirm}
 						disabled={isDeleting}
+						title={isDeleting ? t("admin.textPhrases.deleteOccurrenceModal.deleting") : t("admin.textPhrases.deleteOccurrenceModal.confirm")}
 						className="h-[30px] cursor-pointer rounded-base bg-red-500 px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50"
 					>
 						{isDeleting

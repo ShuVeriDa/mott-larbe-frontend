@@ -68,6 +68,7 @@ export const VersionsTopbar = ({
 				<Button
 					onClick={onRunTokenization}
 					disabled={isRunning}
+					title={isRunning ? t("admin.texts.versions.sidebar.runBtnRunning") : t("admin.texts.versions.sidebar.runBtn")}
 					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60 max-sm:px-2"
 				>
 					{isRunning ? (

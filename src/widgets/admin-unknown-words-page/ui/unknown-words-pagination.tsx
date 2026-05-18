@@ -58,6 +58,7 @@ return (
 				<Button
 					disabled={page <= 1}
 					onClick={handleClick}
+					title={t("admin.unknownWords.pagination.prev")}
 					className={btnClass()}
 				>
 					<ChevronLeft className="size-3" />
@@ -77,6 +78,7 @@ return (
 						<Button
 							key={p}
 							onClick={handlePageClick}
+							title={String(p)}
 							className={btnClass(p === page)}
 						>
 							{p}
@@ -86,6 +88,7 @@ return (
 				<Button
 					disabled={page >= totalPages}
 					onClick={handleClick2}
+					title={t("admin.unknownWords.pagination.next")}
 					className={btnClass()}
 				>
 					<ChevronRight className="size-3" />

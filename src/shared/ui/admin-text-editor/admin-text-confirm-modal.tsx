@@ -52,6 +52,7 @@ export const AdminTextConfirmModal = ({
 					<Button
 						onClick={onCancel}
 						disabled={isConfirming}
+						title={cancelLabel}
 						className="rounded-lg border border-bd-1 px-4 py-1.5 text-sm text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						{cancelLabel}
@@ -59,6 +60,7 @@ export const AdminTextConfirmModal = ({
 					<Button
 						onClick={onConfirm}
 						disabled={isConfirming}
+						title={confirmLabel}
 						className="rounded-lg bg-red px-4 py-1.5 text-sm font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						{confirmLabel}

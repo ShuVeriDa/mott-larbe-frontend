@@ -10,6 +10,7 @@ import { tokenizationApi, tokenizationKeys } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { useQuery } from "@tanstack/react-query";
 import { Play, X } from "lucide-react";
 import { ComponentProps } from "react";
@@ -170,55 +171,55 @@ const TokensTable = ({
 
 	return (
 		<div className="overflow-hidden rounded-[8px] border border-bd-1">
-			<table className="w-full border-collapse text-[12px]">
-				<thead>
-					<tr className="border-b border-bd-1 bg-surf-2">
-						<th className="px-2.5 py-[7px] text-left text-[10px] font-semibold uppercase tracking-[0.4px] text-t-3">
+			<Table className="w-full border-collapse text-[12px]" aria-label={t("admin.tokenization.detail.tokensTitle")}>
+				<TableHeader>
+					<TableRow className="border-b border-bd-1 bg-surf-2">
+						<TableHead className="px-2.5 py-[7px] text-left text-[10px] font-semibold uppercase tracking-[0.4px] text-t-3">
 							{t("admin.tokenization.detail.colOriginal")}
-						</th>
-						<th className="px-2.5 py-[7px] text-left text-[10px] font-semibold uppercase tracking-[0.4px] text-t-3 max-sm:hidden">
+						</TableHead>
+						<TableHead className="px-2.5 py-[7px] text-left text-[10px] font-semibold uppercase tracking-[0.4px] text-t-3 max-sm:hidden">
 							{t("admin.tokenization.detail.colNormalized")}
-						</th>
-						<th className="px-2.5 py-[7px] text-left text-[10px] font-semibold uppercase tracking-[0.4px] text-t-3">
+						</TableHead>
+						<TableHead className="px-2.5 py-[7px] text-left text-[10px] font-semibold uppercase tracking-[0.4px] text-t-3">
 							{t("admin.tokenization.detail.colSource")}
-						</th>
-						<th className="px-2.5 py-[7px] text-left text-[10px] font-semibold uppercase tracking-[0.4px] text-t-3 max-sm:hidden">
+						</TableHead>
+						<TableHead className="px-2.5 py-[7px] text-left text-[10px] font-semibold uppercase tracking-[0.4px] text-t-3 max-sm:hidden">
 							{t("admin.tokenization.detail.colPage")}
-						</th>
-					</tr>
-				</thead>
-				<tbody>
+						</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{tokens.data.map(token => (
-						<tr
+						<TableRow
 							key={token.id}
 							className="border-b border-bd-1 last:border-b-0 hover:bg-surf-2"
 						>
-							<td className="px-2.5 py-2">
+							<TableCell className="px-2.5 py-2">
 								<Typography
 									tag="span"
 									className={`inline-flex items-center rounded-[4px] px-1.5 py-0.5 font-mono text-[11.5px] font-semibold ${TOKEN_STATUS_STYLES[token.status]}`}
 								>
 									{token.original}
 								</Typography>
-							</td>
-							<td className="px-2.5 py-2 font-mono text-[11px] text-t-3 max-sm:hidden">
+							</TableCell>
+							<TableCell className="px-2.5 py-2 font-mono text-[11px] text-t-3 max-sm:hidden">
 								{token.normalized}
-							</td>
-							<td className="px-2.5 py-2">
+							</TableCell>
+							<TableCell className="px-2.5 py-2">
 								<Typography
 									tag="span"
 									className={`inline-flex items-center rounded-[4px] px-1.5 py-0.5 text-[10px] font-semibold ${SOURCE_STYLES[token.source]}`}
 								>
 									{token.source}
 								</Typography>
-							</td>
-							<td className="px-2.5 py-2 text-[11px] text-t-3 tabular-nums max-sm:hidden">
+							</TableCell>
+							<TableCell className="px-2.5 py-2 text-[11px] text-t-3 tabular-nums max-sm:hidden">
 								{token.pageNumber}
-							</td>
-						</tr>
+							</TableCell>
+						</TableRow>
 					))}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	);
 };
@@ -278,6 +279,7 @@ export const TokenizationTextDetailModal = ({
 					<Button
 						size={"bare"}
 						onClick={onClose}
+						title={t("admin.tokenization.detail.closeBtn")}
 						className="flex size-[26px] items-center justify-center rounded-[6px] bg-surf-2 text-t-2 hover:bg-surf-3"
 					>
 						<X className="size-3" />
@@ -319,6 +321,7 @@ export const TokenizationTextDetailModal = ({
 							mutations.runText.isPending ||
 							detail?.processingStatus === "RUNNING"
 						}
+						title={t("admin.tokenization.detail.runBtn")}
 						className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						<Play className="size-[11px]" />
@@ -327,12 +330,14 @@ export const TokenizationTextDetailModal = ({
 					<Button
 						onClick={handleResetClick}
 						disabled={mutations.resetText.isPending}
+						title={t("admin.tokenization.detail.resetBtn")}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 disabled:opacity-50"
 					>
 						{t("admin.tokenization.detail.resetBtn")}
 					</Button>
 					<Button
 						onClick={onClose}
+						title={t("admin.tokenization.detail.closeBtn")}
 						className="ml-auto flex h-[30px] items-center px-3 text-[12px] text-t-3 transition-colors hover:text-t-1"
 					>
 						{t("admin.tokenization.detail.closeBtn")}

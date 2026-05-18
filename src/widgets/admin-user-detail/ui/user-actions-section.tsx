@@ -3,6 +3,7 @@
 import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { ComponentProps, ReactNode, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { adminUserApi } from "@/entities/admin-user";
@@ -73,16 +74,18 @@ return (
 				/>
 				{showCoupon && (
 					<div className="mt-1.5 flex gap-1.5">
-						<input
+						<Input
 							value={couponInput}
 							onChange={handleCouponInputChange}
 							onKeyDown={handleKeyDown}
 							placeholder="PROMO_CODE"
-							className="h-7 flex-1 rounded-[6px] border border-bd-2 bg-surf-2 px-2 text-[12px] text-t-1 outline-none placeholder:text-t-4 focus:border-acc"
+							aria-label={t("admin.userDetail.actions.applyCoupon")}
+							className="h-7 flex-1 rounded-[6px] px-2 text-[12px] placeholder:text-t-4"
 						/>
 						<Button
 							onClick={handleCouponSubmit}
 							disabled={couponPending || !couponInput.trim()}
+							title={t("admin.userDetail.actions.applyCoupon")}
 							className="h-7 rounded-[6px] bg-acc-bg px-2.5 text-[12px] font-semibold text-acc-t transition-colors hover:bg-acc-bg/80 disabled:opacity-50"
 						>
 							OK
@@ -153,6 +156,7 @@ const ActionButton = ({
 		<Button
 			onClick={onClick}
 			disabled={disabled}
+			title={label}
 			className={`flex h-8 w-full items-center gap-2 rounded-base border px-2.5 text-[12.5px] transition-colors disabled:opacity-50 ${variantClass}`}
 		>
 			<Typography tag="span" className="size-[13px] shrink-0 [&>svg]:h-full [&>svg]:w-full">{icon}</Typography>

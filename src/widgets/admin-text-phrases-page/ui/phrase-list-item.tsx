@@ -61,10 +61,10 @@ export const PhraseListItem = ({
 						</Typography>
 						{item._count.occurrences > 0 && (
 							<>
-								<span className="text-bd-3">·</span>
+								<Typography tag="span" className="text-bd-3">·</Typography>
 								<div className="flex items-center gap-0.5 shrink-0 text-[11px] text-t-4">
 									<Link className="size-[9px]" />
-									<span>{item._count.occurrences}</span>
+									<Typography tag="span">{item._count.occurrences}</Typography>
 								</div>
 							</>
 						)}

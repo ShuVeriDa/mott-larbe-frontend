@@ -31,6 +31,7 @@ export const SideNavToggle = ({
 						: "mx-auto w-8 justify-center",
 				)}
 				aria-label={isExpandedOnSmall ? "Collapse menu" : "Expand menu"}
+				title={isExpandedOnSmall ? "Collapse menu" : "Expand menu"}
 			>
 				<div className="w-3.5 h-3.5 flex justify-between items-center">
 					{isExpandedOnSmall ? (

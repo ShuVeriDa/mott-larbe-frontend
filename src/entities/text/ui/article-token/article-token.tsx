@@ -1,18 +1,20 @@
 "use client";
 
-import { type ComponentProps, type MouseEvent, type Ref } from "react";
+import { type ComponentProps, type MouseEvent, type ReactNode, type Ref } from "react";
 import { cn } from "@/shared/lib/cn";
 import { tokenStatusClass } from "../../lib/status-class";
 import type { TextToken } from "../../api";
 
 export interface ArticleTokenProps {
 	token: TextToken;
+	displayText?: string;
 	active?: boolean;
 	onSelect: (token: TextToken, event: MouseEvent<HTMLSpanElement>) => void;
 	ref?: Ref<HTMLSpanElement>;
+	children?: ReactNode;
 }
 
-export const ArticleToken = ({ token, active, onSelect, ref }: ArticleTokenProps) => {
+export const ArticleToken = ({ token, displayText, active, onSelect, ref, children }: ArticleTokenProps) => {
 	const handleClick = (event: MouseEvent<HTMLSpanElement>) => {
 		event.stopPropagation();
 		onSelect(token, event);
@@ -41,8 +43,8 @@ export const ArticleToken = ({ token, active, onSelect, ref }: ArticleTokenProps
 				active && "bg-acc-bg text-acc-t",
 			)}
 		>
-			{token.original}
-		</span>
+			{displayText ?? token.original}{children}
+</span>
 	);
 };
 

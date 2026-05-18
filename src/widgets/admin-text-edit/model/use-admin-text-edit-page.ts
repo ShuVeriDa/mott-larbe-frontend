@@ -29,9 +29,11 @@ export interface TipTapDoc {
 export interface PageContent {
 	doc: TipTapDoc;
 	wordCount: number;
+	title: string;
 }
 
 const EMPTY_DOC: TipTapDoc = { type: "doc", content: [{ type: "paragraph" }] };
+const EMPTY_PAGE: PageContent = { doc: EMPTY_DOC, wordCount: 0, title: "" };
 
 export const useAdminTextEditPage = (id: string) => {
 	const { t, lang } = useI18n();
@@ -46,7 +48,7 @@ export const useAdminTextEditPage = (id: string) => {
 	const { data: versionsData } = useAdminTextVersions(id);
 
 	const [title, setTitle] = useState("");
-	const [pages, setPages] = useState<PageContent[]>([{ doc: EMPTY_DOC, wordCount: 0 }]);
+	const [pages, setPages] = useState<PageContent[]>([EMPTY_PAGE]);
 	const [activePage, setActivePage] = useState(0);
 	const [status, setStatus] = useState<TextStatus>("draft");
 	const [language, setLanguage] = useState<TextLanguage>("CHE");
@@ -87,6 +89,7 @@ export const useAdminTextEditPage = (id: string) => {
 					.map((p) => ({
 						doc: (p.contentRich as TipTapDoc) ?? EMPTY_DOC,
 						wordCount: countWordsInRaw(p.contentRaw),
+						title: p.title ?? "",
 					})),
 			);
 		}
@@ -107,14 +110,23 @@ export const useAdminTextEditPage = (id: string) => {
 	const handlePageContentChange = (doc: TipTapDoc, wordCount: number) => {
 		setPages((prev) => {
 			const next = [...prev];
-			next[activePage] = { doc, wordCount };
+			next[activePage] = { ...next[activePage], doc, wordCount };
+			return next;
+		});
+		markUnsaved();
+	};
+
+	const handlePageTitleChange = (title: string) => {
+		setPages((prev) => {
+			const next = [...prev];
+			next[activePage] = { ...next[activePage], title };
 			return next;
 		});
 		markUnsaved();
 	};
 
 	const handleAddPage = () => {
-		setPages((prev) => [...prev, { doc: EMPTY_DOC, wordCount: 0 }]);
+		setPages((prev) => [...prev, EMPTY_PAGE]);
 		setActivePage((prev) => prev + 1);
 		markUnsaved();
 	};
@@ -149,6 +161,7 @@ export const useAdminTextEditPage = (id: string) => {
 
 		const pagesDto = pages.map((page, i) => ({
 			pageNumber: i + 1,
+			title: page.title.trim() || undefined,
 			contentRich: page.doc,
 		}));
 
@@ -242,6 +255,7 @@ export const useAdminTextEditPage = (id: string) => {
 		showDeleteModal,
 		handleTitleChange,
 		handlePageContentChange,
+		handlePageTitleChange,
 		handleAddPage,
 		handleSelectPage,
 		handleCoverSelect,

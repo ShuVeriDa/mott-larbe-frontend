@@ -31,6 +31,7 @@ export const TokenizationTopbar = ({
 			<div className="ml-auto flex items-center gap-2 shrink-0">
 				<Button
 					onClick={onBatchRun}
+					title={t("admin.tokenization.batchBtn")}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 				>
 					<CheckCircle2 className="size-[13px]" />
@@ -40,6 +41,7 @@ export const TokenizationTopbar = ({
 				</Button>
 				<Button
 					onClick={onRun}
+					title={t("admin.tokenization.runBtn")}
 					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
 					<Play className="size-3" />

@@ -22,6 +22,7 @@ export const TextEditRetokenizeBar = ({
 			</Typography>
 			<Button
 				onClick={onDismiss}
+				title={t("admin.texts.editPage.retokenizeBar.dismiss")}
 				className="shrink-0 rounded-[4px] px-1.5 py-0.5 text-[11px] text-t-3 transition-colors hover:bg-surf-3"
 			>
 				✕

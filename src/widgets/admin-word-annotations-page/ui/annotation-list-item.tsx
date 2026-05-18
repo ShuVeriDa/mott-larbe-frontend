@@ -51,7 +51,7 @@ export const AnnotationListItem = ({
 						</Typography>
 						{item.translation && (
 							<>
-								<span className="text-bd-3">·</span>
+								<Typography tag="span" className="text-bd-3">·</Typography>
 								<Typography tag="span" className="truncate text-[11px] text-t-4">
 									{item.translation}
 								</Typography>
@@ -64,6 +64,7 @@ export const AnnotationListItem = ({
 						variant="bare"
 						size="bare"
 						onClick={handleDelete}
+						title={item.normalized}
 						className="flex size-[22px] items-center justify-center rounded-[5px] text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
 					>
 						<Trash2 className="size-[11px]" />

@@ -8,6 +8,7 @@ import { useAdminTextSSE } from "@/entities/admin-text";
 import type { useAdminTextMutations } from "@/entities/admin-text/model/use-admin-text-mutations";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { AlertCircle, TrendingUp } from "lucide-react";
 import { ComponentProps } from "react";
 import { TextLevelBadge } from "./text-level-badge";
@@ -59,17 +60,18 @@ const TextTableRow = ({
 	const handleActionsClick: NonNullable<ComponentProps<"td">["onClick"]> = e =>
 		e.stopPropagation();
 	return (
-		<tr className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2">
-			<td className="px-2.5 py-[10px] pl-3.5" onClick={handleCheckboxClick}>
+		<TableRow className="border-b border-bd-1 transition-colors last:border-b-0 hover:bg-surf-2">
+			<TableCell className="px-2.5 py-[10px] pl-3.5" onClick={handleCheckboxClick}>
 				<input
 					type="checkbox"
 					checked={selected}
 					onChange={onToggle}
+					aria-label={text.title}
 					className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
 				/>
-			</td>
+			</TableCell>
 
-			<td className="px-2.5 py-[10px]">
+			<TableCell className="px-2.5 py-[10px]">
 				<div className="flex flex-col gap-0.5">
 					<Typography
 						tag="span"
@@ -104,24 +106,24 @@ const TextTableRow = ({
 						)}
 					</Typography>
 				</div>
-			</td>
+			</TableCell>
 
-			<td className="px-2.5 py-[10px]">
+			<TableCell className="px-2.5 py-[10px]">
 				<TextLevelBadge level={text.level} />
-			</td>
+			</TableCell>
 
-			<td className="px-2.5 py-[10px]">
+			<TableCell className="px-2.5 py-[10px]">
 				<TextStatusBadge status={text.status} />
-			</td>
+			</TableCell>
 
-			<td className="px-2.5 py-[10px]">
+			<TableCell className="px-2.5 py-[10px]">
 				<TextProcessingBar
 					status={processingStatus}
 					progress={processingProgress}
 				/>
-			</td>
+			</TableCell>
 
-			<td className="px-2.5 py-[10px] text-[12px] text-t-2">
+			<TableCell className="px-2.5 py-[10px] text-[12px] text-t-2">
 				{text.readCount > 0 ? (
 					text.readCount.toLocaleString("ru-RU")
 				) : (
@@ -129,16 +131,16 @@ const TextTableRow = ({
 						—
 					</Typography>
 				)}
-			</td>
+			</TableCell>
 
-			<td className="px-2.5 py-[10px] text-[11.5px] text-t-3 max-md:hidden">
+			<TableCell className="px-2.5 py-[10px] text-[11.5px] text-t-3 max-md:hidden">
 				{formatDate(text.createdAt)}
-			</td>
+			</TableCell>
 
-			<td className="px-2.5 py-[10px]" onClick={handleActionsClick}>
+			<TableCell className="px-2.5 py-[10px]" onClick={handleActionsClick}>
 				<TextRowActions text={text} mutations={mutations} />
-			</td>
-		</tr>
+			</TableCell>
+		</TableRow>
 	);
 };
 
@@ -159,76 +161,77 @@ export const TextsTable = ({
 	if (isLoading) {
 		return (
 			<div className="overflow-x-auto [&::-webkit-scrollbar]:h-0 max-sm:hidden">
-				<table className="w-full border-collapse text-[12.5px]">
-					<tbody>
+				<Table className="w-full border-collapse text-[12.5px]" aria-busy="true" aria-label="Loading texts">
+					<TableBody>
 						{Array.from({ length: 6 }).map((_, i) => (
-							<tr key={i} className="border-b border-bd-1">
-								<td className="px-2.5 py-2.5 pl-3.5" style={{ width: 30 }}>
+							<TableRow key={i} className="border-b border-bd-1">
+								<TableCell className="px-2.5 py-2.5 pl-3.5" style={{ width: 30 }}>
 									<div className="size-3.5 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-2.5">
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5">
 									<div className="space-y-1.5">
 										<div className="h-3 w-48 animate-pulse rounded bg-surf-3" />
 										<div className="h-2.5 w-28 animate-pulse rounded bg-surf-3" />
 									</div>
-								</td>
-								<td className="px-2.5 py-2.5" style={{ width: 50 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5" style={{ width: 50 }}>
 									<div className="h-4.5 w-7 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-2.5" style={{ width: 110 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5" style={{ width: 110 }}>
 									<div className="h-4 w-20 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-2.5" style={{ width: 150 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5" style={{ width: 150 }}>
 									<div className="h-2 w-full animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-2.5" style={{ width: 85 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5" style={{ width: 85 }}>
 									<div className="h-3 w-10 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td className="px-2.5 py-2.5" style={{ width: 90 }}>
+								</TableCell>
+								<TableCell className="px-2.5 py-2.5" style={{ width: 90 }}>
 									<div className="h-3 w-16 animate-pulse rounded bg-surf-3" />
-								</td>
-								<td style={{ width: 90 }} />
-							</tr>
+								</TableCell>
+								<TableCell style={{ width: 90 }} />
+							</TableRow>
 						))}
-					</tbody>
-				</table>
+					</TableBody>
+				</Table>
 			</div>
 		);
 	}
 
 	return (
 		<div className="overflow-x-auto [&::-webkit-scrollbar]:h-0 max-sm:hidden">
-			<table className="w-full border-collapse text-[12.5px]">
-				<thead>
-					<tr className="border-b border-bd-1">
-						<th className={`${thClass} pl-3.5`} style={{ width: 30 }}>
+			<Table className="w-full border-collapse text-[12.5px]" aria-label={t("admin.texts.table.title")}>
+				<TableHeader>
+					<TableRow className="border-b border-bd-1">
+						<TableHead className={`${thClass} pl-3.5`} style={{ width: 30 }}>
 							<input
 								type="checkbox"
 								checked={allSelected}
 								onChange={onToggleAll}
+								aria-label={t("admin.texts.table.selectAll")}
 								className="size-3.5 cursor-pointer rounded border-[1.5px] border-bd-3 accent-acc"
 							/>
-						</th>
-						<th className={thClass}>{t("admin.texts.table.title")}</th>
-						<th className={thClass} style={{ width: 50 }}>
+						</TableHead>
+						<TableHead className={thClass}>{t("admin.texts.table.title")}</TableHead>
+						<TableHead className={thClass} style={{ width: 50 }}>
 							{t("admin.texts.table.level")}
-						</th>
-						<th className={thClass} style={{ width: 110 }}>
+						</TableHead>
+						<TableHead className={thClass} style={{ width: 110 }}>
 							{t("admin.texts.table.status")}
-						</th>
-						<th className={thClass} style={{ width: 150 }}>
+						</TableHead>
+						<TableHead className={thClass} style={{ width: 150 }}>
 							{t("admin.texts.table.processing")}
-						</th>
-						<th className={thClass} style={{ width: 85 }}>
+						</TableHead>
+						<TableHead className={thClass} style={{ width: 85 }}>
 							{t("admin.texts.table.reads")}
-						</th>
-						<th className={`${thClass} max-md:hidden`} style={{ width: 90 }}>
+						</TableHead>
+						<TableHead className={`${thClass} max-md:hidden`} style={{ width: 90 }}>
 							{t("admin.texts.table.date")}
-						</th>
-						<th className={thClass} style={{ width: 90 }} />
-					</tr>
-				</thead>
-				<tbody>
+						</TableHead>
+						<TableHead className={thClass} style={{ width: 90 }} />
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{texts.map(text => {
 						const handleToggle: NonNullable<
 							ComponentProps<typeof TextTableRow>["onToggle"]
@@ -243,8 +246,8 @@ export const TextsTable = ({
 							/>
 						);
 					})}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	);
 };

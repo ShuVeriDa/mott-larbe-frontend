@@ -104,15 +104,15 @@ export const TokenizationSection = ({
 				{t("admin.texts.editPage.tokenHistoryLink")}
 			</Link>
 
-			<button
-				type="button"
+			<Button
 				onClick={handleClearCache}
+				title="Очистить кэш слов"
 				disabled={clearingCache}
 				className="mb-3 flex w-full items-center justify-center gap-1.5 rounded-base border border-red/25 bg-red-muted px-3 py-[7px] text-[11.5px] font-medium text-red transition-opacity hover:opacity-80 disabled:opacity-50"
 			>
 				<Trash2 className="size-3" />
 				{clearingCache ? "Очищаем..." : "Очистить кэш слов"}
-			</button>
+			</Button>
 			{cacheCleared !== null ? (
 				<Typography tag="p" className="mb-2 text-[11px] text-t-3">
 					Удалено записей: {cacheCleared}

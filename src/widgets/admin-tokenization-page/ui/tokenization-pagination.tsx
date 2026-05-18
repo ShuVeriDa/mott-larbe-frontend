@@ -56,6 +56,7 @@ return (
 				<Button
 					onClick={handleClick}
 					disabled={page === 1}
+					title={t("admin.tokenization.pagination.prev")}
 					className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
 				>
 					<ChevronLeft className="size-3" />
@@ -75,6 +76,7 @@ return (
 						<Button
 							key={p}
 							onClick={handlePageClick}
+							title={String(p)}
 							className={`flex size-7 items-center justify-center rounded-[6px] border text-[12px] font-medium transition-colors ${
 								p === page
 									? "border-acc bg-acc text-white"
@@ -88,6 +90,7 @@ return (
 				<Button
 					onClick={handleClick2}
 					disabled={page === totalPages}
+					title={t("admin.tokenization.pagination.next")}
 					className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
 				>
 					<ChevronRight className="size-3" />

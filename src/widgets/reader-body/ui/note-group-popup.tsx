@@ -3,6 +3,7 @@
 import { NoteCard } from "@/entities/note";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 import { X } from "lucide-react";
 import { type ComponentProps, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
@@ -62,14 +63,15 @@ export const NoteGroupPopup = ({
 			className="rounded-xl border border-bd-1 bg-surf shadow-lg"
 		>
 			<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-3 py-2">
-				<span className="text-[11px] font-semibold uppercase tracking-[0.5px] text-t-3">
+				<Typography tag="span" className="text-[11px] font-semibold uppercase tracking-[0.5px] text-t-3">
 					{t("reader.notes.title")}
-				</span>
+				</Typography>
 				<Button
 					variant="bare"
 					size={null}
 					onClick={handleClose}
 					aria-label={t("reader.notes.cancel")}
+					title={t("reader.notes.cancel")}
 					className="rounded p-0.5 text-t-3 hover:bg-surf-2 hover:text-t-1"
 				>
 					<X className="size-3.5" strokeWidth={1.6} />

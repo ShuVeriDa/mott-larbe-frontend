@@ -46,6 +46,7 @@ export const DeleteCouponModal = ({
 				<Button
 					size={"bare"}
 					onClick={onClose}
+					title={t("admin.coupons.deleteModal.cancel")}
 					className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 				>
 					<X className="size-3" />
@@ -65,6 +66,7 @@ export const DeleteCouponModal = ({
 			<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-4 py-3">
 				<Button
 					onClick={onClose}
+					title={t("admin.coupons.deleteModal.cancel")}
 					className="h-8 rounded-[8px] border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 				>
 					{t("admin.coupons.deleteModal.cancel")}
@@ -74,6 +76,7 @@ export const DeleteCouponModal = ({
 					<Button
 						disabled={isPending}
 						onClick={handleClick}
+						title={t("admin.coupons.deleteModal.deactivate")}
 						className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						{t("admin.coupons.deleteModal.deactivate")}
@@ -82,6 +85,7 @@ export const DeleteCouponModal = ({
 					<Button
 						disabled={isPending}
 						onClick={handleClick2}
+						title={t("admin.coupons.deleteModal.confirm")}
 						className="h-8 rounded-[8px] bg-red px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
 					>
 						{t("admin.coupons.deleteModal.confirm")}

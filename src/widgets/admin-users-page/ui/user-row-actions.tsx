@@ -104,6 +104,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 			<Button
 				size={"bare"}
 				aria-label={t("admin.users.actions.openProfile")}
+				title={t("admin.users.actions.openProfile")}
 				className={btnClass}
 				onClick={handleOpenProfileClick}
 			>
@@ -116,6 +117,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 					className={btnClass}
 					onClick={handleMenuToggleClick}
 					disabled={isPending}
+					title={t("admin.users.actions.more")}
 				>
 					<MoreVertical className="size-3.5" />
 				</Button>
@@ -126,6 +128,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 							size={"bare"}
 							className={menuItemClass}
 							onClick={handleMenuOpenProfileClick}
+							title={t("admin.users.actions.openProfile")}
 						>
 							<User className="size-3.5 shrink-0 text-t-3" />
 							{t("admin.users.actions.openProfile")}
@@ -138,6 +141,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 								size={"bare"}
 								className={menuItemClass}
 								onClick={handleFreezeClick}
+								title={t("admin.users.actions.freeze")}
 							>
 								<Plus className="size-3.5 shrink-0 text-t-3" />
 								{t("admin.users.actions.freeze")}
@@ -149,6 +153,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 								size={"bare"}
 								className={menuItemClass}
 								onClick={handleUnfreezeClick}
+								title={t("admin.users.actions.unfreeze")}
 							>
 								<MinusCircle className="size-3.5 shrink-0 text-t-3" />
 								{t("admin.users.actions.unfreeze")}
@@ -160,6 +165,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 								size={"bare"}
 								className={menuItemClass}
 								onClick={handleUnblockClick}
+								title={t("admin.users.actions.unblock")}
 							>
 								<MinusCircle className="size-3.5 shrink-0 text-t-3" />
 								{t("admin.users.actions.unblock")}
@@ -171,6 +177,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 								size={"bare"}
 								className={menuDangerClass}
 								onClick={handleBlockClick}
+								title={t("admin.users.actions.block")}
 							>
 								<Ban className="size-3.5 shrink-0 text-red-t" />
 								{t("admin.users.actions.block")}
@@ -182,6 +189,7 @@ export const UserRowActions = ({ user, mutations }: UserRowActionsProps) => {
 								size={"bare"}
 								className={menuDangerClass}
 								onClick={handleDeleteClick}
+								title={t("admin.users.actions.delete")}
 							>
 								<Trash2 className="size-3.5 shrink-0 text-red-t" />
 								{t("admin.users.actions.delete")}

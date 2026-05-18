@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 
 import type { AdminDictSense } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
@@ -66,25 +67,27 @@ return (
 						<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
 							{t("admin.dictionaryDetail.translation")}
 						</div>
-						<input
+						<Input
 							ref={inputRef}
-							className={inputCls}
+							className="rounded-lg"
 							type="text"
 							placeholder={t("admin.dictionaryDetail.translationPlaceholder")}
 							value={definition}
 							onChange={handleChange}
+							aria-label={t("admin.dictionaryDetail.translation")}
 						/>
 					</div>
 					<div className="mb-0">
 						<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
 							{t("admin.dictionaryDetail.gloss")}
 						</div>
-						<input
-							className={inputCls}
+						<Input
+							className="rounded-lg"
 							type="text"
 							placeholder={t("admin.dictionaryDetail.glossPlaceholder")}
 							value={notes}
 							onChange={handleChange2}
+							aria-label={t("admin.dictionaryDetail.gloss")}
 						/>
 					</div>
 					<div className="mt-5 flex justify-end gap-2">

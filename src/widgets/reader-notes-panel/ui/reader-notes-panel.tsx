@@ -67,12 +67,12 @@ const NotesPanelBody = ({
 		<div className="flex min-h-0 flex-1 flex-col gap-3">
 			<NoteForm onSubmit={handleCreate} />
 			{isLoading && (
-				<p className="text-[12px] text-t-4">{t("reader.notes.loading")}</p>
+				<Typography className="text-[12px] text-t-4">{t("reader.notes.loading")}</Typography>
 			)}
 			{!isLoading && notes.length === 0 && (
 				<div className="flex flex-col items-center gap-2 py-6 text-center">
 					<NotebookPen className="size-8 text-t-4" strokeWidth={1.2} />
-					<p className="text-[13px] text-t-3">{t("reader.notes.empty")}</p>
+					<Typography className="text-[13px] text-t-3">{t("reader.notes.empty")}</Typography>
 				</div>
 			)}
 			<div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto">
@@ -104,6 +104,7 @@ const NotesChromeHeader = ({ onClose }: { onClose: () => void }) => {
 			<Button
 				onClick={handleClose}
 				aria-label={t("reader.panel.close")}
+				title={t("reader.panel.close")}
 				className="inline-flex size-6 items-center justify-center rounded-[5px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 			>
 				<X className="size-3" strokeWidth={1.6} />

@@ -27,6 +27,7 @@ export const ThemeToggle = ({ isCompactMode = false }: ThemeToggleProps) => {
 		<Button
 			onClick={handleToggle}
 			aria-label={dark ? t("nav.lightTheme") : t("nav.darkTheme")}
+			title={dark ? t("nav.lightTheme") : t("nav.darkTheme")}
 			className={cn(
 				"flex w-full items-center justify-start gap-[9px] border-none rounded-none bg-transparent px-3.5 py-1.5 text-left font-[inherit] text-[13px] text-t-2 transition-[colors,padding,gap] hover:bg-surf-2",
 				isCompactMode &&

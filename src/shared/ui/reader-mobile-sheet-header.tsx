@@ -32,6 +32,7 @@ export const ReaderMobileSheetHeader = ({
 				size={null}
 				onClick={handleCloseClick}
 				aria-label={closeAriaLabel}
+				title={closeAriaLabel}
 				className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 			>
 				<X className="size-4" />

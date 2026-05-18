@@ -57,6 +57,7 @@ export const OverridesToolbar = ({
 
 		<Button
 			onClick={onAddOverride}
+			title={t("admin.featureFlags.overrides.addOverride")}
 			className="ml-auto flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 		>
 			<Plus className="size-[11px]" />

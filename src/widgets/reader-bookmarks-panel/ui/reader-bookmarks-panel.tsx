@@ -57,12 +57,12 @@ const BookmarksPanelBody = ({
 	return (
 		<div className="flex min-h-0 flex-1 flex-col gap-3">
 			{isLoading && (
-				<p className="text-[12px] text-t-4">{t("reader.bookmarks.loading")}</p>
+				<Typography className="text-[12px] text-t-4">{t("reader.bookmarks.loading")}</Typography>
 			)}
 			{!isLoading && bookmarks.length === 0 && (
 				<div className="flex flex-col items-center gap-2 py-6 text-center">
 					<Bookmark className="size-8 text-t-4" strokeWidth={1.2} />
-					<p className="text-[13px] text-t-3">{t("reader.bookmarks.empty")}</p>
+					<Typography className="text-[13px] text-t-3">{t("reader.bookmarks.empty")}</Typography>
 				</div>
 			)}
 			<div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto">
@@ -73,21 +73,21 @@ const BookmarksPanelBody = ({
 						onClick={makeHandleCardClick(bookmark)}
 					>
 						<div className="min-w-0 flex-1">
-							<p className="mb-0.5 text-[11px] font-semibold tabular-nums text-t-3">
+							<Typography className="mb-0.5 text-[11px] font-semibold tabular-nums text-t-3">
 								{t("reader.toc.page")} {bookmark.pageNumber}
-							</p>
+							</Typography>
 							{bookmark.snippet && (
-								<p className="line-clamp-2 text-[12px] text-t-2">{bookmark.snippet}</p>
+								<Typography className="line-clamp-2 text-[12px] text-t-2">{bookmark.snippet}</Typography>
 							)}
 						</div>
-						<button
-							type="button"
+						<Button
 							onClick={makeHandleDelete(bookmark)}
-							aria-label={t("reader.panel.close")}
+							title={t("reader.bookmarks.removeSuccess")}
+							aria-label={t("reader.bookmarks.removeSuccess")}
 							className="mt-0.5 shrink-0 rounded-[4px] p-1 text-t-4 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-surf hover:text-red"
 						>
 							<Trash2 className="size-3.5" strokeWidth={1.4} />
-						</button>
+						</Button>
 					</div>
 				))}
 			</div>

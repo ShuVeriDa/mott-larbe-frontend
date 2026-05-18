@@ -53,6 +53,7 @@ return (
 					</div>
 					<Button
 						onClick={onClose}
+						title={t("admin.unknownWords.contextsModal.close")}
 						className="flex size-7 cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 					>
 						<X className="size-3.5" />

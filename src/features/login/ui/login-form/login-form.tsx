@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
@@ -48,7 +49,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 						{t("auth.fields.loginIdentifier")}
 					</Typography>
 				</div>
-				<input
+				<Input
 					id="login-email"
 					type="text"
 					inputMode="email"
@@ -58,13 +59,14 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 					value={email}
 					onChange={handleEmailChange}
 					className={cn(
-						"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
+						"h-[42px] rounded-[9px] border-[0.5px] bg-surf px-3.5 text-[14px] hover:border-bd-3 max-[640px]:h-11 max-[640px]:text-[16px]",
 						errors.email && "border-red",
 					)}
 					aria-invalid={Boolean(errors.email)}
+					aria-describedby={errors.email ? "login-email-error" : undefined}
 				/>
 				{errors.email ? (
-					<Typography className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
+					<Typography id="login-email-error" className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
 						<AlertCircle size={12} strokeWidth={2} />
 						<Typography tag="span">{errors.email}</Typography>
 					</Typography>
@@ -84,7 +86,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 					</Link>
 				</div>
 				<div className="relative flex items-center">
-					<input
+					<Input
 						id="login-password"
 						type={showPw ? "text" : "password"}
 						autoComplete="current-password"
@@ -93,10 +95,11 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 						value={password}
 						onChange={handlePasswordChange}
 						className={cn(
-							"h-[42px] w-full rounded-[9px] border-[0.5px] border-bd-2 bg-surf px-3.5 pr-11 text-[14px] text-t-1 outline-none transition-colors hover:border-bd-3 focus:border-acc max-[640px]:h-11 max-[640px]:text-[16px]",
+							"h-[42px] rounded-[9px] border-[0.5px] bg-surf px-3.5 pr-11 text-[14px] hover:border-bd-3 max-[640px]:h-11 max-[640px]:text-[16px]",
 							errors.password && "border-red",
 						)}
 						aria-invalid={Boolean(errors.password)}
+						aria-describedby={errors.password ? "login-password-error" : undefined}
 					/>
 					<Button
 						tabIndex={-1}
@@ -113,7 +116,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 					</Button>
 				</div>
 				{errors.password ? (
-					<Typography className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
+					<Typography id="login-password-error" className="mt-1.5 flex items-center gap-1.5 text-[11.5px] text-red">
 						<AlertCircle size={12} strokeWidth={2} />
 						<Typography tag="span">{errors.password}</Typography>
 					</Typography>

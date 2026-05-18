@@ -34,6 +34,7 @@ export const VocabularyTopbar = ({
 						size={"bare"}
 						onClick={onOpenDrawer}
 						aria-label={t("vocabulary.openFilters")}
+						title={t("vocabulary.openFilters")}
 						className="hidden size-[30px] items-center justify-center rounded-base border-hairline border-bd-2 bg-surf-2 text-t-2 transition-colors hover:text-t-1 max-md:flex"
 					>
 						<SlidersHorizontal className="size-[15px]" strokeWidth={2} />
@@ -43,6 +44,7 @@ export const VocabularyTopbar = ({
 						variant="action"
 						size="default"
 						onClick={onAddWord}
+						title={t("vocabulary.addWord")}
 						className="shadow-[0_1px_4px_rgba(34,84,211,0.3)]"
 					>
 						<Plus className="size-[11px]" strokeWidth={2.4} />

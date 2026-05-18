@@ -2,6 +2,7 @@
 
 import { CheckIcon } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
+import { Button } from "@/shared/ui/button";
 
 interface AnnotationScopeOptionProps {
 	active: boolean;
@@ -19,8 +20,8 @@ export const AnnotationScopeOption = ({
 	const handleClick = () => onClick();
 
 	return (
-		<button
-			type="button"
+		<Button
+			title={label}
 			onClick={handleClick}
 			className={cn(
 				"flex w-full items-start gap-3 rounded-base border border-hairline p-3 text-left transition-colors",
@@ -43,6 +44,6 @@ export const AnnotationScopeOption = ({
 				<div className="text-[13px] font-medium text-t-1">{label}</div>
 				<div className="mt-0.5 text-[11px] text-t-3">{description}</div>
 			</div>
-		</button>
+		</Button>
 	);
 };

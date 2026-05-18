@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { Button } from "@/shared/ui/button";
 
 import type { PopularBy, PopularTextItem } from "@/entities/admin-analytics";
@@ -65,59 +65,59 @@ export const AnalyticsPopularTexts = ({
 
 			{/* Table */}
 			<div className="overflow-x-auto">
-				<table className="w-full text-[12.5px]">
-					<thead>
-						<tr className="border-b border-bd-1">
-							<th className="py-2 pl-4 pr-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+				<Table className="text-[12.5px]" aria-label={t("admin.analytics.popularTexts.title")}>
+					<TableHeader>
+						<TableRow className="border-b border-bd-1">
+							<TableHead className="py-2 pl-4 pr-2 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								#
-							</th>
-							<th className="px-2 py-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-2 py-2 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.analytics.popularTexts.text")}
-							</th>
-							<th className="px-2 py-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="px-2 py-2 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.analytics.popularTexts.level")}
-							</th>
-							<th className="py-2 pl-2 pr-4 text-right text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							</TableHead>
+							<TableHead className="py-2 pl-2 pr-4 text-right text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 								{t("admin.analytics.popularTexts.count")}
-							</th>
-						</tr>
-					</thead>
-					<tbody>
+							</TableHead>
+						</TableRow>
+					</TableHeader>
+					<TableBody>
 						{isLoading || !items
 							? Array.from({ length: 7 }).map((_, i) => (
-									<tr key={i} className="border-b border-bd-1 last:border-0">
-										<td className="py-2 pl-4 pr-2">
+									<TableRow key={i} className="border-b border-bd-1 last:border-0">
+										<TableCell className="py-2 pl-4 pr-2">
 											<div className="h-3 w-4 animate-pulse rounded bg-surf-3" />
-										</td>
-										<td className="px-2 py-2">
+										</TableCell>
+										<TableCell className="px-2 py-2">
 											<div className="mb-1 h-3 w-32 animate-pulse rounded bg-surf-3" />
 											<div className="h-2.5 w-20 animate-pulse rounded bg-surf-3" />
-										</td>
-										<td className="px-2 py-2">
+										</TableCell>
+										<TableCell className="px-2 py-2">
 											<div className="h-4 w-8 animate-pulse rounded bg-surf-3" />
-										</td>
-										<td className="py-2 pl-2 pr-4 text-right">
+										</TableCell>
+										<TableCell className="py-2 pl-2 pr-4 text-right">
 											<div className="ml-auto h-3 w-8 animate-pulse rounded bg-surf-3" />
-										</td>
-									</tr>
+										</TableCell>
+									</TableRow>
 								))
 							: items.map(item => (
-									<tr
+									<TableRow
 										key={item.rank}
 										className="border-b border-bd-1 transition-colors last:border-0 hover:bg-surf-2"
 									>
-										<td className="py-2.5 pl-4 pr-2 text-[12px] text-t-2">
+										<TableCell className="py-2.5 pl-4 pr-2 text-[12px] text-t-2">
 											{item.rank}
-										</td>
-										<td className="px-2 py-2.5">
+										</TableCell>
+										<TableCell className="px-2 py-2.5">
 											<div className="font-medium text-t-1">{item.title}</div>
 											{item.author && (
 												<div className="text-[11.5px] text-t-3">
 													{item.author}
 												</div>
 											)}
-										</td>
-										<td className="px-2 py-2.5">
+										</TableCell>
+										<TableCell className="px-2 py-2.5">
 											{item.level && (
 												<Typography
 													tag="span"
@@ -129,14 +129,14 @@ export const AnalyticsPopularTexts = ({
 													{t(`shared.cefrLevel.${item.level}`)}
 												</Typography>
 											)}
-										</td>
-										<td className="py-2.5 pl-2 pr-4 text-right font-mono text-[12px] text-t-2">
+										</TableCell>
+										<TableCell className="py-2.5 pl-2 pr-4 text-right font-mono text-[12px] text-t-2">
 											{item.metricValue.toLocaleString()}
-										</td>
-									</tr>
+										</TableCell>
+									</TableRow>
 								))}
-					</tbody>
-				</table>
+					</TableBody>
+				</Table>
 			</div>
 		</div>
 	);

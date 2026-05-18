@@ -11,6 +11,7 @@ import type {
 import { useAdminFeatureFlagKeys } from "@/entities/feature-flag";
 import { http } from "@/shared/api";
 import { useDebounce } from "@/shared/lib/debounce";
+import { Input } from "@/shared/ui/input";
 import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { Select } from "@/shared/ui/select";
 import { FlagToggle } from "./flag-toggle";
@@ -121,7 +122,7 @@ export const FeatureFlagOverrideModal = ({
 	const handleReasonChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setReason(e.currentTarget.value);
 return (
 		<div
-			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
+			className="fixed inset-0 z-200 flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
 			onClick={handleBackdropClick}
 		>
 			<div className="w-[440px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
@@ -160,14 +161,17 @@ return (
 						{t("admin.featureFlags.overrideModal.userLabel")} *
 					</Typography>
 					<div className="relative">
-						<input
-							className={inputCls}
+						<Input
+							className="rounded-[8px]"
 							placeholder={t(
 								"admin.featureFlags.overrideModal.userPlaceholder",
 							)}
 							value={userInput}
 							onChange={handleUserInputChange}
 							onFocus={handleFocus}
+							aria-label={t("admin.featureFlags.overrideModal.userLabel")}
+							aria-autocomplete="list"
+							aria-expanded={showSuggestions && suggestions.length > 0}
 						/>
 						{showSuggestions && suggestions.length > 0 && (
 							<div className="absolute left-0 top-[calc(100%+4px)] z-50 w-full rounded-[9px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
@@ -207,13 +211,14 @@ return (
 					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.featureFlags.overrideModal.reasonLabel")}
 					</Typography>
-					<input
-						className={inputCls}
+					<Input
+						className="rounded-[8px]"
 						placeholder={t(
 							"admin.featureFlags.overrideModal.reasonPlaceholder",
 						)}
 						value={reason}
 						onChange={handleReasonChange}
+						aria-label={t("admin.featureFlags.overrideModal.reasonLabel")}
 					/>
 				</div>
 
@@ -221,6 +226,7 @@ return (
 					<Button
 						onClick={onClose}
 						disabled={isSubmitting}
+						title={t("admin.featureFlags.modal.cancel")}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10"
 					>
 						{t("admin.featureFlags.modal.cancel")}
@@ -228,6 +234,7 @@ return (
 					<Button
 						onClick={handleSubmit}
 						disabled={isSubmitting || !flagId || !userInput}
+						title={isSubmitting ? t("admin.featureFlags.overrideModal.saving") : t("admin.featureFlags.overrideModal.confirm")}
 						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10"
 					>
 						{isSubmitting

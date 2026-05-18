@@ -36,6 +36,7 @@ export const UserMenuLanguageSection = ({
 					data-locale={locale}
 					role="radio"
 					aria-checked={active}
+					title={locale.toUpperCase()}
 					onClick={onLocaleClick}
 					className={cn(
 						"px-2 py-0.5 min-w-[28px] text-[10.5px] font-medium rounded-full transition-colors",

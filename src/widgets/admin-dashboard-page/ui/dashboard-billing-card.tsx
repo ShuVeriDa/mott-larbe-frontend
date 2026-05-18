@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
@@ -86,34 +86,34 @@ export const DashboardBillingCard = ({ billing }: DashboardBillingCardProps) => 
 					<div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
 						{t("admin.dashboard.billing.recentPayments")}
 					</div>
-					<table className="w-full border-collapse text-[12.5px]">
-						<thead>
-							<tr>
-								<th className="pb-2 text-left text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+					<Table className="border-collapse text-[12.5px]" aria-label={t("admin.dashboard.billing.recentPayments")}>
+						<TableHeader>
+							<TableRow>
+								<TableHead className="pb-2 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 									{t("admin.dashboard.billing.user")}
-								</th>
-								<th className="pb-2 text-right text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+								</TableHead>
+								<TableHead className="pb-2 text-right text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 									{t("admin.dashboard.billing.amount")}
-								</th>
-								<th className="pb-2 text-right text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+								</TableHead>
+								<TableHead className="pb-2 text-right text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 									{t("admin.dashboard.billing.date")}
-								</th>
-							</tr>
-						</thead>
-						<tbody>
+								</TableHead>
+							</TableRow>
+						</TableHeader>
+						<TableBody>
 							{billing.recentPayments.map((payment) => (
-								<tr key={payment.id} className="border-t border-bd-1">
-									<td className="py-2 text-t-1">{payment.userName}</td>
-									<td className="py-2 text-right font-medium text-grn-t">
+								<TableRow key={payment.id} className="border-t border-bd-1">
+									<TableCell className="py-2 text-t-1">{payment.userName}</TableCell>
+									<TableCell className="py-2 text-right font-medium text-grn-t">
 										{formatAmount(payment.amountCents, payment.currency)}
-									</td>
-									<td className="py-2 text-right text-[11.5px] text-t-3">
+									</TableCell>
+									<TableCell className="py-2 text-right text-[11.5px] text-t-3">
 										{formatDate(payment.createdAt)}
-									</td>
-								</tr>
+									</TableCell>
+								</TableRow>
 							))}
-						</tbody>
-					</table>
+						</TableBody>
+					</Table>
 				</div>
 			)}
 		</div>

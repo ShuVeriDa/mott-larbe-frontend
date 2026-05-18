@@ -130,6 +130,7 @@ const WordPopupBody = ({
 				<Button
 					onClick={onPrimary}
 					disabled={isPending}
+					title={lookup.inDictionary ? t("reader.popup.inDictionary") : t("reader.popup.addToDictionary")}
 					className={cn(
 						"flex h-[30px] flex-1 items-center justify-center gap-1.5 rounded-base text-[11.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60",
 						lookup.inDictionary ? "bg-grn" : "bg-acc",
@@ -144,6 +145,7 @@ const WordPopupBody = ({
 					size={"bare"}
 					onClick={onOpenInPanel}
 					aria-label={t("reader.popup.openPanel")}
+					title={t("reader.popup.openPanel")}
 					className="inline-flex h-[30px] w-[30px] items-center justify-center rounded-base border-hairline border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
 				>
 					<ExternalLink className="size-3.5" strokeWidth={1.4} />
@@ -161,9 +163,9 @@ const PhrasePopupBody = ({ phrase }: { phrase: PagePhraseOccurrence }) => {
 		<>
 			<div className="border-b border-hairline border-bd-1 px-3.5 pt-3.5 pb-2.5">
 				<div className="mb-1 flex items-center gap-1.5">
-					<span className="rounded-[4px] border-hairline border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
+					<Typography tag="span" className="rounded-[4px] border-hairline border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
 						{t("reader.phrase.label")}
-					</span>
+					</Typography>
 				</div>
 				<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
 					{phrase.phrase.original}

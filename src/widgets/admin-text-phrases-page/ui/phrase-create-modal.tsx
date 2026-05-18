@@ -95,6 +95,7 @@ export const PhraseCreateModal = ({
 								<Button
 									key={l}
 									onClick={handleClick}
+									title={l}
 									className={cn(
 										"flex h-[34px] cursor-pointer items-center gap-1.5 rounded-[8px] border px-3 text-[12.5px] transition-colors select-none",
 										language === l
@@ -158,6 +159,7 @@ export const PhraseCreateModal = ({
 						size="default"
 						onClick={onClose}
 						disabled={isSubmitting}
+						title={t("admin.textPhrases.createModal.cancel")}
 					>
 						{t("admin.textPhrases.createModal.cancel")}
 					</Button>
@@ -166,6 +168,7 @@ export const PhraseCreateModal = ({
 						size="default"
 						onClick={handleSubmit}
 						disabled={isSubmitting}
+						title={isSubmitting ? t("admin.textPhrases.createModal.creating") : t("admin.textPhrases.createModal.create")}
 					>
 						{isSubmitting
 							? t("admin.textPhrases.createModal.creating")

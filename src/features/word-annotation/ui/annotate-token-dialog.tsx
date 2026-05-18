@@ -158,6 +158,7 @@ export const AnnotateTokenDialog = ({
 				<div className="flex gap-2 px-5 pb-5">
 					<Button
 						size="bare"
+						title={t("reader.annotate.cancel")}
 						onClick={() => handleOpenChange(false)}
 						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-hairline border-bd-2 bg-surf-2 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
 					>
@@ -165,6 +166,7 @@ export const AnnotateTokenDialog = ({
 					</Button>
 					<Button
 						size="bare"
+						title={t("reader.annotate.save")}
 						disabled={!selectedLemma || !scope || isPending}
 						onClick={handleSave}
 						className="flex h-[34px] flex-1 items-center justify-center rounded-base bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-40"

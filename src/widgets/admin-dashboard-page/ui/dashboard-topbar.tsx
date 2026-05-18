@@ -44,6 +44,7 @@ export const DashboardTopbar = ({
 						<Button
 							key={p}
 							onClick={handleClick}
+							title={t(`admin.dashboard.period.${p}` as Parameters<typeof t>[0])}
 							className={cn(
 								"h-[26px] rounded-[5px] px-3 text-[11.5px] font-medium transition-colors",
 								period === p
@@ -72,6 +73,7 @@ export const DashboardTopbar = ({
 
 				<Button
 					onClick={onExport}
+					title={t("admin.dashboard.export")}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
 					<Download className="size-[13px] shrink-0" />

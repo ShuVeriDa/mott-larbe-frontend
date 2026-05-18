@@ -76,7 +76,7 @@ export const PhrasesLeftColumn = ({
 								: t("admin.textPhrases.empty")}
 						</Typography>
 						{!search && (
-							<Button variant="action" size="default" onClick={onCreateOpen}>
+							<Button variant="action" size="default" onClick={onCreateOpen} title={t("admin.textPhrases.newPhrase")}>
 								{t("admin.textPhrases.newPhrase")}
 							</Button>
 						)}

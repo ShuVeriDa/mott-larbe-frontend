@@ -10,6 +10,7 @@ import type {
 	MorphRuleType,
 } from "@/entities/morph-rule";
 import { useI18n } from "@/shared/lib/i18n";
+import { Input } from "@/shared/ui/input";
 import { ComponentProps, useEffect, useState } from "react";
 import { Select } from "@/shared/ui/select";
 const TYPE_OPTIONS: MorphRuleType[] = [
@@ -124,13 +125,14 @@ return (
 						<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
 							{t("admin.morphology.ruleModal.suffixLabel")}
 						</Typography>
-						<input
+						<Input
 							required
 							type="text"
 							value={form.suffix}
 							onChange={handleSuffixChange}
 							placeholder={t("admin.morphology.ruleModal.suffixPlaceholder")}
-							className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] text-t-1 placeholder:font-sans placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
+							aria-label={t("admin.morphology.ruleModal.suffixLabel")}
+							className="h-9 rounded-lg font-mono placeholder:font-sans placeholder:text-[12.5px]"
 						/>
 					</div>
 
@@ -143,12 +145,13 @@ return (
 									{t("admin.morphology.ruleModal.addHint")}
 								</Typography>
 							</Typography>
-							<input
+							<Input
 								type="text"
 								value={form.add ?? ""}
 								onChange={handleAddChange}
 								placeholder="∅"
-								className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 font-mono text-[13px] text-t-1 placeholder:font-sans placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
+								aria-label={t("admin.morphology.ruleModal.addLabel")}
+								className="h-9 rounded-lg font-mono placeholder:font-sans placeholder:text-[12.5px]"
 							/>
 						</div>
 
@@ -157,12 +160,13 @@ return (
 							<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
 								{t("admin.morphology.ruleModal.posLabel")}
 							</Typography>
-							<input
+							<Input
 								type="text"
 								value={form.pos ?? ""}
 								onChange={handlePosChange}
 								placeholder="NOUN"
-								className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[12.5px] text-t-1 placeholder:text-t-3 focus:border-acc focus:outline-none"
+								aria-label={t("admin.morphology.ruleModal.posLabel")}
+								className="h-9 rounded-lg text-[12.5px]"
 							/>
 						</div>
 					</div>
@@ -192,13 +196,14 @@ return (
 							<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
 								{t("admin.morphology.ruleModal.priorityLabel")}
 							</Typography>
-							<input
+							<Input
 								type="number"
 								min={0}
 								max={99}
 								value={form.priority ?? 1}
 								onChange={handlePriorityChange}
-								className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[12.5px] text-t-1 focus:border-acc focus:outline-none"
+								aria-label={t("admin.morphology.ruleModal.priorityLabel")}
+								className="h-9 rounded-lg text-[12.5px]"
 							/>
 						</div>
 					</div>
@@ -208,14 +213,15 @@ return (
 						<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
 							{t("admin.morphology.ruleModal.descriptionLabel")}
 						</Typography>
-						<input
+						<Input
 							type="text"
 							value={form.description ?? ""}
 							onChange={handleDescriptionChange}
 							placeholder={t(
 								"admin.morphology.ruleModal.descriptionPlaceholder",
 							)}
-							className="h-9 w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 text-[13px] text-t-1 placeholder:text-[12.5px] placeholder:text-t-3 focus:border-acc focus:outline-none"
+							aria-label={t("admin.morphology.ruleModal.descriptionLabel")}
+							className="h-9 rounded-lg placeholder:text-[12.5px]"
 						/>
 					</div>
 
@@ -235,6 +241,7 @@ return (
 					<div className="mt-1.5 flex justify-end gap-2 max-sm:flex-col-reverse">
 						<Button
 							onClick={onClose}
+							title={t("admin.morphology.ruleModal.cancel")}
 							className="flex h-[30px] items-center justify-center rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
 						>
 							{t("admin.morphology.ruleModal.cancel")}
@@ -242,6 +249,7 @@ return (
 						<Button
 							type="submit"
 							disabled={isLoading || !form.suffix || !form.type}
+							title={isEdit ? t("admin.morphology.ruleModal.save") : t("admin.morphology.ruleModal.create")}
 							className="flex h-[30px] items-center justify-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
 						>
 							{isLoading
