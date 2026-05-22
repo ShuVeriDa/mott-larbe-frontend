@@ -1090,7 +1090,8 @@
       "notifications": "Уведомления",
       "shortcuts": "Клавиши",
       "sessions": "Сессии",
-      "data": "Данные"
+      "data": "Данные",
+      "ai": "AI-перевод"
     },
     "appearance": {
       "title": "Внешний вид",
@@ -1459,7 +1460,9 @@
       "bookmark": "Закладка",
       "toc": "Оглавление",
       "bookmarks": "Закладки",
-      "focusMode": "Режим фокуса"
+      "focusMode": "Режим фокуса",
+      "aiHistory": "AI-переводы",
+      "batchTranslate": "Перевести все неизвестные слова"
     },
     "body": {
       "progress": "Прогресс по тексту",
@@ -4409,6 +4412,108 @@
       "A": "Начальный",
       "B": "Средний",
       "C": "Продвинутый"
+    }
+  },
+  "aiTranslation": {
+    "settings": {
+      "title": "Gemini API",
+      "description": "Ключ используется для AI-перевода слов, не найденных в словаре. Ключ хранится на сервере в зашифрованном виде (AES-256).",
+      "keyLabel": "Gemini API ключ",
+      "keyPlaceholder": "AIza...",
+      "keyHint": "Ключ хранится зашифрованным на сервере",
+      "hasKey": "Ключ сохранён",
+      "noKey": "Ключ не добавлен",
+      "saveButton": "Сохранить ключ",
+      "deleteButton": "Удалить ключ",
+      "verifyButton": "Проверить ключ",
+      "verifySuccess": "Ключ работает",
+      "verifyError": "Ключ недействителен",
+      "savedSuccess": "Ключ сохранён",
+      "deletedSuccess": "Ключ удалён",
+      "getKeyLink": "Получить ключ на ai.google.dev",
+      "show": "Показать",
+      "hide": "Скрыть"
+    },
+    "popup": {
+      "translating": "Переводим через AI...",
+      "badge": "AI-перевод",
+      "badgeHint": "Перевод может быть неточным",
+      "transliteration": "Транслитерация",
+      "partOfSpeech": "Часть речи",
+      "example": "Пример",
+      "addToDictionary": "Добавить в словарь",
+      "notFound": "Слово не найдено в словаре",
+      "recorded": "Мы записали это слово — постараемся добавить в словарь",
+      "addKeyPrompt": "Добавьте Gemini API ключ в настройках, чтобы получить AI-перевод",
+      "goToSettings": "Перейти в настройки",
+      "notChechen": "Слово не является чеченским",
+      "copy": "Копировать перевод",
+      "sourceApproved": "Из кэша · одобрено",
+      "sourcePending": "Из кэша · на проверке",
+      "sourceFresh": "AI · только что",
+      "error": "Ошибка AI-перевода. Попробуйте позже"
+    },
+    "phrase": {
+      "button": "Перевести фразу",
+      "title": "Перевод фразы",
+      "translating": "Переводим...",
+      "noKey": "Для перевода фраз необходим Gemini API ключ",
+      "refine": "Уточнить",
+      "refinePlaceholder": "Например: «ка» здесь означает барана в буквальном смысле...",
+      "refineSubmit": "Отправить",
+      "refineResult": "Уточнённый перевод",
+      "refineError": "Не удалось уточнить перевод",
+      "error": "Ошибка перевода фразы. Попробуйте позже",
+      "batchError": "Не удалось перевести слова. Попробуйте позже"
+    },
+    "history": {
+      "title": "AI-переводы сессии",
+      "empty": "В этой сессии AI-переводов нет",
+      "addAll": "Добавить все в словарь",
+      "statusPending": "На проверке",
+      "statusApproved": "Одобрено",
+      "refined": "Уточнённый перевод"
+    },
+    "admin": {
+      "tabPending": "AI — ожидает",
+      "tabApproved": "AI — одобрено",
+      "tabRejected": "AI — отклонено",
+      "approve": "Одобрить",
+      "reject": "Отклонить",
+      "hot": "Горячее",
+      "requestCount": "запросов",
+      "thumbsUp": "👍",
+      "thumbsDown": "👎",
+      "approveSuccess": "Запись одобрена",
+      "rejectSuccess": "Запись отклонена",
+      "exportButton": "Экспортировать в словарь",
+      "exportSuccess": "Добавлено: {created}, пропущено: {skipped}",
+      "exportError": "Ошибка экспорта",
+      "exported": "В словаре",
+      "notExported": "Не экспортировано",
+      "exportConfirmTitle": "Экспорт в словарь",
+      "exportConfirmDesc": "Будет отправлено {count} одобренных записей, которые ещё не попали в словарь. Продолжить?",
+      "exportConfirmNoItems": "Нет новых одобренных записей для экспорта.",
+      "exportConfirmCta": "Экспортировать",
+      "exportConfirmCancel": "Отмена",
+      "exportHistory": "История экспортов",
+      "exportHistoryEmpty": "Экспортов ещё не было",
+      "exportRunTriggeredCron": "Автоматически",
+      "exportRunTriggeredManual": "Вручную",
+      "exportRunStatusOk": "Успешно",
+      "exportRunStatusError": "Ошибка",
+      "exportRunStatusRunning": "Выполняется",
+      "exportRunCreated": "добавлено",
+      "exportRunSkipped": "пропущено",
+      "exportRunErrors": "ошибок",
+      "widget": {
+        "title": "AI-кэш",
+        "pending": "Ожидает проверки",
+        "approvedWeek": "Одобрено за неделю",
+        "notExported": "Ждут экспорта",
+        "topWords": "Топ запросов",
+        "goToQueue": "Перейти к очереди"
+      }
     }
   }
 }

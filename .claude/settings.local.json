@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(python3 -c ' *)",
-      "Bash(Get-ChildItem -Path \"f:\\\\programming\\\\mott-larbe\\\\mott-larbe-frontend\" -Filter \"middleware*\" -Force)"
+      "Bash(Get-ChildItem -Path \"f:\\\\programming\\\\mott-larbe\\\\mott-larbe-frontend\" -Filter \"middleware*\" -Force)",
+      "Bash(echo \"\")",
+      "Bash(echo \"GEMINI_MODEL=gemini-3.1-flash-lite\")"
     ]
   }
 }

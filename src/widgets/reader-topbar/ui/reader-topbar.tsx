@@ -32,6 +32,10 @@ export interface ReaderTopbarProps {
 	onToggleBookmarks?: () => void;
 	focusModeActive?: boolean;
 	onToggleFocusMode?: () => void;
+	aiHistoryOpen?: boolean;
+	onToggleAiHistory?: () => void;
+	batchTranslateState?: "idle" | "loading" | "done" | "error";
+	onBatchTranslate?: () => void;
 }
 
 export const ReaderTopbar = ({
@@ -49,6 +53,10 @@ export const ReaderTopbar = ({
 	onToggleBookmarks,
 	focusModeActive,
 	onToggleFocusMode,
+	aiHistoryOpen,
+	onToggleAiHistory,
+	batchTranslateState,
+	onBatchTranslate,
 }: ReaderTopbarProps) => {
 	const {
 		t,
@@ -121,6 +129,10 @@ export const ReaderTopbar = ({
 					bookmarked: data.bookmarked,
 					bookmarking,
 					handleBookmark,
+					aiHistoryOpen,
+					onToggleAiHistory,
+					batchTranslateState,
+					onBatchTranslate,
 				}).map((action) => (
 					<Button
 						key={action.key}

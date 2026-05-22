@@ -8,6 +8,7 @@ import {
 	Database,
 	Smartphone,
 	Laptop,
+	Bot,
 } from 'lucide-react';
 import type { SVGProps } from 'react';
 
@@ -45,4 +46,8 @@ export const PhoneIcon = (props: SVGProps<SVGSVGElement>) => (
 
 export const LaptopIcon = (props: SVGProps<SVGSVGElement>) => (
 	<Laptop className="size-[14px] shrink-0" {...(props as object)} />
+);
+
+export const AiIcon = (props: SVGProps<SVGSVGElement>) => (
+	<Bot className="size-[14px] shrink-0" {...(props as object)} />
 );

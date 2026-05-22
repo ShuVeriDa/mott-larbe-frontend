@@ -111,6 +111,19 @@ export interface AdminDashboardBilling {
 	recentPayments: AdminDashboardPayment[];
 }
 
+export interface AdminDashboardAiCacheTopWord {
+	lemma: string;
+	requestCount: number;
+	translation: string;
+}
+
+export interface AdminDashboardAiCache {
+	pending: number;
+	approvedThisWeek: number;
+	approvedNotExported: number;
+	topWords: AdminDashboardAiCacheTopWord[];
+}
+
 export interface AdminDashboardResponse {
 	kpi: AdminDashboardKpi;
 	chart: AdminDashboardChart;
@@ -121,4 +134,5 @@ export interface AdminDashboardResponse {
 	unknownWords: AdminDashboardUnknownWords;
 	featureFlags: AdminDashboardFeatureFlag[];
 	billing: AdminDashboardBilling;
+	aiCache?: AdminDashboardAiCache;
 }

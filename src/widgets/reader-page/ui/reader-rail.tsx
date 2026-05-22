@@ -1,4 +1,5 @@
 import { cn } from "@/shared/lib/cn";
+import { ReaderAiHistoryAside } from "@/widgets/reader-ai-history-panel";
 import { ReaderBookmarksAside } from "@/widgets/reader-bookmarks-panel";
 import { ReaderNotesAside } from "@/widgets/reader-notes-panel";
 import { ReaderSettingsAside } from "@/widgets/reader-settings-sheet";
@@ -13,6 +14,7 @@ interface ReaderRailProps {
 	notesOpen: boolean;
 	tocOpen: boolean;
 	bookmarksOpen: boolean;
+	aiHistoryOpen: boolean;
 	onClose: () => void;
 	onNavigate: (page: number) => void;
 }
@@ -25,6 +27,7 @@ export const ReaderRail = ({
 	notesOpen,
 	tocOpen,
 	bookmarksOpen,
+	aiHistoryOpen,
 	onClose,
 	onNavigate,
 }: ReaderRailProps) => (
@@ -58,5 +61,6 @@ export const ReaderRail = ({
 			open={bookmarksOpen}
 			onClose={onClose}
 		/>
+		<ReaderAiHistoryAside open={aiHistoryOpen} onClose={onClose} />
 	</div>
 );

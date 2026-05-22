@@ -6,6 +6,7 @@ import {
 	usePagePhrases,
 	type TextPageResponse,
 } from "@/entities/text";
+import { PhraseTranslatePopup } from "@/features/ai-phrase-translate";
 import { usePhraseMap } from "@/features/phrase-lookup";
 import {
 	FONT_FAMILY_CLASS,
@@ -28,7 +29,9 @@ import {
 } from "@/features/reader-text-width";
 import { useReaderTheme } from "@/features/reader-theme";
 import { useSelectToken, useWordLookupStore } from "@/features/word-lookup";
+import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useInlineNotes } from "../model/use-inline-notes";
 import { useReaderHighlights } from "../model/use-reader-highlights";
@@ -44,8 +47,16 @@ export interface ReaderBodyProps {
 }
 
 export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
+	const { lang } = useI18n();
 	const onSelectToken = useSelectToken();
 	const activeToken = useWordLookupStore(s => s.activeToken);
+
+	const [phraseTranslate, setPhraseTranslate] = useState<{
+		phrase: string;
+		x: number;
+		y: number;
+		contextSentence?: string;
+	} | null>(null);
 
 	// Phrase lookup
 	const { data: phrasesData } = usePagePhrases(data.id, data.page.pageNumber);
@@ -103,6 +114,25 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 		if (!selection) return;
 		handleAddNote(selection.text, body);
 	};
+
+	const handleTranslatePhrase = () => {
+		if (!selection) return;
+		const phrase = selection.text;
+		const raw = data.page.contentRaw;
+		const idx = raw.indexOf(phrase);
+		let contextSentence: string | undefined;
+		if (idx !== -1) {
+			const sentenceStart = Math.max(0, raw.lastIndexOf(".", idx - 1) + 1);
+			const nextDot = raw.indexOf(".", idx + phrase.length);
+			const sentenceEnd = nextDot !== -1 ? nextDot + 1 : raw.length;
+			const sentence = raw.slice(sentenceStart, sentenceEnd).trim();
+			if (sentence !== phrase) contextSentence = sentence;
+		}
+		setPhraseTranslate({ phrase, x: selection.x, y: selection.y, contextSentence });
+		handleDismiss();
+	};
+
+	const handleClosePhraseTranslate = () => setPhraseTranslate(null);
 
 	const highlightMarks = highlightsVisible
 		? highlights.map(h => ({
@@ -177,9 +207,20 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 						hasExisting={!!matchedHighlight}
 						onRemove={matchedHighlight ? handleRemoveHighlight : undefined}
 						onAddNote={handleAddNoteFromSelection}
+						onTranslatePhrase={handleTranslatePhrase}
 					/>,
 					document.body,
 				)}
+			{typeof window !== "undefined" && phraseTranslate && (
+				<PhraseTranslatePopup
+					phrase={phraseTranslate.phrase}
+					x={phraseTranslate.x}
+					y={phraseTranslate.y}
+					contextSentence={phraseTranslate.contextSentence}
+					lang={lang}
+					onClose={handleClosePhraseTranslate}
+				/>
+			)}
 			{typeof window !== "undefined" && activeNotePopup && (
 				<NoteInlinePopup
 					popup={activeNotePopup}

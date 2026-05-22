@@ -1090,7 +1090,8 @@
       "notifications": "Хаамаш",
       "shortcuts": "Г1урмаш",
       "sessions": "Сессеш",
-      "data": "Хаам"
+      "data": "Хаам",
+      "ai": "AI-гочдар"
     },
     "appearance": {
       "title": "Аьрхалла",
@@ -1459,7 +1460,9 @@
       "bookmark": "Билгало",
       "toc": "Оглавление",
       "bookmarks": "Закладки",
-      "focusMode": "Режим фокуса"
+      "focusMode": "Режим фокуса",
+      "aiHistory": "AI-гочдарш",
+      "batchTranslate": "Ца хаарш дешнаш гочде"
     },
     "body": {
       "progress": "Доьшаран прогресс",
@@ -4409,6 +4412,108 @@
       "A": "Юьхьехь",
       "B": "Юккъе",
       "C": "Лакхара"
+    }
+  },
+  "aiTranslation": {
+    "settings": {
+      "title": "Gemini API",
+      "description": "И куьг дозалла йоцу дешнашна AI-гочдар дарна лело. Иза сервере зорбаниган (AES-256) кхочуш ду.",
+      "keyLabel": "Gemini API куьг",
+      "keyPlaceholder": "AIza...",
+      "keyHint": "Куьг сервере зорба кхочуш бу",
+      "hasKey": "Куьг кхочуш бу",
+      "noKey": "Куьг яц",
+      "saveButton": "Куьг кхочуш де",
+      "deleteButton": "Куьг дIахоттае",
+      "verifyButton": "Куьг тергаде",
+      "verifySuccess": "Куьг нийса бу",
+      "verifyError": "Куьг нийса яц",
+      "savedSuccess": "Куьг кхочуш ду",
+      "deletedSuccess": "Куьг дIахоттийна",
+      "getKeyLink": "Куьг ai.google.dev-хь схьаэца",
+      "show": "Гойта",
+      "hide": "Кхета"
+    },
+    "popup": {
+      "translating": "AI гочдаш ду...",
+      "badge": "AI-гочдар",
+      "badgeHint": "Гочдар нийса хила тарло",
+      "transliteration": "Транслитераци",
+      "partOfSpeech": "Дешан дакъа",
+      "example": "Масал",
+      "addToDictionary": "Дошамечу тIечIагIде",
+      "notFound": "Дош дошамехь хьалха яц",
+      "recorded": "Дош яздина — дошамечу тIетохур ду",
+      "addKeyPrompt": "AI-гочдар схьалаха Gemini API куьг нисдахьа",
+      "goToSettings": "Нисдаршна дIагIе",
+      "notChechen": "Дош нохчийн яц",
+      "copy": "Гочдар копи ян",
+      "sourceApproved": "Кэшах · бакъдина",
+      "sourcePending": "Кэшах · тергаме",
+      "sourceFresh": "AI · хIинца",
+      "error": "AI-гочдаран гIалат. ТIаьхьа дIа хьажа"
+    },
+    "phrase": {
+      "button": "Дош гочдан",
+      "title": "Дошан гочдар",
+      "translating": "Гочдаш ду...",
+      "noKey": "Дешнаш гочдарна Gemini API куьг оьшу",
+      "refine": "Нийсаде",
+      "refinePlaceholder": "Масала: «ка» кхузахь маьIна «борз» ду...",
+      "refineSubmit": "Дахьа",
+      "refineResult": "Нийсадина гочдар",
+      "refineError": "Гочдар нийсаде ца хилира",
+      "error": "Дешнийн гочдар ца хилира. ТIаьхьа дIа хьажа",
+      "batchError": "Дешнаш гочдан ца хилира. ТIаьхьа дIа хьажа"
+    },
+    "history": {
+      "title": "AI-гочдарш сессехь",
+      "empty": "Хlокху сессехь AI-гочдарш яц",
+      "addAll": "Масех дошаме тIечIагIде",
+      "statusPending": "Терго хьала",
+      "statusApproved": "Ладоьгlна",
+      "refined": "Нисделла гочдар"
+    },
+    "admin": {
+      "tabPending": "AI — хьала",
+      "tabApproved": "AI — ладоьгlна",
+      "tabRejected": "AI — диллина",
+      "approve": "Ладог1а",
+      "reject": "Дилла",
+      "hot": "Цiеналла",
+      "requestCount": "дехарш",
+      "thumbsUp": "👍",
+      "thumbsDown": "👎",
+      "approveSuccess": "Яздар ладоьгlна",
+      "rejectSuccess": "Яздар диллина",
+      "exportButton": "Дошаме экспорт де",
+      "exportSuccess": "Тlетоьхна: {created}, дIадиллина: {skipped}",
+      "exportError": "Экспорт хилла бац",
+      "exported": "Дошамехь ду",
+      "notExported": "Экспорт дина дац",
+      "exportConfirmTitle": "Дошаме экспорт",
+      "exportConfirmDesc": "{count} ладоьгlна яздар дошаме дахьур ду. Д1акхоьхьа?",
+      "exportConfirmNoItems": "Экспорт дан ладоьгlна керла яздарш яц.",
+      "exportConfirmCta": "Экспорт де",
+      "exportConfirmCancel": "Иммен",
+      "exportHistory": "Экспортийн истори",
+      "exportHistoryEmpty": "Экспорташ дац хIинца",
+      "exportRunTriggeredCron": "Автоматехь",
+      "exportRunTriggeredManual": "КIадволла",
+      "exportRunStatusOk": "Кхочушдина",
+      "exportRunStatusError": "Г1алат",
+      "exportRunStatusRunning": "Болх беш",
+      "exportRunCreated": "тlетоьхна",
+      "exportRunSkipped": "дIадиллина",
+      "exportRunErrors": "г1алаташ",
+      "widget": {
+        "title": "AI-кэш",
+        "pending": "Терго хьала",
+        "approvedWeek": "Кхана ладоьгlна",
+        "topWords": "Масех дехарш",
+        "goToQueue": "Никъа дIагIе",
+        "notExported": "Экспорт хьала"
+      }
     }
   }
 }

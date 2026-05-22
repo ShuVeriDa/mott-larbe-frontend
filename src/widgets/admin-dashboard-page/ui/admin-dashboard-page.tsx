@@ -35,6 +35,10 @@ import {
 	DashboardSupportTableSkeleton,
 } from "./dashboard-support-table";
 import { DashboardTopbar } from "./dashboard-topbar";
+import {
+	DashboardAiCacheCard,
+	DashboardAiCacheCardSkeleton,
+} from "./dashboard-ai-cache-card";
 
 export const AdminDashboardPage = () => {
 	const { period, setPeriod, dashboardQuery, handleToggleFlag, handleExport } =
@@ -71,6 +75,9 @@ export const AdminDashboardPage = () => {
 							<DashboardFeatureFlagsCardSkeleton />
 							<DashboardBillingCardSkeleton />
 						</div>
+						<div className="mb-3.5">
+							<DashboardAiCacheCardSkeleton />
+						</div>
 						<DashboardSupportTableSkeleton />
 					</>
 				) : (
@@ -94,6 +101,12 @@ export const AdminDashboardPage = () => {
 							/>
 							<DashboardBillingCard billing={data.billing} />
 						</div>
+
+						{data.aiCache && (
+							<div className="mb-3.5">
+								<DashboardAiCacheCard aiCache={data.aiCache} />
+							</div>
+						)}
 
 						<DashboardSupportTable support={data.support} />
 					</>

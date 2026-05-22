@@ -2,11 +2,14 @@ import {
 	Bookmark,
 	BookMarked,
 	List,
+	Loader2,
 	Maximize2,
 	Minimize2,
 	NotebookPen,
 	PanelRightOpen,
 	Settings,
+	Sparkles,
+	Zap,
 } from "lucide-react";
 import { type ReactNode } from "react";
 
@@ -38,6 +41,10 @@ export interface GetTopbarActionsParams {
 	bookmarked?: boolean | null;
 	bookmarking: boolean;
 	handleBookmark: () => void;
+	aiHistoryOpen?: boolean;
+	onToggleAiHistory?: () => void;
+	batchTranslateState?: "idle" | "loading" | "done" | "error";
+	onBatchTranslate?: () => void;
 }
 
 export const getTopbarActions = ({
@@ -59,6 +66,10 @@ export const getTopbarActions = ({
 	bookmarked,
 	bookmarking,
 	handleBookmark,
+	aiHistoryOpen,
+	onToggleAiHistory,
+	batchTranslateState,
+	onBatchTranslate,
 }: GetTopbarActionsParams): TopbarAction[] => {
 	const actions: (TopbarAction | null)[] = [
 		{
@@ -117,6 +128,28 @@ export const getTopbarActions = ({
 			ariaPressed: settingsOpen,
 			onClick: onToggleSettings,
 		},
+		onToggleAiHistory
+			? {
+					key: "ai-history",
+					renderIcon: () => <Sparkles className="size-[15px]" strokeWidth={1.4} />,
+					ariaLabel: t("reader.topbar.aiHistory"),
+					ariaPressed: aiHistoryOpen,
+					onClick: onToggleAiHistory,
+				}
+			: null,
+		onBatchTranslate
+			? {
+					key: "batch-translate",
+					renderIcon: () =>
+						batchTranslateState === "loading"
+							? <Loader2 className="size-[15px] animate-spin" strokeWidth={1.4} />
+							: <Zap className="size-[15px]" strokeWidth={1.4} />,
+					ariaLabel: t("reader.topbar.batchTranslate"),
+					ariaPressed: undefined,
+					disabled: batchTranslateState === "loading",
+					onClick: onBatchTranslate,
+				}
+			: null,
 		onToggleFocusMode
 			? {
 					key: "focus-mode",

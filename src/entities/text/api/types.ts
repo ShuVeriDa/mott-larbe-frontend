@@ -8,6 +8,8 @@ export interface TextToken {
 	original: string;
 	normalized: string;
 	lemmaId: string | null;
+	vocabId: string | null;
+	isKnown: boolean;
 	userStatus: LearningLevel | null;
 	startOffset: number;
 	endOffset: number;

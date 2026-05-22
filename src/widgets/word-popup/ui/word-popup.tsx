@@ -17,6 +17,7 @@ import { ExternalLink, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
+import { AiWordPopupBody } from "./ai-word-popup-body";
 
 const POPUP_WIDTH = 264;
 const ESTIMATED_HEIGHT = 220;
@@ -186,7 +187,7 @@ const PhrasePopupBody = ({ phrase }: { phrase: PagePhraseOccurrence }) => {
 // ── Main popup ────────────────────────────────────────────────────────────────
 
 export const WordPopup = () => {
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
 	const surface = useWordLookupStore(s => s.surface);
 	const token = useWordLookupStore(s => s.activeToken);
 	const phrase = useWordLookupStore(s => s.activePhrase);
@@ -238,11 +239,17 @@ export const WordPopup = () => {
 										{t("reader.popup.loading")}
 									</div>
 								</div>
-							) : (
+							) : data.translation ? (
 								<WordPopupBody
 									token={token}
 									lookup={data}
 									onOpenInPanel={() => openInPanel(token)}
+								/>
+							) : (
+								<AiWordPopupBody
+									word={token.original}
+									normalized={token.normalized}
+									lang={lang}
 								/>
 							)
 						) : null}

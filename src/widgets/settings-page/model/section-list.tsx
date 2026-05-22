@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import {
+	AiIcon,
 	AppearanceIcon,
 	DataIcon,
 	LearningIcon,
@@ -16,7 +17,8 @@ export type SettingsSectionId =
 	| "notifications"
 	| "shortcuts"
 	| "sessions"
-	| "data";
+	| "data"
+	| "ai";
 
 export interface SectionMeta {
 	id: SettingsSectionId;
@@ -50,4 +52,5 @@ export const SECTIONS: SectionMeta[] = [
 		dividerBefore: true,
 	},
 	{ id: "data", labelKey: "settings.tabs.data", icon: <DataIcon /> },
+	{ id: "ai", labelKey: "settings.tabs.ai", icon: <AiIcon />, dividerBefore: true },
 ];

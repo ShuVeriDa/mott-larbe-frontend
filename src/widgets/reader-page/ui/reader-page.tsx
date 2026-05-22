@@ -1,4 +1,7 @@
 "use client";
+import { useAiBatchTranslate } from "@/features/ai-batch-translate";
+import type { TextPageResponse } from "@/entities/text";
+import { ReaderAiHistorySheet } from "@/widgets/reader-ai-history-panel";
 import { ReaderFooter } from "@/widgets/reader-footer";
 import { ReaderNotesSheet } from "@/widgets/reader-notes-panel";
 import { ReaderSettingsSheet } from "@/widgets/reader-settings-sheet";
@@ -18,28 +21,48 @@ export interface ReaderPageProps {
 	pageNumber: number;
 }
 
-export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
-	const {
-		data,
-		isLoading,
-		isError,
-		lang,
-		focusMode,
-		settingsOpen,
-		notesOpen,
-		tocOpen,
-		bookmarksOpen,
-		desktopRailExpanded,
-		handleNavigate,
-		handleToggleSettings,
-		handleToggleNotes,
-		handleToggleToc,
-		handleToggleBookmarks,
-		handleCloseRail,
-	} = useReaderPage(textId, pageNumber);
+interface ReaderPageInnerProps {
+	textId: string;
+	pageNumber: number;
+	data: TextPageResponse;
+	lang: string;
+	focusMode: { active: boolean; toggle: () => void };
+	settingsOpen: boolean;
+	notesOpen: boolean;
+	tocOpen: boolean;
+	bookmarksOpen: boolean;
+	aiHistoryOpen: boolean;
+	desktopRailExpanded: boolean;
+	handleNavigate: (page: number) => void;
+	handleToggleSettings: () => void;
+	handleToggleNotes: () => void;
+	handleToggleToc: () => void;
+	handleToggleBookmarks: () => void;
+	handleToggleAiHistory: () => void;
+	handleCloseRail: () => void;
+}
 
-	if (isLoading) return <ReaderLoading />;
-	if (isError || !data) return <ReaderError />;
+const ReaderPageInner = ({
+	textId,
+	pageNumber,
+	data,
+	lang,
+	focusMode,
+	settingsOpen,
+	notesOpen,
+	tocOpen,
+	bookmarksOpen,
+	aiHistoryOpen,
+	desktopRailExpanded,
+	handleNavigate,
+	handleToggleSettings,
+	handleToggleNotes,
+	handleToggleToc,
+	handleToggleBookmarks,
+	handleToggleAiHistory,
+	handleCloseRail,
+}: ReaderPageInnerProps) => {
+	const { state: batchTranslateState, translate: batchTranslate } = useAiBatchTranslate(data.tokens);
 
 	return (
 		<>
@@ -59,6 +82,10 @@ export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
 					onToggleBookmarks={handleToggleBookmarks}
 					focusModeActive={focusMode.active}
 					onToggleFocusMode={focusMode.toggle}
+					aiHistoryOpen={aiHistoryOpen}
+					onToggleAiHistory={handleToggleAiHistory}
+					batchTranslateState={batchTranslateState}
+					onBatchTranslate={batchTranslate}
 				/>
 			)}
 			<ReaderLayout
@@ -70,6 +97,7 @@ export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
 				notesOpen={notesOpen}
 				tocOpen={tocOpen}
 				bookmarksOpen={bookmarksOpen}
+				aiHistoryOpen={aiHistoryOpen}
 				onCloseRail={handleCloseRail}
 				onNavigate={handleNavigate}
 			/>
@@ -96,7 +124,57 @@ export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
 				open={bookmarksOpen}
 				onClose={handleCloseRail}
 			/>
+			<ReaderAiHistorySheet open={aiHistoryOpen} onClose={handleCloseRail} />
 			{focusMode.active && <ReaderFocusExitButton onExit={focusMode.toggle} />}
 		</>
+	);
+};
+
+export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
+	const {
+		data,
+		isLoading,
+		isError,
+		lang,
+		focusMode,
+		settingsOpen,
+		notesOpen,
+		tocOpen,
+		bookmarksOpen,
+		aiHistoryOpen,
+		desktopRailExpanded,
+		handleNavigate,
+		handleToggleSettings,
+		handleToggleNotes,
+		handleToggleToc,
+		handleToggleBookmarks,
+		handleToggleAiHistory,
+		handleCloseRail,
+	} = useReaderPage(textId, pageNumber);
+
+	if (isLoading) return <ReaderLoading />;
+	if (isError || !data) return <ReaderError />;
+
+	return (
+		<ReaderPageInner
+			textId={textId}
+			pageNumber={pageNumber}
+			data={data}
+			lang={lang}
+			focusMode={focusMode}
+			settingsOpen={settingsOpen}
+			notesOpen={notesOpen}
+			tocOpen={tocOpen}
+			bookmarksOpen={bookmarksOpen}
+			aiHistoryOpen={aiHistoryOpen}
+			desktopRailExpanded={desktopRailExpanded}
+			handleNavigate={handleNavigate}
+			handleToggleSettings={handleToggleSettings}
+			handleToggleNotes={handleToggleNotes}
+			handleToggleToc={handleToggleToc}
+			handleToggleBookmarks={handleToggleBookmarks}
+			handleToggleAiHistory={handleToggleAiHistory}
+			handleCloseRail={handleCloseRail}
+		/>
 	);
 };

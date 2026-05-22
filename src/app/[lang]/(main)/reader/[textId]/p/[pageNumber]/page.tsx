@@ -6,7 +6,7 @@ import {
 	getDictionary,
 	hasLocale,
 } from "@/i18n/locales";
-import { textApi, textKeys } from "@/entities/text";
+import { textApi, textKeys, fetchTextMeta } from "@/entities/text";
 import { ReaderPage } from "@/widgets/reader-page";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/shared/lib/query-client";
@@ -40,20 +40,12 @@ export const generateMetadata = async ({
 	const meta = dict.reader.meta;
 	const path = `/reader/${textId}/p/${page}`;
 
-	let textTitle: string | null = null;
-	let imageUrl: string | null = null;
-	try {
-		const textData = await textApi.getPage(textId, page);
-		textTitle = textData.title;
-		imageUrl = textData.imageUrl;
-	} catch {
-		// text not found or network error — fall back to generic title
-	}
-
+	const textMeta = await fetchTextMeta(textId, page);
 	const rawTitle = meta.title.replace("{page}", String(page));
-	const title = textTitle
-		? rawTitle.replace("{textTitle}", textTitle)
+	const title = textMeta?.title
+		? rawTitle.replace("{textTitle}", textMeta.title)
 		: rawTitle.replace("{textTitle} · ", "");
+	const imageUrl = textMeta?.imageUrl ?? null;
 	const description = meta.description;
 
 	const languages: Record<string, string> = {};

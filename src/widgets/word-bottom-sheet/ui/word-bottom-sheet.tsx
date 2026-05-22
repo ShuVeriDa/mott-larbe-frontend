@@ -19,6 +19,7 @@ import {
 	ReaderMobileSheetHeader,
 } from "@/shared/ui/reader-mobile-sheet-header";
 import { WordPanelEmpty } from "@/widgets/word-panel";
+import { AiWordSheetBody } from "./ai-word-sheet-body";
 import { Plus, X } from "lucide-react";
 import type { MouseEvent } from "react";
 import { useEffect } from "react";
@@ -140,7 +141,7 @@ const SheetBody = ({
 };
 
 export const WordBottomSheet = ({ textId }: { textId: string }) => {
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
 	const surface = useWordLookupStore(s => s.surface);
 	const token = useWordLookupStore(s => s.activeToken);
 	const closeSheet = useWordLookupStore(s => s.closeSheet);
@@ -198,11 +199,18 @@ export const WordBottomSheet = ({ textId }: { textId: string }) => {
 								{t("reader.popup.loading")}
 							</div>
 						</div>
-					) : (
+					) : data.translation ? (
 						<SheetBody
 							token={token}
 							lookup={data}
 							textId={textId}
+							onClose={closeSheet}
+						/>
+					) : (
+						<AiWordSheetBody
+							word={token.original}
+							normalized={token.normalized}
+							lang={lang}
 							onClose={closeSheet}
 						/>
 					)

@@ -1090,7 +1090,8 @@
       "notifications": "Notifications",
       "shortcuts": "Shortcuts",
       "sessions": "Sessions",
-      "data": "Data"
+      "data": "Data",
+      "ai": "AI translation"
     },
     "appearance": {
       "title": "Appearance",
@@ -1459,7 +1460,9 @@
       "bookmark": "Bookmark",
       "toc": "Table of contents",
       "bookmarks": "Bookmarks",
-      "focusMode": "Focus mode"
+      "focusMode": "Focus mode",
+      "aiHistory": "AI translations",
+      "batchTranslate": "Translate all unknown words"
     },
     "body": {
       "progress": "Reading progress",
@@ -4409,6 +4412,108 @@
       "A": "Beginner",
       "B": "Intermediate",
       "C": "Advanced"
+    }
+  },
+  "aiTranslation": {
+    "settings": {
+      "title": "Gemini API",
+      "description": "The key is used for AI translation of words not found in the dictionary. It is stored encrypted on the server (AES-256).",
+      "keyLabel": "Gemini API key",
+      "keyPlaceholder": "AIza...",
+      "keyHint": "Your key is stored encrypted on the server",
+      "hasKey": "Key saved",
+      "noKey": "No key added",
+      "saveButton": "Save key",
+      "deleteButton": "Delete key",
+      "verifyButton": "Verify key",
+      "verifySuccess": "Key is valid",
+      "verifyError": "Key is invalid",
+      "savedSuccess": "Key saved",
+      "deletedSuccess": "Key deleted",
+      "getKeyLink": "Get a key at ai.google.dev",
+      "show": "Show",
+      "hide": "Hide"
+    },
+    "popup": {
+      "translating": "Translating via AI...",
+      "badge": "AI translation",
+      "badgeHint": "Translation may be inaccurate",
+      "transliteration": "Transliteration",
+      "partOfSpeech": "Part of speech",
+      "example": "Example",
+      "addToDictionary": "Add to dictionary",
+      "notFound": "Word not found in dictionary",
+      "recorded": "We recorded this word and will try to add it to the dictionary",
+      "addKeyPrompt": "Add a Gemini API key in settings to get AI translations",
+      "goToSettings": "Go to settings",
+      "notChechen": "This word is not Chechen",
+      "copy": "Copy translation",
+      "sourceApproved": "From cache · approved",
+      "sourcePending": "From cache · pending",
+      "sourceFresh": "AI · just now",
+      "error": "AI translation error. Please try again later"
+    },
+    "phrase": {
+      "button": "Translate phrase",
+      "title": "Phrase translation",
+      "translating": "Translating...",
+      "noKey": "A Gemini API key is required to translate phrases",
+      "refine": "Clarify",
+      "refinePlaceholder": "E.g.: «ka» here means a ram in the literal sense...",
+      "refineSubmit": "Submit",
+      "refineResult": "Refined translation",
+      "refineError": "Failed to refine translation",
+      "error": "Phrase translation failed. Please try again later",
+      "batchError": "Failed to translate words. Please try again later"
+    },
+    "history": {
+      "title": "AI translations this session",
+      "empty": "No AI translations in this session",
+      "addAll": "Add all to dictionary",
+      "statusPending": "Pending review",
+      "statusApproved": "Approved",
+      "refined": "Refined translation"
+    },
+    "admin": {
+      "tabPending": "AI — pending",
+      "tabApproved": "AI — approved",
+      "tabRejected": "AI — rejected",
+      "approve": "Approve",
+      "reject": "Reject",
+      "hot": "Hot",
+      "requestCount": "requests",
+      "thumbsUp": "👍",
+      "thumbsDown": "👎",
+      "approveSuccess": "Entry approved",
+      "rejectSuccess": "Entry rejected",
+      "exportButton": "Export to dictionary",
+      "exportSuccess": "Added: {created}, skipped: {skipped}",
+      "exportError": "Export failed",
+      "exported": "In dictionary",
+      "notExported": "Not exported",
+      "exportConfirmTitle": "Export to dictionary",
+      "exportConfirmDesc": "{count} approved entries will be sent to the dictionary. Continue?",
+      "exportConfirmNoItems": "No new approved entries to export.",
+      "exportConfirmCta": "Export",
+      "exportConfirmCancel": "Cancel",
+      "exportHistory": "Export history",
+      "exportHistoryEmpty": "No exports yet",
+      "exportRunTriggeredCron": "Automatic",
+      "exportRunTriggeredManual": "Manual",
+      "exportRunStatusOk": "Success",
+      "exportRunStatusError": "Error",
+      "exportRunStatusRunning": "Running",
+      "exportRunCreated": "added",
+      "exportRunSkipped": "skipped",
+      "exportRunErrors": "errors",
+      "widget": {
+        "title": "AI Cache",
+        "pending": "Pending review",
+        "approvedWeek": "Approved this week",
+        "notExported": "Awaiting export",
+        "topWords": "Top requests",
+        "goToQueue": "Go to queue"
+      }
     }
   }
 }

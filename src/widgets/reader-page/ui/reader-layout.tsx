@@ -12,6 +12,7 @@ interface ReaderLayoutProps {
 	notesOpen: boolean;
 	tocOpen: boolean;
 	bookmarksOpen: boolean;
+	aiHistoryOpen: boolean;
 	onCloseRail: () => void;
 	onNavigate: (page: number) => void;
 }
@@ -25,6 +26,7 @@ export const ReaderLayout = ({
 	notesOpen,
 	tocOpen,
 	bookmarksOpen,
+	aiHistoryOpen,
 	onCloseRail,
 	onNavigate,
 }: ReaderLayoutProps) => (
@@ -48,6 +50,7 @@ export const ReaderLayout = ({
 			notesOpen={notesOpen}
 			tocOpen={tocOpen}
 			bookmarksOpen={bookmarksOpen}
+			aiHistoryOpen={aiHistoryOpen}
 			onClose={onCloseRail}
 			onNavigate={onNavigate}
 		/>

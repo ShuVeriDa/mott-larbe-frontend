@@ -4,7 +4,7 @@ import { NoteForm } from "@/entities/note";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
-import { Highlighter, MessageSquare, Palette, Trash2 } from "lucide-react";
+import { Highlighter, MessageSquare, Palette, Sparkles, Trash2 } from "lucide-react";
 import { type ComponentProps, useEffect, useRef, useState } from "react";
 import { HIGHLIGHT_COLOR_HEX, type HighlightColor } from "../../model";
 
@@ -27,6 +27,7 @@ export interface HighlightColorPickerProps {
 	onDismiss: () => void;
 	hasExisting?: boolean;
 	onAddNote?: (body: string) => void;
+	onTranslatePhrase?: () => void;
 }
 
 export const HighlightColorPicker = ({
@@ -37,6 +38,7 @@ export const HighlightColorPicker = ({
 	onDismiss,
 	hasExisting = false,
 	onAddNote,
+	onTranslatePhrase,
 }: HighlightColorPickerProps) => {
 	const { t } = useI18n();
 	const ref = useRef<HTMLDivElement>(null);
@@ -155,6 +157,16 @@ export const HighlightColorPicker = ({
 						className="rounded p-0.5 text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						<MessageSquare className="size-3.5" strokeWidth={1.6} />
+					</Button>
+				)}
+				{onTranslatePhrase && (
+					<Button
+						onClick={onTranslatePhrase}
+						title={t("aiTranslation.phrase.button")}
+						aria-label={t("aiTranslation.phrase.button")}
+						className="rounded p-0.5 text-pur-t transition-colors hover:bg-pur-bg"
+					>
+						<Sparkles className="size-3.5" strokeWidth={1.6} />
 					</Button>
 				)}
 				{hasExisting && onRemove && (
