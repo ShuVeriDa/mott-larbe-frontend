@@ -30,6 +30,7 @@ return (
 				variant="bare"
 				size={null}
 				onClick={handleClick}
+				title={label}
 				className={cn(
 					"flex h-7 items-center justify-center gap-1.5 rounded-md px-3 text-[11.5px] font-medium transition-colors duration-100 max-md:flex-1",
 					active

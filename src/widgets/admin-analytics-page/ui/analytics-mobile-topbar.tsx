@@ -65,6 +65,7 @@ return (
 							<Button
 								key={r}
 								onClick={handleClick}
+								title={t(`admin.analytics.range.${r}`)}
 								className={cn(
 									"h-6 rounded-md px-2 text-[11px] font-medium transition-all",
 									r === range && !isCustomRange
@@ -79,6 +80,7 @@ return (
 					</div>
 					<Button
 						onClick={handleClick}
+						title={t("admin.analytics.dateFrom")}
 						className={cn(
 							"flex size-6 items-center justify-center rounded-md border transition-colors",
 							isCustomRange
@@ -118,12 +120,13 @@ return (
 						</div>
 					</div>
 					<div className="mt-2 flex justify-end gap-1.5">
-						<Button onClick={handleClear} className="h-[26px] rounded-md px-2.5 text-[11.5px] text-t-2">
+						<Button onClick={handleClear} title={t("admin.analytics.clear")} className="h-[26px] rounded-md px-2.5 text-[11.5px] text-t-2">
 							{t("admin.analytics.clear")}
 						</Button>
 						<Button
 							onClick={handleApply}
 							disabled={!localFrom || !localTo}
+							title={t("admin.analytics.apply")}
 							className="h-[26px] rounded-md bg-acc px-2.5 text-[11.5px] font-medium text-white disabled:opacity-40"
 						>
 							{t("admin.analytics.apply")}

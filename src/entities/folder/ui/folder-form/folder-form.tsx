@@ -109,6 +109,7 @@ export const FolderForm = ({
 							data-icon={iconKey}
 							onClick={handleIconClick}
 							aria-pressed={internal.icon === iconKey}
+							title={iconKey}
 							className={cn(
 								"flex size-9 items-center justify-center rounded-[8px]",
 								"border-hairline transition-[background-color,border-color]",

@@ -45,6 +45,7 @@ export const CouponActionsSection = ({
 		<div className="flex flex-col gap-1.5 px-[15px] py-2.5">
 			<Button
 				onClick={handleEdit}
+				title={labels.edit}
 				className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 			>
 				<Pencil className="size-3 shrink-0 text-t-3" />
@@ -53,6 +54,7 @@ export const CouponActionsSection = ({
 
 			<Button
 				onClick={handleCopy}
+				title={labels.copyCode}
 				className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 			>
 				<Copy className="size-3 shrink-0 text-t-3" />
@@ -64,6 +66,7 @@ export const CouponActionsSection = ({
 				<Button
 					disabled={toggling}
 					onClick={handleToggle}
+					title={coupon.computedStatus === "disabled" ? labels.activate : labels.deactivate}
 					className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-50"
 				>
 					<CirclePlus className="size-3 shrink-0 text-t-3" />
@@ -75,6 +78,7 @@ export const CouponActionsSection = ({
 
 			<Button
 				onClick={handleDelete}
+				title={labels.delete}
 				className="flex h-[29px] w-full items-center gap-1.5 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[11.5px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 			>
 				<Trash2 className="size-3 shrink-0 text-red-t" />

@@ -39,6 +39,7 @@ export const SubscriptionsTabs = ({ active, counts, onChange }: Props) => {
 					<Button
 						key={key}
 						onClick={handleClick}
+						title={label}
 						className={cn(
 							"flex h-[26px] shrink-0 items-center gap-1 rounded-base px-3 text-[12px] transition-colors",
 							active === key

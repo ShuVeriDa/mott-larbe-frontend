@@ -36,6 +36,7 @@ export const FeedbackChatHeader = ({
 		{/* Mobile back button */}
 		<Button
 			onClick={onBack}
+			title={t("admin.feedback.back")}
 			className="hidden h-[30px] items-center gap-1.5 rounded-base border border-acc bg-acc-bg px-2.5 text-[12px] font-semibold text-acc-t max-sm:flex"
 		>
 			<ChevronLeft className="size-3.5" />
@@ -70,6 +71,7 @@ export const FeedbackChatHeader = ({
 			{/* Info toggle — shown on tablet/mobile */}
 			<Button
 				onClick={onInfoOpen}
+				title={t("admin.feedback.ticket.title")}
 				className="hidden h-[30px] items-center gap-1.5 rounded-base border border-acc bg-acc-bg px-2.5 text-[11.5px] font-semibold text-acc-t max-[960px]:flex"
 			>
 				<User className="size-[13px]" />
@@ -88,6 +90,7 @@ export const FeedbackChatHeader = ({
 			{/* More */}
 			<Button
 				onClick={onMoreMenu}
+				title={t("admin.feedback.actions.title")}
 				className="flex size-[30px] items-center justify-center rounded-base border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 			>
 				<MoreVertical className="size-[13px]" />

@@ -71,6 +71,7 @@ export const FormPanel = ({
 								{t("auth.crosslink.noAccount")}{" "}
 								<Button
 									onClick={handleClick}
+									title={t("auth.crosslink.signup")}
 									className="font-semibold text-acc-t hover:underline"
 									variant="bare"
 								>
@@ -82,6 +83,7 @@ export const FormPanel = ({
 								{t("auth.crosslink.haveAccount")}{" "}
 								<Button
 									onClick={handleClick2}
+									title={t("auth.crosslink.signin")}
 									className="font-semibold text-acc-t hover:underline"
 									variant="bare"
 								>

@@ -65,6 +65,7 @@ return (
 						<Button
 							key={p}
 							onClick={handleClick}
+							title={String(p)}
 							className={cn(
 								"flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border px-1.5 text-[12px] transition-colors",
 								page === p

@@ -84,6 +84,7 @@ return (
 					<Button
 						onClick={onClose}
 						disabled={isSubmitting}
+						title={t("admin.dictionary.addSenseModal.cancel")}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10"
 					>
 						{t("admin.dictionary.addSenseModal.cancel")}
@@ -91,6 +92,7 @@ return (
 					<Button
 						onClick={handleSubmit}
 						disabled={isSubmitting}
+						title={isSubmitting ? t("admin.dictionary.addSenseModal.adding") : t("admin.dictionary.addSenseModal.add")}
 						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10"
 					>
 						{isSubmitting

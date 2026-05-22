@@ -38,6 +38,7 @@ export const AuthTabs = ({ mode, onChange }: AuthTabsProps) => {
 						variant="bare"
 						aria-selected={isActive}
 						onClick={handleClick}
+						title={t(tab.labelKey)}
 						className={cn(
 							"flex h-[34px] flex-1 items-center justify-center rounded-base text-[12.5px] font-semibold transition-colors",
 							isActive

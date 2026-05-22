@@ -231,6 +231,7 @@ export const SubscriptionsTable = ({
 											{canExtend && (
 												<Button
 													onClick={handleExtendClick}
+													title={t("admin.subscriptions.actions.extend")}
 													className="h-6 rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 whitespace-nowrap"
 												>
 													{t("admin.subscriptions.actions.extend")}
@@ -239,6 +240,7 @@ export const SubscriptionsTable = ({
 											{canCancel && (
 												<Button
 													onClick={handleCancelClick}
+													title={t("admin.subscriptions.actions.cancel")}
 													className="h-6 rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg whitespace-nowrap"
 												>
 													{t("admin.subscriptions.actions.cancel")}

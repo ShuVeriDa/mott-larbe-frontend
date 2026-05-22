@@ -87,6 +87,7 @@ return (
 					<Button
 						onClick={onClose}
 						disabled={isDuplicating}
+						title={t("admin.featureFlags.modal.cancel")}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50"
 					>
 						{t("admin.featureFlags.modal.cancel")}
@@ -94,6 +95,7 @@ return (
 					<Button
 						onClick={handleSubmit}
 						disabled={isDuplicating || !key}
+						title={isDuplicating ? t("admin.featureFlags.duplicateModal.duplicating") : t("admin.featureFlags.duplicateModal.confirm")}
 						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50"
 					>
 						{isDuplicating

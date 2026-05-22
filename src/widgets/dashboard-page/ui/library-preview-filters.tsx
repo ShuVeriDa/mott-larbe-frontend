@@ -35,6 +35,7 @@ export const LibraryPreviewFilters = ({
 				<LibraryPreviewFilterButton
 					active={filterLang === undefined}
 					onClick={onResetLanguageFilter}
+					title={t("dashboard.library.langAll")}
 				>
 					{t("dashboard.library.langAll")}
 				</LibraryPreviewFilterButton>
@@ -47,6 +48,7 @@ export const LibraryPreviewFilters = ({
 							key={languageFilter}
 							active={filterLang === languageFilter}
 							onClick={handleLanguageClick}
+							title={LANG_TAG[languageFilter]}
 						>
 							{LANG_TAG[languageFilter]}
 						</LibraryPreviewFilterButton>
@@ -60,6 +62,7 @@ export const LibraryPreviewFilters = ({
 				<LibraryPreviewFilterButton
 					active={filterLevel === undefined}
 					onClick={onResetLevelFilter}
+					title={t("dashboard.library.levelAll")}
 				>
 					{t("dashboard.library.levelAll")}
 				</LibraryPreviewFilterButton>
@@ -72,6 +75,7 @@ export const LibraryPreviewFilters = ({
 							key={levelFilter}
 							active={filterLevel === levelFilter}
 							onClick={handleLevelClick}
+							title={t(`shared.cefrLevel.${levelFilter}`)}
 						>
 							{t(`shared.cefrLevel.${levelFilter}`)}
 						</LibraryPreviewFilterButton>

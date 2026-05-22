@@ -32,6 +32,7 @@ export const CouponsTabs = ({ active, counts, onChange }: Props) => {
 					<Button
 						key={tab}
 						onClick={handleClick}
+						title={labels[tab]}
 						className={cn(
 							"flex h-[26px] items-center gap-1 whitespace-nowrap rounded-base px-2.5 text-[12px] transition-colors",
 							active === tab

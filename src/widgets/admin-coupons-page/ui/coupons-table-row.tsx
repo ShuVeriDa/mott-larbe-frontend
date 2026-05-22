@@ -182,12 +182,14 @@ export const CouponRow = ({
 				<div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100 [tr:hover_&]:opacity-100 [tr.bg-acc-bg_&]:opacity-100">
 					<Button
 						onClick={handleEditClick}
+						title={t("admin.coupons.table.edit")}
 						className="flex h-6 items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
 						{t("admin.coupons.table.edit")}
 					</Button>
 					<Button
 						onClick={handleDeleteClick}
+						title={t("admin.coupons.table.delete")}
 						className="flex h-6 items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 					>
 						{t("admin.coupons.table.delete")}

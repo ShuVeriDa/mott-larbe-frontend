@@ -36,6 +36,7 @@ export const LibraryFilterBarLevelGroup = ({
 			<LibraryFilterPill
 				active={level === "all"}
 				onClick={handleAllClick}
+				title={t("library.all")}
 				className={
 					level === "all" ? LIBRARY_FILTER_ACC_PILL_ACTIVE : LIBRARY_FILTER_ACC_PILL_IDLE
 				}
@@ -50,6 +51,7 @@ export const LibraryFilterBarLevelGroup = ({
 						key={l}
 						active={level === l}
 						onClick={handleClick}
+						title={t(`shared.cefrLevel.${l}`)}
 						className={libraryFilterLevelPillClass(l, level === l)}
 					>
 						{t(`shared.cefrLevel.${l}`)}

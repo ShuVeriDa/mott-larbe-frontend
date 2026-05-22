@@ -109,6 +109,7 @@ return (
 									<div className="flex items-center justify-end">
 										<Button
 											onClick={handleClick2}
+											title={t("admin.logs.detail.title")}
 											className="flex size-[26px] items-center justify-center rounded-[6px] text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 										>
 											<MoreVertical className="size-[13px]" />

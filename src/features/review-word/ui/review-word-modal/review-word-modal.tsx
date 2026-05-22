@@ -41,6 +41,7 @@ export const ReviewWordModal = ({
 					</Typography>
 					<Button
 						onClick={handleClose}
+						title={t("vocabulary.wordDetail.reviewModal.close")}
 						className="mt-1 text-[12px] text-acc hover:underline"
 					>
 						{t("vocabulary.wordDetail.reviewModal.close")}

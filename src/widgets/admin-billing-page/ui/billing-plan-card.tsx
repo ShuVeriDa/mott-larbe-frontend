@@ -104,12 +104,14 @@ return (
 			<div className="flex gap-1.5 border-t border-bd-1 px-3.5 py-2.5">
 				<Button
 					onClick={handleClick}
+					title={t("admin.plans.plansSection.edit")}
 					className="flex h-[26px] flex-1 items-center justify-center rounded-base bg-surf-2 text-[11.5px] font-medium text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 				>
 					{t("admin.plans.plansSection.edit")}
 				</Button>
 				<Button
 					onClick={handleClick2}
+					title={t("admin.plans.plansSection.limits")}
 					className="flex h-[26px] flex-1 items-center justify-center rounded-base bg-surf-2 text-[11.5px] font-medium text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 				>
 					{t("admin.plans.plansSection.limits")}
@@ -117,6 +119,7 @@ return (
 				{plan.isActive && (
 					<Button
 						onClick={handleClick3}
+						title={t("admin.plans.plansSection.deactivate")}
 						className="flex h-[26px] items-center justify-center rounded-base border border-bd-2 px-2 text-[11.5px] font-medium text-red-t transition-colors hover:bg-red-bg"
 					>
 						{t("admin.plans.plansSection.deactivate")}

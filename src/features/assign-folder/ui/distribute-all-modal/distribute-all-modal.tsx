@@ -52,6 +52,7 @@ export const DistributeAllModal = ({
 						<Button
 							data-folder-id={f.id}
 							onClick={handleFolderSelectClick}
+							title={f.name}
 							className={cn(
 								"flex w-full items-center gap-2.5 px-3 py-2.5 text-left",
 								"text-[13px] transition-colors",
@@ -85,6 +86,7 @@ export const DistributeAllModal = ({
 					size="lg"
 					className="flex-1"
 					onClick={handleClose}
+					title={t("vocabulary.foldersPage.distributeAllModal.cancel")}
 				>
 					{t("vocabulary.foldersPage.distributeAllModal.cancel")}
 				</Button>
@@ -94,6 +96,7 @@ export const DistributeAllModal = ({
 					className="flex-1"
 					disabled={!selectedId || isPending || loadingEntries}
 					onClick={handleConfirm}
+					title={t("vocabulary.foldersPage.distributeAllModal.confirm")}
 				>
 					{t("vocabulary.foldersPage.distributeAllModal.confirm")}
 				</Button>

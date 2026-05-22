@@ -58,6 +58,7 @@ return (
         <Button
           disabled={page === 1}
           onClick={handleClick}
+          title={t("admin.morphology.pagination.prev")}
           className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
         >
           <ChevronLeft className="size-3" />
@@ -81,6 +82,7 @@ return (
             <Button
               key={p}
               onClick={handlePageClick}
+              title={String(p)}
               className={cn(
                 "flex size-7 items-center justify-center rounded-[6px] border text-[12px] font-medium transition-colors",
                 page === p
@@ -96,6 +98,7 @@ return (
         <Button
           disabled={page === totalPages}
           onClick={handleClick2}
+          title={t("admin.morphology.pagination.next")}
           className="flex size-7 items-center justify-center rounded-[6px] border border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-default disabled:opacity-35"
         >
           <ChevronRight className="size-3" />

@@ -22,6 +22,7 @@ export const FolderNewCard = ({ onClick, disabled }: FolderNewCardProps) => {
 			size={null}
 			onClick={onClick}
 			disabled={disabled}
+			title={t("vocabulary.foldersPage.newCard.title")}
 			className={cn(
 				"group flex min-h-[220px] flex-col items-center justify-center gap-2 rounded-card",
 				"border-hairline border-dashed border-bd-2 bg-transparent px-4 py-7 text-center",

@@ -158,6 +158,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 			<Button
 				type="submit"
 				disabled={isPending}
+				title={t("auth.submit.login")}
 				className={cn(
 					"inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-[9px] bg-acc text-[13.5px] font-semibold text-white transition-opacity hover:opacity-[0.92] active:translate-y-px max-[640px]:h-[46px] max-[640px]:text-[14px]",
 					isPending && "cursor-wait opacity-[0.85]",

@@ -67,10 +67,10 @@ return (
 				</div>
 			</div>
 			<div className="flex justify-end gap-2 px-4 py-3.5">
-				<Button variant="outline" onClick={reset}>
+				<Button variant="outline" onClick={reset} title={t("settings.common.reset")}>
 					{t("settings.common.reset")}
 				</Button>
-				<Button variant="action" onClick={save} disabled={isSaving}>
+				<Button variant="action" onClick={save} disabled={isSaving} title={isSaving ? t("settings.common.saving") : t("settings.common.save")}>
 					{isSaving
 						? t("settings.common.saving")
 						: t("settings.common.save")}

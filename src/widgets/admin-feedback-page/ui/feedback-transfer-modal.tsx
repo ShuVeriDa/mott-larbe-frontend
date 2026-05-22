@@ -69,6 +69,7 @@ return (
 					</Typography>
 					<Button
 						onClick={onClose}
+						title={t("admin.feedback.transfer.title")}
 						className="flex size-[26px] items-center justify-center rounded-md border border-bd-1 bg-surf-2 text-t-2 hover:text-t-1"
 					>
 						<X className="size-3" />
@@ -97,6 +98,7 @@ return (
 							<Button
 								key={a.id}
 								onClick={handleClick}
+								title={`${a.name} ${a.surname}`}
 								className={cn(
 									"flex items-center gap-2.5 rounded-lg border border-bd-2 bg-surf-2 px-3 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-3",
 									selectedId === a.id && "border-acc bg-acc-bg",
@@ -129,6 +131,7 @@ return (
 				<Button
 					disabled={!selectedId || isLoading}
 					onClick={handleSubmit}
+					title={t("admin.feedback.transfer.confirm")}
 					className="h-[34px] w-full rounded-base bg-acc text-[12.5px] font-semibold text-white transition-opacity disabled:opacity-40 hover:opacity-90"
 				>
 					{t("admin.feedback.transfer.confirm")}

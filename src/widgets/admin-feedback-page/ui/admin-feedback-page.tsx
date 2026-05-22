@@ -105,6 +105,7 @@ return (
 					<Button
 						disabled={isExporting}
 						onClick={handleExport}
+						title={t("admin.feedback.export")}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-50"
 					>
 						<Download className="size-[13px]" />

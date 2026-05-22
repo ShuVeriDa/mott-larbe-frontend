@@ -98,6 +98,7 @@ return (
 					</Typography>
 					<Button
 						onClick={onClose}
+						title={t("admin.texts.import.cancel")}
 						className="flex size-7 cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
 						<X className="size-[14px]" />
@@ -165,12 +166,14 @@ return (
 							<div className="flex justify-end gap-2">
 								<Button
 									onClick={handleReset}
+									title={t("admin.texts.import.importMore")}
 									className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-4 text-[12.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2"
 								>
 									{t("admin.texts.import.importMore")}
 								</Button>
 								<Button
 									onClick={onClose}
+									title={t("admin.texts.import.done")}
 									className="h-8 cursor-pointer rounded-base bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-88"
 								>
 									{t("admin.texts.import.done")}
@@ -225,6 +228,7 @@ return (
 							<div className="flex justify-end gap-2">
 								<Button
 									onClick={onClose}
+									title={t("admin.texts.import.cancel")}
 									className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-4 text-[12.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2"
 								>
 									{t("admin.texts.import.cancel")}
@@ -232,6 +236,7 @@ return (
 								<Button
 									type="submit"
 									disabled={!fileName || bulkImport.isPending}
+									title={bulkImport.isPending ? t("admin.texts.import.importing") : t("admin.texts.import.submit")}
 									className="h-8 cursor-pointer rounded-base bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-40"
 								>
 									{bulkImport.isPending

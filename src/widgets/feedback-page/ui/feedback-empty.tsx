@@ -28,6 +28,7 @@ export const FeedbackEmpty = ({ t, onNewThread }: FeedbackEmptyProps) => (
 		</Typography>
 		<Button
 			onClick={onNewThread}
+			title={t("feedback.empty.action")}
 			className="h-8 rounded-base bg-acc px-4 text-[12px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88]"
 		>
 			{t("feedback.empty.action")}

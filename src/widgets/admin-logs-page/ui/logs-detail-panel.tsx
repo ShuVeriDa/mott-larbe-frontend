@@ -71,6 +71,7 @@ export const LogsDetailPanel = ({
 				<div className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 px-4 py-3.5">
 					<Button
 						onClick={onClose}
+						title={t("admin.logs.detail.title")}
 						className="flex size-7 items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
 						<X className="size-[13px]" />

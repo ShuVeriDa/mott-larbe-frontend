@@ -55,6 +55,7 @@ return (
 					</Typography>
 					<Button
 						onClick={onClose}
+						title={t("admin.feedback.assign.title")}
 						className="flex size-[26px] items-center justify-center rounded-md border border-bd-1 bg-surf-2 text-t-2 hover:text-t-1"
 					>
 						<X className="size-3" />
@@ -65,6 +66,7 @@ return (
 				{currentThread?.assignee && (
 					<Button
 						onClick={handleClick2}
+						title={t("admin.feedback.assign.unassign")}
 						className="mb-1.5 flex w-full items-center gap-2.5 rounded-lg border border-bd-2 bg-surf-2 px-3 py-2 text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
 						<X className="size-4 shrink-0 text-t-3" />
@@ -90,6 +92,7 @@ return (
 							<Button
 								key={a.id}
 								onClick={handleClick}
+								title={`${a.name} ${a.surname}`}
 								className={cn(
 									"flex items-center gap-2.5 rounded-lg border border-bd-2 bg-surf-2 px-3 py-2 text-left text-[12.5px] text-t-1 transition-colors hover:bg-surf-3",
 									currentThread?.assigneeAdminId === a.id && "border-acc bg-acc-bg",

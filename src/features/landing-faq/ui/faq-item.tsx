@@ -34,6 +34,7 @@ export const FaqItem = ({
 			aria-expanded={open}
 			aria-controls={`${id}-content`}
 			id={`${id}-trigger`}
+			title={question}
 			className="flex w-full items-center justify-between border-0 bg-transparent px-5 py-[18px] text-left font-[inherit] text-[15px] font-medium text-t-1 transition-colors"
 		>
 			<Typography tag="span">{question}</Typography>

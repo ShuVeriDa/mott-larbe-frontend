@@ -23,6 +23,7 @@ export const CouponsTopbar = ({ onExport, onCreate }: Props) => {
 			<div className="ml-auto flex items-center gap-2">
 				<Button
 					onClick={onExport}
+					title={t("admin.coupons.export")}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
 					<Download className="size-3" />
@@ -31,6 +32,7 @@ export const CouponsTopbar = ({ onExport, onCreate }: Props) => {
 
 				<Button
 					onClick={onCreate}
+					title={t("admin.coupons.create")}
 					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
 					<Plus className="size-3" />

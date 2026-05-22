@@ -24,6 +24,7 @@ return (
 				variant="bare"
 				size={null}
 				onClick={handleClick}
+				title={t("landing.pricing.monthly")}
 				className={cn(
 					"inline-flex h-[30px] items-center gap-1.5 rounded-full border-0 px-4 text-[12.5px] font-semibold transition-all",
 					value === "monthly"
@@ -37,6 +38,7 @@ return (
 				variant="bare"
 				size={null}
 				onClick={handleClick2}
+				title={t("landing.pricing.yearly")}
 				className={cn(
 					"inline-flex h-[30px] items-center gap-1.5 rounded-full border-0 px-4 text-[12.5px] font-semibold transition-all",
 					value === "yearly"

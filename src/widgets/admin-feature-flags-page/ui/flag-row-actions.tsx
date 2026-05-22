@@ -56,6 +56,7 @@ return (
 						<Button
 							className="flex w-full items-center gap-2 rounded-[6px] border-none bg-transparent px-2.5 py-[7px] text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							onClick={handleClick3}
+							title={t("admin.featureFlags.actions.addOverride")}
 						>
 							<UserPlus className="size-[13px] shrink-0 text-t-3" />
 							{t("admin.featureFlags.actions.addOverride")}
@@ -63,6 +64,7 @@ return (
 						<Button
 							className="flex w-full items-center gap-2 rounded-[6px] border-none bg-transparent px-2.5 py-[7px] text-left text-[12.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 							onClick={handleClick4}
+							title={t("admin.featureFlags.actions.duplicate")}
 						>
 							<Copy className="size-[13px] shrink-0 text-t-3" />
 							{t("admin.featureFlags.actions.duplicate")}
@@ -74,6 +76,7 @@ return (
 								"text-red-t hover:bg-red-bg",
 							)}
 							onClick={handleClick5}
+							title={t("admin.featureFlags.actions.delete")}
 						>
 							<Trash2 className="size-[13px] shrink-0 text-red-400" />
 							{t("admin.featureFlags.actions.delete")}

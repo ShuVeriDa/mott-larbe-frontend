@@ -33,6 +33,7 @@ export const SubscriptionActionsSection = ({
 		<div className="flex flex-col gap-1.5 px-[15px] py-2.5">
 			<Button
 				onClick={handleGoToProfile}
+				title={labels.goToProfile}
 				className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 			>
 				<User className="size-3 shrink-0 text-t-3" />
@@ -41,6 +42,7 @@ export const SubscriptionActionsSection = ({
 			<Button
 				onClick={handleLogoutAll}
 				disabled={isLogoutPending}
+				title={labels.resetSessions}
 				className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-60"
 			>
 				<LogOut className="size-3 shrink-0 text-t-3" />
@@ -49,6 +51,7 @@ export const SubscriptionActionsSection = ({
 			<Button
 				onClick={handleFreeze}
 				disabled={isFreezePending}
+				title={labels.freezeAccount}
 				className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[12px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg disabled:opacity-60"
 			>
 				<Snowflake className="size-3 shrink-0 text-red-t" />

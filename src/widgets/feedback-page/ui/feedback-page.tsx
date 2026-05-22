@@ -59,6 +59,7 @@ return (
 				{/* Mobile-only new button in topbar */}
 				<Button
 					onClick={handleNewThread}
+					title={t("feedback.new")}
 					className="hidden h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88] max-sm:flex"
 				>
 					<svg

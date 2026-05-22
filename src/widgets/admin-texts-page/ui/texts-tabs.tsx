@@ -44,6 +44,7 @@ return (
 						<Button
 							key={key}
 							onClick={handleClick}
+							title={t(labelKey)}
 							className={cn(
 								"flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-[6px] px-3 py-1 text-[12px] font-medium transition-colors",
 								isActive

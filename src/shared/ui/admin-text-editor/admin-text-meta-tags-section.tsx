@@ -162,6 +162,7 @@ export const AdminTextMetaTagsSection = ({
 							<Button
 								onMouseDown={handleSuggestionMouseDown}
 								onClick={handleCreateTagClick}
+								title={tagsCreate}
 								className={`flex w-full items-center gap-2 px-3 py-[9px] text-left text-[12.5px] transition-colors hover:bg-acc-muted ${filteredSuggestions.length > 0 ? "border-t border-bd-1" : ""}`}
 							>
 								<Typography

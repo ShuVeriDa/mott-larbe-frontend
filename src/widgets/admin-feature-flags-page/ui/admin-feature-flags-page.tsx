@@ -132,6 +132,7 @@ export const AdminFeatureFlagsPage = () => {
 					<>
 						<Button
 							onClick={handleImportClick}
+							title={t("admin.featureFlags.importJson")}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
 							<Upload className="size-[11px]" />
@@ -139,6 +140,7 @@ export const AdminFeatureFlagsPage = () => {
 						</Button>
 						<Button
 							onClick={openCreate}
+							title={t("admin.featureFlags.newFlag")}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 						>
 							<Plus className="size-[11px]" />

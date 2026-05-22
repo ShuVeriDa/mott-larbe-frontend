@@ -59,6 +59,7 @@ export const FeedbackAdminInput = ({
 				{" · "}
 				<Button
 					onClick={onReopen}
+					title={t("admin.feedback.reopen")}
 					className="font-medium text-acc-t hover:underline"
 				>
 					{t("admin.feedback.reopen")}
@@ -81,6 +82,7 @@ return (
 			<div className="mb-2 flex gap-0.5">
 				<Button
 					onClick={handleClick}
+					title={t("admin.feedback.input.replyMode")}
 					className={cn(
 						"flex h-6 items-center gap-1 rounded-[5px] border px-2.5 text-[11px] font-medium transition-all",
 						!isNote
@@ -93,6 +95,7 @@ return (
 				</Button>
 				<Button
 					onClick={handleClick2}
+					title={t("admin.feedback.input.noteMode")}
 					className={cn(
 						"flex h-6 items-center gap-1 rounded-[5px] border px-2.5 text-[11px] font-medium transition-all",
 						isNote
@@ -134,6 +137,7 @@ return (
 				<Button
 					disabled={!value.trim() || isPending}
 					onClick={handleSend}
+					title={isNote ? t("admin.feedback.input.noteMode") : t("admin.feedback.input.replyMode")}
 					className={cn(
 						"flex size-7 shrink-0 items-center justify-center rounded-base text-white transition-opacity hover:opacity-[0.88] disabled:opacity-40",
 						isNote

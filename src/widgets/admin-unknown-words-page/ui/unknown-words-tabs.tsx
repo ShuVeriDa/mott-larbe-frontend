@@ -35,6 +35,7 @@ return (
 						<Button
 							key={tab}
 							onClick={handleClick}
+							title={t(`admin.unknownWords.tabs.${tab}`)}
 							className={cn(
 								"flex h-7 cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-base border-none px-[11px] font-sans text-[12.5px] transition-colors",
 								active === tab

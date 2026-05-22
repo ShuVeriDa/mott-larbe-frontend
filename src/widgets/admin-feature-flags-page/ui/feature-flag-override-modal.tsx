@@ -185,6 +185,7 @@ return (
 										key={u.id}
 										className="flex w-full flex-col rounded-[6px] px-2.5 py-1.5 text-left transition-colors hover:bg-surf-2"
 										onClick={handleClick}
+										title={u.email}
 									>
 										<Typography tag="span" className="text-[12.5px] text-t-1">
 											{u.name} {u.surname}

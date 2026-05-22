@@ -34,6 +34,7 @@ export const UsersBulkBar = ({
 				<Button
 					onClick={onFreeze}
 					disabled={isPending}
+					title={t("admin.users.bulk.freeze")}
 					className="h-[26px] cursor-pointer rounded-md border border-acc/25 bg-transparent px-2.5 text-[11.5px] font-medium text-acc-t transition-colors hover:bg-acc/10 disabled:opacity-50"
 				>
 					{t("admin.users.bulk.freeze")}
@@ -41,6 +42,7 @@ export const UsersBulkBar = ({
 				<Button
 					onClick={onResetRoles}
 					disabled={isPending}
+					title={t("admin.users.bulk.resetRoles")}
 					className="h-[26px] cursor-pointer rounded-md border border-acc/25 bg-transparent px-2.5 text-[11.5px] font-medium text-acc-t transition-colors hover:bg-acc/10 disabled:opacity-50"
 				>
 					{t("admin.users.bulk.resetRoles")}
@@ -48,6 +50,7 @@ export const UsersBulkBar = ({
 				<Button
 					onClick={onBlock}
 					disabled={isPending}
+					title={t("admin.users.bulk.block")}
 					className="h-[26px] cursor-pointer rounded-md border border-red/25 bg-transparent px-2.5 text-[11.5px] font-medium text-red-t transition-colors hover:bg-red/10 disabled:opacity-50"
 				>
 					{t("admin.users.bulk.block")}

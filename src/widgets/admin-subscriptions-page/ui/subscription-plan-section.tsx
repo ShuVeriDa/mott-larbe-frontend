@@ -114,6 +114,7 @@ export const SubscriptionPlanSection = ({ sub, labels, isApplyCouponPending, onE
 				{canExtend && (
 					<Button
 						onClick={handleExtend}
+						title={labels.extendAction}
 						className="flex h-[28px] items-center gap-1 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						{labels.extendAction}
@@ -122,6 +123,7 @@ export const SubscriptionPlanSection = ({ sub, labels, isApplyCouponPending, onE
 				<Button
 					onClick={handleCoupon}
 					disabled={isApplyCouponPending}
+					title={labels.couponAction}
 					className="flex h-[28px] items-center gap-1 rounded-base border border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:opacity-60"
 				>
 					{labels.couponAction}
@@ -129,6 +131,7 @@ export const SubscriptionPlanSection = ({ sub, labels, isApplyCouponPending, onE
 				{canCancel && (
 					<Button
 						onClick={handleCancel}
+						title={labels.cancelAction}
 						className="flex h-[28px] items-center gap-1 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[11.5px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 					>
 						{labels.cancelAction}

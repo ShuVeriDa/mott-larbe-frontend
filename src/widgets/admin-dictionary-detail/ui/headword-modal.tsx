@@ -86,12 +86,14 @@ return (
 						<Button
 							className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
 							onClick={onClose}
+							title={t("admin.dictionaryDetail.cancel")}
 						>
 							{t("admin.dictionaryDetail.cancel")}
 						</Button>
 						<Button
 							type="submit"
 							disabled={isPending || !word.trim()}
+							title={t("admin.dictionaryDetail.add")}
 							className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
 						>
 							{t("admin.dictionaryDetail.add")}

@@ -42,6 +42,7 @@ return (
 						key={level}
 						disabled={isPending || active}
 						onClick={handleClick}
+						title={t(LABEL_KEY[level])}
 						className={cn(
 							"flex-1 rounded-md px-1.5 py-1 text-[10.5px] font-semibold transition-all duration-100",
 							"border-hairline cursor-pointer text-center font-[inherit]",

@@ -96,6 +96,7 @@ export const DemoPopup = ({
 			<div className="flex gap-1.5 p-[7px]">
 				<Button
 					onClick={onAdd}
+					title={isAdded ? t("landing.demo.addedBtn") : t("landing.demo.addBtn")}
 					className={cn(
 						"flex h-7 flex-1 items-center justify-center gap-1 rounded-md border-0 text-[11px] font-semibold transition-opacity",
 						isAdded

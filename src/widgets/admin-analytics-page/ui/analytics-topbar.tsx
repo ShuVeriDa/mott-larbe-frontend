@@ -80,6 +80,7 @@ return (
 						<Button
 							key={r}
 							onClick={handleClick}
+							title={t(`admin.analytics.range.${r}`)}
 							className={cn(
 								"h-[26px] rounded-md px-2.5 text-[11.5px] font-medium transition-all",
 								r === range && !isCustomRange
@@ -97,6 +98,7 @@ return (
 				<div className="relative">
 					<Button
 						onClick={handleDatePickerToggle}
+						title={t("admin.analytics.dateRange")}
 						className={cn(
 							"flex h-[30px] items-center gap-1.5 rounded-base border px-2.5 text-[12px] font-medium transition-colors",
 							isCustomRange
@@ -143,6 +145,7 @@ return (
 							<div className="flex justify-end gap-1.5">
 								<Button
 									onClick={handleDateClear}
+									title={t("admin.analytics.clear")}
 									className="h-[26px] rounded-md px-2.5 text-[11.5px] text-t-2 hover:text-t-1"
 								>
 									{t("admin.analytics.clear")}
@@ -150,6 +153,7 @@ return (
 								<Button
 									onClick={handleDateApply}
 									disabled={!localFrom || !localTo}
+									title={t("admin.analytics.apply")}
 									className="h-[26px] rounded-md bg-acc px-2.5 text-[11.5px] font-medium text-white disabled:opacity-40"
 								>
 									{t("admin.analytics.apply")}
@@ -163,6 +167,7 @@ return (
 				<div className="relative" ref={exportRef}>
 					<Button
 						onClick={handleExportMenuToggle}
+						title={t("admin.analytics.export")}
 						className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 					>
 						<Download className="size-3" aria-hidden="true" />
@@ -180,6 +185,7 @@ return (
 								<Button
 									key={fmt}
 									onClick={handleClick}
+									title={fmt.toUpperCase()}
 									className="px-4 py-2 text-left text-[12px] text-t-1 hover:bg-surf-2"
 								>
 									{fmt.toUpperCase()}

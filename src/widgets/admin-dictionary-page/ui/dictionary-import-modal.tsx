@@ -162,6 +162,7 @@ return (
 					<Button
 						onClick={handleClose}
 						disabled={isSubmitting}
+						title={result ? t("admin.dictionary.importModal.close") : t("admin.dictionary.importModal.cancel")}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
 					>
 						{result ? t("admin.dictionary.importModal.close") : t("admin.dictionary.importModal.cancel")}
@@ -170,6 +171,7 @@ return (
 						<Button
 							onClick={handleClick3}
 							disabled={!file || isSubmitting}
+							title={isSubmitting ? t("admin.dictionary.importModal.importing") : t("admin.dictionary.importModal.import")}
 							className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
 						>
 							{isSubmitting

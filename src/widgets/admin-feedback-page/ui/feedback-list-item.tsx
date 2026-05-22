@@ -53,6 +53,7 @@ export const FeedbackListItem = ({ thread, isActive, t, onClick }: FeedbackListI
 	return (
 		<Button
 			onClick={onClick}
+			title={thread.title ?? `#${thread.ticketNumber}`}
 			className={cn(
 				"relative w-full cursor-pointer border-b border-bd-1 px-3.5 py-[11px] text-left transition-colors",
 				isActive

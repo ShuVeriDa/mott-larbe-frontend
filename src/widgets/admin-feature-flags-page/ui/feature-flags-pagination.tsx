@@ -56,6 +56,7 @@ return (
 						<Button
 							key={pg}
 							onClick={handleClick}
+							title={String(pg)}
 							className={cn(
 								"flex size-7 cursor-pointer items-center justify-center rounded-[6px] border text-[12px] transition-colors",
 								pg === page

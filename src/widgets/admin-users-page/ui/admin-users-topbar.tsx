@@ -25,6 +25,7 @@ export const AdminUsersTopbar = ({ onExport }: AdminUsersTopbarProps) => {
 			<div className="ml-auto">
 				<Button
 					onClick={onExport}
+					title={t("admin.users.export")}
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
 					<Download className="size-[13px]" />

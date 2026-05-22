@@ -211,6 +211,7 @@ return (
 						<div className="flex justify-end px-3.5 pt-2">
 							<Button
 								onClick={closeMobileSheet}
+								title={t("admin.payments.detail.actions")}
 								className="flex size-7 items-center justify-center rounded-lg bg-surf-2 text-t-2"
 							>
 								<X className="size-[14px]" />

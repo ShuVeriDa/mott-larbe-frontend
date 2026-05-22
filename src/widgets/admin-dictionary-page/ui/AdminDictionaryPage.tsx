@@ -103,6 +103,7 @@ export const AdminDictionaryPage = () => {
 					<>
 						<Button
 							onClick={handleImportOpen}
+							title={t("admin.dictionary.import")}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
 							<svg
@@ -123,6 +124,7 @@ export const AdminDictionaryPage = () => {
 						</Button>
 						<Button
 							onClick={handleExportClick}
+							title={t("admin.dictionary.export")}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
 							<svg
@@ -143,6 +145,7 @@ export const AdminDictionaryPage = () => {
 						</Button>
 						<Button
 							onClick={handleCreateClick}
+							title={t("admin.dictionary.create")}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 						>
 							<svg

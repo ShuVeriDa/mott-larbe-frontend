@@ -57,6 +57,7 @@ export const FolderPickerPopover = ({
 							<Button
 								data-folder-id={f.id}
 								onClick={handleFolderPickClick}
+								title={f.name}
 								className={cn(
 									"flex w-full items-center gap-2 px-3 py-2",
 									"text-left text-[13px] text-t-2",

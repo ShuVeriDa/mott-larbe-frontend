@@ -9,6 +9,7 @@ export interface LibraryFilterPillProps {
 	active: boolean;
 	onClick: () => void;
 	className: string;
+	title?: string;
 }
 
 export const LibraryFilterPill = ({
@@ -16,10 +17,12 @@ export const LibraryFilterPill = ({
 	active,
 	onClick,
 	className,
+	title,
 }: LibraryFilterPillProps) => (
 	<Button
 		onClick={onClick}
 		aria-pressed={active}
+		title={title}
 		className={cn(
 			"h-[26px] shrink-0 cursor-pointer rounded-full border px-2.5 text-[11px] font-medium transition-all duration-100 [-webkit-tap-highlight-color:transparent]",
 			className,

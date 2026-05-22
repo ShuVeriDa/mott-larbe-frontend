@@ -36,6 +36,7 @@ export const LibraryFilterBarProgressGroup = ({
 			<LibraryFilterPill
 				active={status === "all"}
 				onClick={handleAllClick}
+				title={t("library.all")}
 				className={
 					status === "all"
 						? LIBRARY_FILTER_ACC_PILL_ACTIVE
@@ -52,6 +53,7 @@ export const LibraryFilterBarProgressGroup = ({
 						key={s}
 						active={status === s}
 						onClick={handleClick}
+						title={t(libraryFilterProgressLabelKey(s))}
 						className={
 							status === s
 								? LIBRARY_FILTER_ACC_PILL_ACTIVE

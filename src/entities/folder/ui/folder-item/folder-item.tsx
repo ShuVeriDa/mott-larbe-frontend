@@ -21,6 +21,7 @@ export const FolderItem = ({
 	<Button
 		aria-pressed={active}
 		onClick={onClick}
+		title={name}
 		className={cn(
 			"flex w-full items-center gap-[7px] rounded-base px-2 py-[6px]",
 			"text-left font-[inherit] transition-colors duration-100",

@@ -57,6 +57,7 @@ export const AuthLanguageSwitcher = () => {
 						role="tab"
 						aria-selected={isActive}
 						onClick={handleClick}
+						title={LABELS[locale]}
 						className={cn(
 							"h-[26px] rounded-[6px] px-2.5 text-[11.5px] font-semibold tracking-[0.3px] transition-colors",
 							isActive ? "bg-surf-3 text-t-1" : "text-t-3 hover:text-t-1",

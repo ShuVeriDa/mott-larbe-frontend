@@ -56,6 +56,7 @@ export const BillingLimitsModal = ({
 					</Typography>
 					<Button
 						onClick={onClose}
+						title={t("admin.plans.limitsModal.cancel")}
 						className="flex size-[26px] items-center justify-center rounded-base bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
 						<X className="size-3" />
@@ -128,6 +129,7 @@ export const BillingLimitsModal = ({
 				<div className="flex shrink-0 items-center justify-end gap-2 border-t border-bd-1 px-[18px] py-3">
 					<Button
 						onClick={onClose}
+						title={t("admin.plans.limitsModal.cancel")}
 						className="h-8 rounded-[8px] border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 					>
 						{t("admin.plans.limitsModal.cancel")}
@@ -136,6 +138,7 @@ export const BillingLimitsModal = ({
 						type="submit"
 						form="limits-form"
 						disabled={isPending}
+						title={t("admin.plans.limitsModal.save")}
 						className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 					>
 						{t("admin.plans.limitsModal.save")}

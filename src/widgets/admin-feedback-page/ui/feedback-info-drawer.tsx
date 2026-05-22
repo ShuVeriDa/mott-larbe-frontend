@@ -65,6 +65,7 @@ export const FeedbackInfoDrawer = ({
 				{/* Close btn */}
 				<Button
 					onClick={onClose}
+					title={t("admin.feedback.back")}
 					className="absolute right-4 top-3 flex size-7 items-center justify-center rounded-md border border-bd-1 bg-surf-2 text-t-2"
 				>
 					<X className="size-3" />

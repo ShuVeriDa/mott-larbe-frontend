@@ -32,6 +32,7 @@ export const UnknownWordsBulkBar = ({
 				<Button
 					onClick={onAddToDictionary}
 					disabled={isPending}
+					title={t("admin.unknownWords.bulk.addToDictionary")}
 					className="h-[26px] cursor-pointer rounded-md border border-acc/25 bg-transparent px-2.5 text-[11.5px] font-medium text-acc-t transition-colors hover:bg-acc/10 disabled:opacity-50"
 				>
 					{t("admin.unknownWords.bulk.addToDictionary")}
@@ -39,6 +40,7 @@ export const UnknownWordsBulkBar = ({
 				<Button
 					onClick={onDelete}
 					disabled={isPending}
+					title={t("admin.unknownWords.bulk.delete")}
 					className="h-[26px] cursor-pointer rounded-md border border-red/25 bg-transparent px-2.5 text-[11.5px] font-medium text-red-t transition-colors hover:bg-red/10 disabled:opacity-50"
 				>
 					{t("admin.unknownWords.bulk.delete")}

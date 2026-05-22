@@ -64,6 +64,7 @@ export const DeckRatingButtons = ({
 						size={null}
 						disabled={disabled || !visible}
 						onClick={handleClick}
+						title={t(`review.deck.card.rate.${option.key}.label`)}
 						className={cn(
 							"flex flex-col items-center gap-1 rounded-card border-hairline border-bd-2 bg-surf py-3.5 px-2.5",
 							"shadow-sm transition-[background-color,border-color,transform,box-shadow] duration-150",

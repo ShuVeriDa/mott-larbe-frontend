@@ -84,6 +84,7 @@ return (
 						<Button
 							key={p}
 							onClick={handlePageClick}
+							title={String(p)}
 							className={btnClass(p === page)}
 						>
 							{p}

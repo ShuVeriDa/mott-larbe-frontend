@@ -36,6 +36,7 @@ return (
 						role="tab"
 						aria-selected={active}
 						onClick={handleClick}
+						title={t(`statistics.period.${period}`)}
 						className={cn(
 							"rounded-md px-3 py-1 text-xs font-medium transition-colors duration-100 max-md:flex-1",
 							active

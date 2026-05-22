@@ -29,6 +29,7 @@ export const MorphologyTopbar = ({ onAdd, onImport }: Props) => {
 			<div className="ml-auto flex items-center gap-2">
 				<Button
 					onClick={onImport}
+					title={t("admin.morphology.import")}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 				>
 					<Download className="size-[13px] shrink-0" />
@@ -37,6 +38,7 @@ export const MorphologyTopbar = ({ onAdd, onImport }: Props) => {
 
 				<Button
 					onClick={onAdd}
+					title={t("admin.morphology.add")}
 					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
 					<Plus className="size-3" />

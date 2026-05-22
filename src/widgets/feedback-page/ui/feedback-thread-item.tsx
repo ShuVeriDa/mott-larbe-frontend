@@ -37,6 +37,7 @@ export const FeedbackThreadItem = ({
 	return (
 		<Button
 			onClick={onClick}
+			title={thread.title ?? thread.body}
 			className={cn(
 				"relative w-full cursor-pointer border-b border-bd-1 px-4 py-[11px] text-left transition-colors",
 				isActive

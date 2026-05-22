@@ -19,6 +19,7 @@ export const FeatureFlagsTabs = ({ active, onChange, t }: FeatureFlagsTabsProps)
 			<Button
 				key={tab}
 				onClick={handleClick}
+				title={t(`admin.featureFlags.tabs.${tab}`)}
 				className={cn(
 					"rounded-[6px] px-3.5 py-[5px] text-[12.5px] font-medium transition-all",
 					active === tab

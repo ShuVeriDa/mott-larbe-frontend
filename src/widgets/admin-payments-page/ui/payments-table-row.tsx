@@ -216,6 +216,7 @@ export const PaymentsTableRow = ({
 				<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100 [tr.bg-acc-bg_&]:opacity-100">
 					<Button
 						onClick={handleReceiptClick}
+						title={receiptLabel}
 						className="flex h-[24px] items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
 						{receiptLabel}
@@ -223,6 +224,7 @@ export const PaymentsTableRow = ({
 					{item.status === "SUCCEEDED" && (
 						<Button
 							onClick={handleRefundClick}
+							title={refundLabel}
 							className="flex h-[24px] items-center rounded-[5px] border border-bd-2 bg-surf px-2 text-[11px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 						>
 							{refundLabel}

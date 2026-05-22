@@ -25,6 +25,7 @@ export const ToastViewport = () => {
 				<Button
 					key={item.id}
 					onClick={handleClick}
+					title={item.message}
 					className={cn(
 						"pointer-events-auto min-w-[240px] max-w-[420px] rounded-base px-4 py-2 text-[12.5px] font-medium",
 						"animate-[fadeUp_0.18s_ease] shadow-md",

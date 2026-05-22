@@ -38,6 +38,7 @@ return (
 						<Button
 							key={key}
 							onClick={handleClick}
+							title={t(`admin.logs.tabs.${key}`)}
 							className={cn(
 								"flex h-7 items-center gap-1.5 whitespace-nowrap rounded-base border border-transparent px-3 text-[12.5px] transition-colors",
 								isActive

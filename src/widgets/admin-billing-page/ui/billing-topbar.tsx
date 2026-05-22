@@ -28,6 +28,7 @@ export const BillingTopbar = ({
 			<div className="flex shrink-0 items-center gap-2">
 				<Button
 					onClick={onNewCoupon}
+					title={t("admin.plans.newCoupon")}
 					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 				>
 					<Plus className="size-[11px]" />
@@ -35,6 +36,7 @@ export const BillingTopbar = ({
 				</Button>
 				<Button
 					onClick={onNewPlan}
+					title={t("admin.plans.newPlan")}
 					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
 				>
 					<Plus className="size-[11px]" />

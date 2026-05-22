@@ -81,6 +81,7 @@ export const RatingButtons = ({
 						size={null}
 						disabled={disabled || !visible}
 						onClick={handleClick}
+						title={t(`review.sm2.card.rate.${rating.key}.label`)}
 						className={cn(
 							"flex flex-col items-center gap-1 rounded-card border-hairline border-bd-2 bg-surf py-2.5 px-1.5",
 							"shadow-sm transition-[background-color,border-color,color,transform,box-shadow] duration-150",

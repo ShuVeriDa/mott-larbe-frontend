@@ -35,6 +35,7 @@ export const LibraryFilterBarLangGroup = ({
 			<LibraryFilterPill
 				active={lang === "all"}
 				onClick={handleAllClick}
+				title={t("library.all")}
 				className={
 					lang === "all" ? LIBRARY_FILTER_ACC_PILL_ACTIVE : LIBRARY_FILTER_ACC_PILL_IDLE
 				}
@@ -49,6 +50,7 @@ export const LibraryFilterBarLangGroup = ({
 						key={l}
 						active={lang === l}
 						onClick={handleClick}
+						title={t(`library.lang.${l}`)}
 						className={
 							lang === l
 								? LIBRARY_FILTER_ACC_PILL_ACTIVE

@@ -109,6 +109,7 @@ export const PlanCard = ({
 					variant="ghost"
 					size="default"
 					disabled
+					title={t("subscription.planCard.current")}
 					className="h-[30px] w-full cursor-default text-[11.5px] font-semibold"
 				>
 					{t("subscription.planCard.current")}
@@ -131,6 +132,7 @@ export const PlanCard = ({
 						"bg-pur shadow-[0_1px_4px_rgba(109,78,212,0.3)]",
 					)}
 					onClick={handleChooseClick}
+					title={t("subscription.planCard.choose")}
 				>
 					{t("subscription.planCard.choose")}
 				</Button>
@@ -142,6 +144,7 @@ export const PlanCard = ({
 				size="default"
 				className={cn(baseClass, "bg-acc")}
 				onClick={handleChooseClick}
+				title={t("subscription.planCard.choose")}
 			>
 				{t("subscription.planCard.choose")}
 			</Button>

@@ -140,6 +140,7 @@ return (
 			{hasMore && (
 				<Button
 					onClick={handleShowMoreClick}
+					title={t("vocabulary.foldersPage.uncategorized.showMore", { count: total - items.length })}
 					className="self-start text-[12px] text-acc transition-colors hover:text-acc/70"
 				>
 					{t("vocabulary.foldersPage.uncategorized.showMore", {
@@ -178,6 +179,7 @@ return (
 					<Button
 						onClick={handleExpandClick}
 						disabled={isPending}
+						title={t("vocabulary.foldersPage.uncategorized.title")}
 						className="flex flex-1 items-center gap-2.5 text-left transition-colors hover:opacity-75"
 					>
 						<ChevronRight
@@ -199,6 +201,7 @@ return (
 						<Button
 							onClick={handleDistributeClick}
 							disabled={isPending}
+							title={t("vocabulary.foldersPage.uncategorized.distributeAll")}
 							className="shrink-0 text-[12px] text-acc transition-colors hover:text-acc/70"
 						>
 							{t("vocabulary.foldersPage.uncategorized.distributeAll")} →

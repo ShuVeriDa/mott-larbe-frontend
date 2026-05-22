@@ -140,6 +140,7 @@ return (
 					<Button
 						onClick={handleClose}
 						disabled={isPreviewLoading || isApplying}
+						title={t("admin.featureFlags.modal.cancel")}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:w-full"
 					>
 						{t("admin.featureFlags.modal.cancel")}
@@ -147,6 +148,7 @@ return (
 					<Button
 						onClick={handlePreview}
 						disabled={!raw.trim() || isPreviewLoading || isApplying}
+						title={isPreviewLoading ? t("admin.featureFlags.importModal.previewing") : t("admin.featureFlags.importModal.preview")}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-surf px-3.5 text-[12.5px] text-t-1 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:w-full"
 					>
 						{isPreviewLoading
@@ -156,6 +158,7 @@ return (
 					<Button
 						onClick={handleApply}
 						disabled={!raw.trim() || isPreviewLoading || isApplying}
+						title={isApplying ? t("admin.featureFlags.importModal.applying") : t("admin.featureFlags.importModal.apply")}
 						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:w-full"
 					>
 						{isApplying

@@ -67,6 +67,7 @@ export const FeedbackThreadList = ({
 				</Typography>
 				<Button
 					onClick={onNewThread}
+					title={t("feedback.newThread")}
 					className="flex h-[30px] w-full cursor-pointer items-center justify-center gap-1.5 rounded-base bg-acc text-[12px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88]"
 				>
 					<svg

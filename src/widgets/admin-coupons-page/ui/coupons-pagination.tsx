@@ -33,6 +33,7 @@ return (
 				<Button
 					disabled={page === 1}
 					onClick={handleClick}
+					title="‹"
 					className="flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border border-bd-1 bg-surf-2 px-1.5 text-[12px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 disabled:pointer-events-none disabled:opacity-40"
 				>
 					‹
@@ -43,6 +44,7 @@ return (
 					<Button
 						key={p}
 						onClick={handleClick}
+						title={String(p)}
 						className={cn(
 							"flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border px-1.5 text-[12px] transition-colors",
 							p === page
@@ -57,6 +59,7 @@ return (
 				<Button
 					disabled={page === totalPages}
 					onClick={handleClick2}
+					title="›"
 					className="flex h-[26px] min-w-[26px] items-center justify-center rounded-[6px] border border-bd-1 bg-surf-2 px-1.5 text-[12px] text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 disabled:pointer-events-none disabled:opacity-40"
 				>
 					›

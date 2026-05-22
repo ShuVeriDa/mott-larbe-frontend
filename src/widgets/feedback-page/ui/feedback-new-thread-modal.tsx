@@ -91,6 +91,7 @@ return (
 					</Typography>
 					<Button
 						onClick={onClose}
+						title={t("feedback.modal.cancel")}
 						className="flex size-7 items-center justify-center rounded-base border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
 					>
 						<svg
@@ -118,6 +119,7 @@ return (
 							<Button
 								key={opt.value}
 								onClick={handleClick}
+								title={t(`feedback.threadTypes.${opt.value}`)}
 								className={cn(
 									"flex cursor-pointer items-center gap-[9px] rounded-[9px] border px-2.5 py-[9px] text-left transition-all",
 									type === opt.value
@@ -180,6 +182,7 @@ return (
 				<div className="mt-4 flex gap-2">
 					<Button
 						onClick={onClose}
+						title={t("feedback.modal.cancel")}
 						className="h-9 flex-1 rounded-[9px] border border-bd-2 bg-surf-2 font-[inherit] text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 					>
 						{t("feedback.modal.cancel")}
@@ -187,6 +190,7 @@ return (
 					<Button
 						disabled={!body.trim() || submitFeedback.isPending}
 						onClick={handleSubmit}
+						title={t("feedback.modal.submit")}
 						className="h-9 flex-2 rounded-[9px] bg-acc font-[inherit] text-[13px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88] disabled:opacity-50"
 					>
 						{t("feedback.modal.submit")}

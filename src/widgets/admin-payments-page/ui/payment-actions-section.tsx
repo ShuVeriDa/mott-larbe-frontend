@@ -34,6 +34,7 @@ export const PaymentActionsSection = ({
 			</div>
 			<Button
 				onClick={handleReceiptClick}
+				title={t("admin.payments.detail.viewReceipt")}
 				className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 			>
 				<FileText className="size-3 shrink-0 text-t-3" />
@@ -41,6 +42,7 @@ export const PaymentActionsSection = ({
 			</Button>
 			<Button
 				onClick={handleSendReceiptClick}
+				title={t("admin.payments.detail.sendReceipt")}
 				className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-2.5 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 			>
 				<Mail className="size-3 shrink-0 text-t-3" />
@@ -56,6 +58,7 @@ export const PaymentActionsSection = ({
 			{payment.status === "SUCCEEDED" && (
 				<Button
 					onClick={handleRefundClick}
+					title={t("admin.payments.detail.issueRefund")}
 					className="flex h-[30px] w-full items-center gap-1.5 rounded-base border border-[rgba(220,38,38,0.2)] bg-transparent px-2.5 text-[12px] text-red-t transition-colors hover:border-transparent hover:bg-red-bg"
 				>
 					<RotateCcw className="size-3 shrink-0 text-red-t" />

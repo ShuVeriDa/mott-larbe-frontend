@@ -49,6 +49,7 @@ return (
 					<Button
 						onClick={onClose}
 						disabled={isDeleting}
+						title={t("admin.dictionary.deleteModal.cancel")}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
 					>
 						{t("admin.dictionary.deleteModal.cancel")}
@@ -56,6 +57,7 @@ return (
 					<Button
 						onClick={onConfirm}
 						disabled={isDeleting}
+						title={isDeleting ? t("admin.dictionary.deleteModal.deleting") : t("admin.dictionary.deleteModal.confirm")}
 						className="h-8 cursor-pointer rounded-base bg-red-500 px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px] max-sm:text-[14px]"
 					>
 						{isDeleting

@@ -49,6 +49,7 @@ return (
 		<Button
 			aria-pressed={selected}
 			onClick={handleClick}
+			title={name}
 			className={cn(
 				"relative shrink-0 cursor-pointer overflow-hidden rounded-[9px] border-[1.5px] transition-colors",
 				selected ? "border-acc" : "border-bd-2 hover:border-bd-3",

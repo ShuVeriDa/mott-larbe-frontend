@@ -21,6 +21,7 @@ export const DictionaryTabs = ({ active, counts, onChange, t }: DictionaryTabsPr
 			<Button
 				key={tab}
 				onClick={handleClick}
+				title={t(`admin.dictionary.tabs.${tab}`)}
 				className={cn(
 					"flex cursor-pointer items-center gap-1.5 border-b-2 pb-2 pt-1 text-[12.5px] transition-colors",
 					active === tab

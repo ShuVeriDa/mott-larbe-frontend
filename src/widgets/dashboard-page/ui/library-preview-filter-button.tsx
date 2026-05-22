@@ -8,15 +8,18 @@ export interface LibraryPreviewFilterButtonProps {
 	active: boolean;
 	onClick: () => void;
 	children: ReactNode;
+	title?: string;
 }
 
 export const LibraryPreviewFilterButton = ({
 	active,
 	onClick,
 	children,
+	title,
 }: LibraryPreviewFilterButtonProps) => (
 	<Button
 		onClick={onClick}
+		title={title}
 		className={cn(
 			"h-[22px] rounded-[5px] px-2 text-[10.5px] font-medium transition-colors",
 			active
