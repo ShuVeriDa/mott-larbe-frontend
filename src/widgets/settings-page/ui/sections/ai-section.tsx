@@ -4,7 +4,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Typography } from "@/shared/ui/typography";
-import { CheckCircle, Eye, EyeOff, ExternalLink, XCircle } from "lucide-react";
+import { CheckCircle, Eye, EyeOff, ExternalLink, Lock, Sparkles, XCircle } from "lucide-react";
 import { useAiSection } from "../../model/use-ai-section";
 import { SectionHeader } from "../section-header";
 import { SettingCard } from "../setting-card";
@@ -31,6 +31,55 @@ export const AiSection = () => {
         title={t("aiTranslation.settings.title")}
         subtitle={t("aiTranslation.settings.description")}
       />
+
+      {!hasKey && (
+        <SettingCard title={t("aiTranslation.settings.howToTitle")}>
+          <div className="flex flex-col gap-3">
+            <div className="flex items-start gap-2 rounded-base border-hairline border-grn/30 bg-grn/8 px-3 py-2.5">
+              <Sparkles className="mt-0.5 size-3.5 shrink-0 text-grn" strokeWidth={1.6} />
+              <Typography tag="p" className="text-[12px] text-grn">
+                {t("aiTranslation.settings.freeNote")}
+              </Typography>
+            </div>
+
+            <ol className="flex flex-col gap-2">
+              {([1, 2, 3] as const).map(n => (
+                <li key={n} className="flex items-start gap-2.5">
+                  <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-acc/15 text-[9px] font-bold text-acc">
+                    {n}
+                  </span>
+                  <Typography tag="span" className="text-[12px] text-t-2">
+                    {n === 1 && (
+                      <>
+                        {t("aiTranslation.settings.step1Pre")}{" "}
+                        <a
+                          href="https://aistudio.google.com/app/apikey"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-0.5 text-acc hover:underline"
+                        >
+                          aistudio.google.com
+                          <ExternalLink className="size-2.5" strokeWidth={1.5} />
+                        </a>
+                        {" "}{t("aiTranslation.settings.step1Post")}
+                      </>
+                    )}
+                    {n === 2 && t("aiTranslation.settings.step2")}
+                    {n === 3 && t("aiTranslation.settings.step3")}
+                  </Typography>
+                </li>
+              ))}
+            </ol>
+
+            <div className="flex items-start gap-2 rounded-base border-hairline border-bd-1 bg-surf-2 px-3 py-2.5">
+              <Lock className="mt-0.5 size-3.5 shrink-0 text-t-3" strokeWidth={1.6} />
+              <Typography tag="p" className="text-[11.5px] text-t-3">
+                {t("aiTranslation.settings.securityNote")}
+              </Typography>
+            </div>
+          </div>
+        </SettingCard>
+      )}
 
       <SettingCard title={t("aiTranslation.settings.title")}>
         <div className="flex flex-col gap-3">

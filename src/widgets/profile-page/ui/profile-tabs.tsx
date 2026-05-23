@@ -6,7 +6,7 @@ import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 
-export type ProfileTabId = "main" | "security" | "subscription";
+export type ProfileTabId = "main" | "security" | "subscription" | "ai";
 
 export interface ProfileTabsProps {
 	active: ProfileTabId;
@@ -20,6 +20,7 @@ export const ProfileTabs = ({ active, onChange }: ProfileTabsProps) => {
 		{ id: "main", label: t("profile.tabs.main") },
 		{ id: "security", label: t("profile.tabs.security") },
 		{ id: "subscription", label: t("profile.tabs.subscription") },
+		{ id: "ai", label: t("profile.tabs.ai") },
 	];
 
 	return (

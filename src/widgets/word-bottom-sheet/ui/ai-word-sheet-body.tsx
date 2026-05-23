@@ -6,7 +6,7 @@ import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { Check, CheckCircle2, Clock, Copy, Settings, Sparkles, ThumbsDown, ThumbsUp, X } from "lucide-react";
+import { Check, CheckCircle2, Clock, Copy, ExternalLink, Settings, Sparkles, ThumbsDown, ThumbsUp, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -58,19 +58,31 @@ export const AiWordSheetBody = ({ word, normalized, contextSentence, lang, onClo
     return (
       <div className="flex min-h-0 flex-1 flex-col">
         <div className="flex min-h-0 flex-1 flex-col gap-3 px-4 py-5">
-          <Typography tag="p" className="text-[14px] text-t-2">
-            {t("aiTranslation.popup.notFound")}
+          <Typography tag="p" className="text-[14px] font-medium text-t-1">
+            {t("aiTranslation.popup.noKeyTitle")}
           </Typography>
           <Typography tag="p" className="text-[13px] text-t-3">
-            {t("aiTranslation.popup.recorded")}
+            {t("aiTranslation.popup.noKeyDescription")}
+          </Typography>
+          <Typography tag="p" className="text-[12px] text-grn">
+            {t("aiTranslation.popup.noKeyFree")}
           </Typography>
           <Link
-            href={`/${lang}/settings?tab=ai`}
+            href={`/${lang}/profile?tab=ai`}
             className="inline-flex items-center gap-1.5 text-[13px] text-acc hover:underline"
           >
             <Settings className="size-3.5" strokeWidth={1.5} />
             {t("aiTranslation.popup.goToSettings")}
           </Link>
+          <a
+            href="https://aistudio.google.com/app/apikey"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-[13px] text-t-3 hover:text-t-1 hover:underline"
+          >
+            <ExternalLink className="size-3.5" strokeWidth={1.5} />
+            {t("aiTranslation.popup.getKeyLink")}
+          </a>
         </div>
         <div className="flex shrink-0 gap-2 border-t border-bd-1 px-4 pt-3 pb-[max(16px,env(safe-area-inset-bottom))]">
           <Button
@@ -108,7 +120,7 @@ export const AiWordSheetBody = ({ word, normalized, contextSentence, lang, onClo
     return (
       <div className="flex min-h-0 flex-1 flex-col px-4 py-5">
         <Typography tag="p" className="text-[14px] text-red-t">
-          {t("reader.toasts.dictFailed")}
+          {t("aiTranslation.popup.error")}
         </Typography>
       </div>
     );

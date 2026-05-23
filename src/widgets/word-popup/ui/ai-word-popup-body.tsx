@@ -1,12 +1,12 @@
 "use client";
 
-import { useAiWordLookup, useAiSessionStore, useAiWordRefine, WordRefineBlock } from "@/features/ai-word-lookup";
+import { useAiWordLookup, useAiSessionStore, useAiWordRefine, WordRefineBlock, useAiKeyNudge } from "@/features/ai-word-lookup";
 import { useGeminiKeyStatus } from "@/entities/ai-translation";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { CheckCircle2, Clock, Copy, Check, Sparkles, ThumbsDown, ThumbsUp, Settings } from "lucide-react";
+import { CheckCircle2, Clock, Copy, Check, ExternalLink, Sparkles, ThumbsDown, ThumbsUp, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -23,6 +23,7 @@ export const AiWordPopupBody = ({ word, normalized, contextSentence, lang }: AiW
   const { refineState, openRefine, refine: refineWord } = useAiWordRefine();
   const { data: keyStatus } = useGeminiKeyStatus();
   const addToSession = useAiSessionStore((s) => s.add);
+  const { showNudge, dismiss } = useAiKeyNudge();
 
   const hasKey = keyStatus?.hasKey ?? false;
 
@@ -55,20 +56,46 @@ export const AiWordPopupBody = ({ word, normalized, contextSentence, lang }: AiW
 
   if (!hasKey) {
     return (
-      <div className="flex flex-col gap-2 px-3.5 py-3">
-        <Typography tag="p" className="text-[12.5px] text-t-2">
-          {t("aiTranslation.popup.notFound")}
-        </Typography>
+      <div className="flex flex-col gap-2.5 px-3.5 py-3">
+        <div className="flex items-start gap-2">
+          <div className="relative mt-0.5 shrink-0">
+            <Sparkles className="size-3.5 text-pur-t" strokeWidth={1.6} />
+            {showNudge && (
+              <span className="absolute -right-1 -top-1 flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-acc opacity-75" />
+                <span className="relative inline-flex size-2 rounded-full bg-acc" />
+              </span>
+            )}
+          </div>
+          <Typography tag="p" className="text-[12.5px] font-medium text-t-1">
+            {t("aiTranslation.popup.noKeyTitle")}
+          </Typography>
+        </div>
         <Typography tag="p" className="text-[11.5px] text-t-3">
-          {t("aiTranslation.popup.recorded")}
+          {t("aiTranslation.popup.noKeyDescription")}
         </Typography>
-        <Link
-          href={`/${lang}/settings?tab=ai`}
-          className="mt-1 inline-flex items-center gap-1 text-[11.5px] text-acc hover:underline"
-        >
-          <Settings className="size-3" strokeWidth={1.5} />
-          {t("aiTranslation.popup.goToSettings")}
-        </Link>
+        <Typography tag="p" className="text-[11px] text-grn">
+          {t("aiTranslation.popup.noKeyFree")}
+        </Typography>
+        <div className="flex flex-col gap-1.5">
+          <Link
+            href={`/${lang}/profile?tab=ai`}
+            onClick={dismiss}
+            className="inline-flex items-center gap-1 text-[11.5px] text-acc hover:underline"
+          >
+            <Settings className="size-3" strokeWidth={1.5} />
+            {t("aiTranslation.popup.goToSettings")}
+          </Link>
+          <a
+            href="https://aistudio.google.com/app/apikey"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-[11.5px] text-t-3 hover:text-t-1 hover:underline"
+          >
+            <ExternalLink className="size-3" strokeWidth={1.5} />
+            {t("aiTranslation.popup.getKeyLink")}
+          </a>
+        </div>
       </div>
     );
   }
@@ -96,7 +123,7 @@ export const AiWordPopupBody = ({ word, normalized, contextSentence, lang }: AiW
     return (
       <div className="px-3.5 py-3">
         <Typography tag="p" className="text-[12.5px] text-red-t">
-          {t("reader.toasts.dictFailed")}
+          {t("aiTranslation.popup.error")}
         </Typography>
       </div>
     );

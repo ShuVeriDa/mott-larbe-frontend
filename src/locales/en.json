@@ -1749,7 +1749,8 @@
     "tabs": {
       "main": "General",
       "security": "Security",
-      "subscription": "Subscription"
+      "subscription": "Subscription",
+      "ai": "AI translation"
     },
     "personalData": {
       "title": "Personal data",
@@ -4432,7 +4433,14 @@
       "deletedSuccess": "Key deleted",
       "getKeyLink": "Get a key at ai.google.dev",
       "show": "Show",
-      "hide": "Hide"
+      "hide": "Hide",
+      "howToTitle": "How to get started",
+      "freeNote": "Gemini Flash Lite is free — no payment required. Just a Google account.",
+      "step1Pre": "Open",
+      "step1Post": "and sign in with your Google account",
+      "step2": "Click \"Create API key\" and copy the generated key",
+      "step3": "Paste the key into the field below and click \"Save key\"",
+      "securityNote": "Your key is encrypted with AES-256 before being stored on the server. Neither the team nor third parties can read it."
     },
     "popup": {
       "translating": "Translating via AI...",
@@ -4444,6 +4452,10 @@
       "addToDictionary": "Add to dictionary",
       "notFound": "Word not found in dictionary",
       "recorded": "We recorded this word and will try to add it to the dictionary",
+      "noKeyTitle": "AI translation is not available",
+      "noKeyDescription": "Add a Gemini API key in your profile to enable AI translation of words not found in the dictionary.",
+      "noKeyFree": "Gemini Flash Lite is free — just a Google account is needed.",
+      "getKeyLink": "Get a key at aistudio.google.com",
       "addKeyPrompt": "Add a Gemini API key in settings to get AI translations",
       "goToSettings": "Go to settings",
       "notChechen": "This word is not Chechen",

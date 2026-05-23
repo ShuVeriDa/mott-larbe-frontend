@@ -1749,7 +1749,8 @@
     "tabs": {
       "main": "Коьрта",
       "security": "Т1екхачам",
-      "subscription": "Жоп"
+      "subscription": "Жоп",
+      "ai": "AI-гочдар"
     },
     "personalData": {
       "title": "Шайн хаамаш",
@@ -4432,7 +4433,14 @@
       "deletedSuccess": "Куьг дIахоттийна",
       "getKeyLink": "Куьг ai.google.dev-хь схьаэца",
       "show": "Гойта",
-      "hide": "Кхета"
+      "hide": "Кхета",
+      "howToTitle": "Муха йолалур ю",
+      "freeNote": "Gemini Flash Lite шеко йоцуш ду — оплата ца оьшу. Google-н аккаунт бен ца оьшу.",
+      "step1Pre": "Хьалха де",
+      "step1Post": "Google-н аккаунтах чубала",
+      "step2": "«Create API key» тохие, схьайаьккхина куьг копи яй",
+      "step3": "Куьг хьалха йолчу хIуттаме тIеяздина, «Куьг кхочуш де» тохие",
+      "securityNote": "Куьг сервере кхочушдалале AES-256-ца зорба кхочушду. Команданна а, кхечарна а и вовшахтохар йийцаран таро яц."
     },
     "popup": {
       "translating": "AI гочдаш ду...",
@@ -4444,7 +4452,11 @@
       "addToDictionary": "Дошамечу тIечIагIде",
       "notFound": "Дош дошамехь хьалха яц",
       "recorded": "Дош яздина — дошамечу тIетохур ду",
-      "addKeyPrompt": "AI-гочдар схьалаха Gemini API куьг нисдахьа",
+      "noKeyTitle": "AI-гочдар ца лела",
+      "noKeyDescription": "Дошамехь цахилла дешнаш гочдарна профилехь Gemini API куьг тIеяздахьа.",
+      "noKeyFree": "Gemini Flash Lite шеко йоцуш ду — Google-н аккаунт бен ца оьшу.",
+      "getKeyLink": "Куьг aistudio.google.com-хь схьаэца",
+      "addKeyPrompt": "AI-гочдар схьалаха профилехь Gemini API куьг тIеяздахьа",
       "goToSettings": "Нисдаршна дIагIе",
       "notChechen": "Дош нохчийн яц",
       "copy": "Гочдар копи ян",

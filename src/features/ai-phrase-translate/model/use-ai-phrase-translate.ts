@@ -33,7 +33,7 @@ export const useAiPhraseTranslate = () => {
       setState({ phase: "done", result });
     } catch {
       setState({ phase: "error" });
-      toastError(t("ai.phrase.error"));
+      toastError(t("aiTranslation.phrase.error"));
     }
   };
 
@@ -47,7 +47,7 @@ export const useAiPhraseTranslate = () => {
       setRefineState({ phase: "done", result });
     } catch {
       setRefineState({ phase: "error" });
-      toastError(t("ai.phrase.refineError"));
+      toastError(t("aiTranslation.phrase.refineError"));
     }
   };
 

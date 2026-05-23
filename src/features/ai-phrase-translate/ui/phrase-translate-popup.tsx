@@ -4,7 +4,7 @@ import { useGeminiKeyStatus } from "@/entities/ai-translation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { Check, Copy, Settings, Sparkles, X } from "lucide-react";
+import { Check, Copy, ExternalLink, Settings, Sparkles, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -114,17 +114,34 @@ export const PhraseTranslatePopup = ({
 
       {/* Body */}
       {!hasKey ? (
-        <div className="flex flex-col gap-2 px-3.5 py-3">
-          <Typography tag="p" className="text-[12.5px] text-t-2">
-            {t("aiTranslation.phrase.noKey")}
+        <div className="flex flex-col gap-2.5 px-3.5 py-3">
+          <Typography tag="p" className="text-[12.5px] font-medium text-t-1">
+            {t("aiTranslation.popup.noKeyTitle")}
           </Typography>
-          <Link
-            href={`/${lang}/settings?tab=ai`}
-            className="inline-flex items-center gap-1 text-[11.5px] text-acc hover:underline"
-          >
-            <Settings className="size-3" strokeWidth={1.5} />
-            {t("aiTranslation.popup.goToSettings")}
-          </Link>
+          <Typography tag="p" className="text-[11.5px] text-t-3">
+            {t("aiTranslation.popup.noKeyDescription")}
+          </Typography>
+          <Typography tag="p" className="text-[11px] text-grn">
+            {t("aiTranslation.popup.noKeyFree")}
+          </Typography>
+          <div className="flex flex-col gap-1.5">
+            <Link
+              href={`/${lang}/profile?tab=ai`}
+              className="inline-flex items-center gap-1 text-[11.5px] text-acc hover:underline"
+            >
+              <Settings className="size-3" strokeWidth={1.5} />
+              {t("aiTranslation.popup.goToSettings")}
+            </Link>
+            <a
+              href="https://aistudio.google.com/app/apikey"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-[11.5px] text-t-3 hover:text-t-1 hover:underline"
+            >
+              <ExternalLink className="size-3" strokeWidth={1.5} />
+              {t("aiTranslation.popup.getKeyLink")}
+            </a>
+          </div>
         </div>
       ) : state.phase === "idle" || state.phase === "loading" ? (
         <div className="flex flex-col items-center justify-center gap-2 p-5">
@@ -134,7 +151,7 @@ export const PhraseTranslatePopup = ({
       ) : state.phase === "error" ? (
         <div className="px-3.5 py-3">
           <Typography tag="p" className="text-[12.5px] text-red-t">
-            {t("reader.toasts.dictFailed")}
+            {t("aiTranslation.phrase.error")}
           </Typography>
         </div>
       ) : (
