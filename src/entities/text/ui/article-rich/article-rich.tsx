@@ -8,7 +8,7 @@ import {
 	type ReactNode,
 	type Ref,
 } from "react";
-import type { TextToken } from "../../api";
+import type { TextToken, TipTapDoc } from "../../api";
 import {
 	renderRichContent,
 	type RichSegment,
@@ -29,7 +29,7 @@ export interface NoteMark {
 }
 
 export interface ArticleRichProps {
-	contentRich: unknown;
+	contentRich: TipTapDoc;
 	tokens: readonly TextToken[];
 	activeTokenId?: string | null;
 	onSelectToken: (token: TextToken, event: MouseEvent<HTMLSpanElement>) => void;

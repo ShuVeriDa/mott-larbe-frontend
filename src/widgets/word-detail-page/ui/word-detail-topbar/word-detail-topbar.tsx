@@ -6,13 +6,14 @@ import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, RefreshCw, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Pencil, RefreshCw, Trash2 } from "lucide-react";
 import {
 	useDictionaryNeighbors,
 	type DictionaryEntryDetail,
 } from "@/entities/dictionary";
 import { useDeleteWord } from "@/features/delete-word";
 import { ReviewWordModal } from "@/features/review-word";
+import { EntrySuggestModal } from "@/features/entry-suggest";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 
@@ -33,6 +34,7 @@ export const WordDetailTopbar = ({ entry }: WordDetailTopbarProps) => {
 	const { data: neighbors } = useDictionaryNeighbors(entry.id);
 	const { mutate: removeEntry, isPending: isDeleting } = useDeleteWord();
 	const [reviewOpen, setReviewOpen] = useState(false);
+	const [suggestOpen, setSuggestOpen] = useState(false);
 
 	const onDelete = () => {
 		const ok = window.confirm(
@@ -46,8 +48,11 @@ export const WordDetailTopbar = ({ entry }: WordDetailTopbarProps) => {
 
 	const buildHref = (id: string) => `/${lang}/vocabulary/${id}`;
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setReviewOpen(true);
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setReviewOpen(true);
 	const handleClose: NonNullable<ComponentProps<typeof ReviewWordModal>["onClose"]> = () => setReviewOpen(false);
+	const handleSuggestOpen: NonNullable<ComponentProps<"button">["onClick"]> = () => setSuggestOpen(true);
+	const handleSuggestChange = (open: boolean) => setSuggestOpen(open);
+
 return (
 		<>
 			<header className="flex shrink-0 items-center gap-2.5 border-b border-hairline border-bd-1 bg-surf px-[22px] py-3 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
@@ -100,6 +105,16 @@ return (
 						</Typography>
 					</Button>
 					<Button
+						onClick={handleSuggestOpen}
+						className={cn(tbBtnClass, "ml-0.5")}
+						title={t("suggest.button")}
+					>
+						<Pencil className="size-3" strokeWidth={1.8} />
+						<Typography tag="span" className="max-md:hidden">
+							{t("suggest.button")}
+						</Typography>
+					</Button>
+					<Button
 						onClick={onDelete}
 						disabled={isDeleting}
 						className={cn(tbBtnClass, "border-red/20 text-red hover:text-red")}
@@ -117,6 +132,14 @@ return (
 					entry={entry}
 				/>
 			) : null}
+
+			<EntrySuggestModal
+				open={suggestOpen}
+				onOpenChange={handleSuggestChange}
+				normalized={entry.normalized}
+				rawWord={entry.word}
+				currentTranslation={entry.translation}
+			/>
 		</>
 	);
 };

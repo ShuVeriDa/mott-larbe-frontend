@@ -1,5 +1,4 @@
-export { textApi, textKeys, fetchTextMeta } from "./api";
-export type { TextMeta } from "./api";
+export { textApi, textKeys } from "./api";
 export type {
 	BookmarkResponse,
 	TextLanguage,

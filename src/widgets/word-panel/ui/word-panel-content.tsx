@@ -11,11 +11,14 @@ import {
 } from "@/entities/word";
 import { LearnStatusRow } from "@/features/learn-status";
 import { useI18n } from "@/shared/lib/i18n";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { AddToDictionaryButton } from "./add-to-dictionary-button";
 import { WordExamplesList } from "./word-examples-list";
 import { WordFormsChips } from "./word-forms-chips";
 import { WordPanelLoader } from "./word-panel-loader";
+import { EntrySuggestModal } from "@/features/entry-suggest";
+import { Button } from "@/shared/ui/button";
+import { Pencil } from "lucide-react";
 
 export interface WordPanelContentProps {
 	token: TextToken;
@@ -186,6 +189,9 @@ const PanelBody = ({
 	textId: string;
 }) => {
 	const { t } = useI18n();
+	const [suggestOpen, setSuggestOpen] = useState(false);
+
+	const handleSuggestChange = (open: boolean) => setSuggestOpen(open);
 
 	return (
 		<div className="flex-1 overflow-y-auto [scrollbar-width:thin]">
@@ -255,9 +261,25 @@ const PanelBody = ({
 							inDictionary={lookup.inDictionary}
 							dictionaryEntryId={lookup.dictionaryEntryId}
 						/>
+						<Button
+							onClick={() => setSuggestOpen(true)}
+							variant="ghost"
+							className="flex w-full items-center justify-center gap-1.5 text-[12px] text-t-3"
+							title={t("suggest.button")}
+						>
+							<Pencil className="size-3" strokeWidth={1.5} />
+							{t("suggest.button")}
+						</Button>
 					</div>
 				</Section>
 			) : null}
+			<EntrySuggestModal
+				open={suggestOpen}
+				onOpenChange={handleSuggestChange}
+				normalized={token.normalized}
+				rawWord={token.original}
+				currentTranslation={lookup.translation ?? ""}
+			/>
 		</div>
 	);
 };

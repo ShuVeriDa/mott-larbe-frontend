@@ -2601,6 +2601,7 @@
       "unknownWords": "Ца хааш долу дешнаш",
       "usersList": "Нийсархой",
       "feedback": "Хаамаш",
+      "suggestions": "Хьехамаш",
       "plans": "Тарифаш",
       "payments": "ДохIамийн история",
       "coupons": "Промокодаш",
@@ -4413,7 +4414,8 @@
       "A": "Юьхьехь",
       "B": "Юккъе",
       "C": "Лакхара"
-    }
+    },
+    "retry": "Цӏенкъа"
   },
   "aiTranslation": {
     "settings": {
@@ -4476,6 +4478,7 @@
       "refineResult": "Нийсадина гочдар",
       "refineError": "Гочдар нийсаде ца хилира",
       "error": "Дешнийн гочдар ца хилира. ТIаьхьа дIа хьажа",
+      "errorLocationNotSupported": "Gemini хьан регионехь ца болу. VPN лела.",
       "batchError": "Дешнаш гочдан ца хилира. ТIаьхьа дIа хьажа"
     },
     "history": {
@@ -4527,5 +4530,87 @@
         "notExported": "Экспорт хьала"
       }
     }
+  },
+  "suggest": {
+    "title": "Тайпа хIума хьажо",
+    "wordLabel": "Дош:",
+    "fieldLabel": "Поле",
+    "newValueLabel": "Керла мах",
+    "newValuePlaceholder": "Хьайн хьехам язде…",
+    "commentLabel": "Коммент",
+    "commentPlaceholder": "Муха хийца деза?",
+    "cancel": "ДIасадаккха",
+    "submit": "Дахийта",
+    "submitting": "Дохуш ду…",
+    "success": "Хьайн хьехам модерацена хьажийна",
+    "error": "Хьехам дахийта ца хилира. Кхин хIоттийта.",
+    "button": "Тайпа хIума хьажо",
+    "fields": {
+      "rawTranslate": "Гочдар",
+      "rawWord": "Дош",
+      "rawWordAlt": "Кхин йоза",
+      "notes": "Хаамаш"
+    }
+  },
+  "suggestions": {
+    "meta": {
+      "title": "Сан хьехамаш | Мотт Ларбе",
+      "description": "Хьо тешош берш"
+    },
+    "title": "Сан хьехамаш",
+    "empty": "Хьо хьехам дахийна яц",
+    "status": {
+      "PENDING": "Хьажош",
+      "APPROVED": "Ладоьгlна",
+      "REJECTED": "ДIахоьссина"
+    },
+    "field": "Поле",
+    "oldValue": "Хилла",
+    "newValue": "Хир",
+    "comment": "Коммент",
+    "reviewComment": "Редактора жоп",
+    "submittedAt": "Дахийтина"
+  },
+  "adminSuggestions": {
+    "meta": {
+      "title": "Хьехамаш — Admin | Мотт Ларбе",
+      "description": "Пользователан хьехамаш модераци"
+    },
+    "title": "Хьехамаш",
+    "subtitle": "{total} хьехам",
+    "empty": "Хьехамаш яц",
+    "emptySearch": "Ца карийра",
+    "selectToReview": "Хьехам харжа",
+    "stats": {
+      "total": "Массо",
+      "pending": "Хьажош",
+      "approved": "Ладоьгlна",
+      "rejected": "Дlахоьссина"
+    },
+    "status": {
+      "PENDING": "Хьажош",
+      "APPROVED": "Ладоьгlна",
+      "REJECTED": "Дlахоьссина"
+    },
+    "filter": {
+      "all": "Массо",
+      "pending": "Хьажош",
+      "approved": "Ладоьгlна",
+      "rejected": "Дlахоьссина"
+    },
+    "field": "Поле",
+    "word": "Дош",
+    "author": "Автор",
+    "oldValue": "Хилла",
+    "newValue": "Хир",
+    "comment": "Коммент",
+    "reviewComment": "Редактора коммент",
+    "approve": "Ладовла",
+    "reject": "Дlахоссийта",
+    "approved": "Ладоьгlна",
+    "rejected": "Дlахоьссина",
+    "successApprove": "Хьехам ладоьгlна, хийцам бина",
+    "successReject": "Хьехам дlахоьссина",
+    "errorReview": "Статус хийца ца хилира"
   }
 }

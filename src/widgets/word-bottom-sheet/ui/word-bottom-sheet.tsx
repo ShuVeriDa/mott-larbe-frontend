@@ -20,10 +20,11 @@ import {
 } from "@/shared/ui/reader-mobile-sheet-header";
 import { WordPanelEmpty } from "@/widgets/word-panel";
 import { AiWordSheetBody } from "./ai-word-sheet-body";
-import { Plus, X } from "lucide-react";
+import { Pencil, Plus, X } from "lucide-react";
 import type { MouseEvent } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { EntrySuggestModal } from "@/features/entry-suggest";
 
 const SheetBody = ({
 	token,
@@ -41,6 +42,10 @@ const SheetBody = ({
 	const { mutate: add, isPending: adding } = useAddToVocabulary();
 	const { mutate: remove, isPending: removing } = useRemoveFromVocabulary();
 	const isPending = adding || removing;
+	const [suggestOpen, setSuggestOpen] = useState(false);
+
+	const handleSuggestChange = (open: boolean) => setSuggestOpen(open);
+	const handleSuggestSuccess = () => onClose();
 
 	const handlePrimaryClick = () => {
 		if (lookup.inDictionary && lookup.dictionaryEntryId) {
@@ -126,6 +131,14 @@ const SheetBody = ({
 						? t("reader.popup.inDictionary")
 						: t("reader.popup.addToDictionary")}
 				</Button>
+					<Button
+					onClick={() => setSuggestOpen(true)}
+					aria-label={t("suggest.button")}
+					title={t("suggest.button")}
+					className="inline-flex h-11 shrink-0 items-center justify-center rounded-[10px] border border-bd-2 bg-surf-2 px-3 text-t-2"
+				>
+					<Pencil className="size-4" strokeWidth={1.6} />
+				</Button>
 				<Button
 					onClick={onClose}
 					aria-label={t("reader.sheet.close")}
@@ -136,6 +149,14 @@ const SheetBody = ({
 					{t("reader.sheet.close")}
 				</Button>
 			</div>
+			<EntrySuggestModal
+				open={suggestOpen}
+				onOpenChange={handleSuggestChange}
+				onSuccess={handleSuggestSuccess}
+				normalized={token.normalized}
+				rawWord={token.original}
+				currentTranslation={lookup.translation ?? ""}
+			/>
 		</div>
 	);
 };

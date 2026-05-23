@@ -151,7 +151,7 @@ export const PhraseTranslatePopup = ({
       ) : state.phase === "error" ? (
         <div className="px-3.5 py-3">
           <Typography tag="p" className="text-[12.5px] text-red-t">
-            {t("aiTranslation.phrase.error")}
+            {state.errorMessage}
           </Typography>
         </div>
       ) : (

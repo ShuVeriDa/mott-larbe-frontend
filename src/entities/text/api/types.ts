@@ -15,11 +15,29 @@ export interface TextToken {
 	endOffset: number;
 }
 
+export interface TipTapMark {
+	type: string;
+	attrs?: Record<string, unknown>;
+}
+
+export interface TipTapNode {
+	type: string;
+	text?: string;
+	marks?: TipTapMark[];
+	attrs?: Record<string, unknown>;
+	content?: TipTapNode[];
+}
+
+export interface TipTapDoc {
+	type: "doc";
+	content?: TipTapNode[];
+}
+
 export interface TextPageData {
 	id: string;
 	pageNumber: number;
 	title: string | null;
-	contentRich: unknown;
+	contentRich: TipTapDoc;
 	contentRaw: string;
 }
 

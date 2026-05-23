@@ -6,7 +6,7 @@ import {
 	getDictionary,
 	hasLocale,
 } from "@/i18n/locales";
-import { textApi, textKeys, fetchTextMeta } from "@/entities/text";
+import { textApi, textKeys } from "@/entities/text";
 import { ReaderPage } from "@/widgets/reader-page";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/shared/lib/query-client";
@@ -40,12 +40,22 @@ export const generateMetadata = async ({
 	const meta = dict.reader.meta;
 	const path = `/reader/${textId}/p/${page}`;
 
-	const textMeta = await fetchTextMeta(textId, page);
+	// Prefetch into the shared per-request QueryClient so the page component
+	// reuses the same data without a second network call.
+	const queryClient = getQueryClient();
+	await queryClient.prefetchQuery({
+		queryKey: textKeys.page(textId, page),
+		queryFn: () => textApi.getPage(textId, page),
+	});
+	const pageData = queryClient.getQueryData(textKeys.page(textId, page)) as
+		| { title?: string; imageUrl?: string | null }
+		| undefined;
+
 	const rawTitle = meta.title.replace("{page}", String(page));
-	const title = textMeta?.title
-		? rawTitle.replace("{textTitle}", textMeta.title)
+	const title = pageData?.title
+		? rawTitle.replace("{textTitle}", pageData.title)
 		: rawTitle.replace("{textTitle} · ", "");
-	const imageUrl = textMeta?.imageUrl ?? null;
+	const imageUrl = pageData?.imageUrl ?? null;
 	const description = meta.description;
 
 	const languages: Record<string, string> = {};
@@ -71,13 +81,10 @@ export const generateMetadata = async ({
 			...(imageUrl && { images: [{ url: imageUrl }] }),
 		},
 		twitter: {
-			card: "summary",
+			card: "summary_large_image",
 			title,
 			description,
-		},
-		robots: {
-			index: false,
-			follow: false,
+			...(imageUrl && { images: [imageUrl] }),
 		},
 	};
 };
@@ -93,6 +100,8 @@ const ReaderTextPageRoutePage = async ({
 	const page = parsePage(pageNumber);
 	if (!page) notFound();
 
+	// Data is already in the QueryClient if generateMetadata ran first;
+	// prefetchQuery is a no-op when the key is already populated.
 	const queryClient = getQueryClient();
 	await queryClient.prefetchQuery({
 		queryKey: textKeys.page(textId, page),

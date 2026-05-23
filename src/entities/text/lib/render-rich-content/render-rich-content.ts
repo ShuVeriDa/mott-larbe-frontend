@@ -1,4 +1,4 @@
-import type { TextToken } from "../../api";
+import type { TextToken, TipTapDoc, TipTapNode } from "../../api";
 
 export interface MarkAttrs {
 	bold?: boolean;
@@ -21,25 +21,7 @@ export interface RichParagraph {
 	blockType?: "blockquote";
 }
 
-interface TipTapMark {
-	type: string;
-	attrs?: Record<string, unknown>;
-}
-
-interface TipTapNode {
-	type: string;
-	text?: string;
-	marks?: TipTapMark[];
-	attrs?: Record<string, unknown>;
-	content?: TipTapNode[];
-}
-
-interface TipTapDoc {
-	type: "doc";
-	content?: TipTapNode[];
-}
-
-const resolveMarks = (marks: TipTapMark[] | undefined): MarkAttrs => {
+const resolveMarks = (marks: TipTapNode["marks"]): MarkAttrs => {
 	if (!marks) return {};
 	const result: MarkAttrs = {};
 	for (const m of marks) {
@@ -77,17 +59,16 @@ const nodeToRaw = (root: TipTapNode): string => {
 };
 
 // Reconstruct contentRaw from TipTap doc, mirroring the backend pipeline exactly.
-export const contentRawFromRich = (contentRich: unknown): string => {
-	const doc = contentRich as TipTapDoc;
-	if (!doc?.content) return "";
-	return nodeToRaw(doc as unknown as TipTapNode).replace(/\n{3,}/g, "\n\n").trim();
+export const contentRawFromRich = (contentRich: TipTapDoc): string => {
+	if (!contentRich?.content) return "";
+	return nodeToRaw(contentRich as unknown as TipTapNode).replace(/\n{3,}/g, "\n\n").trim();
 };
 
 export const renderRichContent = (
-	contentRich: unknown,
+	contentRich: TipTapDoc,
 	tokens: readonly TextToken[],
 ): RichParagraph[] => {
-	const doc = contentRich as TipTapDoc;
+	const doc = contentRich;
 	if (!doc?.content) return [];
 
 	// Reconstruct the same string the backend used to compute token offsets.

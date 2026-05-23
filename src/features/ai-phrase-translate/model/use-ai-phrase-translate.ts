@@ -4,13 +4,14 @@ import { aiTranslationApi } from "@/entities/ai-translation";
 import type { AiPhraseTranslation } from "@/entities/ai-translation";
 import { useToast } from "@/shared/lib/toast";
 import { useI18n } from "@/shared/lib/i18n";
+import { isAxiosError } from "axios";
 import { useState } from "react";
 
 export type AiPhraseTranslateState =
   | { phase: "idle" }
   | { phase: "loading" }
   | { phase: "done"; result: AiPhraseTranslation }
-  | { phase: "error" };
+  | { phase: "error"; errorMessage: string };
 
 export type AiPhraseRefineState =
   | { phase: "idle" }
@@ -25,15 +26,23 @@ export const useAiPhraseTranslate = () => {
   const { error: toastError } = useToast();
   const { t } = useI18n();
 
+  const getErrorKey = (e: unknown): string => {
+    if (isAxiosError(e) && e.response?.data?.message === "location_not_supported") {
+      return "aiTranslation.phrase.errorLocationNotSupported";
+    }
+    return "aiTranslation.phrase.error";
+  };
+
   const translate = async (phrase: string, contextSentence?: string) => {
     setState({ phase: "loading" });
     setRefineState({ phase: "idle" });
     try {
       const result = await aiTranslationApi.translatePhrase({ phrase, contextSentence });
       setState({ phase: "done", result });
-    } catch {
-      setState({ phase: "error" });
-      toastError(t("aiTranslation.phrase.error"));
+    } catch (e) {
+      const errorMessage = t(getErrorKey(e));
+      setState({ phase: "error", errorMessage });
+      toastError(errorMessage);
     }
   };
 
@@ -45,9 +54,12 @@ export const useAiPhraseTranslate = () => {
     try {
       const result = await aiTranslationApi.refinePhrase({ phrase, previousTranslation, hint });
       setRefineState({ phase: "done", result });
-    } catch {
+    } catch (e) {
       setRefineState({ phase: "error" });
-      toastError(t("aiTranslation.phrase.refineError"));
+      toastError(t(isAxiosError(e) && e.response?.data?.message === "location_not_supported"
+        ? "aiTranslation.phrase.errorLocationNotSupported"
+        : "aiTranslation.phrase.refineError"
+      ));
     }
   };
 

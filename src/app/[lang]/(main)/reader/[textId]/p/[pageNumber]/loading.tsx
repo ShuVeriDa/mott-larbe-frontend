@@ -1,5 +1,7 @@
-const Bone = ({ className }: { className: string }) => (
-	<div className={`animate-pulse rounded bg-surf-3 ${className}`} />
+import { CSSProperties } from "react";
+
+const Bone = ({ className, style }: { className: string; style?: CSSProperties }) => (
+	<div className={`animate-pulse rounded bg-surf-3 ${className}`} style={style} />
 );
 
 const ReaderPageLoading = () => (
@@ -73,7 +75,11 @@ const ReaderPageLoading = () => (
 					].map((lines, pi) => (
 						<div key={pi} className="space-y-2">
 							{lines.map((w, li) => (
-								<Bone key={li} className="h-4" style={{ width: `${w * 100}%` }} />
+								<Bone
+									key={li}
+									className="h-4"
+									style={{ width: `${w * 100}%` }}
+								/>
 							))}
 						</div>
 					))}

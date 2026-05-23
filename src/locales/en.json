@@ -2601,6 +2601,7 @@
       "unknownWords": "Unknown words",
       "usersList": "Users",
       "feedback": "Feedback",
+      "suggestions": "Edit suggestions",
       "plans": "Pricing plans",
       "payments": "Payment history",
       "coupons": "Promo codes",
@@ -4413,7 +4414,8 @@
       "A": "Beginner",
       "B": "Intermediate",
       "C": "Advanced"
-    }
+    },
+    "retry": "Retry"
   },
   "aiTranslation": {
     "settings": {
@@ -4476,6 +4478,7 @@
       "refineResult": "Refined translation",
       "refineError": "Failed to refine translation",
       "error": "Phrase translation failed. Please try again later",
+      "errorLocationNotSupported": "Gemini is not available in your region. Try using a VPN.",
       "batchError": "Failed to translate words. Please try again later"
     },
     "history": {
@@ -4527,5 +4530,87 @@
         "goToQueue": "Go to queue"
       }
     }
+  },
+  "suggest": {
+    "title": "Suggest an edit",
+    "wordLabel": "Word:",
+    "fieldLabel": "Field",
+    "newValueLabel": "New value",
+    "newValuePlaceholder": "Enter your suggestion…",
+    "commentLabel": "Comment",
+    "commentPlaceholder": "Why should this be changed?",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "submitting": "Submitting…",
+    "success": "Your suggestion has been submitted for review",
+    "error": "Failed to submit suggestion. Please try again.",
+    "button": "Suggest edit",
+    "fields": {
+      "rawTranslate": "Translation",
+      "rawWord": "Word",
+      "rawWordAlt": "Alternative spelling",
+      "notes": "Notes"
+    }
+  },
+  "suggestions": {
+    "meta": {
+      "title": "My suggestions | Mott Larbe",
+      "description": "Your proposed edits to the dictionary"
+    },
+    "title": "My suggestions",
+    "empty": "You haven't submitted any suggestions yet",
+    "status": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    },
+    "field": "Field",
+    "oldValue": "Before",
+    "newValue": "After",
+    "comment": "Comment",
+    "reviewComment": "Editor's note",
+    "submittedAt": "Submitted"
+  },
+  "adminSuggestions": {
+    "meta": {
+      "title": "Suggestions — Admin | Mott Larbe",
+      "description": "Moderate user-submitted dictionary edits"
+    },
+    "title": "Suggestions",
+    "subtitle": "{total} suggestions",
+    "empty": "No suggestions found",
+    "emptySearch": "Nothing found",
+    "selectToReview": "Select a suggestion to review",
+    "stats": {
+      "total": "Total",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    },
+    "filter": {
+      "all": "All",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "field": "Field",
+    "word": "Word",
+    "author": "Author",
+    "oldValue": "Before",
+    "newValue": "After",
+    "comment": "Comment",
+    "reviewComment": "Editor's comment",
+    "approve": "Approve",
+    "reject": "Reject",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "successApprove": "Suggestion approved and applied",
+    "successReject": "Suggestion rejected",
+    "errorReview": "Failed to update status"
   }
 }

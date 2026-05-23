@@ -13,11 +13,12 @@ import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
-import { ExternalLink, Plus } from "lucide-react";
-import { useEffect } from "react";
+import { ExternalLink, Pencil, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 import { AiWordPopupBody } from "./ai-word-popup-body";
+import { EntrySuggestModal } from "@/features/entry-suggest";
 
 const POPUP_WIDTH = 264;
 const ESTIMATED_HEIGHT = 220;
@@ -43,10 +44,12 @@ const WordPopupBody = ({
 	token,
 	lookup,
 	onOpenInPanel,
+	onSuggestOpen,
 }: {
 	token: TextToken;
 	lookup: WordLookupResponse;
 	onOpenInPanel: () => void;
+	onSuggestOpen: () => void;
 }) => {
 	const { t } = useI18n();
 	const { success, error } = useToast();
@@ -142,6 +145,15 @@ const WordPopupBody = ({
 						? t("reader.popup.inDictionary")
 						: t("reader.popup.addToDictionary")}
 				</Button>
+					<Button
+					size={"bare"}
+					onClick={onSuggestOpen}
+					aria-label={t("suggest.button")}
+					title={t("suggest.button")}
+					className="inline-flex h-[30px] w-[30px] items-center justify-center rounded-base border-hairline border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
+				>
+					<Pencil className="size-3.5" strokeWidth={1.4} />
+				</Button>
 				<Button
 					size={"bare"}
 					onClick={onOpenInPanel}
@@ -194,6 +206,8 @@ export const WordPopup = () => {
 	const anchor = useWordLookupStore(s => s.anchor);
 	const closePopup = useWordLookupStore(s => s.closePopup);
 	const openInPanel = useWordLookupStore(s => s.openInPanel);
+	const [suggestOpen, setSuggestOpen] = useState(false);
+	const [suggestWord, setSuggestWord] = useState<{ normalized: string; rawWord: string; currentTranslation: string } | null>(null);
 
 	const isVisible = surface === "popup" && Boolean(anchor) && (Boolean(token) || Boolean(phrase));
 
@@ -203,14 +217,25 @@ export const WordPopup = () => {
 
 	const position = anchor ? computePosition(anchor) : { left: 0, top: 0 };
 
+	const handleSuggestOpen = (normalized: string, rawWord: string, currentTranslation: string) => {
+		setSuggestWord({ normalized, rawWord, currentTranslation });
+		setSuggestOpen(true);
+	};
+
+	const handleSuggestChange = (open: boolean) => setSuggestOpen(open);
+
+	const handleBackdropClick = () => {
+		if (!suggestOpen) closePopup();
+	};
+
 	useEffect(() => {
 		if (!isVisible) return;
 		const onKey = (event: KeyboardEvent) => {
-			if (event.key === "Escape") closePopup();
+			if (event.key === "Escape" && !suggestOpen) closePopup();
 		};
 		document.addEventListener("keydown", onKey);
 		return () => document.removeEventListener("keydown", onKey);
-	}, [isVisible, closePopup]);
+	}, [isVisible, closePopup, suggestOpen]);
 
 	if (typeof window === "undefined") return null;
 
@@ -220,7 +245,7 @@ export const WordPopup = () => {
 				<>
 					<div
 						className="fixed inset-0 z-199"
-						onClick={closePopup}
+						onClick={handleBackdropClick}
 						aria-hidden="true"
 					/>
 					<div
@@ -244,6 +269,7 @@ export const WordPopup = () => {
 									token={token}
 									lookup={data}
 									onOpenInPanel={() => openInPanel(token)}
+									onSuggestOpen={() => handleSuggestOpen(token.normalized, token.original, data.translation ?? "")}
 								/>
 							) : (
 								<AiWordPopupBody
@@ -256,6 +282,16 @@ export const WordPopup = () => {
 					</div>
 				</>,
 				document.body,
+			)}
+			{suggestWord && (
+				<EntrySuggestModal
+					open={suggestOpen}
+					onOpenChange={handleSuggestChange}
+					onSuccess={closePopup}
+					normalized={suggestWord.normalized}
+					rawWord={suggestWord.rawWord}
+					currentTranslation={suggestWord.currentTranslation}
+				/>
 			)}
 		</>
 	);

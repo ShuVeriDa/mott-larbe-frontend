@@ -1,15 +1,18 @@
 "use client";
 
 import type { TextLanguage } from "@/entities/admin-text";
-import { adminTextPhraseApi, adminTextPhraseKeys } from "@/entities/admin-text-phrase";
 import type { PhraseLanguage } from "@/entities/admin-text-phrase";
+import {
+	adminTextPhraseApi,
+	adminTextPhraseKeys,
+} from "@/entities/admin-text-phrase";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
+import { Typography } from "@/shared/ui/typography";
 import { useQueryClient } from "@tanstack/react-query";
 import { Languages, X } from "lucide-react";
-import { Typography } from "@/shared/ui/typography";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -105,7 +108,10 @@ export const PhraseTranslationPanel = ({
 				<div className="flex items-center justify-between border-b border-hairline border-bd-1 px-4 py-3">
 					<div className="flex items-center gap-2">
 						<Languages className="size-4 text-violet-500" strokeWidth={1.6} />
-						<Typography tag="span" className="text-[13px] font-semibold text-t-1">
+						<Typography
+							tag="span"
+							className="text-[13px] font-semibold text-t-1"
+						>
 							{t("admin.texts.editPage.addPhraseTranslation")}
 						</Typography>
 					</div>
@@ -161,17 +167,17 @@ export const PhraseTranslationPanel = ({
 
 					<div className="flex gap-2 pt-1">
 						<Button
+							onClick={handleClose}
+							className="h-[34px] rounded-lg border-hairline border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
+						>
+							{t("admin.texts.editPage.phraseCancel")}
+						</Button>
+						<Button
 							onClick={handleSave}
 							disabled={!translation.trim() || isSaving}
 							className="h-[34px] flex-1 rounded-lg bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
 						>
 							{isSaving ? "…" : t("admin.texts.editPage.phraseSave")}
-						</Button>
-						<Button
-							onClick={handleClose}
-							className="h-[34px] rounded-lg border-hairline border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
-						>
-							{t("admin.texts.editPage.phraseCancel")}
 						</Button>
 					</div>
 				</div>
