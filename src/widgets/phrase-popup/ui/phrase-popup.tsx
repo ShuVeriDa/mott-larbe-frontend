@@ -3,24 +3,23 @@
 import { usePhraseLookupStore, type PhrasePopupAnchor } from "@/features/phrase-lookup";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 const POPUP_WIDTH = 280;
-const ESTIMATED_HEIGHT = 140;
 const SAFE_MARGIN = 10;
 
-const computePosition = (anchor: PhrasePopupAnchor) => {
+const computePosition = (anchor: PhrasePopupAnchor, popupHeight: number) => {
   if (typeof window === "undefined") return { left: 0, top: 0 };
   let left = anchor.left + anchor.width / 2 - POPUP_WIDTH / 2;
-  let top = anchor.top + anchor.height + 8;
+  const topBelow = anchor.top + anchor.height + 8;
+  const topAbove = anchor.top - popupHeight - 8;
   left = Math.max(
     SAFE_MARGIN,
     Math.min(left, window.innerWidth - POPUP_WIDTH - SAFE_MARGIN),
   );
-  if (top + ESTIMATED_HEIGHT > window.innerHeight - SAFE_MARGIN) {
-    top = anchor.top - ESTIMATED_HEIGHT - 8;
-  }
+  const fitsBelow = topBelow + popupHeight <= window.innerHeight - SAFE_MARGIN;
+  const top = fitsBelow ? topBelow : Math.max(SAFE_MARGIN, topAbove);
   return { left, top };
 };
 
@@ -29,9 +28,11 @@ export const PhrasePopup = () => {
   const activePhrase = usePhraseLookupStore(s => s.activePhrase);
   const anchor = usePhraseLookupStore(s => s.anchor);
   const close = usePhraseLookupStore(s => s.close);
+  const popupRef = useRef<HTMLDivElement>(null);
+  const [popupHeight, setPopupHeight] = useState(140);
 
   const isVisible = Boolean(activePhrase) && Boolean(anchor);
-  const position = anchor ? computePosition(anchor) : { left: 0, top: 0 };
+  const position = anchor ? computePosition(anchor, popupHeight) : { left: 0, top: 0 };
 
   useEffect(() => {
     if (!isVisible) return;
@@ -41,6 +42,17 @@ export const PhrasePopup = () => {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [isVisible, close]);
+
+  useEffect(() => {
+    const el = popupRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(entries => {
+      const h = entries[0]?.contentRect.height;
+      if (h && h > 0) setPopupHeight(h);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isVisible]);
 
   if (!isVisible || !activePhrase || typeof window === "undefined") return null;
 
@@ -54,6 +66,7 @@ export const PhrasePopup = () => {
         aria-hidden="true"
       />
       <div
+        ref={popupRef}
         role="dialog"
         aria-label={phrase.original}
         className="fixed z-200 w-[280px] overflow-hidden rounded-card border-hairline border-bd-2 bg-surf shadow-lg"

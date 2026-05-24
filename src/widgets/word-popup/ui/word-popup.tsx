@@ -14,27 +14,26 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { ExternalLink, Pencil, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 import { AiWordPopupBody } from "./ai-word-popup-body";
 import { EntrySuggestModal } from "@/features/entry-suggest";
 
 const POPUP_WIDTH = 264;
-const ESTIMATED_HEIGHT = 220;
 const SAFE_MARGIN = 10;
 
-const computePosition = (anchor: PopupAnchor) => {
+const computePosition = (anchor: PopupAnchor, popupHeight: number) => {
 	if (typeof window === "undefined") return { left: 0, top: 0 };
 	let left = anchor.left + anchor.width / 2 - POPUP_WIDTH / 2;
-	let top = anchor.top + anchor.height + 8;
+	const topBelow = anchor.top + anchor.height + 8;
+	const topAbove = anchor.top - popupHeight - 8;
 	left = Math.max(
 		SAFE_MARGIN,
 		Math.min(left, window.innerWidth - POPUP_WIDTH - SAFE_MARGIN),
 	);
-	if (top + ESTIMATED_HEIGHT > window.innerHeight - SAFE_MARGIN) {
-		top = anchor.top - ESTIMATED_HEIGHT - 8;
-	}
+	const fitsBelow = topBelow + popupHeight <= window.innerHeight - SAFE_MARGIN;
+	const top = fitsBelow ? topBelow : Math.max(SAFE_MARGIN, topAbove);
 	return { left, top };
 };
 
@@ -203,11 +202,14 @@ export const WordPopup = () => {
 	const surface = useWordLookupStore(s => s.surface);
 	const token = useWordLookupStore(s => s.activeToken);
 	const phrase = useWordLookupStore(s => s.activePhrase);
+	const contextSentence = useWordLookupStore(s => s.contextSentence);
 	const anchor = useWordLookupStore(s => s.anchor);
 	const closePopup = useWordLookupStore(s => s.closePopup);
 	const openInPanel = useWordLookupStore(s => s.openInPanel);
 	const [suggestOpen, setSuggestOpen] = useState(false);
 	const [suggestWord, setSuggestWord] = useState<{ normalized: string; rawWord: string; currentTranslation: string } | null>(null);
+	const popupRef = useRef<HTMLDivElement>(null);
+	const [popupHeight, setPopupHeight] = useState(220);
 
 	const isVisible = surface === "popup" && Boolean(anchor) && (Boolean(token) || Boolean(phrase));
 
@@ -215,7 +217,18 @@ export const WordPopup = () => {
 		isVisible && token ? token.id : null,
 	);
 
-	const position = anchor ? computePosition(anchor) : { left: 0, top: 0 };
+	const position = anchor ? computePosition(anchor, popupHeight) : { left: 0, top: 0 };
+
+	useEffect(() => {
+		const el = popupRef.current;
+		if (!el) return;
+		const observer = new ResizeObserver(entries => {
+			const h = entries[0]?.contentRect.height;
+			if (h && h > 0) setPopupHeight(h);
+		});
+		observer.observe(el);
+		return () => observer.disconnect();
+	}, [isVisible]);
 
 	const handleSuggestOpen = (normalized: string, rawWord: string, currentTranslation: string) => {
 		setSuggestWord({ normalized, rawWord, currentTranslation });
@@ -249,6 +262,7 @@ export const WordPopup = () => {
 						aria-hidden="true"
 					/>
 					<div
+						ref={popupRef}
 						role="dialog"
 						aria-label={token?.original ?? phrase?.phrase.original}
 						className="fixed z-200 w-[264px] overflow-hidden rounded-card border-hairline border-bd-2 bg-surf shadow-lg"
@@ -275,6 +289,7 @@ export const WordPopup = () => {
 								<AiWordPopupBody
 									word={token.original}
 									normalized={token.normalized}
+									contextSentence={contextSentence}
 									lang={lang}
 								/>
 							)

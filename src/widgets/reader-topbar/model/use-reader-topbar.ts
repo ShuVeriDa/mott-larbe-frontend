@@ -67,10 +67,10 @@ export const useReaderTopbar = (
 
 	const level =
 		data.level === "A"
-			? t("settings.learning.A")
+			? t("settings.learning.levelA")
 			: data.level === "B"
-				? t("shared.cefrLevel.B")
-				: t("shared.cefrLevel.C");
+				? t("shared.cefrLevel.levelB")
+				: t("shared.cefrLevel.levelC");
 
 	const metaParts = [data.author, level, LANG_TAG[data.language]].filter(
 		Boolean,

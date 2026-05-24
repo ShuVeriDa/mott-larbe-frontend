@@ -31,6 +31,7 @@ import { useReaderTheme } from "@/features/reader-theme";
 import { useSelectToken, useWordLookupStore } from "@/features/word-lookup";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { extractSentence } from "@/shared/lib/extract-sentence";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useInlineNotes } from "../model/use-inline-notes";
@@ -48,7 +49,7 @@ export interface ReaderBodyProps {
 
 export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 	const { lang } = useI18n();
-	const onSelectToken = useSelectToken();
+	const onSelectToken = useSelectToken(data.page.contentRaw);
 	const activeToken = useWordLookupStore(s => s.activeToken);
 
 	const [phraseTranslate, setPhraseTranslate] = useState<{
@@ -120,14 +121,9 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 		const phrase = selection.text;
 		const raw = data.page.contentRaw;
 		const idx = raw.indexOf(phrase);
-		let contextSentence: string | undefined;
-		if (idx !== -1) {
-			const sentenceStart = Math.max(0, raw.lastIndexOf(".", idx - 1) + 1);
-			const nextDot = raw.indexOf(".", idx + phrase.length);
-			const sentenceEnd = nextDot !== -1 ? nextDot + 1 : raw.length;
-			const sentence = raw.slice(sentenceStart, sentenceEnd).trim();
-			if (sentence !== phrase) contextSentence = sentence;
-		}
+		const contextSentence = idx !== -1
+			? extractSentence(raw, idx, idx + phrase.length)
+			: undefined;
 		setPhraseTranslate({ phrase, x: selection.x, y: selection.y, contextSentence });
 		handleDismiss();
 	};

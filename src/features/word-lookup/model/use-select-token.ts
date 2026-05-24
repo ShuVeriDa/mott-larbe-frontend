@@ -1,6 +1,7 @@
 "use client";
 import { type MouseEvent } from 'react';
 import type { TextToken } from "@/entities/text";
+import { extractSentence } from "@/shared/lib/extract-sentence";
 import { useWordLookupStore } from "./word-lookup-store";
 
 /**
@@ -9,19 +10,21 @@ import { useWordLookupStore } from "./word-lookup-store";
  */
 export const SHEET_LAYOUT_MAX_WIDTH_PX = 767;
 
-export const useSelectToken = () => {
+export const useSelectToken = (contentRaw: string) => {
 	const openInPopup = useWordLookupStore((s) => s.openInPopup);
 	const openInPanel = useWordLookupStore((s) => s.openInPanel);
 	const openInSheet = useWordLookupStore((s) => s.openInSheet);
 	const panelPinned = useWordLookupStore((s) => s.panelPinned);
 
 	return (token: TextToken, event: MouseEvent<HTMLSpanElement>) => {
+		const contextSentence = extractSentence(contentRaw, token.startOffset, token.endOffset);
+
 		const useSheetLayout =
 			typeof window !== "undefined" &&
 			window.innerWidth <= SHEET_LAYOUT_MAX_WIDTH_PX;
 
 		if (useSheetLayout) {
-			openInSheet(token);
+			openInSheet(token, contextSentence);
 			return;
 		}
 
@@ -35,10 +38,10 @@ export const useSelectToken = () => {
 		};
 
 		if (panelPinned) {
-			openInPanel(token);
+			openInPanel(token, contextSentence);
 			return;
 		}
 
-		openInPopup(token, anchor);
+		openInPopup(token, anchor, contextSentence);
 	};
 };
