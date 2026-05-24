@@ -2611,7 +2611,8 @@
       "darkTheme": "Iаьржонан тема",
       "closeMenu": "Меню сецо",
       "openMenu": "Меню хьала а тохо",
-      "subscriptions": "Подписках"
+      "subscriptions": "Подписках",
+      "tracking": "Трафик"
     },
     "users": {
       "title": "Нийсархой",
@@ -4100,6 +4101,163 @@
         "goodRetention": "дика карлаяьлла",
         "retentionGrade": "хьесап ≥ 3",
         "vsPrev": "хьалхарнах."
+      }
+    },
+    "tracking": {
+      "meta": {
+        "title": "Трафик — Admin | Mott Larbe",
+        "description": "Хьашташ, агIонаш а, хиламаш а"
+      },
+      "tabs": {
+        "overview": "ЙогIу",
+        "timeseries": "График",
+        "pages": "АгIонаш",
+        "wordClicks": "Дешнаш",
+        "referrers": "Хьажамаш",
+        "devices": "ГIирсаш",
+        "geography": "География",
+        "live": "Live"
+      },
+      "toolbar": {
+        "today": "Тахана",
+        "7d": "7 де",
+        "30d": "30 де",
+        "90d": "90 де",
+        "custom": "Шен",
+        "from": "Дуьйна",
+        "to": "Кхаччалц",
+        "refresh": "Нийса",
+        "export": "Схьаяккха"
+      },
+      "metrics": {
+        "uniqueVisitors": "Хьашташ",
+        "sessions": "Сессеш",
+        "pageviews": "Хьажамаш",
+        "totalEvents": "Хиламаш",
+        "avgSessionSec": "Юккъера сесси",
+        "bounceRate": "Арайалар"
+      },
+      "overview": {
+        "topPages": "Сов агIонаш",
+        "topReferrers": "Сов хьажамаш",
+        "chart": "Трафик",
+        "vsPrev": "хьалхарнах",
+        "noData": "Хан далла хаам бац"
+      },
+      "timeseries": {
+        "granularity": {
+          "day": "Денош",
+          "week": "Кийранаш",
+          "month": "Беттанаш"
+        },
+        "compare": "Хьалхарнах лела",
+        "summary": {
+          "total": "Дерриге",
+          "avg": "Юккъера",
+          "peak": "Чекхдолу",
+          "min": "Кеманиг"
+        },
+        "noData": "Хан далла хаам бац"
+      },
+      "pages": {
+        "title": "АгIонаш",
+        "search": "URL лахар...",
+        "loadMore": "Схьаяккха",
+        "path": "АгIо",
+        "views": "Хьажамаш",
+        "noData": "Хаам бац"
+      },
+      "wordClicks": {
+        "title": "Тоьлла дешнаш",
+        "word": "Дош",
+        "clicks": "КлекIаш",
+        "noData": "Хаам бац"
+      },
+      "referrers": {
+        "title": "Трафикан хьажамаш",
+        "categories": {
+          "search": "Лахар",
+          "direct": "Нийса",
+          "social": "Юкъара сеташ",
+          "other": "Кхийтта"
+        },
+        "host": "Хьажам",
+        "visits": "Хьажамаш",
+        "share": "Дакъа",
+        "noData": "Хаам бац"
+      },
+      "devices": {
+        "title": "Гlирсаш",
+        "device": "Тайпа",
+        "browser": "Браузер",
+        "os": "Операционни система",
+        "visitors": "Хьашташ",
+        "events": "Хиламаш",
+        "share": "Дакъа",
+        "noData": "Хаам бац"
+      },
+      "geography": {
+        "title": "География",
+        "countries": "Мехкаш",
+        "cities": "ГIалаш",
+        "country": "Мехк",
+        "city": "ГIала",
+        "events": "Хиламаш",
+        "noGeoIp": "GeoIP яздина яц — метта хаам бац",
+        "setupTitle": "GeoIP туснахь",
+        "setupStep1": "MaxMind аккаунт кхоллайе maxmind.com-чохь (маьIна доцу)",
+        "setupStep2": "GeoLite2-City.mmdb чукхача",
+        "setupStep3": "Файл яздайе /data/geoip/GeoLite2-City.mmdb серверан чохь, я GEOIP_MMDB_PATH яздайе backend .env чохь",
+        "setupStep4": "Backend реста — база автоматически юхадогIу",
+        "coverageLabel": "Coverage (хьалхарниг 7 де)",
+        "dbType": "База",
+        "dbSize": "Файлан барам",
+        "loadedAt": "Юхадайна",
+        "noData": "Хаам бац"
+      },
+      "live": {
+        "title": "Live-лента",
+        "pause": "Сацо",
+        "resume": "Дуьйладо",
+        "clear": "ДIаяккха",
+        "filter": "Хиламан тайпа",
+        "all": "Дерриге",
+        "visitors": "Хьашташ",
+        "eventsPerMin": "Хиламаш/мин",
+        "queueSize": "Лаьтта",
+        "time": "Хан",
+        "event": "Хилам",
+        "page": "АгIо",
+        "device": "ГIирс",
+        "country": "Мехк",
+        "user": "Пайдахо",
+        "noEvents": "Хиламаш бац",
+        "eventTypes": {
+          "pageview": "Хьажам",
+          "text_open": "Текст дIайоьшу",
+          "text_finish": "Чекхдаьлла",
+          "word_click": "Дош клекI",
+          "word_add_dict": "Словарна тIетоха",
+          "word_dismiss": "ДIатаса",
+          "ai_translation": "AI гочдар",
+          "search": "Лахар"
+        }
+      },
+      "realtime": {
+        "online": "онлайн",
+        "visitors": "хьашташ"
+      },
+      "aggregator": {
+        "healthy": "Агрегатор болх беш бу",
+        "unhealthy": "Агрегатор жоп луш вац",
+        "neverRun": "Агрегатор хьалха долаяьлла вац",
+        "queue": "лаьтта"
+      },
+      "common": {
+        "loading": "Лоьху...",
+        "error": "Гlалат хилла",
+        "noData": "Хаам бац",
+        "direct": "(нийса гIо)"
       }
     },
     "logs": {

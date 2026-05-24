@@ -1,6 +1,7 @@
 import {
 	LayoutGrid,
 	TrendingUp,
+	BarChart2,
 	FileText,
 	Scissors,
 	BookOpen,
@@ -45,6 +46,11 @@ export const buildAdminNavSections = (t: (key: string) => string, lang: string):
 				href: () => `/${lang}/admin/analytics`,
 				label: () => t("admin.nav.analytics"),
 				icon: TrendingUp,
+			},
+			{
+				href: () => `/${lang}/admin/tracking`,
+				label: () => t("admin.nav.tracking"),
+				icon: BarChart2,
 			},
 		],
 	},

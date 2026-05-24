@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { Link2, Pencil, Plus, Trash2 } from "lucide-react";
 import { useEffect, useRef } from "react";
@@ -61,32 +62,32 @@ export const WordAnnotationEditorPopup = ({
 			<Typography tag="span" className="mr-1 text-[11px] font-medium text-t-2">{lemmaBaseForm}</Typography>
 			{isAnnotated ? (
 				<>
-					<button
+					<Button
 						onClick={e => { e.preventDefault(); e.stopPropagation(); onEdit(); }}
 						title={t("admin.texts.editPage.wordAnnotation.edit")}
 						className="flex items-center gap-1 rounded px-1.5 py-0.5 text-[11.5px] font-medium text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
 						<Pencil className="size-3" strokeWidth={1.6} />
 						{t("admin.texts.editPage.wordAnnotation.edit")}
-					</button>
+					</Button>
 					<div className="mx-0.5 h-3.5 w-px bg-bd-2" />
-					<button
+					<Button
 						onClick={e => { e.preventDefault(); e.stopPropagation(); onDelete(); }}
 						title={t("admin.texts.editPage.wordAnnotation.delete")}
 						className="rounded p-1 text-t-3 transition-colors hover:bg-red/10 hover:text-red"
 					>
 						<Trash2 className="size-3.5" strokeWidth={1.6} />
-					</button>
+					</Button>
 				</>
 			) : (
-				<button
+				<Button
 					onClick={e => { e.preventDefault(); e.stopPropagation(); onAnnotate(); }}
 					title={t("admin.texts.editPage.wordAnnotation.annotate")}
 					className="flex items-center gap-1 rounded px-1.5 py-0.5 text-[11.5px] font-medium text-acc transition-colors hover:bg-acc-bg"
 				>
 					<Plus className="size-3" strokeWidth={1.6} />
 					{t("admin.texts.editPage.wordAnnotation.annotate")}
-				</button>
+				</Button>
 			)}
 		</div>,
 		document.body,

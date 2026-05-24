@@ -50,6 +50,7 @@ export const ExportTextModal = ({ textId, onClose }: ExportTextModalProps) => {
 					</Typography>
 					<Button
 						onClick={onClose}
+						title={t("admin.texts.export.cancel")}
 						className="flex size-7 cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
 						<X className="size-[14px]" />
@@ -68,10 +69,11 @@ export const ExportTextModal = ({ textId, onClose }: ExportTextModalProps) => {
 						</Typography>
 						<div className="flex gap-2">
 							{(["json", "csv"] as ExportFormat[]).map((f) => (
-								<button
+								<Button
 									key={f}
 									type="button"
 									onClick={() => setFormat(f)}
+									title={f.toUpperCase()}
 									className={`flex h-8 flex-1 cursor-pointer items-center justify-center rounded-[7px] border text-[12.5px] font-medium transition-colors ${
 										format === f
 											? "border-acc bg-acc/10 text-acc"
@@ -79,7 +81,7 @@ export const ExportTextModal = ({ textId, onClose }: ExportTextModalProps) => {
 									}`}
 								>
 									{f.toUpperCase()}
-								</button>
+								</Button>
 							))}
 						</div>
 					</div>
@@ -96,6 +98,7 @@ export const ExportTextModal = ({ textId, onClose }: ExportTextModalProps) => {
 					<Button
 						onClick={onClose}
 						disabled={isExporting}
+						title={t("admin.texts.export.cancel")}
 						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-4 text-[12.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50"
 					>
 						{t("admin.texts.export.cancel")}
@@ -103,6 +106,7 @@ export const ExportTextModal = ({ textId, onClose }: ExportTextModalProps) => {
 					<Button
 						onClick={handleExport}
 						disabled={isExporting}
+						title={isExporting ? t("admin.texts.export.exporting") : t("admin.texts.export.submit")}
 						className="flex h-8 cursor-pointer items-center gap-1.5 rounded-base bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-40"
 					>
 						<Download className="size-3" />

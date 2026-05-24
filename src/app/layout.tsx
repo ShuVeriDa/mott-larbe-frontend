@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { QueryProvider } from "@/shared/ui/query-provider";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
 import { TooltipProvider } from "@/shared/ui/tooltip";
+import { PageAnalyticsProvider } from "@/shared/lib/page-analytics";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -74,6 +75,7 @@ const RootLayout = async ({
 			<body className="min-h-full flex flex-col" suppressHydrationWarning>
 				<ThemeProvider>
 					<QueryProvider>
+						<PageAnalyticsProvider />
 						<TooltipProvider>{children}</TooltipProvider>
 					</QueryProvider>
 				</ThemeProvider>
