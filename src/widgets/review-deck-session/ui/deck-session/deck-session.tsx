@@ -71,6 +71,7 @@ export const DeckSession = ({ due, sessionMode = "flashcard", onFinish, onBack, 
 		queue,
 		counts,
 		againCards,
+		currentAgainStreak,
 		flipped,
 		isFinished,
 		flip,
@@ -214,6 +215,7 @@ export const DeckSession = ({ due, sessionMode = "flashcard", onFinish, onBack, 
 							cardNumber={currentIndex + 1}
 							type={current.deckType}
 							deckNumber={current.deckNumber}
+							againStreak={currentAgainStreak}
 						/>
 					}
 					back={
@@ -284,6 +286,7 @@ interface DeckCardFrontProps {
 	cardNumber: number;
 	type: DeckDueResponse["new"][number]["deckType"];
 	deckNumber?: number | null;
+	againStreak?: number;
 }
 
 const DeckCardFront = ({
@@ -292,8 +295,10 @@ const DeckCardFront = ({
 	cardNumber,
 	type,
 	deckNumber,
+	againStreak = 0,
 }: DeckCardFrontProps) => {
 	const { t } = useI18n();
+	const isHard = againStreak >= 2;
 
 	return (
 		<>
@@ -303,6 +308,19 @@ const DeckCardFront = ({
 			<Typography tag="span" className="absolute right-3.5 top-3 text-[10.5px] text-t-3">
 				#{cardNumber}
 			</Typography>
+
+			{isHard ? (
+				<Typography
+					tag="span"
+					className="absolute bottom-3 right-3.5 flex items-center gap-1 text-[10.5px] font-medium text-red-t"
+					title={t("review.deck.card.hardWord")}
+				>
+					<svg viewBox="0 0 10 10" fill="currentColor" className="size-2.5">
+						<path d="M5 1L6.18 3.62 9 4.12 7 6.08 7.45 9 5 7.77 2.55 9 3 6.08 1 4.12 3.82 3.62z" />
+					</svg>
+					×{againStreak}
+				</Typography>
+			) : null}
 
 			<Typography
 				tag="h2"

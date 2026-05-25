@@ -1499,7 +1499,8 @@
           "flip": "Flip"
         },
         "moveToRepeat": "Move to REPEAT",
-        "returnFromRepeat": "Return to Esalar"
+        "returnFromRepeat": "Return to Esalar",
+        "hardWord": "Hard word"
       },
       "done": {
         "title": "Esalar complete!",

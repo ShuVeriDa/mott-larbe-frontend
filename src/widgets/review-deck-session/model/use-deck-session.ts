@@ -19,6 +19,7 @@ export interface UseDeckSessionResult {
 	queue: DeckCard[];
 	counts: DeckCounts;
 	againCards: DeckCard[];
+	currentAgainStreak: number;
 	flipped: boolean;
 	isFinished: boolean;
 	flip: () => void;
@@ -50,12 +51,15 @@ export const useDeckSession = (
 	const [flipped, setFlipped] = useState(false);
 	const [counts, setCounts] = useState<DeckCounts>({ know: 0, again: 0 });
 	const [againCards, setAgainCards] = useState<DeckCard[]>([]);
+	// lemmaId → count of consecutive "again" answers without a "know" in between
+	const againStreakRef = useRef<Map<string, number>>(new Map());
 
 	const { mutate: rateMutation } = useRateDeckCard();
 
 	const total = queue.length;
 	const current = queue[index] ?? null;
 	const isFinished = total > 0 && index >= total;
+	const currentAgainStreak = current ? (againStreakRef.current.get(current.lemmaId) ?? 0) : 0;
 
 	const flip = () => setFlipped((v) => !v);
 
@@ -70,6 +74,12 @@ export const useDeckSession = (
 
 		if (result === "again") {
 			setAgainCards((prev) => [...prev, current]);
+			againStreakRef.current.set(
+				current.lemmaId,
+				(againStreakRef.current.get(current.lemmaId) ?? 0) + 1,
+			);
+		} else {
+			againStreakRef.current.delete(current.lemmaId);
 		}
 
 		rateMutation({ lemmaId: current.lemmaId, body: { result } });
@@ -79,6 +89,7 @@ export const useDeckSession = (
 
 	const resetIndex = () => {
 		snapshotRef.current = null;
+		againStreakRef.current = new Map();
 		setIndex(0);
 		setFlipped(false);
 		setCounts({ know: 0, again: 0 });
@@ -92,6 +103,7 @@ export const useDeckSession = (
 		queue,
 		counts,
 		againCards,
+		currentAgainStreak,
 		flipped,
 		isFinished,
 		flip,

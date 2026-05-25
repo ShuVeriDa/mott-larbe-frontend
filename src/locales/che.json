@@ -1499,7 +1499,8 @@
           "flip": "Гайта"
         },
         "moveToRepeat": "Юха чу",
-        "returnFromRepeat": "Эсалар чу хьажа"
+        "returnFromRepeat": "Эсалар чу хьажа",
+        "hardWord": "Хала дош"
       },
       "done": {
         "title": "Эсалар чекхдаьлла!",

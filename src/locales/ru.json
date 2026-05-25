@@ -1499,7 +1499,8 @@
           "flip": "Открыть"
         },
         "moveToRepeat": "В REPEAT",
-        "returnFromRepeat": "Вернуть в Эсалар"
+        "returnFromRepeat": "Вернуть в Эсалар",
+        "hardWord": "Трудное слово"
       },
       "done": {
         "title": "Эсалар пройден!",

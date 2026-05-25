@@ -33,7 +33,7 @@ export const ChoiceCardSm2 = ({
 		setSelection({ index: idx, correct });
 		// auto-advance after short delay so user sees feedback
 		setTimeout(() => {
-			onRate(correct ? 4 : 0);
+			onRate(correct ? 5 : 0);
 		}, 700);
 	};
 
