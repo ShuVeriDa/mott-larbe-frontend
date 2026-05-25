@@ -11,8 +11,7 @@ import {
 	type UpdateDictionaryEntryDto,
 } from "@/entities/dictionary";
 import type { LearningLevel } from "@/shared/types";
-import { useI18n } from "@/shared/lib/i18n";
-import { useToast } from "@/shared/lib/toast";
+import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 
 export interface UpdateWordVars {
 	id: string;
@@ -22,8 +21,7 @@ export interface UpdateWordVars {
 
 export const useUpdateWord = () => {
 	const qc = useQueryClient();
-	const { t } = useI18n();
-	const { error: toastError } = useToast();
+	const { toastApiError } = useApiErrorToast();
 
 	return useMutation({
 		mutationFn: ({ id, body }: UpdateWordVars) =>
@@ -117,7 +115,7 @@ export const useUpdateWord = () => {
 
 			return { previousLists, previousStats };
 		},
-		onError: (_err, _vars, context) => {
+		onError: (err, _vars, context) => {
 			if (context) {
 				for (const [key, data] of context.previousLists) {
 					qc.setQueryData(key, data);
@@ -126,7 +124,7 @@ export const useUpdateWord = () => {
 					qc.setQueryData(dictionaryKeys.stats(), context.previousStats);
 				}
 			}
-			toastError(t("vocabulary.errorLoading"));
+			toastApiError(err);
 		},
 		onSettled: () => {
 			qc.invalidateQueries({ queryKey: dictionaryKeys.root });

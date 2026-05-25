@@ -11,6 +11,7 @@ import {
 	type UserLanguage,
 	type UserLevel,
 } from "@/entities/user";
+import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { useEffect, useState, type ChangeEvent } from "react";
@@ -30,7 +31,8 @@ export const useLearningSection = ({
 	const { mutateAsync: updateGoals, isPending: isGoalsSaving } =
 		useUpdateGoals();
 	const { mutateAsync: updateUser, isPending: isUserSaving } = useUpdateUser();
-	const { success, error } = useToast();
+	const { success } = useToast();
+	const { toastApiError } = useApiErrorToast();
 
 	const [learningLang, setLearningLang] = useState<UserLanguage>(
 		user?.language ?? "CHE",
@@ -56,8 +58,8 @@ export const useLearningSection = ({
 				updateUser({ language: learningLang, level }),
 			]);
 			success(t("settings.toasts.languageSaved"));
-		} catch {
-			error(t("settings.toasts.genericError"));
+		} catch (err) {
+			toastApiError(err);
 		}
 	};
 
@@ -65,8 +67,8 @@ export const useLearningSection = ({
 		try {
 			await updateGoals({ dailyWords, dailyMinutes });
 			success(t("settings.toasts.goalsSaved"));
-		} catch {
-			error(t("settings.toasts.genericError"));
+		} catch (err) {
+			toastApiError(err);
 		}
 	};
 
@@ -97,8 +99,8 @@ export const useLearningSection = ({
 		try {
 			await updatePrefs(patch);
 			success(t(successKey));
-		} catch {
-			error(t("settings.toasts.genericError"));
+		} catch (err) {
+			toastApiError(err);
 		}
 	};
 

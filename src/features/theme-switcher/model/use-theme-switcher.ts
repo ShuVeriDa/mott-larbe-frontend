@@ -5,6 +5,7 @@ import {
 	useUpdatePreferences,
 	type ThemePreference,
 } from "@/entities/settings";
+import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 import { useI18n } from "@/shared/lib/i18n";
 import { useMounted } from "@/shared/lib/mounted";
 import { useToast } from "@/shared/lib/toast";
@@ -23,7 +24,8 @@ export const useThemeSwitcher = ({ value }: UseThemeSwitcherParams) => {
 	const { t } = useI18n();
 	const { theme, setTheme } = useTheme();
 	const { mutateAsync } = useUpdatePreferences();
-	const { success, error } = useToast();
+	const { success } = useToast();
+	const { toastApiError } = useApiErrorToast();
 	const mounted = useMounted();
 
 	const current: "light" | "dark" | "system" = mounted
@@ -45,8 +47,8 @@ export const useThemeSwitcher = ({ value }: UseThemeSwitcherParams) => {
 		try {
 			await mutateAsync({ theme: toApi[id] });
 			success(t("settings.toasts.themeSaved"));
-		} catch {
-			error(t("settings.toasts.genericError"));
+		} catch (err) {
+			toastApiError(err);
 		}
 	};
 

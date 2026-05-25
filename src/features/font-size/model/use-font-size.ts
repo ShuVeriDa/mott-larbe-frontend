@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useUpdatePreferences } from "@/entities/settings";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
+import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 
 export const FONT_SIZE_MIN = 12;
 export const FONT_SIZE_MAX = 24;
@@ -11,7 +12,8 @@ export const FONT_SIZE_DEFAULT = 16;
 export const useFontSize = (initial: number) => {
 	const { t } = useI18n();
 	const { mutateAsync, isPending } = useUpdatePreferences();
-	const { success, error } = useToast();
+	const { success } = useToast();
+	const { toastApiError } = useApiErrorToast();
 	const [value, setValue] = useState<number>(initial);
 
 	const change = (delta: number) => {
@@ -28,8 +30,8 @@ export const useFontSize = (initial: number) => {
 		try {
 			await mutateAsync({ fontSize: value });
 			success(t("settings.toasts.fontSaved"));
-		} catch {
-			error(t("settings.toasts.genericError"));
+		} catch (err) {
+			toastApiError(err);
 		}
 	};
 

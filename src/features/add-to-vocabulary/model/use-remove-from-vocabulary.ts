@@ -3,6 +3,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { dictionaryApi, dictionaryKeys } from "@/entities/dictionary";
 import { wordKeys } from "@/entities/word";
+import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 
 interface RemoveVars {
 	dictionaryEntryId: string;
@@ -11,6 +12,7 @@ interface RemoveVars {
 
 export const useRemoveFromVocabulary = () => {
 	const qc = useQueryClient();
+	const { toastApiError } = useApiErrorToast();
 	return useMutation({
 		mutationFn: ({ dictionaryEntryId }: RemoveVars) =>
 			dictionaryApi.remove(dictionaryEntryId),
@@ -22,5 +24,6 @@ export const useRemoveFromVocabulary = () => {
 				});
 			}
 		},
+		onError: toastApiError,
 	});
 };

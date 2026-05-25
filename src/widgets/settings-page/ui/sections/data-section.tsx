@@ -13,7 +13,7 @@ import { SettingCard } from "../setting-card";
 
 export const DataSection = () => {
 	const { t } = useI18n();
-	const { success, error } = useToast();
+	const { success } = useToast();
 	const { mutateAsync: resetProgress, isPending: isResetting } =
 		useResetProgress();
 	const [clearOpen, setClearOpen] = useState(false);
@@ -23,9 +23,7 @@ export const DataSection = () => {
 		try {
 			await resetProgress();
 			success(t("settings.toasts.progressReset"));
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
+		} catch {}
 	};
 
 		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => setClearOpen(true);

@@ -8,9 +8,11 @@ import {
 	type UpdateNotificationsDto,
 	type UserNotifications,
 } from "../api";
+import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 
 export const useUpdateNotifications = () => {
 	const qc = useQueryClient();
+	const { toastApiError } = useApiErrorToast();
 	return useMutation({
 		mutationFn: (dto: UpdateNotificationsDto) =>
 			settingsApi.updateNotifications(dto),
@@ -20,5 +22,6 @@ export const useUpdateNotifications = () => {
 				(prev) => (prev ? { ...prev, notifications } : prev),
 			);
 		},
+		onError: toastApiError,
 	});
 };

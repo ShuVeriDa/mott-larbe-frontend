@@ -40,7 +40,7 @@ const formatDate = (iso: string) => {
 
 export const SessionsSection = () => {
 	const { t } = useI18n();
-	const { success, error } = useToast();
+	const { success } = useToast();
 	const { data: sessions = [], isLoading, isError } = useSessions();
 	const terminateOne = useTerminateSession();
 	const terminateAll = useTerminateAllSessions();
@@ -49,18 +49,14 @@ export const SessionsSection = () => {
 		try {
 			await terminateOne.mutateAsync(id);
 			success(t("settings.toasts.sessionTerminated"));
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
+		} catch {}
 	};
 
 	const handleTerminateAll = async () => {
 		try {
 			await terminateAll.mutateAsync();
 			success(t("settings.toasts.allSessionsTerminated"));
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
+		} catch {}
 	};
 
 	return (

@@ -2,9 +2,8 @@
 
 import type { AiWordTranslation } from "@/entities/ai-translation";
 import { aiTranslationApi } from "@/entities/ai-translation";
-import { useI18n } from "@/shared/lib/i18n";
-import { useToast } from "@/shared/lib/toast";
-import { isAxiosError } from "axios";
+import { getApiErrorCode } from "@/shared/api";
+import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 import { useState } from "react";
 
 export type AiWordLookupState =
@@ -19,8 +18,7 @@ export type AiWordLookupState =
 export const useAiWordLookup = () => {
 	const [state, setState] = useState<AiWordLookupState>({ phase: "idle" });
 	const [voted, setVoted] = useState<"up" | "down" | null>(null);
-	const { error: toastError } = useToast();
-	const { t } = useI18n();
+	const { toastApiError } = useApiErrorToast();
 
 	const translate = async (word: string, contextSentence?: string) => {
 		setState({ phase: "loading" });
@@ -31,24 +29,17 @@ export const useAiWordLookup = () => {
 			});
 			setState({ phase: "done", result });
 		} catch (err: unknown) {
-			console.log({ err });
+			const code = getApiErrorCode(err);
 
-			if (isAxiosError(err)) {
-				const message = err.response?.data?.message as string | undefined;
-				if (message === "not_chechen") {
-					setState({ phase: "not_chechen" });
-				} else if (message === "location_not_supported") {
-					setState({ phase: "location_not_supported" });
-				} else if (err.response?.status === 400) {
-					setState({ phase: "no_key" });
-				} else {
-					setState({ phase: "error", message });
-					toastError(t("aiTranslation.popup.error"));
-				}
+			if (code === "NOT_CHECHEN") {
+				setState({ phase: "not_chechen" });
+			} else if (code === "LOCATION_NOT_SUPPORTED") {
+				setState({ phase: "location_not_supported" });
+			} else if (code === "GEMINI_KEY_NOT_CONFIGURED") {
+				setState({ phase: "no_key" });
 			} else {
-				const msg = err instanceof Error ? err.message : String(err);
-				setState({ phase: "error", message: msg });
-				toastError(t("aiTranslation.popup.error"));
+				setState({ phase: "error" });
+				toastApiError(err);
 			}
 		}
 	};

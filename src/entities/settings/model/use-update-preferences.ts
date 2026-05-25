@@ -8,9 +8,11 @@ import {
 	type UpdatePreferencesDto,
 	type UserPreferences,
 } from "../api";
+import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 
 export const useUpdatePreferences = () => {
 	const qc = useQueryClient();
+	const { toastApiError } = useApiErrorToast();
 	return useMutation({
 		mutationFn: (dto: UpdatePreferencesDto) =>
 			settingsApi.updatePreferences(dto),
@@ -20,5 +22,6 @@ export const useUpdatePreferences = () => {
 				(prev) => (prev ? { ...prev, preferences } : prev),
 			);
 		},
+		onError: toastApiError,
 	});
 };

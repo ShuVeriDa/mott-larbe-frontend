@@ -13,7 +13,7 @@ import { ExportRow } from "./export-row";
 
 export const ExportButtons = () => {
 	const { t } = useI18n();
-	const { success, error } = useToast();
+	const { success } = useToast();
 	const exportVocab = useExportVocabulary();
 	const exportProgress = useExportProgress();
 	const exportArchive = useExportArchive();
@@ -22,27 +22,21 @@ export const ExportButtons = () => {
 		try {
 			await exportVocab.mutateAsync(format);
 			success(`${t("settings.toasts.exportStarted")} · ${format.toUpperCase()}`);
-		} catch {
-			error(t("settings.toasts.exportFailed"));
-		}
+		} catch {}
 	};
 
 	const handleProgress = async () => {
 		try {
 			await exportProgress.mutateAsync();
 			success(t("settings.toasts.exportStarted"));
-		} catch {
-			error(t("settings.toasts.exportFailed"));
-		}
+		} catch {}
 	};
 
 	const handleArchive = async () => {
 		try {
 			await exportArchive.mutateAsync();
 			success(t("settings.toasts.archiveQueued"));
-		} catch {
-			error(t("settings.toasts.exportFailed"));
-		}
+		} catch {}
 	};
 
 		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => handleVocab("csv");

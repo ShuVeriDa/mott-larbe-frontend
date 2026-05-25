@@ -8,13 +8,11 @@ import {
 	type DictionaryStats,
 } from "@/entities/dictionary";
 import type { LearningLevel } from "@/shared/types";
-import { useI18n } from "@/shared/lib/i18n";
-import { useToast } from "@/shared/lib/toast";
+import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 
 export const useDeleteWord = () => {
 	const qc = useQueryClient();
-	const { t } = useI18n();
-	const { error: toastError } = useToast();
+	const { toastApiError } = useApiErrorToast();
 
 	return useMutation({
 		mutationFn: (id: string) => dictionaryApi.remove(id),
@@ -67,7 +65,7 @@ export const useDeleteWord = () => {
 
 			return { previousLists, previousStats };
 		},
-		onError: (_err, _id, context) => {
+		onError: (err, _id, context) => {
 			if (context) {
 				for (const [key, data] of context.previousLists) {
 					qc.setQueryData(key, data);
@@ -76,7 +74,7 @@ export const useDeleteWord = () => {
 					qc.setQueryData(dictionaryKeys.stats(), context.previousStats);
 				}
 			}
-			toastError(t("vocabulary.errorLoading"));
+			toastApiError(err);
 		},
 		onSettled: () => {
 			qc.invalidateQueries({ queryKey: dictionaryKeys.root });

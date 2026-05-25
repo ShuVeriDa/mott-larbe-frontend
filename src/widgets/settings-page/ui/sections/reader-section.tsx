@@ -48,24 +48,20 @@ const POPUP_OPTIONS: PopupOption[] = [
 export const ReaderSection = ({ preferences }: ReaderSectionProps) => {
 	const { t } = useI18n();
 	const { mutateAsync } = useUpdatePreferences();
-	const { success, error } = useToast();
+	const { success } = useToast();
 
 	const updatePopup = async (mode: PopupMode) => {
 		try {
 			await mutateAsync({ popupMode: mode });
 			success(t("settings.toasts.saved"));
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
+		} catch {}
 	};
 
 	const togglePref = async (patch: Partial<UserPreferences>) => {
 		try {
 			await mutateAsync(patch);
 			success(t("settings.toasts.saved"));
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
+		} catch {}
 	};
 
 		const handleChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ highlightKnown: v });

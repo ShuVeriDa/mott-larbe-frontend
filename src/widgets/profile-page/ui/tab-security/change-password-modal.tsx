@@ -16,7 +16,7 @@ export interface ChangePasswordModalProps {
 
 export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps) => {
 	const { t } = useI18n();
-	const { success, error } = useToast();
+	const { success } = useToast();
 	const { mutateAsync, isPending } = useChangePassword();
 
 	const [currentPassword, setCurrentPassword] = useState("");
@@ -42,9 +42,7 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 			await mutateAsync({ currentPassword, newPassword });
 			success(t("profile.security.passwordChanged"));
 			handleClose();
-		} catch {
-			error(t("profile.toasts.error"));
-		}
+		} catch {}
 	};
 
 		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setCurrentPassword(e.currentTarget.value);

@@ -29,7 +29,7 @@ export const NotificationsSection = ({
 }: NotificationsSectionProps) => {
 	const { t } = useI18n();
 	const { mutateAsync, isPending } = useUpdateNotifications();
-	const { success, error } = useToast();
+	const { success } = useToast();
 
 	const [reminderTime, setReminderTime] = useState(notifications.reminderTime);
 	const [timezone, setTimezone] = useState(notifications.timezone);
@@ -38,18 +38,14 @@ export const NotificationsSection = ({
 		try {
 			await mutateAsync(patch);
 			success(t("settings.toasts.saved"));
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
+		} catch {}
 	};
 
 	const handleScheduleSave = async () => {
 		try {
 			await mutateAsync({ reminderTime, timezone });
 			success(t("settings.toasts.notificationsSaved"));
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
+		} catch {}
 	};
 
 		const handleChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ repeatReminder: v });

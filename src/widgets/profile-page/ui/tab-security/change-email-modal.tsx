@@ -15,7 +15,7 @@ export interface ChangeEmailModalProps {
 
 export const ChangeEmailModal = ({ open, onClose }: ChangeEmailModalProps) => {
 	const { t } = useI18n();
-	const { success, error } = useToast();
+	const { success } = useToast();
 	const { mutateAsync, isPending } = useRequestEmailChange();
 
 	const [newEmail, setNewEmail] = useState("");
@@ -32,9 +32,7 @@ export const ChangeEmailModal = ({ open, onClose }: ChangeEmailModalProps) => {
 			await mutateAsync({ newEmail: newEmail.trim(), currentPassword: password });
 			success(t("profile.security.emailChangeSent"));
 			handleClose();
-		} catch {
-			error(t("profile.toasts.error"));
-		}
+		} catch {}
 	};
 
 		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setNewEmail(e.currentTarget.value);

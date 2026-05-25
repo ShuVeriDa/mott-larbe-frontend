@@ -8,9 +8,11 @@ import {
 	type UpdateGoalsDto,
 	type UserGoals,
 } from "../api";
+import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 
 export const useUpdateGoals = () => {
 	const qc = useQueryClient();
+	const { toastApiError } = useApiErrorToast();
 	return useMutation({
 		mutationFn: (dto: UpdateGoalsDto) => settingsApi.updateGoals(dto),
 		onSuccess: (goals: UserGoals) => {
@@ -18,5 +20,6 @@ export const useUpdateGoals = () => {
 				prev ? { ...prev, goals } : prev,
 			);
 		},
+		onError: toastApiError,
 	});
 };

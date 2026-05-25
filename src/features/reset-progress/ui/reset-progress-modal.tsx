@@ -18,16 +18,14 @@ export const ResetProgressModal = ({
 }: ResetProgressModalProps) => {
 	const { t } = useI18n();
 	const { mutateAsync, isPending } = useResetProgress();
-	const { success, error } = useToast();
+	const { success } = useToast();
 
 	const handleConfirm = async () => {
 		try {
 			await mutateAsync();
 			success(t("settings.toasts.progressReset"));
 			onClose();
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
+		} catch {}
 	};
 
 	return (
@@ -42,7 +40,7 @@ export const ResetProgressModal = ({
 				<Button
 					variant="action"
 					size="lg"
-					className="flex-1 !bg-red"
+					className="flex-1 bg-red!"
 					disabled={isPending}
 					onClick={handleConfirm}
 				>

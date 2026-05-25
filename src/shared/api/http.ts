@@ -1,6 +1,23 @@
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { ACCESS_TOKEN_STORAGE_KEY, API_URL } from "@/shared/config";
 import { clearAccessToken } from "@/entities/auth";
+
+export interface ApiErrorBody {
+  statusCode: number;
+  code: string;
+  message: string;
+  timestamp: string;
+  path: string;
+  correlationId: string;
+}
+
+export const getApiErrorCode = (error: unknown): string => {
+  if (isAxiosError(error)) {
+    const data = error.response?.data as Partial<ApiErrorBody> | undefined;
+    if (data?.code) return data.code;
+  }
+  return "INTERNAL_SERVER_ERROR";
+};
 
 export const http = axios.create({
 	baseURL: API_URL,

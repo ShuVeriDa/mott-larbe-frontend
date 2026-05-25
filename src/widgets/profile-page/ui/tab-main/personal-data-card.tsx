@@ -16,7 +16,7 @@ export interface PersonalDataCardProps {
 
 export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 	const { t } = useI18n();
-	const { success, error } = useToast();
+	const { success } = useToast();
 	const { mutateAsync, isPending } = useUpdateUser();
 
 	const [name, setName] = useState(profile.name ?? "");
@@ -33,9 +33,7 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 				phone: phone.trim() || null,
 			});
 			success(t("profile.toasts.saved"));
-		} catch {
-			error(t("profile.toasts.error"));
-		}
+		} catch {}
 	};
 
 		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setName(e.currentTarget.value);

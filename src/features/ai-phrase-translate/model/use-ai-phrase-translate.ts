@@ -2,9 +2,9 @@
 
 import type { AiPhraseTranslation } from "@/entities/ai-translation";
 import { aiTranslationApi } from "@/entities/ai-translation";
+import { getApiErrorCode } from "@/shared/api";
+import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 import { useI18n } from "@/shared/lib/i18n";
-import { useToast } from "@/shared/lib/toast";
-import { isAxiosError } from "axios";
 import { useState } from "react";
 
 export type AiPhraseTranslateState =
@@ -25,18 +25,8 @@ export const useAiPhraseTranslate = () => {
 	const [refineState, setRefineState] = useState<AiPhraseRefineState>({
 		phase: "idle",
 	});
-	const { error: toastError } = useToast();
+	const { toastApiError } = useApiErrorToast();
 	const { t } = useI18n();
-
-	const getErrorKey = (e: unknown): string => {
-		if (
-			isAxiosError(e) &&
-			e.response?.data?.message === "location_not_supported"
-		) {
-			return "aiTranslation.phrase.errorLocationNotSupported";
-		}
-		return "aiTranslation.phrase.error";
-	};
 
 	const translate = async (phrase: string, contextSentence?: string) => {
 		setState({ phase: "loading" });
@@ -48,9 +38,14 @@ export const useAiPhraseTranslate = () => {
 			});
 			setState({ phase: "done", result });
 		} catch (e) {
-			const errorMessage = t(getErrorKey(e));
+			const code = getApiErrorCode(e);
+			const i18nKey =
+				code === "LOCATION_NOT_SUPPORTED"
+					? "aiTranslation.phrase.errorLocationNotSupported"
+					: "aiTranslation.phrase.error";
+			const errorMessage = t(i18nKey);
 			setState({ phase: "error", errorMessage });
-			toastError(errorMessage);
+			toastApiError(e);
 		}
 	};
 
@@ -72,16 +67,7 @@ export const useAiPhraseTranslate = () => {
 			setRefineState({ phase: "done", result });
 		} catch (e) {
 			setRefineState({ phase: "error" });
-			console.log({ e });
-
-			toastError(
-				t(
-					isAxiosError(e) &&
-						e.response?.data?.message === "location_not_supported"
-						? "aiTranslation.phrase.errorLocationNotSupported"
-						: "aiTranslation.phrase.refineError",
-				),
-			);
+			toastApiError(e);
 		}
 	};
 

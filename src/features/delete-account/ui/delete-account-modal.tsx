@@ -19,7 +19,7 @@ export const DeleteAccountModal = ({
 }: DeleteAccountModalProps) => {
 	const { t } = useI18n();
 	const { mutateAsync, isPending } = useDeleteAccount();
-	const { success, error } = useToast();
+	const { success } = useToast();
 	const [email, setEmail] = useState("");
 
 	const handleSubmit = async () => {
@@ -29,9 +29,7 @@ export const DeleteAccountModal = ({
 			success(t("settings.toasts.deleteRequested"));
 			setEmail("");
 			onClose();
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
+		} catch {}
 	};
 
 		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setEmail(e.currentTarget.value);

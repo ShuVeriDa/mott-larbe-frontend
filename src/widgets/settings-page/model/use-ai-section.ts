@@ -1,6 +1,7 @@
 "use client";
 
 import { aiTranslationApi, useGeminiKeyStatus } from "@/entities/ai-translation";
+import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { useQueryClient } from "@tanstack/react-query";
@@ -10,6 +11,7 @@ import { type ChangeEvent, useState } from "react";
 export const useAiSection = () => {
   const { t } = useI18n();
   const { success, error } = useToast();
+  const { toastApiError } = useApiErrorToast();
   const queryClient = useQueryClient();
   const { data: keyStatus } = useGeminiKeyStatus();
 
@@ -37,8 +39,8 @@ export const useAiSection = () => {
       setKeyInput("");
       queryClient.invalidateQueries({ queryKey: aiTranslationKeys.keyStatus() });
       success(t("aiTranslation.settings.savedSuccess"));
-    } catch {
-      error(t("settings.toasts.genericError"));
+    } catch (err) {
+      toastApiError(err);
     } finally {
       setIsSaving(false);
     }
@@ -50,8 +52,8 @@ export const useAiSection = () => {
       await aiTranslationApi.deleteKey();
       queryClient.invalidateQueries({ queryKey: aiTranslationKeys.keyStatus() });
       success(t("aiTranslation.settings.deletedSuccess"));
-    } catch {
-      error(t("settings.toasts.genericError"));
+    } catch (err) {
+      toastApiError(err);
     } finally {
       setIsDeleting(false);
     }

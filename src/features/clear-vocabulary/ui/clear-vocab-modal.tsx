@@ -15,16 +15,14 @@ export interface ClearVocabModalProps {
 export const ClearVocabModal = ({ open, onClose }: ClearVocabModalProps) => {
 	const { t } = useI18n();
 	const { mutateAsync, isPending } = useClearVocabulary();
-	const { success, error } = useToast();
+	const { success } = useToast();
 
 	const handleConfirm = async () => {
 		try {
 			await mutateAsync();
 			success(t("settings.toasts.vocabCleared"));
 			onClose();
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
+		} catch {}
 	};
 
 	return (
@@ -39,7 +37,7 @@ export const ClearVocabModal = ({ open, onClose }: ClearVocabModalProps) => {
 				<Button
 					variant="action"
 					size="lg"
-					className="flex-1 !bg-red"
+					className="flex-1 bg-red!"
 					disabled={isPending}
 					onClick={handleConfirm}
 				>

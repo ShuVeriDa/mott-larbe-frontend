@@ -22,7 +22,7 @@ export interface AppearanceSectionProps {
 export const AppearanceSection = ({ preferences }: AppearanceSectionProps) => {
 	const { t } = useI18n();
 	const { mutateAsync, isPending } = useUpdatePreferences();
-	const { success, error } = useToast();
+	const { success } = useToast();
 	const [uiLanguage, setUiLanguage] = useState<UiLanguage>(
 		preferences.uiLanguage,
 	);
@@ -31,9 +31,7 @@ export const AppearanceSection = ({ preferences }: AppearanceSectionProps) => {
 		try {
 			await mutateAsync({ uiLanguage });
 			success(t("settings.toasts.languageSaved"));
-		} catch {
-			error(t("settings.toasts.genericError"));
-		}
+		} catch {}
 	};
 
 		const handleChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => setUiLanguage(e.currentTarget.value as UiLanguage);
