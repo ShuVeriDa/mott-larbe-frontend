@@ -53,6 +53,8 @@ export interface DashboardPlan {
 }
 
 export interface DashboardResponse {
+	user: import("@/entities/user/api/types").UserProfile;
+	subscription: import("@/entities/subscription/api/types").Subscription | null;
 	stats: DashboardStats;
 	continueReading: DashboardContinueItem[];
 	plan: DashboardPlan;

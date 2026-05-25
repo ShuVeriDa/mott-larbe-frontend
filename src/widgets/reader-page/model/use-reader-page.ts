@@ -1,5 +1,5 @@
 "use client";
-import { textApi, textKeys, useTextPage } from "@/entities/text";
+import { readerContextApi, readerContextKeys, useReaderContext } from "@/entities/reader-context";
 import { useWordLookupStore } from "@/features/word-lookup";
 import { useReaderFocusMode } from "@/features/reader-focus-mode";
 import { useReaderSettingsSync } from "@/features/reader-settings-sync";
@@ -15,7 +15,8 @@ export const useReaderPage = (textId: string, pageNumber: number) => {
 	const { t, lang } = useI18n();
 	const router = useRouter();
 	const queryClient = useQueryClient();
-	const { data, isLoading, isError } = useTextPage(textId, pageNumber);
+	const { data: ctx, isLoading, isError } = useReaderContext(textId, pageNumber);
+	const data = ctx?.page;
 
 	const totalPages = data?.totalPages ?? 0;
 
@@ -24,8 +25,8 @@ export const useReaderPage = (textId: string, pageNumber: number) => {
 		const prefetchPage = (page: number) => {
 			if (page < 1 || page > totalPages) return;
 			queryClient.prefetchQuery({
-				queryKey: textKeys.page(textId, page),
-				queryFn: () => textApi.getPage(textId, page),
+				queryKey: readerContextKeys.context(textId, page),
+				queryFn: () => readerContextApi.getContext(textId, page),
 				staleTime: 60_000,
 			});
 			router.prefetch(`/${lang}/reader/${textId}/p/${page}`);
