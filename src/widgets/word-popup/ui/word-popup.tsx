@@ -4,21 +4,16 @@ import { Typography } from "@/shared/ui/typography";
 
 import type { TextToken } from "@/entities/text";
 import { useWordLookup, type WordLookupResponse } from "@/entities/word";
-import {
-	useAddToVocabulary,
-	useRemoveFromVocabulary,
-} from "@/features/add-to-vocabulary";
 import { useWordLookupStore, type PopupAnchor } from "@/features/word-lookup";
-import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
-import { ExternalLink, Pencil, Plus } from "lucide-react";
+import { ExternalLink, Pencil } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 import { AiWordPopupBody } from "./ai-word-popup-body";
 import { EntrySuggestModal } from "@/features/entry-suggest";
+import { AddToDictionaryButton } from "@/widgets/word-panel/ui/add-to-dictionary-button";
 
 const POPUP_WIDTH = 264;
 const SAFE_MARGIN = 10;
@@ -51,30 +46,6 @@ const WordPopupBody = ({
 	onSuggestOpen: () => void;
 }) => {
 	const { t } = useI18n();
-	const { success, error } = useToast();
-	const { mutate: add, isPending: adding } = useAddToVocabulary();
-	const { mutate: remove, isPending: removing } = useRemoveFromVocabulary();
-	const isPending = adding || removing;
-
-	const onPrimary = () => {
-		if (lookup.inDictionary && lookup.dictionaryEntryId) {
-			remove(
-				{ dictionaryEntryId: lookup.dictionaryEntryId, tokenId: token.id },
-				{
-					onSuccess: () => success(t("reader.toasts.removedFromDict")),
-					onError: () => error(t("reader.toasts.dictFailed")),
-				},
-			);
-			return;
-		}
-		add(
-			{ tokenId: token.id },
-			{
-				onSuccess: () => success(t("reader.toasts.addedToDict")),
-				onError: () => error(t("reader.toasts.dictFailed")),
-			},
-		);
-	};
 
 	return (
 		<>
@@ -130,26 +101,22 @@ const WordPopupBody = ({
 				</div>
 			) : null}
 			<div className="flex gap-1.5 p-2.5">
+				<AddToDictionaryButton
+					tokenId={token.id}
+					word={token.original}
+					translation={lookup.translation}
+					inDictionary={lookup.inDictionary}
+					dictionaryEntryId={lookup.dictionaryEntryId}
+					currentFolderId={lookup.dictionaryFolder?.id ?? null}
+					currentFolderName={lookup.dictionaryFolder?.name ?? null}
+					className="h-[30px] text-[11.5px]"
+				/>
 				<Button
-					onClick={onPrimary}
-					disabled={isPending}
-					title={lookup.inDictionary ? t("reader.popup.inDictionary") : t("reader.popup.addToDictionary")}
-					className={cn(
-						"flex h-[30px] flex-1 items-center justify-center gap-1.5 rounded-base text-[11.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60",
-						lookup.inDictionary ? "bg-grn" : "bg-acc",
-					)}
-				>
-					<Plus className="size-3" strokeWidth={1.8} />
-					{lookup.inDictionary
-						? t("reader.popup.inDictionary")
-						: t("reader.popup.addToDictionary")}
-				</Button>
-					<Button
 					size={"bare"}
 					onClick={onSuggestOpen}
 					aria-label={t("suggest.button")}
 					title={t("suggest.button")}
-					className="inline-flex h-[30px] w-[30px] items-center justify-center rounded-base border-hairline border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
+					className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-base border-hairline border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
 				>
 					<Pencil className="size-3.5" strokeWidth={1.4} />
 				</Button>
@@ -158,7 +125,7 @@ const WordPopupBody = ({
 					onClick={onOpenInPanel}
 					aria-label={t("reader.popup.openPanel")}
 					title={t("reader.popup.openPanel")}
-					className="inline-flex h-[30px] w-[30px] items-center justify-center rounded-base border-hairline border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
+					className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-base border-hairline border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
 				>
 					<ExternalLink className="size-3.5" strokeWidth={1.4} />
 				</Button>

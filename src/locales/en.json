@@ -480,7 +480,8 @@
 		"wordStatus": {
 			"NEW": "new",
 			"LEARNING": "learning",
-			"KNOWN": "known"
+			"KNOWN": "known",
+			"null": "—"
 		},
 		"planTranslations": "{used} / {limit} trans.",
 		"premiumPlan": "Premium",
@@ -1437,6 +1438,9 @@
 			"baseForm": "Base form",
 			"addToDictionary": "Add to dictionary",
 			"inDictionary": "In dictionary",
+			"chooseFolder": "Choose folder",
+			"removeFromFolder": "Remove from folder",
+			"noFolders": "No folders yet",
 			"examplesLoading": "Loading examples…",
 			"sections": {
 				"translation": "Translation",
@@ -1570,6 +1574,7 @@
 		"toasts": {
 			"addedToDict": "Word added to dictionary",
 			"removedFromDict": "Word removed from dictionary",
+			"folderAssigned": "Folder updated",
 			"dictFailed": "Could not update the dictionary",
 			"bookmarkAdded": "Bookmark saved",
 			"bookmarkRemoved": "Bookmark removed",
@@ -4582,7 +4587,8 @@
 			"sourceApproved": "From cache · approved",
 			"sourcePending": "From cache · pending",
 			"sourceFresh": "AI · just now",
-			"error": "AI translation error. Please try again later"
+			"error": "AI translation error. Please try again later",
+			"errorLocationNotSupported": "Gemini is not available in your region. Try using a VPN."
 		},
 		"phrase": {
 			"button": "Translate phrase",

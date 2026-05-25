@@ -483,7 +483,8 @@
 		"wordStatus": {
 			"NEW": "новое",
 			"LEARNING": "учу",
-			"KNOWN": "знаю"
+			"KNOWN": "знаю",
+			"null": "—"
 		},
 		"planTranslations": "{used} / {limit} перев.",
 		"premiumPlan": "Premium",
@@ -1573,6 +1574,7 @@
 		"toasts": {
 			"addedToDict": "Слово добавлено в словарь",
 			"removedFromDict": "Слово удалено из словаря",
+			"folderAssigned": "Папка обновлена",
 			"dictFailed": "Не удалось обновить словарь",
 			"bookmarkAdded": "Закладка сохранена",
 			"bookmarkRemoved": "Закладка удалена",
@@ -4585,7 +4587,8 @@
 			"sourceApproved": "Из кэша · одобрено",
 			"sourcePending": "Из кэша · на проверке",
 			"sourceFresh": "AI · только что",
-			"error": "Ошибка AI-перевода. Попробуйте позже"
+			"error": "Ошибка AI-перевода. Попробуйте позже",
+			"errorLocationNotSupported": "Gemini недоступен в вашем регионе. Попробуйте использовать VPN."
 		},
 		"phrase": {
 			"button": "Перевести фразу",

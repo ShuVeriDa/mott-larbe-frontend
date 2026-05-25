@@ -521,7 +521,8 @@
     "wordStatus": {
       "NEW": "керла",
       "LEARNING": "1емаш",
-      "KNOWN": "хаьа"
+      "KNOWN": "хаьа",
+      "null": "—"
     },
     "planTranslations": "{used} / {limit} тарг.",
     "premiumPlan": "Premium",
@@ -1611,6 +1612,7 @@
     "toasts": {
       "addedToDict": "Дош словаре тоьхна",
       "removedFromDict": "Дош словарех д1адаьккхина",
+			"folderAssigned": "Папка хийцира",
       "dictFailed": "Словарь хийцалуш яц",
       "bookmarkAdded": "Билгало йиллина",
       "bookmarkRemoved": "Билгало д1аяьккхина",
@@ -4623,7 +4625,8 @@
       "sourceApproved": "Кэшах · бакъдина",
       "sourcePending": "Кэшах · тергаме",
       "sourceFresh": "AI · хIинца",
-      "error": "AI-гочдаран гIалат. ТIаьхьа дIа хьажа"
+      "error": "AI-гочдаран гIалат. ТIаьхьа дIа хьажа",
+      "errorLocationNotSupported": "Gemini хьан регионехь ца болу. VPN лела."
     },
     "phrase": {
       "button": "Дош гочдан",

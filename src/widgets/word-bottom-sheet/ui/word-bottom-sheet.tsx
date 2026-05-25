@@ -4,23 +4,18 @@ import { Typography } from "@/shared/ui/typography";
 
 import type { TextToken } from "@/entities/text";
 import { useWordLookup, type WordLookupResponse } from "@/entities/word";
-import {
-	useAddToVocabulary,
-	useRemoveFromVocabulary,
-} from "@/features/add-to-vocabulary";
 import { LearnStatusRow } from "@/features/learn-status";
 import { useWordLookupStore } from "@/features/word-lookup";
-import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import {
 	READER_MOBILE_SHEET_OVERLAY_CLASSES,
 	ReaderMobileSheetHeader,
 } from "@/shared/ui/reader-mobile-sheet-header";
 import { WordPanelEmpty } from "@/widgets/word-panel";
+import { AddToDictionaryButton } from "@/widgets/word-panel/ui/add-to-dictionary-button";
 import { AiWordSheetBody } from "./ai-word-sheet-body";
-import { Pencil, Plus, X } from "lucide-react";
+import { Pencil, X } from "lucide-react";
 import type { MouseEvent } from "react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -38,34 +33,10 @@ const SheetBody = ({
 	onClose: () => void;
 }) => {
 	const { t } = useI18n();
-	const { success, error } = useToast();
-	const { mutate: add, isPending: adding } = useAddToVocabulary();
-	const { mutate: remove, isPending: removing } = useRemoveFromVocabulary();
-	const isPending = adding || removing;
 	const [suggestOpen, setSuggestOpen] = useState(false);
 
 	const handleSuggestChange = (open: boolean) => setSuggestOpen(open);
 	const handleSuggestSuccess = () => onClose();
-
-	const handlePrimaryClick = () => {
-		if (lookup.inDictionary && lookup.dictionaryEntryId) {
-			remove(
-				{ dictionaryEntryId: lookup.dictionaryEntryId, tokenId: token.id },
-				{
-					onSuccess: () => success(t("reader.toasts.removedFromDict")),
-					onError: () => error(t("reader.toasts.dictFailed")),
-				},
-			);
-			return;
-		}
-		add(
-			{ tokenId: token.id },
-			{
-				onSuccess: () => success(t("reader.toasts.addedToDict")),
-				onError: () => error(t("reader.toasts.dictFailed")),
-			},
-		);
-	};
 
 	return (
 		<div className="flex min-h-0 flex-1 flex-col">
@@ -117,21 +88,17 @@ const SheetBody = ({
 				</div>
 			</div>
 			<div className="flex shrink-0 gap-2 border-t border-bd-1 px-4 pt-3 pb-[max(16px,env(safe-area-inset-bottom))]">
+				<AddToDictionaryButton
+					tokenId={token.id}
+					word={token.original}
+					translation={lookup.translation}
+					inDictionary={lookup.inDictionary}
+					dictionaryEntryId={lookup.dictionaryEntryId}
+					currentFolderId={lookup.dictionaryFolder?.id ?? null}
+					currentFolderName={lookup.dictionaryFolder?.name ?? null}
+					className="h-11 rounded-[10px] text-[14px]"
+				/>
 				<Button
-					onClick={handlePrimaryClick}
-					disabled={isPending}
-					title={lookup.inDictionary ? t("reader.popup.inDictionary") : t("reader.popup.addToDictionary")}
-					className={cn(
-						"flex h-11 flex-1 items-center justify-center gap-1.5 rounded-[10px] text-[14px] font-semibold text-white shadow-sm transition-opacity hover:opacity-90 disabled:opacity-60",
-						lookup.inDictionary ? "bg-grn" : "bg-acc",
-					)}
-				>
-					<Plus className="size-3.5" strokeWidth={1.8} />
-					{lookup.inDictionary
-						? t("reader.popup.inDictionary")
-						: t("reader.popup.addToDictionary")}
-				</Button>
-					<Button
 					onClick={() => setSuggestOpen(true)}
 					aria-label={t("suggest.button")}
 					title={t("suggest.button")}

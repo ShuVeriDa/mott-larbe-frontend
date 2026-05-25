@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import { useI18n } from "@/shared/lib/i18n";
-import { formatReviewIn } from "@/shared/lib/format-relative-time";
-import { Typography } from "@/shared/ui/typography";
 import { useDueWords } from "@/entities/dictionary";
+import { formatReviewIn } from "@/shared/lib/format-relative-time";
+import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
+import Link from "next/link";
 
 export interface ReviewBannerProps {
 	lang: string;
@@ -25,9 +25,10 @@ export const ReviewBanner = ({ lang }: ReviewBannerProps) => {
 	return (
 		<section
 			aria-label={t("vocabulary.review.title")}
-			className="relative mx-[18px] mt-[14px] flex shrink-0 items-center gap-[14px] overflow-hidden rounded-card border-hairline border-bd-1 bg-surf p-3 max-md:mx-[14px] max-md:mt-3"
+			className="relative mx-[18px] mt-[14px] mb-[14px] flex shrink-0 items-center gap-[14px] overflow-hidden rounded-card border-hairline border-bd-1 bg-surf p-3 max-md:mx-[14px] max-md:mt-3"
 		>
-			<Typography tag="span"
+			<Typography
+				tag="span"
 				aria-hidden="true"
 				className="absolute inset-y-0 left-0 w-[3px] rounded-r-[2px] bg-amb"
 			/>
@@ -38,10 +39,7 @@ export const ReviewBanner = ({ lang }: ReviewBannerProps) => {
 				{data.count}
 			</Typography>
 			<div className="flex-1 min-w-0">
-				<Typography
-					tag="h2"
-					className="text-[12.5px] font-semibold text-t-1"
-				>
+				<Typography tag="h2" className="text-[12.5px] font-semibold text-t-1">
 					{t("vocabulary.review.title")}
 				</Typography>
 				<Typography className="text-[11.5px] text-t-2 truncate">

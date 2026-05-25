@@ -2,10 +2,10 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import Link from "next/link";
+import { useDictionaryList } from "@/entities/dictionary";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { useDictionaryList } from "@/entities/dictionary";
+import Link from "next/link";
 
 const STATUS_CLASS: Record<string, string> = {
 	KNOWN: "bg-grn-bg text-grn-t",
@@ -23,7 +23,10 @@ export const NavVocab = () => {
 	return (
 		<div className="px-3.5 pb-2.5 pt-1">
 			<div className="mb-1.5 flex items-center justify-between">
-				<Typography tag="span" className="text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
+				<Typography
+					tag="span"
+					className="text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3"
+				>
 					{t("nav.recentWords")}
 				</Typography>
 				<Link
@@ -35,18 +38,22 @@ export const NavVocab = () => {
 			</div>
 
 			<div className="flex flex-col">
-				{items.map((item) => (
-					<div
-						key={item.id}
-						className="flex items-center gap-1.5 py-[2.5px]"
-					>
-						<Typography tag="span" className="min-w-0 flex-1 truncate text-[11.5px] font-medium text-t-1">
+				{items.map(item => (
+					<div key={item.id} className="flex items-center gap-1.5 py-[2.5px]">
+						<Typography
+							tag="span"
+							className="min-w-0 flex-1 truncate text-[11.5px] font-medium text-t-1"
+						>
 							{item.word}
 						</Typography>
-						<Typography tag="span" className="max-w-[58px] truncate text-[10.5px] text-t-3">
+						<Typography
+							tag="span"
+							className="max-w-[58px] truncate text-[10.5px] text-t-3"
+						>
 							{item.translation}
 						</Typography>
-						<Typography tag="span"
+						<Typography
+							tag="span"
 							className={cn(
 								"shrink-0 rounded-[3px] px-[5px] py-[1.5px] text-[9px] font-semibold uppercase",
 								STATUS_CLASS[item.wordProgressStatus] ?? "bg-surf-3 text-t-3",

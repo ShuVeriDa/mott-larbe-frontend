@@ -8,6 +8,8 @@ import { wordKeys } from "@/entities/word";
 interface AddToVocabularyVars {
 	tokenId: string;
 	folderId?: string | null;
+	word?: string;
+	translation?: string;
 }
 
 export const useAddToVocabulary = () => {
@@ -16,10 +18,14 @@ export const useAddToVocabulary = () => {
 		mutationFn: async ({
 			tokenId,
 			folderId,
+			word,
+			translation,
 		}: AddToVocabularyVars): Promise<DictionaryEntry> => {
 			const { data } = await http.post<DictionaryEntry>("/dictionary", {
 				tokenId,
 				folderId: folderId ?? null,
+				...(word && { word }),
+				...(translation && { translation }),
 			});
 			return data;
 		},

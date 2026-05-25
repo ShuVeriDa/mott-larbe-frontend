@@ -61,7 +61,7 @@ export const useAdminTextEditPage = (id: string) => {
 	const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null);
 	const [autoTokenizeOnSave, setAutoTokenizeOnSave] = useState(true);
 	const [useNormalization, setUseNormalization] = useState(true);
-	const [useMorphAnalysis, setUseMorphAnalysis] = useState(false);
+	const [useMorphAnalysis, setUseMorphAnalysis] = useState(true);
 	const [isUnsaved, setIsUnsaved] = useState(false);
 	const [showRetokenizeBar, setShowRetokenizeBar] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);

@@ -53,7 +53,7 @@ export const useAdminTextCreatePage = () => {
 	const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null);
 	const [autoTokenizeOnSave, setAutoTokenizeOnSave] = useState(true);
 	const [useNormalization, setUseNormalization] = useState(true);
-	const [useMorphAnalysis, setUseMorphAnalysis] = useState(false);
+	const [useMorphAnalysis, setUseMorphAnalysis] = useState(true);
 	const [saveState, setSaveState] = useState<SaveState>("initial");
 
 	const savedIdRef = useRef<string | null>(null);

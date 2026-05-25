@@ -258,8 +258,12 @@ const PanelBody = ({
 						/>
 						<AddToDictionaryButton
 							tokenId={token.id}
+							word={token.original}
+							translation={lookup.translation}
 							inDictionary={lookup.inDictionary}
 							dictionaryEntryId={lookup.dictionaryEntryId}
+							currentFolderId={lookup.dictionaryFolder?.id ?? null}
+							currentFolderName={lookup.dictionaryFolder?.name ?? null}
 						/>
 						<Button
 							onClick={() => setSuggestOpen(true)}

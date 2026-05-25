@@ -45,6 +45,7 @@ export interface WordLookupResponse {
 	userStatus: LearningLevel | null;
 	inDictionary: boolean;
 	dictionaryEntryId: string | null;
+	dictionaryFolder: { id: string; name: string } | null;
 }
 
 export interface WordCorpusExample {
