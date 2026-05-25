@@ -1,9 +1,13 @@
 "use client";
 
+import type { DeckStats } from "@/entities/deck";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import type { DeckStats } from "@/entities/deck";
+import { ModeSelector, type SessionMode } from "@/features/session-mode";
+import { DeckDailyWords } from "../deck-daily-words";
+import { DeckGuide } from "../deck-guide";
+import { DeckSettingsPanel } from "../deck-settings-panel";
 
 export interface ReviewDeckIntroProps {
 	stats: DeckStats | undefined;
@@ -11,6 +15,8 @@ export interface ReviewDeckIntroProps {
 	error: boolean;
 	premiumLocked: boolean;
 	hasDue: boolean;
+	sessionMode: SessionMode;
+	onModeChange: (mode: SessionMode) => void;
 	onStart: () => void;
 	onUpgrade: () => void;
 }
@@ -33,6 +39,8 @@ export const ReviewDeckIntro = ({
 	error,
 	premiumLocked,
 	hasDue,
+	sessionMode,
+	onModeChange,
 	onStart,
 	onUpgrade,
 }: ReviewDeckIntroProps) => {
@@ -41,9 +49,25 @@ export const ReviewDeckIntro = ({
 	const deckMaxSize = stats?.deckMaxSize ?? 90;
 	const currentNum = stats?.currentNumberedDeck ?? 1;
 	const numberedCount =
-		stats?.numbered.find((n) => n.deckNumber === currentNum)?.count ?? 0;
+		stats?.numbered.find(n => n.deckNumber === currentNum)?.count ?? 0;
+	const repeatCount = stats?.repeat ?? 0;
 
 	const rows: DeckRowConfig[] = [
+		...(repeatCount > 0
+			? [
+					{
+						key: "repeat",
+						icon: "🔁",
+						title: t("review.deck.intro.row.repeat"),
+						desc: t("review.deck.intro.row.repeatDesc"),
+						count: repeatCount,
+						max: deckMaxSize,
+						bg: "bg-red-bg",
+						bar: "bg-red",
+						border: "border-red/25",
+					} satisfies DeckRowConfig,
+				]
+			: []),
 		{
 			key: "new",
 			icon: "🆕",
@@ -98,19 +122,46 @@ export const ReviewDeckIntro = ({
 			>
 				{t("review.deck.intro.title")}
 			</Typography>
-			<Typography className="mb-5 max-w-[400px] text-center text-[13px] leading-[1.6] text-t-3">
-				{loading
-					? t("review.deck.intro.loading")
-					: error
-						? t("review.deck.intro.error")
-						: t("review.deck.intro.subtitle")}
-			</Typography>
+			{!loading && !error ? (
+				<p className="mb-5 w-full max-w-[500px] whitespace-pre-line text-center text-[13px] leading-[1.75] text-t-2">
+					{t("review.deck.intro.subtitle")}
+				</p>
+			) : (
+				<p className="mb-5 text-[13px] text-t-3">
+					{loading ? t("review.deck.intro.loading") : t("review.deck.intro.error")}
+				</p>
+			)}
 
-			<ul className="mb-5 flex w-full max-w-[500px] flex-col gap-1.5">
-				{rows.map(({ key, ...row }) => (
-					<DeckRow key={key} {...row} />
-				))}
-			</ul>
+			<div className="mb-4 w-full max-w-[500px]">
+				{!premiumLocked ? (
+					<div className="mb-2 flex items-center justify-between">
+						<span className="text-[11px] uppercase tracking-wide text-t-3">
+							{t("review.deck.intro.decksLabel")}
+						</span>
+						<div className="flex items-center gap-1.5">
+							<DeckGuide />
+							<DeckSettingsPanel />
+						</div>
+					</div>
+				) : null}
+				<ul className="flex flex-col gap-1.5">
+					{rows.map(({ key, ...row }) => (
+						<DeckRow key={key} {...row} />
+					))}
+				</ul>
+			</div>
+
+			{!premiumLocked ? (
+				<div className="mb-4 w-full max-w-[500px]">
+					<DeckDailyWords />
+				</div>
+			) : null}
+
+			{!premiumLocked ? (
+				<div className="mb-4 w-full max-w-[420px]">
+					<ModeSelector value={sessionMode} onChange={onModeChange} />
+				</div>
+			) : null}
 
 			<Button
 				variant="action"
@@ -124,11 +175,10 @@ export const ReviewDeckIntro = ({
 
 			{premiumLocked ? (
 				<div className="mt-4 flex w-full max-w-[340px] flex-col items-center gap-2 rounded-card border-hairline border-pur/20 bg-pur-bg p-4 text-center">
-					<Typography tag="span" className="text-[20px]" aria-hidden="true">🔒</Typography>
-					<Typography
-						tag="h2"
-						className="text-[13px] font-semibold text-pur-t"
-					>
+					<Typography tag="span" className="text-[20px]" aria-hidden="true">
+						🔒
+					</Typography>
+					<Typography tag="h2" className="text-[13px] font-semibold text-pur-t">
 						{t("review.deck.intro.premium.title")}
 					</Typography>
 					<Typography className="text-[12px] leading-normal text-t-3">

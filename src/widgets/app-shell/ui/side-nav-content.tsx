@@ -15,7 +15,10 @@ interface SideNavContentProps {
 	stats: DashboardStats | undefined;
 }
 
-export const SideNavContent = ({ isCompactMode, stats }: SideNavContentProps) => {
+export const SideNavContent = ({
+	isCompactMode,
+	stats,
+}: SideNavContentProps) => {
 	const { lang } = useI18n();
 	const pathname = usePathname();
 	const sections = buildNavSections(lang);
@@ -32,10 +35,14 @@ export const SideNavContent = ({ isCompactMode, stats }: SideNavContentProps) =>
 							)}
 						/>
 					) : null}
-					<NavSection labelKey={section.titleKey} isCompactMode={isCompactMode} />
-					{section.items.map(item => {
+					<NavSection
+						labelKey={section.titleKey}
+						isCompactMode={isCompactMode}
+					/>
+					{section.items.map((item, i) => {
 						const href = item.href(lang);
-						const active = pathname === href;
+						const active =
+							pathname === href || (i === 1 && pathname.includes("reader"));
 						const Icon = item.icon;
 						return (
 							<NavItem

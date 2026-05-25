@@ -8,12 +8,16 @@ import {
 	type ReviewStats,
 	getPrimaryTranslation,
 } from "@/entities/review";
+import { ModeSelector, type SessionMode } from "@/features/session-mode";
+import { Sm2Guide } from "../sm2-guide";
 
 export interface ReviewIntroProps {
 	stats: ReviewStats | undefined;
 	queue: ReviewDueWord[];
 	loading: boolean;
 	error: boolean;
+	sessionMode: SessionMode;
+	onModeChange: (mode: SessionMode) => void;
 	onStart: () => void;
 }
 
@@ -38,6 +42,8 @@ export const ReviewIntro = ({
 	queue,
 	loading,
 	error,
+	sessionMode,
+	onModeChange,
 	onStart,
 }: ReviewIntroProps) => {
 	const { t } = useI18n();
@@ -85,6 +91,10 @@ export const ReviewIntro = ({
 							: t("review.sm2.intro.subtitle", { count: dueCount })}
 			</Typography>
 
+			<div className="mb-4 w-full max-w-[420px]">
+				<ModeSelector value={sessionMode} onChange={onModeChange} />
+			</div>
+
 			<Button
 				variant="action"
 				size="lg"
@@ -96,9 +106,13 @@ export const ReviewIntro = ({
 
 			{queue.length > 0 ? (
 				<div className="mt-5 w-full max-w-[420px] border-t border-bd-1 pt-4">
-					<Typography className="mb-2 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
-						{t("review.sm2.intro.queue.title")}
-					</Typography>
+					<div className="mb-2 flex items-center justify-between">
+						<Typography className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
+							{t("review.sm2.intro.queue.title")}
+						</Typography>
+						<Sm2Guide />
+					</div>
+
 					<ul className="flex flex-col gap-1">
 						{queue.slice(0, QUEUE_PREVIEW).map((item) => (
 							<li

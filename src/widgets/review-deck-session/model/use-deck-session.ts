@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import type {
 	DeckCard,
 	DeckDueResponse,
@@ -16,7 +16,9 @@ export interface UseDeckSessionResult {
 	current: DeckCard | null;
 	currentIndex: number;
 	total: number;
+	queue: DeckCard[];
 	counts: DeckCounts;
+	againCards: DeckCard[];
 	flipped: boolean;
 	isFinished: boolean;
 	flip: () => void;
@@ -25,6 +27,7 @@ export interface UseDeckSessionResult {
 }
 
 const flatten = (resp: DeckDueResponse): DeckCard[] => [
+	...resp.repeat,
 	...resp.new,
 	...resp.old,
 	...resp.retired,
@@ -34,10 +37,19 @@ const flatten = (resp: DeckDueResponse): DeckCard[] => [
 export const useDeckSession = (
 	due: DeckDueResponse | undefined,
 ): UseDeckSessionResult => {
-	const queue = due ? flatten(due) : [];
+	// Snapshot the queue once on first load — never mutate it during the session.
+	// This prevents mid-session refetches (triggered by shouldRefreshDeck invalidation)
+	// from reshuffling the queue and causing the same card to appear multiple times.
+	const snapshotRef = useRef<DeckCard[] | null>(null);
+	if (snapshotRef.current === null && due) {
+		snapshotRef.current = flatten(due);
+	}
+	const queue = snapshotRef.current ?? [];
+
 	const [index, setIndex] = useState(0);
 	const [flipped, setFlipped] = useState(false);
 	const [counts, setCounts] = useState<DeckCounts>({ know: 0, again: 0 });
+	const [againCards, setAgainCards] = useState<DeckCard[]>([]);
 
 	const { mutate: rateMutation } = useRateDeckCard();
 
@@ -56,22 +68,30 @@ export const useDeckSession = (
 				: { ...prev, again: prev.again + 1 },
 		);
 
+		if (result === "again") {
+			setAgainCards((prev) => [...prev, current]);
+		}
+
 		rateMutation({ lemmaId: current.lemmaId, body: { result } });
 		setFlipped(false);
 		setIndex((i) => i + 1);
 	};
 
 	const resetIndex = () => {
+		snapshotRef.current = null;
 		setIndex(0);
 		setFlipped(false);
 		setCounts({ know: 0, again: 0 });
+		setAgainCards([]);
 	};
 
 	return {
 		current,
 		currentIndex: index,
 		total,
+		queue,
 		counts,
+		againCards,
 		flipped,
 		isFinished,
 		flip,

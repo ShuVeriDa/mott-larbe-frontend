@@ -9,6 +9,7 @@ export interface ReviewDeckDoneProps {
 	again: number;
 	onBack: () => void;
 	onGoSm2: () => void;
+	onRetry?: () => void;
 }
 
 export const ReviewDeckDone = ({
@@ -16,6 +17,7 @@ export const ReviewDeckDone = ({
 	again,
 	onBack,
 	onGoSm2,
+	onRetry,
 }: ReviewDeckDoneProps) => {
 	const { t } = useI18n();
 
@@ -50,6 +52,17 @@ export const ReviewDeckDone = ({
 				<Stat value={know} label={t("review.deck.done.stats.know")} tone="grn" />
 				<Stat value={again} label={t("review.deck.done.stats.again")} tone="amb" />
 			</div>
+
+			{again > 0 && onRetry ? (
+				<Button
+					variant="outline"
+					size="lg"
+					onClick={onRetry}
+					className="mb-3 w-full max-w-[280px] border-amb/30 text-amb hover:border-amb/50 hover:bg-amb-bg"
+				>
+					{t("review.deck.done.retry", { count: again })}
+				</Button>
+			) : null}
 
 			<div className="flex flex-wrap items-center justify-center gap-2">
 				<Button variant="ghost" size="lg" onClick={onBack}>

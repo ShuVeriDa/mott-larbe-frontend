@@ -15,6 +15,7 @@ const styles: Record<DeckType, string> = {
 	OLD: "bg-amb-bg text-amb-t",
 	RETIRED: "bg-pur-bg text-pur-t",
 	NUMBERED: "bg-grn-bg text-grn-t",
+	REPEAT: "bg-red-bg text-red-t",
 };
 
 export const DeckBadge = ({ type, deckNumber }: DeckBadgeProps) => {

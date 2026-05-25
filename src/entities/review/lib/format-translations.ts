@@ -1,8 +1,11 @@
 import type { ReviewLemma } from "../api";
 
 export const getPrimaryTranslation = (lemma: ReviewLemma): string => {
-	const first = lemma.headwords[0]?.entry.rawTranslate;
-	return first ?? "";
+	// Prefer the headword entry translation, fall back to the user's own saved translation
+	const fromHeadword = lemma.headwords[0]?.entry.rawTranslate?.trim();
+	if (fromHeadword) return fromHeadword;
+	const fromDictionary = lemma.userDictionaryEntries?.[0]?.translation?.trim();
+	return fromDictionary ?? "";
 };
 
 export const getAlternateTranslations = (lemma: ReviewLemma): string[] =>

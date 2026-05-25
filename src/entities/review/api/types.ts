@@ -27,6 +27,7 @@ export interface ReviewLemma {
 	partOfSpeech: string | null;
 	headwords: ReviewHeadword[];
 	morphForms: ReviewMorphForm[];
+	userDictionaryEntries?: { translation: string }[];
 }
 
 export interface ReviewLatestContext {

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import type { ReviewSystem } from "../ui/review-topbar";
 
-export type ReviewScreen = "intro" | "card" | "done";
+export type ReviewScreen = "intro" | "card" | "done" | "retry";
 
 export interface ReviewFlowState {
 	system: ReviewSystem;
@@ -14,6 +14,7 @@ export interface UseReviewFlowResult extends ReviewFlowState {
 	goToCard: () => void;
 	goToDone: () => void;
 	goToIntro: () => void;
+	goToRetry: () => void;
 }
 
 export const useReviewFlow = (
@@ -30,6 +31,7 @@ export const useReviewFlow = (
 	const goToCard = () => setScreen("card");
 	const goToDone = () => setScreen("done");
 	const goToIntro = () => setScreen("intro");
+	const goToRetry = () => setScreen("retry");
 
-	return { system, screen, switchSystem, goToCard, goToDone, goToIntro };
+	return { system, screen, switchSystem, goToCard, goToDone, goToIntro, goToRetry };
 };

@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { useDeckDue, useDeckStats } from "@/entities/deck";
+import type { DeckCard } from "@/entities/deck";
 import { useReviewDue, useReviewStats } from "@/entities/review";
+import { useSessionMode } from "@/features/session-mode";
 import { useReviewFlow } from "./use-review-flow";
 
 interface Sm2Counts {
@@ -20,8 +22,9 @@ const ZERO_SM2: Sm2Counts = { easy: 0, good: 0, hard: 0 };
 const ZERO_DECK: DeckCounts = { know: 0, again: 0 };
 
 export const useReviewPage = () => {
-	const { system, screen, switchSystem, goToCard, goToDone, goToIntro } =
+	const { system, screen, switchSystem, goToCard, goToDone, goToIntro, goToRetry } =
 		useReviewFlow();
+	const { mode: sessionMode, setMode: setSessionMode } = useSessionMode();
 	const { data: stats, isLoading: statsLoading } = useReviewStats();
 
 	const dueLimit = stats?.dueCount && stats.dueCount > 0 ? stats.dueCount : 20;
@@ -46,6 +49,7 @@ export const useReviewPage = () => {
 	const [liveSm2Counts, setLiveSm2Counts] = useState<Sm2Counts>(ZERO_SM2);
 	const [liveSm2Index, setLiveSm2Index] = useState(0);
 	const [liveDeckCounts, setLiveDeckCounts] = useState<DeckCounts>(ZERO_DECK);
+	const [deckAgainCards, setDeckAgainCards] = useState<DeckCard[]>([]);
 
 	const sm2DueBadge = stats?.dueCount ?? null;
 	const deckTotalBadge = deckStats?.total ?? null;
@@ -82,6 +86,7 @@ export const useReviewPage = () => {
 	const handleStartDeck = () => {
 		setDeckCounts(ZERO_DECK);
 		setLiveDeckCounts(ZERO_DECK);
+		setDeckAgainCards([]);
 		goToCard();
 	};
 
@@ -89,8 +94,21 @@ export const useReviewPage = () => {
 		setLiveDeckCounts(counts);
 	};
 
-	const handleDeckFinish = (counts: DeckCounts) => {
+	const handleDeckFinish = (counts: DeckCounts, againCards: DeckCard[]) => {
 		setDeckCounts(counts);
+		setDeckAgainCards(againCards);
+		goToDone();
+	};
+
+	const handleDeckRetry = () => {
+		setDeckCounts(ZERO_DECK);
+		setLiveDeckCounts(ZERO_DECK);
+		goToRetry();
+	};
+
+	const handleRetryFinish = (counts: DeckCounts, _againCards: DeckCard[]) => {
+		setDeckCounts(counts);
+		setDeckAgainCards([]);
 		goToDone();
 	};
 
@@ -114,6 +132,7 @@ export const useReviewPage = () => {
 		deckLoading,
 		deckDueError,
 		deckDue,
+		deckAgainCards,
 		premiumLocked,
 		sm2DueBadge,
 		deckTotalBadge,
@@ -122,12 +141,16 @@ export const useReviewPage = () => {
 		panelSm2Counts,
 		panelDeckCounts,
 		nextWords,
+		sessionMode,
+		setSessionMode,
 		handleStartSm2,
 		handleSm2Progress,
 		handleSm2Finish,
 		handleStartDeck,
 		handleDeckProgress,
 		handleDeckFinish,
+		handleDeckRetry,
+		handleRetryFinish,
 		handleTryDeck,
 		handleUpgrade,
 		handleGoSm2,

@@ -1,4 +1,5 @@
 "use client";
+import { useMemo } from "react";
 import { useReviewPage } from "../model";
 import { ReviewIntro } from "@/widgets/review-intro";
 import { Sm2Session } from "@/widgets/review-session";
@@ -6,8 +7,10 @@ import { ReviewDone } from "@/widgets/review-done";
 import { ReviewDeckIntro } from "@/widgets/review-deck-intro";
 import { DeckSession } from "@/widgets/review-deck-session";
 import { ReviewDeckDone } from "@/widgets/review-deck-done";
+import type { DeckDueResponse } from "@/entities/deck";
 import { ReviewTopbar } from "./review-topbar";
 import { ReviewSidePanel } from "./review-side-panel";
+import { ReviewPageSkeleton } from "./review-page-skeleton";
 
 export const ReviewPage = () => {
 	const {
@@ -24,6 +27,7 @@ export const ReviewPage = () => {
 		deckLoading,
 		deckDueError,
 		deckDue,
+		deckAgainCards,
 		premiumLocked,
 		sm2DueBadge,
 		deckTotalBadge,
@@ -32,16 +36,32 @@ export const ReviewPage = () => {
 		panelSm2Counts,
 		panelDeckCounts,
 		nextWords,
+		sessionMode,
+		setSessionMode,
 		handleStartSm2,
 		handleSm2Progress,
 		handleSm2Finish,
 		handleStartDeck,
 		handleDeckProgress,
 		handleDeckFinish,
+		handleDeckRetry,
+		handleRetryFinish,
 		handleTryDeck,
 		handleUpgrade,
 		handleGoSm2,
 	} = useReviewPage();
+
+	const retryDue = useMemo<DeckDueResponse>(() => ({
+		new: deckAgainCards,
+		old: [],
+		retired: [],
+		repeat: [],
+		numbered: [],
+		currentNumberedDeck: 1,
+		maxNumberedDeck: 0,
+	}), [deckAgainCards]);
+
+	if (statsLoading && dueLoading && screen === "intro") return <ReviewPageSkeleton />;
 
 	return (
 		<>
@@ -60,6 +80,8 @@ export const ReviewPage = () => {
 							queue={words}
 							loading={statsLoading || dueLoading}
 							error={dueError}
+							sessionMode={sessionMode}
+							onModeChange={setSessionMode}
 							onStart={handleStartSm2}
 						/>
 					) : null}
@@ -67,7 +89,9 @@ export const ReviewPage = () => {
 					{system === "sm2" && screen === "card" && words.length > 0 ? (
 						<Sm2Session
 							words={words}
+							sessionMode={sessionMode}
 							onFinish={handleSm2Finish}
+							onBack={goToIntro}
 							onProgress={handleSm2Progress}
 						/>
 					) : null}
@@ -89,6 +113,8 @@ export const ReviewPage = () => {
 							error={deckDueError}
 							premiumLocked={premiumLocked}
 							hasDue={(deckStats?.total ?? 0) > 0}
+							sessionMode={sessionMode}
+							onModeChange={setSessionMode}
 							onStart={handleStartDeck}
 							onUpgrade={handleUpgrade}
 						/>
@@ -97,8 +123,18 @@ export const ReviewPage = () => {
 					{system === "deck" && screen === "card" && deckDue ? (
 						<DeckSession
 							due={deckDue}
+							sessionMode={sessionMode}
 							onFinish={handleDeckFinish}
 							onProgress={handleDeckProgress}
+							onBack={goToIntro}
+						/>
+					) : null}
+
+					{system === "deck" && screen === "retry" && deckAgainCards.length > 0 ? (
+						<DeckSession
+							due={retryDue}
+							sessionMode={sessionMode}
+							onFinish={handleRetryFinish}
 							onBack={goToIntro}
 						/>
 					) : null}
@@ -109,18 +145,21 @@ export const ReviewPage = () => {
 							again={deckCounts.again}
 							onBack={goToIntro}
 							onGoSm2={handleGoSm2}
+							onRetry={deckAgainCards.length > 0 ? handleDeckRetry : undefined}
 						/>
 					) : null}
 				</div>
 
-				<ReviewSidePanel
-					system={system}
-					screen={screen}
-					streak={stats?.streak ?? 0}
-					sm2Counts={panelSm2Counts}
-					deckCounts={panelDeckCounts}
-					nextWords={nextWords}
-				/>
+				{system === "sm2" ? (
+					<ReviewSidePanel
+						system={system}
+						screen={screen}
+						streak={stats?.streak ?? 0}
+						sm2Counts={panelSm2Counts}
+						deckCounts={panelDeckCounts}
+						nextWords={nextWords}
+					/>
+				) : null}
 			</div>
 		</>
 	);
