@@ -18,6 +18,7 @@ import {
 	ScrollText,
 	Quote,
 	Link2,
+	BookMarked,
 } from "lucide-react";
 
 export interface AdminNavItem {
@@ -81,6 +82,11 @@ export const buildAdminNavSections = (t: (key: string) => string, lang: string):
 				href: () => `/${lang}/admin/dictionary`,
 				label: () => t("admin.nav.dictionary"),
 				icon: BookOpen,
+			},
+			{
+				href: () => `/${lang}/admin/phrasebook`,
+				label: () => t("admin.nav.phrasebook"),
+				icon: BookMarked,
 			},
 			{
 				href: () => `/${lang}/admin/morphology`,

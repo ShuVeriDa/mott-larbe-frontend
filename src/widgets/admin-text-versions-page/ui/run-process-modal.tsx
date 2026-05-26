@@ -1,14 +1,14 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
 import type { ProcessTextDto } from "@/entities/admin-text";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { X, Check } from "lucide-react";
+import { Modal, ModalActions } from "@/shared/ui/modal";
+import { Check } from "lucide-react";
 import { ComponentProps, useState } from "react";
+
 interface RunProcessModalProps {
 	defaultNormalization: boolean;
 	defaultMorphAnalysis: boolean;
@@ -25,95 +25,66 @@ export const RunProcessModal = ({
 	onClose,
 }: RunProcessModalProps) => {
 	const { t } = useI18n();
-	const [useNormalization, setUseNormalization] =
-		useState(defaultNormalization);
-	const [useMorphAnalysis, setUseMorphAnalysis] =
-		useState(defaultMorphAnalysis);
+	const [useNormalization, setUseNormalization] = useState(defaultNormalization);
+	const [useMorphAnalysis, setUseMorphAnalysis] = useState(defaultMorphAnalysis);
 
 	const handleSubmit = () => {
 		onConfirm({ useNormalization, useMorphAnalysis });
 	};
 
 	return (
-		<>
-			<div
-				className="fixed inset-0 z-50 bg-black/45 backdrop-blur-[2px]"
-				onClick={onClose}
-				aria-hidden="true"
-			/>
-			<div
-				role="dialog"
-				aria-modal="true"
-				className="fixed inset-0 z-50 flex items-center justify-center p-5 max-sm:items-end max-sm:p-0"
-			>
-				<div className="w-[400px] max-w-full overflow-hidden rounded-[14px] border border-bd-2 bg-surf shadow-lg max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[16px]">
-					<div className="flex items-center justify-between border-b border-bd-1 px-4.5 py-3.5">
-						<Typography tag="span" className="font-display text-[15px] text-t-1">
-							{t("admin.texts.versions.runModal.title")}
-						</Typography>
-						<Button
-							onClick={onClose}
-							title={t("admin.texts.versions.runModal.cancel")}
-							className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
-						>
-							<X className="size-3" />
-						</Button>
-					</div>
-
-					<form action={handleSubmit}>
-						<div className="flex flex-col gap-1 px-4.5 py-4">
-							<CheckboxRow
-								label={t("admin.texts.versions.runModal.tokenization")}
-								checked={true}
-								disabled
-								description={t(
-									"admin.texts.versions.runModal.tokenizationDesc",
-								)}
-							/>
-							<CheckboxRow
-								label={t("admin.texts.versions.runModal.normalization")}
-								checked={useNormalization}
-								onChange={setUseNormalization}
-								description={t(
-									"admin.texts.versions.runModal.normalizationDesc",
-								)}
-							/>
-							<CheckboxRow
-								label={t("admin.texts.versions.runModal.morphAnalysis")}
-								checked={useMorphAnalysis}
-								onChange={setUseMorphAnalysis}
-								description={t(
-									"admin.texts.versions.runModal.morphAnalysisDesc",
-								)}
-							/>
-						</div>
-
-						<div className="flex items-center justify-end gap-2 border-t border-bd-1 px-4 py-3">
-							<Button
-								onClick={onClose}
-								title={t("admin.texts.versions.runModal.cancel")}
-								className="flex h-[30px] items-center rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
-							>
-								{t("admin.texts.versions.runModal.cancel")}
-							</Button>
-							<Button
-								type="submit"
-								disabled={isPending}
-								title={isPending ? t("admin.texts.versions.runModal.running") : t("admin.texts.versions.runModal.run")}
-								className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
-							>
-								{isPending && (
-									<Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />
-								)}
-								{isPending
-									? t("admin.texts.versions.runModal.running")
-									: t("admin.texts.versions.runModal.run")}
-							</Button>
-						</div>
-					</form>
+		<Modal
+			open
+			onClose={onClose}
+			title={t("admin.texts.versions.runModal.title")}
+			className="max-w-[400px]"
+		>
+			<form action={handleSubmit}>
+				<div className="flex flex-col gap-1 mb-2">
+					<CheckboxRow
+						label={t("admin.texts.versions.runModal.tokenization")}
+						checked={true}
+						disabled
+						description={t("admin.texts.versions.runModal.tokenizationDesc")}
+					/>
+					<CheckboxRow
+						label={t("admin.texts.versions.runModal.normalization")}
+						checked={useNormalization}
+						onChange={setUseNormalization}
+						description={t("admin.texts.versions.runModal.normalizationDesc")}
+					/>
+					<CheckboxRow
+						label={t("admin.texts.versions.runModal.morphAnalysis")}
+						checked={useMorphAnalysis}
+						onChange={setUseMorphAnalysis}
+						description={t("admin.texts.versions.runModal.morphAnalysisDesc")}
+					/>
 				</div>
-			</div>
-		</>
+
+				<ModalActions>
+					<Button
+						variant="ghost"
+						onClick={onClose}
+						className="h-[34px] px-4 rounded-lg text-[13px]"
+					>
+						{t("admin.texts.versions.runModal.cancel")}
+					</Button>
+					<Button
+						variant="action"
+						type="submit"
+						disabled={isPending}
+						className="h-[34px] flex-1 px-4 rounded-lg text-[13px]"
+					>
+						{isPending && (
+							<Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />
+						)}
+						{isPending
+							? t("admin.texts.versions.runModal.running")
+							: t("admin.texts.versions.runModal.run")}
+					</Button>
+				</ModalActions>
+			</form>
+		</Modal>
 	);
 };
 
@@ -132,39 +103,40 @@ const CheckboxRow = ({
 	disabled,
 	onChange,
 }: CheckboxRowProps) => {
-  const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onChange?.(e.currentTarget.checked);
-  return (
-	<Typography tag="label"
-		className={cn(
-			"flex cursor-pointer items-start gap-3 rounded-[10px] border border-bd-1 bg-surf-2 px-3.5 py-3 transition-colors",
-			disabled && "cursor-default opacity-60",
-			!disabled && "hover:border-bd-2 hover:bg-surf-3",
-		)}
-	>
-		<div className="mt-0.5 shrink-0">
-			<div
-				className={cn(
-					"flex size-4 items-center justify-center rounded-[4px] border transition-colors",
-					checked ? "border-acc bg-acc" : "border-bd-2 bg-surf",
-				)}
-			>
-				{checked && (
-					<Check className="size-[9px] text-white" />
-				)}
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => onChange?.(e.currentTarget.checked);
+	return (
+		<Typography
+			tag="label"
+			className={cn(
+				"flex cursor-pointer items-start gap-3 rounded-[10px] border border-bd-1 bg-surf-2 px-3.5 py-3 transition-colors",
+				disabled && "cursor-default opacity-60",
+				!disabled && "hover:border-bd-2 hover:bg-surf-3",
+			)}
+		>
+			<div className="mt-0.5 shrink-0">
+				<div
+					className={cn(
+						"flex size-4 items-center justify-center rounded-[4px] border transition-colors",
+						checked ? "border-acc bg-acc" : "border-bd-2 bg-surf",
+					)}
+				>
+					{checked && (
+						<Check className="size-[9px] text-white" />
+					)}
+				</div>
 			</div>
-		</div>
-		<div className="flex flex-col gap-0.5">
-			<Typography tag="span" className="text-[13px] font-medium text-t-1">{label}</Typography>
-			<Typography tag="span" className="text-[11.5px] text-t-3">{description}</Typography>
-		</div>
-		{!disabled && (
-			<input
-				type="checkbox"
-				className="sr-only"
-				checked={checked}
-				onChange={handleChange}
-			/>
-		)}
-	</Typography>
-);
+			<div className="flex flex-col gap-0.5">
+				<Typography tag="span" className="text-[13px] font-medium text-t-1">{label}</Typography>
+				<Typography tag="span" className="text-[11.5px] text-t-3">{description}</Typography>
+			</div>
+			{!disabled && (
+				<input
+					type="checkbox"
+					className="sr-only"
+					checked={checked}
+					onChange={handleChange}
+				/>
+			)}
+		</Typography>
+	);
 };

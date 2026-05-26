@@ -357,105 +357,143 @@
 				"pos": "глагол",
 				"trans": "живущий",
 				"extra": "обитающий, проживающий",
-				"tags": ["прич.", "наст.вр."]
+				"tags": [
+					"прич.",
+					"наст.вр."
+				]
 			},
 			"хилла": {
 				"base": "хила",
 				"pos": "глагол",
 				"trans": "был, являлся",
 				"extra": "произошёл, случился",
-				"tags": ["прош.вр.", "3 л."]
+				"tags": [
+					"прош.вр.",
+					"3 л."
+				]
 			},
 			"кIант": {
 				"base": "кIант",
 				"pos": "сущ.",
 				"trans": "мальчик, юноша",
 				"extra": "парень, сын",
-				"tags": ["1 кл.", "ед.ч."]
+				"tags": [
+					"1 кл.",
+					"ед.ч."
+				]
 			},
 			"да-нана": {
 				"base": "да-нана",
 				"pos": "сущ.",
 				"trans": "родители",
 				"extra": "букв. «отец-мать»",
-				"tags": ["ед.ч."]
+				"tags": [
+					"ед.ч."
+				]
 			},
 			"доттагIий": {
 				"base": "доттагI",
 				"pos": "сущ.",
 				"trans": "друзья",
 				"extra": "товарищи, приятели",
-				"tags": ["мн.ч."]
+				"tags": [
+					"мн.ч."
+				]
 			},
 			"хIорда": {
 				"base": "хIорд",
 				"pos": "сущ.",
 				"trans": "море",
 				"extra": "водное пространство",
-				"tags": ["ед.ч.", "эрг."]
+				"tags": [
+					"ед.ч.",
+					"эрг."
+				]
 			},
 			"маьлхан": {
 				"base": "малх",
 				"pos": "прил.",
 				"trans": "солнечный",
 				"extra": "относящийся к солнцу",
-				"tags": ["ед.ч.", "род.п."]
+				"tags": [
+					"ед.ч.",
+					"род.п."
+				]
 			},
 			"олхазарш": {
 				"base": "олхазар",
 				"pos": "сущ.",
 				"trans": "птицы",
 				"extra": "тIема — крылатые",
-				"tags": ["мн.ч."]
+				"tags": [
+					"мн.ч."
+				]
 			},
 			"волавелла": {
 				"base": "дIавала",
 				"pos": "глагол",
 				"trans": "отправился",
 				"extra": "двинулся в путь",
-				"tags": ["прош.вр.", "3 л."]
+				"tags": [
+					"прош.вр.",
+					"3 л."
+				]
 			},
 			"вала": {
 				"base": "вала",
 				"pos": "глагол",
 				"trans": "идти, отправляться",
 				"extra": "двигаться к",
-				"tags": ["инфинитив"]
+				"tags": [
+					"инфинитив"
+				]
 			},
 			"кхечу": {
 				"base": "кхин",
 				"pos": "мест.",
 				"trans": "другой, иной",
 				"extra": "не этот",
-				"tags": ["эрг.", "ед.ч."]
+				"tags": [
+					"эрг.",
+					"ед.ч."
+				]
 			},
 			"тарх": {
 				"base": "тарх",
 				"pos": "сущ.",
 				"trans": "скала, утёс",
 				"extra": "каменная глыба",
-				"tags": ["ед.ч."]
+				"tags": [
+					"ед.ч."
+				]
 			},
 			"шиъ": {
 				"base": "шиъ",
 				"pos": "числ.",
 				"trans": "два",
 				"extra": "",
-				"tags": ["колич."]
+				"tags": [
+					"колич."
+				]
 			},
 			"кхета": {
 				"base": "кхета",
 				"pos": "глагол",
 				"trans": "понимать",
 				"extra": "постигать, осознавать",
-				"tags": ["наст.вр.", "3 л."]
+				"tags": [
+					"наст.вр.",
+					"3 л."
+				]
 			},
 			"бала": {
 				"base": "бала",
 				"pos": "сущ.",
 				"trans": "горе, беда",
 				"extra": "страдание, невзгода",
-				"tags": ["ед.ч."]
+				"tags": [
+					"ед.ч."
+				]
 			}
 		}
 	},
@@ -2753,7 +2791,8 @@
 			"darkTheme": "Тёмная тема",
 			"closeMenu": "Закрыть меню",
 			"openMenu": "Открыть меню",
-			"subscriptions": "Подписки"
+			"subscriptions": "Подписки",
+			"phrasebook": "Разговорник"
 		},
 		"users": {
 			"title": "Пользователи",
@@ -5131,5 +5170,132 @@
 		"phrasebookPhraseNotFound": "Фраза разговорника не найдена.",
 		"phraseSuggestionNotFound": "Предложение фразы не найдено.",
 		"logNotFound": "Запись журнала не найдена."
+	},
+	"adminPhrasebook": {
+		"meta": {
+			"title": "Разговорник — Admin | Мотт Ларбе",
+			"description": "Управление категориями, фразами и предложениями разговорника"
+		},
+		"title": "Разговорник",
+		"subtitle": "{categories} кат. · {phrases} фраз · {suggestions} предложений",
+		"emojiSearch": "Поиск...",
+		"addPhrase": "Добавить фразу",
+		"addCategory": "Добавить категорию",
+		"edit": "Редактировать",
+		"delete": "Удалить",
+		"save": "Сохранить",
+		"saving": "Сохранение...",
+		"create": "Создать",
+		"cancel": "Отмена",
+		"confirmDelete": "Удалить",
+		"deleting": "Удаление...",
+		"errorSave": "Не удалось сохранить",
+		"errorDelete": "Не удалось удалить",
+		"categoryCreated": "Категория создана",
+		"categorySaved": "Категория сохранена",
+		"categoryDeleted": "Категория удалена",
+		"phraseCreated": "Фраза создана",
+		"phraseSaved": "Фраза сохранена",
+		"phraseDeleted": "Фраза удалена",
+		"suggestionDeleted": "Предложение удалено",
+		"tabs": {
+			"categories": "Категории",
+			"phrases": "Фразы",
+			"suggestions": "Предложения"
+		},
+		"stats": {
+			"categories": "Категории",
+			"categoriesSub": "всего категорий",
+			"phrases": "Фразы",
+			"phrasesSub": "всего фраз",
+			"suggestions": "Предложения",
+			"suggestionsSub": "ожидают проверки"
+		},
+		"categories": {
+			"empty": "Нет категорий. Создайте первую.",
+			"phraseCount": "{count} фраз",
+			"sortOrder": "порядок: {n}",
+			"col": {
+				"emoji": "Эмодзи",
+				"name": "Название",
+				"phrases": "Фраз",
+				"order": "Порядок"
+			}
+		},
+		"phrases": {
+			"searchPlaceholder": "Поиск фраз...",
+			"allCategories": "Все категории",
+			"totalCount": "{count} фраз",
+			"empty": "Нет фраз. Создайте первую.",
+			"emptySearch": "Ничего не найдено",
+			"page": "Стр. {page} / {total}",
+			"words": "{n} слов",
+			"examples": "{n} примеров",
+			"col": {
+				"phrase": "Фраза",
+				"category": "Категория",
+				"lang": "Язык",
+				"words": "Слова"
+			}
+		},
+		"suggestions": {
+			"empty": "Нет предложений от пользователей",
+			"accept": "Принять (создать фразу)",
+			"col": {
+				"phrase": "Фраза",
+				"category": "Категория",
+				"lang": "Язык",
+				"author": "Автор",
+				"date": "Дата"
+			}
+		},
+		"categoryModal": {
+			"createTitle": "Новая категория",
+			"editTitle": "Редактировать категорию",
+			"emojiLabel": "Эмодзи",
+			"emojiRequired": "Укажите эмодзи",
+			"nameLabel": "Название",
+			"nameRequired": "Укажите название",
+			"namePlaceholder": "напр. Приветствия",
+			"sortOrderLabel": "Порядок сортировки"
+		},
+		"phraseModal": {
+			"createTitle": "Новая фраза",
+			"editTitle": "Редактировать фразу",
+			"categoryLabel": "Категория",
+			"categoryRequired": "Выберите категорию",
+			"selectCategory": "Выберите категорию",
+			"langLabel": "Язык",
+			"originalLabel": "Оригинал",
+			"originalRequired": "Укажите оригинал",
+			"originalPlaceholder": "напр. Салам!",
+			"transliterationLabel": "Транслитерация",
+			"transliterationPlaceholder": "напр. Salam!",
+			"translationLabel": "Перевод",
+			"translationRequired": "Укажите перевод",
+			"translationPlaceholder": "напр. Привет!",
+			"sortOrderLabel": "Порядок сортировки",
+			"wordsLabel": "Разбор по словам",
+			"addWord": "Добавить слово",
+			"wordOriginalPlaceholder": "Слово",
+			"wordTranslationPlaceholder": "Перевод",
+			"examplesLabel": "Примеры",
+			"addExample": "Добавить пример",
+			"examplePhrasePlaceholder": "Фраза-пример",
+			"exampleTranslationPlaceholder": "Перевод примера",
+			"exampleContextPlaceholder": "Контекст (необязательно)"
+		},
+		"deleteCategory": {
+			"title": "Удалить категорию",
+			"description": "Будут удалены категория и все её фразы. Действие необратимо."
+		},
+		"deletePhrase": {
+			"title": "Удалить фразу",
+			"description": "Фраза будет удалена безвозвратно."
+		},
+		"deleteSuggestion": {
+			"title": "Удалить предложение",
+			"description": "Предложение будет удалено безвозвратно."
+		}
 	}
 }

@@ -8,8 +8,9 @@ import { cn } from "@/shared/lib/cn";
 import type { AddToDictionaryPayload } from "@/entities/admin-unknown-word";
 import type { AddModalState } from "../model/use-admin-unknown-words-page";
 import { LemmaAutocomplete } from "./lemma-autocomplete";
-import { X, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { NewEntryForm } from "./new-entry-form";
+import { Modal, ModalActions } from "@/shared/ui/modal";
 
 type ActionType = "new" | "link";
 
@@ -20,8 +21,6 @@ interface UnknownWordsAddModalProps {
 	onSubmit: (payload: AddToDictionaryPayload) => void;
 	onLink: (lemmaId: string) => void;
 }
-
-// ── Main component ─────────────────────────────────────────────────────────────
 
 export const UnknownWordsAddModal = ({
 	state,
@@ -54,12 +53,10 @@ export const UnknownWordsAddModal = ({
 		}
 	}, [state]);
 
-	if (!state?.open) return null;
-
 	const occurrenceText =
-		state.seenCount === 1
+		state?.seenCount === 1
 			? t("admin.unknownWords.addModal.subtitleOccurrences", { count: state.seenCount })
-			: t("admin.unknownWords.addModal.subtitleOccurrencesPlural", { count: state.seenCount });
+			: t("admin.unknownWords.addModal.subtitleOccurrencesPlural", { count: state?.seenCount ?? 0 });
 
 	const handleSubmit = () => {
 		if (action === "new") {
@@ -85,8 +82,6 @@ export const UnknownWordsAddModal = ({
 	const canSubmit =
 		action === "new" ? !!translation && !isPending : !!selectedLemma && !isPending;
 
-	const handleBackdropClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) =>
-		/* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
 	const handleHeadwordChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setHeadword(e.currentTarget.value);
 	const handlePartOfSpeechChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => setPartOfSpeech(e.currentTarget.value);
 	const handleTranslationChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setTranslation(e.currentTarget.value);
@@ -96,36 +91,23 @@ export const UnknownWordsAddModal = ({
 	const handleLemmaSelect: NonNullable<ComponentProps<typeof LemmaAutocomplete>["onSelect"]> = (id, label) => setSelectedLemma({ id, label });
 
 	return (
-		<div
-			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 p-4 backdrop-blur-sm max-sm:items-end max-sm:p-0"
-			onClick={handleBackdropClick}
+		<Modal
+			open={!!state?.open}
+			onClose={onClose}
+			title={t("admin.unknownWords.addModal.title")}
+			className="max-w-[520px]"
 		>
-			<div className="w-full max-w-[520px] max-h-[calc(100vh-32px)] overflow-y-auto [&::-webkit-scrollbar]:w-0 rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] animate-[modal-in_0.15s_ease] max-sm:max-w-full max-sm:rounded-t-[18px] max-sm:rounded-b-none max-sm:max-h-[94vh]">
-				{/* Header */}
-				<div className="mb-4 flex items-start justify-between">
-					<div>
-						<div className="font-display text-[15px] text-t-1">
-							{t("admin.unknownWords.addModal.title")}
-						</div>
-						<div className="mt-0.5 text-[11.5px] text-t-3">{occurrenceText}</div>
-					</div>
-					<Button
-						onClick={onClose}
-						title={t("admin.unknownWords.addModal.cancel")}
-						className="flex size-7 cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
-					>
-						<X className="size-3.5" />
-					</Button>
+			<Typography tag="p" className="mb-4 text-[11.5px] text-t-3">{occurrenceText}</Typography>
+
+			{/* Context snippet */}
+			{state?.snippet && (
+				<div className="mb-3.5 rounded-lg border-l-2 border-bd-3 bg-surf-2 px-3 py-2.5 text-[12px] leading-[1.6] text-t-2">
+					{state.snippet}
 				</div>
+			)}
 
-				{/* Context snippet */}
-				{state.snippet && (
-					<div className="mb-3.5 rounded-lg border-l-2 border-bd-3 bg-surf-2 px-3 py-2.5 text-[12px] leading-[1.6] text-t-2">
-						{state.snippet}
-					</div>
-				)}
-
-				{/* Word preview */}
+			{/* Word preview */}
+			{state && (
 				<div className="mb-3.5 flex items-center gap-2.5 rounded-lg bg-surf-2 px-3 py-2.5">
 					<div>
 						<div className="font-display text-[16px] font-semibold text-t-1">{state.word}</div>
@@ -136,111 +118,112 @@ export const UnknownWordsAddModal = ({
 						)}
 					</div>
 				</div>
+			)}
 
-				{/* Action selector */}
-				<div className="mb-3.5">
-					<div className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
-						{t("admin.unknownWords.addModal.actionLabel")}
-					</div>
-					<div className="flex flex-col gap-1.5">
-						{(["new", "link"] as ActionType[]).map((type) => {
-							const handleActionChange: NonNullable<ComponentProps<"input">["onChange"]> = () => setAction(type);
-							return (
-								<Typography tag="label"
-									key={type}
-									className={cn(
-										"flex cursor-pointer items-center gap-2 rounded-lg border px-2.5 py-2 transition-colors",
-										action === type
-											? "border-acc/30 bg-acc-bg"
-											: "border-bd-2 hover:border-bd-3 hover:bg-surf-2",
-									)}
-								>
-									<input
-										type="radio"
-										name="dictAction"
-										value={type}
-										checked={action === type}
-										onChange={handleActionChange}
-										className="accent-acc shrink-0"
-									/>
-									<div>
-										<div className="text-[12.5px] font-medium text-t-1">
-											{t(
-												type === "new"
-													? "admin.unknownWords.addModal.createNew"
-													: "admin.unknownWords.addModal.linkExisting",
-											)}
-										</div>
-										<div className="text-[11px] text-t-3">
-											{t(
-												type === "new"
-													? "admin.unknownWords.addModal.createNewSub"
-													: "admin.unknownWords.addModal.linkExistingSub",
-											)}
-										</div>
-									</div>
-								</Typography>
-							);
-						})}
-					</div>
+			{/* Action selector */}
+			<div className="mb-3.5">
+				<div className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					{t("admin.unknownWords.addModal.actionLabel")}
 				</div>
-
-				{/* New entry fields */}
-				{action === "new" && (
-					<NewEntryForm
-						state={state}
-						headword={headword}
-						partOfSpeech={partOfSpeech}
-						translation={translation}
-						level={level}
-						domain={domain}
-						formsRaw={formsRaw}
-						onHeadwordChange={handleHeadwordChange}
-						onPartOfSpeechChange={handlePartOfSpeechChange}
-						onTranslationChange={handleTranslationChange}
-						onLevelChange={handleLevelChange}
-						onDomainChange={handleDomainChange}
-						onFormsRawChange={handleFormsRawChange}
-						t={t}
-					/>
-				)}
-
-				{/* Link lemma */}
-				{action === "link" && (
-					<div className="mb-3">
-						<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
-							{t("admin.unknownWords.addModal.findLemma")}
-						</Typography>
-						<LemmaAutocomplete
-							value={selectedLemma}
-							onSelect={handleLemmaSelect}
-							placeholder={t("admin.unknownWords.addModal.findLemmaPlaceholder")}
-						/>
-					</div>
-				)}
-
-				{/* Footer */}
-				<div className="mt-4 flex justify-end gap-2 border-t border-bd-1 pt-3.5 max-sm:flex-col-reverse">
-					<Button
-						onClick={onClose}
-						title={t("admin.unknownWords.addModal.cancel")}
-						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] font-medium text-t-2 transition-colors hover:border-bd-3 hover:text-t-1 max-sm:h-[42px] max-sm:justify-center max-sm:text-[13.5px]"
-					>
-						{t("admin.unknownWords.addModal.cancel")}
-					</Button>
-					<Button
-						onClick={handleSubmit}
-						disabled={!canSubmit}
-						title={action === "link" ? t("admin.unknownWords.addModal.submitLink") : t("admin.unknownWords.addModal.submit")}
-						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-none bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 max-sm:h-[42px] max-sm:justify-center max-sm:text-[13.5px]"
-					>
-						<Check className="size-3" />
-						{action === "link"
-							? t("admin.unknownWords.addModal.submitLink")
-							: t("admin.unknownWords.addModal.submit")}
-					</Button>
+				<div className="flex flex-col gap-1.5">
+					{(["new", "link"] as ActionType[]).map((type) => {
+						const handleActionChange: NonNullable<ComponentProps<"input">["onChange"]> = () => setAction(type);
+						return (
+							<Typography tag="label"
+								key={type}
+								className={cn(
+									"flex cursor-pointer items-center gap-2 rounded-lg border px-2.5 py-2 transition-colors",
+									action === type
+										? "border-acc/30 bg-acc-bg"
+										: "border-bd-2 hover:border-bd-3 hover:bg-surf-2",
+								)}
+							>
+								<input
+									type="radio"
+									name="dictAction"
+									value={type}
+									checked={action === type}
+									onChange={handleActionChange}
+									className="accent-acc shrink-0"
+								/>
+								<div>
+									<div className="text-[12.5px] font-medium text-t-1">
+										{t(
+											type === "new"
+												? "admin.unknownWords.addModal.createNew"
+												: "admin.unknownWords.addModal.linkExisting",
+										)}
+									</div>
+									<div className="text-[11px] text-t-3">
+										{t(
+											type === "new"
+												? "admin.unknownWords.addModal.createNewSub"
+												: "admin.unknownWords.addModal.linkExistingSub",
+										)}
+									</div>
+								</div>
+							</Typography>
+						);
+					})}
 				</div>
 			</div>
-		</div>
+
+			{/* New entry fields */}
+			{action === "new" && state && (
+				<NewEntryForm
+					state={state}
+					headword={headword}
+					partOfSpeech={partOfSpeech}
+					translation={translation}
+					level={level}
+					domain={domain}
+					formsRaw={formsRaw}
+					onHeadwordChange={handleHeadwordChange}
+					onPartOfSpeechChange={handlePartOfSpeechChange}
+					onTranslationChange={handleTranslationChange}
+					onLevelChange={handleLevelChange}
+					onDomainChange={handleDomainChange}
+					onFormsRawChange={handleFormsRawChange}
+					t={t}
+				/>
+			)}
+
+			{/* Link lemma */}
+			{action === "link" && (
+				<div className="mb-3">
+					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+						{t("admin.unknownWords.addModal.findLemma")}
+					</Typography>
+					<LemmaAutocomplete
+						value={selectedLemma}
+						onSelect={handleLemmaSelect}
+						placeholder={t("admin.unknownWords.addModal.findLemmaPlaceholder")}
+					/>
+				</div>
+			)}
+
+			<ModalActions>
+				<Button
+					onClick={onClose}
+					title={t("admin.unknownWords.addModal.cancel")}
+					variant="ghost"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
+				>
+					{t("admin.unknownWords.addModal.cancel")}
+				</Button>
+				<Button
+					onClick={handleSubmit}
+					disabled={!canSubmit}
+					title={action === "link" ? t("admin.unknownWords.addModal.submitLink") : t("admin.unknownWords.addModal.submit")}
+					variant="action"
+					className="h-[34px] px-4 rounded-lg text-[13px] flex-1"
+				>
+					<Check className="size-3" />
+					{action === "link"
+						? t("admin.unknownWords.addModal.submitLink")
+						: t("admin.unknownWords.addModal.submit")}
+				</Button>
+			</ModalActions>
+		</Modal>
 	);
 };

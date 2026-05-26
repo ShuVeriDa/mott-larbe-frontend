@@ -1,14 +1,14 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
 import type { ImportMorphRulesResult } from "@/entities/morph-rule";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Modal, ModalActions } from "@/shared/ui/modal";
 import { ChangeEvent, ComponentProps, DragEvent, useRef, useState } from "react";
 import { Download } from "lucide-react";
+
 interface Props {
 	open: boolean;
 	isLoading?: boolean;
@@ -30,8 +30,6 @@ export const MorphologyImportModal = ({
 	const [overwrite, setOverwrite] = useState(false);
 	const [dragging, setDragging] = useState(false);
 
-	if (!open) return null;
-
 	const handleDrop = (e: DragEvent) => {
 		e.preventDefault();
 		setDragging(false);
@@ -49,7 +47,6 @@ export const MorphologyImportModal = ({
 		onSubmit(file, overwrite);
 	};
 
-	const handleBackdropClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
 	const handleDragOver: NonNullable<ComponentProps<"div">["onDragOver"]> = e => {
 		e.preventDefault();
 		setDragging(true);
@@ -57,20 +54,20 @@ export const MorphologyImportModal = ({
 	const handleDragLeave: NonNullable<ComponentProps<"div">["onDragLeave"]> = () => setDragging(false);
 	const handleFilePickerClick: NonNullable<ComponentProps<"div">["onClick"]> = () => inputRef.current?.click();
 	const handleOverwriteChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setOverwrite(e.currentTarget.checked);
-return (
-		<div
-			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"
-			onClick={handleBackdropClick}
-		>
-			<div className="w-full max-w-[480px] overflow-y-auto rounded-[14px] border border-bd-2 bg-surf p-5 shadow-md max-sm:max-w-full max-sm:rounded-b-none max-sm:rounded-t-[16px] max-sm:pb-7">
-				<Typography tag="h2" className="font-display text-[15px] text-t-1 mb-1">
-					{t("admin.morphology.importModal.title")}
-				</Typography>
-				<Typography tag="p" className="mb-4 text-[12px] text-t-3">
-					{t("admin.morphology.importModal.subtitle")}
-				</Typography>
 
-				{result ? (
+	return (
+		<Modal
+			open={open}
+			onClose={onClose}
+			title={t("admin.morphology.importModal.title")}
+			className="max-w-[480px]"
+		>
+			<Typography tag="p" className="mb-4 text-[12px] text-t-3">
+				{t("admin.morphology.importModal.subtitle")}
+			</Typography>
+
+			{result ? (
+				<>
 					<div className="mb-4 rounded-[10px] border border-bd-1 bg-surf-2 p-4">
 						<div className="mb-3 text-[13px] font-semibold text-t-1">
 							{t("admin.morphology.importModal.resultTitle")}
@@ -119,90 +116,87 @@ return (
 							</div>
 						)}
 					</div>
-				) : (
-					<form action={handleSubmit} className="flex flex-col gap-3.5">
-						<div
-							className={cn(
-								"cursor-pointer rounded-[9px] border-[1.5px] border-dashed border-bd-2 p-6 text-center transition-colors",
-								dragging
-									? "border-acc bg-acc-bg"
-									: "hover:border-acc hover:bg-acc-bg",
-							)}
-							onDragOver={handleDragOver}
-							onDragLeave={handleDragLeave}
-							onDrop={handleDrop}
-							onClick={handleFilePickerClick}
-						>
-							<input
-								ref={inputRef}
-								type="file"
-								accept=".csv,.json"
-								className="hidden"
-								onChange={handleFileChange}
-							/>
-							<div className="mb-2 text-t-3">
-								<Download className="mx-auto size-6" />
-							</div>
-							{file ? (
-								<div className="text-[13px] font-semibold text-t-1">
-									{file.name}
-								</div>
-							) : (
-								<>
-									<div className="text-[13px] font-semibold text-t-2">
-										{t("admin.morphology.importModal.dropTitle")}
-									</div>
-									<div className="mt-1 text-[11.5px] text-t-3">
-										{t("admin.morphology.importModal.dropSub")}
-									</div>
-								</>
-							)}
-						</div>
-
-						<Typography tag="label" className="flex cursor-pointer items-center gap-2.5">
-							<input
-								type="checkbox"
-								checked={overwrite}
-								onChange={handleOverwriteChange}
-								className="accent-acc"
-							/>
-							<Typography tag="span" className="text-[12.5px] text-t-2">
-								{t("admin.morphology.importModal.overwrite")}
-							</Typography>
-						</Typography>
-
-						<div className="flex justify-end gap-2 max-sm:flex-col-reverse">
-							<Button
-								onClick={onClose}
-								title={t("admin.morphology.importModal.cancel")}
-								className="flex h-[30px] items-center justify-center rounded-base border border-bd-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
-							>
-								{t("admin.morphology.importModal.cancel")}
-							</Button>
-							<Button
-								type="submit"
-								disabled={isLoading || !file}
-								title={isLoading ? "…" : t("admin.morphology.importModal.submit")}
-								className="flex h-[30px] items-center justify-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
-							>
-								{isLoading ? "…" : t("admin.morphology.importModal.submit")}
-							</Button>
-						</div>
-					</form>
-				)}
-
-				{result && (
-					<div className="flex justify-end">
+					<ModalActions>
 						<Button
+							variant="action"
 							onClick={onClose}
-							title={t("admin.morphology.importModal.close")}
-							className="flex h-[30px] items-center justify-center rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
+							className="h-[34px] flex-1 px-4 rounded-lg text-[13px]"
 						>
 							{t("admin.morphology.importModal.close")}
 						</Button>
+					</ModalActions>
+				</>
+			) : (
+				<form action={handleSubmit} className="flex flex-col gap-3.5">
+					<div
+						className={cn(
+							"cursor-pointer rounded-[9px] border-[1.5px] border-dashed border-bd-2 p-6 text-center transition-colors",
+							dragging
+								? "border-acc bg-acc-bg"
+								: "hover:border-acc hover:bg-acc-bg",
+						)}
+						onDragOver={handleDragOver}
+						onDragLeave={handleDragLeave}
+						onDrop={handleDrop}
+						onClick={handleFilePickerClick}
+					>
+						<input
+							ref={inputRef}
+							type="file"
+							accept=".csv,.json"
+							className="hidden"
+							onChange={handleFileChange}
+						/>
+						<div className="mb-2 text-t-3">
+							<Download className="mx-auto size-6" />
+						</div>
+						{file ? (
+							<div className="text-[13px] font-semibold text-t-1">
+								{file.name}
+							</div>
+						) : (
+							<>
+								<div className="text-[13px] font-semibold text-t-2">
+									{t("admin.morphology.importModal.dropTitle")}
+								</div>
+								<div className="mt-1 text-[11.5px] text-t-3">
+									{t("admin.morphology.importModal.dropSub")}
+								</div>
+							</>
+						)}
 					</div>
-				)}
-			</div>
-		</div>
+
+					<Typography tag="label" className="flex cursor-pointer items-center gap-2.5">
+						<input
+							type="checkbox"
+							checked={overwrite}
+							onChange={handleOverwriteChange}
+							className="accent-acc"
+						/>
+						<Typography tag="span" className="text-[12.5px] text-t-2">
+							{t("admin.morphology.importModal.overwrite")}
+						</Typography>
+					</Typography>
+
+					<ModalActions>
+						<Button
+							variant="ghost"
+							onClick={onClose}
+							className="h-[34px] px-4 rounded-lg text-[13px]"
+						>
+							{t("admin.morphology.importModal.cancel")}
+						</Button>
+						<Button
+							variant="action"
+							type="submit"
+							disabled={isLoading || !file}
+							className="h-[34px] flex-1 px-4 rounded-lg text-[13px]"
+						>
+							{isLoading ? "…" : t("admin.morphology.importModal.submit")}
+						</Button>
+					</ModalActions>
+				</form>
+			)}
+		</Modal>
 	);
 };

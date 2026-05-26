@@ -91,7 +91,9 @@ export const NoteForm = ({
 						{t("reader.notes.cancel")}
 					</Button>
 				)}
-				<Typography tag="span" className="ml-auto text-[11px] text-t-4">⌘↵</Typography>
+				<Typography tag="span" className="ml-auto text-[11px] text-t-4">
+					⌘↵
+				</Typography>
 			</div>
 		</form>
 	);

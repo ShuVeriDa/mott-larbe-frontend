@@ -1,11 +1,11 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
 import type { AdminDictListItem } from "@/entities/dictionary";
 import { ComponentProps, useEffect, useState } from 'react';
+import { Modal, ModalActions } from "@/shared/ui/modal";
+
 interface DictionaryAddSenseModalProps {
 	entry: AdminDictListItem | null;
 	isSubmitting: boolean;
@@ -40,67 +40,55 @@ export const DictionaryAddSenseModal = ({
 		onConfirm(definition.trim());
 	};
 
-	if (!entry) return null;
-
-	const inputCls =
-		"w-full min-h-[72px] resize-y rounded-[8px] border border-bd-2 bg-bg px-2.5 py-2 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc";
-
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
-				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
-			};
 	const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = e => {
-							setDefinition(e.currentTarget.value);
-							setError("");
-						};
-return (
-		<div
-			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={handleClick}
+		setDefinition(e.currentTarget.value);
+		setError("");
+	};
+
+	return (
+		<Modal
+			open={!!entry}
+			onClose={onClose}
+			title={t("admin.dictionary.addSenseModal.title")}
+			className="max-w-[440px]"
 		>
-			<div className="w-[440px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
-				<Typography tag="h2" className="font-display text-[16px] text-t-1 mb-1">
-					{t("admin.dictionary.addSenseModal.title")}
+			<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
+				{t("admin.dictionary.addSenseModal.subtitle")}{" "}
+				<Typography tag="span" className="font-medium text-t-2">{entry?.baseForm}</Typography>
+			</Typography>
+			<div className="mb-4">
+				<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					{t("admin.dictionary.addSenseModal.definitionLabel")} *
 				</Typography>
-				<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
-					{t("admin.dictionary.addSenseModal.subtitle")}{" "}
-					<Typography tag="span" className="font-medium text-t-2">{entry.baseForm}</Typography>
-				</Typography>
-				<div className="mb-4">
-					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
-						{t("admin.dictionary.addSenseModal.definitionLabel")} *
-					</Typography>
-					<textarea
-						className={inputCls}
-						placeholder={t(
-							"admin.dictionary.addSenseModal.definitionPlaceholder",
-						)}
-						value={definition}
-						onChange={handleChange}
-						autoFocus
-					/>
-					{error && <Typography tag="p" className="mt-1 text-[11px] text-red-t">{error}</Typography>}
-				</div>
-				<div className="flex justify-end gap-2 max-sm:flex-col-reverse">
-					<Button
-						onClick={onClose}
-						disabled={isSubmitting}
-						title={t("admin.dictionary.addSenseModal.cancel")}
-						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10"
-					>
-						{t("admin.dictionary.addSenseModal.cancel")}
-					</Button>
-					<Button
-						onClick={handleSubmit}
-						disabled={isSubmitting}
-						title={isSubmitting ? t("admin.dictionary.addSenseModal.adding") : t("admin.dictionary.addSenseModal.add")}
-						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10"
-					>
-						{isSubmitting
-							? t("admin.dictionary.addSenseModal.adding")
-							: t("admin.dictionary.addSenseModal.add")}
-					</Button>
-				</div>
+				<textarea
+					className="w-full min-h-[72px] resize-y rounded-[8px] border border-bd-2 bg-bg px-2.5 py-2 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
+					placeholder={t("admin.dictionary.addSenseModal.definitionPlaceholder")}
+					value={definition}
+					onChange={handleChange}
+					autoFocus
+				/>
+				{error && <Typography tag="p" className="mt-1 text-[11px] text-red-t">{error}</Typography>}
 			</div>
-		</div>
+			<ModalActions>
+				<Button
+					variant="ghost"
+					onClick={onClose}
+					disabled={isSubmitting}
+					className="h-[34px] px-4 rounded-lg text-[13px]"
+				>
+					{t("admin.dictionary.addSenseModal.cancel")}
+				</Button>
+				<Button
+					variant="action"
+					onClick={handleSubmit}
+					disabled={isSubmitting}
+					className="h-[34px] flex-1 px-4 rounded-lg text-[13px]"
+				>
+					{isSubmitting
+						? t("admin.dictionary.addSenseModal.adding")
+						: t("admin.dictionary.addSenseModal.add")}
+				</Button>
+			</ModalActions>
+		</Modal>
 	);
 };

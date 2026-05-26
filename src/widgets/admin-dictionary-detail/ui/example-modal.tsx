@@ -5,6 +5,9 @@ import { Button } from "@/shared/ui/button";
 import type { AdminDictExample } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
 import { ComponentProps, useEffect, useRef, useState } from "react";
+import { Modal, ModalActions } from "@/shared/ui/modal";
+import { Typography } from "@/shared/ui/typography";
+
 interface ExampleModalProps {
 	isOpen: boolean;
 	editExample?: AdminDictExample | null;
@@ -39,73 +42,71 @@ export const ExampleModal = ({
 		onSave({ text: text.trim(), translation: translation.trim() });
 	};
 
-	if (!isOpen) return null;
-
 	const taCls =
 		"w-full resize-y rounded-lg border border-bd-2 bg-surf-2 px-2.5 py-2 text-[12.5px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
 	const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = e => setText(e.currentTarget.value);
 	const handleChange2: NonNullable<ComponentProps<"textarea">["onChange"]> = e => setTranslation(e.currentTarget.value);
-return (
-		<div
-			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
-			onClick={handleClick}
+
+	return (
+		<Modal
+			open={isOpen}
+			onClose={onClose}
+			title={editExample
+				? t("admin.dictionaryDetail.editExample")
+				: t("admin.dictionaryDetail.addExampleTitle")}
+			className="max-w-[440px]"
 		>
-			<div className="w-[440px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
-				<div className="mb-1 font-display text-[15px] text-t-1">
-					{editExample
-						? t("admin.dictionaryDetail.editExample")
-						: t("admin.dictionaryDetail.addExampleTitle")}
+			<Typography tag="p" className="mb-4 text-[12px] text-t-3">
+				{t("admin.dictionaryDetail.exampleModalSub")}
+			</Typography>
+			<form action={handleSubmit}>
+				<div className="mb-3.5">
+					<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
+						{t("admin.dictionaryDetail.exampleSrc")}
+					</div>
+					<textarea
+						ref={textareaRef}
+						className={`${taCls} min-h-[68px]`}
+						placeholder={t("admin.dictionaryDetail.exampleSrcPlaceholder")}
+						value={text}
+						onChange={handleChange}
+					/>
 				</div>
-				<div className="mb-4.5 text-[12px] text-t-3">
-					{t("admin.dictionaryDetail.exampleModalSub")}
+				<div className="mb-0">
+					<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
+						{t("admin.dictionaryDetail.exampleTranslation")}
+					</div>
+					<textarea
+						className={`${taCls} min-h-[50px]`}
+						placeholder={t(
+							"admin.dictionaryDetail.exampleTranslationPlaceholder",
+						)}
+						value={translation}
+						onChange={handleChange2}
+					/>
 				</div>
-				<form action={handleSubmit}>
-					<div className="mb-3.5">
-						<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
-							{t("admin.dictionaryDetail.exampleSrc")}
-						</div>
-						<textarea
-							ref={textareaRef}
-							className={`${taCls} min-h-[68px]`}
-							placeholder={t("admin.dictionaryDetail.exampleSrcPlaceholder")}
-							value={text}
-							onChange={handleChange}
-						/>
-					</div>
-					<div className="mb-0">
-						<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
-							{t("admin.dictionaryDetail.exampleTranslation")}
-						</div>
-						<textarea
-							className={`${taCls} min-h-[50px]`}
-							placeholder={t(
-								"admin.dictionaryDetail.exampleTranslationPlaceholder",
-							)}
-							value={translation}
-							onChange={handleChange2}
-						/>
-					</div>
-					<div className="mt-5 flex justify-end gap-2">
-						<Button
-							className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
-							onClick={onClose}
-							title={t("admin.dictionaryDetail.cancel")}
-						>
-							{t("admin.dictionaryDetail.cancel")}
-						</Button>
-						<Button
-							type="submit"
-							disabled={isPending || !text.trim()}
-							title={t("admin.dictionaryDetail.add")}
-							className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
-						>
-							{t("admin.dictionaryDetail.add")}
-						</Button>
-					</div>
-				</form>
-			</div>
-		</div>
+				<ModalActions>
+					<Button
+						type="button"
+						onClick={onClose}
+						title={t("admin.dictionaryDetail.cancel")}
+						variant="ghost"
+						className="h-[34px] px-4 rounded-lg text-[13px]"
+					>
+						{t("admin.dictionaryDetail.cancel")}
+					</Button>
+					<Button
+						type="submit"
+						disabled={isPending || !text.trim()}
+						title={t("admin.dictionaryDetail.add")}
+						variant="action"
+						className="h-[34px] px-4 rounded-lg text-[13px] flex-1"
+					>
+						{t("admin.dictionaryDetail.add")}
+					</Button>
+				</ModalActions>
+			</form>
+		</Modal>
 	);
 };

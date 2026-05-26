@@ -11,6 +11,9 @@ import type {
 import { useI18n } from "@/shared/lib/i18n";
 import { ComponentProps, useEffect, useRef, useState } from "react";
 import { Select } from "@/shared/ui/select";
+import { Modal, ModalActions } from "@/shared/ui/modal";
+import { Typography } from "@/shared/ui/typography";
+
 interface MorphFormModalProps {
 	isOpen: boolean;
 	editForm?: AdminDictMorphForm | null;
@@ -70,105 +73,100 @@ export const MorphFormModal = ({
 		});
 	};
 
-	if (!isOpen) return null;
-
-	const inputCls =
-		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[13px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
-
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
 	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(e.currentTarget.value);
 	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e =>
-									setGramCase(e.currentTarget.value as AdminDictGramCase | "");
+		setGramCase(e.currentTarget.value as AdminDictGramCase | "");
 	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e =>
-									setGramNumber(e.currentTarget.value as AdminDictGramNumber | "");
-return (
-		<div
-			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
-			onClick={handleClick}
+		setGramNumber(e.currentTarget.value as AdminDictGramNumber | "");
+
+	return (
+		<Modal
+			open={isOpen}
+			onClose={onClose}
+			title={editForm
+				? t("admin.dictionaryDetail.editForm")
+				: t("admin.dictionaryDetail.addFormTitle")}
+			className="max-w-[440px]"
 		>
-			<div className="w-[440px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
-				<div className="mb-1 font-display text-[15px] text-t-1">
-					{editForm
-						? t("admin.dictionaryDetail.editForm")
-						: t("admin.dictionaryDetail.addFormTitle")}
+			<Typography tag="p" className="mb-4 text-[12px] text-t-3">
+				{t("admin.dictionaryDetail.formModalSub")}
+			</Typography>
+			<form action={handleSubmit}>
+				<div className="mb-3.5">
+					<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
+						{t("admin.dictionaryDetail.wordForm")}
+					</div>
+					<Input
+						ref={inputRef}
+						className="rounded-lg font-display text-[14px]"
+						type="text"
+						placeholder={t("admin.dictionaryDetail.wordFormPlaceholder")}
+						value={form}
+						onChange={handleChange}
+						aria-label={t("admin.dictionaryDetail.wordForm")}
+					/>
 				</div>
-				<div className="mb-4.5 text-[12px] text-t-3">
-					{t("admin.dictionaryDetail.formModalSub")}
-				</div>
-				<form action={handleSubmit}>
-					<div className="mb-3.5">
+				<div className="mb-0 flex gap-2.5 max-sm:flex-col">
+					<div className="flex-1">
 						<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
-							{t("admin.dictionaryDetail.wordForm")}
+							{t("admin.dictionaryDetail.gramCase")}
 						</div>
-						<Input
-							ref={inputRef}
-							className="rounded-lg font-display text-[14px]"
-							type="text"
-							placeholder={t("admin.dictionaryDetail.wordFormPlaceholder")}
-							value={form}
-							onChange={handleChange}
-							aria-label={t("admin.dictionaryDetail.wordForm")}
-						/>
-					</div>
-					<div className="mb-0 flex gap-2.5 max-sm:flex-col">
-						<div className="flex-1">
-							<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
-								{t("admin.dictionaryDetail.gramCase")}
-							</div>
-							<Select
-								variant="lg"
-								value={gramCase}
-								onChange={handleChange2}
-							>
-								<option value="">
-									— {t("admin.dictionaryDetail.selectCase")} —
-								</option>
-								{GRAM_CASES.map(c => (
-									<option key={c.value} value={c.value}>
-										{c.label}
-									</option>
-								))}
-							</Select>
-						</div>
-						<div className="flex-1">
-							<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
-								{t("admin.dictionaryDetail.gramNumber")}
-							</div>
-							<Select
-								variant="lg"
-								value={gramNumber}
-								onChange={handleChange3}
-							>
-								<option value="">
-									— {t("admin.dictionaryDetail.selectNumber")} —
-								</option>
-								{GRAM_NUMBERS.map(n => (
-									<option key={n.value} value={n.value}>
-										{n.label}
-									</option>
-								))}
-							</Select>
-						</div>
-					</div>
-					<div className="mt-5 flex justify-end gap-2">
-						<Button
-							className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
-							onClick={onClose}
-							title={t("admin.dictionaryDetail.cancel")}
+						<Select
+							variant="lg"
+							value={gramCase}
+							onChange={handleChange2}
 						>
-							{t("admin.dictionaryDetail.cancel")}
-						</Button>
-						<Button
-							type="submit"
-							disabled={isPending || !form.trim()}
-							title={t("admin.dictionaryDetail.add")}
-							className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
-						>
-							{t("admin.dictionaryDetail.add")}
-						</Button>
+							<option value="">
+								— {t("admin.dictionaryDetail.selectCase")} —
+							</option>
+							{GRAM_CASES.map(c => (
+								<option key={c.value} value={c.value}>
+									{c.label}
+								</option>
+							))}
+						</Select>
 					</div>
-				</form>
-			</div>
-		</div>
+					<div className="flex-1">
+						<div className="mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2">
+							{t("admin.dictionaryDetail.gramNumber")}
+						</div>
+						<Select
+							variant="lg"
+							value={gramNumber}
+							onChange={handleChange3}
+						>
+							<option value="">
+								— {t("admin.dictionaryDetail.selectNumber")} —
+							</option>
+							{GRAM_NUMBERS.map(n => (
+								<option key={n.value} value={n.value}>
+									{n.label}
+								</option>
+							))}
+						</Select>
+					</div>
+				</div>
+				<ModalActions>
+					<Button
+						type="button"
+						onClick={onClose}
+						title={t("admin.dictionaryDetail.cancel")}
+						variant="ghost"
+						className="h-[34px] px-4 rounded-lg text-[13px]"
+					>
+						{t("admin.dictionaryDetail.cancel")}
+					</Button>
+					<Button
+						type="submit"
+						disabled={isPending || !form.trim()}
+						title={t("admin.dictionaryDetail.add")}
+						variant="action"
+						className="h-[34px] px-4 rounded-lg text-[13px] flex-1"
+					>
+						{t("admin.dictionaryDetail.add")}
+					</Button>
+				</ModalActions>
+			</form>
+		</Modal>
 	);
 };

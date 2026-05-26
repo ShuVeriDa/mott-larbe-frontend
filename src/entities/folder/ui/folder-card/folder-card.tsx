@@ -141,6 +141,7 @@ export const FolderCard = ({
 
 					{onMenu ? (
 						<Button
+							variant="bare"
 							aria-label={menuLabel}
 							title={menuLabel}
 							onClick={handleMenuClick}

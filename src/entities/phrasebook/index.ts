@@ -9,6 +9,19 @@ export {
 	type PhraseWord,
 	type PhraseExample,
 	type SuggestPhraseDto,
+	adminPhrasebookApi,
+	adminPhrasebookKeys,
+	type AdminPhrasebookCategory,
+	type AdminPhrasebookPhrase,
+	type AdminPhrasesResponse,
+	type AdminPhrasebookSuggestion,
+	type CreateAdminCategoryDto,
+	type UpdateAdminCategoryDto,
+	type CreateAdminPhraseDto,
+	type UpdateAdminPhraseDto,
+	type CreateAdminPhraseWordDto,
+	type CreateAdminPhraseExampleDto,
+	type AdminPhrasesQuery,
 } from "./api";
 
 export {

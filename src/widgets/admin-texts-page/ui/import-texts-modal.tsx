@@ -2,14 +2,16 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
+import { Modal, ModalActions } from "@/shared/ui/modal";
 import type {
 	BulkImportResultItem,
 	CreateTextDto,
 } from "@/entities/admin-text";
 import { useAdminTextBulkImport } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
-import { X, Upload } from "lucide-react";
+import { Upload } from "lucide-react";
 import { ChangeEvent, ComponentProps, useRef, useState } from "react";
+
 interface ImportTextsModalProps {
 	onClose: () => void;
 }
@@ -78,176 +80,152 @@ export const ImportTextsModal = ({ onClose }: ImportTextsModalProps) => {
 		if (fileRef.current) fileRef.current.value = "";
 	};
 
-		const handleMouseDown: NonNullable<ComponentProps<"div">["onMouseDown"]> = e => {
-				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
-			};
 	const handleFilePickerClick: NonNullable<ComponentProps<"div">["onClick"]> = () => fileRef.current?.click();
 	const handleKeyDown: NonNullable<ComponentProps<"div">["onKeyDown"]> = e => {
-									if (e.key === "Enter") fileRef.current?.click();
-								};
-return (
-		<div
-			className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
-			onMouseDown={handleMouseDown}
+		if (e.key === "Enter") fileRef.current?.click();
+	};
+
+	return (
+		<Modal
+			open
+			onClose={onClose}
+			title={t("admin.texts.import.title")}
+			className="max-w-[560px]"
 		>
-			<div className="flex w-full max-w-[560px] flex-col rounded-[12px] border border-bd-2 bg-surf shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
-				{/* Header */}
-				<div className="flex items-center justify-between border-b border-bd-1 px-5 py-4">
-					<Typography tag="h2" className="text-[14px] font-semibold text-t-1">
-						{t("admin.texts.import.title")}
-					</Typography>
-					<Button
-						onClick={onClose}
-						title={t("admin.texts.import.cancel")}
-						className="flex size-7 cursor-pointer items-center justify-center rounded-[6px] border-none bg-transparent text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
-					>
-						<X className="size-[14px]" />
-					</Button>
-				</div>
-
-				{/* Body */}
-				<div className="p-5">
-					{modalState === "done" ? (
-						<div className="flex flex-col gap-4">
-							{/* Summary */}
-							<div className="flex gap-3 rounded-[8px] border border-bd-1 bg-surf-2 px-4 py-3 text-[12.5px]">
-								<Typography tag="span" className="text-t-2">
-									{t("admin.texts.import.summaryTotal", {
-										count: summary.total,
-									})}
-								</Typography>
-								<Typography tag="span" className="text-grn-t font-medium">
-									{t("admin.texts.import.summaryCreated", {
-										count: summary.created,
-									})}
-								</Typography>
-								{summary.failed > 0 && (
-									<Typography tag="span" className="text-red-t font-medium">
-										{t("admin.texts.import.summaryFailed", {
-											count: summary.failed,
-										})}
-									</Typography>
-								)}
-							</div>
-
-							{/* Per-row results */}
-							<div className="max-h-[280px] overflow-y-auto rounded-[8px] border border-bd-1 [&::-webkit-scrollbar]:w-0">
-								{results.map(item => (
-									<div
-										key={item.index}
-										className="flex items-start gap-3 border-b border-bd-1 px-3 py-2.5 last:border-b-0"
-									>
-										<Typography tag="span" className="mt-px shrink-0 text-[10.5px] text-t-4">
-											#{item.index + 1}
-										</Typography>
-										<Typography tag="span"
-											className={`mt-px shrink-0 text-[10.5px] font-semibold ${
-												item.status === "ok" ? "text-grn-t" : "text-red-t"
-											}`}
-										>
-											{item.status === "ok"
-												? t("admin.texts.import.resultOk")
-												: t("admin.texts.import.resultError")}
-										</Typography>
-										<div className="min-w-0 flex-1">
-											<Typography tag="p" className="truncate text-[12px] text-t-1">
-												{item.title}
-											</Typography>
-											{item.error && (
-												<Typography tag="p" className="mt-0.5 text-[11px] text-red-t">
-													{item.error}
-												</Typography>
-											)}
-										</div>
-									</div>
-								))}
-							</div>
-
-							<div className="flex justify-end gap-2">
-								<Button
-									onClick={handleReset}
-									title={t("admin.texts.import.importMore")}
-									className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-4 text-[12.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2"
-								>
-									{t("admin.texts.import.importMore")}
-								</Button>
-								<Button
-									onClick={onClose}
-									title={t("admin.texts.import.done")}
-									className="h-8 cursor-pointer rounded-base bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-88"
-								>
-									{t("admin.texts.import.done")}
-								</Button>
-							</div>
-						</div>
-					) : (
-						<form action={handleSubmit} className="flex flex-col gap-4">
-							<Typography tag="p" className="text-[12.5px] text-t-3">
-								{t("admin.texts.import.description")}
+			{modalState === "done" ? (
+				<div className="flex flex-col gap-4">
+					{/* Summary */}
+					<div className="flex gap-3 rounded-[8px] border border-bd-1 bg-surf-2 px-4 py-3 text-[12.5px]">
+						<Typography tag="span" className="text-t-2">
+							{t("admin.texts.import.summaryTotal", { count: summary.total })}
+						</Typography>
+						<Typography tag="span" className="text-grn-t font-medium">
+							{t("admin.texts.import.summaryCreated", { count: summary.created })}
+						</Typography>
+						{summary.failed > 0 && (
+							<Typography tag="span" className="text-red-t font-medium">
+								{t("admin.texts.import.summaryFailed", { count: summary.failed })}
 							</Typography>
+						)}
+					</div>
 
-							{/* File picker */}
+					{/* Per-row results */}
+					<div className="max-h-[280px] overflow-y-auto rounded-[8px] border border-bd-1 [&::-webkit-scrollbar]:w-0">
+						{results.map(item => (
 							<div
-								className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[8px] border border-dashed border-bd-3 bg-surf-2 px-4 py-8 transition-colors hover:border-acc hover:bg-surf-3"
-								onClick={handleFilePickerClick}
-								onKeyDown={handleKeyDown}
-								role="button"
-								tabIndex={0}
+								key={item.index}
+								className="flex items-start gap-3 border-b border-bd-1 px-3 py-2.5 last:border-b-0"
 							>
-								<Upload className="size-6 text-t-3" />
-								{fileName ? (
-									<Typography tag="span" className="max-w-[320px] truncate text-[12.5px] font-medium text-t-1">
-										{fileName}
-									</Typography>
-								) : (
-									<Typography tag="span" className="text-[12.5px] text-t-3">
-										{t("admin.texts.import.chooseFile")}
-									</Typography>
-								)}
-								<input
-									ref={fileRef}
-									type="file"
-									accept=".json"
-									className="hidden"
-									onChange={handleFileChange}
-								/>
-							</div>
-
-							{parseError && (
-								<Typography tag="p" className="rounded-[6px] bg-red-bg px-3 py-2 text-[12px] text-red-t">
-									{parseError}
+								<Typography tag="span" className="mt-px shrink-0 text-[10.5px] text-t-4">
+									#{item.index + 1}
 								</Typography>
-							)}
-
-							{bulkImport.isError && (
-								<Typography tag="p" className="rounded-[6px] bg-red-bg px-3 py-2 text-[12px] text-red-t">
-									{t("admin.texts.import.serverError")}
+								<Typography
+									tag="span"
+									className={`mt-px shrink-0 text-[10.5px] font-semibold ${
+										item.status === "ok" ? "text-grn-t" : "text-red-t"
+									}`}
+								>
+									{item.status === "ok"
+										? t("admin.texts.import.resultOk")
+										: t("admin.texts.import.resultError")}
 								</Typography>
-							)}
-
-							<div className="flex justify-end gap-2">
-								<Button
-									onClick={onClose}
-									title={t("admin.texts.import.cancel")}
-									className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-4 text-[12.5px] text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2"
-								>
-									{t("admin.texts.import.cancel")}
-								</Button>
-								<Button
-									type="submit"
-									disabled={!fileName || bulkImport.isPending}
-									title={bulkImport.isPending ? t("admin.texts.import.importing") : t("admin.texts.import.submit")}
-									className="h-8 cursor-pointer rounded-base bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-40"
-								>
-									{bulkImport.isPending
-										? t("admin.texts.import.importing")
-										: t("admin.texts.import.submit")}
-								</Button>
+								<div className="min-w-0 flex-1">
+									<Typography tag="p" className="truncate text-[12px] text-t-1">
+										{item.title}
+									</Typography>
+									{item.error && (
+										<Typography tag="p" className="mt-0.5 text-[11px] text-red-t">
+											{item.error}
+										</Typography>
+									)}
+								</div>
 							</div>
-						</form>
-					)}
+						))}
+					</div>
+
+					<ModalActions>
+						<Button
+							variant="ghost"
+							onClick={handleReset}
+							className="h-[34px] px-4 rounded-lg text-[13px]"
+						>
+							{t("admin.texts.import.importMore")}
+						</Button>
+						<Button
+							variant="action"
+							onClick={onClose}
+							className="h-[34px] flex-1 px-4 rounded-lg text-[13px]"
+						>
+							{t("admin.texts.import.done")}
+						</Button>
+					</ModalActions>
 				</div>
-			</div>
-		</div>
+			) : (
+				<form action={handleSubmit} className="flex flex-col gap-4">
+					<Typography tag="p" className="text-[12.5px] text-t-3">
+						{t("admin.texts.import.description")}
+					</Typography>
+
+					{/* File picker */}
+					<div
+						className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[8px] border border-dashed border-bd-3 bg-surf-2 px-4 py-8 transition-colors hover:border-acc hover:bg-surf-3"
+						onClick={handleFilePickerClick}
+						onKeyDown={handleKeyDown}
+						role="button"
+						tabIndex={0}
+					>
+						<Upload className="size-6 text-t-3" />
+						{fileName ? (
+							<Typography tag="span" className="max-w-[320px] truncate text-[12.5px] font-medium text-t-1">
+								{fileName}
+							</Typography>
+						) : (
+							<Typography tag="span" className="text-[12.5px] text-t-3">
+								{t("admin.texts.import.chooseFile")}
+							</Typography>
+						)}
+						<input
+							ref={fileRef}
+							type="file"
+							accept=".json"
+							className="hidden"
+							onChange={handleFileChange}
+						/>
+					</div>
+
+					{parseError && (
+						<Typography tag="p" className="rounded-[6px] bg-red-bg px-3 py-2 text-[12px] text-red-t">
+							{parseError}
+						</Typography>
+					)}
+
+					{bulkImport.isError && (
+						<Typography tag="p" className="rounded-[6px] bg-red-bg px-3 py-2 text-[12px] text-red-t">
+							{t("admin.texts.import.serverError")}
+						</Typography>
+					)}
+
+					<ModalActions>
+						<Button
+							variant="ghost"
+							onClick={onClose}
+							className="h-[34px] px-4 rounded-lg text-[13px]"
+						>
+							{t("admin.texts.import.cancel")}
+						</Button>
+						<Button
+							variant="action"
+							type="submit"
+							disabled={!fileName || bulkImport.isPending}
+							className="h-[34px] flex-1 px-4 rounded-lg text-[13px]"
+						>
+							{bulkImport.isPending
+								? t("admin.texts.import.importing")
+								: t("admin.texts.import.submit")}
+						</Button>
+					</ModalActions>
+				</form>
+			)}
+		</Modal>
 	);
 };

@@ -196,14 +196,16 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 				<Button
 					onClick={onClose}
 					title={t("admin.payments.receipt.close")}
-					className="flex h-[32px] items-center rounded-lg border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
+					variant="ghost"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
 				>
 					{t("admin.payments.receipt.close")}
 				</Button>
 				<Button
 					disabled
 					title={t("admin.payments.receipt.copyLinkUnavailable")}
-					className="flex h-[32px] cursor-not-allowed items-center rounded-lg bg-acc px-4 text-[12.5px] font-semibold text-white opacity-40"
+					variant="action"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
 				>
 					{t("admin.payments.receipt.copyLink")}
 				</Button>

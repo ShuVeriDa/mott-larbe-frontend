@@ -1,15 +1,15 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Button } from "@/shared/ui/button";
-import { TableRow, TableCell } from "@/shared/ui/table";
-import { ComponentProps } from "react";
-import { cn } from "@/shared/lib/cn";
 import type {
 	AdminPaymentListItem,
 	PaymentBackendStatus,
 	PaymentProvider,
 } from "@/entities/admin-payment";
+import { cn } from "@/shared/lib/cn";
+import { Button } from "@/shared/ui/button";
+import { TableCell, TableRow } from "@/shared/ui/table";
+import { Typography } from "@/shared/ui/typography";
+import { ComponentProps } from "react";
 
 const PROVIDER_COLORS: Record<PaymentProvider, string> = {
 	STRIPE: "#635bff",
@@ -121,12 +121,17 @@ export const PaymentsTableRow = ({
 	const amtStr = fmtAmount(item);
 	const init = initials(item.user.name, item.user.surname);
 
-	const handleClick: NonNullable<ComponentProps<"tr">["onClick"]> = () => onSelect(item.id);
-	const handleReceiptClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
+	const handleClick: NonNullable<ComponentProps<"tr">["onClick"]> = () =>
+		onSelect(item.id);
+	const handleReceiptClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = e => {
 		e.stopPropagation();
 		onReceipt(item.id);
 	};
-	const handleRefundClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
+	const handleRefundClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = e => {
 		e.stopPropagation();
 		onRefund(item.id);
 	};
@@ -160,7 +165,8 @@ export const PaymentsTableRow = ({
 			</TableCell>
 
 			<TableCell className="px-3 py-2.5">
-				<Typography tag="span"
+				<Typography
+					tag="span"
 					className={cn(
 						"inline-block rounded px-1.5 py-px text-[10px] font-semibold whitespace-nowrap",
 						planCls,
@@ -171,8 +177,12 @@ export const PaymentsTableRow = ({
 			</TableCell>
 
 			<TableCell className="px-3 py-2.5 max-md:hidden">
-				<Typography tag="span" className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[11px] font-medium text-t-2">
-					<Typography tag="span"
+				<Typography
+					tag="span"
+					className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf-2 px-1.5 py-px text-[11px] font-medium text-t-2"
+				>
+					<Typography
+						tag="span"
 						className="size-1.5 rounded-full"
 						style={{ background: provColor }}
 					/>
@@ -185,19 +195,24 @@ export const PaymentsTableRow = ({
 			</TableCell>
 
 			<TableCell className="px-3 py-2.5">
-				<Typography tag="span"
+				<Typography
+					tag="span"
 					className={cn(
 						"inline-flex items-center gap-1 rounded-[5px] px-1.5 py-px text-[10.5px] font-semibold",
 						sc.cls,
 					)}
 				>
-					<Typography tag="span" className={cn("size-[5px] rounded-full", sc.dotCls)} />
+					<Typography
+						tag="span"
+						className={cn("size-[5px] rounded-full", sc.dotCls)}
+					/>
 					{t(sc.i18nKey)}
 				</Typography>
 			</TableCell>
 
 			<TableCell className="px-3 py-2.5 text-right">
-				<Typography tag="span"
+				<Typography
+					tag="span"
 					className={cn(
 						"font-semibold",
 						item.status === "SUCCEEDED"

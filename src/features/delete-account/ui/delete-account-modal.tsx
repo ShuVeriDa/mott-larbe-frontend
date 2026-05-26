@@ -53,19 +53,17 @@ return (
 				/>
 				<ModalActions>
 					<Button
-						variant="ghost"
-						className="flex-1"
-						size="lg"
 						onClick={onClose}
+						variant="ghost"
+						className="h-[34px] px-4 rounded-lg text-[13px]"
 					>
 						{t("settings.deleteAccountModal.cancel")}
 					</Button>
 					<Button
 						type="submit"
-						variant="action"
-						size="lg"
-						className="flex-1 bg-red!"
 						disabled={isPending || !email.trim()}
+						variant="bare"
+						className="h-[34px] px-4 rounded-lg text-[13px] font-semibold text-white bg-red hover:opacity-85 flex-1"
 					>
 						{t("settings.deleteAccountModal.confirm")}
 					</Button>

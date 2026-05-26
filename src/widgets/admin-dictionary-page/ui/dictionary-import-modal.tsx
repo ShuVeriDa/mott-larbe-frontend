@@ -1,11 +1,11 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
 import { ComponentProps, DragEvent, useRef, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminImportResult } from "@/entities/dictionary";
+import { Modal, ModalActions } from "@/shared/ui/modal";
 
 interface DictionaryImportModalProps {
 	open: boolean;
@@ -68,119 +68,114 @@ export const DictionaryImportModal = ({
 		onClose();
 	};
 
-	if (!open) return null;
-
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => { if (/* intentional: backdrop-only click */ e.target === e.currentTarget) handleClose(); };
 	const handleDragOver: NonNullable<ComponentProps<"div">["onDragOver"]> = (e) => { e.preventDefault(); setDragging(true); };
 	const handleDragLeave: NonNullable<ComponentProps<"div">["onDragLeave"]> = () => setDragging(false);
-	const handleClick2: NonNullable<ComponentProps<"div">["onClick"]> = () => inputRef.current?.click();
+	const handleDropzoneClick: NonNullable<ComponentProps<"div">["onClick"]> = () => inputRef.current?.click();
 	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => {
-									const f = e.currentTarget.files?.[0];
-									if (f) pick(f);
-								};
-	const handleClick3: NonNullable<ComponentProps<"button">["onClick"]> = () => { if (file) onSubmit(file); };
-return (
-		<div
-			className="fixed inset-0 z-200 flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={handleClick}
+		const f = e.currentTarget.files?.[0];
+		if (f) pick(f);
+	};
+	const handleImportClick: NonNullable<ComponentProps<"button">["onClick"]> = () => { if (file) onSubmit(file); };
+
+	return (
+		<Modal
+			open={open}
+			onClose={handleClose}
+			title={t("admin.dictionary.importModal.title")}
+			className="max-w-[460px]"
 		>
-			<div className="w-[460px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
-				<Typography tag="h2" className="font-display text-[16px] text-t-1 mb-1">
-					{t("admin.dictionary.importModal.title")}
-				</Typography>
-				<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
-					{t("admin.dictionary.importModal.subtitle")}
-				</Typography>
+			<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
+				{t("admin.dictionary.importModal.subtitle")}
+			</Typography>
 
-				{result ? (
-					<div className="mb-4 rounded-[10px] border border-bd-1 bg-surf-2 p-4">
-						<Typography tag="p" className="mb-2 text-[13px] font-semibold text-t-1">
-							{t("admin.dictionary.importModal.done")}
+			{result ? (
+				<div className="mb-4 rounded-[10px] border border-bd-1 bg-surf-2 p-4">
+					<Typography tag="p" className="mb-2 text-[13px] font-semibold text-t-1">
+						{t("admin.dictionary.importModal.done")}
+					</Typography>
+					<div className="flex gap-4 text-[12.5px]">
+						<Typography tag="span" className="text-t-2">
+							{t("admin.dictionary.importModal.created")}:{" "}
+							<Typography tag="span" className="font-semibold text-acc-t">{result.created}</Typography>
 						</Typography>
-						<div className="flex gap-4 text-[12.5px]">
-							<Typography tag="span" className="text-t-2">
-								{t("admin.dictionary.importModal.created")}:{" "}
-								<Typography tag="span" className="font-semibold text-acc-t">{result.created}</Typography>
-							</Typography>
-							<Typography tag="span" className="text-t-2">
-								{t("admin.dictionary.importModal.skipped")}:{" "}
-								<Typography tag="span" className="font-semibold text-t-1">{result.skipped}</Typography>
-							</Typography>
-							<Typography tag="span" className="text-t-2">
-								{t("admin.dictionary.importModal.total")}:{" "}
-								<Typography tag="span" className="font-semibold text-t-1">{result.total}</Typography>
-							</Typography>
-						</div>
+						<Typography tag="span" className="text-t-2">
+							{t("admin.dictionary.importModal.skipped")}:{" "}
+							<Typography tag="span" className="font-semibold text-t-1">{result.skipped}</Typography>
+						</Typography>
+						<Typography tag="span" className="text-t-2">
+							{t("admin.dictionary.importModal.total")}:{" "}
+							<Typography tag="span" className="font-semibold text-t-1">{result.total}</Typography>
+						</Typography>
 					</div>
-				) : (
-					<>
-						<div
-							className={cn(
-								"mb-3 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[10px] border-2 border-dashed px-4 py-8 transition-colors",
-								dragging ? "border-acc bg-acc-bg" : "border-bd-2 hover:border-bd-3",
-							)}
-							onDragOver={handleDragOver}
-							onDragLeave={handleDragLeave}
-							onDrop={handleDrop}
-							onClick={handleClick2}
-						>
-							<svg className="size-8 text-t-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
-								<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" strokeLinecap="round" strokeLinejoin="round" />
-								<polyline points="17 8 12 3 7 8" strokeLinecap="round" strokeLinejoin="round" />
-								<line x1="12" y1="3" x2="12" y2="15" strokeLinecap="round" />
-							</svg>
-							{file ? (
-								<Typography tag="p" className="text-[13px] font-medium text-t-1">{file.name}</Typography>
-							) : (
-								<>
-									<Typography tag="p" className="text-[13px] font-medium text-t-1">
-										{t("admin.dictionary.importModal.dropHere")}
-									</Typography>
-									<Typography tag="p" className="text-[11.5px] text-t-3">
-										{t("admin.dictionary.importModal.orClick")}
-									</Typography>
-								</>
-							)}
-							<input
-								ref={inputRef}
-								type="file"
-								accept=".json"
-								className="hidden"
-								onChange={handleChange}
-							/>
-						</div>
-						{error && (
-							<Typography tag="p" className="mb-3 text-[11.5px] text-red-t">{error}</Typography>
-						)}
-						<Typography tag="p" className="mb-4 text-[11px] text-t-3">
-							{t("admin.dictionary.importModal.hint")}
-						</Typography>
-					</>
-				)}
-
-				<div className="flex justify-end gap-2 max-sm:flex-col-reverse">
-					<Button
-						onClick={handleClose}
-						disabled={isSubmitting}
-						title={result ? t("admin.dictionary.importModal.close") : t("admin.dictionary.importModal.cancel")}
-						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
-					>
-						{result ? t("admin.dictionary.importModal.close") : t("admin.dictionary.importModal.cancel")}
-					</Button>
-					{!result && (
-						<Button
-							onClick={handleClick3}
-							disabled={!file || isSubmitting}
-							title={isSubmitting ? t("admin.dictionary.importModal.importing") : t("admin.dictionary.importModal.import")}
-							className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10 max-sm:rounded-[9px]"
-						>
-							{isSubmitting
-								? t("admin.dictionary.importModal.importing")
-								: t("admin.dictionary.importModal.import")}
-						</Button>
-					)}
 				</div>
-			</div>
-		</div>
+			) : (
+				<>
+					<div
+						className={cn(
+							"mb-3 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[10px] border-2 border-dashed px-4 py-8 transition-colors",
+							dragging ? "border-acc bg-acc-bg" : "border-bd-2 hover:border-bd-3",
+						)}
+						onDragOver={handleDragOver}
+						onDragLeave={handleDragLeave}
+						onDrop={handleDrop}
+						onClick={handleDropzoneClick}
+					>
+						<svg className="size-8 text-t-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+							<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" strokeLinecap="round" strokeLinejoin="round" />
+							<polyline points="17 8 12 3 7 8" strokeLinecap="round" strokeLinejoin="round" />
+							<line x1="12" y1="3" x2="12" y2="15" strokeLinecap="round" />
+						</svg>
+						{file ? (
+							<Typography tag="p" className="text-[13px] font-medium text-t-1">{file.name}</Typography>
+						) : (
+							<>
+								<Typography tag="p" className="text-[13px] font-medium text-t-1">
+									{t("admin.dictionary.importModal.dropHere")}
+								</Typography>
+								<Typography tag="p" className="text-[11.5px] text-t-3">
+									{t("admin.dictionary.importModal.orClick")}
+								</Typography>
+							</>
+						)}
+						<input
+							ref={inputRef}
+							type="file"
+							accept=".json"
+							className="hidden"
+							onChange={handleChange}
+						/>
+					</div>
+					{error && (
+						<Typography tag="p" className="mb-3 text-[11.5px] text-red-t">{error}</Typography>
+					)}
+					<Typography tag="p" className="mb-2 text-[11px] text-t-3">
+						{t("admin.dictionary.importModal.hint")}
+					</Typography>
+				</>
+			)}
+
+			<ModalActions>
+				<Button
+					variant="ghost"
+					onClick={handleClose}
+					disabled={isSubmitting}
+					className="h-[34px] px-4 rounded-lg text-[13px]"
+				>
+					{result ? t("admin.dictionary.importModal.close") : t("admin.dictionary.importModal.cancel")}
+				</Button>
+				{!result && (
+					<Button
+						variant="action"
+						onClick={handleImportClick}
+						disabled={!file || isSubmitting}
+						className="h-[34px] flex-1 px-4 rounded-lg text-[13px]"
+					>
+						{isSubmitting
+							? t("admin.dictionary.importModal.importing")
+							: t("admin.dictionary.importModal.import")}
+					</Button>
+				)}
+			</ModalActions>
+		</Modal>
 	);
 };

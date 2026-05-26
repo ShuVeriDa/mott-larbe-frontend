@@ -13,6 +13,8 @@ import { useI18n } from "@/shared/lib/i18n";
 import { Input } from "@/shared/ui/input";
 import { ComponentProps, useEffect, useState } from "react";
 import { Select } from "@/shared/ui/select";
+import { Modal, ModalActions } from "@/shared/ui/modal";
+
 const TYPE_OPTIONS: MorphRuleType[] = [
 	"SUFFIX",
 	"ENDING",
@@ -72,8 +74,6 @@ export const MorphologyRuleModal = ({
 		}
 	}, [rule, open]);
 
-	if (!open) return null;
-
 	const isEdit = !!rule;
 
 	const handleSubmit = () => {
@@ -85,7 +85,6 @@ export const MorphologyRuleModal = ({
 		});
 	};
 
-	const handleBackdropClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
 	const handleSuffixChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, suffix: e.currentTarget.value }));
 	const handleAddChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, add: e.currentTarget.value }));
 	const handlePosChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setForm(p => ({ ...p, pos: e.currentTarget.value }));
@@ -104,163 +103,164 @@ export const MorphologyRuleModal = ({
 		setForm(p => ({ ...p, description: e.currentTarget.value }));
 	const handleActiveChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
 		setForm(p => ({ ...p, isActive: e.currentTarget.checked }));
-return (
-		<div
-			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 p-4 backdrop-blur-[2px] sm:p-4 max-sm:items-end max-sm:p-0"
-			onClick={handleBackdropClick}
-		>
-			<div className="w-full max-w-[480px] overflow-y-auto rounded-[14px] border border-bd-2 bg-surf p-5 shadow-md max-sm:max-w-full max-sm:rounded-b-none max-sm:rounded-t-[16px] max-sm:pb-7">
-				<Typography tag="h2" className="font-display text-[15px] text-t-1 mb-1">
-					{isEdit
-						? t("admin.morphology.ruleModal.editTitle")
-						: t("admin.morphology.ruleModal.addTitle")}
-				</Typography>
-				<Typography tag="p" className="mb-4 text-[12px] text-t-3">
-					{t("admin.morphology.ruleModal.subtitle")}
-				</Typography>
 
-				<form action={handleSubmit} className="flex flex-col gap-3.5">
-					{/* Pattern */}
-					<div>
+	return (
+		<Modal
+			open={open}
+			onClose={onClose}
+			title={isEdit
+				? t("admin.morphology.ruleModal.editTitle")
+				: t("admin.morphology.ruleModal.addTitle")}
+			className="max-w-[480px]"
+		>
+			<Typography tag="p" className="mb-4 text-[12px] text-t-3">
+				{t("admin.morphology.ruleModal.subtitle")}
+			</Typography>
+
+			<form action={handleSubmit} className="flex flex-col gap-3.5">
+				{/* Pattern */}
+				<div>
+					<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+						{t("admin.morphology.ruleModal.suffixLabel")}
+					</Typography>
+					<Input
+						required
+						type="text"
+						value={form.suffix}
+						onChange={handleSuffixChange}
+						placeholder={t("admin.morphology.ruleModal.suffixPlaceholder")}
+						aria-label={t("admin.morphology.ruleModal.suffixLabel")}
+						className="h-9 rounded-lg font-mono placeholder:font-sans placeholder:text-[12.5px]"
+					/>
+				</div>
+
+				<div className="flex gap-2.5">
+					{/* Replacement */}
+					<div className="flex-1">
 						<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
-							{t("admin.morphology.ruleModal.suffixLabel")}
+							{t("admin.morphology.ruleModal.addLabel")}
+							<Typography tag="span" className="ml-1.5 font-normal tracking-normal text-t-3">
+								{t("admin.morphology.ruleModal.addHint")}
+							</Typography>
 						</Typography>
 						<Input
-							required
 							type="text"
-							value={form.suffix}
-							onChange={handleSuffixChange}
-							placeholder={t("admin.morphology.ruleModal.suffixPlaceholder")}
-							aria-label={t("admin.morphology.ruleModal.suffixLabel")}
+							value={form.add ?? ""}
+							onChange={handleAddChange}
+							placeholder="∅"
+							aria-label={t("admin.morphology.ruleModal.addLabel")}
 							className="h-9 rounded-lg font-mono placeholder:font-sans placeholder:text-[12.5px]"
 						/>
 					</div>
 
-					<div className="flex gap-2.5">
-						{/* Replacement */}
-						<div className="flex-1">
-							<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
-								{t("admin.morphology.ruleModal.addLabel")}
-								<Typography tag="span" className="ml-1.5 font-normal tracking-normal text-t-3">
-									{t("admin.morphology.ruleModal.addHint")}
-								</Typography>
-							</Typography>
-							<Input
-								type="text"
-								value={form.add ?? ""}
-								onChange={handleAddChange}
-								placeholder="∅"
-								aria-label={t("admin.morphology.ruleModal.addLabel")}
-								className="h-9 rounded-lg font-mono placeholder:font-sans placeholder:text-[12.5px]"
-							/>
-						</div>
-
-						{/* POS */}
-						<div className="w-28">
-							<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
-								{t("admin.morphology.ruleModal.posLabel")}
-							</Typography>
-							<Input
-								type="text"
-								value={form.pos ?? ""}
-								onChange={handlePosChange}
-								placeholder="NOUN"
-								aria-label={t("admin.morphology.ruleModal.posLabel")}
-								className="h-9 rounded-lg text-[12.5px]"
-							/>
-						</div>
-					</div>
-
-					<div className="flex gap-2.5">
-						{/* Type */}
-						<div className="flex-1">
-							<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
-								{t("admin.morphology.ruleModal.typeLabel")}
-							</Typography>
-							<Select
-								variant="lg"
-								value={form.type}
-								onChange={handleTypeChange}
-								className="rounded-lg h-9"
-							>
-								{TYPE_OPTIONS.map(tp => (
-									<option key={tp} value={tp}>
-										{t(`admin.morphology.ruleType.${tp}` as never) || tp}
-									</option>
-								))}
-							</Select>
-						</div>
-
-						{/* Priority */}
-						<div className="w-24">
-							<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
-								{t("admin.morphology.ruleModal.priorityLabel")}
-							</Typography>
-							<Input
-								type="number"
-								min={0}
-								max={99}
-								value={form.priority ?? 1}
-								onChange={handlePriorityChange}
-								aria-label={t("admin.morphology.ruleModal.priorityLabel")}
-								className="h-9 rounded-lg text-[12.5px]"
-							/>
-						</div>
-					</div>
-
-					{/* Description */}
-					<div>
+					{/* POS */}
+					<div className="w-28">
 						<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
-							{t("admin.morphology.ruleModal.descriptionLabel")}
+							{t("admin.morphology.ruleModal.posLabel")}
 						</Typography>
 						<Input
 							type="text"
-							value={form.description ?? ""}
-							onChange={handleDescriptionChange}
-							placeholder={t(
-								"admin.morphology.ruleModal.descriptionPlaceholder",
-							)}
-							aria-label={t("admin.morphology.ruleModal.descriptionLabel")}
-							className="h-9 rounded-lg placeholder:text-[12.5px]"
+							value={form.pos ?? ""}
+							onChange={handlePosChange}
+							placeholder="NOUN"
+							aria-label={t("admin.morphology.ruleModal.posLabel")}
+							className="h-9 rounded-lg text-[12.5px]"
 						/>
 					</div>
+				</div>
 
-					{/* Active toggle */}
-					<Typography tag="label" className="flex cursor-pointer items-center gap-2.5">
-						<input
-							type="checkbox"
-							checked={form.isActive ?? true}
-							onChange={handleActiveChange}
-							className="accent-acc"
-						/>
-						<Typography tag="span" className="text-[12.5px] text-t-2">
-							{t("admin.morphology.ruleModal.activeLabel")}
+				<div className="flex gap-2.5">
+					{/* Type */}
+					<div className="flex-1">
+						<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+							{t("admin.morphology.ruleModal.typeLabel")}
 						</Typography>
-					</Typography>
-
-					<div className="mt-1.5 flex justify-end gap-2 max-sm:flex-col-reverse">
-						<Button
-							onClick={onClose}
-							title={t("admin.morphology.ruleModal.cancel")}
-							className="flex h-[30px] items-center justify-center rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
+						<Select
+							variant="lg"
+							value={form.type}
+							onChange={handleTypeChange}
+							className="rounded-lg h-9"
 						>
-							{t("admin.morphology.ruleModal.cancel")}
-						</Button>
-						<Button
-							type="submit"
-							disabled={isLoading || !form.suffix || !form.type}
-							title={isEdit ? t("admin.morphology.ruleModal.save") : t("admin.morphology.ruleModal.create")}
-							className="flex h-[30px] items-center justify-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60 max-sm:h-10 max-sm:rounded-[10px] max-sm:text-[13px]"
-						>
-							{isLoading
-								? "…"
-								: isEdit
-									? t("admin.morphology.ruleModal.save")
-									: t("admin.morphology.ruleModal.create")}
-						</Button>
+							{TYPE_OPTIONS.map(tp => (
+								<option key={tp} value={tp}>
+									{t(`admin.morphology.ruleType.${tp}` as never) || tp}
+								</option>
+							))}
+						</Select>
 					</div>
-				</form>
-			</div>
-		</div>
+
+					{/* Priority */}
+					<div className="w-24">
+						<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+							{t("admin.morphology.ruleModal.priorityLabel")}
+						</Typography>
+						<Input
+							type="number"
+							min={0}
+							max={99}
+							value={form.priority ?? 1}
+							onChange={handlePriorityChange}
+							aria-label={t("admin.morphology.ruleModal.priorityLabel")}
+							className="h-9 rounded-lg text-[12.5px]"
+						/>
+					</div>
+				</div>
+
+				{/* Description */}
+				<div>
+					<Typography tag="label" className="mb-1.5 block text-[11px] font-semibold tracking-[0.3px] text-t-2">
+						{t("admin.morphology.ruleModal.descriptionLabel")}
+					</Typography>
+					<Input
+						type="text"
+						value={form.description ?? ""}
+						onChange={handleDescriptionChange}
+						placeholder={t(
+							"admin.morphology.ruleModal.descriptionPlaceholder",
+						)}
+						aria-label={t("admin.morphology.ruleModal.descriptionLabel")}
+						className="h-9 rounded-lg placeholder:text-[12.5px]"
+					/>
+				</div>
+
+				{/* Active toggle */}
+				<Typography tag="label" className="flex cursor-pointer items-center gap-2.5">
+					<input
+						type="checkbox"
+						checked={form.isActive ?? true}
+						onChange={handleActiveChange}
+						className="accent-acc"
+					/>
+					<Typography tag="span" className="text-[12.5px] text-t-2">
+						{t("admin.morphology.ruleModal.activeLabel")}
+					</Typography>
+				</Typography>
+
+				<ModalActions>
+					<Button
+						type="button"
+						onClick={onClose}
+						title={t("admin.morphology.ruleModal.cancel")}
+						variant="ghost"
+						className="h-[34px] px-4 rounded-lg text-[13px]"
+					>
+						{t("admin.morphology.ruleModal.cancel")}
+					</Button>
+					<Button
+						type="submit"
+						disabled={isLoading || !form.suffix || !form.type}
+						title={isEdit ? t("admin.morphology.ruleModal.save") : t("admin.morphology.ruleModal.create")}
+						variant="action"
+						className="h-[34px] px-4 rounded-lg text-[13px] flex-1"
+					>
+						{isLoading
+							? "…"
+							: isEdit
+								? t("admin.morphology.ruleModal.save")
+								: t("admin.morphology.ruleModal.create")}
+					</Button>
+				</ModalActions>
+			</form>
+		</Modal>
 	);
 };

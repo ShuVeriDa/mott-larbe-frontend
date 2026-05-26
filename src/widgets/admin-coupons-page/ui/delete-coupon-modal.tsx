@@ -67,7 +67,8 @@ export const DeleteCouponModal = ({
 				<Button
 					onClick={onClose}
 					title={t("admin.coupons.deleteModal.cancel")}
-					className="h-8 rounded-[8px] border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
+					variant="ghost"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
 				>
 					{t("admin.coupons.deleteModal.cancel")}
 				</Button>
@@ -77,7 +78,8 @@ export const DeleteCouponModal = ({
 						disabled={isPending}
 						onClick={handleClick}
 						title={t("admin.coupons.deleteModal.deactivate")}
-						className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+						variant="action"
+						className="h-[34px] px-4 rounded-lg text-[13px]"
 					>
 						{t("admin.coupons.deleteModal.deactivate")}
 					</Button>
@@ -86,7 +88,8 @@ export const DeleteCouponModal = ({
 						disabled={isPending}
 						onClick={handleClick2}
 						title={t("admin.coupons.deleteModal.confirm")}
-						className="h-8 rounded-[8px] bg-red px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+						variant="bare"
+						className="h-[34px] px-4 rounded-lg text-[13px] font-semibold text-white bg-red hover:opacity-85"
 					>
 						{t("admin.coupons.deleteModal.confirm")}
 					</Button>

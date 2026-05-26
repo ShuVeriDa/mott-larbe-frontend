@@ -4,10 +4,11 @@ import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
-import { ComponentProps, MouseEvent, useState } from 'react';
+import { ComponentProps, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { FeedbackType } from "@/entities/feedback";
 import { useSubmitFeedback } from "@/features/submit-feedback";
+import { Modal, ModalActions } from "@/shared/ui/modal";
 
 type Translator = (key: string) => string;
 
@@ -60,62 +61,25 @@ export const FeedbackNewThreadModal = ({
 		);
 	};
 
-	const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
-		if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
-	};
-
-		const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setTitle(e.currentTarget.value);
+	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => setTitle(e.currentTarget.value);
 	const handleChange2: NonNullable<ComponentProps<"textarea">["onChange"]> = (e) => setBody(e.currentTarget.value);
-return (
-		<div
-			onClick={handleOverlayClick}
-			className={cn(
-				"fixed inset-0 z-50 flex items-center justify-center bg-black/40 transition-opacity duration-200",
-				"max-sm:items-end",
-				isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
-			)}
-		>
-			<div
-				className={cn(
-					"w-[420px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-lg transition-[transform,opacity] duration-200",
-					"max-sm:w-full max-sm:max-h-[92dvh] max-sm:overflow-y-auto max-sm:rounded-t-hero max-sm:rounded-b-none max-sm:pb-[calc(20px+env(safe-area-inset-bottom,0))]",
-					isOpen
-						? "translate-y-0 scale-100 opacity-100"
-						: "translate-y-2.5 scale-[0.97] opacity-0 max-sm:translate-y-full",
-				)}
-			>
-				{/* Header */}
-				<div className="mb-[18px] flex items-center justify-between">
-					<Typography tag="p" className="text-sm font-semibold text-t-1">
-						{t("feedback.modal.title")}
-					</Typography>
-					<Button
-						onClick={onClose}
-						title={t("feedback.modal.cancel")}
-						className="flex size-7 items-center justify-center rounded-base border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3"
-					>
-						<svg
-							viewBox="0 0 12 12"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="1.8"
-							strokeLinecap="round"
-							className="size-3"
-						>
-							<path d="M2 2l8 8M10 2l-8 8" />
-						</svg>
-					</Button>
-				</div>
 
-				{/* Type selector */}
-				<div className="mb-3.5">
-					<Typography tag="label" className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
-						{t("feedback.modal.typeLabel")}
-					</Typography>
-					<div className="grid grid-cols-2 gap-[7px]">
-						{TYPE_OPTIONS.map((opt) => {
-						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setType(opt.value);
-						  return (
+	return (
+		<Modal
+			open={isOpen}
+			onClose={onClose}
+			title={t("feedback.modal.title")}
+			className="max-w-[420px]"
+		>
+			{/* Type selector */}
+			<div className="mb-3.5">
+				<Typography tag="label" className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
+					{t("feedback.modal.typeLabel")}
+				</Typography>
+				<div className="grid grid-cols-2 gap-[7px]">
+					{TYPE_OPTIONS.map((opt) => {
+						const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setType(opt.value);
+						return (
 							<Button
 								key={opt.value}
 								onClick={handleClick}
@@ -145,58 +109,58 @@ return (
 								</div>
 							</Button>
 						);
-						})}
-					</div>
-				</div>
-
-				{/* Title */}
-				<div className="mb-3">
-					<Typography tag="label" className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
-						{t("feedback.modal.titleLabel")}
-					</Typography>
-					<Input
-						type="text"
-						value={title}
-						onChange={handleChange}
-						placeholder={t("feedback.modal.titlePlaceholder")}
-						maxLength={200}
-						aria-label={t("feedback.modal.titleLabel")}
-						className="rounded-[9px] border-bd-2 bg-surf-2 px-3 py-2.5 h-auto"
-					/>
-				</div>
-
-				{/* Message */}
-				<div className="mb-0">
-					<Typography tag="label" className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
-						{t("feedback.modal.messageLabel")}
-					</Typography>
-					<textarea
-						value={body}
-						onChange={handleChange2}
-						placeholder={t("feedback.modal.messagePlaceholder")}
-						className="min-h-[86px] w-full resize-none rounded-[9px] border border-bd-2 bg-surf-2 px-3 py-2.5 font-[inherit] text-[13px] leading-[1.55] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
-					/>
-				</div>
-
-				{/* Actions */}
-				<div className="mt-4 flex gap-2">
-					<Button
-						onClick={onClose}
-						title={t("feedback.modal.cancel")}
-						className="h-9 flex-1 rounded-[9px] border border-bd-2 bg-surf-2 font-[inherit] text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
-					>
-						{t("feedback.modal.cancel")}
-					</Button>
-					<Button
-						disabled={!body.trim() || submitFeedback.isPending}
-						onClick={handleSubmit}
-						title={t("feedback.modal.submit")}
-						className="h-9 flex-2 rounded-[9px] bg-acc font-[inherit] text-[13px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88] disabled:opacity-50"
-					>
-						{t("feedback.modal.submit")}
-					</Button>
+					})}
 				</div>
 			</div>
-		</div>
+
+			{/* Title */}
+			<div className="mb-3">
+				<Typography tag="label" className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
+					{t("feedback.modal.titleLabel")}
+				</Typography>
+				<Input
+					type="text"
+					value={title}
+					onChange={handleChange}
+					placeholder={t("feedback.modal.titlePlaceholder")}
+					maxLength={200}
+					aria-label={t("feedback.modal.titleLabel")}
+					className="rounded-[9px] border-bd-2 bg-surf-2 px-3 py-2.5 h-auto"
+				/>
+			</div>
+
+			{/* Message */}
+			<div className="mb-2">
+				<Typography tag="label" className="mb-[7px] block text-[11px] font-semibold uppercase tracking-[0.5px] text-t-2">
+					{t("feedback.modal.messageLabel")}
+				</Typography>
+				<textarea
+					value={body}
+					onChange={handleChange2}
+					placeholder={t("feedback.modal.messagePlaceholder")}
+					className="min-h-[86px] w-full resize-none rounded-[9px] border border-bd-2 bg-surf-2 px-3 py-2.5 font-[inherit] text-[13px] leading-[1.55] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc"
+				/>
+			</div>
+
+			<ModalActions>
+				<Button
+					onClick={onClose}
+					title={t("feedback.modal.cancel")}
+					variant="ghost"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
+				>
+					{t("feedback.modal.cancel")}
+				</Button>
+				<Button
+					disabled={!body.trim() || submitFeedback.isPending}
+					onClick={handleSubmit}
+					title={t("feedback.modal.submit")}
+					variant="action"
+					className="h-[34px] px-4 rounded-lg text-[13px] flex-1"
+				>
+					{t("feedback.modal.submit")}
+				</Button>
+			</ModalActions>
+		</Modal>
 	);
 };

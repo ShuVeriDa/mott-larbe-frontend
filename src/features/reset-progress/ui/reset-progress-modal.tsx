@@ -34,15 +34,18 @@ export const ResetProgressModal = ({
 				{t("settings.resetProgressModal.desc")}
 			</Typography>
 			<ModalActions>
-				<Button variant="ghost" className="flex-1" size="lg" onClick={onClose}>
+				<Button
+					onClick={onClose}
+					variant="ghost"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
+				>
 					{t("settings.resetProgressModal.cancel")}
 				</Button>
 				<Button
-					variant="action"
-					size="lg"
-					className="flex-1 bg-red!"
 					disabled={isPending}
 					onClick={handleConfirm}
+					variant="bare"
+					className="h-[34px] px-4 rounded-lg text-[13px] font-semibold text-white bg-red hover:opacity-85 flex-1"
 				>
 					{t("settings.resetProgressModal.confirm")}
 				</Button>

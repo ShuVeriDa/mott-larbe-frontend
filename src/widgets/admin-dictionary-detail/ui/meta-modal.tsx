@@ -12,6 +12,7 @@ import type { CefrLevel } from "@/shared/types";
 import { CEFR_LEVELS, POS_OPTIONS } from "@/shared/types";
 import { ComponentProps, useEffect, useRef, useState } from "react";
 import { Select } from "@/shared/ui/select";
+import { Modal, ModalActions } from "@/shared/ui/modal";
 
 interface MetaModalProps {
 	isOpen: boolean;
@@ -61,131 +62,124 @@ export const MetaModal = ({
 		onSave(body);
 	};
 
-	if (!isOpen) return null;
-
-	const inputCls =
-		"w-full rounded-lg border border-bd-2 bg-surf-2 px-2.5 h-[34px] text-[13px] text-t-1 outline-none placeholder:text-t-3 transition-colors focus:border-acc";
 	const labelCls = "mb-1.5 text-[11px] font-semibold tracking-[0.3px] text-t-2";
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => /* intentional: backdrop-only click */ e.target === e.currentTarget && onClose();
 	const handleChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setBaseForm(e.currentTarget.value);
 	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e => setPartOfSpeech(e.currentTarget.value);
 	const handleChange3: NonNullable<ComponentProps<"select">["onChange"]> = e => setLevel(e.currentTarget.value as CefrLevel | "");
 	const handleChange4: NonNullable<ComponentProps<"input">["onChange"]> = e => setFrequency(e.currentTarget.value);
 	const handleChange5: NonNullable<ComponentProps<"input">["onChange"]> = e => setNotes(e.currentTarget.value);
-return (
-		<div
-			className="fixed inset-0 z-200 flex items-center justify-center bg-black/35 backdrop-blur-[2px]"
-			onClick={handleClick}
+
+	return (
+		<Modal
+			open={isOpen}
+			onClose={onClose}
+			title={t("admin.dictionaryDetail.editMetadata")}
+			className="max-w-[480px]"
 		>
-			<div className="w-[480px] max-w-[calc(100vw-24px)] rounded-[14px] border border-bd-2 bg-surf p-[22px] shadow-lg max-sm:p-4.5">
-				<div className="mb-1 font-display text-[15px] text-t-1">
-					{t("admin.dictionaryDetail.editMetadata")}
+			<form action={handleSubmit}>
+				<div className="mb-3.5">
+					<div className={labelCls}>
+						{t("admin.dictionaryDetail.baseForm")}
+					</div>
+					<Input
+						ref={inputRef}
+						className="rounded-lg font-display text-[14px]"
+						type="text"
+						value={baseForm}
+						onChange={handleChange}
+						placeholder={t("admin.dictionaryDetail.baseFormPlaceholder")}
+						aria-label={t("admin.dictionaryDetail.baseForm")}
+					/>
 				</div>
-				<div className="mb-4.5 text-[12px] text-t-3">
-					{t("admin.dictionaryDetail.metadataModalSub")}
+
+				<div className="mb-3.5 flex gap-2.5 max-sm:flex-col">
+					<div className="flex-1">
+						<div className={labelCls}>{t("admin.dictionaryDetail.pos")}</div>
+						<Select
+							variant="lg"
+							value={partOfSpeech}
+							onChange={handleChange2}
+						>
+							<option value="">
+								— {t("admin.dictionaryDetail.selectPos")} —
+							</option>
+							{POS_OPTIONS.map(p => (
+								<option key={p} value={p}>
+									{p}
+								</option>
+							))}
+						</Select>
+					</div>
+					<div className="flex-1">
+						<div className={labelCls}>
+							{t("admin.dictionaryDetail.level")}
+						</div>
+						<Select
+							variant="lg"
+							value={level}
+							onChange={handleChange3}
+						>
+							<option value="">
+								— {t("admin.dictionaryDetail.selectLevel")} —
+							</option>
+							{CEFR_LEVELS.map(l => (
+								<option key={l} value={l}>
+									{l}
+								</option>
+							))}
+						</Select>
+					</div>
 				</div>
-				<form action={handleSubmit}>
-					<div className="mb-3.5">
-						<div className={labelCls}>
-							{t("admin.dictionaryDetail.baseForm")}
-						</div>
-						<Input
-							ref={inputRef}
-							className="rounded-lg font-display text-[14px]"
-							type="text"
-							value={baseForm}
-							onChange={handleChange}
-							placeholder={t("admin.dictionaryDetail.baseFormPlaceholder")}
-							aria-label={t("admin.dictionaryDetail.baseForm")}
-						/>
-					</div>
 
-					<div className="mb-3.5 flex gap-2.5 max-sm:flex-col">
-						<div className="flex-1">
-							<div className={labelCls}>{t("admin.dictionaryDetail.pos")}</div>
-							<Select
-								variant="lg"
-								value={partOfSpeech}
-								onChange={handleChange2}
-							>
-								<option value="">
-									— {t("admin.dictionaryDetail.selectPos")} —
-								</option>
-								{POS_OPTIONS.map(p => (
-									<option key={p} value={p}>
-										{p}
-									</option>
-								))}
-							</Select>
-						</div>
-						<div className="flex-1">
-							<div className={labelCls}>
-								{t("admin.dictionaryDetail.level")}
-							</div>
-							<Select
-								variant="lg"
-								value={level}
-								onChange={handleChange3}
-							>
-								<option value="">
-									— {t("admin.dictionaryDetail.selectLevel")} —
-								</option>
-								{CEFR_LEVELS.map(l => (
-									<option key={l} value={l}>
-										{l}
-									</option>
-								))}
-							</Select>
-						</div>
+				<div className="mb-3.5">
+					<div className={labelCls}>
+						{t("admin.dictionaryDetail.frequency")}
 					</div>
+					<Input
+						className="rounded-lg"
+						type="number"
+						min={0}
+						value={frequency}
+						onChange={handleChange4}
+						placeholder="0"
+						aria-label={t("admin.dictionaryDetail.frequency")}
+					/>
+				</div>
 
-					<div className="mb-3.5">
-						<div className={labelCls}>
-							{t("admin.dictionaryDetail.frequency")}
-						</div>
-						<Input
-							className="rounded-lg"
-							type="number"
-							min={0}
-							value={frequency}
-							onChange={handleChange4}
-							placeholder="0"
-							aria-label={t("admin.dictionaryDetail.frequency")}
-						/>
-					</div>
+				<div className="mb-0">
+					<div className={labelCls}>{t("admin.dictionaryDetail.notes")}</div>
+					<Input
+						className="rounded-lg"
+						type="text"
+						value={notes}
+						onChange={handleChange5}
+						placeholder={t("admin.dictionaryDetail.notesPlaceholder")}
+						aria-label={t("admin.dictionaryDetail.notes")}
+					/>
+				</div>
 
-					<div className="mb-0">
-						<div className={labelCls}>{t("admin.dictionaryDetail.notes")}</div>
-						<Input
-							className="rounded-lg"
-							type="text"
-							value={notes}
-							onChange={handleChange5}
-							placeholder={t("admin.dictionaryDetail.notesPlaceholder")}
-							aria-label={t("admin.dictionaryDetail.notes")}
-						/>
-					</div>
-
-					<div className="mt-5 flex justify-end gap-2">
-						<Button
-							className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-[11px] text-[12px] text-t-2 transition-colors hover:bg-surf-2"
-							onClick={onClose}
-							title={t("admin.dictionaryDetail.cancel")}
-						>
-							{t("admin.dictionaryDetail.cancel")}
-						</Button>
-						<Button
-							type="submit"
-							disabled={isPending || !baseForm.trim()}
-							title={t("admin.dictionaryDetail.save")}
-							className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-50"
-						>
-							{t("admin.dictionaryDetail.save")}
-						</Button>
-					</div>
-				</form>
-			</div>
-		</div>
+				<ModalActions>
+					<Button
+						type="button"
+						onClick={onClose}
+						title={t("admin.dictionaryDetail.cancel")}
+						variant="ghost"
+						className="h-[34px] px-4 rounded-lg text-[13px]"
+					>
+						{t("admin.dictionaryDetail.cancel")}
+					</Button>
+					<Button
+						type="submit"
+						disabled={isPending || !baseForm.trim()}
+						title={t("admin.dictionaryDetail.save")}
+						variant="action"
+						className="h-[34px] px-4 rounded-lg text-[13px] flex-1"
+					>
+						{t("admin.dictionaryDetail.save")}
+					</Button>
+				</ModalActions>
+			</form>
+		</Modal>
 	);
 };

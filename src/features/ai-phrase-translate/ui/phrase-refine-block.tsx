@@ -37,6 +37,7 @@ export const PhraseRefineBlock = ({
 			<div className="border-t border-[0.5px] border-bd-1 px-3.5 py-2">
 				<Button
 					size="bare"
+					variant="bare"
 					onClick={onOpen}
 					className="flex items-center gap-1.5 text-[11.5px] text-t-3 transition-colors hover:text-t-1"
 				>

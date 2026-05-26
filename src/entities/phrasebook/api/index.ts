@@ -10,3 +10,20 @@ export type {
 	PhraseExample,
 	SuggestPhraseDto,
 } from "./types";
+
+export { adminPhrasebookApi } from "./admin-phrasebook-api";
+export { adminPhrasebookKeys } from "./admin-phrasebook-keys";
+export type {
+	AdminPhrasebookCategory,
+	AdminPhrasebookPhrase,
+	AdminPhrasesResponse,
+	AdminSuggestionsResponse,
+	AdminPhrasebookSuggestion,
+	CreateAdminCategoryDto,
+	UpdateAdminCategoryDto,
+	CreateAdminPhraseDto,
+	UpdateAdminPhraseDto,
+	CreateAdminPhraseWordDto,
+	CreateAdminPhraseExampleDto,
+	AdminPhrasesQuery,
+} from "./admin-types";

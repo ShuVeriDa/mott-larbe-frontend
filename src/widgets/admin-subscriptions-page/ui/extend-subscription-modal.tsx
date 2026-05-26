@@ -107,7 +107,8 @@ export const ExtendSubscriptionModal = ({
 				<Button
 					onClick={onClose}
 					title={t("admin.subscriptions.modal.cancel")}
-					className="h-8 rounded-lg border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
+					variant="ghost"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
 				>
 					{t("admin.subscriptions.modal.cancel")}
 				</Button>
@@ -115,7 +116,8 @@ export const ExtendSubscriptionModal = ({
 					onClick={handleConfirm}
 					disabled={mutations.extend.isPending}
 					title={mutations.extend.isPending ? t("admin.subscriptions.modal.saving") : t("admin.subscriptions.modal.extendConfirm")}
-					className="h-8 rounded-lg bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+					variant="action"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
 				>
 					{mutations.extend.isPending
 						? t("admin.subscriptions.modal.saving")

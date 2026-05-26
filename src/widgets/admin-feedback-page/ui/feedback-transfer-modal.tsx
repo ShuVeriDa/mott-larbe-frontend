@@ -2,10 +2,10 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
-import { X } from "lucide-react";
 import { ComponentProps, MouseEvent, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackAssignee } from "@/entities/feedback";
+import { Modal, ModalActions } from "@/shared/ui/modal";
 
 type Translator = (key: string) => string;
 
@@ -40,8 +40,6 @@ export const FeedbackTransferModal = ({
 	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const [note, setNote] = useState("");
 
-	if (!isOpen) return null;
-
 	const candidates = assignees.filter((a) => a.id !== currentAssigneeId);
 
 	const handleSubmit = () => {
@@ -51,50 +49,34 @@ export const FeedbackTransferModal = ({
 		setNote("");
 	};
 
-	const handleBackdrop = (e: MouseEvent) => {
-		if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
-	};
+	const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = (e) => setNote(e.currentTarget.value);
 
-		const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = (e) => setNote(e.currentTarget.value);
-return (
-		<div
-			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/35 px-5"
-			onClick={handleBackdrop}
+	return (
+		<Modal
+			open={isOpen}
+			onClose={onClose}
+			title={t("admin.feedback.transfer.title")}
+			className="max-w-[400px]"
 		>
-			<div className="w-full max-w-[400px] animate-[fadeUp_0.18s_ease] rounded-2xl border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08),0_20px_60px_rgba(0,0,0,0.15)]">
-				{/* Header */}
-				<div className="mb-3.5 flex items-center justify-between">
-					<Typography tag="p" className="text-[14px] font-semibold text-t-1">
-						{t("admin.feedback.transfer.title")}
-					</Typography>
-					<Button
-						onClick={onClose}
-						title={t("admin.feedback.transfer.title")}
-						className="flex size-[26px] items-center justify-center rounded-md border border-bd-1 bg-surf-2 text-t-2 hover:text-t-1"
-					>
-						<X className="size-3" />
-					</Button>
+			{/* Assignee list */}
+			{isLoading ? (
+				<div className="mb-3 space-y-1.5">
+					{[1, 2, 3].map((i) => (
+						<div key={i} className="flex items-center gap-2.5 rounded-lg border border-bd-2 bg-surf-2 px-3 py-2">
+							<div className="size-[26px] animate-pulse rounded-full bg-surf-3" />
+							<div className="h-3 flex-1 animate-pulse rounded bg-surf-3" />
+						</div>
+					))}
 				</div>
-
-				{/* Assignee list */}
-				{isLoading ? (
-					<div className="space-y-1.5">
-						{[1, 2, 3].map((i) => (
-							<div key={i} className="flex items-center gap-2.5 rounded-lg border border-bd-2 bg-surf-2 px-3 py-2">
-								<div className="size-[26px] animate-pulse rounded-full bg-surf-3" />
-								<div className="h-3 flex-1 animate-pulse rounded bg-surf-3" />
-							</div>
-						))}
-					</div>
-				) : candidates.length === 0 ? (
-					<Typography tag="p" className="py-3 text-center text-[12px] text-t-3">
-						{t("admin.feedback.transfer.noAssignees")}
-					</Typography>
-				) : (
-					<div className="mb-3 flex flex-col gap-1.5">
-						{candidates.map((a) => {
-						  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setSelectedId(a.id);
-						  return (
+			) : candidates.length === 0 ? (
+				<Typography tag="p" className="mb-3 py-3 text-center text-[12px] text-t-3">
+					{t("admin.feedback.transfer.noAssignees")}
+				</Typography>
+			) : (
+				<div className="mb-3 flex flex-col gap-1.5">
+					{candidates.map((a) => {
+						const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setSelectedId(a.id);
+						return (
 							<Button
 								key={a.id}
 								onClick={handleClick}
@@ -115,28 +97,30 @@ return (
 								{a.name} {a.surname}
 							</Button>
 						);
-						})}
-					</div>
-				)}
+					})}
+				</div>
+			)}
 
-				{/* Optional note */}
-				<textarea
-					value={note}
-					onChange={handleChange}
-					placeholder={t("admin.feedback.transfer.notePlaceholder")}
-					rows={2}
-					className="mb-3 w-full resize-none rounded-base border border-bd-2 bg-surf-2 px-3 py-2 text-[12px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc"
-				/>
+			{/* Optional note */}
+			<textarea
+				value={note}
+				onChange={handleChange}
+				placeholder={t("admin.feedback.transfer.notePlaceholder")}
+				rows={2}
+				className="mb-3 w-full resize-none rounded-base border border-bd-2 bg-surf-2 px-3 py-2 text-[12px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc"
+			/>
 
+			<ModalActions>
 				<Button
 					disabled={!selectedId || isLoading}
 					onClick={handleSubmit}
 					title={t("admin.feedback.transfer.confirm")}
-					className="h-[34px] w-full rounded-base bg-acc text-[12.5px] font-semibold text-white transition-opacity disabled:opacity-40 hover:opacity-90"
+					variant="action"
+					className="h-[34px] px-4 rounded-lg text-[13px] w-full"
 				>
 					{t("admin.feedback.transfer.confirm")}
 				</Button>
-			</div>
-		</div>
+			</ModalActions>
+		</Modal>
 	);
 };

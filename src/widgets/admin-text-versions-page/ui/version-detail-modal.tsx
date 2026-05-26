@@ -9,6 +9,7 @@ import { cn } from "@/shared/lib/cn";
 import { useAdminTextVersionDetail } from "@/entities/admin-text/model/use-admin-text-versions";
 import { X, Download } from "lucide-react";
 import type { VersionLogLevel, VersionPageStatus } from "@/entities/admin-text";
+import { createPortal } from "react-dom";
 
 type ModalTab = "overview" | "pages" | "log";
 
@@ -60,31 +61,12 @@ const OverviewTab = ({
 			{t("admin.texts.versions.modal.overview")}
 		</div>
 		<div className="grid grid-cols-2 gap-2 max-sm:grid-cols-1">
-			<MetaCell
-				label={t("admin.texts.versions.modal.totalTokens")}
-				value={version.totalTokenCount.toLocaleString()}
-			/>
-			<MetaCell
-				label={t("admin.texts.versions.modal.totalWords")}
-				value={version.totalWordCount.toLocaleString()}
-			/>
-			<MetaCell
-				label={t("admin.texts.versions.modal.totalChars")}
-				value={version.totalCharCount.toLocaleString()}
-			/>
-			<MetaCell
-				label={t("admin.texts.versions.modal.duration")}
-				value={formatDuration(version.durationMs)}
-			/>
-			<MetaCell
-				label={t("admin.texts.versions.modal.trigger")}
-				value={t(`admin.texts.versions.trigger.${version.trigger}`)}
-			/>
-			<MetaCell
-				label={t("admin.texts.versions.modal.initiator")}
-				value={version.initiator?.name ?? "—"}
-				mono
-			/>
+			<MetaCell label={t("admin.texts.versions.modal.totalTokens")} value={version.totalTokenCount.toLocaleString()} />
+			<MetaCell label={t("admin.texts.versions.modal.totalWords")} value={version.totalWordCount.toLocaleString()} />
+			<MetaCell label={t("admin.texts.versions.modal.totalChars")} value={version.totalCharCount.toLocaleString()} />
+			<MetaCell label={t("admin.texts.versions.modal.duration")} value={formatDuration(version.durationMs)} />
+			<MetaCell label={t("admin.texts.versions.modal.trigger")} value={t(`admin.texts.versions.trigger.${version.trigger}`)} />
+			<MetaCell label={t("admin.texts.versions.modal.initiator")} value={version.initiator?.name ?? "—"} mono />
 		</div>
 
 		{version.errorMessage && (
@@ -206,7 +188,7 @@ export const VersionDetailModal = ({
 	const handleRetryClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRetry(versionId);
 	const handleRestoreClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRestore(versionId);
 
-	return (
+	return createPortal(
 		<>
 			{/* Backdrop */}
 			<div
@@ -230,9 +212,10 @@ export const VersionDetailModal = ({
 								: t("admin.texts.versions.modal.title").replace("{n}", "…")}
 						</Typography>
 						<Button
+							variant="bare"
 							onClick={onClose}
 							title={t("admin.texts.versions.modal.close")}
-							className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
+							className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 						>
 							<X className="size-3" />
 						</Button>
@@ -245,6 +228,7 @@ export const VersionDetailModal = ({
 							return (
 								<Button
 									key={key}
+									variant="bare"
 									onClick={handleTabClick}
 									title={label}
 									className={cn(
@@ -282,17 +266,19 @@ export const VersionDetailModal = ({
 					{/* Footer */}
 					<div className="flex shrink-0 items-center justify-end gap-2 border-t border-bd-1 px-4 py-3 max-sm:px-4 max-sm:pb-5">
 						<Button
+							variant="ghost"
 							onClick={onClose}
 							title={t("admin.texts.versions.modal.close")}
-							className="flex h-[30px] items-center rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+							className="h-[34px] px-4 rounded-lg text-[13px]"
 						>
 							{t("admin.texts.versions.modal.close")}
 						</Button>
 						{version && (
 							<Button
+								variant="outline"
 								onClick={handleDownloadClick}
 								title={t("admin.texts.versions.modal.download")}
-								className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+								className="h-[34px] px-4 rounded-lg text-[13px] flex items-center gap-1.5"
 							>
 								<Download className="size-3" />
 								{t("admin.texts.versions.modal.download")}
@@ -300,10 +286,11 @@ export const VersionDetailModal = ({
 						)}
 						{canRetry && (
 							<Button
+								variant="bare"
 								onClick={handleRetryClick}
 								disabled={isRetrying}
 								title={isRetrying ? t("admin.texts.versions.modal.retrying") : t("admin.texts.versions.modal.retry")}
-								className="flex h-[30px] items-center gap-1.5 rounded-base bg-amb px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
+								className="h-[34px] px-4 rounded-lg text-[13px] flex items-center gap-1.5 bg-amb font-semibold text-white hover:opacity-88"
 							>
 								{isRetrying && <Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
 								{isRetrying ? t("admin.texts.versions.modal.retrying") : t("admin.texts.versions.modal.retry")}
@@ -311,10 +298,11 @@ export const VersionDetailModal = ({
 						)}
 						{canRestore && (
 							<Button
+								variant="action"
 								onClick={handleRestoreClick}
 								disabled={isRestoring}
 								title={isRestoring ? t("admin.texts.versions.modal.restoring") : t("admin.texts.versions.modal.restore")}
-								className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
+								className="h-[34px] px-4 rounded-lg text-[13px] flex items-center gap-1.5"
 							>
 								{isRestoring && <Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
 								{isRestoring ? t("admin.texts.versions.modal.restoring") : t("admin.texts.versions.modal.restore")}
@@ -323,6 +311,7 @@ export const VersionDetailModal = ({
 					</div>
 				</div>
 			</div>
-		</>
+		</>,
+		document.body,
 	);
 };

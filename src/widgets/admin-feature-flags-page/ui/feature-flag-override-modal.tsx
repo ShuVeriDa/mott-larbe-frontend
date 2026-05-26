@@ -1,9 +1,7 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
 import type {
 	CreateFeatureFlagOverrideDto,
 	FeatureFlagKeyItem,
@@ -12,6 +10,7 @@ import { useAdminFeatureFlagKeys } from "@/entities/feature-flag";
 import { http } from "@/shared/api";
 import { useDebounce } from "@/shared/lib/debounce";
 import { Input } from "@/shared/ui/input";
+import { Modal, ModalActions } from "@/shared/ui/modal";
 import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { Select } from "@/shared/ui/select";
 import { FlagToggle } from "./flag-toggle";
@@ -95,8 +94,6 @@ export const FeatureFlagOverrideModal = ({
 		return () => document.removeEventListener("mousedown", handler);
 	}, [showSuggestions]);
 
-	if (!open) return null;
-
 	const handleSubmit = () => {
 		if (!flagId || !userInput) return;
 		onSubmit({
@@ -107,12 +104,6 @@ export const FeatureFlagOverrideModal = ({
 		});
 	};
 
-	const inputCls =
-		"h-[34px] w-full rounded-[8px] border border-bd-2 bg-bg px-2.5 text-[13px] text-t-1 outline-none transition-colors placeholder:text-t-3 focus:border-acc";
-
-	const handleBackdropClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
-			if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
-		};
 	const handleFlagChange: NonNullable<ComponentProps<"select">["onChange"]> = e => setFlagId(e.currentTarget.value);
 	const handleUserInputChange: NonNullable<ComponentProps<"input">["onChange"]> = e => {
 		setUserInput(e.currentTarget.value);
@@ -120,67 +111,64 @@ export const FeatureFlagOverrideModal = ({
 	};
 	const handleFocus: NonNullable<ComponentProps<"input">["onFocus"]> = () => suggestions.length > 0 && setShowSuggestions(true);
 	const handleReasonChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setReason(e.currentTarget.value);
-return (
-		<div
-			className="fixed inset-0 z-200 flex items-center justify-center bg-black/30 backdrop-blur-[3px] max-sm:items-end"
-			onClick={handleBackdropClick}
+
+	return (
+		<Modal
+			open={open}
+			onClose={onClose}
+			title={t("admin.featureFlags.overrideModal.title")}
+			className="max-w-[440px]"
 		>
-			<div className="w-[440px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[18px] max-sm:px-4.5 max-sm:pb-8">
-				<Typography tag="h2" className="font-display text-[16px] text-t-1 mb-1">
-					{t("admin.featureFlags.overrideModal.title")}
-				</Typography>
-				<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
-					{t("admin.featureFlags.overrideModal.subtitle")}
-				</Typography>
+			<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
+				{t("admin.featureFlags.overrideModal.subtitle")}
+			</Typography>
 
-				{/* Flag select */}
-				<div className="mb-3.5">
-					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
-						{t("admin.featureFlags.overrideModal.flagLabel")} *
-					</Typography>
-					<Select
-						variant="lg"
-						value={flagId}
-						onChange={handleFlagChange}
-						className="bg-bg"
-					>
-						<option value="">
-							{t("admin.featureFlags.overrideModal.selectFlag")}
+			{/* Flag select */}
+			<div className="mb-3.5">
+				<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					{t("admin.featureFlags.overrideModal.flagLabel")} *
+				</Typography>
+				<Select
+					variant="lg"
+					value={flagId}
+					onChange={handleFlagChange}
+					className="bg-bg"
+				>
+					<option value="">
+						{t("admin.featureFlags.overrideModal.selectFlag")}
+					</option>
+					{flagKeys.map(f => (
+						<option key={f.id} value={f.id}>
+							{f.key}
 						</option>
-						{flagKeys.map(f => (
-							<option key={f.id} value={f.id}>
-								{f.key}
-							</option>
-						))}
-					</Select>
-				</div>
+					))}
+				</Select>
+			</div>
 
-				{/* User typeahead */}
-				<div className="mb-3.5" ref={suggestRef}>
-					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
-						{t("admin.featureFlags.overrideModal.userLabel")} *
-					</Typography>
-					<div className="relative">
-						<Input
-							className="rounded-[8px]"
-							placeholder={t(
-								"admin.featureFlags.overrideModal.userPlaceholder",
-							)}
-							value={userInput}
-							onChange={handleUserInputChange}
-							onFocus={handleFocus}
-							aria-label={t("admin.featureFlags.overrideModal.userLabel")}
-							aria-autocomplete="list"
-							aria-expanded={showSuggestions && suggestions.length > 0}
-						/>
-						{showSuggestions && suggestions.length > 0 && (
-							<div className="absolute left-0 top-[calc(100%+4px)] z-50 w-full rounded-[9px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
-								{suggestions.map(u => {
-								  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
-											setUserInput(u.email);
-											setShowSuggestions(false);
-										};
-								  return (
+			{/* User typeahead */}
+			<div className="mb-3.5" ref={suggestRef}>
+				<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					{t("admin.featureFlags.overrideModal.userLabel")} *
+				</Typography>
+				<div className="relative">
+					<Input
+						className="rounded-[8px]"
+						placeholder={t("admin.featureFlags.overrideModal.userPlaceholder")}
+						value={userInput}
+						onChange={handleUserInputChange}
+						onFocus={handleFocus}
+						aria-label={t("admin.featureFlags.overrideModal.userLabel")}
+						aria-autocomplete="list"
+						aria-expanded={showSuggestions && suggestions.length > 0}
+					/>
+					{showSuggestions && suggestions.length > 0 && (
+						<div className="absolute left-0 top-[calc(100%+4px)] z-50 w-full rounded-[9px] border border-bd-2 bg-surf p-1 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
+							{suggestions.map(u => {
+								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+									setUserInput(u.email);
+									setShowSuggestions(false);
+								};
+								return (
 									<Button
 										key={u.id}
 										className="flex w-full flex-col rounded-[6px] px-2.5 py-1.5 text-left transition-colors hover:bg-surf-2"
@@ -193,57 +181,54 @@ return (
 										<Typography tag="span" className="text-[11px] text-t-3">{u.email}</Typography>
 									</Button>
 								);
-								})}
-							</div>
-						)}
-					</div>
-				</div>
-
-				{/* isEnabled toggle */}
-				<div className="mb-3.5 flex items-center justify-between rounded-[8px] border border-bd-1 bg-bg px-3 py-2.5">
-					<Typography tag="span" className="text-[12.5px] text-t-2">
-						{t("admin.featureFlags.overrideModal.valueLabel")}
-					</Typography>
-					<FlagToggle enabled={isEnabled} onChange={setIsEnabled} />
-				</div>
-
-				{/* Reason */}
-				<div className="mb-3.5">
-					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
-						{t("admin.featureFlags.overrideModal.reasonLabel")}
-					</Typography>
-					<Input
-						className="rounded-[8px]"
-						placeholder={t(
-							"admin.featureFlags.overrideModal.reasonPlaceholder",
-						)}
-						value={reason}
-						onChange={handleReasonChange}
-						aria-label={t("admin.featureFlags.overrideModal.reasonLabel")}
-					/>
-				</div>
-
-				<div className="mt-5 flex justify-end gap-2 max-sm:flex-col-reverse">
-					<Button
-						onClick={onClose}
-						disabled={isSubmitting}
-						title={t("admin.featureFlags.modal.cancel")}
-						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50 max-sm:h-10"
-					>
-						{t("admin.featureFlags.modal.cancel")}
-					</Button>
-					<Button
-						onClick={handleSubmit}
-						disabled={isSubmitting || !flagId || !userInput}
-						title={isSubmitting ? t("admin.featureFlags.overrideModal.saving") : t("admin.featureFlags.overrideModal.confirm")}
-						className="h-8 cursor-pointer rounded-base bg-acc px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50 max-sm:h-10"
-					>
-						{isSubmitting
-							? t("admin.featureFlags.overrideModal.saving")
-							: t("admin.featureFlags.overrideModal.confirm")}
-					</Button>
+							})}
+						</div>
+					)}
 				</div>
 			</div>
-		</div>
+
+			{/* isEnabled toggle */}
+			<div className="mb-3.5 flex items-center justify-between rounded-[8px] border border-bd-1 bg-bg px-3 py-2.5">
+				<Typography tag="span" className="text-[12.5px] text-t-2">
+					{t("admin.featureFlags.overrideModal.valueLabel")}
+				</Typography>
+				<FlagToggle enabled={isEnabled} onChange={setIsEnabled} />
+			</div>
+
+			{/* Reason */}
+			<div className="mb-2">
+				<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
+					{t("admin.featureFlags.overrideModal.reasonLabel")}
+				</Typography>
+				<Input
+					className="rounded-[8px]"
+					placeholder={t("admin.featureFlags.overrideModal.reasonPlaceholder")}
+					value={reason}
+					onChange={handleReasonChange}
+					aria-label={t("admin.featureFlags.overrideModal.reasonLabel")}
+				/>
+			</div>
+
+			<ModalActions>
+				<Button
+					variant="ghost"
+					onClick={onClose}
+					disabled={isSubmitting}
+					className="h-[34px] px-4 rounded-lg text-[13px]"
+				>
+					{t("admin.featureFlags.modal.cancel")}
+				</Button>
+				<Button
+					variant="action"
+					onClick={handleSubmit}
+					disabled={isSubmitting || !flagId || !userInput}
+					className="h-[34px] flex-1 px-4 rounded-lg text-[13px]"
+				>
+					{isSubmitting
+						? t("admin.featureFlags.overrideModal.saving")
+						: t("admin.featureFlags.overrideModal.confirm")}
+				</Button>
+			</ModalActions>
+		</Modal>
 	);
 };

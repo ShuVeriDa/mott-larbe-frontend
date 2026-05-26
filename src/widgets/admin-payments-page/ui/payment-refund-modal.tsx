@@ -141,7 +141,8 @@ export const PaymentRefundModal = ({
 						onClick={onClose}
 						disabled={isPending}
 						title={t("admin.payments.refundModal.cancel")}
-						className="flex h-[32px] items-center rounded-lg border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3 disabled:opacity-60"
+						variant="ghost"
+						className="h-[34px] px-4 rounded-lg text-[13px]"
 					>
 						{t("admin.payments.refundModal.cancel")}
 					</Button>
@@ -149,7 +150,8 @@ export const PaymentRefundModal = ({
 						type="submit"
 						disabled={isPending}
 						title={isPending ? t("admin.payments.refundModal.loading") : t("admin.payments.refundModal.confirm")}
-						className="flex h-[32px] items-center rounded-lg bg-red px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-88 disabled:opacity-60"
+						variant="bare"
+						className="h-[34px] px-4 rounded-lg text-[13px] font-semibold text-white bg-red hover:opacity-85"
 					>
 						{isPending
 							? t("admin.payments.refundModal.loading")

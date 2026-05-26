@@ -2,7 +2,7 @@
 
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import type { ComponentProps } from "react";
+import { Modal, ModalActions } from "@/shared/ui/modal";
 
 interface AdminTextConfirmModalProps {
 	title: string;
@@ -25,48 +25,41 @@ export const AdminTextConfirmModal = ({
 	onConfirm,
 	onCancel,
 }: AdminTextConfirmModalProps) => {
-	const handleContainerClick: NonNullable<ComponentProps<"div">["onClick"]> = e =>
-		e.stopPropagation();
-	const handleBackdropClick: NonNullable<ComponentProps<"div">["onClick"]> = () => {
+	const handleClose = () => {
 		if (!closeOnBackdropClick || isConfirming) return;
 		onCancel();
 	};
 
 	return (
-		<div
-			className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 backdrop-blur-sm"
-			onClick={handleBackdropClick}
+		<Modal
+			open
+			onClose={handleClose}
+			title={title}
 		>
-			<div
-				className="w-full max-w-[360px] rounded-xl border border-bd-1 bg-surf p-6 shadow-xl"
-				onClick={handleContainerClick}
-			>
-				<Typography tag="h2" className="text-base font-semibold text-t-1">
-					{title}
-				</Typography>
-				<Typography tag="p" className="mt-2 text-sm text-t-3">
-					{description}
-				</Typography>
+			<Typography tag="p" className="mb-4 text-sm text-t-3">
+				{description}
+			</Typography>
 
-				<div className="mt-5 flex justify-end gap-2">
-					<Button
-						onClick={onCancel}
-						disabled={isConfirming}
-						title={cancelLabel}
-						className="rounded-lg border border-bd-1 px-4 py-1.5 text-sm text-t-2 transition-colors hover:bg-surf-2 disabled:cursor-not-allowed disabled:opacity-50"
-					>
-						{cancelLabel}
-					</Button>
-					<Button
-						onClick={onConfirm}
-						disabled={isConfirming}
-						title={confirmLabel}
-						className="rounded-lg bg-red px-4 py-1.5 text-sm font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
-					>
-						{confirmLabel}
-					</Button>
-				</div>
-			</div>
-		</div>
+			<ModalActions>
+				<Button
+					onClick={onCancel}
+					disabled={isConfirming}
+					title={cancelLabel}
+					variant="ghost"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
+				>
+					{cancelLabel}
+				</Button>
+				<Button
+					onClick={onConfirm}
+					disabled={isConfirming}
+					title={confirmLabel}
+					variant="bare"
+					className="h-[34px] px-4 rounded-lg text-[13px] font-semibold text-white bg-red hover:opacity-85 flex-1"
+				>
+					{confirmLabel}
+				</Button>
+			</ModalActions>
+		</Modal>
 	);
 };

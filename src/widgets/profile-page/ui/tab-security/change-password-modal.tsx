@@ -90,10 +90,19 @@ return (
 					)}
 				</div>
 				<ModalActions>
-					<Button variant="ghost" className="flex-1" onClick={handleClose}>
+					<Button
+						onClick={handleClose}
+						variant="ghost"
+						className="h-[34px] px-4 rounded-lg text-[13px]"
+					>
 						{t("profile.common.cancel")}
 					</Button>
-					<Button type="submit" variant="action" className="flex-1" disabled={isPending}>
+					<Button
+						type="submit"
+						disabled={isPending}
+						variant="action"
+						className="h-[34px] px-4 rounded-lg text-[13px] flex-1"
+					>
 						{t("profile.security.savePassword")}
 					</Button>
 				</ModalActions>

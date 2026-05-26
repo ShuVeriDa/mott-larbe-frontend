@@ -78,7 +78,8 @@ export const CancelSubscriptionModal = ({
 				<Button
 					onClick={onClose}
 					title={t("admin.subscriptions.modal.keepSub")}
-					className="h-8 rounded-lg border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
+					variant="ghost"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
 				>
 					{t("admin.subscriptions.modal.keepSub")}
 				</Button>
@@ -86,7 +87,8 @@ export const CancelSubscriptionModal = ({
 					onClick={handleConfirm}
 					disabled={mutations.cancel.isPending}
 					title={mutations.cancel.isPending ? t("admin.subscriptions.modal.saving") : t("admin.subscriptions.modal.cancelConfirm")}
-					className="h-8 rounded-lg bg-red px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+					variant="bare"
+					className="h-[34px] px-4 rounded-lg text-[13px] font-semibold text-white bg-red hover:opacity-85"
 				>
 					{mutations.cancel.isPending
 						? t("admin.subscriptions.modal.saving")

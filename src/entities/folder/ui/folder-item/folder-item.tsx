@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
+import { ReactNode } from "react";
 
 import { Button } from "@/shared/ui/button";
 export interface FolderItemProps {

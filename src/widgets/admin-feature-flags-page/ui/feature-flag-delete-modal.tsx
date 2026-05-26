@@ -1,11 +1,9 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import { Button } from "@/shared/ui/button";
-
-import { ComponentProps } from 'react';
 import type { FeatureFlagItem } from "@/entities/feature-flag";
+import { Modal, ModalActions } from "@/shared/ui/modal";
 
 interface FeatureFlagDeleteModalProps {
 	flag: FeatureFlagItem | null;
@@ -22,47 +20,41 @@ export const FeatureFlagDeleteModal = ({
 	onClose,
 	t,
 }: FeatureFlagDeleteModalProps) => {
-	if (!flag) return null;
-
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
-				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
-			};
-return (
-		<div
-			className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-[3px]"
-			onClick={handleClick}
+	return (
+		<Modal
+			open={!!flag}
+			onClose={onClose}
+			title={t("admin.featureFlags.deleteModal.title")}
+			className="max-w-[400px]"
 		>
-			<div className="w-[400px] rounded-[14px] border border-bd-2 bg-surf p-5 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
-				<Typography tag="h2" className="font-display text-[16px] text-t-1 mb-1">
-					{t("admin.featureFlags.deleteModal.title")}
-				</Typography>
-				<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
-					{t("admin.featureFlags.deleteModal.subtitle")}
-				</Typography>
+			<Typography tag="p" className="mb-4 text-[12.5px] text-t-3">
+				{t("admin.featureFlags.deleteModal.subtitle")}
+			</Typography>
+			{flag && (
 				<div className="mb-4 rounded-[8px] border border-bd-1 bg-surf-2 px-3 py-2">
 					<Typography tag="span" className="font-mono text-[12px] text-t-1">{flag.key}</Typography>
 				</div>
-				<div className="flex justify-end gap-2">
-					<Button
-						onClick={onClose}
-						disabled={isDeleting}
-						title={t("admin.featureFlags.deleteModal.cancel")}
-						className="h-8 cursor-pointer rounded-base border border-bd-2 bg-transparent px-3.5 text-[12.5px] text-t-2 transition-all hover:border-bd-3 hover:bg-surf-2 disabled:opacity-50"
-					>
-						{t("admin.featureFlags.deleteModal.cancel")}
-					</Button>
-					<Button
-						onClick={onConfirm}
-						disabled={isDeleting}
-						title={isDeleting ? t("admin.featureFlags.deleteModal.deleting") : t("admin.featureFlags.deleteModal.confirm")}
-						className="h-8 cursor-pointer rounded-base bg-red-500 px-3.5 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[.88] disabled:opacity-50"
-					>
-						{isDeleting
-							? t("admin.featureFlags.deleteModal.deleting")
-							: t("admin.featureFlags.deleteModal.confirm")}
-					</Button>
-				</div>
-			</div>
-		</div>
+			)}
+			<ModalActions>
+				<Button
+					variant="ghost"
+					onClick={onClose}
+					disabled={isDeleting}
+					className="h-[34px] px-4 rounded-lg text-[13px]"
+				>
+					{t("admin.featureFlags.deleteModal.cancel")}
+				</Button>
+				<Button
+					variant="bare"
+					onClick={onConfirm}
+					disabled={isDeleting}
+					className="h-[34px] flex-1 px-4 rounded-lg text-[13px] font-semibold text-white bg-red hover:opacity-85"
+				>
+					{isDeleting
+						? t("admin.featureFlags.deleteModal.deleting")
+						: t("admin.featureFlags.deleteModal.confirm")}
+				</Button>
+			</ModalActions>
+		</Modal>
 	);
 };

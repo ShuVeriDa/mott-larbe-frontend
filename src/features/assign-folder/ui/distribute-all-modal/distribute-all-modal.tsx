@@ -92,7 +92,8 @@ export const DistributeAllModal = ({
 				<Button
 					onClick={handleClose}
 					title={t("vocabulary.foldersPage.distributeAllModal.cancel")}
-					className="h-[34px] rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
+					variant="ghost"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
 				>
 					{t("vocabulary.foldersPage.distributeAllModal.cancel")}
 				</Button>
@@ -100,7 +101,8 @@ export const DistributeAllModal = ({
 					disabled={!selectedId || isPending || loadingEntries}
 					onClick={handleConfirm}
 					title={t("vocabulary.foldersPage.distributeAllModal.confirm")}
-					className="h-[34px] flex-1 rounded-lg bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
+					variant="action"
+					className="h-[34px] px-4 rounded-lg text-[13px] flex-1"
 				>
 					{t("vocabulary.foldersPage.distributeAllModal.confirm")}
 				</Button>

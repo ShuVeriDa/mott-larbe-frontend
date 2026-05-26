@@ -365,7 +365,8 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 				<Button
 					onClick={onClose}
 					title={t("admin.coupons.modal.cancel")}
-					className="h-8 rounded-[8px] border border-bd-2 bg-surf-2 px-3.5 text-[12.5px] font-medium text-t-2 transition-colors hover:bg-surf-3"
+					variant="ghost"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
 				>
 					{t("admin.coupons.modal.cancel")}
 				</Button>
@@ -373,7 +374,8 @@ export const CreateCouponModal = ({ editing, mutations, onClose }: Props) => {
 					type="submit"
 					disabled={isPending}
 					title={isEdit ? t("admin.coupons.modal.save") : t("admin.coupons.modal.create")}
-					className="h-8 rounded-[8px] bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+					variant="action"
+					className="h-[34px] px-4 rounded-lg text-[13px]"
 				>
 					{isEdit
 						? t("admin.coupons.modal.save")
