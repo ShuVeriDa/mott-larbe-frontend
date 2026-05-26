@@ -2,11 +2,11 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
-import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { useMounted } from "@/shared/lib/mounted";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { ComponentProps } from "react";
 
 export const LandingThemeToggle = () => {
 	const { t } = useI18n();
@@ -15,14 +15,15 @@ export const LandingThemeToggle = () => {
 
 	const dark = mounted && resolvedTheme === "dark";
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setTheme(dark ? "light" : "dark");
-return (
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		setTheme(dark ? "light" : "dark");
+	return (
 		<Button
 			variant="bare"
 			size={null}
 			onClick={handleClick}
 			aria-label={t("landing.nav.theme")}
-			className="flex h-[34px] w-[34px] items-center justify-center rounded-base border-hairline border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+			className="flex h-[34px] w-[34px] items-center justify-center rounded-base border-[0.5px] border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
 		>
 			{mounted && dark ? (
 				<Sun size={15} strokeWidth={1.8} />

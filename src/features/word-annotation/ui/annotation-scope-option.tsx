@@ -1,8 +1,8 @@
 "use client";
 
-import { CheckIcon } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
+import { CheckIcon } from "lucide-react";
 
 interface AnnotationScopeOptionProps {
 	active: boolean;
@@ -24,7 +24,7 @@ export const AnnotationScopeOption = ({
 			title={label}
 			onClick={handleClick}
 			className={cn(
-				"flex w-full items-start gap-3 rounded-base border border-hairline p-3 text-left transition-colors",
+				"flex w-full items-start gap-3 rounded-base border border-[0.5px] p-3 text-left transition-colors",
 				active
 					? "border-acc bg-acc/5"
 					: "border-bd-1 bg-surf-2 hover:border-bd-2 hover:bg-surf-3",

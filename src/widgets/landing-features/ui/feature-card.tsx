@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
+import type { ReactNode } from "react";
 
 export type FeatureIconColor =
 	| "acc"
@@ -32,7 +32,7 @@ export const FeatureCard = ({
 	icon,
 	iconColor,
 }: FeatureCardProps) => (
-	<article className="rounded-[12px] border-hairline border-bd-2 bg-surf p-[22px] pb-6 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-bd-3 max-[640px]:p-5">
+	<article className="rounded-[12px] border-[0.5px] border-bd-2 bg-surf p-[22px] pb-6 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-bd-3 max-[640px]:p-5">
 		<div
 			className={cn(
 				"mb-4 flex h-[38px] w-[38px] items-center justify-center rounded-[9px]",

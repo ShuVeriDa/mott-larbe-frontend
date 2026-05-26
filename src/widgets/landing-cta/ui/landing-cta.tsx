@@ -1,9 +1,9 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface LandingCtaProps {
 	startHref: string;
@@ -19,7 +19,7 @@ export const LandingCta = ({ startHref, loginHref }: LandingCtaProps) => {
 			aria-labelledby="cta-title"
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
-				<div className="relative overflow-hidden rounded-[18px] border-hairline border-bd-2 bg-surf px-12 py-16 text-center max-[640px]:rounded-[14px] max-[640px]:px-[22px] max-[640px]:py-9">
+				<div className="relative overflow-hidden rounded-[18px] border-[0.5px] border-bd-2 bg-surf px-12 py-16 text-center max-[640px]:rounded-[14px] max-[640px]:px-[22px] max-[640px]:py-9">
 					<div
 						aria-hidden="true"
 						className="pointer-events-none absolute inset-0 z-0"
@@ -52,7 +52,7 @@ export const LandingCta = ({ startHref, loginHref }: LandingCtaProps) => {
 							</Link>
 							<Link
 								href={loginHref}
-								className="inline-flex h-12 items-center justify-center gap-1.5 rounded-[10px] border-hairline border-bd-2 bg-transparent px-[22px] text-[14px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-2 max-[640px]:w-full"
+								className="inline-flex h-12 items-center justify-center gap-1.5 rounded-[10px] border-[0.5px] border-bd-2 bg-transparent px-[22px] text-[14px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-2 max-[640px]:w-full"
 							>
 								{t("landing.cta.secondary")}
 							</Link>

@@ -5,7 +5,10 @@ import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import Link from "next/link";
-import { LANGUAGE_DOT_COLOR, LANGUAGE_LABEL } from "../lib/continue-reading-config";
+import {
+	LANGUAGE_DOT_COLOR,
+	LANGUAGE_LABEL,
+} from "../lib/continue-reading-config";
 
 interface ContinueCardProps {
 	item: DashboardContinueItem;
@@ -22,7 +25,7 @@ export const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 	return (
 		<Link
 			href={`/${lang}/reader/${item.id}/p/${item.lastPageNumber}`}
-			className="group flex flex-col overflow-hidden rounded-card border-hairline border border-bd-1 bg-surf transition-all hover:-translate-y-px hover:border-bd-2 hover:shadow-md"
+			className="group flex flex-col overflow-hidden rounded-card border-[0.5px] border border-bd-1 bg-surf transition-all hover:-translate-y-px hover:border-bd-2 hover:shadow-md"
 		>
 			<div className="relative h-[5px] w-full bg-surf-3">
 				<div
@@ -41,7 +44,10 @@ export const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 						className="size-[6px] shrink-0 rounded-full"
 						style={{ background: dotColor }}
 					/>
-					<Typography tag="span" className="text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+					<Typography
+						tag="span"
+						className="text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3"
+					>
 						{langLabel}
 					</Typography>
 				</div>
@@ -71,9 +77,7 @@ export const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 						tag="span"
 						className={cn(
 							"rounded-[5px] border-none px-[9px] py-[3px] text-[11px] font-semibold transition-opacity group-hover:opacity-80",
-							isAlmostDone
-								? "bg-grn-bg text-grn-t"
-								: "bg-acc-bg text-acc-t",
+							isAlmostDone ? "bg-grn-bg text-grn-t" : "bg-acc-bg text-acc-t",
 						)}
 					>
 						{isAlmostDone

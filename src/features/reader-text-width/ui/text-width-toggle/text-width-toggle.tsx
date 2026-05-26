@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { ComponentProps } from "react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import { ComponentProps } from "react";
 import { useReaderTextWidth, type ReaderTextWidth } from "../../model";
 
 const OPTIONS: Array<{ value: ReaderTextWidth; labelKey: string }> = [
@@ -16,10 +16,13 @@ export interface TextWidthToggleProps {
 	buttonClassName?: string;
 }
 
-export const TextWidthToggle = ({ className, buttonClassName }: TextWidthToggleProps) => {
+export const TextWidthToggle = ({
+	className,
+	buttonClassName,
+}: TextWidthToggleProps) => {
 	const { t } = useI18n();
-	const width = useReaderTextWidth((s) => s.width);
-	const setWidth = useReaderTextWidth((s) => s.setWidth);
+	const width = useReaderTextWidth(s => s.width);
+	const setWidth = useReaderTextWidth(s => s.setWidth);
 
 	return (
 		<div
@@ -27,10 +30,11 @@ export const TextWidthToggle = ({ className, buttonClassName }: TextWidthToggleP
 			role="group"
 			aria-label={t("reader.settings.width")}
 		>
-			{OPTIONS.map((item) => {
+			{OPTIONS.map(item => {
 				const active = item.value === width;
-				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-					setWidth(item.value);
+				const handleClick: NonNullable<
+					ComponentProps<"button">["onClick"]
+				> = () => setWidth(item.value);
 				return (
 					<Button
 						key={item.value}
@@ -40,7 +44,7 @@ export const TextWidthToggle = ({ className, buttonClassName }: TextWidthToggleP
 						aria-pressed={active}
 						title={t(item.labelKey)}
 						className={cn(
-							"h-[26px] flex-1 rounded-[5px] border-hairline border-bd-1 px-[9px]",
+							"h-[26px] flex-1 rounded-[5px] border-[0.5px] border-bd-1 px-[9px]",
 							"text-[13px] font-medium transition-colors duration-100",
 							active
 								? "border-acc/20 bg-acc-bg text-acc-t"

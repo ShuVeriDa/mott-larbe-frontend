@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import type { DeckDailyWordCount } from "@/entities/deck";
+import { useDeckSettings, useUpdateDeckSettings } from "@/entities/deck";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
-import { useDeckSettings, useUpdateDeckSettings } from "@/entities/deck";
-import type { DeckDailyWordCount } from "@/entities/deck";
+import { useEffect, useState } from "react";
 
 const DAILY_OPTIONS: DeckDailyWordCount[] = [3, 5, 10];
 const NUMBERED_DECKS_OPTIONS = [1, 2, 3, 4, 5] as const;
@@ -39,16 +39,20 @@ export const DeckSettingsForm = ({ onSaved }: DeckSettingsFormProps) => {
 			deckMaxSize !== settings.deckMaxSize ||
 			dailyNumberedDecks !== settings.dailyNumberedDecks);
 
-	const handleDailySelect = (value: number) => setDailyWordCount(value as DeckDailyWordCount);
+	const handleDailySelect = (value: number) =>
+		setDailyWordCount(value as DeckDailyWordCount);
 
 	const handleDeckMaxSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const raw = parseInt(e.currentTarget.value, 10);
 		if (!isNaN(raw)) {
-			setDeckMaxSize(Math.min(DECK_MAX_SIZE_MAX, Math.max(DECK_MAX_SIZE_MIN, raw)));
+			setDeckMaxSize(
+				Math.min(DECK_MAX_SIZE_MAX, Math.max(DECK_MAX_SIZE_MIN, raw)),
+			);
 		}
 	};
 
-	const handleDailyNumberedDecksSelect = (value: number) => setDailyNumberedDecks(value);
+	const handleDailyNumberedDecksSelect = (value: number) =>
+		setDailyNumberedDecks(value);
 
 	const handleSave = () => {
 		updateSettings(
@@ -72,7 +76,7 @@ export const DeckSettingsForm = ({ onSaved }: DeckSettingsFormProps) => {
 					{t("review.deck.intro.settings.dailyWordCount")}
 				</div>
 				<div className="flex gap-2">
-					{DAILY_OPTIONS.map((n) => (
+					{DAILY_OPTIONS.map(n => (
 						<OptionButton
 							key={n}
 							value={n}
@@ -88,7 +92,7 @@ export const DeckSettingsForm = ({ onSaved }: DeckSettingsFormProps) => {
 					{t("review.deck.intro.settings.dailyNumberedDecks")}
 				</div>
 				<div className="flex gap-2">
-					{NUMBERED_DECKS_OPTIONS.map((n) => (
+					{NUMBERED_DECKS_OPTIONS.map(n => (
 						<OptionButton
 							key={n}
 							value={n}
@@ -109,7 +113,7 @@ export const DeckSettingsForm = ({ onSaved }: DeckSettingsFormProps) => {
 					max={DECK_MAX_SIZE_MAX}
 					value={deckMaxSize}
 					onChange={handleDeckMaxSizeChange}
-					className="h-8 w-24 rounded-base border-hairline border-bd-2 bg-surf px-2 text-[13px] text-t-1 outline-none focus:border-acc"
+					className="h-8 w-24 rounded-base border-[0.5px] border-bd-2 bg-surf px-2 text-[13px] text-t-1 outline-none focus:border-acc"
 				/>
 				<div className="mt-1 text-[11px] text-t-3">
 					{t("review.deck.intro.settings.deckMaxSizeHint")}
@@ -145,7 +149,7 @@ const OptionButton = ({ value, selected, onSelect }: OptionButtonProps) => {
 		<button
 			type="button"
 			onClick={handleClick}
-			className={`flex h-8 w-10 items-center justify-center rounded-base border-hairline text-[13px] font-semibold transition-colors ${
+			className={`flex h-8 w-10 items-center justify-center rounded-base border-[0.5px] text-[13px] font-semibold transition-colors ${
 				selected
 					? "border-acc bg-acc-bg text-acc"
 					: "border-bd-2 bg-surf text-t-2 hover:border-bd-1 hover:text-t-1"

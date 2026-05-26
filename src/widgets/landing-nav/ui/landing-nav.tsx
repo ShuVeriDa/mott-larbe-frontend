@@ -31,7 +31,7 @@ export const LandingNav = ({ loginHref, startHref }: LandingNavProps) => {
 	const { open, openMenu, closeMenu } = useMobileMenu();
 
 	return (
-		<header className="sticky top-0 z-[100] border-hairline border-b border-bd-1 bg-surf/80 backdrop-blur-xl backdrop-saturate-[160%] transition-colors">
+		<header className="sticky top-0 z-[100] border-[0.5px] border-b border-bd-1 bg-surf/80 backdrop-blur-xl backdrop-saturate-[160%] transition-colors">
 			<div className="mx-auto w-full max-w-[1120px] px-7 max-[900px]:px-[22px] max-[640px]:px-[18px]">
 				<div className="flex h-[60px] items-center justify-between max-[640px]:h-14">
 					<Link
@@ -72,7 +72,7 @@ export const LandingNav = ({ loginHref, startHref }: LandingNavProps) => {
 						<LandingThemeToggle />
 						<Link
 							href={loginHref}
-							className="inline-flex h-[34px] items-center gap-1.5 rounded-base border-hairline border-bd-2 bg-transparent px-3.5 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-2 max-[900px]:hidden"
+							className="inline-flex h-[34px] items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3.5 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-2 max-[900px]:hidden"
 						>
 							{t("landing.nav.login")}
 						</Link>
@@ -86,7 +86,7 @@ export const LandingNav = ({ loginHref, startHref }: LandingNavProps) => {
 							onClick={openMenu}
 							aria-label={t("landing.nav.menu")}
 							title={t("landing.nav.menu")}
-							className="hidden h-[34px] w-[34px] items-center justify-center rounded-base border-hairline border-bd-2 bg-surf text-t-1 transition-colors hover:bg-surf-2 max-[900px]:inline-flex"
+							className="hidden h-[34px] w-[34px] items-center justify-center rounded-base border-[0.5px] border-bd-2 bg-surf text-t-1 transition-colors hover:bg-surf-2 max-[900px]:inline-flex"
 						>
 							<Menu size={18} strokeWidth={1.8} />
 						</Button>

@@ -2,17 +2,17 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
-import { cn } from "@/shared/lib/cn";
 import {
 	useUpdatePreferences,
 	type PopupMode,
 	type UserPreferences,
 } from "@/entities/settings";
 import { FontSizeControl } from "@/features/font-size";
+import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Typography } from "@/shared/ui/typography";
+import { ComponentProps } from "react";
 import { SectionHeader } from "../section-header";
 import { SettingCard } from "../setting-card";
 import { ToggleRow } from "../toggle-row";
@@ -64,10 +64,16 @@ export const ReaderSection = ({ preferences }: ReaderSectionProps) => {
 		} catch {}
 	};
 
-		const handleChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ highlightKnown: v });
-	const handleChange2: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ showProgress: v });
-	const handleChange3: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => togglePref({ autoNextPage: v });
-return (
+	const handleChange: NonNullable<
+		ComponentProps<typeof ToggleRow>["onChange"]
+	> = v => togglePref({ highlightKnown: v });
+	const handleChange2: NonNullable<
+		ComponentProps<typeof ToggleRow>["onChange"]
+	> = v => togglePref({ showProgress: v });
+	const handleChange3: NonNullable<
+		ComponentProps<typeof ToggleRow>["onChange"]
+	> = v => togglePref({ autoNextPage: v });
+	return (
 		<div className="flex flex-col gap-3.5">
 			<SectionHeader
 				title={t("settings.reader.title")}
@@ -80,27 +86,33 @@ return (
 
 			<SettingCard title={t("settings.reader.popupMode")} noBody>
 				<div className="flex flex-col">
-					{POPUP_OPTIONS.map((opt) => {
+					{POPUP_OPTIONS.map(opt => {
 						const selected = preferences.popupMode === opt.value;
-												const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => updatePopup(opt.value);
-return (
+						const handleClick: NonNullable<
+							ComponentProps<"button">["onClick"]
+						> = () => updatePopup(opt.value);
+						return (
 							<Button
 								key={opt.value}
 								onClick={handleClick}
 								aria-pressed={selected}
 								className={cn(
-									"flex items-center gap-2.5 border-hairline border-b border-bd-1 px-4 py-2.5 text-left transition-colors last:border-b-0",
+									"flex items-center gap-2.5 border-[0.5px] border-b border-bd-1 px-4 py-2.5 text-left transition-colors last:border-b-0",
 									"hover:bg-surf-2",
 								)}
 							>
-								<Typography tag="span"
+								<Typography
+									tag="span"
 									className={cn(
 										"flex size-4 shrink-0 items-center justify-center rounded-full border-[1.5px]",
 										selected ? "border-acc" : "border-bd-2",
 									)}
 								>
 									{selected ? (
-										<Typography tag="span" className="block size-2 rounded-full bg-acc" />
+										<Typography
+											tag="span"
+											className="block size-2 rounded-full bg-acc"
+										/>
 									) : null}
 								</Typography>
 								<Typography tag="span" className="flex-1">

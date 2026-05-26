@@ -1,9 +1,16 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import type { DetailMorphForm } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/shared/ui/table";
+import { Typography } from "@/shared/ui/typography";
 import { CardSection } from "../card-section";
 
 export interface MorphologySectionProps {
@@ -33,7 +40,10 @@ export const MorphologySection = ({
 			}
 		>
 			<div className="overflow-x-auto -webkit-overflow-scrolling-touch">
-				<Table className="w-full min-w-[280px] border-collapse" aria-label={t("vocabulary.wordDetail.sections.morphology")}>
+				<Table
+					className="w-full min-w-[280px] border-collapse"
+					aria-label={t("vocabulary.wordDetail.sections.morphology")}
+				>
 					<TableHeader>
 						<TableRow>
 							<TableHead className="pb-1.5 pr-2 text-left text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
@@ -51,13 +61,16 @@ export const MorphologySection = ({
 						{forms.map((form, idx) => (
 							<TableRow
 								key={`${form.form}-${idx}`}
-								className="border-t border-hairline border-bd-1"
+								className="border-t border-[0.5px] border-bd-1"
 							>
 								<TableCell className="py-1.5 pr-2 text-[12px] text-t-3">
 									{form.caseLabel ?? form.gramCase ?? form.grammarTag ?? "—"}
 								</TableCell>
 								<TableCell className="py-1.5 pr-2">
-									<Typography tag="span" className="inline-flex items-center rounded-[5px] border-hairline border-bd-1 bg-surf-2 px-2 py-[2px] font-display text-[12px] italic text-t-1">
+									<Typography
+										tag="span"
+										className="inline-flex items-center rounded-[5px] border-[0.5px] border-bd-1 bg-surf-2 px-2 py-[2px] font-display text-[12px] italic text-t-1"
+									>
 										{form.form}
 									</Typography>
 								</TableCell>

@@ -1,9 +1,14 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { ComponentProps, type MouseEvent as ReactMouseEvent, useEffect, useRef } from "react";
-import { ArrowRight, PaintBucket, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
+import { Button } from "@/shared/ui/button";
+import { ArrowRight, PaintBucket, Pencil, Trash2 } from "lucide-react";
+import {
+	ComponentProps,
+	type MouseEvent as ReactMouseEvent,
+	useEffect,
+	useRef,
+} from "react";
 
 export interface FolderCardActionsProps {
 	open: boolean;
@@ -34,7 +39,13 @@ export const FolderCardActions = ({
 	useEffect(() => {
 		if (!open) return;
 		const onDocClick = (e: globalThis.MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node /* intentional: outside-click target */)) onClose();
+			if (
+				ref.current &&
+				!ref.current.contains(
+					e.target as Node /* intentional: outside-click target */,
+				)
+			)
+				onClose();
 		};
 		const onKey = (e: KeyboardEvent) => {
 			if (e.key === "Escape") onClose();
@@ -64,15 +75,16 @@ export const FolderCardActions = ({
 		onClose();
 	};
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => e.stopPropagation();
-return (
+	const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e =>
+		e.stopPropagation();
+	return (
 		<div
 			ref={ref}
 			role="menu"
 			onClick={handleClick}
 			className={cn(
 				"absolute right-2.5 top-9 z-30 min-w-[170px] overflow-hidden rounded-card",
-				"border-hairline border-bd-2 bg-surf shadow-md",
+				"border-[0.5px] border-bd-2 bg-surf shadow-md",
 				"animate-[fadeUp_0.14s_ease]",
 			)}
 		>

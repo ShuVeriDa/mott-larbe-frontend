@@ -90,13 +90,13 @@ export const PhraseTranslatePopup = ({
 			ref={ref}
 			role="dialog"
 			aria-label={t("aiTranslation.phrase.title")}
-			className="fixed z-200 w-[280px] overflow-hidden rounded-card border-hairline border-bd-2 bg-surf shadow-lg"
+			className="fixed z-200 w-[280px] overflow-hidden rounded-card border-[0.5px] border-bd-2 bg-surf shadow-lg"
 			style={{ left, top, transform: "translateY(-100%)" }}
 		>
 			{/* Header */}
-			<div className="flex items-center justify-between border-b border-hairline border-bd-1 px-3.5 py-2.5">
+			<div className="flex items-center justify-between border-b border-[0.5px] border-bd-1 px-3.5 py-2.5">
 				<div className="flex items-center gap-1.5">
-					<span className="flex items-center gap-1 rounded-[4px] border-hairline border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
+					<span className="flex items-center gap-1 rounded-[4px] border-[0.5px] border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
 						<Sparkles className="size-2.5" strokeWidth={1.8} />
 						{t("aiTranslation.phrase.title")}
 					</span>
@@ -112,7 +112,7 @@ export const PhraseTranslatePopup = ({
 			</div>
 
 			{/* Phrase */}
-			<div className="border-b border-hairline border-bd-1 px-3.5 py-2.5">
+			<div className="border-b border-[0.5px] border-bd-1 px-3.5 py-2.5">
 				<div className="text-[13px] font-medium text-t-1 line-clamp-2">
 					{phrase}
 				</div>

@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
+import type { ReactNode } from "react";
 
 import { Typography } from "@/shared/ui/typography";
 export interface CardSectionProps {
@@ -21,13 +21,16 @@ export const CardSection = ({
 }: CardSectionProps) => (
 	<section
 		className={cn(
-			"mb-3.5 overflow-hidden rounded-card border-hairline border-bd-1 bg-surf last:mb-0",
+			"mb-3.5 overflow-hidden rounded-card border-[0.5px] border-bd-1 bg-surf last:mb-0",
 			className,
 		)}
 	>
 		{headless ? null : (
-			<header className="flex items-center justify-between border-b border-hairline border-bd-1 px-4 pt-3 pb-2.5">
-				<Typography tag="span" className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
+			<header className="flex items-center justify-between border-b border-[0.5px] border-bd-1 px-4 pt-3 pb-2.5">
+				<Typography
+					tag="span"
+					className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
+				>
 					{title}
 				</Typography>
 				{rightSlot}

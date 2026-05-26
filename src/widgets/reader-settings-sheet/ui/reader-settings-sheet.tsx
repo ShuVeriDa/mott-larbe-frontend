@@ -33,7 +33,7 @@ export const ReaderSettingsAside = ({
 			aria-hidden={!open}
 			className={cn(
 				"flex shrink-0 flex-col overflow-hidden bg-surf max-md:hidden",
-				"border-l border-hairline transition-[border-color] duration-200",
+				"border-l border-[0.5px] transition-[border-color] duration-200",
 				open ? "w-[296px] border-bd-1" : "w-0 min-w-0 border-l-transparent",
 			)}
 		>

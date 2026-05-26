@@ -1,4 +1,5 @@
 import {
+	BookOpen,
 	ChartNoAxesCombined,
 	House,
 	LibraryBig,
@@ -35,6 +36,11 @@ export const buildNavSections = (lang: string): NavSection[] => [
 				href: () => `/${lang}/vocabulary`,
 				icon: WholeWord,
 				labelKey: "nav.vocabulary",
+			},
+			{
+				href: () => `/${lang}/phrasebook`,
+				icon: BookOpen,
+				labelKey: "nav.phrasebook",
 			},
 			{
 				href: () => `/${lang}/review`,

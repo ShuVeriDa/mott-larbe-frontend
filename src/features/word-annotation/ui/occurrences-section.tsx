@@ -28,7 +28,7 @@ export const OccurrencesSection = ({
 	const { t } = useI18n();
 
 	return (
-		<div className="border-t border-hairline border-bd-1">
+		<div className="border-t border-[0.5px] border-bd-1">
 			<div className="flex items-center justify-between px-5 py-2">
 				<Typography tag="span" className="text-[11.5px] font-medium text-t-2">
 					{isLoadingOccurrences
@@ -41,7 +41,11 @@ export const OccurrencesSection = ({
 					<Button
 						size="bare"
 						onClick={onToggleAll}
-						title={allChecked || someChecked ? t("admin.texts.editPage.wordAnnotation.deselectAll") : t("admin.texts.editPage.wordAnnotation.selectAll")}
+						title={
+							allChecked || someChecked
+								? t("admin.texts.editPage.wordAnnotation.deselectAll")
+								: t("admin.texts.editPage.wordAnnotation.selectAll")
+						}
 						className="text-[11px] text-acc hover:underline"
 					>
 						{allChecked || someChecked

@@ -4,10 +4,10 @@ import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type { BillingCycle } from "@/entities/subscription";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import { ComponentProps } from "react";
 
 export interface BillingCycleToggleProps {
 	value: BillingCycle;
@@ -24,8 +24,9 @@ export const BillingCycleToggle = ({
 
 	const renderButton = (cycle: BillingCycle, label: string, badge?: string) => {
 		const active = value === cycle;
-				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(cycle);
-return (
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+			onChange(cycle);
+		return (
 			<Button
 				variant="bare"
 				size={null}
@@ -41,7 +42,10 @@ return (
 			>
 				<Typography tag="span">{label}</Typography>
 				{badge ? (
-					<Typography tag="span" className="rounded-[4px] bg-grn-bg px-[5px] py-[1px] text-[9.5px] font-semibold text-grn-t">
+					<Typography
+						tag="span"
+						className="rounded-[4px] bg-grn-bg px-[5px] py-[1px] text-[9.5px] font-semibold text-grn-t"
+					>
 						{badge}
 					</Typography>
 				) : null}
@@ -56,7 +60,7 @@ return (
 
 	return (
 		<div
-			className="flex w-fit gap-1 rounded-base border-hairline border-bd-1 bg-surf-2 p-1 max-md:w-full"
+			className="flex w-fit gap-1 rounded-base border-[0.5px] border-bd-1 bg-surf-2 p-1 max-md:w-full"
 			role="tablist"
 			aria-label={t("subscription.planSelector.billingToggle")}
 		>

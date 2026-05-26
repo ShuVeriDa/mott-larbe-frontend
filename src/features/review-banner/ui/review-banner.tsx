@@ -25,7 +25,7 @@ export const ReviewBanner = ({ lang }: ReviewBannerProps) => {
 	return (
 		<section
 			aria-label={t("vocabulary.review.title")}
-			className="relative mx-[18px] mt-[14px] mb-[14px] flex shrink-0 items-center gap-[14px] overflow-hidden rounded-card border-hairline border-bd-1 bg-surf p-3 max-md:mx-[14px] max-md:mt-3"
+			className="relative mx-[18px] mt-[14px] mb-[14px] flex shrink-0 items-center gap-[14px] overflow-hidden rounded-card border-[0.5px] border-bd-1 bg-surf p-3 max-md:mx-[14px] max-md:mt-3"
 		>
 			<Typography
 				tag="span"

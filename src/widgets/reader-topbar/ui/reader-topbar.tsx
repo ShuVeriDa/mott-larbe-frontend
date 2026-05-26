@@ -1,14 +1,14 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Button } from "@/shared/ui/button";
 import type { TextPageResponse } from "@/entities/text";
 import { cn } from "@/shared/lib/cn";
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import { ReaderPager } from "./reader-pager";
-import { useReaderTopbar } from "../model/use-reader-topbar";
 import { getTopbarActions } from "../lib/topbar-actions";
+import { useReaderTopbar } from "../model/use-reader-topbar";
+import { ReaderPager } from "./reader-pager";
 
 const iconBtnClass = cn(
 	"inline-flex h-[30px] w-[30px] items-center justify-center rounded-base",
@@ -70,7 +70,7 @@ export const ReaderTopbar = ({
 	} = useReaderTopbar(textId, currentPage, data);
 
 	return (
-		<header className="flex h-[46px] shrink-0 items-center gap-2 border-b border-hairline border-bd-1 bg-surf px-4 max-md:sticky max-md:top-0 max-md:z-80">
+		<header className="flex h-[46px] shrink-0 items-center gap-2 border-b border-[0.5px] border-bd-1 bg-surf px-4 max-md:sticky max-md:top-0 max-md:z-80">
 			<Link
 				href={`/${lang}/texts`}
 				className="inline-flex shrink-0 items-center gap-1.5 rounded-base px-2 py-1 text-[12.5px] text-t-2 transition-colors duration-100 hover:bg-surf-2 hover:text-t-1"
@@ -133,7 +133,7 @@ export const ReaderTopbar = ({
 					onToggleAiHistory,
 					batchTranslateState,
 					onBatchTranslate,
-				}).map((action) => (
+				}).map(action => (
 					<Button
 						key={action.key}
 						onClick={action.onClick}

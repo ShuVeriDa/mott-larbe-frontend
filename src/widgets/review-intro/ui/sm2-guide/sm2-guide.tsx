@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { BookOpenIcon, X } from "lucide-react";
-import type { MouseEvent } from "react";
-import { createPortal } from "react-dom";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
-import { ScrollArea } from "@/shared/ui/scroll-area";
 import { READER_MOBILE_SHEET_OVERLAY_CLASSES } from "@/shared/ui/reader-mobile-sheet-header";
+import { ScrollArea } from "@/shared/ui/scroll-area";
+import { BookOpenIcon, X } from "lucide-react";
+import type { MouseEvent } from "react";
+import { useState } from "react";
+import { createPortal } from "react-dom";
 
 export const Sm2Guide = () => {
 	const { t } = useI18n();
@@ -29,25 +29,30 @@ export const Sm2Guide = () => {
 			</Button>
 
 			{/* Desktop: invisible backdrop to close on click-outside */}
-			{open && typeof window !== "undefined" ? createPortal(
-				<div
-					role="presentation"
-					className="fixed inset-0 z-40 hidden md:block"
-					onClick={handleClose}
-				/>,
-				document.body,
-			) : null}
+			{open && typeof window !== "undefined"
+				? createPortal(
+						<div
+							role="presentation"
+							className="fixed inset-0 z-40 hidden md:block"
+							onClick={handleClose}
+						/>,
+						document.body,
+					)
+				: null}
 
 			{/* Desktop: fixed right aside with width transition */}
 			<aside
 				aria-hidden={!open}
 				className={cn(
 					"fixed right-0 top-0 z-50 flex h-dvh shrink-0 flex-col overflow-hidden bg-surf max-md:hidden",
-					"border-l border-hairline transition-[width,border-color] duration-200",
+					"border-l border-[0.5px] transition-[width,border-color] duration-200",
 					open ? "w-[420px] border-bd-1" : "w-0 border-l-transparent",
 				)}
 			>
-				<GuideHeader title={t("review.sm2.guide.title")} onClose={handleClose} />
+				<GuideHeader
+					title={t("review.sm2.guide.title")}
+					onClose={handleClose}
+				/>
 				<ScrollArea className="flex min-h-0 flex-1 overflow-y-auto">
 					<GuideBody />
 				</ScrollArea>
@@ -69,7 +74,7 @@ const GuideHeader = ({ title, onClose }: GuideHeaderProps) => {
 	const handleClose = () => onClose();
 
 	return (
-		<div className="flex shrink-0 items-center justify-between border-b border-hairline border-bd-1 px-5 py-3.5">
+		<div className="flex shrink-0 items-center justify-between border-b border-[0.5px] border-bd-1 px-5 py-3.5">
 			<div className="flex items-center gap-2">
 				<BookOpenIcon className="size-4 shrink-0 text-t-3" />
 				<span className="text-[13px] font-semibold text-t-1">{title}</span>
@@ -154,7 +159,6 @@ const GuideBody = () => {
 
 	return (
 		<div className="flex flex-col gap-7 px-6 py-6">
-
 			{/* Intro */}
 			<p className="text-[13.5px] leading-[1.7] text-t-2">
 				{t("review.sm2.guide.intro")}
@@ -162,7 +166,7 @@ const GuideBody = () => {
 
 			{/* Why SM-2 */}
 			<GuideSection title={t("review.sm2.guide.whyTitle")}>
-				<div className="rounded-card border-hairline border-acc/20 bg-acc-bg px-4 py-3">
+				<div className="rounded-card border-[0.5px] border-acc/20 bg-acc-bg px-4 py-3">
 					<p className="text-[13px] leading-[1.7] text-t-2">
 						{t("review.sm2.guide.why")}
 					</p>
@@ -172,49 +176,55 @@ const GuideBody = () => {
 			{/* Word stages */}
 			<GuideSection title={t("review.sm2.guide.stagesTitle")}>
 				<ol className="flex flex-col gap-0">
-					{Array.isArray(stages) && stages.map((step, i) => (
-						<PathStep
-							key={step.name}
-							icon={step.icon}
-							name={step.name}
-							desc={step.desc}
-							isLast={i === stages.length - 1}
-						/>
-					))}
+					{Array.isArray(stages) &&
+						stages.map((step, i) => (
+							<PathStep
+								key={step.name}
+								icon={step.icon}
+								name={step.name}
+								desc={step.desc}
+								isLast={i === stages.length - 1}
+							/>
+						))}
 				</ol>
 			</GuideSection>
 
 			{/* Rating */}
 			<GuideSection title={t("review.sm2.guide.ratingTitle")}>
 				<div className="flex flex-col gap-2">
-					{Array.isArray(rating) && rating.map((r) => (
-						<div
-							key={r.label}
-							className="flex items-start gap-3 rounded-base border-hairline border-bd-2 bg-surf px-3.5 py-2.5"
-						>
-							<span className="mt-px shrink-0 rounded-[4px] bg-surf-2 px-1.5 py-0.5 text-[11px] font-semibold text-t-1">
-								{r.label}
-							</span>
-							<span className="text-[12.5px] leading-[1.6] text-t-3">{r.desc}</span>
-						</div>
-					))}
+					{Array.isArray(rating) &&
+						rating.map(r => (
+							<div
+								key={r.label}
+								className="flex items-start gap-3 rounded-base border-[0.5px] border-bd-2 bg-surf px-3.5 py-2.5"
+							>
+								<span className="mt-px shrink-0 rounded-[4px] bg-surf-2 px-1.5 py-0.5 text-[11px] font-semibold text-t-1">
+									{r.label}
+								</span>
+								<span className="text-[12.5px] leading-[1.6] text-t-3">
+									{r.desc}
+								</span>
+							</div>
+						))}
 				</div>
 			</GuideSection>
 
 			{/* Tips */}
 			<GuideSection title={t("review.sm2.guide.tipsTitle")}>
 				<ul className="flex flex-col gap-2.5">
-					{Array.isArray(tips) && tips.map((tip, i) => (
-						<li key={i} className="flex items-start gap-2.5">
-							<span className="mt-[3px] flex size-[18px] shrink-0 items-center justify-center rounded-full bg-acc text-[9px] font-bold text-white">
-								{i + 1}
-							</span>
-							<span className="text-[13px] leading-[1.6] text-t-2">{tip}</span>
-						</li>
-					))}
+					{Array.isArray(tips) &&
+						tips.map((tip, i) => (
+							<li key={i} className="flex items-start gap-2.5">
+								<span className="mt-[3px] flex size-[18px] shrink-0 items-center justify-center rounded-full bg-acc text-[9px] font-bold text-white">
+									{i + 1}
+								</span>
+								<span className="text-[13px] leading-[1.6] text-t-2">
+									{tip}
+								</span>
+							</li>
+						))}
 				</ul>
 			</GuideSection>
-
 		</div>
 	);
 };

@@ -21,7 +21,10 @@ const LegendRow = ({ label, value, colorClass, percent }: LegendRowProps) => (
 	<div>
 		<div className="flex items-center justify-between">
 			<div className="flex items-center gap-1.5 text-[11.5px] text-t-2">
-				<Typography tag="span" className={`size-2 shrink-0 rounded-full ${colorClass}`} />
+				<Typography
+					tag="span"
+					className={`size-2 shrink-0 rounded-full ${colorClass}`}
+				/>
 				{label}
 			</div>
 			<Typography tag="span" className="text-xs font-semibold text-t-1">
@@ -57,7 +60,7 @@ export const WordProgressCard = ({ words }: WordProgressCardProps) => {
 	const newDash = ratios.new * CIRCUMFERENCE;
 
 	return (
-		<section className="rounded-card border-hairline border-bd-1 bg-surf p-4">
+		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4">
 			<header className="mb-3 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.words.title")}

@@ -1,8 +1,8 @@
 "use client";
 
+import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { ComponentProps } from "react";
-import { cn } from "@/shared/lib/cn";
 
 export interface SegmentedOption<T extends string> {
 	value: T;
@@ -26,11 +26,16 @@ export const SegmentedGroup = <T extends string>({
 	className,
 	buttonClassName,
 }: SegmentedGroupProps<T>) => (
-	<div className={cn("flex gap-1", className)} role="group" aria-label={ariaLabel}>
-		{options.map((item) => {
+	<div
+		className={cn("flex gap-1", className)}
+		role="group"
+		aria-label={ariaLabel}
+	>
+		{options.map(item => {
 			const active = item.value === value;
-			const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-				onChange(item.value);
+			const handleClick: NonNullable<
+				ComponentProps<"button">["onClick"]
+			> = () => onChange(item.value);
 			return (
 				<Button
 					key={item.value}
@@ -40,7 +45,7 @@ export const SegmentedGroup = <T extends string>({
 					aria-pressed={active}
 					title={item.label}
 					className={cn(
-						"h-[26px] flex-1 rounded-[5px] border-hairline border-bd-1 px-[9px]",
+						"h-[26px] flex-1 rounded-[5px] border-[0.5px] border-bd-1 px-[9px]",
 						"text-[11px] font-medium leading-none transition-colors duration-100",
 						active
 							? "border-acc/20 bg-acc-bg text-acc-t"

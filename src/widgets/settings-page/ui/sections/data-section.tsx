@@ -1,5 +1,4 @@
 "use client";
-import { ComponentProps, useState } from 'react';
 import { useResetProgress } from "@/entities/settings";
 import { ClearVocabModal } from "@/features/clear-vocabulary";
 import { DeleteAccountModal } from "@/features/delete-account";
@@ -8,6 +7,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { ComponentProps, useState } from "react";
 import { SectionHeader } from "../section-header";
 import { SettingCard } from "../setting-card";
 
@@ -26,11 +26,19 @@ export const DataSection = () => {
 		} catch {}
 	};
 
-		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => setClearOpen(true);
-	const handleClick2: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => setDeleteOpen(true);
-	const handleClose: NonNullable<ComponentProps<typeof ClearVocabModal>["onClose"]> = () => setClearOpen(false);
-	const handleClose2: NonNullable<ComponentProps<typeof DeleteAccountModal>["onClose"]> = () => setDeleteOpen(false);
-return (
+	const handleClick: NonNullable<
+		ComponentProps<typeof Button>["onClick"]
+	> = () => setClearOpen(true);
+	const handleClick2: NonNullable<
+		ComponentProps<typeof Button>["onClick"]
+	> = () => setDeleteOpen(true);
+	const handleClose: NonNullable<
+		ComponentProps<typeof ClearVocabModal>["onClose"]
+	> = () => setClearOpen(false);
+	const handleClose2: NonNullable<
+		ComponentProps<typeof DeleteAccountModal>["onClose"]
+	> = () => setDeleteOpen(false);
+	return (
 		<div className="flex flex-col gap-3.5">
 			<SectionHeader
 				title={t("settings.data.title")}
@@ -66,8 +74,8 @@ return (
 				/>
 			</SettingCard>
 
-			<section className="overflow-hidden rounded-card border-hairline border-red/20 bg-surf">
-				<header className="border-hairline border-b border-red/10 bg-red-bg px-4 pb-2.5 pt-3">
+			<section className="overflow-hidden rounded-card border-[0.5px] border-red/20 bg-surf">
+				<header className="border-[0.5px] border-b border-red/10 bg-red-bg px-4 pb-2.5 pt-3">
 					<Typography
 						tag="h3"
 						className="text-[12.5px] font-semibold text-red-t"
@@ -87,10 +95,7 @@ return (
 			</section>
 
 			<ClearVocabModal open={clearOpen} onClose={handleClose} />
-			<DeleteAccountModal
-				open={deleteOpen}
-				onClose={handleClose2}
-			/>
+			<DeleteAccountModal open={deleteOpen} onClose={handleClose2} />
 		</div>
 	);
 };

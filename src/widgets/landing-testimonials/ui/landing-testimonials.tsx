@@ -1,8 +1,8 @@
 "use client";
 
-import { QuoteIcon } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { QuoteIcon } from "lucide-react";
 
 interface TestimonialItem {
 	text: string;
@@ -23,7 +23,7 @@ export const LandingTestimonials = () => {
 
 	return (
 		<section
-			className="border-hairline border-y border-bd-1 bg-surf-2 px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
+			className="border-[0.5px] border-y border-bd-1 bg-surf-2 px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
 			aria-labelledby="testimonials-title"
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
@@ -50,7 +50,7 @@ export const LandingTestimonials = () => {
 					{items.map((item, idx) => (
 						<article
 							key={idx}
-							className="flex flex-col rounded-[14px] border-hairline border-bd-2 bg-surf p-6"
+							className="flex flex-col rounded-[14px] border-[0.5px] border-bd-2 bg-surf p-6"
 						>
 							<QuoteIcon
 								size={20}
@@ -67,7 +67,10 @@ export const LandingTestimonials = () => {
 									</div>
 									<div className="text-[12.5px] text-t-3">{item.role}</div>
 								</div>
-								<Typography tag="span" className="rounded-full bg-acc-bg px-2.5 py-0.5 text-[11.5px] font-semibold text-acc-t">
+								<Typography
+									tag="span"
+									className="rounded-full bg-acc-bg px-2.5 py-0.5 text-[11.5px] font-semibold text-acc-t"
+								>
 									{item.level}
 								</Typography>
 							</div>

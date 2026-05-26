@@ -4,11 +4,11 @@ import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
 
-import { Volume2 } from "lucide-react";
-import { CefrBadge, StatusBadge } from "@/entities/dictionary";
 import type { DictionaryEntryDetail } from "@/entities/dictionary";
+import { CefrBadge, StatusBadge } from "@/entities/dictionary";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Volume2 } from "lucide-react";
 import { useAudioPlayback } from "../../lib/use-audio-playback";
 
 const FREQUENCY_DOTS = 5;
@@ -31,41 +31,56 @@ export const WordHero = ({ entry }: WordHeroProps) => {
 	return (
 		<section
 			aria-labelledby="word-hero-title"
-			className="relative mb-4 overflow-hidden rounded-[14px] border-hairline border-bd-1 bg-surf p-[26px_28px_22px] max-md:p-[18px_16px_16px]"
+			className="relative mb-4 overflow-hidden rounded-[14px] border-[0.5px] border-bd-1 bg-surf p-[26px_28px_22px] max-md:p-[18px_16px_16px]"
 		>
-			<Typography tag="span"
+			<Typography
+				tag="span"
 				aria-hidden="true"
 				className="absolute inset-y-0 left-0 w-[3px] rounded-r-[3px] bg-acc"
 			/>
 			<div className="flex items-start justify-between gap-4 max-md:gap-2.5">
 				<div className="min-w-0 flex-1">
-					<Typography tag="h1"
+					<Typography
+						tag="h1"
 						id="word-hero-title"
 						className="mb-1.5 font-display text-[38px] font-normal leading-none tracking-[-0.5px] text-t-1 max-md:text-[28px] max-lg:text-[32px]"
 					>
 						{entry.word}
 					</Typography>
 					{transliteration ? (
-						<Typography tag="p" className="mb-2.5 text-[14px] italic text-t-3 max-md:mb-[7px] max-md:text-[13px]">
+						<Typography
+							tag="p"
+							className="mb-2.5 text-[14px] italic text-t-3 max-md:mb-[7px] max-md:text-[13px]"
+						>
 							{transliteration}
 						</Typography>
 					) : null}
-					<Typography tag="p" className="mb-2.5 text-[18px] leading-[1.4] text-t-2 max-md:mb-2 max-md:text-[15px]">
+					<Typography
+						tag="p"
+						className="mb-2.5 text-[18px] leading-[1.4] text-t-2 max-md:mb-2 max-md:text-[15px]"
+					>
 						{entry.translation}
 					</Typography>
 					<div className="flex flex-wrap items-center gap-1.5">
 						{partOfSpeech ? (
-							<Typography tag="span" className="inline-flex items-center rounded-[6px] border-hairline border-bd-2 bg-surf-2 px-2 py-[3px] text-[11px] font-semibold text-t-2">
+							<Typography
+								tag="span"
+								className="inline-flex items-center rounded-[6px] border-[0.5px] border-bd-2 bg-surf-2 px-2 py-[3px] text-[11px] font-semibold text-t-2"
+							>
 								{partOfSpeech}
 							</Typography>
 						) : null}
 						{entry.cefrLevel ? <CefrBadge level={entry.cefrLevel} /> : null}
 						<StatusBadge status={entry.learningLevel} />
-						<Typography tag="span" className="ml-1 flex items-center gap-1.5 max-md:hidden">
+						<Typography
+							tag="span"
+							className="ml-1 flex items-center gap-1.5 max-md:hidden"
+						>
 							<Typography tag="span" className="text-[11px] text-t-3">
 								{t("vocabulary.wordDetail.frequency")}
 							</Typography>
-							<Typography tag="span"
+							<Typography
+								tag="span"
 								className="flex gap-[3px]"
 								role="img"
 								aria-label={t("vocabulary.wordDetail.frequencyValue", {
@@ -73,7 +88,8 @@ export const WordHero = ({ entry }: WordHeroProps) => {
 								})}
 							>
 								{Array.from({ length: FREQUENCY_DOTS }).map((_, i) => (
-									<Typography tag="span"
+									<Typography
+										tag="span"
 										key={i}
 										className={cn(
 											"size-2 rounded-[2px]",
@@ -92,14 +108,17 @@ export const WordHero = ({ entry }: WordHeroProps) => {
 					aria-label={t("vocabulary.wordDetail.playAudio")}
 					className={cn(
 						"flex size-11 shrink-0 items-center justify-center rounded-full",
-						"border-hairline border-acc/15 bg-acc-bg",
+						"border-[0.5px] border-acc/15 bg-acc-bg",
 						"transition-colors duration-150",
 						"hover:bg-acc hover:text-white",
 						"disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-acc-bg",
 						"max-md:size-[38px]",
 					)}
 				>
-					<Volume2 className="size-4 text-acc transition-colors hover:[&]:text-white" strokeWidth={1.6} />
+					<Volume2
+						className="size-4 text-acc transition-colors hover:[&]:text-white"
+						strokeWidth={1.6}
+					/>
 				</Button>
 			</div>
 		</section>

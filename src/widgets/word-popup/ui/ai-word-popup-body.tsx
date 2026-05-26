@@ -166,12 +166,12 @@ export const AiWordPopupBody = ({
 
 	return (
 		<>
-			<div className="border-b border-hairline border-bd-1 px-3.5 pt-3.5 pb-2.5">
+			<div className="border-b border-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
 				<div className="mb-1.5 flex items-start gap-2">
 					<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
 						{word}
 					</div>
-					<span className="mt-0.5 flex shrink-0 items-center gap-0.5 rounded-[4px] border-hairline border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
+					<span className="mt-0.5 flex shrink-0 items-center gap-0.5 rounded-[4px] border-[0.5px] border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
 						<Sparkles className="size-2.5" strokeWidth={1.8} />
 						{t("aiTranslation.popup.badge")}
 					</span>
@@ -181,7 +181,7 @@ export const AiWordPopupBody = ({
 				</Typography>
 			</div>
 
-			<div className="border-b border-hairline border-bd-1 px-3.5 py-2.5">
+			<div className="border-b border-[0.5px] border-bd-1 px-3.5 py-2.5">
 				<div className="flex items-start justify-between gap-2">
 					<div className="text-[14px] font-medium text-t-1">
 						{result.translation}
@@ -256,7 +256,7 @@ export const AiWordPopupBody = ({
 						disabled={Boolean(voted)}
 						aria-label={t("aiTranslation.admin.thumbsUp")}
 						title={t("aiTranslation.admin.thumbsUp")}
-						className={`flex h-7 items-center gap-1 rounded-base px-2 text-[11.5px] border-hairline transition-colors ${
+						className={`flex h-7 items-center gap-1 rounded-base px-2 text-[11.5px] border-[0.5px] transition-colors ${
 							voted === "up"
 								? "border-grn/40 bg-grn/10 text-grn"
 								: "border-bd-1 bg-surf-2 text-t-3 hover:text-t-1"
@@ -271,7 +271,7 @@ export const AiWordPopupBody = ({
 						disabled={Boolean(voted)}
 						aria-label={t("aiTranslation.admin.thumbsDown")}
 						title={t("aiTranslation.admin.thumbsDown")}
-						className={`flex h-7 items-center gap-1 rounded-base px-2 text-[11.5px] border-hairline transition-colors ${
+						className={`flex h-7 items-center gap-1 rounded-base px-2 text-[11.5px] border-[0.5px] transition-colors ${
 							voted === "down"
 								? "border-red/40 bg-red/10 text-red"
 								: "border-bd-1 bg-surf-2 text-t-3 hover:text-t-1"

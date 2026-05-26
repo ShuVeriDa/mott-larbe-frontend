@@ -1,9 +1,9 @@
 "use client";
 
-import { useI18n } from "@/shared/lib/i18n";
-import { Typography } from "@/shared/ui/typography";
 import { useProfileSummary } from "@/entities/statistics";
 import type { UserProfile } from "@/entities/user";
+import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
 import { ActivityCard } from "./activity-card";
 import { LearningSettingsCard } from "./learning-settings-card";
 import { PersonalDataCard } from "./personal-data-card";
@@ -27,7 +27,7 @@ export const TabMain = ({ profile, lang }: TabMainProps) => {
 
 			<div className="flex flex-col gap-3.5">
 				{summaryLoading ? (
-					<div className="rounded-[12px] border-hairline border-bd-1 bg-surf px-4 py-6 text-center">
+					<div className="rounded-[12px] border-[0.5px] border-bd-1 bg-surf px-4 py-6 text-center">
 						<Typography tag="p" className="text-[13px] text-t-3">
 							{t("profile.loading")}
 						</Typography>

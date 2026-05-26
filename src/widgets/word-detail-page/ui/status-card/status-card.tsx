@@ -22,9 +22,10 @@ export const StatusCard = ({
 	return (
 		<section
 			aria-labelledby={`status-card-${wordId}`}
-			className="mb-3.5 rounded-card border-hairline border-bd-1 bg-surf p-4"
+			className="mb-3.5 rounded-card border-[0.5px] border-bd-1 bg-surf p-4"
 		>
-			<Typography tag="h3"
+			<Typography
+				tag="h3"
 				id={`status-card-${wordId}`}
 				className="mb-3 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
 			>

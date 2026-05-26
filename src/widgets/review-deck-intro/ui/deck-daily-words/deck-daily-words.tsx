@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import type { DeckDailyWord } from "@/entities/deck";
+import { deckApi, deckKeys, useDeckDaily } from "@/entities/deck";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { deckApi, deckKeys, useDeckDaily } from "@/entities/deck";
-import type { DeckDailyWord } from "@/entities/deck";
+import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 export const DeckDailyWords = () => {
 	const { t } = useI18n();
@@ -17,17 +17,17 @@ export const DeckDailyWords = () => {
 	const [addingIds, setAddingIds] = useState<Set<string>>(new Set());
 	const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
 
-	const visibleWords = words?.filter((w) => !addedIds.has(w.lemmaId)) ?? [];
+	const visibleWords = words?.filter(w => !addedIds.has(w.lemmaId)) ?? [];
 
 	const handleAdd = async (lemmaId: string) => {
-		setAddingIds((prev) => new Set(prev).add(lemmaId));
+		setAddingIds(prev => new Set(prev).add(lemmaId));
 		try {
 			await deckApi.addWord(lemmaId);
-			setAddedIds((prev) => new Set(prev).add(lemmaId));
+			setAddedIds(prev => new Set(prev).add(lemmaId));
 			queryClient.invalidateQueries({ queryKey: deckKeys.stats() });
 			queryClient.invalidateQueries({ queryKey: deckKeys.daily() });
 		} finally {
-			setAddingIds((prev) => {
+			setAddingIds(prev => {
 				const next = new Set(prev);
 				next.delete(lemmaId);
 				return next;
@@ -42,7 +42,7 @@ export const DeckDailyWords = () => {
 			for (const word of words) {
 				if (!addedIds.has(word.lemmaId)) {
 					await deckApi.addWord(word.lemmaId);
-					setAddedIds((prev) => new Set(prev).add(word.lemmaId));
+					setAddedIds(prev => new Set(prev).add(word.lemmaId));
 				}
 			}
 			queryClient.invalidateQueries({ queryKey: deckKeys.stats() });
@@ -56,7 +56,7 @@ export const DeckDailyWords = () => {
 
 	if (!visibleWords.length) {
 		return (
-			<div className="w-full max-w-[500px] rounded-card border-hairline border-bd-2 bg-surf px-4 py-3.5 text-center shadow-sm">
+			<div className="w-full max-w-[500px] rounded-card border-[0.5px] border-bd-2 bg-surf px-4 py-3.5 text-center shadow-sm">
 				<div className="mb-0.5 text-[13px] font-semibold text-t-2">
 					{t("review.deck.intro.daily.empty")}
 				</div>
@@ -68,7 +68,7 @@ export const DeckDailyWords = () => {
 	}
 
 	return (
-		<div className="w-full max-w-[500px] rounded-card border-hairline border-bd-2 bg-surf px-4 py-3.5 shadow-sm">
+		<div className="w-full max-w-[500px] rounded-card border-[0.5px] border-bd-2 bg-surf px-4 py-3.5 shadow-sm">
 			<div className="mb-2.5 flex items-center justify-between gap-2">
 				<div>
 					<Typography tag="h2" className="text-[13px] font-semibold text-t-1">
@@ -78,11 +78,7 @@ export const DeckDailyWords = () => {
 						{t("review.deck.intro.daily.subtitle")}
 					</div>
 				</div>
-				<Button
-					variant="outline"
-										onClick={handleAddAll}
-					disabled={addingAll}
-				>
+				<Button variant="outline" onClick={handleAddAll} disabled={addingAll}>
 					{addingAll
 						? t("review.deck.intro.daily.adding")
 						: t("review.deck.intro.daily.addAll")}
@@ -90,7 +86,7 @@ export const DeckDailyWords = () => {
 			</div>
 
 			<ul className="flex flex-col gap-1">
-				{visibleWords.map((word) => (
+				{visibleWords.map(word => (
 					<DailyWordRow
 						key={word.lemmaId}
 						word={word}
@@ -124,7 +120,7 @@ const DailyWordRow = ({ word, isAdding, onAdd }: DailyWordRowProps) => {
 			</div>
 			<Button
 				variant="outline"
-								onClick={handleClick}
+				onClick={handleClick}
 				disabled={isAdding}
 				className="shrink-0"
 			>

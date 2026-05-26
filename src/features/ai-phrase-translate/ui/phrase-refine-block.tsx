@@ -34,7 +34,7 @@ export const PhraseRefineBlock = ({
 
 	if (refineState.phase === "idle") {
 		return (
-			<div className="border-t border-hairline border-bd-1 px-3.5 py-2">
+			<div className="border-t border-[0.5px] border-bd-1 px-3.5 py-2">
 				<Button
 					size="bare"
 					onClick={onOpen}
@@ -50,7 +50,7 @@ export const PhraseRefineBlock = ({
 	if (refineState.phase === "open" || refineState.phase === "loading") {
 		const isLoading = refineState.phase === "loading";
 		return (
-			<div className="border-t border-hairline border-bd-1 px-3.5 py-2.5">
+			<div className="border-t border-[0.5px] border-bd-1 px-3.5 py-2.5">
 				<div className="mb-1.5 flex items-center gap-1 text-[11px] font-medium text-t-2">
 					<MessageSquare className="size-3" strokeWidth={1.5} />
 					{t("aiTranslation.phrase.refine")}
@@ -62,7 +62,7 @@ export const PhraseRefineBlock = ({
 					placeholder={t("aiTranslation.phrase.refinePlaceholder")}
 					disabled={isLoading}
 					rows={2}
-					className="w-full resize-none rounded-[6px] border border-hairline border-bd-2 bg-surf-2 px-2.5 py-1.5 text-[12px] text-t-1 placeholder:text-t-4 focus:border-acc focus:outline-none disabled:opacity-50"
+					className="w-full resize-none rounded-[6px] border border-[0.5px] border-bd-2 bg-surf-2 px-2.5 py-1.5 text-[12px] text-t-1 placeholder:text-t-4 focus:border-acc focus:outline-none disabled:opacity-50"
 				/>
 				<div className="mt-1.5 flex justify-end">
 					<Button
@@ -85,7 +85,7 @@ export const PhraseRefineBlock = ({
 
 	if (refineState.phase === "error") {
 		return (
-			<div className="border-t border-hairline border-bd-1 px-3.5 py-2.5">
+			<div className="border-t border-[0.5px] border-bd-1 px-3.5 py-2.5">
 				<p className="text-[12px] text-red-t">
 					{t("aiTranslation.phrase.refineError")}
 				</p>
@@ -95,7 +95,7 @@ export const PhraseRefineBlock = ({
 
 	// done
 	return (
-		<div className="border-t border-hairline border-bd-1 bg-pur-bg/40 px-3.5 py-2.5">
+		<div className="border-t border-[0.5px] border-bd-1 bg-pur-bg/40 px-3.5 py-2.5">
 			<div className="mb-1 flex items-center gap-1 text-[10.5px] font-semibold uppercase tracking-[0.4px] text-pur-t">
 				<MessageSquare className="size-2.5" strokeWidth={1.8} />
 				{t("aiTranslation.phrase.refineResult")}

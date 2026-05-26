@@ -21,7 +21,7 @@ export const SettingsNav = ({ active, onChange }: SettingsNavProps) => {
 		<nav
 			aria-label={t("settings.pageTitle")}
 			className={cn(
-				"flex flex-col gap-0.5  overflow-y-auto border-hairline border-r border-bd-1 p-2.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+				"flex flex-col gap-0.5  overflow-y-auto border-[0.5px] border-r border-bd-1 p-2.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
 				"w-[200px] shrink-0",
 				"max-md:h-11 max-md:w-full max-md:flex-row max-md:gap-0 max-md:overflow-x-auto max-md:overflow-y-visible max-md:border-b max-md:border-r-0 max-md:bg-surf max-md:p-0",
 				"max-sm:h-[42px]",

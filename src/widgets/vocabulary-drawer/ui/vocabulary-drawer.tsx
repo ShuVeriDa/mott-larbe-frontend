@@ -58,7 +58,7 @@ export const VocabularyDrawer = ({
 				<div className="mx-auto mt-2.5 h-1 w-9 rounded-[2px] bg-surf-4" />
 				<Typography
 					tag="h2"
-					className="border-b border-hairline border-bd-1 px-[18px] py-3 pb-3 text-sm font-semibold text-t-1"
+					className="border-b border-[0.5px] border-bd-1 px-[18px] py-3 pb-3 text-sm font-semibold text-t-1"
 				>
 					{t("vocabulary.filtersAndFolders")}
 				</Typography>

@@ -24,11 +24,7 @@ export const ReviewDeckDone = ({
 	return (
 		<section className="flex flex-1 flex-col items-center justify-center px-6 py-10 max-md:px-5 max-md:py-8">
 			<div className="mb-4 flex size-[52px] items-center justify-center rounded-[14px] bg-grn-bg shadow-md">
-				<svg
-					viewBox="0 0 24 24"
-					fill="none"
-					className="size-[22px] text-grn"
-				>
+				<svg viewBox="0 0 24 24" fill="none" className="size-[22px] text-grn">
 					<path
 						d="M5 13l4 4L19 7"
 						stroke="currentColor"
@@ -49,8 +45,16 @@ export const ReviewDeckDone = ({
 			</Typography>
 
 			<div className="mb-5 flex gap-2.5 max-md:w-full">
-				<Stat value={know} label={t("review.deck.done.stats.know")} tone="grn" />
-				<Stat value={again} label={t("review.deck.done.stats.again")} tone="amb" />
+				<Stat
+					value={know}
+					label={t("review.deck.done.stats.know")}
+					tone="grn"
+				/>
+				<Stat
+					value={again}
+					label={t("review.deck.done.stats.again")}
+					tone="amb"
+				/>
 			</div>
 
 			{again > 0 && onRetry ? (
@@ -88,7 +92,7 @@ const toneClasses: Record<StatProps["tone"], string> = {
 };
 
 const Stat = ({ value, label, tone }: StatProps) => (
-	<div className="rounded-card border-hairline border-bd-2 bg-surf px-4 py-3 text-center shadow-sm min-w-[78px] max-md:flex-1 max-md:min-w-0">
+	<div className="rounded-card border-[0.5px] border-bd-2 bg-surf px-4 py-3 text-center shadow-sm min-w-[78px] max-md:flex-1 max-md:min-w-0">
 		<div
 			className={`font-display text-[22px] font-semibold leading-[1.1] tabular-nums ${toneClasses[tone]}`}
 		>

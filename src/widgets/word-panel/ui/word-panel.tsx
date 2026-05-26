@@ -29,11 +29,11 @@ export const WordPanel = ({ textId }: WordPanelProps) => {
 			aria-hidden={!open}
 			className={cn(
 				"flex shrink-0 flex-col overflow-hidden bg-surf max-md:hidden",
-				"border-l border-hairline transition-[border-color] duration-200",
+				"border-l border-[0.5px] transition-[border-color] duration-200",
 				open ? "w-[296px] border-bd-1" : "w-0 min-w-0 border-l-transparent",
 			)}
 		>
-			<div className="flex shrink-0 items-center justify-between border-b border-hairline border-bd-1 px-3.5 py-2.5">
+			<div className="flex shrink-0 items-center justify-between border-b border-[0.5px] border-bd-1 px-3.5 py-2.5">
 				<Typography
 					tag="span"
 					className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"

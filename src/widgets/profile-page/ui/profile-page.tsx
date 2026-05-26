@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useMySubscription } from "@/entities/subscription";
+import { useCurrentUser } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
-import { useCurrentUser } from "@/entities/user";
-import { useMySubscription } from "@/entities/subscription";
 import { AiSection } from "@/widgets/settings-page";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { ProfileHeader } from "./profile-header";
 import { ProfileTabs, type ProfileTabId } from "./profile-tabs";
 import { TabMain } from "./tab-main";
@@ -58,7 +58,7 @@ export const ProfilePage = ({ lang }: ProfilePageProps) => {
 
 	return (
 		<>
-			<div className="border-b border-hairline border-bd-1 bg-surf px-[22px] py-3 max-md:hidden sticky top-0 z-10">
+			<div className="border-b border-[0.5px] border-bd-1 bg-surf px-[22px] py-3 max-md:hidden sticky top-0 z-10">
 				<Typography tag="p" className="text-[13.5px] font-semibold text-t-1">
 					{t("profile.pageTitle")}
 				</Typography>

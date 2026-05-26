@@ -14,9 +14,9 @@ import {
 	PHRASE_CLICK_EVENT,
 	type PhraseClickDetail,
 } from "@/shared/ui/notion-editor";
-import { Languages, Pencil, Trash2, X } from "lucide-react";
 import { Typography } from "@/shared/ui/typography";
-import { type ComponentProps, useEffect, useRef, useState } from "react";
+import { Languages, Pencil, Trash2, X } from "lucide-react";
+import { useEffect, useRef, useState, type ComponentProps } from "react";
 import { createPortal } from "react-dom";
 import { PhraseEditorPopup } from "./phrase-editor-popup";
 
@@ -60,9 +60,15 @@ const EditModal = ({
 		};
 	}, []);
 
-	const handleTranslationChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setTranslation(e.currentTarget.value);
-	const handleNotesChange: NonNullable<ComponentProps<"input">["onChange"]> = e => setNotes(e.currentTarget.value);
-	const handleTranslationKeyDown: NonNullable<ComponentProps<"input">["onKeyDown"]> = e => {
+	const handleTranslationChange: NonNullable<
+		ComponentProps<"input">["onChange"]
+	> = e => setTranslation(e.currentTarget.value);
+	const handleNotesChange: NonNullable<
+		ComponentProps<"input">["onChange"]
+	> = e => setNotes(e.currentTarget.value);
+	const handleTranslationKeyDown: NonNullable<
+		ComponentProps<"input">["onKeyDown"]
+	> = e => {
 		if (e.key === "Enter") handleSave();
 	};
 
@@ -96,12 +102,15 @@ const EditModal = ({
 			<div
 				role="dialog"
 				aria-modal="true"
-				className="fixed left-1/2 top-1/2 z-300 w-[340px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border-hairline border-bd-2 bg-surf shadow-xl"
+				className="fixed left-1/2 top-1/2 z-300 w-[340px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border-[0.5px] border-bd-2 bg-surf shadow-xl"
 			>
-				<div className="flex items-center justify-between border-b border-hairline border-bd-1 px-4 py-3">
+				<div className="flex items-center justify-between border-b border-[0.5px] border-bd-1 px-4 py-3">
 					<div className="flex items-center gap-2">
 						<Languages className="size-4 text-violet-500" strokeWidth={1.6} />
-						<Typography tag="span" className="text-[13px] font-semibold text-t-1">
+						<Typography
+							tag="span"
+							className="text-[13px] font-semibold text-t-1"
+						>
 							{t("admin.texts.editPage.phraseEditTitle")}
 						</Typography>
 					</div>
@@ -117,7 +126,7 @@ const EditModal = ({
 				<div className="space-y-3 p-4">
 					<div>
 						<InputLabel>{t("admin.texts.editPage.phraseOriginal")}</InputLabel>
-						<div className="rounded-base border-hairline border-bd-2 bg-surf-2 px-[10px] py-[7px] text-[13px] text-t-2 opacity-70 select-none">
+						<div className="rounded-base border-[0.5px] border-bd-2 bg-surf-2 px-[10px] py-[7px] text-[13px] text-t-2 opacity-70 select-none">
 							{occurrence.phrase.original}
 						</div>
 					</div>
@@ -164,7 +173,7 @@ const EditModal = ({
 						</Button>
 						<Button
 							onClick={onClose}
-							className="h-[34px] rounded-lg border-hairline border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
+							className="h-[34px] rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 						>
 							{t("admin.texts.editPage.phraseCancel")}
 						</Button>
@@ -195,7 +204,7 @@ const PhraseItem = ({
 	const [confirmDelete, setConfirmDelete] = useState(false);
 
 	return (
-		<div className="group relative rounded-lg border-hairline border-bd-1 bg-surf-2 p-3 transition-colors hover:border-bd-2">
+		<div className="group relative rounded-lg border-[0.5px] border-bd-1 bg-surf-2 p-3 transition-colors hover:border-bd-2">
 			<div className="mb-1 flex items-start justify-between gap-2">
 				<div className="text-[13px] font-semibold text-t-1 leading-tight">
 					{occurrence.phrase.original}
@@ -355,18 +364,24 @@ export const PhrasesListPanel = ({
 
 			{/* Slide-in panel */}
 			<div
-				className={`fixed top-0 right-0 z-200 flex h-full w-[320px] flex-col border-l border-hairline border-bd-2 bg-surf shadow-xl transition-transform duration-250 ${
+				className={`fixed top-0 right-0 z-200 flex h-full w-[320px] flex-col border-l border-[0.5px] border-bd-2 bg-surf shadow-xl transition-transform duration-250 ${
 					isOpen ? "translate-x-0" : "translate-x-full"
 				}`}
 			>
-				<div className="flex items-center justify-between border-b border-hairline border-bd-1 px-4 py-3">
+				<div className="flex items-center justify-between border-b border-[0.5px] border-bd-1 px-4 py-3">
 					<div className="flex items-center gap-2">
 						<Languages className="size-4 text-violet-500" strokeWidth={1.6} />
-						<Typography tag="span" className="text-[13.5px] font-semibold text-t-1">
+						<Typography
+							tag="span"
+							className="text-[13.5px] font-semibold text-t-1"
+						>
 							{t("admin.texts.editPage.phraseListTitle")}
 						</Typography>
 						{phrases.length > 0 && (
-							<Typography tag="span" className="rounded-full bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
+							<Typography
+								tag="span"
+								className="rounded-full bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2"
+							>
 								{phrases.length}
 							</Typography>
 						)}

@@ -29,7 +29,7 @@ export const LemmaSearchSection = ({
 	const { t } = useI18n();
 
 	return (
-		<div className="border-t border-hairline border-bd-1 px-5 py-3">
+		<div className="border-t border-[0.5px] border-bd-1 px-5 py-3">
 			<div className="relative mb-2">
 				<SearchIcon className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-t-3" />
 				<Input
@@ -40,7 +40,7 @@ export const LemmaSearchSection = ({
 					autoFocus={autoFocus}
 				/>
 			</div>
-			<div className="max-h-[150px] overflow-y-auto rounded-base border border-hairline border-bd-1">
+			<div className="max-h-[150px] overflow-y-auto rounded-base border border-[0.5px] border-bd-1">
 				{isSearching ? (
 					<div className="flex items-center justify-center py-5">
 						<div className="size-4 animate-spin rounded-full border-2 border-surf-3 border-t-acc" />

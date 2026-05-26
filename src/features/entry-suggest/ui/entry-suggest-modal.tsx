@@ -37,7 +37,14 @@ export const EntrySuggestModal = ({
 		handleCommentChange,
 		handleSubmit,
 		handleClose,
-	} = useEntrySuggest({ open, onOpenChange, onSuccess, normalized, rawWord, currentTranslation });
+	} = useEntrySuggest({
+		open,
+		onOpenChange,
+		onSuccess,
+		normalized,
+		rawWord,
+		currentTranslation,
+	});
 
 	if (!open || typeof window === "undefined") return null;
 
@@ -52,10 +59,10 @@ export const EntrySuggestModal = ({
 				role="dialog"
 				aria-modal="true"
 				aria-label={t("suggest.title")}
-				className="fixed left-1/2 top-1/2 z-200 w-[340px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border-hairline border-bd-2 bg-surf shadow-xl"
+				className="fixed left-1/2 top-1/2 z-200 w-[340px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border-[0.5px] border-bd-2 bg-surf shadow-xl"
 			>
 				{/* Header */}
-				<div className="flex items-center justify-between border-b border-hairline border-bd-1 px-4 py-3">
+				<div className="flex items-center justify-between border-b border-[0.5px] border-bd-1 px-4 py-3">
 					<div className="flex items-center gap-2">
 						<Pencil className="size-4 text-acc" strokeWidth={1.6} />
 						<span className="text-[13px] font-semibold text-t-1">
@@ -75,7 +82,10 @@ export const EntrySuggestModal = ({
 					{/* Word — read-only context */}
 					<div>
 						<InputLabel>{t("suggest.wordLabel")}</InputLabel>
-						<div className="rounded-base border-hairline border-bd-2 bg-surf-2 px-[10px] py-[7px] text-[13px] text-t-2 opacity-70 select-none" lang="ce">
+						<div
+							className="rounded-base border-[0.5px] border-bd-2 bg-surf-2 px-[10px] py-[7px] text-[13px] text-t-2 opacity-70 select-none"
+							lang="ce"
+						>
 							{rawWord}
 						</div>
 					</div>
@@ -91,7 +101,7 @@ export const EntrySuggestModal = ({
 							onChange={handleFieldChange}
 							disabled={isPending}
 						>
-							{fieldOrder.map((key) => (
+							{fieldOrder.map(key => (
 								<option key={key} value={key}>
 									{t(`suggest.fields.${key}`)}
 								</option>
@@ -134,7 +144,7 @@ export const EntrySuggestModal = ({
 							type="button"
 							onClick={handleClose}
 							disabled={isPending}
-							className="h-[34px] rounded-lg border-hairline border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
+							className="h-[34px] rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 						>
 							{t("suggest.cancel")}
 						</Button>

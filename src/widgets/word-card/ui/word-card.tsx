@@ -1,14 +1,5 @@
 "use client";
 
-import { ComponentProps } from 'react';
-import { cn } from "@/shared/lib/cn";
-import { useI18n } from "@/shared/lib/i18n";
-import { Typography } from "@/shared/ui/typography";
-import {
-	formatNextReview,
-	formatRelativeFromNow,
-	formatReviewIn,
-} from "@/shared/lib/format-relative-time";
 import {
 	CefrBadge,
 	Sm2Bar,
@@ -18,6 +9,15 @@ import {
 } from "@/entities/dictionary";
 import { DeleteWordButton } from "@/features/delete-word";
 import { FolderSelect, StatusButtons } from "@/features/update-word";
+import { cn } from "@/shared/lib/cn";
+import {
+	formatNextReview,
+	formatRelativeFromNow,
+	formatReviewIn,
+} from "@/shared/lib/format-relative-time";
+import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
+import { ComponentProps } from "react";
 
 export interface WordCardProps {
 	entry: DictionaryEntry;
@@ -58,16 +58,19 @@ const getMetaSecondary = (
 export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 	const { t, lang } = useI18n();
 	const sourceTitle = entry.lemma?.wordContexts?.[0]?.text?.title;
-	const example = entry.lemma?.headwords?.[0]?.entry?.senses?.[0]?.examples?.[0];
+	const example =
+		entry.lemma?.headwords?.[0]?.entry?.senses?.[0]?.examples?.[0];
 	const forms = entry.lemma?.morphForms ?? [];
 
-		const handleKeyDown: NonNullable<ComponentProps<"article">["onKeyDown"]> = (e) => {
-				if (e.key === "Enter" || e.key === " ") {
-					e.preventDefault();
-					onToggle();
-				}
-			};
-return (
+	const handleKeyDown: NonNullable<
+		ComponentProps<"article">["onKeyDown"]
+	> = e => {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			onToggle();
+		}
+	};
+	return (
 		<article
 			role="button"
 			tabIndex={0}
@@ -75,7 +78,7 @@ return (
 			onClick={onToggle}
 			onKeyDown={handleKeyDown}
 			className={cn(
-				"flex cursor-pointer items-center gap-3 rounded-card border-hairline border-bd-1 bg-surf p-[11px_14px]",
+				"flex cursor-pointer items-center gap-3 rounded-card border-[0.5px] border-bd-1 bg-surf p-[11px_14px]",
 				"transition-[border-color,box-shadow] duration-100",
 				"hover:border-bd-2 hover:shadow-sm",
 				"outline-none focus-visible:border-acc focus-visible:shadow-[0_0_0_2px_var(--acc-bg)]",
@@ -109,7 +112,11 @@ return (
 						</Typography>
 					) : null}
 					{sourceTitle ? (
-						<Typography tag="span" aria-hidden="true" className="size-[2px] rounded-full bg-t-4" />
+						<Typography
+							tag="span"
+							aria-hidden="true"
+							className="size-[2px] rounded-full bg-t-4"
+						/>
 					) : null}
 					<Typography tag="span" className="text-[11px] text-t-3">
 						{getMetaSecondary(entry, t)}
@@ -117,7 +124,7 @@ return (
 				</div>
 
 				{expanded ? (
-					<div className="mt-2.5 border-t border-hairline border-bd-1 pt-2.5">
+					<div className="mt-2.5 border-t border-[0.5px] border-bd-1 pt-2.5">
 						<div className="flex flex-col gap-3.5 md:flex-row md:gap-5">
 							<div className="min-w-0 flex-1">
 								{example ? (
@@ -143,7 +150,7 @@ return (
 												<Typography
 													tag="span"
 													key={`${f.form}-${idx}`}
-													className="rounded-[5px] border-hairline border-bd-1 bg-surf-2 px-[7px] py-[2px] text-[11px] text-t-2"
+													className="rounded-[5px] border-[0.5px] border-bd-1 bg-surf-2 px-[7px] py-[2px] text-[11px] text-t-2"
 												>
 													{f.form}
 												</Typography>

@@ -1,14 +1,14 @@
 "use client";
 
-import { useI18n } from "@/shared/lib/i18n";
-import { Button } from "@/shared/ui/button";
-import { Typography } from "@/shared/ui/typography";
 import {
 	type ReviewDueWord,
 	type ReviewStats,
 	getPrimaryTranslation,
 } from "@/entities/review";
 import { ModeSelector, type SessionMode } from "@/features/session-mode";
+import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 import { Sm2Guide } from "../sm2-guide";
 
 export interface ReviewIntroProps {
@@ -114,12 +114,13 @@ export const ReviewIntro = ({
 					</div>
 
 					<ul className="flex flex-col gap-1">
-						{queue.slice(0, QUEUE_PREVIEW).map((item) => (
+						{queue.slice(0, QUEUE_PREVIEW).map(item => (
 							<li
 								key={item.lemmaId}
-								className="flex items-center gap-2.5 rounded-base border-hairline border-bd-1 bg-surf px-3 py-2"
+								className="flex items-center gap-2.5 rounded-base border-[0.5px] border-bd-1 bg-surf px-3 py-2"
 							>
-								<Typography tag="span"
+								<Typography
+									tag="span"
 									aria-hidden="true"
 									className={`size-1.5 shrink-0 rounded-full ${dotClass(item.status)}`}
 								/>
@@ -162,7 +163,7 @@ const toneClasses: Record<StatBoxProps["tone"], string> = {
 };
 
 const StatBox = ({ value, label, tone }: StatBoxProps) => (
-	<div className="rounded-card border-hairline border-bd-2 bg-surf px-4 py-3 text-center shadow-sm min-w-[80px] max-md:flex-1 max-md:min-w-0">
+	<div className="rounded-card border-[0.5px] border-bd-2 bg-surf px-4 py-3 text-center shadow-sm min-w-[80px] max-md:flex-1 max-md:min-w-0">
 		<div
 			className={`font-display text-[22px] font-semibold leading-[1.1] tabular-nums max-md:text-[20px] ${toneClasses[tone]}`}
 		>

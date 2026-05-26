@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import type { TextProgressItem } from "@/entities/statistics";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import Link from "next/link";
 
 interface TextsProgressProps {
 	items: TextProgressItem[];
@@ -18,13 +18,7 @@ const colorForPercent = (percent: number): { bar: string; pct: string } => {
 	return { bar: "bg-acc", pct: "text-acc" };
 };
 
-const TextRow = ({
-	item,
-	lang,
-}: {
-	item: TextProgressItem;
-	lang: string;
-}) => {
+const TextRow = ({ item, lang }: { item: TextProgressItem; lang: string }) => {
 	const { t } = useI18n();
 	const { bar, pct } = colorForPercent(item.progressPercent);
 	const isNew = item.progressPercent === 0;
@@ -63,10 +57,16 @@ const TextRow = ({
 					{item.title}
 				</Typography>
 				<div className="flex items-center gap-1.5 text-[11px] text-t-3">
-					<Typography tag="span">{item.level ? t(`shared.cefrLevel.${item.level}`) : "—"}</Typography>
-					<Typography tag="span" aria-hidden="true">·</Typography>
+					<Typography tag="span">
+						{item.level ? t(`shared.cefrLevel.${item.level}`) : "—"}
+					</Typography>
+					<Typography tag="span" aria-hidden="true">
+						·
+					</Typography>
 					<Typography tag="span">{item.language}</Typography>
-					<Typography tag="span" aria-hidden="true">·</Typography>
+					<Typography tag="span" aria-hidden="true">
+						·
+					</Typography>
 					<Typography tag="span">
 						{t("statistics.texts.wordsOf", {
 							known: item.knownWords,
@@ -97,7 +97,7 @@ export const TextsProgress = ({ items, lang }: TextsProgressProps) => {
 	const { t } = useI18n();
 
 	return (
-		<section className="rounded-card border-hairline border-bd-1 bg-surf p-4">
+		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4">
 			<header className="mb-3 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.texts.title")}
@@ -116,7 +116,7 @@ export const TextsProgress = ({ items, lang }: TextsProgressProps) => {
 				</div>
 			) : (
 				<div className="flex flex-col">
-					{items.map((item) => (
+					{items.map(item => (
 						<TextRow key={item.id} item={item} lang={lang} />
 					))}
 				</div>

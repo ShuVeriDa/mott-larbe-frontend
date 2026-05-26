@@ -1,5 +1,5 @@
-import type { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
+import type { ComponentProps } from "react";
 
 export type StatCardProps = ComponentProps<"div">;
 
@@ -7,7 +7,7 @@ export const StatCard = ({ className, ...props }: StatCardProps) => (
 	<div
 		data-slot="stat-card"
 		className={cn(
-			"bg-surf border-hairline border-bd-1 rounded-card px-[14px] py-3",
+			"bg-surf border-[0.5px] border-bd-1 rounded-card px-[14px] py-3",
 			"transition-colors duration-200",
 			className,
 		)}
@@ -33,10 +33,7 @@ export type StatValueProps = ComponentProps<"div">;
 export const StatValue = ({ className, ...props }: StatValueProps) => (
 	<div
 		data-slot="stat-value"
-		className={cn(
-			"text-[20px] font-semibold leading-none text-t-1",
-			className,
-		)}
+		className={cn("text-[20px] font-semibold leading-none text-t-1", className)}
 		{...props}
 	/>
 );

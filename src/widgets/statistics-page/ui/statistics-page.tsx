@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { ComponentProps, useState } from 'react';
 import { useStatistics, type StatsPeriod } from "@/entities/statistics";
 import { PeriodTabs } from "@/features/stats-period-tabs";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { ComponentProps, useState } from "react";
 import { AccuracyBlock } from "./accuracy-block";
 import { ActivityLog } from "./activity-log";
 import { KpiGrid } from "./kpi-grid";
@@ -30,14 +30,12 @@ export const StatisticsPage = () => {
 		activityLimit: 15,
 	});
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => refetch();
-return (
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		refetch();
+	return (
 		<>
-			<header className="flex shrink-0 items-center gap-3 border-hairline border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-md:flex-wrap max-md:px-4 max-md:py-2.5">
-				<Typography
-					tag="h1"
-					className="text-[13.5px] font-semibold text-t-1"
-				>
+			<header className="flex shrink-0 items-center gap-3 border-[0.5px] border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-md:flex-wrap max-md:px-4 max-md:py-2.5">
+				<Typography tag="h1" className="text-[13.5px] font-semibold text-t-1">
 					{t("statistics.pageTitle")}
 				</Typography>
 				<div className="ml-auto max-md:w-full">
@@ -65,7 +63,10 @@ return (
 					<Typography tag="p" className="text-sm font-semibold text-t-1">
 						{t("statistics.premium.title")}
 					</Typography>
-					<Typography tag="p" className="max-w-[260px] text-xs leading-relaxed text-t-3">
+					<Typography
+						tag="p"
+						className="max-w-[260px] text-xs leading-relaxed text-t-3"
+					>
 						{t("statistics.premium.description")}
 					</Typography>
 					<a

@@ -1,11 +1,14 @@
 "use client";
-import { ComponentProps, useState } from 'react';
-import { useRouter } from "next/navigation";
+import { FolderCard, useFolders, type Folder } from "@/entities/folder";
+import { useReorderFolders } from "@/features/update-folder";
+import { cn } from "@/shared/lib/cn";
+import { formatRelativeFromNow } from "@/shared/lib/format-relative-time";
+import { useI18n } from "@/shared/lib/i18n";
 import {
 	DndContext,
-	closestCenter,
 	KeyboardSensor,
 	PointerSensor,
+	closestCenter,
 	useSensor,
 	useSensors,
 	type DragEndEvent,
@@ -17,11 +20,8 @@ import {
 	useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
-import { formatRelativeFromNow } from "@/shared/lib/format-relative-time";
-import { FolderCard, useFolders, type Folder } from "@/entities/folder";
-import { useReorderFolders } from "@/features/update-folder";
+import { useRouter } from "next/navigation";
+import { ComponentProps, useState } from "react";
 import { FolderCardActions } from "./folder-card-actions";
 import { FolderNewCard } from "./folder-new-card";
 
@@ -163,7 +163,7 @@ export const FoldersGrid = ({
 				{Array.from({ length: 3 }).map((_, i) => (
 					<div
 						key={i}
-						className="h-[230px] animate-pulse rounded-card border-hairline border-bd-1 bg-surf"
+						className="h-[230px] animate-pulse rounded-card border-[0.5px] border-bd-1 bg-surf"
 					/>
 				))}
 			</div>
@@ -177,7 +177,7 @@ export const FoldersGrid = ({
 			onForbidden();
 		}
 		return (
-			<div className="rounded-card border-hairline border-bd-1 bg-surf px-5 py-6 text-[13px] text-t-3">
+			<div className="rounded-card border-[0.5px] border-bd-1 bg-surf px-5 py-6 text-[13px] text-t-3">
 				{t("vocabulary.errorLoading")}
 			</div>
 		);
@@ -189,7 +189,7 @@ export const FoldersGrid = ({
 		return (
 			<div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
 				<FolderNewCard onClick={onCreate} disabled={createDisabled} />
-				<div className="col-span-full rounded-card border-hairline border-bd-1 bg-surf px-5 py-8 text-center sm:col-span-1 lg:col-span-2">
+				<div className="col-span-full rounded-card border-[0.5px] border-bd-1 bg-surf px-5 py-8 text-center sm:col-span-1 lg:col-span-2">
 					<div className="mb-1 text-[14px] font-semibold text-t-1">
 						{t("vocabulary.foldersPage.empty.title")}
 					</div>
@@ -208,15 +208,15 @@ export const FoldersGrid = ({
 		const { active, over } = event;
 		if (!over || active.id === over.id) return;
 
-		const oldIndex = list.findIndex((f) => f.id === active.id);
-		const newIndex = list.findIndex((f) => f.id === over.id);
+		const oldIndex = list.findIndex(f => f.id === active.id);
+		const newIndex = list.findIndex(f => f.id === over.id);
 		if (oldIndex === -1 || newIndex === -1) return;
 
 		const reordered = [...list];
 		const [moved] = reordered.splice(oldIndex, 1);
 		reordered.splice(newIndex, 0, moved);
 
-		reorder({ orderedIds: reordered.map((f) => f.id) });
+		reorder({ orderedIds: reordered.map(f => f.id) });
 	};
 
 	return (
@@ -226,35 +226,42 @@ export const FoldersGrid = ({
 			onDragEnd={handleDragEnd}
 		>
 			<SortableContext
-				items={list.map((f) => f.id)}
+				items={list.map(f => f.id)}
 				strategy={rectSortingStrategy}
 			>
 				<div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-					{list.map((folder) => {
-					  const handleOpen: NonNullable<ComponentProps<typeof SortableCard>["onOpen"]> = () => open(folder);
-					  const handleMenuToggle: NonNullable<ComponentProps<typeof SortableCard>["onMenuToggle"]> = () =>
-								setOpenMenuId((cur) =>
-									cur === folder.id ? null : folder.id,
-								);
-					  const handleMenuClose: NonNullable<ComponentProps<typeof SortableCard>["onMenuClose"]> = () => setOpenMenuId(null);
-					  const handleEdit: NonNullable<ComponentProps<typeof SortableCard>["onEdit"]> = () => onEdit(folder);
-					  const handleDelete: NonNullable<ComponentProps<typeof SortableCard>["onDelete"]> = () => onDelete(folder);
-					  return (
-						<SortableCard
-							key={folder.id}
-							folder={folder}
-							cardLabels={cardLabels}
-							menuLabel={t("vocabulary.foldersPage.card.menu")}
-							openMenuId={openMenuId}
-							onOpen={handleOpen}
-							onMenuToggle={handleMenuToggle
-							}
-							onMenuClose={handleMenuClose}
-							onEdit={handleEdit}
-							onDelete={handleDelete}
-							menuLabels={menuLabels}
-						/>
-					);
+					{list.map(folder => {
+						const handleOpen: NonNullable<
+							ComponentProps<typeof SortableCard>["onOpen"]
+						> = () => open(folder);
+						const handleMenuToggle: NonNullable<
+							ComponentProps<typeof SortableCard>["onMenuToggle"]
+						> = () =>
+							setOpenMenuId(cur => (cur === folder.id ? null : folder.id));
+						const handleMenuClose: NonNullable<
+							ComponentProps<typeof SortableCard>["onMenuClose"]
+						> = () => setOpenMenuId(null);
+						const handleEdit: NonNullable<
+							ComponentProps<typeof SortableCard>["onEdit"]
+						> = () => onEdit(folder);
+						const handleDelete: NonNullable<
+							ComponentProps<typeof SortableCard>["onDelete"]
+						> = () => onDelete(folder);
+						return (
+							<SortableCard
+								key={folder.id}
+								folder={folder}
+								cardLabels={cardLabels}
+								menuLabel={t("vocabulary.foldersPage.card.menu")}
+								openMenuId={openMenuId}
+								onOpen={handleOpen}
+								onMenuToggle={handleMenuToggle}
+								onMenuClose={handleMenuClose}
+								onEdit={handleEdit}
+								onDelete={handleDelete}
+								menuLabels={menuLabels}
+							/>
+						);
 					})}
 					<FolderNewCard onClick={onCreate} disabled={createDisabled} />
 				</div>

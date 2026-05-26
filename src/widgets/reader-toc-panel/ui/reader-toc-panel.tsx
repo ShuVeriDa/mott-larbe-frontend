@@ -2,15 +2,15 @@
 
 import { useTextToc, type TocEntry } from "@/entities/text-toc";
 import { cn } from "@/shared/lib/cn";
-import { Button } from "@/shared/ui/button";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
 import {
 	READER_MOBILE_SHEET_OVERLAY_CLASSES,
 	ReaderMobileSheetHeader,
 } from "@/shared/ui/reader-mobile-sheet-header";
 import { Typography } from "@/shared/ui/typography";
 import { List, X } from "lucide-react";
-import { type MouseEvent, useEffect } from "react";
+import { useEffect, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
 
 export interface ReaderTocPanelProps {
@@ -46,7 +46,8 @@ const TocPanelBody = ({
 	const { t } = useI18n();
 	const { data: entries = [], isLoading } = useTextToc(textId);
 
-	const hasContent = entries.length > 0 && entries.some((e) => e.title !== null || true);
+	const hasContent =
+		entries.length > 0 && entries.some(e => e.title !== null || true);
 	const isEmpty = !isLoading && entries.length === 0;
 
 	const handleEntryClick = (entry: TocEntry) => {
@@ -57,18 +58,23 @@ const TocPanelBody = ({
 	return (
 		<div className="flex min-h-0 flex-1 flex-col gap-3">
 			{isLoading && (
-				<Typography className="text-[12px] text-t-4">{t("reader.toc.loading")}</Typography>
+				<Typography className="text-[12px] text-t-4">
+					{t("reader.toc.loading")}
+				</Typography>
 			)}
 			{isEmpty && (
 				<div className="flex flex-col items-center gap-2 py-6 text-center">
 					<List className="size-8 text-t-4" strokeWidth={1.2} />
-					<Typography className="text-[13px] text-t-3">{t("reader.toc.empty")}</Typography>
+					<Typography className="text-[13px] text-t-3">
+						{t("reader.toc.empty")}
+					</Typography>
 				</div>
 			)}
 			<div className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto">
-				{entries.map((entry) => {
+				{entries.map(entry => {
 					const isActive = entry.pageNumber === currentPage;
-					const label = entry.title ?? `${t("reader.toc.page")} ${entry.pageNumber}`;
+					const label =
+						entry.title ?? `${t("reader.toc.page")} ${entry.pageNumber}`;
 
 					const handleClick = () => handleEntryClick(entry);
 
@@ -84,10 +90,15 @@ const TocPanelBody = ({
 									: "text-t-2 hover:bg-surf-2 hover:text-t-1",
 							)}
 						>
-							<Typography tag="span" className="shrink-0 text-[11px] tabular-nums text-t-4">
+							<Typography
+								tag="span"
+								className="shrink-0 text-[11px] tabular-nums text-t-4"
+							>
 								{entry.pageNumber}
 							</Typography>
-							<Typography tag="span" className="min-w-0 truncate">{label}</Typography>
+							<Typography tag="span" className="min-w-0 truncate">
+								{label}
+							</Typography>
 						</Button>
 					);
 				})}
@@ -101,7 +112,7 @@ const TocChromeHeader = ({ onClose }: { onClose: () => void }) => {
 	const handleClose = () => onClose();
 
 	return (
-		<div className="flex shrink-0 items-center justify-between border-b border-hairline border-bd-1 px-3.5 py-2.5">
+		<div className="flex shrink-0 items-center justify-between border-b border-[0.5px] border-bd-1 px-3.5 py-2.5">
 			<Typography
 				tag="span"
 				className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
@@ -133,7 +144,7 @@ export const ReaderTocAside = ({
 			aria-hidden={!open}
 			className={cn(
 				"flex shrink-0 flex-col overflow-hidden bg-surf max-md:hidden",
-				"border-l border-hairline transition-[border-color] duration-200",
+				"border-l border-[0.5px] transition-[border-color] duration-200",
 				open ? "w-[296px] border-bd-1" : "w-0 min-w-0 border-l-transparent",
 			)}
 		>
@@ -161,7 +172,8 @@ export const ReaderTocSheet = ({
 	useEscapeToClose(open, onClose);
 
 	const handleBackdropClick = () => onClose();
-	const handleSheetClick = (e: MouseEvent<HTMLDivElement>) => e.stopPropagation();
+	const handleSheetClick = (e: MouseEvent<HTMLDivElement>) =>
+		e.stopPropagation();
 
 	if (!open || typeof window === "undefined") return null;
 

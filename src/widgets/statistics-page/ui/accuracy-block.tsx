@@ -29,7 +29,10 @@ const AccuracyRow = ({
 		<div className="flex items-center justify-between">
 			<div className="flex items-center gap-1.5 text-xs text-t-2">
 				{dotColor ? (
-					<Typography tag="span" className={`size-[7px] rounded-full ${dotColor}`} />
+					<Typography
+						tag="span"
+						className={`size-[7px] rounded-full ${dotColor}`}
+					/>
 				) : null}
 				{label}
 			</div>
@@ -58,7 +61,7 @@ export const AccuracyBlock = ({ accuracy }: AccuracyBlockProps) => {
 	const wrongPct = Math.max(0, 100 - accuracy.percent);
 
 	return (
-		<section className="rounded-card border-hairline border-bd-1 bg-surf p-4">
+		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4">
 			<header className="mb-3 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.accuracy.title")}
@@ -106,10 +109,7 @@ export const AccuracyBlock = ({ accuracy }: AccuracyBlockProps) => {
 							<Typography tag="span" className="text-[11px] text-t-3">
 								{t("statistics.accuracy.bestStreak")}
 							</Typography>
-							<Typography
-								tag="span"
-								className="text-xs font-semibold text-t-1"
-							>
+							<Typography tag="span" className="text-xs font-semibold text-t-1">
 								{t("statistics.accuracy.bestStreakValue", {
 									n: accuracy.bestStreak,
 								})}
@@ -119,10 +119,7 @@ export const AccuracyBlock = ({ accuracy }: AccuracyBlockProps) => {
 							<Typography tag="span" className="text-[11px] text-t-3">
 								{t("statistics.accuracy.sessions")}
 							</Typography>
-							<Typography
-								tag="span"
-								className="text-xs font-semibold text-t-1"
-							>
+							<Typography tag="span" className="text-xs font-semibold text-t-1">
 								{accuracy.sessions.toLocaleString()}
 							</Typography>
 						</div>

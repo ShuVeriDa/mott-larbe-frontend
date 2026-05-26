@@ -504,6 +504,7 @@
     "vocabulary": "Дошам",
     "review": "Карладаккхар",
     "progress": "Статистика",
+    "phrasebook": "Дешар-йийцарш",
     "language": "Мотт",
     "chechen": "Нохчийн",
     "grammar": "Грамматика",
@@ -4949,6 +4950,69 @@
     "successApprove": "Хьехам ладоьгlна, хийцам бина",
     "successReject": "Хьехам дlахоьссина",
     "errorReview": "Статус хийца ца хилира"
+  },
+  "phrasebook": {
+    "title": "Дешар-йийцарш",
+    "meta": {
+      "title": "Дешар-йийцарш — Мотт Ларбе",
+      "description": "Нохчийн меттан дешар-йийцарш: гайтина дош дийцарш, транслитераци а, декъашхошна дешар а."
+    },
+    "searchPlaceholder": "Йийцарш лаха...",
+    "phraseCount": "{count} йийцар",
+    "lang": {
+      "che": "НОХ",
+      "ru": "РУС"
+    },
+    "overview": {
+      "phrases": "йийцарш ду",
+      "saved": "kIелтосна",
+      "categories": "тоба",
+      "suggest": "Йийцар хlоттае"
+    },
+    "filters": {
+      "lang": "Мотт:",
+      "show": "Гайта:",
+      "all": "Цхьаьна",
+      "allLangs": "Вуьш меттанаш",
+      "saved": "kIелтосна"
+    },
+    "categories": {
+      "title": "Тобанаш"
+    },
+    "card": {
+      "save": "kIелтоса",
+      "unsave": "Дlасаяккха",
+      "copy": "Копи яр",
+      "copied": "Копи хlиттина!"
+    },
+    "detail": {
+      "wordBreakdown": "Дош дийцар",
+      "examples": "Лелор масалаш",
+      "addToVocab": "Дешамна тlе",
+      "addedToVocab": "Тlетоьхна",
+      "addToVocabHint": "Йийцаран дош цхьаьна схьаяккха хьайн дешаман",
+      "wordAdded": "«{word}» → {trans} дешамна тlетоьхна",
+      "allWordsAdded": "Дешнаш дешамна тlетоьхна"
+    },
+    "empty": {
+      "title": "Йийцарш карадаьлла яц",
+      "sub": "Фильтраш хийцале я вуьш тоба хlоттале"
+    },
+    "suggestModal": {
+      "title": "Йийцар хlоттае",
+      "originalLabel": "Йийцар (нохчийн меттана)",
+      "originalPlaceholder": "масала: Салам!",
+      "translationLabel": "Гочдар",
+      "translationPlaceholder": "масала: Маршалла!",
+      "langLabel": "Мотт",
+      "contextLabel": "Карара хlум (хаза дац)",
+      "contextPlaceholder": "Мичча лелор хlара йийцар?",
+      "cancel": "Дlасаяккха",
+      "submit": "Дlаяхьа",
+      "sending": "Дlаяхьуш...",
+      "success": "Баркалла! Хьайн хlоттам тергошна дlаяхьана.",
+      "error": "Хlоттам дlаяхьа хиллина яц. Кхин схьаха."
+    }
   },
   "apiErrors": {
     "internalServerError": "Гlалат хилла. Хlинца а гlойла.",

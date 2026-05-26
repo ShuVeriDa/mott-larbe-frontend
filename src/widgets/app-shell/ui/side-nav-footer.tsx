@@ -17,10 +17,17 @@ export const SideNavFooter = ({ isCompactMode, plan }: SideNavFooterProps) => {
 
 	return (
 		<>
-			<div className={cn("px-3.5 pb-3.5 pt-2", isCompactMode && "max-[899px]:hidden")}>
+			<div
+				className={cn(
+					"px-3.5 pb-3.5 pt-2",
+					isCompactMode && "max-[899px]:hidden",
+				)}
+			>
 				{plan ? (
-					<div className="rounded-[9px] border-hairline border-bd-1 bg-surf-2 p-3">
-						<div className="mb-1 text-xs font-semibold text-t-1">{plan.name}</div>
+					<div className="rounded-[9px] border-[0.5px] border-bd-1 bg-surf-2 p-3">
+						<div className="mb-1 text-xs font-semibold text-t-1">
+							{plan.name}
+						</div>
 						{plan.isPremium ? (
 							<Typography className="text-[11px] leading-[1.55] text-t-3">
 								{t("nav.premiumPlan")}

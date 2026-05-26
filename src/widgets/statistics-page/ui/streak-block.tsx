@@ -15,7 +15,7 @@ export const StreakBlock = ({ streak, heatmap }: StreakBlockProps) => {
 	const { t } = useI18n();
 
 	return (
-		<section className="flex items-start gap-6 rounded-card border-hairline border-bd-1 bg-surf p-4 max-md:flex-col max-md:gap-3.5">
+		<section className="flex items-start gap-6 rounded-card border-[0.5px] border-bd-1 bg-surf p-4 max-md:flex-col max-md:gap-3.5">
 			<div className="shrink-0 max-md:w-full">
 				<div className="mb-1 flex items-center gap-2">
 					<Typography
@@ -24,7 +24,11 @@ export const StreakBlock = ({ streak, heatmap }: StreakBlockProps) => {
 					>
 						{streak.current}
 					</Typography>
-					<Typography tag="span" className="text-[26px] leading-none" aria-hidden="true">
+					<Typography
+						tag="span"
+						className="text-[26px] leading-none"
+						aria-hidden="true"
+					>
 						🔥
 					</Typography>
 				</div>
@@ -36,14 +40,12 @@ export const StreakBlock = ({ streak, heatmap }: StreakBlockProps) => {
 				</Typography>
 
 				<div className="mt-3 flex gap-2 overflow-x-auto pb-1 max-[480px]:overflow-x-auto">
-					{streak.milestones.map((ms) => (
+					{streak.milestones.map(ms => (
 						<div
 							key={ms.days}
 							className={cn(
-								"flex min-w-[52px] shrink-0 flex-col items-center gap-0.5 rounded-lg border-hairline border-bd-1 px-2.5 py-1.5",
-								ms.reached
-									? "border-amb/20 bg-amb-bg"
-									: "bg-surf-2",
+								"flex min-w-[52px] shrink-0 flex-col items-center gap-0.5 rounded-lg border-[0.5px] border-bd-1 px-2.5 py-1.5",
+								ms.reached ? "border-amb/20 bg-amb-bg" : "bg-surf-2",
 							)}
 						>
 							<Typography

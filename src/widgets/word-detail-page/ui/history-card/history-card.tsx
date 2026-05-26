@@ -2,11 +2,11 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { Check, X } from "lucide-react";
 import type { DetailReviewLog } from "@/entities/dictionary";
 import { cn } from "@/shared/lib/cn";
 import { formatNextReview } from "@/shared/lib/format-relative-time";
 import { useI18n } from "@/shared/lib/i18n";
+import { Check, X } from "lucide-react";
 import { CardSection } from "../card-section";
 
 export interface HistoryCardProps {
@@ -35,15 +35,16 @@ export const HistoryCard = ({ logs }: HistoryCardProps) => {
 			bodyClassName="px-4 py-2"
 		>
 			<ul className="flex flex-col">
-				{logs.map((log) => {
+				{logs.map(log => {
 					const correct = log.correct;
 					const delta = log.intervalDelta;
 					return (
 						<li
 							key={log.id}
-							className="flex items-center gap-2.5 border-b border-hairline border-bd-1 py-1.5 last:border-b-0"
+							className="flex items-center gap-2.5 border-b border-[0.5px] border-bd-1 py-1.5 last:border-b-0"
 						>
-							<Typography tag="span"
+							<Typography
+								tag="span"
 								className={cn(
 									"flex size-[26px] shrink-0 items-center justify-center rounded-[6px]",
 									correct ? "bg-grn-bg text-grn" : "bg-red-bg text-red",
@@ -65,7 +66,8 @@ export const HistoryCard = ({ logs }: HistoryCardProps) => {
 									{formatNextReview(log.createdAt, t, lang)}
 								</Typography>
 							</div>
-							<Typography tag="span"
+							<Typography
+								tag="span"
 								className={cn(
 									"ml-auto text-[12px] font-semibold",
 									correct ? "text-grn" : "text-red-t",

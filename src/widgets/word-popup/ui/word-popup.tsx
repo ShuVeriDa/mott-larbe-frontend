@@ -2,18 +2,18 @@
 
 import { Typography } from "@/shared/ui/typography";
 
+import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 import type { TextToken } from "@/entities/text";
 import { useWordLookup, type WordLookupResponse } from "@/entities/word";
+import { EntrySuggestModal } from "@/features/entry-suggest";
 import { useWordLookupStore, type PopupAnchor } from "@/features/word-lookup";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { AddToDictionaryButton } from "@/widgets/word-panel/ui/add-to-dictionary-button";
 import { ExternalLink, Pencil } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 import { AiWordPopupBody } from "./ai-word-popup-body";
-import { EntrySuggestModal } from "@/features/entry-suggest";
-import { AddToDictionaryButton } from "@/widgets/word-panel/ui/add-to-dictionary-button";
 
 const POPUP_WIDTH = 264;
 const SAFE_MARGIN = 10;
@@ -49,7 +49,7 @@ const WordPopupBody = ({
 
 	return (
 		<>
-			<div className="border-b border-hairline border-bd-1 px-3.5 pt-3.5 pb-2.5">
+			<div className="border-b border-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
 				<div className="mb-1 flex items-start gap-2">
 					<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
 						{token.original}
@@ -57,10 +57,12 @@ const WordPopupBody = ({
 					{lookup.wordLevel ? (
 						<Typography
 							tag="span"
-							className={`mt-0.5 shrink-0 rounded-[4px] border-hairline px-1.5 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.4px] ${
-								lookup.wordLevel === "A" ? "bg-grn/15 text-grn border-grn/30" :
-								lookup.wordLevel === "B" ? "bg-acc/15 text-acc border-acc/30" :
-								"bg-red/15 text-red border-red/30"
+							className={`mt-0.5 shrink-0 rounded-[4px] border-[0.5px] px-1.5 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.4px] ${
+								lookup.wordLevel === "A"
+									? "bg-grn/15 text-grn border-grn/30"
+									: lookup.wordLevel === "B"
+										? "bg-acc/15 text-acc border-acc/30"
+										: "bg-red/15 text-red border-red/30"
 							}`}
 						>
 							{lookup.wordLevel}
@@ -74,8 +76,14 @@ const WordPopupBody = ({
 					</Typography>
 				</div>
 			</div>
-			<div className="border-b border-hairline border-bd-1 px-3.5 py-2.5">
-				<div className={lookup.lemmaTranslation ? "mb-1 text-[14px] font-medium text-t-1" : "text-[14px] font-medium text-t-1"}>
+			<div className="border-b border-[0.5px] border-bd-1 px-3.5 py-2.5">
+				<div
+					className={
+						lookup.lemmaTranslation
+							? "mb-1 text-[14px] font-medium text-t-1"
+							: "text-[14px] font-medium text-t-1"
+					}
+				>
 					{lookup.translation}
 				</div>
 				{lookup.lemmaTranslation ? (
@@ -88,12 +96,12 @@ const WordPopupBody = ({
 				) : null}
 			</div>
 			{lookup.tags.length > 0 ? (
-				<div className="flex flex-wrap gap-1 border-b border-hairline border-bd-1 px-3.5 py-2">
+				<div className="flex flex-wrap gap-1 border-b border-[0.5px] border-bd-1 px-3.5 py-2">
 					{lookup.tags.slice(0, 3).map(tag => (
 						<Typography
 							tag="span"
 							key={tag}
-							className="rounded-[4px] border-hairline border-bd-1 bg-surf-2 px-[7px] py-0.5 text-[10.5px] font-medium text-t-2"
+							className="rounded-[4px] border-[0.5px] border-bd-1 bg-surf-2 px-[7px] py-0.5 text-[10.5px] font-medium text-t-2"
 						>
 							{tag}
 						</Typography>
@@ -116,7 +124,7 @@ const WordPopupBody = ({
 					onClick={onSuggestOpen}
 					aria-label={t("suggest.button")}
 					title={t("suggest.button")}
-					className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-base border-hairline border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
+					className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-base border-[0.5px] border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
 				>
 					<Pencil className="size-3.5" strokeWidth={1.4} />
 				</Button>
@@ -125,7 +133,7 @@ const WordPopupBody = ({
 					onClick={onOpenInPanel}
 					aria-label={t("reader.popup.openPanel")}
 					title={t("reader.popup.openPanel")}
-					className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-base border-hairline border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
+					className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-base border-[0.5px] border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
 				>
 					<ExternalLink className="size-3.5" strokeWidth={1.4} />
 				</Button>
@@ -140,9 +148,12 @@ const PhrasePopupBody = ({ phrase }: { phrase: PagePhraseOccurrence }) => {
 	const { t } = useI18n();
 	return (
 		<>
-			<div className="border-b border-hairline border-bd-1 px-3.5 pt-3.5 pb-2.5">
+			<div className="border-b border-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
 				<div className="mb-1 flex items-center gap-1.5">
-					<Typography tag="span" className="rounded-[4px] border-hairline border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
+					<Typography
+						tag="span"
+						className="rounded-[4px] border-[0.5px] border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t"
+					>
 						{t("reader.phrase.label")}
 					</Typography>
 				</div>
@@ -174,17 +185,26 @@ export const WordPopup = () => {
 	const closePopup = useWordLookupStore(s => s.closePopup);
 	const openInPanel = useWordLookupStore(s => s.openInPanel);
 	const [suggestOpen, setSuggestOpen] = useState(false);
-	const [suggestWord, setSuggestWord] = useState<{ normalized: string; rawWord: string; currentTranslation: string } | null>(null);
+	const [suggestWord, setSuggestWord] = useState<{
+		normalized: string;
+		rawWord: string;
+		currentTranslation: string;
+	} | null>(null);
 	const popupRef = useRef<HTMLDivElement>(null);
 	const [popupHeight, setPopupHeight] = useState(220);
 
-	const isVisible = surface === "popup" && Boolean(anchor) && (Boolean(token) || Boolean(phrase));
+	const isVisible =
+		surface === "popup" &&
+		Boolean(anchor) &&
+		(Boolean(token) || Boolean(phrase));
 
 	const { data, isLoading } = useWordLookup(
 		isVisible && token ? token.id : null,
 	);
 
-	const position = anchor ? computePosition(anchor, popupHeight) : { left: 0, top: 0 };
+	const position = anchor
+		? computePosition(anchor, popupHeight)
+		: { left: 0, top: 0 };
 
 	useEffect(() => {
 		const el = popupRef.current;
@@ -197,7 +217,11 @@ export const WordPopup = () => {
 		return () => observer.disconnect();
 	}, [isVisible]);
 
-	const handleSuggestOpen = (normalized: string, rawWord: string, currentTranslation: string) => {
+	const handleSuggestOpen = (
+		normalized: string,
+		rawWord: string,
+		currentTranslation: string,
+	) => {
 		setSuggestWord({ normalized, rawWord, currentTranslation });
 		setSuggestOpen(true);
 	};
@@ -221,50 +245,57 @@ export const WordPopup = () => {
 
 	return (
 		<>
-			{isVisible && createPortal(
-				<>
-					<div
-						className="fixed inset-0 z-199"
-						onClick={handleBackdropClick}
-						aria-hidden="true"
-					/>
-					<div
-						ref={popupRef}
-						role="dialog"
-						aria-label={token?.original ?? phrase?.phrase.original}
-						className="fixed z-200 w-[264px] overflow-hidden rounded-card border-hairline border-bd-2 bg-surf shadow-lg"
-						style={{ left: position.left, top: position.top }}
-					>
-						{phrase ? (
-							<PhrasePopupBody phrase={phrase} />
-						) : token ? (
-							isLoading || !data ? (
-								<div className="flex flex-col items-center justify-center gap-2 p-6">
-									<div className="size-[18px] animate-spin rounded-full border-2 border-surf-3 border-t-acc" />
-									<div className="text-[12px] text-t-3">
-										{t("reader.popup.loading")}
+			{isVisible &&
+				createPortal(
+					<>
+						<div
+							className="fixed inset-0 z-199"
+							onClick={handleBackdropClick}
+							aria-hidden="true"
+						/>
+						<div
+							ref={popupRef}
+							role="dialog"
+							aria-label={token?.original ?? phrase?.phrase.original}
+							className="fixed z-200 w-[264px] overflow-hidden rounded-card border-[0.5px] border-bd-2 bg-surf shadow-lg"
+							style={{ left: position.left, top: position.top }}
+						>
+							{phrase ? (
+								<PhrasePopupBody phrase={phrase} />
+							) : token ? (
+								isLoading || !data ? (
+									<div className="flex flex-col items-center justify-center gap-2 p-6">
+										<div className="size-[18px] animate-spin rounded-full border-2 border-surf-3 border-t-acc" />
+										<div className="text-[12px] text-t-3">
+											{t("reader.popup.loading")}
+										</div>
 									</div>
-								</div>
-							) : data.translation ? (
-								<WordPopupBody
-									token={token}
-									lookup={data}
-									onOpenInPanel={() => openInPanel(token)}
-									onSuggestOpen={() => handleSuggestOpen(token.normalized, token.original, data.translation ?? "")}
-								/>
-							) : (
-								<AiWordPopupBody
-									word={token.original}
-									normalized={token.normalized}
-									contextSentence={contextSentence}
-									lang={lang}
-								/>
-							)
-						) : null}
-					</div>
-				</>,
-				document.body,
-			)}
+								) : data.translation ? (
+									<WordPopupBody
+										token={token}
+										lookup={data}
+										onOpenInPanel={() => openInPanel(token)}
+										onSuggestOpen={() =>
+											handleSuggestOpen(
+												token.normalized,
+												token.original,
+												data.translation ?? "",
+											)
+										}
+									/>
+								) : (
+									<AiWordPopupBody
+										word={token.original}
+										normalized={token.normalized}
+										contextSentence={contextSentence}
+										lang={lang}
+									/>
+								)
+							) : null}
+						</div>
+					</>,
+					document.body,
+				)}
 			{suggestWord && (
 				<EntrySuggestModal
 					open={suggestOpen}

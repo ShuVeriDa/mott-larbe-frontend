@@ -24,7 +24,7 @@ export const SensesSection = ({ senses }: SensesSectionProps) => {
 					{senses.map((sense, idx) => (
 						<li
 							key={sense.id}
-							className="border-b border-hairline border-bd-1 py-2.5 first:pt-0 last:border-b-0 last:pb-0"
+							className="border-b border-[0.5px] border-bd-1 py-2.5 first:pt-0 last:border-b-0 last:pb-0"
 						>
 							<div className="mb-1 text-[10px] font-bold text-t-4">
 								{idx + 1}
@@ -39,16 +39,25 @@ export const SensesSection = ({ senses }: SensesSectionProps) => {
 											key={ex.id}
 											className="rounded-base border-l-2 border-bd-2 bg-surf-2 px-2.5 py-2"
 										>
-											<Typography tag="p" className="mb-0.5 text-[13px] italic leading-[1.55] text-t-1 max-md:text-[12.5px]">
+											<Typography
+												tag="p"
+												className="mb-0.5 text-[13px] italic leading-[1.55] text-t-1 max-md:text-[12.5px]"
+											>
 												«{ex.text}»
 											</Typography>
 											{ex.translation ? (
-												<Typography tag="p" className="text-[12px] leading-[1.45] text-t-3">
+												<Typography
+													tag="p"
+													className="text-[12px] leading-[1.45] text-t-3"
+												>
 													{ex.translation}
 												</Typography>
 											) : null}
 											{ex.origin ? (
-												<Typography tag="p" className="mt-[3px] text-[11px] text-t-4">
+												<Typography
+													tag="p"
+													className="mt-[3px] text-[11px] text-t-4"
+												>
 													{ex.origin}
 												</Typography>
 											) : null}

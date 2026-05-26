@@ -1,9 +1,9 @@
 "use client";
-import { type ReactNode } from 'react';
 import type { StatsDelta, StatsHeader } from "@/entities/statistics";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { type ReactNode } from "react";
 
 interface KpiGridProps {
 	header: StatsHeader;
@@ -49,7 +49,7 @@ const KpiCard = ({ label, value, delta, tone, icon }: KpiCardProps) => {
 				: "text-red";
 
 	return (
-		<div className="rounded-card border-hairline border-bd-1 bg-surf p-3.5 transition-colors hover:border-bd-2 hover:shadow-sm">
+		<div className="rounded-card border-[0.5px] border-bd-1 bg-surf p-3.5 transition-colors hover:border-bd-2 hover:shadow-sm">
 			<div
 				className={cn(
 					"mb-2.5 flex size-7 items-center justify-center rounded-base",
@@ -141,8 +141,8 @@ export const KpiGrid = ({ header }: KpiGridProps) => {
 			label: t("statistics.kpi.reading"),
 			value: formatReadingTime(
 				header.readingTimeMinutes.total,
-				(n) => t("statistics.kpi.hoursShort", { n }),
-				(n) => t("statistics.kpi.minutesShort", { n }),
+				n => t("statistics.kpi.hoursShort", { n }),
+				n => t("statistics.kpi.minutesShort", { n }),
 			),
 			delta: header.readingTimeMinutes,
 			tone: "grn",
@@ -202,7 +202,7 @@ export const KpiGrid = ({ header }: KpiGridProps) => {
 			aria-label={t("statistics.pageTitle")}
 			className="grid grid-cols-4 gap-2 max-md:grid-cols-2"
 		>
-			{items.map((item) => (
+			{items.map(item => (
 				<KpiCard key={item.label} {...item} />
 			))}
 		</section>

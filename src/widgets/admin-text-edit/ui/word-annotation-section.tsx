@@ -62,7 +62,7 @@ export const WordAnnotationSection = () => {
 			</div>
 
 			{showResults && (
-				<div className="mb-2 max-h-[160px] overflow-y-auto rounded-base border border-hairline border-bd-1">
+				<div className="mb-2 max-h-[160px] overflow-y-auto rounded-base border border-[0.5px] border-bd-1">
 					{isSearching ? (
 						<div className="flex items-center justify-center py-4">
 							<div className="size-4 animate-spin rounded-full border-2 border-surf-3 border-t-acc" />
@@ -89,7 +89,11 @@ export const WordAnnotationSection = () => {
 			<Button
 				disabled={!canSave}
 				onClick={handleSave}
-				title={isPending ? t("admin.texts.editPage.wordAnnotation.saving") : t("admin.texts.editPage.wordAnnotation.save")}
+				title={
+					isPending
+						? t("admin.texts.editPage.wordAnnotation.saving")
+						: t("admin.texts.editPage.wordAnnotation.save")
+				}
 				className="flex w-full items-center justify-center rounded-base bg-acc px-3 py-[7px] text-[11.5px] font-medium text-white transition-opacity hover:opacity-80 disabled:opacity-40"
 			>
 				{isPending

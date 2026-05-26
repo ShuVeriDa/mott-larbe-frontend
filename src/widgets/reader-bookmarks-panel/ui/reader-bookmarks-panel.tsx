@@ -1,6 +1,10 @@
 "use client";
 
-import { usePageBookmarks, useRemovePageBookmark, type PageBookmark } from "@/entities/page-bookmark";
+import {
+	usePageBookmarks,
+	useRemovePageBookmark,
+	type PageBookmark,
+} from "@/entities/page-bookmark";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
@@ -10,7 +14,7 @@ import {
 } from "@/shared/ui/reader-mobile-sheet-header";
 import { Typography } from "@/shared/ui/typography";
 import { Bookmark, Trash2, X } from "lucide-react";
-import { type MouseEvent, useEffect } from "react";
+import { useEffect, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
 
 export interface ReaderBookmarksPanelProps {
@@ -49,24 +53,29 @@ const BookmarksPanelBody = ({
 		onClose();
 	};
 
-	const makeHandleDelete = (bookmark: PageBookmark) => (e: MouseEvent<HTMLButtonElement>) => {
-		e.stopPropagation();
-		removeBookmark(bookmark.id);
-	};
+	const makeHandleDelete =
+		(bookmark: PageBookmark) => (e: MouseEvent<HTMLButtonElement>) => {
+			e.stopPropagation();
+			removeBookmark(bookmark.id);
+		};
 
 	return (
 		<div className="flex min-h-0 flex-1 flex-col gap-3">
 			{isLoading && (
-				<Typography className="text-[12px] text-t-4">{t("reader.bookmarks.loading")}</Typography>
+				<Typography className="text-[12px] text-t-4">
+					{t("reader.bookmarks.loading")}
+				</Typography>
 			)}
 			{!isLoading && bookmarks.length === 0 && (
 				<div className="flex flex-col items-center gap-2 py-6 text-center">
 					<Bookmark className="size-8 text-t-4" strokeWidth={1.2} />
-					<Typography className="text-[13px] text-t-3">{t("reader.bookmarks.empty")}</Typography>
+					<Typography className="text-[13px] text-t-3">
+						{t("reader.bookmarks.empty")}
+					</Typography>
 				</div>
 			)}
 			<div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto">
-				{bookmarks.map((bookmark) => (
+				{bookmarks.map(bookmark => (
 					<div
 						key={bookmark.id}
 						className="group flex cursor-pointer items-start gap-2 rounded-[8px] border border-bd-1 bg-surf-2 px-3 py-2.5 transition-colors hover:bg-surf-3"
@@ -77,7 +86,9 @@ const BookmarksPanelBody = ({
 								{t("reader.toc.page")} {bookmark.pageNumber}
 							</Typography>
 							{bookmark.snippet && (
-								<Typography className="line-clamp-2 text-[12px] text-t-2">{bookmark.snippet}</Typography>
+								<Typography className="line-clamp-2 text-[12px] text-t-2">
+									{bookmark.snippet}
+								</Typography>
 							)}
 						</div>
 						<Button
@@ -100,7 +111,7 @@ const BookmarksChromeHeader = ({ onClose }: { onClose: () => void }) => {
 	const handleClose = () => onClose();
 
 	return (
-		<div className="flex shrink-0 items-center justify-between border-b border-hairline border-bd-1 px-3.5 py-2.5">
+		<div className="flex shrink-0 items-center justify-between border-b border-[0.5px] border-bd-1 px-3.5 py-2.5">
 			<Typography
 				tag="span"
 				className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
@@ -131,13 +142,17 @@ export const ReaderBookmarksAside = ({
 			aria-hidden={!open}
 			className={cn(
 				"flex shrink-0 flex-col overflow-hidden bg-surf max-md:hidden",
-				"border-l border-hairline transition-[border-color] duration-200",
+				"border-l border-[0.5px] transition-[border-color] duration-200",
 				open ? "w-[296px] border-bd-1" : "w-0 min-w-0 border-l-transparent",
 			)}
 		>
 			<BookmarksChromeHeader onClose={onClose} />
 			<div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 py-3">
-				<BookmarksPanelBody textId={textId} onNavigate={onNavigate} onClose={onClose} />
+				<BookmarksPanelBody
+					textId={textId}
+					onNavigate={onNavigate}
+					onClose={onClose}
+				/>
 			</div>
 		</aside>
 	);
@@ -153,7 +168,8 @@ export const ReaderBookmarksSheet = ({
 	useEscapeToClose(open, onClose);
 
 	const handleBackdropClick = () => onClose();
-	const handleSheetClick = (e: MouseEvent<HTMLDivElement>) => e.stopPropagation();
+	const handleSheetClick = (e: MouseEvent<HTMLDivElement>) =>
+		e.stopPropagation();
 
 	if (!open || typeof window === "undefined") return null;
 
@@ -176,7 +192,11 @@ export const ReaderBookmarksSheet = ({
 					onClose={onClose}
 				/>
 				<div className="min-h-0 flex-1 overflow-y-auto p-4">
-					<BookmarksPanelBody textId={textId} onNavigate={onNavigate} onClose={onClose} />
+					<BookmarksPanelBody
+						textId={textId}
+						onNavigate={onNavigate}
+						onClose={onClose}
+					/>
 				</div>
 			</div>
 		</div>,

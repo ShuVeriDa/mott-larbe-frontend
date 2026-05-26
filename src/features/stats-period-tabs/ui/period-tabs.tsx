@@ -2,10 +2,10 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
+import type { StatsPeriod } from "@/entities/statistics";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import type { StatsPeriod } from "@/entities/statistics";
+import { ComponentProps } from "react";
 
 const PERIODS: StatsPeriod[] = ["week", "month", "year", "all"];
 
@@ -23,14 +23,16 @@ export const PeriodTabs = ({ value, onChange, className }: PeriodTabsProps) => {
 			role="tablist"
 			aria-label={t("statistics.pageTitle")}
 			className={cn(
-				"flex gap-0.5 rounded-lg border-hairline border-bd-2 bg-surf-2 p-[3px] max-md:w-full",
+				"flex gap-0.5 rounded-lg border-[0.5px] border-bd-2 bg-surf-2 p-[3px] max-md:w-full",
 				className,
 			)}
 		>
-			{PERIODS.map((period) => {
+			{PERIODS.map(period => {
 				const active = value === period;
-								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(period);
-return (
+				const handleClick: NonNullable<
+					ComponentProps<"button">["onClick"]
+				> = () => onChange(period);
+				return (
 					<Button
 						key={period}
 						role="tab"
@@ -39,9 +41,7 @@ return (
 						title={t(`statistics.period.${period}`)}
 						className={cn(
 							"rounded-md px-3 py-1 text-xs font-medium transition-colors duration-100 max-md:flex-1",
-							active
-								? "bg-surf text-t-1 shadow-sm"
-								: "text-t-2 hover:text-t-1",
+							active ? "bg-surf text-t-1 shadow-sm" : "text-t-2 hover:text-t-1",
 						)}
 					>
 						{t(`statistics.period.${period}`)}

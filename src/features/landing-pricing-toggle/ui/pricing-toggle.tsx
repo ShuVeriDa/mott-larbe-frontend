@@ -2,10 +2,10 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { ComponentProps } from "react";
 import type { BillingPeriod } from "../model";
 
 interface PricingToggleProps {
@@ -16,10 +16,12 @@ interface PricingToggleProps {
 export const PricingToggle = ({ value, onChange }: PricingToggleProps) => {
 	const { t } = useI18n();
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange("monthly");
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange("yearly");
-return (
-		<div className="mx-auto mt-[22px] inline-flex items-center gap-1 rounded-full border-hairline border-bd-2 bg-surf p-1">
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		onChange("monthly");
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		onChange("yearly");
+	return (
+		<div className="mx-auto mt-[22px] inline-flex items-center gap-1 rounded-full border-[0.5px] border-bd-2 bg-surf p-1">
 			<Button
 				variant="bare"
 				size={null}

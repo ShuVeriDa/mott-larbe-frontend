@@ -10,15 +10,17 @@ import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import type { WordAnnotationClickDetail } from "@/shared/ui/notion-editor";
 import { WORD_ANNOTATION_CLICK_EVENT } from "@/shared/ui/notion-editor";
-import { Link2, Pencil, Trash2, X } from "lucide-react";
 import { Typography } from "@/shared/ui/typography";
+import { Link2, Pencil, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { WordAnnotationEditorPopup } from "./word-annotation-editor-popup";
 
-export const WORD_ANNOTATIONS_PANEL_EVENT = "admin:toggle-word-annotations-panel";
+export const WORD_ANNOTATIONS_PANEL_EVENT =
+	"admin:toggle-word-annotations-panel";
 export const WORD_ANNOTATION_DELETE_EVENT = "admin:delete-word-annotation";
-export const WORD_ANNOTATION_EDIT_FORM_EVENT = "admin:edit-word-annotation-form";
+export const WORD_ANNOTATION_EDIT_FORM_EVENT =
+	"admin:edit-word-annotation-form";
 
 interface WordAnnotationsPanelProps {
 	textId: string;
@@ -54,11 +56,15 @@ const AnnotationItem = ({ form, onEdit, onDelete }: AnnotationItemProps) => {
 	const handleDelete = () => onDelete(form);
 
 	return (
-		<div className="group relative rounded-lg border-hairline border-bd-1 bg-surf-2 p-3 transition-colors hover:border-bd-2">
+		<div className="group relative rounded-lg border-[0.5px] border-bd-1 bg-surf-2 p-3 transition-colors hover:border-bd-2">
 			<div className="mb-1 flex items-start justify-between gap-2">
 				<div className="min-w-0">
-					<Typography tag="span" className="text-[13px] font-semibold text-t-1">{form.normalized}</Typography>
-					<Typography tag="span" className="ml-1.5 text-[11px] text-t-3">→ {form.lemmaBaseForm}</Typography>
+					<Typography tag="span" className="text-[13px] font-semibold text-t-1">
+						{form.normalized}
+					</Typography>
+					<Typography tag="span" className="ml-1.5 text-[11px] text-t-3">
+						→ {form.lemmaBaseForm}
+					</Typography>
 				</div>
 				<div className="flex shrink-0 items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
 					<Button
@@ -86,12 +92,20 @@ const AnnotationItem = ({ form, onEdit, onDelete }: AnnotationItemProps) => {
 
 // ── Main panel ────────────────────────────────────────────────────────────────
 
-export const WordAnnotationsPanel = ({ textId, pageNumber }: WordAnnotationsPanelProps) => {
+export const WordAnnotationsPanel = ({
+	textId,
+	pageNumber,
+}: WordAnnotationsPanelProps) => {
 	const { t } = useI18n();
 	const [isOpen, setIsOpen] = useState(false);
-	const [editingForm, setEditingForm] = useState<AnnotatedFormOnPage | null>(null);
-	const [batchDeleteTarget, setBatchDeleteTarget] = useState<AnnotatedFormOnPage | null>(null);
-	const [deleteInitialTokenId, setDeleteInitialTokenId] = useState<string | undefined>(undefined);
+	const [editingForm, setEditingForm] = useState<AnnotatedFormOnPage | null>(
+		null,
+	);
+	const [batchDeleteTarget, setBatchDeleteTarget] =
+		useState<AnnotatedFormOnPage | null>(null);
+	const [deleteInitialTokenId, setDeleteInitialTokenId] = useState<
+		string | undefined
+	>(undefined);
 	const [popup, setPopup] = useState<PopupState | null>(null);
 
 	const { data: allForms = [] } = useAnnotatedFormsByPage(textId, pageNumber);
@@ -109,10 +123,18 @@ export const WordAnnotationsPanel = ({ textId, pageNumber }: WordAnnotationsPane
 		const handleToggle = () => setIsOpen(v => !v);
 
 		const handleClick = (e: Event) => {
-			const { normalized, tokenId, isAnnotated, x, y } = (e as CustomEvent<WordAnnotationClickDetail>).detail;
+			const { normalized, tokenId, isAnnotated, x, y } = (
+				e as CustomEvent<WordAnnotationClickDetail>
+			).detail;
 			const forms = allFormsRef.current;
 			let found = isAnnotated
-				? forms.find(f => f.normalized === normalized && f.pageOccurrences.some(o => o.tokenId === tokenId && o.isAnnotated))
+				? forms.find(
+						f =>
+							f.normalized === normalized &&
+							f.pageOccurrences.some(
+								o => o.tokenId === tokenId && o.isAnnotated,
+							),
+					)
 				: forms.find(f => f.normalized === normalized);
 			if (!found) found = forms.find(f => f.normalized === normalized);
 			if (!found) return;
@@ -120,7 +142,9 @@ export const WordAnnotationsPanel = ({ textId, pageNumber }: WordAnnotationsPane
 		};
 
 		const handleDelete = (e: Event) => {
-			const { normalized, tokenId } = (e as CustomEvent<WordAnnotationDeleteDetail>).detail;
+			const { normalized, tokenId } = (
+				e as CustomEvent<WordAnnotationDeleteDetail>
+			).detail;
 			const form = allFormsRef.current.find(f => f.normalized === normalized);
 			if (form) {
 				setPopup(null);
@@ -143,7 +167,10 @@ export const WordAnnotationsPanel = ({ textId, pageNumber }: WordAnnotationsPane
 			document.removeEventListener(WORD_ANNOTATIONS_PANEL_EVENT, handleToggle);
 			document.removeEventListener(WORD_ANNOTATION_CLICK_EVENT, handleClick);
 			document.removeEventListener(WORD_ANNOTATION_DELETE_EVENT, handleDelete);
-			document.removeEventListener(WORD_ANNOTATION_EDIT_FORM_EVENT, handleEditForm);
+			document.removeEventListener(
+				WORD_ANNOTATION_EDIT_FORM_EVENT,
+				handleEditForm,
+			);
 		};
 	}, []);
 
@@ -165,7 +192,9 @@ export const WordAnnotationsPanel = ({ textId, pageNumber }: WordAnnotationsPane
 		setPopup(null);
 		// Open the annotate dialog for this specific token
 		document.dispatchEvent(
-			new CustomEvent("admin:annotate-token", { detail: { tokenId: popup.tokenId, normalized: popup.form.normalized } }),
+			new CustomEvent("admin:annotate-token", {
+				detail: { tokenId: popup.tokenId, normalized: popup.form.normalized },
+			}),
 		);
 	};
 
@@ -188,18 +217,24 @@ export const WordAnnotationsPanel = ({ textId, pageNumber }: WordAnnotationsPane
 			)}
 
 			<div
-				className={`fixed top-0 right-0 z-200 flex h-full w-[320px] flex-col border-l border-hairline border-bd-2 bg-surf shadow-xl transition-transform duration-250 ${
+				className={`fixed top-0 right-0 z-200 flex h-full w-[320px] flex-col border-l border-[0.5px] border-bd-2 bg-surf shadow-xl transition-transform duration-250 ${
 					isOpen ? "translate-x-0" : "translate-x-full"
 				}`}
 			>
-				<div className="flex items-center justify-between border-b border-hairline border-bd-1 px-4 py-3">
+				<div className="flex items-center justify-between border-b border-[0.5px] border-bd-1 px-4 py-3">
 					<div className="flex items-center gap-2">
 						<Link2 className="size-4 text-acc" strokeWidth={1.6} />
-						<Typography tag="span" className="text-[13.5px] font-semibold text-t-1">
+						<Typography
+							tag="span"
+							className="text-[13.5px] font-semibold text-t-1"
+						>
 							{t("admin.texts.editPage.wordAnnotation.panelTitle")}
 						</Typography>
 						{forms.length > 0 && (
-							<Typography tag="span" className="rounded-full bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2">
+							<Typography
+								tag="span"
+								className="rounded-full bg-surf-3 px-1.5 py-0.5 text-[10px] font-semibold text-t-2"
+							>
 								{forms.length}
 							</Typography>
 						)}

@@ -1,8 +1,8 @@
 "use client";
 
+import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { useI18n } from "@/shared/lib/i18n";
 import { X } from "lucide-react";
 
 export interface ReaderSettingsChromeHeaderProps {
@@ -16,7 +16,7 @@ export const ReaderSettingsChromeHeader = ({
 	const handleCloseClick = () => onClose();
 
 	return (
-		<div className="flex shrink-0 items-center justify-between border-b border-hairline border-bd-1 px-3.5 py-2.5">
+		<div className="flex shrink-0 items-center justify-between border-b border-[0.5px] border-bd-1 px-3.5 py-2.5">
 			<Typography
 				tag="span"
 				className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"

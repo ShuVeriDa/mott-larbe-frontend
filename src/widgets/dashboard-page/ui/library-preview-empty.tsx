@@ -8,7 +8,7 @@ export const LibraryPreviewEmpty = () => {
 	const { t } = useI18n();
 
 	return (
-		<div className="flex h-[400px] flex-col items-center justify-center gap-1.5 rounded-card border border-hairline border-bd-1 bg-surf-2">
+		<div className="flex h-[400px] flex-col items-center justify-center gap-1.5 rounded-card border border-[0.5px] border-bd-1 bg-surf-2">
 			<SlidersHorizontal className="size-4 text-t-3" strokeWidth={1.5} />
 			<Typography tag="span" className="text-[12.5px] font-medium text-t-2">
 				{t("dashboard.library.emptyTitle")}

@@ -35,15 +35,18 @@ export const CancelModal = ({ open, onClose, onSuccess }: CancelModalProps) => {
 			<Typography className="mb-4 text-[12.5px] leading-[1.55] text-t-3">
 				{t("subscription.modal.cancel.subtitle")}
 			</Typography>
-			<ModalActions className="justify-end">
-				<Button variant="ghost" onClick={onClose} disabled={isPending}>
+			<ModalActions>
+				<Button
+					onClick={onClose}
+					disabled={isPending}
+					className="h-[34px] rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
+				>
 					{t("subscription.modal.cancel.keep")}
 				</Button>
 				<Button
-					variant="danger"
 					onClick={handleConfirm}
 					disabled={isPending}
-					className="bg-red text-white border-0 hover:opacity-[0.88]"
+					className="h-[34px] flex-1 rounded-lg bg-red text-[13px] font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					{isPending
 						? t("subscription.modal.cancel.submitting")

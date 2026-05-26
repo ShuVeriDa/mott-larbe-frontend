@@ -1,27 +1,32 @@
 "use client";
 
-import Link from "next/link";
-import { ChevronLeft, Plus } from "lucide-react";
+import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { useI18n } from "@/shared/lib/i18n";
+import { ChevronLeft, Plus } from "lucide-react";
+import Link from "next/link";
 
 export interface FoldersTopbarProps {
 	onCreate: () => void;
 	createDisabled?: boolean;
 }
 
-export const FoldersTopbar = ({ onCreate, createDisabled }: FoldersTopbarProps) => {
+export const FoldersTopbar = ({
+	onCreate,
+	createDisabled,
+}: FoldersTopbarProps) => {
 	const { t, lang } = useI18n();
 
 	return (
-		<header className="flex shrink-0 items-center gap-2.5 border-hairline border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
+		<header className="flex shrink-0 items-center gap-2.5 border-[0.5px] border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
 			<Link
 				href={`/${lang}/vocabulary`}
 				className="flex items-center gap-1 text-[12.5px] text-t-3 transition-colors hover:text-t-1"
 			>
 				<ChevronLeft className="size-3" strokeWidth={1.6} />
-				<Typography tag="span">{t("vocabulary.foldersPage.breadcrumb.vocabulary")}</Typography>
+				<Typography tag="span">
+					{t("vocabulary.foldersPage.breadcrumb.vocabulary")}
+				</Typography>
 			</Link>
 			<Typography tag="span" aria-hidden className="text-[12px] text-t-4">
 				·

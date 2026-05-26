@@ -1,11 +1,8 @@
 "use client";
 
+import type { ReviewLatestContext, ReviewMorphForm } from "@/entities/review";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
-import type {
-	ReviewLatestContext,
-	ReviewMorphForm,
-} from "@/entities/review";
 
 export interface FlashcardBackProps {
 	word: string;
@@ -45,7 +42,7 @@ export const FlashcardBack = ({
 			</div>
 
 			{context ? (
-				<div className="w-full rounded-base border-hairline border-bd-1 bg-surf-2 px-3 py-2 mb-2">
+				<div className="w-full rounded-base border-[0.5px] border-bd-1 bg-surf-2 px-3 py-2 mb-2">
 					<Typography className="mb-1 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
 						{label}
 					</Typography>
@@ -57,10 +54,11 @@ export const FlashcardBack = ({
 
 			{morphForms.length > 0 ? (
 				<div className="flex w-full flex-wrap gap-1 mb-1">
-					{morphForms.slice(0, 8).map((form) => (
-						<Typography tag="span"
+					{morphForms.slice(0, 8).map(form => (
+						<Typography
+							tag="span"
 							key={`${form.form}-${form.grammarTag ?? ""}`}
-							className="rounded-[4px] border-hairline border-bd-2 bg-surf-3 px-1.5 py-0.5 text-[11px] text-t-2"
+							className="rounded-[4px] border-[0.5px] border-bd-2 bg-surf-3 px-1.5 py-0.5 text-[11px] text-t-2"
 							title={form.grammarTag ?? undefined}
 						>
 							{form.form}

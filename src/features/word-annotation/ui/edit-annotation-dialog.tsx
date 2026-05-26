@@ -9,12 +9,14 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/shared/ui/dialog";
-import { Input } from "@/shared/ui/input";
-import { InputLabel } from "@/shared/ui/input";
+import { Input, InputLabel } from "@/shared/ui/input";
 import type { ChangeEvent } from "react";
 import { useEffect, useState } from "react";
 import type { AnnotatedFormOnPage, LemmaSearchResult } from "../api/types";
-import { useDeleteMorphForm, useUpdateMorphForm } from "../model/use-annotated-forms-by-page";
+import {
+	useDeleteMorphForm,
+	useUpdateMorphForm,
+} from "../model/use-annotated-forms-by-page";
 import { useBatchAnnotate } from "../model/use-batch-annotate";
 import { useLemmaSearch } from "../model/use-lemma-search";
 import { useUnannotateTokens } from "../model/use-unannotate-tokens";
@@ -49,27 +51,44 @@ export const EditAnnotationDialog = ({
 
 	const [translation, setTranslation] = useState(form.translation ?? "");
 	const [lemmaQuery, setLemmaQuery] = useState(form.lemmaBaseForm);
-	const [selectedLemma, setSelectedLemma] = useState<LemmaSearchResult>(makeInitialLemma(form));
+	const [selectedLemma, setSelectedLemma] = useState<LemmaSearchResult>(
+		makeInitialLemma(form),
+	);
 	// deselected = tokenIds the user has unchecked (starts empty = all checked)
 	const [deselected, setDeselected] = useState<Set<string>>(new Set());
 	// initiallyUnannotated = tokenIds that were NOT annotated when dialog opened (needed to detect newly selected)
-	const [initiallyUnannotated, setInitiallyUnannotated] = useState<Set<string>>(new Set());
+	const [initiallyUnannotated, setInitiallyUnannotated] = useState<Set<string>>(
+		new Set(),
+	);
 
-	const { data: results = [], isLoading: isSearching } = useLemmaSearch(lemmaQuery);
+	const { data: results = [], isLoading: isSearching } =
+		useLemmaSearch(lemmaQuery);
 
-	const { mutate: updateMorphForm, isPending: isUpdating } = useUpdateMorphForm(textId, pageNumber);
-	const { mutate: batchAnnotate, isPending: isBatchAnnotating } = useBatchAnnotate(textId);
-	const { mutate: deleteMorphForm, isPending: isDeleting } = useDeleteMorphForm(textId, pageNumber);
-	const { mutate: unannotateTokens, isPending: isUnannotating } = useUnannotateTokens(textId);
+	const { mutate: updateMorphForm, isPending: isUpdating } = useUpdateMorphForm(
+		textId,
+		pageNumber,
+	);
+	const { mutate: batchAnnotate, isPending: isBatchAnnotating } =
+		useBatchAnnotate(textId);
+	const { mutate: deleteMorphForm, isPending: isDeleting } = useDeleteMorphForm(
+		textId,
+		pageNumber,
+	);
+	const { mutate: unannotateTokens, isPending: isUnannotating } =
+		useUnannotateTokens(textId);
 
-	const isPending = isUpdating || isBatchAnnotating || isDeleting || isUnannotating;
+	const isPending =
+		isUpdating || isBatchAnnotating || isDeleting || isUnannotating;
 	const lemmaChanged = selectedLemma.id !== form.lemmaId;
 
 	// allOccurrences is the single source of truth — lemma-specific isAnnotated, with before/after context
 	const occurrences = form.allOccurrences;
-	const selectedIds = occurrences.filter(o => !deselected.has(o.tokenId)).map(o => o.tokenId);
+	const selectedIds = occurrences
+		.filter(o => !deselected.has(o.tokenId))
+		.map(o => o.tokenId);
 	const selectedCount = selectedIds.length;
-	const allChecked = occurrences.length > 0 && selectedCount === occurrences.length;
+	const allChecked =
+		occurrences.length > 0 && selectedCount === occurrences.length;
 	const someChecked = selectedCount > 0 && selectedCount < occurrences.length;
 
 	const canSave = selectedCount > 0;
@@ -81,7 +100,9 @@ export const EditAnnotationDialog = ({
 			setTranslation(form.translation ?? "");
 			setLemmaQuery(form.lemmaBaseForm);
 			setSelectedLemma(makeInitialLemma(form));
-			const unannotated = new Set(form.allOccurrences.filter(o => !o.isAnnotated).map(o => o.tokenId));
+			const unannotated = new Set(
+				form.allOccurrences.filter(o => !o.isAnnotated).map(o => o.tokenId),
+			);
 			setDeselected(unannotated);
 			setInitiallyUnannotated(new Set(unannotated));
 		}
@@ -127,7 +148,8 @@ export const EditAnnotationDialog = ({
 			success(t("admin.texts.editPage.wordAnnotation.updateSuccess"));
 			handleOpenChange(false);
 		};
-		const onErr = () => toastError(t("admin.texts.editPage.wordAnnotation.error"));
+		const onErr = () =>
+			toastError(t("admin.texts.editPage.wordAnnotation.error"));
 
 		if (lemmaChanged) {
 			// Lemma changed: unannotate all current tokens, then re-annotate selected with new lemma
@@ -172,7 +194,10 @@ export const EditAnnotationDialog = ({
 				.map(o => o.tokenId);
 			// Tokens that were unannotated on open but are now checked = newly selected
 			const newlySelectedIds = occurrences
-				.filter(o => initiallyUnannotated.has(o.tokenId) && !deselected.has(o.tokenId))
+				.filter(
+					o =>
+						initiallyUnannotated.has(o.tokenId) && !deselected.has(o.tokenId),
+				)
 				.map(o => o.tokenId);
 
 			const doAnnotateNew = (afterDone: () => void) => {
@@ -205,9 +230,15 @@ export const EditAnnotationDialog = ({
 			if (deselectedIds.length > 0 && selectedCount === 0) {
 				// All tokens deselected = remove all annotations
 				if (form.hasMorphForm) {
-					deleteMorphForm(form.morphFormId, { onSuccess: onDone, onError: onErr });
+					deleteMorphForm(form.morphFormId, {
+						onSuccess: onDone,
+						onError: onErr,
+					});
 				} else {
-					unannotateTokens({ tokenIds: deselectedIds }, { onSuccess: onDone, onError: onErr });
+					unannotateTokens(
+						{ tokenIds: deselectedIds },
+						{ onSuccess: onDone, onError: onErr },
+					);
 				}
 			} else if (deselectedIds.length > 0) {
 				// Some tokens deselected: unannotate them, then annotate new ones, then update translation
@@ -233,39 +264,54 @@ export const EditAnnotationDialog = ({
 	const saveLabel = isPending
 		? "…"
 		: lemmaChanged
-			? t("admin.texts.editPage.wordAnnotation.saveTokens", { count: String(selectedCount) })
+			? t("admin.texts.editPage.wordAnnotation.saveTokens", {
+					count: String(selectedCount),
+				})
 			: t("admin.texts.editPage.wordAnnotation.save");
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
-			<DialogContent aria-describedby={undefined} className="max-w-lg gap-0 p-0">
+			<DialogContent
+				aria-describedby={undefined}
+				className="max-w-lg gap-0 p-0"
+			>
 				<DialogHeader className="px-5 pt-5 pb-4">
-					<DialogTitle>{t("admin.texts.editPage.wordAnnotation.editTitle")}</DialogTitle>
+					<DialogTitle>
+						{t("admin.texts.editPage.wordAnnotation.editTitle")}
+					</DialogTitle>
 				</DialogHeader>
 
-				<div className="space-y-3 border-t border-hairline border-bd-1 px-5 py-4">
+				<div className="space-y-3 border-t border-[0.5px] border-bd-1 px-5 py-4">
 					<div>
-						<InputLabel>{t("admin.texts.editPage.wordAnnotation.wordFormLabel")}</InputLabel>
-						<div className="rounded-base border-hairline border-bd-2 bg-surf-2 px-[10px] py-[7px] text-[13px] text-t-2 select-none">
+						<InputLabel>
+							{t("admin.texts.editPage.wordAnnotation.wordFormLabel")}
+						</InputLabel>
+						<div className="rounded-base border-[0.5px] border-bd-2 bg-surf-2 px-[10px] py-[7px] text-[13px] text-t-2 select-none">
 							{form.normalized}
 						</div>
 					</div>
 					<div>
 						<InputLabel htmlFor="edit-annotation-translation">
-							{t("admin.texts.editPage.wordAnnotation.formTranslationPlaceholder")}
+							{t(
+								"admin.texts.editPage.wordAnnotation.formTranslationPlaceholder",
+							)}
 						</InputLabel>
 						<Input
 							id="edit-annotation-translation"
 							value={translation}
 							onChange={handleTranslationChange}
-							placeholder={t("admin.texts.editPage.wordAnnotation.formTranslationPlaceholder")}
+							placeholder={t(
+								"admin.texts.editPage.wordAnnotation.formTranslationPlaceholder",
+							)}
 						/>
 					</div>
 				</div>
 
-				<div className="border-t border-hairline border-bd-1">
+				<div className="border-t border-[0.5px] border-bd-1">
 					<div className="px-5 pt-3 pb-1">
-						<InputLabel>{t("admin.texts.editPage.wordAnnotation.lemmaLabel")}</InputLabel>
+						<InputLabel>
+							{t("admin.texts.editPage.wordAnnotation.lemmaLabel")}
+						</InputLabel>
 					</div>
 					<LemmaSearchSection
 						query={lemmaQuery}
@@ -288,12 +334,12 @@ export const EditAnnotationDialog = ({
 					onToggleAll={handleToggleAll}
 				/>
 
-				<div className="flex gap-2 border-t border-hairline border-bd-1 px-5 py-4">
+				<div className="flex gap-2 border-t border-[0.5px] border-bd-1 px-5 py-4">
 					<Button
 						size="bare"
 						title={t("reader.annotate.cancel")}
 						onClick={handleCancel}
-						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-hairline border-bd-2 bg-surf-2 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
+						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-[0.5px] border-bd-2 bg-surf-2 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
 					>
 						{t("reader.annotate.cancel")}
 					</Button>

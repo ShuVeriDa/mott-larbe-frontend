@@ -18,7 +18,7 @@ export const ToggleRow = ({
 	disabled,
 	onChange,
 }: ToggleRowProps) => (
-	<div className="flex items-start justify-between gap-4 border-hairline border-b border-bd-1 px-4 py-3 last:border-b-0">
+	<div className="flex items-start justify-between gap-4 border-[0.5px] border-b border-bd-1 px-4 py-3 last:border-b-0">
 		<div className="min-w-0 flex-1">
 			<Typography tag="p" className="text-[13px] font-medium text-t-1">
 				{label}

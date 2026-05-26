@@ -21,9 +21,10 @@ export const Sm2Card = ({ sm2, reviewHistory }: Sm2CardProps) => {
 		return (
 			<section
 				aria-labelledby="sm2-card-title"
-				className="mb-3.5 rounded-card border-hairline border-bd-1 bg-surf p-4"
+				className="mb-3.5 rounded-card border-[0.5px] border-bd-1 bg-surf p-4"
 			>
-				<Typography tag="h3"
+				<Typography
+					tag="h3"
 					id="sm2-card-title"
 					className="mb-3 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
 				>
@@ -37,7 +38,10 @@ export const Sm2Card = ({ sm2, reviewHistory }: Sm2CardProps) => {
 	}
 
 	const target = Math.max(sm2.targetRepetitions, 1);
-	const fillPercent = Math.min(100, Math.round((sm2.repetitions / target) * 100));
+	const fillPercent = Math.min(
+		100,
+		Math.round((sm2.repetitions / target) * 100),
+	);
 	const intervalLabel =
 		sm2.interval === 1
 			? t("vocabulary.wordDetail.sm2.intervalDay", { n: sm2.interval })
@@ -46,9 +50,10 @@ export const Sm2Card = ({ sm2, reviewHistory }: Sm2CardProps) => {
 	return (
 		<section
 			aria-labelledby="sm2-card-title"
-			className="mb-3.5 rounded-card border-hairline border-bd-1 bg-surf p-4"
+			className="mb-3.5 rounded-card border-[0.5px] border-bd-1 bg-surf p-4"
 		>
-			<Typography tag="h3"
+			<Typography
+				tag="h3"
 				id="sm2-card-title"
 				className="mb-3 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
 			>

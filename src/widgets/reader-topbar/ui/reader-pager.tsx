@@ -2,14 +2,14 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 const buttonClass = cn(
 	"inline-flex h-7 w-7 items-center justify-center rounded-base",
-	"border-hairline border-bd-1 bg-surf-2 text-t-2",
+	"border-[0.5px] border-bd-1 bg-surf-2 text-t-2",
 	"transition-colors duration-150 hover:border-bd-2 hover:text-t-1",
 	"aria-disabled:opacity-30 aria-disabled:pointer-events-none",
 );
@@ -45,7 +45,10 @@ export const ReaderPager = ({
 			>
 				<ChevronLeft className="size-3" strokeWidth={1.6} />
 			</Link>
-			<Typography tag="span" className="min-w-[42px] px-2 text-center text-[11.5px] font-medium tabular-nums text-t-2">
+			<Typography
+				tag="span"
+				className="min-w-[42px] px-2 text-center text-[11.5px] font-medium tabular-nums text-t-2"
+			>
 				{currentPage} / {totalPages}
 			</Typography>
 			<Link

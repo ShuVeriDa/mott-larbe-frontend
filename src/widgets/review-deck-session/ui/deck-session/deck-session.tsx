@@ -1,27 +1,39 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { useEffect } from 'react';
+import type {
+	DeckCard,
+	DeckDueResponse,
+	DeckRateResult,
+} from "@/entities/deck";
+import { getPrimaryTranslation } from "@/entities/review";
+import { FlipCard } from "@/features/flip-card";
+import {
+	DeckRatingButtons,
+	useAddToRepeat,
+	useReturnFromRepeat,
+} from "@/features/rate-deck-card";
+import type { SessionMode } from "@/features/session-mode";
 import { useI18n } from "@/shared/lib/i18n";
 import { useSwipe } from "@/shared/lib/swipe";
+import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { getPrimaryTranslation } from "@/entities/review";
-import type { DeckCard, DeckDueResponse, DeckRateResult } from "@/entities/deck";
-import { FlipCard } from "@/features/flip-card";
-import { DeckRatingButtons, useAddToRepeat, useReturnFromRepeat } from "@/features/rate-deck-card";
-import type { SessionMode } from "@/features/session-mode";
 import { FlashcardBack } from "@/widgets/review-session";
-import { DeckBadge } from "../deck-badge";
-import { ChoiceCardDeck } from "../choice-card";
-import { TypingCardDeck } from "../typing-card";
+import { useEffect } from "react";
 import { useDeckSession, type DeckCounts } from "../../model";
+import { ChoiceCardDeck } from "../choice-card";
+import { DeckBadge } from "../deck-badge";
+import { TypingCardDeck } from "../typing-card";
 
 export interface DeckSessionProps {
 	due: DeckDueResponse;
 	sessionMode?: SessionMode;
 	onFinish: (counts: DeckCounts, againCards: DeckCard[]) => void;
 	onBack: () => void;
-	onProgress?: (currentIndex: number, total: number, counts: DeckCounts) => void;
+	onProgress?: (
+		currentIndex: number,
+		total: number,
+		counts: DeckCounts,
+	) => void;
 }
 
 const buildDeckOptions = (
@@ -61,7 +73,13 @@ const buildDeckOptions = (
 	return { options: all, correctIndex: all.indexOf(correct) };
 };
 
-export const DeckSession = ({ due, sessionMode = "flashcard", onFinish, onBack, onProgress }: DeckSessionProps) => {
+export const DeckSession = ({
+	due,
+	sessionMode = "flashcard",
+	onFinish,
+	onBack,
+	onProgress,
+}: DeckSessionProps) => {
 	const { t } = useI18n();
 	const session = useDeckSession(due);
 	const {
@@ -79,7 +97,8 @@ export const DeckSession = ({ due, sessionMode = "flashcard", onFinish, onBack, 
 	} = session;
 
 	const { mutate: addToRepeat, isPending: isAddingToRepeat } = useAddToRepeat();
-	const { mutate: returnFromRepeat, isPending: isReturning } = useReturnFromRepeat();
+	const { mutate: returnFromRepeat, isPending: isReturning } =
+		useReturnFromRepeat();
 
 	const { options, correctIndex } = buildDeckOptions(queue, currentIndex);
 
@@ -142,9 +161,11 @@ export const DeckSession = ({ due, sessionMode = "flashcard", onFinish, onBack, 
 
 	const hasTranslation = translation !== "";
 	const hasEnoughOptions = options.length >= 2;
-	const effectiveMode = (sessionMode === "choice" || sessionMode === "typing") && (!hasTranslation || (sessionMode === "choice" && !hasEnoughOptions))
-		? "flashcard"
-		: sessionMode;
+	const effectiveMode =
+		(sessionMode === "choice" || sessionMode === "typing") &&
+		(!hasTranslation || (sessionMode === "choice" && !hasEnoughOptions))
+			? "flashcard"
+			: sessionMode;
 	const isFlashcard = effectiveMode === "flashcard";
 
 	const deckTypeName = (() => {
@@ -239,7 +260,7 @@ export const DeckSession = ({ due, sessionMode = "flashcard", onFinish, onBack, 
 					type="button"
 					onClick={handleMoveToRepeat}
 					disabled={isAddingToRepeat}
-					className="mt-1 flex h-7 items-center gap-1.5 rounded-base border-hairline border-red/30 bg-red-bg px-3 text-[11.5px] font-medium text-red-t transition-opacity disabled:opacity-50"
+					className="mt-1 flex h-7 items-center gap-1.5 rounded-base border-[0.5px] border-red/30 bg-red-bg px-3 text-[11.5px] font-medium text-red-t transition-opacity disabled:opacity-50"
 				>
 					{t("review.deck.card.moveToRepeat")}
 				</button>
@@ -250,7 +271,7 @@ export const DeckSession = ({ due, sessionMode = "flashcard", onFinish, onBack, 
 					type="button"
 					onClick={handleReturnFromRepeat}
 					disabled={isReturning}
-					className="mt-1 flex h-7 items-center gap-1.5 rounded-base border-hairline border-grn/30 bg-grn-bg px-3 text-[11.5px] font-medium text-grn-t transition-opacity disabled:opacity-50"
+					className="mt-1 flex h-7 items-center gap-1.5 rounded-base border-[0.5px] border-grn/30 bg-grn-bg px-3 text-[11.5px] font-medium text-grn-t transition-opacity disabled:opacity-50"
 				>
 					{t("review.deck.card.returnFromRepeat")}
 				</button>
@@ -259,7 +280,7 @@ export const DeckSession = ({ due, sessionMode = "flashcard", onFinish, onBack, 
 			<div className="mt-2.5 flex w-full max-w-[520px] items-center gap-2">
 				<Button
 					onClick={onBack}
-					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-hairline border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
+					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 				>
 					<svg viewBox="0 0 12 12" fill="none" className="size-3">
 						<path
@@ -305,7 +326,10 @@ const DeckCardFront = ({
 			<div className="absolute left-3 top-2.5">
 				<DeckBadge type={type} deckNumber={deckNumber} />
 			</div>
-			<Typography tag="span" className="absolute right-3.5 top-3 text-[10.5px] text-t-3">
+			<Typography
+				tag="span"
+				className="absolute right-3.5 top-3 text-[10.5px] text-t-3"
+			>
 				#{cardNumber}
 			</Typography>
 

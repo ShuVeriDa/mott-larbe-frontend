@@ -104,19 +104,15 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 
 				<ModalActions>
 					<Button
-						variant="ghost"
-						className="flex-1"
-						size="lg"
 						onClick={onClose}
+						className="h-[34px] rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 					>
 						{t("vocabulary.addModal.cancel")}
 					</Button>
 					<Button
 						type="submit"
-						variant="action"
-						size="lg"
-						className="flex-1"
 						disabled={isPending}
+						className="h-[34px] flex-1 rounded-lg bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						{t("vocabulary.addModal.submit")}
 					</Button>

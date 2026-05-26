@@ -2,9 +2,9 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ChevronDown } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
+import { ChevronDown } from "lucide-react";
 
 interface FaqItemProps {
 	question: string;
@@ -23,7 +23,7 @@ export const FaqItem = ({
 }: FaqItemProps) => (
 	<div
 		className={cn(
-			"mb-2.5 overflow-hidden rounded-[11px] border-hairline bg-surf transition-colors",
+			"mb-2.5 overflow-hidden rounded-[11px] border-[0.5px] bg-surf transition-colors",
 			open ? "border-bd-3" : "border-bd-2",
 		)}
 	>
@@ -55,9 +55,7 @@ export const FaqItem = ({
 			aria-labelledby={`${id}-trigger`}
 			className={cn(
 				"grid overflow-hidden text-[14px] leading-[1.6] text-t-2 transition-[grid-template-rows,padding] duration-300 ease-in-out",
-				open
-					? "grid-rows-[1fr] px-5 pb-5"
-					: "grid-rows-[0fr] px-5",
+				open ? "grid-rows-[1fr] px-5 pb-5" : "grid-rows-[0fr] px-5",
 			)}
 		>
 			<div className="min-h-0 overflow-hidden">{answer}</div>

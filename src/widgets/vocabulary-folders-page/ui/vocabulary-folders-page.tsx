@@ -1,13 +1,13 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { ComponentProps, useEffect, useState } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
 import { useFolders, useFoldersSummary, type Folder } from "@/entities/folder";
 import { CreateFolderModal } from "@/features/create-folder";
 import { DeleteFolderModal } from "@/features/delete-folder";
 import { EditFolderModal } from "@/features/update-folder";
+import { useI18n } from "@/shared/lib/i18n";
 import { PremiumUpsellModal } from "@/shared/ui/premium-upsell-modal";
+import { Typography } from "@/shared/ui/typography";
+import { ComponentProps, useEffect, useState } from "react";
 import { FoldersGrid } from "./folders-grid";
 import { FoldersSummary } from "./folders-summary";
 import { FoldersTopbar } from "./folders-topbar";
@@ -51,15 +51,31 @@ export const VocabularyFoldersPage = () => {
 		return t("vocabulary.foldersPage.section.limitUsed", { used, max });
 	})();
 
-		const handleCreate: NonNullable<ComponentProps<typeof FoldersTopbar>["onCreate"]> = () => setCreateOpen(true);
-	const handleCreate2: NonNullable<ComponentProps<typeof FoldersGrid>["onCreate"]> = () => setCreateOpen(true);
-	const handleEdit: NonNullable<ComponentProps<typeof FoldersGrid>["onEdit"]> = (f) => setEditFolder(f);
-	const handleDelete: NonNullable<ComponentProps<typeof FoldersGrid>["onDelete"]> = (f) => setDeleteFolder(f);
-	const handleClose: NonNullable<ComponentProps<typeof CreateFolderModal>["onClose"]> = () => setCreateOpen(false);
-	const handleClose2: NonNullable<ComponentProps<typeof EditFolderModal>["onClose"]> = () => setEditFolder(null);
-	const handleClose3: NonNullable<ComponentProps<typeof DeleteFolderModal>["onClose"]> = () => setDeleteFolder(null);
-	const handleClose4: NonNullable<ComponentProps<typeof PremiumUpsellModal>["onClose"]> = () => setUpsellOpen(false);
-return (
+	const handleCreate: NonNullable<
+		ComponentProps<typeof FoldersTopbar>["onCreate"]
+	> = () => setCreateOpen(true);
+	const handleCreate2: NonNullable<
+		ComponentProps<typeof FoldersGrid>["onCreate"]
+	> = () => setCreateOpen(true);
+	const handleEdit: NonNullable<
+		ComponentProps<typeof FoldersGrid>["onEdit"]
+	> = f => setEditFolder(f);
+	const handleDelete: NonNullable<
+		ComponentProps<typeof FoldersGrid>["onDelete"]
+	> = f => setDeleteFolder(f);
+	const handleClose: NonNullable<
+		ComponentProps<typeof CreateFolderModal>["onClose"]
+	> = () => setCreateOpen(false);
+	const handleClose2: NonNullable<
+		ComponentProps<typeof EditFolderModal>["onClose"]
+	> = () => setEditFolder(null);
+	const handleClose3: NonNullable<
+		ComponentProps<typeof DeleteFolderModal>["onClose"]
+	> = () => setDeleteFolder(null);
+	const handleClose4: NonNullable<
+		ComponentProps<typeof PremiumUpsellModal>["onClose"]
+	> = () => setUpsellOpen(false);
+	return (
 		<>
 			<FoldersTopbar
 				onCreate={handleCreate}
@@ -76,25 +92,28 @@ return (
 
 				<section aria-labelledby="folders-list-heading">
 					<div className="mb-3 flex items-center justify-between gap-3">
-						<Typography tag="h2"
+						<Typography
+							tag="h2"
 							id="folders-list-heading"
 							className="text-[13px] font-semibold text-t-1"
 						>
 							{t("vocabulary.foldersPage.section.title")}
 						</Typography>
 						{limitMessage ? (
-							<Typography tag="span" className="text-[12px] text-t-3">{limitMessage}</Typography>
+							<Typography tag="span" className="text-[12px] text-t-3">
+								{limitMessage}
+							</Typography>
 						) : null}
 					</div>
 
 					{limitReached ? (
-						<div className="mb-3 rounded-card border-hairline border-amb/30 bg-amb-bg px-4 py-2.5 text-[12.5px] text-amb-t">
+						<div className="mb-3 rounded-card border-[0.5px] border-amb/30 bg-amb-bg px-4 py-2.5 text-[12.5px] text-amb-t">
 							{t("vocabulary.foldersPage.limitReached", { max })}
 						</div>
 					) : null}
 
 					{folderCreationDisabled ? (
-						<div className="mb-3 rounded-card border-hairline border-acc/30 bg-acc-bg px-4 py-2.5 text-[12.5px] text-acc-t">
+						<div className="mb-3 rounded-card border-[0.5px] border-acc/30 bg-acc-bg px-4 py-2.5 text-[12.5px] text-acc-t">
 							{t("vocabulary.foldersPage.premiumOnly")}
 						</div>
 					) : null}
@@ -112,9 +131,7 @@ return (
 					<Typography tag="h2" id="folders-uncat-heading" className="sr-only">
 						{t("vocabulary.foldersPage.uncategorized.title")}
 					</Typography>
-					<UncategorizedSection
-						count={summary?.wordsWithoutFolder ?? 0}
-					/>
+					<UncategorizedSection count={summary?.wordsWithoutFolder ?? 0} />
 				</section>
 			</main>
 
@@ -133,10 +150,7 @@ return (
 				folder={deleteFolder}
 				onClose={handleClose3}
 			/>
-			<PremiumUpsellModal
-				open={upsellOpen}
-				onClose={handleClose4}
-			/>
+			<PremiumUpsellModal open={upsellOpen} onClose={handleClose4} />
 		</>
 	);
 };

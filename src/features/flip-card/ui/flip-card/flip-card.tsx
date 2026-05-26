@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import type { ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
+import { Button } from "@/shared/ui/button";
+import type { ReactNode } from "react";
 
 export interface FlipCardProps {
 	flipped: boolean;
@@ -20,10 +20,7 @@ export const FlipCard = ({
 	className,
 }: FlipCardProps) => (
 	<div
-		className={cn(
-			"w-full max-w-[520px] mb-3.5",
-			className,
-		)}
+		className={cn("w-full max-w-[520px] mb-3.5", className)}
 		style={{ perspective: "1000px" }}
 	>
 		<Button
@@ -42,7 +39,7 @@ export const FlipCard = ({
 			<div
 				className={cn(
 					"flip-face absolute inset-0 flex flex-col items-center justify-center",
-					"rounded-hero border-hairline border-bd-2 bg-surf p-7 shadow-md",
+					"rounded-hero border-[0.5px] border-bd-2 bg-surf p-7 shadow-md",
 					"max-md:p-5 min-h-[205px] max-md:min-h-[185px]",
 				)}
 				style={{
@@ -55,7 +52,7 @@ export const FlipCard = ({
 			<div
 				className={cn(
 					"flip-face absolute inset-0 flex flex-col items-start justify-start",
-					"rounded-hero border-hairline border-bd-2 bg-surf px-7 pt-5 pb-7 shadow-md",
+					"rounded-hero border-[0.5px] border-bd-2 bg-surf px-7 pt-5 pb-7 shadow-md",
 					"max-md:px-5 max-md:pt-4 max-md:pb-5 min-h-[205px] max-md:min-h-[185px]",
 				)}
 				style={{

@@ -15,12 +15,12 @@ export const buttonVariants = cva(
 			variant: {
 				action: "bg-acc text-white font-semibold border-0 hover:opacity-[0.88]",
 				ghost:
-					"bg-transparent border-hairline border-bd-2 text-t-2 hover:bg-surf-2 hover:border-bd-3 hover:text-t-1",
+					"bg-transparent border-[0.5px] border-bd-2 text-t-2 hover:bg-surf-2 hover:border-bd-3 hover:text-t-1",
 				outline:
-					"bg-surf border-hairline border-bd-2 text-t-2 hover:bg-surf-2 hover:border-bd-3 hover:text-t-1",
+					"bg-surf border-[0.5px] border-bd-2 text-t-2 hover:bg-surf-2 hover:border-bd-3 hover:text-t-1",
 				save: "bg-grn text-white font-semibold border-0 hover:opacity-[0.88]",
 				danger:
-					"bg-transparent border-hairline border-red/30 text-red font-medium hover:bg-red-bg",
+					"bg-transparent border-[0.5px] border-red/30 text-red font-medium hover:bg-red-bg",
 				bare: "",
 			},
 			size: {

@@ -2,17 +2,22 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { Plus, X } from "lucide-react";
-import type { CSSProperties } from 'react';
+import type { DemoWordEntry } from "@/entities/landing";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
-import type { DemoWordEntry } from "@/entities/landing";
+import { Plus, X } from "lucide-react";
+import type { CSSProperties } from "react";
 
 interface DemoPopupProps {
 	word: string;
 	data: DemoWordEntry;
-	position: { top: number; left: number; arrowX: number; above: boolean } | null;
+	position: {
+		top: number;
+		left: number;
+		arrowX: number;
+		above: boolean;
+	} | null;
 	isMobile: boolean;
 	isAdded: boolean;
 	onAdd: () => void;
@@ -38,7 +43,7 @@ export const DemoPopup = ({
 				top: position.top,
 				left: position.left,
 				["--arrow-x" as string]: `${position.arrowX}px`,
-		  };
+			};
 
 	return (
 		<div
@@ -47,7 +52,7 @@ export const DemoPopup = ({
 			aria-label={word}
 			style={style}
 			className={cn(
-				"absolute z-30 w-[240px] overflow-hidden rounded-[11px] border-hairline border-bd-2 bg-surf shadow-lg",
+				"absolute z-30 w-[240px] overflow-hidden rounded-[11px] border-[0.5px] border-bd-2 bg-surf shadow-lg",
 				"max-[640px]:left-4 max-[640px]:right-4 max-[640px]:w-[calc(100%-32px)] max-[640px]:max-w-[320px]",
 				"before:absolute before:h-3 before:w-3 before:bg-surf",
 				"before:border-l-[0.5px] before:border-t-[0.5px] before:border-bd-2",
@@ -58,7 +63,7 @@ export const DemoPopup = ({
 					: "before:top-[-6px] before:rotate-45",
 			)}
 		>
-			<div className="border-hairline border-b border-bd-1 px-[13px] pb-[9px] pt-[11px]">
+			<div className="border-[0.5px] border-b border-bd-1 px-[13px] pb-[9px] pt-[11px]">
 				<div className="mb-[2px] text-[16px] font-semibold tracking-[-0.2px] text-t-1">
 					{word}
 				</div>
@@ -70,7 +75,7 @@ export const DemoPopup = ({
 					· {data.pos}
 				</div>
 			</div>
-			<div className="border-hairline border-b border-bd-1 px-[13px] py-[9px]">
+			<div className="border-[0.5px] border-b border-bd-1 px-[13px] py-[9px]">
 				<div className="mb-[3px] text-[13.5px] font-medium text-t-1">
 					{data.trans}
 				</div>
@@ -81,8 +86,8 @@ export const DemoPopup = ({
 				) : null}
 			</div>
 			{data.tags.length > 0 ? (
-				<div className="flex flex-wrap gap-1 border-hairline border-b border-bd-1 px-[13px] py-[7px]">
-					{data.tags.map((tag) => (
+				<div className="flex flex-wrap gap-1 border-[0.5px] border-b border-bd-1 px-[13px] py-[7px]">
+					{data.tags.map(tag => (
 						<Typography
 							tag="span"
 							key={tag}
@@ -96,11 +101,13 @@ export const DemoPopup = ({
 			<div className="flex gap-1.5 p-[7px]">
 				<Button
 					onClick={onAdd}
-					title={isAdded ? t("landing.demo.addedBtn") : t("landing.demo.addBtn")}
+					title={
+						isAdded ? t("landing.demo.addedBtn") : t("landing.demo.addBtn")
+					}
 					className={cn(
 						"flex h-7 flex-1 items-center justify-center gap-1 rounded-md border-0 text-[11px] font-semibold transition-opacity",
 						isAdded
-							? "border-hairline border-grn bg-grn-bg text-grn-t"
+							? "border-[0.5px] border-grn bg-grn-bg text-grn-t"
 							: "bg-acc text-white hover:opacity-[0.88]",
 					)}
 				>
@@ -110,7 +117,7 @@ export const DemoPopup = ({
 				<Button
 					onClick={onClose}
 					aria-label={t("landing.nav.close")}
-					className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-hairline border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
+					className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-[0.5px] border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 				>
 					<X size={11} strokeWidth={2} />
 				</Button>

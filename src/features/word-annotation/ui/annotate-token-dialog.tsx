@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { SearchIcon } from "lucide-react";
+import type { TextToken } from "@/entities/text";
+import { useI18n } from "@/shared/lib/i18n";
+import { useToast } from "@/shared/lib/toast";
+import { Button } from "@/shared/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -9,15 +11,13 @@ import {
 	DialogTitle,
 } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
-import { Button } from "@/shared/ui/button";
-import { useI18n } from "@/shared/lib/i18n";
-import { useToast } from "@/shared/lib/toast";
-import type { TextToken } from "@/entities/text";
+import { SearchIcon } from "lucide-react";
+import { useState } from "react";
+import type { AnnotateScope, LemmaSearchResult } from "../api";
 import { useAnnotateToken } from "../model/use-annotate-token";
 import { useLemmaSearch } from "../model/use-lemma-search";
-import type { AnnotateScope, LemmaSearchResult } from "../api";
-import { LemmaResultItem } from "./lemma-result-item";
 import { AnnotationScopeOption } from "./annotation-scope-option";
+import { LemmaResultItem } from "./lemma-result-item";
 
 interface AnnotateTokenDialogProps {
 	token: TextToken;
@@ -89,7 +89,10 @@ export const AnnotateTokenDialog = ({
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
-			<DialogContent aria-describedby={undefined} className="max-w-md gap-4 p-0">
+			<DialogContent
+				aria-describedby={undefined}
+				className="max-w-md gap-4 p-0"
+			>
 				<DialogHeader className="px-5 pt-5 pb-0">
 					<DialogTitle>
 						{t("reader.annotate.title", { word: token.original })}
@@ -109,14 +112,14 @@ export const AnnotateTokenDialog = ({
 					</div>
 				</div>
 
-				<div className="mx-5 max-h-[180px] overflow-y-auto rounded-base border border-hairline border-bd-1">
+				<div className="mx-5 max-h-[180px] overflow-y-auto rounded-base border border-[0.5px] border-bd-1">
 					{isLoading ? (
 						<div className="flex items-center justify-center py-6">
 							<div className="size-4 animate-spin rounded-full border-2 border-surf-3 border-t-acc" />
 						</div>
 					) : results.length > 0 ? (
 						<div className="p-1">
-							{results.map((lemma) => (
+							{results.map(lemma => (
 								<LemmaResultItem
 									key={lemma.id}
 									lemma={lemma}
@@ -160,7 +163,7 @@ export const AnnotateTokenDialog = ({
 						size="bare"
 						title={t("reader.annotate.cancel")}
 						onClick={() => handleOpenChange(false)}
-						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-hairline border-bd-2 bg-surf-2 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
+						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-[0.5px] border-bd-2 bg-surf-2 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
 					>
 						{t("reader.annotate.cancel")}
 					</Button>

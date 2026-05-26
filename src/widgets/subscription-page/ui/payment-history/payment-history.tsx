@@ -1,16 +1,16 @@
 "use client";
 
-import { CreditCard } from "lucide-react";
 import {
 	formatPrice,
 	usePayments,
 	type Payment,
 	type PaymentStatus,
 } from "@/entities/subscription";
-import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
 import { Badge } from "@/shared/ui/badge";
 import { Typography } from "@/shared/ui/typography";
+import { CreditCard } from "lucide-react";
 import { SectionCard } from "../section-card";
 
 const STATUS_BADGE: Record<
@@ -45,7 +45,7 @@ const PaymentRow = ({ payment, lang, tStatus }: PaymentRowProps) => {
 	const interval = payment.subscription?.plan.interval;
 
 	return (
-		<div className="flex items-center gap-2.5 border-hairline border-b border-bd-1 px-4 py-3 transition-colors hover:bg-surf-2 last:border-b-0 max-md:px-3">
+		<div className="flex items-center gap-2.5 border-[0.5px] border-b border-bd-1 px-4 py-3 transition-colors hover:bg-surf-2 last:border-b-0 max-md:px-3">
 			<div
 				className={cn(
 					"flex size-[30px] shrink-0 items-center justify-center rounded-[8px]",
@@ -91,16 +91,10 @@ const EmptyState = () => {
 			<div className="mb-0.5 flex size-9 items-center justify-center rounded-[9px] bg-surf-2">
 				<CreditCard className="size-4 text-t-3" strokeWidth={1.5} />
 			</div>
-			<Typography
-				tag="span"
-				className="text-[12.5px] font-medium text-t-1"
-			>
+			<Typography tag="span" className="text-[12.5px] font-medium text-t-1">
 				{t("subscription.payments.emptyTitle")}
 			</Typography>
-			<Typography
-				tag="span"
-				className="text-[11.5px] leading-[1.5] text-t-3"
-			>
+			<Typography tag="span" className="text-[11.5px] leading-[1.5] text-t-3">
 				{t("subscription.payments.emptyDesc")}
 			</Typography>
 		</div>
@@ -125,7 +119,7 @@ export const PaymentHistory = () => {
 				<EmptyState />
 			) : (
 				<div className="flex flex-col">
-					{data.items.map((payment) => (
+					{data.items.map(payment => (
 						<PaymentRow
 							key={payment.id}
 							payment={payment}

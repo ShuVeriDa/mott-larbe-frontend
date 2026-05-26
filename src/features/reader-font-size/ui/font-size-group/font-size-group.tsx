@@ -2,9 +2,9 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { ComponentProps } from "react";
 import {
 	useReaderFontSize,
 	type ReaderFontSize,
@@ -28,8 +28,8 @@ export const FontSizeGroup = ({
 	buttonClassName,
 }: FontSizeGroupProps) => {
 	const { t } = useI18n();
-	const size = useReaderFontSize((s) => s.size);
-	const setSize = useReaderFontSize((s) => s.setSize);
+	const size = useReaderFontSize(s => s.size);
+	const setSize = useReaderFontSize(s => s.setSize);
 
 	return (
 		<div
@@ -37,9 +37,11 @@ export const FontSizeGroup = ({
 			role="group"
 			aria-label={t("reader.footer.size")}
 		>
-			{SIZES.map((item) => {
+			{SIZES.map(item => {
 				const active = item.value === size;
-				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setSize(item.value);
+				const handleClick: NonNullable<
+					ComponentProps<"button">["onClick"]
+				> = () => setSize(item.value);
 				return (
 					<Button
 						key={item.value}
@@ -49,7 +51,7 @@ export const FontSizeGroup = ({
 						aria-pressed={active}
 						title={item.label}
 						className={cn(
-							"h-[26px] rounded-[5px] border-hairline border-bd-1 px-[9px]",
+							"h-[26px] rounded-[5px] border-[0.5px] border-bd-1 px-[9px]",
 							"text-[11px] font-medium leading-none transition-colors duration-100",
 							active
 								? "border-acc/20 bg-acc-bg text-acc-t"

@@ -1,6 +1,5 @@
 "use client";
 
-import { Clock, Sparkles } from "lucide-react";
 import {
 	UNLIMITED_SYMBOL,
 	useMySubscription,
@@ -11,6 +10,7 @@ import {
 import { useI18n } from "@/shared/lib/i18n";
 import { Badge } from "@/shared/ui/badge";
 import { Typography } from "@/shared/ui/typography";
+import { Clock, Sparkles } from "lucide-react";
 import { SectionCard } from "../section-card";
 import { LimitBar } from "./limit-bar";
 
@@ -31,11 +31,7 @@ const statusVariant = (
 };
 
 const FreePlanIcon = () => (
-	<Clock
-		className="size-5 text-acc-t"
-		strokeWidth={1.5}
-		aria-hidden="true"
-	/>
+	<Clock className="size-5 text-acc-t" strokeWidth={1.5} aria-hidden="true" />
 );
 
 const PaidPlanIcon = () => (
@@ -77,9 +73,9 @@ export const CurrentPlanCard = ({ subscription }: CurrentPlanCardProps) => {
 				</Badge>
 			}
 		>
-			<div className="flex items-start gap-3.5 border-hairline border-b border-bd-1 px-4 py-4 max-md:px-3 max-md:py-3">
+			<div className="flex items-start gap-3.5 border-[0.5px] border-b border-bd-1 px-4 py-4 max-md:px-3 max-md:py-3">
 				<div
-					className="flex size-11 shrink-0 items-center justify-center rounded-[11px] border-hairline border-acc/15 bg-acc-bg max-md:size-[38px] max-md:rounded-[9px]"
+					className="flex size-11 shrink-0 items-center justify-center rounded-[11px] border-[0.5px] border-acc/15 bg-acc-bg max-md:size-[38px] max-md:rounded-[9px]"
 					aria-hidden="true"
 				>
 					{isFree ? <FreePlanIcon /> : <PaidPlanIcon />}

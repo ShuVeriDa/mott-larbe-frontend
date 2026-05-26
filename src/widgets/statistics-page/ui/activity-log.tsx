@@ -1,10 +1,10 @@
 "use client";
 
-import { ReactNode } from 'react';
 import type { ActivityItem, ActivityType } from "@/entities/statistics";
 import { formatRelativeFromNow } from "@/shared/lib/format-relative-time";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { ReactNode } from "react";
 
 interface ActivityLogProps {
 	items: ActivityItem[];
@@ -45,7 +45,7 @@ export const ActivityLog = ({ items }: ActivityLogProps) => {
 	const { t } = useI18n();
 
 	return (
-		<section className="rounded-card border-hairline border-bd-1 bg-surf p-4">
+		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4">
 			<header className="mb-3 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.activity.title")}
@@ -86,14 +86,14 @@ export const ActivityLog = ({ items }: ActivityLogProps) => {
 									>
 										{item.title}
 									</Typography>
-									<Typography
-										tag="p"
-										className="truncate text-[11px] text-t-3"
-									>
+									<Typography tag="p" className="truncate text-[11px] text-t-3">
 										{item.description}
 									</Typography>
 								</div>
-								<Typography tag="span" className="whitespace-nowrap text-[11px] text-t-3">
+								<Typography
+									tag="span"
+									className="whitespace-nowrap text-[11px] text-t-3"
+								>
 									{time}
 								</Typography>
 							</li>

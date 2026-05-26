@@ -9,16 +9,16 @@ import {
 	type WordLookupMeaning,
 	type WordLookupResponse,
 } from "@/entities/word";
+import { EntrySuggestModal } from "@/features/entry-suggest";
 import { LearnStatusRow } from "@/features/learn-status";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import { Pencil } from "lucide-react";
 import { ReactNode, useState } from "react";
 import { AddToDictionaryButton } from "./add-to-dictionary-button";
 import { WordExamplesList } from "./word-examples-list";
 import { WordFormsChips } from "./word-forms-chips";
 import { WordPanelLoader } from "./word-panel-loader";
-import { EntrySuggestModal } from "@/features/entry-suggest";
-import { Button } from "@/shared/ui/button";
-import { Pencil } from "lucide-react";
 
 export interface WordPanelContentProps {
 	token: TextToken;
@@ -32,7 +32,7 @@ const Section = ({
 	title: string;
 	children: ReactNode;
 }) => (
-	<div className="border-b border-hairline border-bd-1 px-4 py-3 last:border-b-0">
+	<div className="border-b border-[0.5px] border-bd-1 px-4 py-3 last:border-b-0">
 		<div className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.6px] text-t-3">
 			{title}
 		</div>
@@ -59,7 +59,7 @@ const PanelHeader = ({
 	wordLevel: string | null;
 	baseLabel: string;
 }) => (
-	<div className="border-b border-hairline border-bd-1 px-4 py-4">
+	<div className="border-b border-[0.5px] border-bd-1 px-4 py-4">
 		<div className="mb-1 flex items-start gap-2">
 			<div className="font-display text-[22px] font-medium tracking-[-0.3px] text-t-1">
 				{word}
@@ -67,7 +67,7 @@ const PanelHeader = ({
 			{wordLevel ? (
 				<Typography
 					tag="span"
-					className={`mt-1.5 shrink-0 rounded-[4px] border-hairline px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.4px] ${WORD_LEVEL_COLORS[wordLevel] ?? "bg-surf-2 text-t-3 border-bd-1"}`}
+					className={`mt-1.5 shrink-0 rounded-[4px] border-[0.5px] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.4px] ${WORD_LEVEL_COLORS[wordLevel] ?? "bg-surf-2 text-t-3 border-bd-1"}`}
 				>
 					{wordLevel}
 				</Typography>
@@ -85,7 +85,7 @@ const PanelHeader = ({
 					<Typography
 						tag="span"
 						key={tag}
-						className="rounded-[5px] border-hairline border-bd-1 bg-surf-2 px-2 py-0.5 text-[10.5px] font-medium text-t-2"
+						className="rounded-[5px] border-[0.5px] border-bd-1 bg-surf-2 px-2 py-0.5 text-[10.5px] font-medium text-t-2"
 					>
 						{tag}
 					</Typography>

@@ -9,8 +9,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/shared/ui/dialog";
-import { useEffect, useState } from "react";
 import { Typography } from "@/shared/ui/typography";
+import { useEffect, useState } from "react";
 import type { AnnotatedFormOnPage } from "../api/types";
 import { useDeleteMorphForm } from "../model/use-annotated-forms-by-page";
 import { useTokenOccurrences } from "../model/use-token-occurrences";
@@ -42,8 +42,10 @@ export const BatchDeleteAnnotationDialog = ({
 	const { data: occurrences = [], isLoading: isLoadingOccurrences } =
 		useTokenOccurrences(form.normalized, textId);
 
-	const { mutate: deleteMorphForm, isPending: isDeletingAll } = useDeleteMorphForm(textId, pageNumber);
-	const { mutate: unannotateTokens, isPending: isUnannotating } = useUnannotateTokens(textId);
+	const { mutate: deleteMorphForm, isPending: isDeletingAll } =
+		useDeleteMorphForm(textId, pageNumber);
+	const { mutate: unannotateTokens, isPending: isUnannotating } =
+		useUnannotateTokens(textId);
 
 	const isPending = isDeletingAll || isUnannotating;
 
@@ -56,15 +58,22 @@ export const BatchDeleteAnnotationDialog = ({
 			setSelected(new Set([initialTokenId]));
 		} else {
 			// Default: check all currently annotated tokens
-			setSelected(new Set(occurrences.filter(o => o.isAnnotated).map(o => o.tokenId)));
+			setSelected(
+				new Set(occurrences.filter(o => o.isAnnotated).map(o => o.tokenId)),
+			);
 		}
 	}, [isLoadingOccurrences, occurrences, initialTokenId]);
 
-	const selectedIds = occurrences.filter(o => selected.has(o.tokenId)).map(o => o.tokenId);
+	const selectedIds = occurrences
+		.filter(o => selected.has(o.tokenId))
+		.map(o => o.tokenId);
 	const selectedCount = selectedIds.length;
-	const allChecked = occurrences.length > 0 && selectedCount === occurrences.length;
+	const allChecked =
+		occurrences.length > 0 && selectedCount === occurrences.length;
 	const someChecked = selectedCount > 0 && selectedCount < occurrences.length;
-	const deselected = new Set(occurrences.filter(o => !selected.has(o.tokenId)).map(o => o.tokenId));
+	const deselected = new Set(
+		occurrences.filter(o => !selected.has(o.tokenId)).map(o => o.tokenId),
+	);
 
 	const handleOpenChange = (nextOpen: boolean) => {
 		if (!nextOpen) setSelected(new Set());
@@ -97,7 +106,8 @@ export const BatchDeleteAnnotationDialog = ({
 					success(t("admin.texts.editPage.wordAnnotation.deleteSuccess"));
 					handleOpenChange(false);
 				},
-				onError: () => toastError(t("admin.texts.editPage.wordAnnotation.error")),
+				onError: () =>
+					toastError(t("admin.texts.editPage.wordAnnotation.error")),
 			});
 		} else {
 			unannotateTokens(
@@ -111,7 +121,8 @@ export const BatchDeleteAnnotationDialog = ({
 						);
 						handleOpenChange(false);
 					},
-					onError: () => toastError(t("admin.texts.editPage.wordAnnotation.error")),
+					onError: () =>
+						toastError(t("admin.texts.editPage.wordAnnotation.error")),
 				},
 			);
 		}
@@ -127,7 +138,10 @@ export const BatchDeleteAnnotationDialog = ({
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
-			<DialogContent aria-describedby={undefined} className="max-w-lg gap-0 p-0">
+			<DialogContent
+				aria-describedby={undefined}
+				className="max-w-lg gap-0 p-0"
+			>
 				<DialogHeader className="px-5 pt-5 pb-4">
 					<DialogTitle>
 						{t("admin.texts.editPage.wordAnnotation.deleteDialogTitle", {
@@ -136,7 +150,7 @@ export const BatchDeleteAnnotationDialog = ({
 					</DialogTitle>
 				</DialogHeader>
 
-				<div className="border-t border-hairline border-bd-1 px-5 py-3">
+				<div className="border-t border-[0.5px] border-bd-1 px-5 py-3">
 					<Typography tag="span" className="text-[12.5px] text-t-2">
 						{t("admin.texts.editPage.wordAnnotation.deleteDialogHint")}
 					</Typography>
@@ -152,12 +166,12 @@ export const BatchDeleteAnnotationDialog = ({
 					onToggleAll={handleToggleAll}
 				/>
 
-				<div className="flex gap-2 border-t border-hairline border-bd-1 px-5 py-4">
+				<div className="flex gap-2 border-t border-[0.5px] border-bd-1 px-5 py-4">
 					<Button
 						size="bare"
 						title={t("reader.annotate.cancel")}
 						onClick={handleCancel}
-						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-hairline border-bd-2 bg-surf-2 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
+						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-[0.5px] border-bd-2 bg-surf-2 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
 					>
 						{t("reader.annotate.cancel")}
 					</Button>

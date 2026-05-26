@@ -15,19 +15,21 @@ export const ReaderFooter = () => {
 	const { t } = useI18n();
 
 	return (
-		<footer className="flex shrink-0 items-center gap-2.5 border-t border-hairline border-bd-1 bg-surf px-4 py-2.5 max-md:hidden">
+		<footer className="flex shrink-0 items-center gap-2.5 border-t border-[0.5px] border-bd-1 bg-surf px-4 py-2.5 max-md:hidden">
 			<Typography tag="span" className="text-[11px] text-t-3">
 				{t("reader.footer.size")}:
 			</Typography>
 			<FontSizeGroup />
 			<Typography tag="span" aria-hidden="true" className="h-4 w-px bg-bd-2" />
 			<div className="ml-auto flex items-center gap-2.5">
-				{LEGEND.map((item) => (
-					<Typography tag="span"
+				{LEGEND.map(item => (
+					<Typography
+						tag="span"
 						key={item.key}
 						className="flex items-center gap-1.5 text-[11px] text-t-3"
 					>
-						<Typography tag="span"
+						<Typography
+							tag="span"
 							aria-hidden="true"
 							className="block h-0.5 w-3.5 rounded-[1px]"
 							style={{ background: item.color }}

@@ -2,10 +2,10 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { ComponentProps } from "react";
 
 export type ReviewSystem = "sm2" | "deck";
 
@@ -24,10 +24,14 @@ export const ReviewTopbar = ({
 }: ReviewTopbarProps) => {
 	const { t } = useI18n();
 
-		const handleClick: NonNullable<ComponentProps<typeof TabButton>["onClick"]> = () => onChange("sm2");
-	const handleClick2: NonNullable<ComponentProps<typeof TabButton>["onClick"]> = () => onChange("deck");
-return (
-		<header className="flex shrink-0 items-center gap-2.5 border-hairline border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-3.5 max-md:py-2.5">
+	const handleClick: NonNullable<
+		ComponentProps<typeof TabButton>["onClick"]
+	> = () => onChange("sm2");
+	const handleClick2: NonNullable<
+		ComponentProps<typeof TabButton>["onClick"]
+	> = () => onChange("deck");
+	return (
+		<header className="flex shrink-0 items-center gap-2.5 border-[0.5px] border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-3.5 max-md:py-2.5">
 			<svg
 				viewBox="0 0 15 15"
 				fill="none"
@@ -60,7 +64,7 @@ return (
 			<div
 				role="tablist"
 				aria-label={t("review.tabs.aria")}
-				className="flex gap-0.5 rounded-base border-hairline border-bd-2 bg-surf-2 p-0.5 max-md:flex-1"
+				className="flex gap-0.5 rounded-base border-[0.5px] border-bd-2 bg-surf-2 p-0.5 max-md:flex-1"
 			>
 				<TabButton
 					label={t("review.tabs.sm2")}
@@ -107,12 +111,11 @@ const TabButton = ({ label, count, active, onClick }: TabButtonProps) => (
 	>
 		{label}
 		{count !== null && count > 0 ? (
-			<Typography tag="span"
+			<Typography
+				tag="span"
 				className={cn(
 					"rounded-[3px] px-1.5 py-px text-[10px] font-bold",
-					active
-						? "bg-acc-bg text-acc-t"
-						: "bg-amb-bg text-amb-t",
+					active ? "bg-acc-bg text-acc-t" : "bg-amb-bg text-amb-t",
 				)}
 			>
 				{count}

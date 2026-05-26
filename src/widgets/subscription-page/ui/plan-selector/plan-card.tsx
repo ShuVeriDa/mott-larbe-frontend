@@ -1,6 +1,5 @@
 "use client";
 
-import { ComponentProps } from 'react';
 import {
 	formatPrice,
 	type Plan,
@@ -12,6 +11,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { Check, Sparkles, TrendingUp, X } from "lucide-react";
+import { ComponentProps } from "react";
 
 export interface PlanCardProps {
 	plan: Plan;
@@ -121,7 +121,9 @@ export const PlanCard = ({
 		}
 		const baseClass =
 			"h-[30px] w-full text-[11.5px] font-semibold border-0 text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] hover:opacity-[0.88]";
-		const handleChooseClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => onChoose?.(plan);
+		const handleChooseClick: NonNullable<
+			ComponentProps<typeof Button>["onClick"]
+		> = () => onChoose?.(plan);
 		if (colorScheme.button === "pro") {
 			return (
 				<Button
@@ -151,13 +153,15 @@ export const PlanCard = ({
 		);
 	};
 
-	const handleCardClick: NonNullable<ComponentProps<"article">["onClick"]> = () => {
+	const handleCardClick: NonNullable<
+		ComponentProps<"article">["onClick"]
+	> = () => {
 		if (!current) onChoose?.(plan);
 	};
-return (
+	return (
 		<article
 			className={cn(
-				"group/plan-card relative flex flex-col gap-3 overflow-hidden rounded-[10px] border-hairline border-bd-2 bg-surf-2 p-3.5 transition-[border-color,box-shadow] duration-150 max-md:min-w-[155px] max-md:flex-none max-md:snap-start max-md:p-3",
+				"group/plan-card relative flex flex-col gap-3 overflow-hidden rounded-[10px] border-[0.5px] border-bd-2 bg-surf-2 p-3.5 transition-[border-color,box-shadow] duration-150 max-md:min-w-[155px] max-md:flex-none max-md:snap-start max-md:p-3",
 				popular && "border-acc bg-acc-bg dark:bg-acc/10",
 				current && "bg-surf",
 				!current && "hover:border-bd-3 hover:shadow-sm cursor-pointer",
@@ -165,7 +169,10 @@ return (
 			onClick={handleCardClick}
 		>
 			{popular ? (
-				<Typography tag="span" className="absolute right-0 top-0 rounded-bl-base rounded-tr-[10px] bg-acc px-2.5 py-[3px] text-[9px] font-bold uppercase tracking-[0.3px] text-white">
+				<Typography
+					tag="span"
+					className="absolute right-0 top-0 rounded-bl-base rounded-tr-[10px] bg-acc px-2.5 py-[3px] text-[9px] font-bold uppercase tracking-[0.3px] text-white"
+				>
 					{t("subscription.planCard.popular")}
 				</Typography>
 			) : null}

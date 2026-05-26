@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { BrandMark } from "@/shared/ui/brand-mark";
 import { Typography } from "@/shared/ui/typography";
+import Link from "next/link";
 
 interface FooterColumn {
 	titleKey: string;
@@ -61,7 +61,7 @@ export const LandingFooter = () => {
 	const { t, lang } = useI18n();
 
 	return (
-		<footer className="border-hairline border-t border-bd-1 bg-surf-2 px-7 pb-8 pt-14 max-[900px]:px-[22px] max-[640px]:px-[18px]">
+		<footer className="border-[0.5px] border-t border-bd-1 bg-surf-2 px-7 pb-8 pt-14 max-[900px]:px-[22px] max-[640px]:px-[18px]">
 			<div className="mx-auto w-full max-w-[1120px]">
 				<div className="mb-9 grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 max-[900px]:grid-cols-2 max-[900px]:gap-8 max-[640px]:gap-7 max-[380px]:grid-cols-1">
 					<div>
@@ -90,7 +90,7 @@ export const LandingFooter = () => {
 							{t("landing.footer.about")}
 						</Typography>
 					</div>
-					{COLUMNS.map((col) => (
+					{COLUMNS.map(col => (
 						<div key={col.titleKey}>
 							<Typography
 								tag="h3"
@@ -99,7 +99,7 @@ export const LandingFooter = () => {
 								{t(col.titleKey)}
 							</Typography>
 							<ul>
-								{col.links.map((link) => (
+								{col.links.map(link => (
 									<Typography tag="li" key={link.labelKey}>
 										<Link
 											href={link.href}
@@ -114,15 +114,15 @@ export const LandingFooter = () => {
 					))}
 				</div>
 
-				<div className="flex flex-wrap items-center justify-between gap-3 border-hairline border-t border-bd-1 pt-6 text-[12px] text-t-3 max-[640px]:flex-col-reverse max-[640px]:items-start max-[640px]:gap-3.5">
+				<div className="flex flex-wrap items-center justify-between gap-3 border-[0.5px] border-t border-bd-1 pt-6 text-[12px] text-t-3 max-[640px]:flex-col-reverse max-[640px]:items-start max-[640px]:gap-3.5">
 					<Typography tag="span">{t("landing.footer.copy")}</Typography>
 					<div className="flex gap-1.5">
-						{SOCIALS.map((s) => (
+						{SOCIALS.map(s => (
 							<Link
 								key={s.label}
 								href={s.href}
 								aria-label={s.label}
-								className="flex h-8 w-8 items-center justify-center rounded-base border-hairline border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
+								className="flex h-8 w-8 items-center justify-center rounded-base border-[0.5px] border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
 							>
 								<svg
 									viewBox="0 0 24 24"

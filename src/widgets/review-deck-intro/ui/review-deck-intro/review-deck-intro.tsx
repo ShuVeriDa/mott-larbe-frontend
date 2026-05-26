@@ -1,10 +1,10 @@
 "use client";
 
 import type { DeckStats } from "@/entities/deck";
+import { ModeSelector, type SessionMode } from "@/features/session-mode";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { ModeSelector, type SessionMode } from "@/features/session-mode";
 import { DeckDailyWords } from "../deck-daily-words";
 import { DeckGuide } from "../deck-guide";
 import { DeckSettingsPanel } from "../deck-settings-panel";
@@ -128,7 +128,9 @@ export const ReviewDeckIntro = ({
 				</p>
 			) : (
 				<p className="mb-5 text-[13px] text-t-3">
-					{loading ? t("review.deck.intro.loading") : t("review.deck.intro.error")}
+					{loading
+						? t("review.deck.intro.loading")
+						: t("review.deck.intro.error")}
 				</p>
 			)}
 
@@ -174,7 +176,7 @@ export const ReviewDeckIntro = ({
 			</Button>
 
 			{premiumLocked ? (
-				<div className="mt-4 flex w-full max-w-[340px] flex-col items-center gap-2 rounded-card border-hairline border-pur/20 bg-pur-bg p-4 text-center">
+				<div className="mt-4 flex w-full max-w-[340px] flex-col items-center gap-2 rounded-card border-[0.5px] border-pur/20 bg-pur-bg p-4 text-center">
 					<Typography tag="span" className="text-[20px]" aria-hidden="true">
 						🔒
 					</Typography>
@@ -211,7 +213,7 @@ const DeckRow = ({
 
 	return (
 		<li
-			className={`flex items-center gap-3 rounded-card border-hairline ${border ?? "border-bd-2"} bg-surf px-3.5 py-3 shadow-sm`}
+			className={`flex items-center gap-3 rounded-card border-[0.5px] ${border ?? "border-bd-2"} bg-surf px-3.5 py-3 shadow-sm`}
 		>
 			<div
 				className={`flex size-8 shrink-0 items-center justify-center rounded-base text-[14px] ${bg}`}

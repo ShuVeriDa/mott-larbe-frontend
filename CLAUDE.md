@@ -446,7 +446,6 @@ React Compiler handles memoization automatically.
 // ❌ wrong
 useMemo(() => compute(a, b), [a, b]);
 useCallback(fn, [deps]);
-memo(MyComponent);
 
 // ✅ exception only: explicitly heavy computations (sorting 10k+ items, d3, canvas)
 ```

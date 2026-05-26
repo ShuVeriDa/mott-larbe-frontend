@@ -5,10 +5,10 @@ const Bone = ({ className }: { className: string }) => (
 export const ReviewPageSkeleton = () => (
 	<div className="flex flex-1 flex-col overflow-hidden">
 		{/* Topbar */}
-		<div className="flex shrink-0 items-center gap-2.5 border-b border-hairline border-bd-1 bg-surf px-[22px] py-3 max-md:px-3.5 max-md:py-2.5">
+		<div className="flex shrink-0 items-center gap-2.5 border-b border-[0.5px] border-bd-1 bg-surf px-[22px] py-3 max-md:px-3.5 max-md:py-2.5">
 			<Bone className="h-3.5 w-3.5 max-md:hidden" />
 			<Bone className="h-4 w-28 max-md:hidden" />
-			<div className="flex gap-0.5 rounded-base border-hairline border-bd-2 bg-surf-2 p-0.5 max-md:flex-1">
+			<div className="flex gap-0.5 rounded-base border-[0.5px] border-bd-2 bg-surf-2 p-0.5 max-md:flex-1">
 				<Bone className="h-[26px] w-20 rounded-[6px] max-md:flex-1" />
 				<Bone className="h-[26px] w-16 rounded-[6px] max-md:flex-1" />
 			</div>
@@ -22,7 +22,7 @@ export const ReviewPageSkeleton = () => (
 				{[80, 80, 80].map((w, i) => (
 					<div
 						key={i}
-						className="min-w-[80px] animate-pulse rounded-card border-hairline border-bd-2 bg-surf-2 px-4 py-3 text-center shadow-sm max-md:flex-1 max-md:min-w-0"
+						className="min-w-[80px] animate-pulse rounded-card border-[0.5px] border-bd-2 bg-surf-2 px-4 py-3 text-center shadow-sm max-md:flex-1 max-md:min-w-0"
 						style={{ width: w }}
 					>
 						<div className="mx-auto h-7 w-8 rounded bg-surf-3" />
@@ -46,7 +46,7 @@ export const ReviewPageSkeleton = () => (
 					{Array.from({ length: 4 }).map((_, i) => (
 						<div
 							key={i}
-							className="flex items-center gap-2.5 rounded-base border-hairline border-bd-1 bg-surf px-3 py-2"
+							className="flex items-center gap-2.5 rounded-base border-[0.5px] border-bd-1 bg-surf px-3 py-2"
 						>
 							<div className="size-1.5 animate-pulse rounded-full bg-surf-3" />
 							<Bone className="h-4 flex-1" />

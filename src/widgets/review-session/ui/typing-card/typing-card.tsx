@@ -1,11 +1,11 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import type { ReviewQuality } from "@/entities/review";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { Typography } from "@/shared/ui/typography";
-import type { ReviewQuality } from "@/entities/review";
+import { useEffect, useRef, useState } from "react";
 
 export interface TypingCardSm2Props {
 	word: string;
@@ -89,11 +89,17 @@ export const TypingCardSm2 = ({
 
 	return (
 		<div className="w-full max-w-[520px] mb-3.5">
-			<div className="relative w-full min-h-[205px] flex flex-col items-center justify-center rounded-hero border-hairline border-bd-2 bg-surf p-7 shadow-md max-md:p-5 max-md:min-h-[185px]">
-				<Typography tag="span" className="absolute right-3.5 top-3 text-[10.5px] text-t-3">
+			<div className="relative w-full min-h-[205px] flex flex-col items-center justify-center rounded-hero border-[0.5px] border-bd-2 bg-surf p-7 shadow-md max-md:p-5 max-md:min-h-[185px]">
+				<Typography
+					tag="span"
+					className="absolute right-3.5 top-3 text-[10.5px] text-t-3"
+				>
 					#{cardNumber}
 				</Typography>
-				<Typography tag="span" className="absolute left-3.5 top-3 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+				<Typography
+					tag="span"
+					className="absolute left-3.5 top-3 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3"
+				>
 					{t("review.mode.typing.label")}
 				</Typography>
 
@@ -111,7 +117,10 @@ export const TypingCardSm2 = ({
 					<div className="mb-4" />
 				)}
 
-				<form onSubmit={handleSubmit} className="w-full max-w-[300px] flex flex-col items-center gap-2">
+				<form
+					onSubmit={handleSubmit}
+					className="w-full max-w-[300px] flex flex-col items-center gap-2"
+				>
 					<Input
 						ref={inputRef}
 						value={value}
@@ -141,12 +150,14 @@ export const TypingCardSm2 = ({
 
 				{revealed ? (
 					<div className="mt-3 flex flex-col items-center gap-0.5">
-						<Typography className={cn(
-							"text-[13px] font-semibold",
-							result === "exact" && "text-grn-t",
-							result === "typo" && "text-acc",
-							result === "wrong" && "text-red-t",
-						)}>
+						<Typography
+							className={cn(
+								"text-[13px] font-semibold",
+								result === "exact" && "text-grn-t",
+								result === "typo" && "text-acc",
+								result === "wrong" && "text-red-t",
+							)}
+						>
 							{result === "exact"
 								? t("review.mode.typing.exact")
 								: result === "typo"
@@ -155,7 +166,8 @@ export const TypingCardSm2 = ({
 						</Typography>
 						{result !== "exact" ? (
 							<Typography className="text-[12px] text-t-3">
-								{t("review.mode.typing.answer")}: <span className="font-medium text-t-1">{correctAnswer}</span>
+								{t("review.mode.typing.answer")}:{" "}
+								<span className="font-medium text-t-1">{correctAnswer}</span>
 							</Typography>
 						) : null}
 					</div>

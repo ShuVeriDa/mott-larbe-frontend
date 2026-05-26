@@ -45,7 +45,7 @@ export const ModeSelector = ({ value, onChange }: ModeSelectorProps) => {
 				{t("review.mode.label")}
 			</p>
 			<div className="flex gap-2">
-				{OPTIONS.map((opt) => {
+				{OPTIONS.map(opt => {
 					const active = value === opt.value;
 					return (
 						<button
@@ -53,7 +53,7 @@ export const ModeSelector = ({ value, onChange }: ModeSelectorProps) => {
 							type="button"
 							onClick={() => onChange(opt.value)}
 							className={cn(
-								"flex flex-1 flex-col items-center gap-1 rounded-card border-hairline px-2 py-2.5 text-center transition-colors",
+								"flex flex-1 flex-col items-center gap-1 rounded-card border-[0.5px] px-2 py-2.5 text-center transition-colors",
 								active
 									? "border-acc/40 bg-acc-bg text-acc"
 									: "border-bd-2 bg-surf text-t-3 hover:border-bd-3 hover:bg-surf-2 hover:text-t-2",

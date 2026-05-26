@@ -1,10 +1,5 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { useEffect } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
-import { useSwipe } from "@/shared/lib/swipe";
-import { Typography } from "@/shared/ui/typography";
 import {
 	type ReviewDueWord,
 	type ReviewQuality,
@@ -13,10 +8,15 @@ import {
 import { FlipCard } from "@/features/flip-card";
 import { RatingButtons } from "@/features/rate-word";
 import type { SessionMode } from "@/features/session-mode";
+import { useI18n } from "@/shared/lib/i18n";
+import { useSwipe } from "@/shared/lib/swipe";
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
+import { useEffect } from "react";
 import { useSm2Session } from "../../model";
-import { FlashcardFront } from "../flashcard-front";
-import { FlashcardBack } from "../flashcard-back";
 import { ChoiceCardSm2 } from "../choice-card";
+import { FlashcardBack } from "../flashcard-back";
+import { FlashcardFront } from "../flashcard-front";
 import { TypingCardSm2 } from "../typing-card";
 
 export interface Sm2SessionProps {
@@ -24,11 +24,15 @@ export interface Sm2SessionProps {
 	sessionMode?: SessionMode;
 	onFinish: (counts: { easy: number; good: number; hard: number }) => void;
 	onBack?: () => void;
-	onProgress?: (currentIndex: number, total: number, counts: {
-		easy: number;
-		good: number;
-		hard: number;
-	}) => void;
+	onProgress?: (
+		currentIndex: number,
+		total: number,
+		counts: {
+			easy: number;
+			good: number;
+			hard: number;
+		},
+	) => void;
 }
 
 const buildOptions = (
@@ -113,11 +117,15 @@ export const Sm2Session = ({
 			if (!flipped) return;
 
 			const quality: ReviewQuality | null =
-				e.key === "1" ? 0
-				: e.key === "2" ? 2
-				: e.key === "3" ? 4
-				: e.key === "4" ? 5
-				: null;
+				e.key === "1"
+					? 0
+					: e.key === "2"
+						? 2
+						: e.key === "3"
+							? 4
+							: e.key === "4"
+								? 5
+								: null;
 
 			if (quality !== null) {
 				e.preventDefault();
@@ -152,9 +160,11 @@ export const Sm2Session = ({
 	// Fall back to flashcard when translation is missing or insufficient distractors for choice
 	const hasTranslation = translation !== "";
 	const hasEnoughOptions = options.length >= 2;
-	const effectiveMode = (sessionMode === "choice" || sessionMode === "typing") && (!hasTranslation || (sessionMode === "choice" && !hasEnoughOptions))
-		? "flashcard"
-		: sessionMode;
+	const effectiveMode =
+		(sessionMode === "choice" || sessionMode === "typing") &&
+		(!hasTranslation || (sessionMode === "choice" && !hasEnoughOptions))
+			? "flashcard"
+			: sessionMode;
 
 	const isFlashcard = effectiveMode === "flashcard";
 
@@ -178,10 +188,7 @@ export const Sm2Session = ({
 				>
 					{currentIndex + 1}
 				</Typography>
-				<Typography
-					tag="span"
-					className="text-[11.5px] text-t-3"
-				>
+				<Typography tag="span" className="text-[11.5px] text-t-3">
 					/ {total}
 				</Typography>
 			</div>
@@ -233,15 +240,13 @@ export const Sm2Session = ({
 				/>
 			)}
 
-			{isFlashcard ? (
-				<RatingButtons visible={flipped} onRate={rate} />
-			) : null}
+			{isFlashcard ? <RatingButtons visible={flipped} onRate={rate} /> : null}
 
 			<div className="mt-2.5 flex w-full max-w-[520px] items-center gap-2">
 				{onBack ? (
 					<Button
 						onClick={onBack}
-						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-hairline border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
+						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 					>
 						<svg viewBox="0 0 12 12" fill="none" className="size-3">
 							<path
@@ -257,7 +262,7 @@ export const Sm2Session = ({
 				) : null}
 				<Button
 					onClick={skip}
-					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-hairline border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
+					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 				>
 					<svg viewBox="0 0 12 12" fill="none" className="size-3">
 						<path
@@ -275,7 +280,7 @@ export const Sm2Session = ({
 					<Button
 						onClick={toggleMode}
 						aria-label={t("review.sm2.card.modeToggle")}
-						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-hairline border-bd-2 bg-surf-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-3"
+						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-surf-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-3"
 					>
 						<svg viewBox="0 0 12 12" fill="none" className="size-3 text-t-3">
 							<path

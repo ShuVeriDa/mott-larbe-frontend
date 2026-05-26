@@ -1,16 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/shared/ui/button";
-import { Check, ChevronDown, FolderOpen, Plus, X } from "lucide-react";
+import { useFolders } from "@/entities/folder";
 import {
 	useAddToVocabulary,
 	useAssignFolder,
 } from "@/features/add-to-vocabulary";
-import { useFolders } from "@/entities/folder";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
+import { Button } from "@/shared/ui/button";
+import { Check, ChevronDown, FolderOpen, Plus, X } from "lucide-react";
+import { useState } from "react";
 
 export interface AddToDictionaryButtonProps {
 	tokenId: string;
@@ -53,7 +53,7 @@ export const AddToDictionaryButton = ({
 		);
 	};
 
-	const handleToggleFolderMenu = () => setFolderOpen((prev) => !prev);
+	const handleToggleFolderMenu = () => setFolderOpen(prev => !prev);
 
 	const handleFolderSelect = (folderId: string | null) => {
 		if (!dictionaryEntryId) return;
@@ -109,14 +109,16 @@ export const AddToDictionaryButton = ({
 					aria-label={t("reader.panel.chooseFolder")}
 					className="flex items-center border-l border-white/20 px-2 transition-opacity hover:opacity-80 disabled:opacity-60"
 				>
-					{folderOpen
-						? <X className="size-3.5" strokeWidth={1.8} />
-						: <ChevronDown className="size-3.5" strokeWidth={1.8} />}
+					{folderOpen ? (
+						<X className="size-3.5" strokeWidth={1.8} />
+					) : (
+						<ChevronDown className="size-3.5" strokeWidth={1.8} />
+					)}
 				</button>
 			</div>
 
 			{folderOpen && (
-				<div className="absolute bottom-[calc(100%+4px)] left-0 z-50 w-full overflow-hidden rounded-card border-hairline border-bd-2 bg-surf shadow-lg">
+				<div className="absolute bottom-[calc(100%+4px)] left-0 z-50 w-full overflow-hidden rounded-card border-[0.5px] border-bd-2 bg-surf shadow-lg">
 					{currentFolderId !== null && (
 						<button
 							type="button"
@@ -127,7 +129,7 @@ export const AddToDictionaryButton = ({
 							{t("reader.panel.removeFromFolder")}
 						</button>
 					)}
-					{folders.map((folder) => (
+					{folders.map(folder => (
 						<button
 							key={folder.id}
 							type="button"
@@ -139,7 +141,10 @@ export const AddToDictionaryButton = ({
 									: "text-t-2",
 							)}
 						>
-							<FolderOpen className="size-3 shrink-0 text-t-3" strokeWidth={1.5} />
+							<FolderOpen
+								className="size-3 shrink-0 text-t-3"
+								strokeWidth={1.5}
+							/>
 							{folder.name}
 							{folder.id === currentFolderId && (
 								<Check className="ml-auto size-3 text-grn" strokeWidth={2} />

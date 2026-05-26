@@ -112,7 +112,7 @@ export const FolderCard = ({
 			onKeyDown={handleKey}
 			className={cn(
 				"group relative cursor-pointer overflow-hidden rounded-card",
-				"border-hairline border-bd-1 bg-surf",
+				"border-[0.5px] border-bd-1 bg-surf",
 				"transition-[border-color,box-shadow] duration-150",
 				"hover:border-bd-2 hover:shadow-sm",
 				"focus-visible:border-acc focus-visible:outline-none",
@@ -192,7 +192,7 @@ export const FolderCard = ({
 					</div>
 				</div>
 
-				<div className="flex items-center justify-between border-t border-hairline border-bd-1 pt-2.5">
+				<div className="flex items-center justify-between border-t border-[0.5px] border-bd-1 pt-2.5">
 					<Typography tag="span" className="text-[11px] text-t-3">
 						{folder.total === 0
 							? labels.noWords

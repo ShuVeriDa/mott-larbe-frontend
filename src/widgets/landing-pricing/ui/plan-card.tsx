@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
 import { ArrowRight, BookIcon, Check, Sparkles, X, Zap } from "lucide-react";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 export type PlanKey = "free" | "premium" | "pro";
 
@@ -34,7 +34,7 @@ const ICON_BG_BY_PLAN: Record<PlanKey, string> = {
 };
 
 const CTA_BY_PLAN: Record<PlanKey, string> = {
-	free: "bg-surf-2 border-hairline border-bd-2 text-t-1 hover:bg-surf-3",
+	free: "bg-surf-2 border-[0.5px] border-bd-2 text-t-1 hover:bg-surf-3",
 	premium:
 		"bg-acc text-white shadow-[0_2px_6px_rgba(34,84,211,0.25)] hover:opacity-[0.92]",
 	pro: "bg-pur text-white shadow-[0_2px_6px_rgba(109,78,212,0.3)] hover:opacity-[0.92]",
@@ -60,7 +60,7 @@ export const PlanCard = ({
 	return (
 		<article
 			className={cn(
-				"relative flex flex-col rounded-[14px] border-hairline bg-surf p-7 max-[640px]:p-[22px]",
+				"relative flex flex-col rounded-[14px] border-[0.5px] bg-surf p-7 max-[640px]:p-[22px]",
 				featured
 					? "border-acc shadow-lg [box-shadow:0_0_0_4px_rgba(34,84,211,0.12)]"
 					: "border-bd-2",

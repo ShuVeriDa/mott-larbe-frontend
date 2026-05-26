@@ -2,11 +2,11 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
+import type { DeckRateResult } from "@/entities/deck";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
-import type { DeckRateResult } from "@/entities/deck";
+import { ComponentProps } from "react";
 
 interface DeckRatingOption {
 	key: DeckRateResult;
@@ -55,51 +55,61 @@ export const DeckRatingButtons = ({
 			</Typography>
 
 			<div className="grid grid-cols-2 gap-2">
-				{OPTIONS.map((option) => {
-				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRate(option.key);
-				  return (
-					<Button
-						key={option.key}
-						variant="bare"
-						size={null}
-						disabled={disabled || !visible}
-						onClick={handleClick}
-						title={t(`review.deck.card.rate.${option.key}.label`)}
-						className={cn(
-							"flex flex-col items-center gap-1 rounded-card border-hairline border-bd-2 bg-surf py-3.5 px-2.5",
-							"shadow-sm transition-[background-color,border-color,transform,box-shadow] duration-150",
-							"cursor-pointer hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:opacity-80",
-							"disabled:cursor-default disabled:opacity-40",
-							option.hoverClass,
-						)}
-					>
-						<Typography tag="span" className="text-[20px] leading-none">{option.icon}</Typography>
-						<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
-							{t(`review.deck.card.rate.${option.key}.label`)}
-						</Typography>
-						<Typography tag="span" className="text-[11px] text-t-3 max-md:hidden">
-							{t(`review.deck.card.rate.${option.key}.sub`)}
-						</Typography>
-					</Button>
-				);
+				{OPTIONS.map(option => {
+					const handleClick: NonNullable<
+						ComponentProps<"button">["onClick"]
+					> = () => onRate(option.key);
+					return (
+						<Button
+							key={option.key}
+							variant="bare"
+							size={null}
+							disabled={disabled || !visible}
+							onClick={handleClick}
+							title={t(`review.deck.card.rate.${option.key}.label`)}
+							className={cn(
+								"flex flex-col items-center gap-1 rounded-card border-[0.5px] border-bd-2 bg-surf py-3.5 px-2.5",
+								"shadow-sm transition-[background-color,border-color,transform,box-shadow] duration-150",
+								"cursor-pointer hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:opacity-80",
+								"disabled:cursor-default disabled:opacity-40",
+								option.hoverClass,
+							)}
+						>
+							<Typography tag="span" className="text-[20px] leading-none">
+								{option.icon}
+							</Typography>
+							<Typography
+								tag="span"
+								className="text-[12.5px] font-semibold text-t-1"
+							>
+								{t(`review.deck.card.rate.${option.key}.label`)}
+							</Typography>
+							<Typography
+								tag="span"
+								className="text-[11px] text-t-3 max-md:hidden"
+							>
+								{t(`review.deck.card.rate.${option.key}.sub`)}
+							</Typography>
+						</Button>
+					);
 				})}
 			</div>
 
 			<div className="mt-2 flex items-center justify-center gap-3.5 max-md:hidden">
 				<div className="flex items-center gap-1 text-[11px] text-t-3">
-					<kbd className="inline-flex h-[18px] min-w-[20px] items-center justify-center rounded-[3px] border-hairline border-bd-3 bg-surf-2 px-1 text-[10px] font-semibold text-t-2">
+					<kbd className="inline-flex h-[18px] min-w-[20px] items-center justify-center rounded-[3px] border-[0.5px] border-bd-3 bg-surf-2 px-1 text-[10px] font-semibold text-t-2">
 						←
 					</kbd>
 					{t("review.deck.card.kbd.again")}
 				</div>
 				<div className="flex items-center gap-1 text-[11px] text-t-3">
-					<kbd className="inline-flex h-[18px] min-w-[20px] items-center justify-center rounded-[3px] border-hairline border-bd-3 bg-surf-2 px-1 text-[10px] font-semibold text-t-2">
+					<kbd className="inline-flex h-[18px] min-w-[20px] items-center justify-center rounded-[3px] border-[0.5px] border-bd-3 bg-surf-2 px-1 text-[10px] font-semibold text-t-2">
 						→
 					</kbd>
 					{t("review.deck.card.kbd.know")}
 				</div>
 				<div className="flex items-center gap-1 text-[11px] text-t-3">
-					<kbd className="inline-flex h-[18px] min-w-[20px] items-center justify-center rounded-[3px] border-hairline border-bd-3 bg-surf-2 px-1 text-[10px] font-semibold text-t-2">
+					<kbd className="inline-flex h-[18px] min-w-[20px] items-center justify-center rounded-[3px] border-[0.5px] border-bd-3 bg-surf-2 px-1 text-[10px] font-semibold text-t-2">
 						Space
 					</kbd>
 					{t("review.deck.card.kbd.flip")}

@@ -2,10 +2,10 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { LEARNING_LEVELS, type LearningLevel } from "@/shared/types";
+import { ComponentProps } from "react";
 import { useUpdateWord } from "../../model";
 
 const ACTIVE_CLASS: Record<LearningLevel, string> = {
@@ -31,13 +31,19 @@ export const StatusButtons = ({ wordId, current }: StatusButtonsProps) => {
 
 	return (
 		<div className="mb-2 flex gap-1">
-			{LEARNING_LEVELS.map((level) => {
+			{LEARNING_LEVELS.map(level => {
 				const active = current === level;
-								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = (e) => {
-							e.stopPropagation();
-							mutate({ id: wordId, body: { learningLevel: level }, previousLevel: current });
-						};
-return (
+				const handleClick: NonNullable<
+					ComponentProps<"button">["onClick"]
+				> = e => {
+					e.stopPropagation();
+					mutate({
+						id: wordId,
+						body: { learningLevel: level },
+						previousLevel: current,
+					});
+				};
+				return (
 					<Button
 						key={level}
 						disabled={isPending || active}
@@ -45,7 +51,7 @@ return (
 						title={t(LABEL_KEY[level])}
 						className={cn(
 							"flex-1 rounded-md px-1.5 py-1 text-[10.5px] font-semibold transition-all duration-100",
-							"border-hairline cursor-pointer text-center font-[inherit]",
+							"border-[0.5px] cursor-pointer text-center font-[inherit]",
 							"focus-visible:ring-2 focus-visible:ring-acc/40 outline-none",
 							"disabled:cursor-default",
 							active

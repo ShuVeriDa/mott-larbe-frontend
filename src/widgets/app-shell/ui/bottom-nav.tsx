@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import {
 	HomeIcon,
-	ProgressIcon,
+	PhrasebookIcon,
 	ReviewIcon,
 	TextsIcon,
 	VocabularyIcon,
@@ -37,14 +37,14 @@ const buildItems = (lang: string): BottomNavItem[] => [
 		labelKey: "nav.vocabulary",
 	},
 	{
+		href: `/${lang}/phrasebook`,
+		icon: <PhrasebookIcon className="size-5" />,
+		labelKey: "nav.phrasebook",
+	},
+	{
 		href: `/${lang}/review`,
 		icon: <ReviewIcon className="size-5" />,
 		labelKey: "nav.review",
-	},
-	{
-		href: `/${lang}/progress`,
-		icon: <ProgressIcon className="size-5" />,
-		labelKey: "nav.progress",
 	},
 ];
 
@@ -56,7 +56,7 @@ export const BottomNav = () => {
 	return (
 		<nav
 			aria-label={t("nav.vocabulary")}
-			className="fixed inset-x-0 bottom-0 z-90 hidden h-[56px] border-hairline border-t border-bd-1 bg-surf pb-[env(safe-area-inset-bottom)] max-md:block"
+			className="fixed inset-x-0 bottom-0 z-90 hidden h-[56px] border-[0.5px] border-t border-bd-1 bg-surf pb-[env(safe-area-inset-bottom)] max-md:block"
 		>
 			<div className="mx-auto flex h-full max-w-[1120px] items-stretch">
 				{items.map((item, i) => {

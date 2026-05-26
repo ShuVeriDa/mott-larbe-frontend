@@ -1,9 +1,9 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { ComponentProps, type ReactNode, useEffect } from 'react';
-import { createPortal } from "react-dom";
 import { cn } from "@/shared/lib/cn";
+import { Typography } from "@/shared/ui/typography";
+import { ComponentProps, type ReactNode, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 export interface ModalProps {
 	open: boolean;
@@ -36,10 +36,11 @@ export const Modal = ({
 
 	if (!open || typeof window === "undefined") return null;
 
-		const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = (e) => {
-				if (/* intentional: backdrop-only click */ e.target === e.currentTarget) onClose();
-			};
-return createPortal(
+	const handleClick: NonNullable<ComponentProps<"div">["onClick"]> = e => {
+		if (/* intentional: backdrop-only click */ e.target === e.currentTarget)
+			onClose();
+	};
+	return createPortal(
 		<div
 			role="dialog"
 			aria-modal="true"
@@ -49,14 +50,19 @@ return createPortal(
 			<div
 				className={cn(
 					"w-full max-w-[340px] rounded-t-[16px] sm:rounded-[14px]",
-					"border-hairline border-bd-2 bg-surf shadow-md",
+					"border-[0.5px] border-bd-2 bg-surf shadow-md",
 					"px-5 pt-5 pb-[calc(20px+env(safe-area-inset-bottom))]",
 					"sm:p-6 sm:pb-6 animate-[fadeUp_0.2s_ease]",
 					className,
 				)}
 			>
 				{title ? (
-					<Typography tag="h2" className="font-display text-[18px] text-t-1 mb-4">{title}</Typography>
+					<Typography
+						tag="h2"
+						className="font-display text-[18px] text-t-1 mb-4"
+					>
+						{title}
+					</Typography>
 				) : null}
 				{children}
 			</div>

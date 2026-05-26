@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { ComponentProps, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { ComponentProps, useState } from "react";
 
 const LEVEL_KEYS = ["a1", "a2", "b1", "b2", "c1", "c2"] as const;
 type LevelKey = (typeof LEVEL_KEYS)[number];
@@ -62,32 +62,37 @@ export const LandingLevels = () => {
 					role="tablist"
 					aria-label="CEFR levels"
 				>
-					{LEVEL_KEYS.map((key) => {
-					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setActive(key);
-					  return (
-						<Button
-							key={key}
-							role="tab"
-							aria-selected={active === key}
-							onClick={handleClick}
-							className={cn(
-								"rounded-full border-hairline px-4 py-1.5 text-[13px] font-semibold transition-colors",
-								active === key
-									? "border-acc bg-acc-bg text-acc-t"
-									: "border-bd-2 bg-surf text-t-2 hover:border-bd-3 hover:text-t-1",
-							)}
-						>
-							{t(`landing.levels.tabs.${key}.label`)}
-							<Typography tag="span" className="ml-1.5 font-normal opacity-60">
-								{t(`landing.levels.tabs.${key}.name`)}
-							</Typography>
-						</Button>
-					);
+					{LEVEL_KEYS.map(key => {
+						const handleClick: NonNullable<
+							ComponentProps<"button">["onClick"]
+						> = () => setActive(key);
+						return (
+							<Button
+								key={key}
+								role="tab"
+								aria-selected={active === key}
+								onClick={handleClick}
+								className={cn(
+									"rounded-full border-[0.5px] px-4 py-1.5 text-[13px] font-semibold transition-colors",
+									active === key
+										? "border-acc bg-acc-bg text-acc-t"
+										: "border-bd-2 bg-surf text-t-2 hover:border-bd-3 hover:text-t-1",
+								)}
+							>
+								{t(`landing.levels.tabs.${key}.label`)}
+								<Typography
+									tag="span"
+									className="ml-1.5 font-normal opacity-60"
+								>
+									{t(`landing.levels.tabs.${key}.name`)}
+								</Typography>
+							</Button>
+						);
 					})}
 				</div>
 
 				<div className="grid grid-cols-2 gap-5 max-[640px]:grid-cols-1">
-					<article className="rounded-[14px] border-hairline border-bd-2 bg-surf p-6">
+					<article className="rounded-[14px] border-[0.5px] border-bd-2 bg-surf p-6">
 						<div className="mb-4 flex items-center justify-between">
 							<Typography
 								tag="h3"
@@ -95,7 +100,10 @@ export const LandingLevels = () => {
 							>
 								{t("landing.levels.myDict.title")}
 							</Typography>
-							<Typography tag="span" className="rounded-full bg-acc-bg px-2.5 py-0.5 text-[12px] font-medium text-acc-t">
+							<Typography
+								tag="span"
+								className="rounded-full bg-acc-bg px-2.5 py-0.5 text-[12px] font-medium text-acc-t"
+							>
 								{t("landing.levels.myDict.badge")}
 							</Typography>
 						</div>
@@ -105,27 +113,31 @@ export const LandingLevels = () => {
 									key={word}
 									className="flex items-center gap-3 rounded-[8px] bg-bg px-3 py-2"
 								>
-									<Typography tag="span"
+									<Typography
+										tag="span"
 										className={cn(
 											"h-2 w-2 shrink-0 rounded-full",
 											STATUS_COLOR[status],
 										)}
 									/>
-									<Typography tag="span" className="flex-1 text-[14px] font-medium text-t-1">
+									<Typography
+										tag="span"
+										className="flex-1 text-[14px] font-medium text-t-1"
+									>
 										{word}
 									</Typography>
-									<Typography tag="span" className="text-[13px] text-t-2">{translation}</Typography>
+									<Typography tag="span" className="text-[13px] text-t-2">
+										{translation}
+									</Typography>
 								</li>
 							))}
 						</ul>
-						<Button
-							className="mt-4 text-[13px] font-medium text-acc-t hover:underline"
-						>
+						<Button className="mt-4 text-[13px] font-medium text-acc-t hover:underline">
 							{t("landing.levels.myDict.viewAll")}
 						</Button>
 					</article>
 
-					<article className="rounded-[14px] border-hairline border-bd-2 bg-surf p-6">
+					<article className="rounded-[14px] border-[0.5px] border-bd-2 bg-surf p-6">
 						<Typography
 							tag="h3"
 							className="mb-6 text-[15px] font-semibold text-t-1"
@@ -133,7 +145,7 @@ export const LandingLevels = () => {
 							{t("landing.levels.weekStats.title")}
 						</Typography>
 						<div className="grid grid-cols-3 gap-x-4 gap-y-6">
-							{STAT_KEYS.map((k) => (
+							{STAT_KEYS.map(k => (
 								<div key={k} className="text-center">
 									<div className="font-display text-[24px] font-bold leading-none text-t-1">
 										{t(`landing.levels.weekStats.${k}v`)}

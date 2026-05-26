@@ -37,6 +37,10 @@ export const GrammarIcon = (props: SVGProps<SVGSVGElement>) => (
 	<BookOpen className="size-[15px] shrink-0" {...(props as object)} />
 );
 
+export const PhrasebookIcon = (props: SVGProps<SVGSVGElement>) => (
+	<BookOpen className="size-[15px] shrink-0" {...(props as object)} />
+);
+
 const accAlpha = (pct: number) =>
 	`color-mix(in srgb, var(--acc) ${pct}%, transparent)`;
 

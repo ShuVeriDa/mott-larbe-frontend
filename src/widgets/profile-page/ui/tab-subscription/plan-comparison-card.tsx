@@ -1,18 +1,29 @@
 "use client";
 
+import { UNLIMITED_SYMBOL, usePlans, type Plan } from "@/entities/subscription";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
-import { usePlans, UNLIMITED_SYMBOL, type Plan } from "@/entities/subscription";
 import { ProfileCard as SettingCard } from "../profile-card";
 
 const CheckIcon = () => (
-	<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-3 text-grn-t">
+	<svg
+		viewBox="0 0 12 12"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="1.5"
+		className="size-3 text-grn-t"
+	>
 		<path d="M2 6l3 3 5-5" strokeLinecap="round" strokeLinejoin="round" />
 	</svg>
 );
 
 const DashIcon = () => (
-	<Typography tag="span" className="inline-block w-3 text-center text-[12px] text-t-4">—</Typography>
+	<Typography
+		tag="span"
+		className="inline-block w-3 text-center text-[12px] text-t-4"
+	>
+		—
+	</Typography>
 );
 
 interface FeatureRow {
@@ -87,7 +98,13 @@ const buildRows = (
 	];
 };
 
-const CellValue = ({ value, color }: { value: string | boolean; color: string }) => {
+const CellValue = ({
+	value,
+	color,
+}: {
+	value: string | boolean;
+	color: string;
+}) => {
 	if (typeof value === "boolean") {
 		return value ? <CheckIcon /> : <DashIcon />;
 	}
@@ -103,31 +120,40 @@ export const PlanComparisonCard = () => {
 	const { data: plans } = usePlans();
 
 	const allPlans = [
-		...(plans?.groups.flatMap((g) => g.variants) ?? []),
+		...(plans?.groups.flatMap(g => g.variants) ?? []),
 		...(plans?.ungrouped ?? []),
 	];
 
-	const freePlan = allPlans.find((p) => p.type === "FREE");
-	const premiumPlan = allPlans.find((p) => p.type === "PREMIUM");
-	const proPlan = allPlans.find((p) => p.type === "PRO");
+	const freePlan = allPlans.find(p => p.type === "FREE");
+	const premiumPlan = allPlans.find(p => p.type === "PREMIUM");
+	const proPlan = allPlans.find(p => p.type === "PRO");
 
 	const rows = buildRows(freePlan, premiumPlan, proPlan, t);
 
 	return (
 		<SettingCard title={t("profile.planComparison.title")} noBody>
 			<div className="px-4 py-3.5">
-				<div className="grid grid-cols-[1fr_repeat(3,68px)] gap-1.5 pb-2 mb-1 border-b border-hairline border-bd-1">
+				<div className="grid grid-cols-[1fr_repeat(3,68px)] gap-1.5 pb-2 mb-1 border-b border-[0.5px] border-bd-1">
 					<div />
-					<div className="text-center text-[11px] font-semibold text-t-2">Free</div>
-					<div className="text-center text-[11px] font-semibold text-acc-t">Premium</div>
-					<div className="text-center text-[11px] font-semibold text-pur-t">Pro</div>
+					<div className="text-center text-[11px] font-semibold text-t-2">
+						Free
+					</div>
+					<div className="text-center text-[11px] font-semibold text-acc-t">
+						Premium
+					</div>
+					<div className="text-center text-[11px] font-semibold text-pur-t">
+						Pro
+					</div>
 				</div>
 				{rows.map((row, i) => (
 					<div
 						key={row.label}
-						className={`grid grid-cols-[1fr_repeat(3,68px)] gap-1.5 py-[7px] ${i < rows.length - 1 ? "border-b border-hairline border-bd-1" : ""}`}
+						className={`grid grid-cols-[1fr_repeat(3,68px)] gap-1.5 py-[7px] ${i < rows.length - 1 ? "border-b border-[0.5px] border-bd-1" : ""}`}
 					>
-						<Typography tag="span" className="flex items-center text-[12px] text-t-2 leading-[1.3]">
+						<Typography
+							tag="span"
+							className="flex items-center text-[12px] text-t-2 leading-[1.3]"
+						>
 							{row.label}
 						</Typography>
 						<div className="flex items-center justify-center">

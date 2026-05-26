@@ -18,18 +18,22 @@ export const WordFormRow = ({
 	const { t } = useI18n();
 
 	return (
-		<div className="flex gap-2 border-t border-hairline border-bd-1 px-5 py-3">
+		<div className="flex gap-2 border-t border-[0.5px] border-bd-1 px-5 py-3">
 			<Input
 				value={wordForm}
 				disabled
-				placeholder={t("admin.texts.editPage.wordAnnotation.wordFormPlaceholder")}
+				placeholder={t(
+					"admin.texts.editPage.wordAnnotation.wordFormPlaceholder",
+				)}
 				className="flex-1"
 				variant="readonly"
 			/>
 			<Input
 				value={formTranslation}
 				onChange={onFormTranslationChange}
-				placeholder={t("admin.texts.editPage.wordAnnotation.formTranslationPlaceholder")}
+				placeholder={t(
+					"admin.texts.editPage.wordAnnotation.formTranslationPlaceholder",
+				)}
 				className="flex-1 bg-white"
 			/>
 		</div>

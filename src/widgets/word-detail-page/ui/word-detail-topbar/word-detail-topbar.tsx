@@ -2,24 +2,30 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { Button } from "@/shared/ui/button";
-import { ComponentProps, useState } from 'react';
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, Pencil, RefreshCw, Trash2 } from "lucide-react";
 import {
 	useDictionaryNeighbors,
 	type DictionaryEntryDetail,
 } from "@/entities/dictionary";
 import { useDeleteWord } from "@/features/delete-word";
-import { ReviewWordModal } from "@/features/review-word";
 import { EntrySuggestModal } from "@/features/entry-suggest";
+import { ReviewWordModal } from "@/features/review-word";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import {
+	ChevronLeft,
+	ChevronRight,
+	Pencil,
+	RefreshCw,
+	Trash2,
+} from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ComponentProps, useState } from "react";
 
 const tbBtnClass = cn(
 	"inline-flex h-7 items-center gap-[5px] whitespace-nowrap rounded-base px-2.5",
-	"border-hairline border-bd-2 bg-surf-2 text-[12px] text-t-2 font-[inherit]",
+	"border-[0.5px] border-bd-2 bg-surf-2 text-[12px] text-t-2 font-[inherit]",
 	"transition-[color,border-color] duration-150 hover:text-t-1",
 	"disabled:opacity-40 disabled:cursor-not-allowed",
 );
@@ -48,14 +54,19 @@ export const WordDetailTopbar = ({ entry }: WordDetailTopbarProps) => {
 
 	const buildHref = (id: string) => `/${lang}/vocabulary/${id}`;
 
-	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setReviewOpen(true);
-	const handleClose: NonNullable<ComponentProps<typeof ReviewWordModal>["onClose"]> = () => setReviewOpen(false);
-	const handleSuggestOpen: NonNullable<ComponentProps<"button">["onClick"]> = () => setSuggestOpen(true);
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		setReviewOpen(true);
+	const handleClose: NonNullable<
+		ComponentProps<typeof ReviewWordModal>["onClose"]
+	> = () => setReviewOpen(false);
+	const handleSuggestOpen: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => setSuggestOpen(true);
 	const handleSuggestChange = (open: boolean) => setSuggestOpen(open);
 
-return (
+	return (
 		<>
-			<header className="flex shrink-0 items-center gap-2.5 border-b border-hairline border-bd-1 bg-surf px-[22px] py-3 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
+			<header className="flex shrink-0 items-center gap-2.5 border-b border-[0.5px] border-bd-1 bg-surf px-[22px] py-3 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
 				<Link
 					href={`/${lang}/vocabulary`}
 					className="inline-flex items-center gap-1.5 whitespace-nowrap p-0 text-[12.5px] text-t-3 transition-colors duration-150 hover:text-t-1 max-md:text-[12px]"
@@ -63,10 +74,15 @@ return (
 					<ChevronLeft className="size-3" strokeWidth={1.8} />
 					{t("vocabulary.wordDetail.back")}
 				</Link>
-				<Typography tag="span" aria-hidden="true" className="text-[12px] text-t-4">
+				<Typography
+					tag="span"
+					aria-hidden="true"
+					className="text-[12px] text-t-4"
+				>
 					·
 				</Typography>
-				<Typography tag="span"
+				<Typography
+					tag="span"
 					className={cn(
 						"min-w-0 truncate font-display text-[13px] font-semibold italic text-t-1",
 						"max-md:max-w-[120px]",
@@ -120,7 +136,9 @@ return (
 						className={cn(tbBtnClass, "border-red/20 text-red hover:text-red")}
 					>
 						<Trash2 className="size-3" strokeWidth={1.8} />
-						<Typography tag="span" className="max-md:hidden">{t("vocabulary.card.delete")}</Typography>
+						<Typography tag="span" className="max-md:hidden">
+							{t("vocabulary.card.delete")}
+						</Typography>
 					</Button>
 				</div>
 			</header>

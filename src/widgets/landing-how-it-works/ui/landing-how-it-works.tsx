@@ -11,7 +11,7 @@ export const LandingHowItWorks = () => {
 	return (
 		<section
 			id="how"
-			className="border-hairline border-y border-bd-1 bg-surf-2 px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
+			className="border-[0.5px] border-y border-bd-1 bg-surf-2 px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
 			aria-labelledby="how-title"
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
@@ -35,7 +35,8 @@ export const LandingHowItWorks = () => {
 				</header>
 
 				<ol className="relative grid grid-cols-3 gap-6 max-[900px]:grid-cols-1 max-[900px]:gap-8">
-					<Typography tag="span"
+					<Typography
+						tag="span"
 						aria-hidden="true"
 						className="pointer-events-none absolute left-[12%] right-[12%] top-7 h-px max-[900px]:hidden"
 						style={{
@@ -49,7 +50,7 @@ export const LandingHowItWorks = () => {
 							key={step}
 							className="relative z-[1] px-3 text-center max-[900px]:px-0"
 						>
-							<div className="mx-auto mb-[18px] flex h-14 w-14 items-center justify-center rounded-full border-hairline border-bd-2 bg-surf font-display text-[22px] font-semibold text-acc-t shadow-sm">
+							<div className="mx-auto mb-[18px] flex h-14 w-14 items-center justify-center rounded-full border-[0.5px] border-bd-2 bg-surf font-display text-[22px] font-semibold text-acc-t shadow-sm">
 								{idx + 1}
 							</div>
 							<Typography

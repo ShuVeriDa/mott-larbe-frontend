@@ -2,12 +2,12 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { Button } from "@/shared/ui/button";
-import { ComponentProps, useState } from 'react';
-import Link from "next/link";
 import type { DetailWordContext } from "@/entities/dictionary";
 import { useDictionaryWordContexts } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import Link from "next/link";
+import { ComponentProps, useState } from "react";
 import { CardSection } from "../card-section";
 
 export interface ContextsSectionProps {
@@ -31,14 +31,13 @@ const renderHighlighted = (snippet: string, pattern: RegExp) => {
 	const parts = snippet.split(pattern);
 	return parts.map((part, idx) =>
 		pattern.test(part) ? (
-			<mark
-				key={idx}
-				className="rounded-[3px] bg-acc-bg px-0.5 text-acc-t"
-			>
+			<mark key={idx} className="rounded-[3px] bg-acc-bg px-0.5 text-acc-t">
 				{part}
 			</mark>
 		) : (
-			<Typography tag="span" key={idx}>{part}</Typography>
+			<Typography tag="span" key={idx}>
+				{part}
+			</Typography>
 		),
 	);
 };
@@ -57,14 +56,20 @@ const ContextItem = ({
 		<li>
 			<Link
 				href={`/${lang}/reader/${ctx.text.id}`}
-				className="block rounded-[8px] border-hairline border-bd-1 bg-surf-2 px-3 py-2.5 transition-colors duration-150 hover:border-bd-2"
+				className="block rounded-[8px] border-[0.5px] border-bd-1 bg-surf-2 px-3 py-2.5 transition-colors duration-150 hover:border-bd-2"
 			>
 				<Typography tag="p" className="mb-1 text-[13px] leading-[1.6] text-t-2">
-					«{ctx.snippet ? renderHighlighted(ctx.snippet, pattern) : pattern.source}»
+					«
+					{ctx.snippet
+						? renderHighlighted(ctx.snippet, pattern)
+						: pattern.source}
+					»
 				</Typography>
 				<Typography tag="p" className="text-[11px] text-t-3">
 					{ctx.text.title}
-					{ctx.text.level ? ` · ${t(`shared.cefrLevel.${ctx.text.level}`)}` : ""}
+					{ctx.text.level
+						? ` · ${t(`shared.cefrLevel.${ctx.text.level}`)}`
+						: ""}
 				</Typography>
 			</Link>
 		</li>
@@ -97,8 +102,9 @@ export const ContextsSection = ({
 		);
 	}
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setExpanded(true);
-return (
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		setExpanded(true);
+	return (
 		<CardSection
 			title={t("vocabulary.wordDetail.sections.contexts")}
 			rightSlot={
@@ -108,15 +114,13 @@ return (
 						title={t("vocabulary.wordDetail.sections.contextsAll")}
 						className="border-0 bg-transparent p-0 text-[11.5px] text-acc font-[inherit] hover:underline"
 					>
-						{isFetching
-							? "…"
-							: t("vocabulary.wordDetail.sections.contextsAll")}
+						{isFetching ? "…" : t("vocabulary.wordDetail.sections.contextsAll")}
 					</Button>
 				) : undefined
 			}
 		>
 			<ul className="flex flex-col gap-1.5">
-				{displayed.map((ctx) => (
+				{displayed.map(ctx => (
 					<ContextItem key={ctx.id} ctx={ctx} pattern={pattern} lang={lang} />
 				))}
 			</ul>

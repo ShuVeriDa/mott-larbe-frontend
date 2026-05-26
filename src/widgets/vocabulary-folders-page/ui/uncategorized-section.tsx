@@ -2,11 +2,6 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { Button } from "@/shared/ui/button";
-import { ComponentProps, useState } from 'react';
-import { ChevronRight, Plus } from "lucide-react";
-import { cn } from "@/shared/lib/cn";
-import { useI18n } from "@/shared/lib/i18n";
 import { useDictionaryList, type DictionaryEntry } from "@/entities/dictionary";
 import { useFolders, type Folder } from "@/entities/folder";
 import {
@@ -14,6 +9,11 @@ import {
 	FolderPickerPopover,
 	useAssignEntriesToFolder,
 } from "@/features/assign-folder";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import { ChevronRight, Plus } from "lucide-react";
+import { ComponentProps, useState } from "react";
 
 const PAGE_SIZE = 50;
 
@@ -34,24 +34,35 @@ const Chip = ({
 }) => {
 	const [open, setOpen] = useState(false);
 
-	const handleFolderPickerToggle: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
-	const handleClose: NonNullable<ComponentProps<typeof FolderPickerPopover>["onClose"]> = () => setOpen(false);
-	const handlePick: NonNullable<ComponentProps<typeof FolderPickerPopover>["onPick"]> = (folderId) => {
-					onAssign(entry.id, folderId);
-					setOpen(false);
-				};
-return (
+	const handleFolderPickerToggle: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => setOpen(v => !v);
+	const handleClose: NonNullable<
+		ComponentProps<typeof FolderPickerPopover>["onClose"]
+	> = () => setOpen(false);
+	const handlePick: NonNullable<
+		ComponentProps<typeof FolderPickerPopover>["onPick"]
+	> = folderId => {
+		onAssign(entry.id, folderId);
+		setOpen(false);
+	};
+	return (
 		<div className="relative">
 			<div
 				className={cn(
-					"flex items-center gap-1.5 rounded-base border-hairline border-bd-1 bg-surf-2 px-2.5 py-[5px]",
+					"flex items-center gap-1.5 rounded-base border-[0.5px] border-bd-1 bg-surf-2 px-2.5 py-[5px]",
 					"transition-colors hover:border-bd-2",
 				)}
 			>
-				<Typography tag="span" className="font-display text-[13px] italic text-t-1">
+				<Typography
+					tag="span"
+					className="font-display text-[13px] italic text-t-1"
+				>
 					{entry.word}
 				</Typography>
-				<Typography tag="span" className="text-[11.5px] text-t-3">{entry.translation}</Typography>
+				<Typography tag="span" className="text-[11.5px] text-t-3">
+					{entry.translation}
+				</Typography>
 				<Button
 					aria-label={assignLabel}
 					onClick={handleFolderPickerToggle}
@@ -121,11 +132,13 @@ const UncategorizedChips = ({
 		);
 	}
 
-		const handleShowMoreClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setLimit((l) => l + PAGE_SIZE);
-return (
+	const handleShowMoreClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => setLimit(l => l + PAGE_SIZE);
+	return (
 		<div className="flex flex-col gap-2.5">
 			<div className="flex flex-wrap gap-1.5">
-				{items.map((entry) => (
+				{items.map(entry => (
 					<Chip
 						key={entry.id}
 						entry={entry}
@@ -140,7 +153,9 @@ return (
 			{hasMore && (
 				<Button
 					onClick={handleShowMoreClick}
-					title={t("vocabulary.foldersPage.uncategorized.showMore", { count: total - items.length })}
+					title={t("vocabulary.foldersPage.uncategorized.showMore", {
+						count: total - items.length,
+					})}
 					className="self-start text-[12px] text-acc transition-colors hover:text-acc/70"
 				>
 					{t("vocabulary.foldersPage.uncategorized.showMore", {
@@ -164,15 +179,21 @@ export const UncategorizedSection = ({ count }: UncategorizedSectionProps) => {
 	const handleAssign = (entryId: string, folderId: string) =>
 		assign({ assignments: [{ id: entryId, folderId }] });
 
-		const handleExpandClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setOpen((v) => !v);
-	const handleDistributeClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setDistributeOpen(true);
-	const handleClose: NonNullable<ComponentProps<typeof DistributeAllModal>["onClose"]> = () => setDistributeOpen(false);
-return (
+	const handleExpandClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => setOpen(v => !v);
+	const handleDistributeClick: NonNullable<
+		ComponentProps<"button">["onClick"]
+	> = () => setDistributeOpen(true);
+	const handleClose: NonNullable<
+		ComponentProps<typeof DistributeAllModal>["onClose"]
+	> = () => setDistributeOpen(false);
+	return (
 		<>
-			<div className="overflow-hidden rounded-card border-hairline border-bd-1 bg-surf">
+			<div className="overflow-hidden rounded-card border-[0.5px] border-bd-1 bg-surf">
 				<div
 					className={cn(
-						"flex w-full items-center gap-2.5 border-hairline border-b border-bd-1 px-[18px] py-3.5",
+						"flex w-full items-center gap-2.5 border-[0.5px] border-b border-bd-1 px-[18px] py-3.5",
 						isPending && "opacity-60",
 					)}
 				>
@@ -189,7 +210,10 @@ return (
 							)}
 							strokeWidth={1.6}
 						/>
-						<Typography tag="span" className="flex-1 text-[13px] font-semibold text-t-2">
+						<Typography
+							tag="span"
+							className="flex-1 text-[13px] font-semibold text-t-2"
+						>
 							{t("vocabulary.foldersPage.uncategorized.title")}
 						</Typography>
 						<Typography tag="span" className="text-[12px] text-t-3">

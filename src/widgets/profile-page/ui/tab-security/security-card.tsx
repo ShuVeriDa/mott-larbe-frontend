@@ -1,31 +1,49 @@
 "use client";
-import { ComponentProps, useState } from 'react';
+import { useTerminateAllSessions } from "@/entities/auth";
+import type { UserProfile } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
-import { useTerminateAllSessions } from "@/entities/auth";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import type { UserProfile } from "@/entities/user";
+import { ComponentProps, useState } from "react";
 import { ProfileCard as SettingCard } from "../profile-card";
-import { ChangePasswordModal } from "./change-password-modal";
 import { ChangeEmailModal } from "./change-email-modal";
+import { ChangePasswordModal } from "./change-password-modal";
 
 const LockIcon = () => (
-	<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" className="size-3.5">
+	<svg
+		viewBox="0 0 16 16"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="1.4"
+		className="size-3.5"
+	>
 		<rect x="4" y="7" width="8" height="7" rx="1.5" />
 		<path d="M5.5 7V5.5a2.5 2.5 0 0 1 5 0V7" strokeLinecap="round" />
 	</svg>
 );
 
 const EmailIcon = () => (
-	<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" className="size-3.5">
+	<svg
+		viewBox="0 0 16 16"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="1.4"
+		className="size-3.5"
+	>
 		<rect x="2" y="4" width="12" height="9" rx="1.5" />
 		<path d="M2 6l6 4 6-4" strokeLinecap="round" />
 	</svg>
 );
 
 const SessionsIcon = () => (
-	<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" className="size-3.5">
+	<svg
+		viewBox="0 0 16 16"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="1.4"
+		className="size-3.5"
+	>
 		<rect x="2.5" y="2.5" width="11" height="11" rx="2" />
 		<path d="M5.5 8l2 2 3-3" strokeLinecap="round" strokeLinejoin="round" />
 	</svg>
@@ -40,7 +58,8 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 	const { success, error } = useToast();
 	const [passwordModalOpen, setPasswordModalOpen] = useState(false);
 	const [emailModalOpen, setEmailModalOpen] = useState(false);
-	const { mutate: terminateAll, isPending: terminatingAll } = useTerminateAllSessions();
+	const { mutate: terminateAll, isPending: terminatingAll } =
+		useTerminateAllSessions();
 
 	const handleTerminateAll = () => {
 		terminateAll(undefined, {
@@ -49,9 +68,13 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 		});
 	};
 
-		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => setPasswordModalOpen(true);
-	const handleClick2: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => setEmailModalOpen(true);
-const rows = [
+	const handleClick: NonNullable<
+		ComponentProps<typeof Button>["onClick"]
+	> = () => setPasswordModalOpen(true);
+	const handleClick2: NonNullable<
+		ComponentProps<typeof Button>["onClick"]
+	> = () => setEmailModalOpen(true);
+	const rows = [
 		{
 			id: "password",
 			Icon: LockIcon,
@@ -103,21 +126,31 @@ const rows = [
 		},
 	];
 
-		const handleClose: NonNullable<ComponentProps<typeof ChangePasswordModal>["onClose"]> = () => setPasswordModalOpen(false);
-	const handleClose2: NonNullable<ComponentProps<typeof ChangeEmailModal>["onClose"]> = () => setEmailModalOpen(false);
-return (
+	const handleClose: NonNullable<
+		ComponentProps<typeof ChangePasswordModal>["onClose"]
+	> = () => setPasswordModalOpen(false);
+	const handleClose2: NonNullable<
+		ComponentProps<typeof ChangeEmailModal>["onClose"]
+	> = () => setEmailModalOpen(false);
+	return (
 		<>
 			<SettingCard title={t("profile.security.title")} noBody>
-				{rows.map((row) => (
+				{rows.map(row => (
 					<div
 						key={row.id}
-						className="flex items-center gap-3 border-b border-hairline border-bd-1 px-4 py-3 last:border-b-0"
+						className="flex items-center gap-3 border-b border-[0.5px] border-bd-1 px-4 py-3 last:border-b-0"
 					>
-						<Typography tag="span" className={`flex size-8 shrink-0 items-center justify-center rounded-[8px] ${row.iconBg}`}>
+						<Typography
+							tag="span"
+							className={`flex size-8 shrink-0 items-center justify-center rounded-[8px] ${row.iconBg}`}
+						>
 							<row.Icon />
 						</Typography>
 						<div className="flex-1 min-w-0">
-							<Typography tag="p" className="text-[12.5px] font-medium text-t-1 mb-0.5">
+							<Typography
+								tag="p"
+								className="text-[12.5px] font-medium text-t-1 mb-0.5"
+							>
 								{row.name}
 							</Typography>
 							<Typography tag="p" className="text-[11px] text-t-3 truncate">
@@ -129,14 +162,8 @@ return (
 				))}
 			</SettingCard>
 
-			<ChangePasswordModal
-				open={passwordModalOpen}
-				onClose={handleClose}
-			/>
-			<ChangeEmailModal
-				open={emailModalOpen}
-				onClose={handleClose2}
-			/>
+			<ChangePasswordModal open={passwordModalOpen} onClose={handleClose} />
+			<ChangeEmailModal open={emailModalOpen} onClose={handleClose2} />
 		</>
 	);
 };

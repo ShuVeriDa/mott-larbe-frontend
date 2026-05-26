@@ -1,6 +1,5 @@
 "use client";
 
-import { ComponentProps } from 'react';
 import {
 	useSessions,
 	useTerminateAllSessions,
@@ -10,9 +9,10 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { LaptopIcon, PhoneIcon, SessionsIcon } from "../settings-icons";
+import { ComponentProps } from "react";
 import { SectionHeader } from "../section-header";
 import { SettingCard } from "../setting-card";
+import { LaptopIcon, PhoneIcon, SessionsIcon } from "../settings-icons";
 
 const resolveIcon = (device: string) => {
 	const lower = device.toLowerCase();
@@ -97,19 +97,24 @@ export const SessionsSection = () => {
 
 				{!isLoading &&
 					!isError &&
-					sessions.map((s) => {
+					sessions.map(s => {
 						const age = formatDate(s.createdAt);
 						const icon = resolveIcon(s.device);
 						const isTerminating =
 							terminateOne.isPending && terminateOne.variables === s.id;
 
-												const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = () => handleTerminate(s.id);
-return (
+						const handleClick: NonNullable<
+							ComponentProps<typeof Button>["onClick"]
+						> = () => handleTerminate(s.id);
+						return (
 							<div
 								key={s.id}
-								className="flex items-center gap-3 border-hairline border-b border-bd-1 px-4 py-2.5 last:border-b-0"
+								className="flex items-center gap-3 border-[0.5px] border-b border-bd-1 px-4 py-2.5 last:border-b-0"
 							>
-								<Typography tag="span" className="flex size-8 shrink-0 items-center justify-center rounded-[8px] border-hairline border-bd-1 bg-surf-2">
+								<Typography
+									tag="span"
+									className="flex size-8 shrink-0 items-center justify-center rounded-[8px] border-[0.5px] border-bd-1 bg-surf-2"
+								>
 									{renderIcon(icon)}
 								</Typography>
 								<div className="min-w-0 flex-1">
@@ -128,7 +133,10 @@ return (
 									</Typography>
 								</div>
 								{s.isCurrent ? (
-									<Typography tag="span" className="rounded bg-grn-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-grn-t">
+									<Typography
+										tag="span"
+										className="rounded bg-grn-bg px-1.5 py-0.5 text-[10.5px] font-semibold text-grn-t"
+									>
 										{t("settings.sessions.current")}
 									</Typography>
 								) : (

@@ -9,8 +9,8 @@ import Link from "next/link";
 
 const STATUS_CLASS: Record<string, string> = {
 	KNOWN: "bg-grn-bg text-grn-t",
-	LEARNING: "bg-amb-bg text-amb-t",
-	NEW: "bg-surf-3 text-t-3",
+	LEARNING: "bg-acc-bg text-acc-t",
+	NEW: "bg-amb-bg text-t-3",
 };
 
 export const NavVocab = () => {
@@ -21,8 +21,8 @@ export const NavVocab = () => {
 	if (items.length === 0) return null;
 
 	return (
-		<div className="px-3.5 pb-2.5 pt-1">
-			<div className="mb-1.5 flex items-center justify-between">
+		<div className="flex flex-col w-full px-3.5 pb-2.5 pt-1.5 border-t-[0.5px] border-t-[bd]">
+			<div className="mb-1.5 flex items-center justify-between ">
 				<Typography
 					tag="span"
 					className="text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3"
@@ -37,30 +37,37 @@ export const NavVocab = () => {
 				</Link>
 			</div>
 
-			<div className="flex flex-col">
+			<div className="flex flex-col w-full">
 				{items.map(item => (
-					<div key={item.id} className="flex items-center gap-1.5 py-[2.5px]">
-						<Typography
-							tag="span"
-							className="min-w-0 flex-1 truncate text-[11.5px] font-medium text-t-1"
-						>
-							{item.word}
-						</Typography>
-						<Typography
-							tag="span"
-							className="max-w-[58px] truncate text-[10.5px] text-t-3"
-						>
-							{item.translation}
-						</Typography>
-						<Typography
-							tag="span"
-							className={cn(
-								"shrink-0 rounded-[3px] px-[5px] py-[1.5px] text-[9px] font-semibold uppercase",
-								STATUS_CLASS[item.wordProgressStatus] ?? "bg-surf-3 text-t-3",
-							)}
-						>
-							{t(`nav.wordStatus.${item.wordProgressStatus}`)}
-						</Typography>
+					<div
+						key={item.id}
+						className="flex items-center justify-between w-full gap-1.5 py-[4.5px] border-b-[0.5px] border-b-[bd]"
+					>
+						<div className="flex flex-col w-full">
+							<Typography
+								tag="span"
+								className="min-w-0 flex-1 truncate text-[12px] font-medium text-t-1"
+							>
+								{item.word}
+							</Typography>
+							<Typography
+								tag="span"
+								className="max-w-[150px] truncate text-[10.5px] text-t-3"
+							>
+								{item.translation}
+							</Typography>
+						</div>
+						<div>
+							<Typography
+								tag="span"
+								className={cn(
+									"shrink-0 rounded-[3px] px-1.5 py-0.5 text-[10px] font-semibold uppercase",
+									STATUS_CLASS[item.wordProgressStatus] ?? "bg-surf-3 text-t-3",
+								)}
+							>
+								{t(`nav.wordStatus.${item.wordProgressStatus}`)}
+							</Typography>
+						</div>
 					</div>
 				))}
 			</div>

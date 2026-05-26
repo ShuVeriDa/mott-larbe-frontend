@@ -1,8 +1,8 @@
 "use client";
 
-import type { ComponentProps } from 'react';
-import { Switch as SwitchPrimitive } from "radix-ui";
 import { cn } from "@/shared/lib/cn";
+import { Switch as SwitchPrimitive } from "radix-ui";
+import type { ComponentProps } from "react";
 
 export type ToggleProps = ComponentProps<typeof SwitchPrimitive.Root>;
 
@@ -10,7 +10,7 @@ export const Toggle = ({ className, ...props }: ToggleProps) => (
 	<SwitchPrimitive.Root
 		data-slot="toggle"
 		className={cn(
-			"relative inline-flex shrink-0 w-[34px] h-5 rounded-[10px] border-hairline outline-none cursor-pointer",
+			"relative inline-flex shrink-0 w-[34px] h-5 rounded-[10px] border-[0.5px] outline-none cursor-pointer",
 			"transition-[background-color,border-color] duration-200",
 			"data-[state=unchecked]:bg-surf-3 data-[state=unchecked]:border-bd-2",
 			"data-[state=checked]:bg-acc data-[state=checked]:border-acc",

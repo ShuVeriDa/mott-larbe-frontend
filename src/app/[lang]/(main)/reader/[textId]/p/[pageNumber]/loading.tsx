@@ -1,13 +1,22 @@
 import { CSSProperties } from "react";
 
-const Bone = ({ className, style }: { className: string; style?: CSSProperties }) => (
-	<div className={`animate-pulse rounded bg-surf-3 ${className}`} style={style} />
+const Bone = ({
+	className,
+	style,
+}: {
+	className: string;
+	style?: CSSProperties;
+}) => (
+	<div
+		className={`animate-pulse rounded bg-surf-3 ${className}`}
+		style={style}
+	/>
 );
 
 const ReaderPageLoading = () => (
 	<>
 		{/* Topbar */}
-		<header className="flex h-[46px] shrink-0 items-center gap-2 border-b border-hairline border-bd-1 bg-surf px-4">
+		<header className="flex h-[46px] shrink-0 items-center gap-2 border-b border-[0.5px] border-bd-1 bg-surf px-4">
 			{/* Back button */}
 			<Bone className="h-6 w-20" />
 
@@ -49,7 +58,7 @@ const ReaderPageLoading = () => (
 				</div>
 
 				{/* Article header */}
-				<div className="mb-7 border-b border-hairline border-bd-1 pb-6">
+				<div className="mb-7 border-b border-[0.5px] border-bd-1 pb-6">
 					{/* Badges */}
 					<div className="mb-3 flex flex-wrap gap-1.5">
 						<Bone className="h-4 w-14" />

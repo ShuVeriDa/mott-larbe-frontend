@@ -50,13 +50,21 @@ export const AnnotateWordFormDialog = ({
 		handleToggleOccurrence,
 		handleToggleAll,
 		handleSave,
-	} = useAnnotateWordFormDialog({ initialWordForm: wordForm, textId, initialSelectedTokenId, onOpenChange });
+	} = useAnnotateWordFormDialog({
+		initialWordForm: wordForm,
+		textId,
+		initialSelectedTokenId,
+		onOpenChange,
+	});
 
 	const handleCancel = () => handleOpenChange(false);
 
 	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
-			<DialogContent aria-describedby={undefined} className="max-w-lg gap-0 p-0">
+			<DialogContent
+				aria-describedby={undefined}
+				className="max-w-lg gap-0 p-0"
+			>
 				<DialogHeader className="px-5 pt-5 pb-4">
 					<DialogTitle>
 						{t("admin.texts.editPage.wordAnnotation.dialogTitle")}
@@ -90,12 +98,12 @@ export const AnnotateWordFormDialog = ({
 					/>
 				)}
 
-				<div className="flex gap-2 border-t border-hairline border-bd-1 px-5 py-4">
+				<div className="flex gap-2 border-t border-[0.5px] border-bd-1 px-5 py-4">
 					<Button
 						size="bare"
 						title={t("reader.annotate.cancel")}
 						onClick={handleCancel}
-						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-hairline border-bd-2 bg-surf-2 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
+						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-[0.5px] border-bd-2 bg-surf-2 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
 					>
 						{t("reader.annotate.cancel")}
 					</Button>

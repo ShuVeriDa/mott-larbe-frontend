@@ -62,7 +62,7 @@ export const LandingPricing = ({ startHref }: LandingPricingProps) => {
 	return (
 		<section
 			id="pricing"
-			className="border-hairline border-y border-bd-1 bg-surf-2 px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
+			className="border-[0.5px] border-y border-bd-1 bg-surf-2 px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
 			aria-labelledby="pricing-title"
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
@@ -87,13 +87,9 @@ export const LandingPricing = ({ startHref }: LandingPricingProps) => {
 				</header>
 
 				<div className="mt-10 grid grid-cols-3 items-stretch gap-4 max-[900px]:mx-auto max-[900px]:max-w-[460px] max-[900px]:grid-cols-1">
-					{PLANS.map((plan) => {
-						const monthlyPrice = t(
-							`landing.pricing.plans.${plan.key}.priceM`,
-						);
-						const yearlyPrice = t(
-							`landing.pricing.plans.${plan.key}.priceY`,
-						);
+					{PLANS.map(plan => {
+						const monthlyPrice = t(`landing.pricing.plans.${plan.key}.priceM`);
+						const yearlyPrice = t(`landing.pricing.plans.${plan.key}.priceY`);
 						const isYearly = period === "yearly";
 						const price = isYearly ? yearlyPrice : monthlyPrice;
 						const priceOld =

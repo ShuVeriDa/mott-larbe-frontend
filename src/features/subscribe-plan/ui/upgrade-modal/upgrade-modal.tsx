@@ -61,7 +61,7 @@ export const UpgradeModal = ({
 				{t("subscription.modal.upgrade.subtitle")}
 			</Typography>
 
-			<div className="mb-4 rounded-[9px] border-hairline border-bd-1 bg-surf-2 p-3.5">
+			<div className="mb-4 rounded-[9px] border-[0.5px] border-bd-1 bg-surf-2 p-3.5">
 				<Typography
 					tag="span"
 					className="mb-1 block text-[13.5px] font-semibold text-t-1"
@@ -79,11 +79,19 @@ export const UpgradeModal = ({
 				</Typography>
 			</div>
 
-			<ModalActions className="justify-end">
-				<Button variant="ghost" onClick={onClose} disabled={isPending}>
+			<ModalActions>
+				<Button
+					onClick={onClose}
+					disabled={isPending}
+					className="h-[34px] rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
+				>
 					{t("subscription.modal.upgrade.cancel")}
 				</Button>
-				<Button variant="action" onClick={handleConfirm} disabled={isPending}>
+				<Button
+					onClick={handleConfirm}
+					disabled={isPending}
+					className="h-[34px] flex-1 rounded-lg bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
+				>
 					{isPending
 						? t("subscription.modal.upgrade.submitting")
 						: t("subscription.modal.upgrade.confirm")}

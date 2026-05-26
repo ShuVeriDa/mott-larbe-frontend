@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowRight, Check, PlayCircle } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { ArrowRight, Check, PlayCircle } from "lucide-react";
+import Link from "next/link";
 import { ReaderMock } from "./reader-mock";
 
 interface LandingHeroProps {
@@ -31,9 +31,12 @@ export const LandingHero = ({ startHref }: LandingHeroProps) => {
 				<div>
 					<Typography
 						tag="span"
-						className="mb-[22px] inline-flex items-center gap-1.5 rounded-full border-hairline border-acc/25 bg-acc-bg px-[11px] py-[5px] text-[11.5px] font-semibold text-acc-t"
+						className="mb-[22px] inline-flex items-center gap-1.5 rounded-full border-[0.5px] border-acc/25 bg-acc-bg px-[11px] py-[5px] text-[11.5px] font-semibold text-acc-t"
 					>
-						<Typography tag="span" className="h-1.5 w-1.5 rounded-full bg-acc" />
+						<Typography
+							tag="span"
+							className="h-1.5 w-1.5 rounded-full bg-acc"
+						/>
 						{t("landing.hero.eyebrow")}
 					</Typography>
 
@@ -43,7 +46,10 @@ export const LandingHero = ({ startHref }: LandingHeroProps) => {
 						className="mb-[22px] font-display text-[56px] font-semibold leading-[1.05] tracking-[-1px] text-t-1 max-[900px]:text-[44px] max-[640px]:text-[34px] max-[640px]:tracking-[-0.5px]"
 					>
 						{t("landing.hero.titleStart")}{" "}
-						<Typography tag="em" className="not-italic font-medium text-acc-t italic">
+						<Typography
+							tag="em"
+							className="not-italic font-medium text-acc-t italic"
+						>
 							{t("landing.hero.titleEm")}
 						</Typography>{" "}
 						{t("landing.hero.titleEnd")}
@@ -63,7 +69,7 @@ export const LandingHero = ({ startHref }: LandingHeroProps) => {
 						</Link>
 						<Link
 							href="#how"
-							className="inline-flex h-[46px] items-center gap-1.5 rounded-[9px] border-hairline border-bd-2 bg-transparent px-5 text-[14px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-2 max-[640px]:w-full max-[640px]:justify-center"
+							className="inline-flex h-[46px] items-center gap-1.5 rounded-[9px] border-[0.5px] border-bd-2 bg-transparent px-5 text-[14px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-2 max-[640px]:w-full max-[640px]:justify-center"
 						>
 							<PlayCircle size={14} strokeWidth={1.5} />
 							{t("landing.hero.how")}

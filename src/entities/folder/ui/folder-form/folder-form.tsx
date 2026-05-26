@@ -1,9 +1,8 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { useFolderForm } from "../../model";
-import { Input, InputLabel } from "@/shared/ui/input";
 import { cn } from "@/shared/lib/cn";
+import { Button } from "@/shared/ui/button";
+import { Input, InputLabel } from "@/shared/ui/input";
 import {
 	DEFAULT_FOLDER_COLOR,
 	DEFAULT_FOLDER_ICON,
@@ -12,6 +11,7 @@ import {
 	type FolderColor,
 	type FolderIconKey,
 } from "../../lib/folder-presets";
+import { useFolderForm } from "../../model";
 import { FolderIcon } from "../folder-icon";
 
 export interface FolderFormValue {
@@ -89,7 +89,7 @@ export const FolderForm = ({
 					rows={3}
 					className={cn(
 						"min-h-[68px] w-full resize-none rounded-base px-[10px] py-2",
-						"border-hairline border-bd-2 bg-surf-2",
+						"border-[0.5px] border-bd-2 bg-surf-2",
 						"text-[13px] text-t-1 font-[inherit] outline-none",
 						"transition-colors duration-100",
 						"placeholder:text-t-3 focus:border-acc",
@@ -102,25 +102,25 @@ export const FolderForm = ({
 					{labels.iconLabel}
 				</div>
 				<div className="flex flex-wrap gap-1.5">
-					{FOLDER_ICON_KEYS.map((iconKey) => {
-					  return (
-						<Button
-							key={iconKey}
-							data-icon={iconKey}
-							onClick={handleIconClick}
-							aria-pressed={internal.icon === iconKey}
-							title={iconKey}
-							className={cn(
-								"flex size-9 items-center justify-center rounded-[8px]",
-								"border-hairline transition-[background-color,border-color]",
-								internal.icon === iconKey
-									? "border-acc bg-acc-bg text-acc"
-									: "border-bd-1 bg-surf-2 text-t-2 hover:border-bd-2 hover:text-t-1",
-							)}
-						>
-							<FolderIcon icon={iconKey} className="size-[15px]" />
-						</Button>
-					);
+					{FOLDER_ICON_KEYS.map(iconKey => {
+						return (
+							<Button
+								key={iconKey}
+								data-icon={iconKey}
+								onClick={handleIconClick}
+								aria-pressed={internal.icon === iconKey}
+								title={iconKey}
+								className={cn(
+									"flex size-9 items-center justify-center rounded-[8px]",
+									"border-[0.5px] transition-[background-color,border-color]",
+									internal.icon === iconKey
+										? "border-acc bg-acc-bg text-acc"
+										: "border-bd-1 bg-surf-2 text-t-2 hover:border-bd-2 hover:text-t-1",
+								)}
+							>
+								<FolderIcon icon={iconKey} className="size-[15px]" />
+							</Button>
+						);
 					})}
 				</div>
 			</div>
@@ -130,9 +130,9 @@ export const FolderForm = ({
 					{labels.colorLabel}
 				</div>
 				<div className="flex flex-wrap gap-[7px]">
-					{FOLDER_COLORS.map((c) => {
+					{FOLDER_COLORS.map(c => {
 						const selected = internal.color === c;
-return (
+						return (
 							<Button
 								key={c}
 								data-color={c}

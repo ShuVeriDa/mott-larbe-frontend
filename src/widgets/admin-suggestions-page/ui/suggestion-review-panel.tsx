@@ -1,13 +1,13 @@
 "use client";
 
-import { ChangeEvent } from "react";
-import { CheckCircle, Inbox, XCircle } from "lucide-react";
+import type { Suggestion } from "@/features/suggestions";
 import { Button } from "@/shared/ui/button";
 import { InputLabel } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
 import { Typography } from "@/shared/ui/typography";
 import { SuggestionStatusBadge } from "@/widgets/suggestions-page/ui/suggestion-status-badge";
-import type { Suggestion } from "@/features/suggestions";
+import { CheckCircle, Inbox, XCircle } from "lucide-react";
+import { ChangeEvent } from "react";
 
 const displayValue = (raw: string | null) => {
 	if (!raw) return "—";
@@ -54,7 +54,10 @@ export const SuggestionReviewPanel = ({
 			{/* Header */}
 			<div className="mb-5 flex items-start justify-between gap-3">
 				<div>
-					<Typography tag="p" className="font-display text-[20px] font-semibold italic text-t-1">
+					<Typography
+						tag="p"
+						className="font-display text-[20px] font-semibold italic text-t-1"
+					>
 						{suggestion.entry?.rawWord ?? "—"}
 					</Typography>
 					<Typography tag="p" className="mt-1 text-[12px] text-t-3">
@@ -75,19 +78,31 @@ export const SuggestionReviewPanel = ({
 			<div className="mb-5 overflow-hidden rounded-card border border-bd-1 bg-surf">
 				{suggestion.oldValue !== null && (
 					<div className="border-b border-bd-1 px-4 py-3">
-						<Typography tag="p" className="mb-1 text-[11px] font-medium uppercase tracking-wide text-t-3">
+						<Typography
+							tag="p"
+							className="mb-1 text-[11px] font-medium uppercase tracking-wide text-t-3"
+						>
 							{t("adminSuggestions.oldValue")}
 						</Typography>
-						<Typography tag="p" className="text-[13px] text-red/80 line-through">
+						<Typography
+							tag="p"
+							className="text-[13px] text-red/80 line-through"
+						>
 							{displayValue(suggestion.oldValue)}
 						</Typography>
 					</div>
 				)}
 				<div className="px-4 py-3">
-					<Typography tag="p" className="mb-1 text-[11px] font-medium uppercase tracking-wide text-t-3">
+					<Typography
+						tag="p"
+						className="mb-1 text-[11px] font-medium uppercase tracking-wide text-t-3"
+					>
 						{t("adminSuggestions.newValue")}
 					</Typography>
-					<Typography tag="p" className="text-[13px] text-green-600 dark:text-green-400">
+					<Typography
+						tag="p"
+						className="text-[13px] text-green-600 dark:text-green-400"
+					>
 						{displayValue(suggestion.newValue)}
 					</Typography>
 				</div>
@@ -96,7 +111,10 @@ export const SuggestionReviewPanel = ({
 			{/* User comment */}
 			{suggestion.comment && (
 				<div className="mb-5 rounded-card border border-bd-1 bg-surf px-4 py-3">
-					<Typography tag="p" className="mb-1 text-[11px] font-medium uppercase tracking-wide text-t-3">
+					<Typography
+						tag="p"
+						className="mb-1 text-[11px] font-medium uppercase tracking-wide text-t-3"
+					>
 						{t("adminSuggestions.comment")}
 					</Typography>
 					<Typography tag="p" className="text-[13px] italic text-t-2">
@@ -108,7 +126,10 @@ export const SuggestionReviewPanel = ({
 			{/* Reviewer comment (read-only if already reviewed) */}
 			{suggestion.reviewComment && suggestion.status !== "PENDING" && (
 				<div className="mb-5 rounded-card border border-bd-1 bg-surf px-4 py-3">
-					<Typography tag="p" className="mb-1 text-[11px] font-medium uppercase tracking-wide text-t-3">
+					<Typography
+						tag="p"
+						className="mb-1 text-[11px] font-medium uppercase tracking-wide text-t-3"
+					>
 						{t("adminSuggestions.reviewComment")}
 					</Typography>
 					<Typography tag="p" className="text-[13px] text-t-2">
@@ -121,7 +142,9 @@ export const SuggestionReviewPanel = ({
 			{suggestion.status === "PENDING" && (
 				<div className="mt-auto">
 					<div className="mb-3">
-						<InputLabel htmlFor="review-comment">{t("adminSuggestions.reviewComment")}</InputLabel>
+						<InputLabel htmlFor="review-comment">
+							{t("adminSuggestions.reviewComment")}
+						</InputLabel>
 						<Textarea
 							id="review-comment"
 							value={comment}
@@ -135,7 +158,7 @@ export const SuggestionReviewPanel = ({
 							type="button"
 							onClick={onReject}
 							disabled={isPending}
-							className="flex h-[34px] flex-1 items-center justify-center gap-1.5 rounded-lg border-hairline border-bd-1 bg-surf-2 text-[13px] font-medium text-t-2 transition-colors hover:bg-red-bg hover:text-red-t hover:border-red/30 disabled:cursor-not-allowed disabled:opacity-50"
+							className="flex h-[34px] flex-1 items-center justify-center gap-1.5 rounded-lg border-[0.5px] border-bd-1 bg-surf-2 text-[13px] font-medium text-t-2 transition-colors hover:bg-red-bg hover:text-red-t hover:border-red/30 disabled:cursor-not-allowed disabled:opacity-50"
 						>
 							<XCircle className="size-3.5" />
 							{t("adminSuggestions.reject")}

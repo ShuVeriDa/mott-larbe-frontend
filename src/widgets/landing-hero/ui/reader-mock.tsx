@@ -2,11 +2,11 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ChevronDown, Plus } from "lucide-react";
-import { ComponentProps, useState } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { ChevronDown, Plus } from "lucide-react";
+import { ComponentProps, useState } from "react";
 
 export const ReaderMock = () => {
 	const { t } = useI18n();
@@ -14,7 +14,7 @@ export const ReaderMock = () => {
 
 	const tags = t("landing.hero.popupTags")
 		.split(",")
-		.map((s) => s.trim())
+		.map(s => s.trim())
 		.filter(Boolean);
 
 	const original = t("landing.hero.readerOriginal");
@@ -24,8 +24,11 @@ export const ReaderMock = () => {
 
 	return (
 		<div className="relative" style={{ perspective: "1400px" }}>
-			<div className="absolute -top-4 right-6 z-[4] flex items-center gap-2 rounded-[10px] border-hairline border-bd-2 bg-surf px-3 py-2.5 text-[12px] shadow-md max-[640px]:hidden animate-[chipFloat_5s_ease-in-out_infinite]">
-				<Typography tag="span" className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-md bg-grn-bg text-grn-t">
+			<div className="absolute -top-4 right-6 z-[4] flex items-center gap-2 rounded-[10px] border-[0.5px] border-bd-2 bg-surf px-3 py-2.5 text-[12px] shadow-md max-[640px]:hidden animate-[chipFloat_5s_ease-in-out_infinite]">
+				<Typography
+					tag="span"
+					className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-md bg-grn-bg text-grn-t"
+				>
 					<svg
 						width="11"
 						height="11"
@@ -48,8 +51,11 @@ export const ReaderMock = () => {
 				</Typography>
 			</div>
 
-			<div className="absolute -bottom-3.5 left-7 z-[4] flex items-center gap-2 rounded-[10px] border-hairline border-bd-2 bg-surf px-3 py-2.5 text-[12px] shadow-md max-[640px]:hidden animate-[chipFloat_6s_ease-in-out_infinite_reverse]">
-				<Typography tag="span" className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-md bg-pur-bg text-pur-t">
+			<div className="absolute -bottom-3.5 left-7 z-[4] flex items-center gap-2 rounded-[10px] border-[0.5px] border-bd-2 bg-surf px-3 py-2.5 text-[12px] shadow-md max-[640px]:hidden animate-[chipFloat_6s_ease-in-out_infinite_reverse]">
+				<Typography
+					tag="span"
+					className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-md bg-pur-bg text-pur-t"
+				>
 					<svg
 						width="11"
 						height="11"
@@ -72,19 +78,22 @@ export const ReaderMock = () => {
 				</Typography>
 			</div>
 
-			<div className="overflow-hidden rounded-[14px] border-hairline border-bd-2 bg-surf shadow-lg transition-transform duration-300 -rotate-1 hover:rotate-0 max-[640px]:rotate-0">
-				<div className="flex items-center gap-1.5 border-hairline border-b border-bd-1 bg-surf-2 px-[14px] py-[10px]">
-					<Typography tag="span"
+			<div className="overflow-hidden rounded-[14px] border-[0.5px] border-bd-2 bg-surf shadow-lg transition-transform duration-300 -rotate-1 hover:rotate-0 max-[640px]:rotate-0">
+				<div className="flex items-center gap-1.5 border-[0.5px] border-b border-bd-1 bg-surf-2 px-[14px] py-[10px]">
+					<Typography
+						tag="span"
 						aria-hidden="true"
 						className="h-[9px] w-[9px] rounded-full"
 						style={{ background: "#e87171", opacity: 0.55 }}
 					/>
-					<Typography tag="span"
+					<Typography
+						tag="span"
 						aria-hidden="true"
 						className="h-[9px] w-[9px] rounded-full"
 						style={{ background: "#f5a524", opacity: 0.55 }}
 					/>
-					<Typography tag="span"
+					<Typography
+						tag="span"
 						aria-hidden="true"
 						className="h-[9px] w-[9px] rounded-full"
 						style={{ background: "#3dc87a", opacity: 0.55 }}
@@ -109,11 +118,15 @@ export const ReaderMock = () => {
 							if (!tok.trim()) return tok;
 							const clean = tok.replace(/[.,!?;:«»]/g, "");
 							const isHl = clean === hl && highlighted === hl;
-														const handleClick: NonNullable<ComponentProps<typeof Typography>["onClick"]> = () => setHighlighted(clean);
-							const handleKeyDown: NonNullable<ComponentProps<typeof Typography>["onKeyDown"]> = (e) => {
-										if (e.key === "Enter") setHighlighted(clean);
-									};
-return (
+							const handleClick: NonNullable<
+								ComponentProps<typeof Typography>["onClick"]
+							> = () => setHighlighted(clean);
+							const handleKeyDown: NonNullable<
+								ComponentProps<typeof Typography>["onKeyDown"]
+							> = e => {
+								if (e.key === "Enter") setHighlighted(clean);
+							};
+							return (
 								<Typography
 									tag="span"
 									key={`${tok}-${i}`}
@@ -137,9 +150,9 @@ return (
 					</Typography>
 				</div>
 
-				<div className="absolute left-[38%] top-[47%] z-[5] w-[240px] overflow-hidden rounded-[11px] border-hairline border-bd-2 bg-surf shadow-lg animate-[popupFloat_4s_ease-in-out_infinite] max-[640px]:left-[32%] max-[640px]:top-1/2 max-[640px]:w-[200px]">
+				<div className="absolute left-[38%] top-[47%] z-[5] w-[240px] overflow-hidden rounded-[11px] border-[0.5px] border-bd-2 bg-surf shadow-lg animate-[popupFloat_4s_ease-in-out_infinite] max-[640px]:left-[32%] max-[640px]:top-1/2 max-[640px]:w-[200px]">
 					<div className="absolute -top-1.5 left-[30px] h-3 w-3 rotate-45 border-l-[0.5px] border-t-[0.5px] border-bd-2 bg-surf" />
-					<div className="border-hairline border-b border-bd-1 px-[13px] pb-[9px] pt-[11px]">
+					<div className="border-[0.5px] border-b border-bd-1 px-[13px] pb-[9px] pt-[11px]">
 						<div className="mb-[2px] text-[16px] font-semibold tracking-[-0.2px] text-t-1">
 							{hl}
 						</div>
@@ -151,7 +164,7 @@ return (
 							· {t("landing.hero.popupPos")}
 						</div>
 					</div>
-					<div className="border-hairline border-b border-bd-1 px-[13px] py-[9px]">
+					<div className="border-[0.5px] border-b border-bd-1 px-[13px] py-[9px]">
 						<div className="mb-[3px] text-[13.5px] font-medium text-t-1">
 							{t("landing.hero.popupTrans")}
 						</div>
@@ -160,8 +173,8 @@ return (
 						</div>
 					</div>
 					{tags.length > 0 ? (
-						<div className="flex flex-wrap gap-1 border-hairline border-b border-bd-1 px-[13px] py-[7px]">
-							{tags.map((tag) => (
+						<div className="flex flex-wrap gap-1 border-[0.5px] border-b border-bd-1 px-[13px] py-[7px]">
+							{tags.map(tag => (
 								<Typography
 									tag="span"
 									key={tag}
@@ -173,15 +186,13 @@ return (
 						</div>
 					) : null}
 					<div className="flex gap-1.5 p-[7px]">
-						<Button
-							className="flex h-7 flex-1 items-center justify-center gap-1 rounded-md border-0 bg-acc text-[11px] font-semibold text-white"
-						>
+						<Button className="flex h-7 flex-1 items-center justify-center gap-1 rounded-md border-0 bg-acc text-[11px] font-semibold text-white">
 							<Plus size={11} strokeWidth={2} />
 							{t("landing.hero.popupAdd")}
 						</Button>
 						<Button
 							aria-hidden="true"
-							className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-hairline border-bd-1 bg-surf-2 text-t-2"
+							className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-[0.5px] border-bd-1 bg-surf-2 text-t-2"
 						>
 							<ChevronDown size={11} strokeWidth={2} />
 						</Button>

@@ -2,10 +2,10 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import Link from "next/link";
-import { CefrBadge } from "@/entities/dictionary";
 import type { DetailRelated } from "@/entities/dictionary";
+import { CefrBadge } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
+import Link from "next/link";
 import { CardSection } from "../card-section";
 
 export interface RelatedSectionProps {
@@ -21,7 +21,7 @@ export const RelatedSection = ({ related, lang }: RelatedSectionProps) => {
 	return (
 		<CardSection title={t("vocabulary.wordDetail.sections.related")}>
 			<ul className="flex flex-wrap gap-1.5 max-md:flex-nowrap max-md:overflow-x-auto max-md:pb-1">
-				{related.map((rel) => {
+				{related.map(rel => {
 					const typeLabel = t(
 						`vocabulary.wordDetail.related.types.${rel.type}`,
 					);
@@ -29,10 +29,13 @@ export const RelatedSection = ({ related, lang }: RelatedSectionProps) => {
 						<li key={`${rel.lemmaId}-${rel.type}`} className="shrink-0">
 							<Link
 								href={`/${lang}/vocabulary?search=${encodeURIComponent(rel.baseForm)}`}
-								className="flex items-center gap-1.5 rounded-[8px] border-hairline border-bd-1 bg-surf-2 px-2.5 py-1.5 transition-colors duration-150 hover:border-bd-2"
+								className="flex items-center gap-1.5 rounded-[8px] border-[0.5px] border-bd-1 bg-surf-2 px-2.5 py-1.5 transition-colors duration-150 hover:border-bd-2"
 								title={typeLabel}
 							>
-								<Typography tag="span" className="font-display text-[13px] italic text-t-1">
+								<Typography
+									tag="span"
+									className="font-display text-[13px] italic text-t-1"
+								>
 									{rel.baseForm}
 								</Typography>
 								{rel.translation ? (

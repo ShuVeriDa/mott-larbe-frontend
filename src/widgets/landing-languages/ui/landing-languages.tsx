@@ -56,7 +56,7 @@ export const LandingLanguages = () => {
 					{items.map(item => (
 						<article
 							key={item.tag}
-							className="rounded-[16px] border-hairline border-bd-2 bg-surf p-7"
+							className="rounded-[16px] border-[0.5px] border-bd-2 bg-surf p-7"
 						>
 							<div className="mb-4 flex items-start justify-between gap-3">
 								<div>
@@ -70,7 +70,10 @@ export const LandingLanguages = () => {
 										{item.native}
 									</Typography>
 								</div>
-								<Typography tag="span" className="rounded-base border-hairline border-bd-2 bg-surf-2 px-2.5 py-1 font-mono text-[12px] font-semibold text-t-2">
+								<Typography
+									tag="span"
+									className="rounded-base border-[0.5px] border-bd-2 bg-surf-2 px-2.5 py-1 font-mono text-[12px] font-semibold text-t-2"
+								>
 									{item.tag}
 								</Typography>
 							</div>

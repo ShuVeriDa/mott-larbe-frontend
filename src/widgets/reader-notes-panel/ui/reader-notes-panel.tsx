@@ -17,7 +17,7 @@ import {
 } from "@/shared/ui/reader-mobile-sheet-header";
 import { Typography } from "@/shared/ui/typography";
 import { NotebookPen, X } from "lucide-react";
-import { type MouseEvent, useEffect, useState } from "react";
+import { type MouseEvent, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 export interface ReaderNotesPanelProps {
@@ -67,20 +67,24 @@ const NotesPanelBody = ({
 		<div className="flex min-h-0 flex-1 flex-col gap-3">
 			<NoteForm onSubmit={handleCreate} />
 			{isLoading && (
-				<Typography className="text-[12px] text-t-4">{t("reader.notes.loading")}</Typography>
+				<Typography className="text-[12px] text-t-4">
+					{t("reader.notes.loading")}
+				</Typography>
 			)}
 			{!isLoading && notes.length === 0 && (
 				<div className="flex flex-col items-center gap-2 py-6 text-center">
 					<NotebookPen className="size-8 text-t-4" strokeWidth={1.2} />
-					<Typography className="text-[13px] text-t-3">{t("reader.notes.empty")}</Typography>
+					<Typography className="text-[13px] text-t-3">
+						{t("reader.notes.empty")}
+					</Typography>
 				</div>
 			)}
 			<div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto">
-				{notes.map((note) => (
+				{notes.map(note => (
 					<NoteCard
 						key={note.id}
 						note={note}
-						onUpdate={(body) => handleUpdate(note.id, body)}
+						onUpdate={body => handleUpdate(note.id, body)}
 						onDelete={() => handleDelete(note.id)}
 					/>
 				))}
@@ -91,10 +95,12 @@ const NotesPanelBody = ({
 
 const NotesChromeHeader = ({ onClose }: { onClose: () => void }) => {
 	const { t } = useI18n();
-	const handleClose: NonNullable<React.ComponentProps<"button">["onClick"]> = () => onClose();
+	const handleClose: NonNullable<
+		React.ComponentProps<"button">["onClick"]
+	> = () => onClose();
 
 	return (
-		<div className="flex shrink-0 items-center justify-between border-b border-hairline border-bd-1 px-3.5 py-2.5">
+		<div className="flex shrink-0 items-center justify-between border-b border-[0.5px] border-bd-1 px-3.5 py-2.5">
 			<Typography
 				tag="span"
 				className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
@@ -126,7 +132,7 @@ export const ReaderNotesAside = ({
 			aria-hidden={!open}
 			className={cn(
 				"flex shrink-0 flex-col overflow-hidden bg-surf max-md:hidden",
-				"border-l border-hairline transition-[border-color] duration-200",
+				"border-l border-[0.5px] transition-[border-color] duration-200",
 				open ? "w-[296px] border-bd-1" : "w-0 min-w-0 border-l-transparent",
 			)}
 		>
@@ -148,7 +154,8 @@ export const ReaderNotesSheet = ({
 	useEscapeToClose(open, onClose);
 
 	const handleBackdropClick = () => onClose();
-	const handleSheetClick = (e: MouseEvent<HTMLDivElement>) => e.stopPropagation();
+	const handleSheetClick = (e: MouseEvent<HTMLDivElement>) =>
+		e.stopPropagation();
 
 	if (!open || typeof window === "undefined") return null;
 

@@ -2,11 +2,11 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { LearningLevel } from "@/shared/types";
 import { LEARNING_LEVELS } from "@/shared/types";
+import { ComponentProps } from "react";
 import { useUpdateLearnStatus } from "../../model";
 
 const ACTIVE_CLASS: Record<LearningLevel, string> = {
@@ -40,10 +40,12 @@ export const LearnStatusRow = ({
 
 	return (
 		<div className="flex gap-1.5">
-			{LEARNING_LEVELS.map((level) => {
+			{LEARNING_LEVELS.map(level => {
 				const isActive = level === active;
-								const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => handleSelect(level);
-return (
+				const handleClick: NonNullable<
+					ComponentProps<"button">["onClick"]
+				> = () => handleSelect(level);
+				return (
 					<Button
 						key={level}
 						disabled={isPending}
@@ -51,7 +53,7 @@ return (
 						title={t(`reader.learnStatus.${level}`)}
 						className={cn(
 							"flex h-[30px] flex-1 items-center justify-center rounded-base",
-							"border-hairline border-bd-1 bg-surf-2 text-[11px] font-semibold",
+							"border-[0.5px] border-bd-1 bg-surf-2 text-[11px] font-semibold",
 							"transition-all duration-150",
 							"hover:border-bd-2 hover:text-t-1 disabled:opacity-60",
 							isActive ? ACTIVE_CLASS[level] : "text-t-2",

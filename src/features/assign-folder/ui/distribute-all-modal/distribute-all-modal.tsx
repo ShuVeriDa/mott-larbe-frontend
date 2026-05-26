@@ -1,10 +1,10 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
+import { FolderIcon, type Folder } from "@/entities/folder";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { Modal, ModalActions } from "@/shared/ui/modal";
-import { FolderIcon, type Folder } from "@/entities/folder";
+import { Typography } from "@/shared/ui/typography";
 import { useDistributeAllModal } from "../../model";
 
 export interface DistributeAllModalProps {
@@ -45,58 +45,62 @@ export const DistributeAllModal = ({
 				})}
 			</Typography>
 
-			<ul className="mb-4 max-h-[240px] overflow-y-auto rounded-card border-hairline border-bd-1">
-				{folders.map((f) => {
-				  return (
-					<li key={f.id}>
-						<Button
-							data-folder-id={f.id}
-							onClick={handleFolderSelectClick}
-							title={f.name}
-							className={cn(
-								"flex w-full items-center gap-2.5 px-3 py-2.5 text-left",
-								"text-[13px] transition-colors",
-								selectedId === f.id
-									? "bg-acc-bg text-acc"
-									: "text-t-2 hover:bg-surf-2 hover:text-t-1",
-							)}
-						>
-							<Typography tag="span"
-								className="flex size-5 shrink-0 items-center justify-center rounded-[5px]"
-								style={{
-									background: `${f.color ?? "#2254d3"}1F`,
-									color: f.color ?? "#2254d3",
-								}}
+			<ul className="mb-4 max-h-[240px] overflow-y-auto rounded-card border-[0.5px] border-bd-1">
+				{folders.map(f => {
+					return (
+						<li key={f.id}>
+							<Button
+								data-folder-id={f.id}
+								onClick={handleFolderSelectClick}
+								title={f.name}
+								className={cn(
+									"flex w-full items-center gap-2.5 px-3 py-2.5 text-left",
+									"text-[13px] transition-colors",
+									selectedId === f.id
+										? "bg-acc-bg text-acc"
+										: "text-t-2 hover:bg-surf-2 hover:text-t-1",
+								)}
 							>
-								<FolderIcon icon={f.icon} className="size-3" />
-							</Typography>
-							<Typography tag="span" className="truncate">{f.name}</Typography>
-							{selectedId === f.id && (
-								<Typography tag="span" className="ml-auto shrink-0 text-[11px]">✓</Typography>
-							)}
-						</Button>
-					</li>
-				);
+								<Typography
+									tag="span"
+									className="flex size-5 shrink-0 items-center justify-center rounded-[5px]"
+									style={{
+										background: `${f.color ?? "#2254d3"}1F`,
+										color: f.color ?? "#2254d3",
+									}}
+								>
+									<FolderIcon icon={f.icon} className="size-3" />
+								</Typography>
+								<Typography tag="span" className="truncate">
+									{f.name}
+								</Typography>
+								{selectedId === f.id && (
+									<Typography
+										tag="span"
+										className="ml-auto shrink-0 text-[11px]"
+									>
+										✓
+									</Typography>
+								)}
+							</Button>
+						</li>
+					);
 				})}
 			</ul>
 
 			<ModalActions>
 				<Button
-					variant="ghost"
-					size="lg"
-					className="flex-1"
 					onClick={handleClose}
 					title={t("vocabulary.foldersPage.distributeAllModal.cancel")}
+					className="h-[34px] rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
 				>
 					{t("vocabulary.foldersPage.distributeAllModal.cancel")}
 				</Button>
 				<Button
-					variant="action"
-					size="lg"
-					className="flex-1"
 					disabled={!selectedId || isPending || loadingEntries}
 					onClick={handleConfirm}
 					title={t("vocabulary.foldersPage.distributeAllModal.confirm")}
+					className="h-[34px] flex-1 rounded-lg bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					{t("vocabulary.foldersPage.distributeAllModal.confirm")}
 				</Button>

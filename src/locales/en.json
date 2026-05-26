@@ -504,6 +504,7 @@
     "vocabulary": "Vocabulary",
     "review": "Review",
     "progress": "Statistics",
+    "phrasebook": "Phrasebook",
     "language": "Language",
     "chechen": "Chechen",
     "grammar": "Grammar",
@@ -4952,6 +4953,69 @@
     "successApprove": "Suggestion approved and applied",
     "successReject": "Suggestion rejected",
     "errorReview": "Failed to update status"
+  },
+  "phrasebook": {
+    "title": "Phrasebook",
+    "meta": {
+      "title": "Phrasebook — Mott Larbe",
+      "description": "Chechen phrasebook: phrases with translation, transliteration and word-by-word breakdown by category."
+    },
+    "searchPlaceholder": "Search phrases...",
+    "phraseCount": "{count} phrases",
+    "lang": {
+      "che": "CHE",
+      "ru": "RU"
+    },
+    "overview": {
+      "phrases": "phrases in phrasebook",
+      "saved": "saved",
+      "categories": "categories",
+      "suggest": "Suggest a phrase"
+    },
+    "filters": {
+      "lang": "Language:",
+      "show": "Show:",
+      "all": "All",
+      "allLangs": "All languages",
+      "saved": "Saved"
+    },
+    "categories": {
+      "title": "Categories"
+    },
+    "card": {
+      "save": "Save",
+      "unsave": "Remove",
+      "copy": "Copy",
+      "copied": "Copied!"
+    },
+    "detail": {
+      "wordBreakdown": "Word breakdown",
+      "examples": "Usage examples",
+      "addToVocab": "Add to vocabulary",
+      "addedToVocab": "Added",
+      "addToVocabHint": "Add all words from this phrase to your vocabulary",
+      "wordAdded": "«{word}» → {trans} added to vocabulary",
+      "allWordsAdded": "Words added to vocabulary"
+    },
+    "empty": {
+      "title": "No phrases found",
+      "sub": "Try changing the filters or selecting a different category"
+    },
+    "suggestModal": {
+      "title": "Suggest a phrase",
+      "originalLabel": "Phrase (in Chechen)",
+      "originalPlaceholder": "e.g. Салам!",
+      "translationLabel": "Translation",
+      "translationPlaceholder": "e.g. Hello!",
+      "langLabel": "Language",
+      "contextLabel": "Context (optional)",
+      "contextPlaceholder": "Where is this phrase used?",
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "sending": "Sending...",
+      "success": "Thank you! Your suggestion has been sent for review.",
+      "error": "Failed to send suggestion. Please try again."
+    }
   },
   "apiErrors": {
     "internalServerError": "Something went wrong. Please try again.",
