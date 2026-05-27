@@ -4,7 +4,7 @@ import { Typography } from "@/shared/ui/typography";
 import { ComponentProps, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
-import { clearAccessToken, useChangePassword } from "@/entities/auth";
+import { useChangePassword } from "@/entities/auth";
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { Modal, ModalActions } from "@/shared/ui/modal";
@@ -43,19 +43,23 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 		try {
 			await mutateAsync({ currentPassword, newPassword });
 			success(t("profile.security.passwordChanged"));
-			clearAccessToken();
+			// Backend revokes all sessions and blacklists access tokens.
+			// Redirect to auth — the middleware will clear the stale cookie on next load.
 			const lang = window.location.pathname.split("/")[1] ?? "ru";
 			router.push(`/${lang}/auth`);
 		} catch {}
 	};
 
-		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setCurrentPassword(e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setNewPassword(e.currentTarget.value);
-	const handleChange3: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => {
-							setConfirmPassword(e.currentTarget.value);
-							setMismatch(false);
-						};
-return (
+	const handleCurrentPasswordChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) =>
+		setCurrentPassword(e.currentTarget.value);
+	const handleNewPasswordChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) =>
+		setNewPassword(e.currentTarget.value);
+	const handleConfirmPasswordChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => {
+		setConfirmPassword(e.currentTarget.value);
+		setMismatch(false);
+	};
+
+	return (
 		<Modal open={open} onClose={handleClose} title={t("profile.security.changePassword")}>
 			<form action={handleSubmit} className="flex flex-col gap-3">
 				<div>
@@ -64,7 +68,7 @@ return (
 						id="cp-current"
 						type="password"
 						value={currentPassword}
-						onChange={handleChange}
+						onChange={handleCurrentPasswordChange}
 						required
 					/>
 				</div>
@@ -74,7 +78,7 @@ return (
 						id="cp-new"
 						type="password"
 						value={newPassword}
-						onChange={handleChange2}
+						onChange={handleNewPasswordChange}
 						required
 					/>
 				</div>
@@ -84,7 +88,7 @@ return (
 						id="cp-confirm"
 						type="password"
 						value={confirmPassword}
-						onChange={handleChange3}
+						onChange={handleConfirmPasswordChange}
 						required
 					/>
 					{mismatch && (

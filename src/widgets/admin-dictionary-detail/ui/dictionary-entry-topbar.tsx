@@ -6,7 +6,8 @@ import { Button } from "@/shared/ui/button";
 
 import { ComponentProps } from 'react';
 import type { AdminDictNavEntry } from "@/entities/dictionary";
-import { ACCESS_TOKEN_STORAGE_KEY, API_URL } from "@/shared/config";
+import { getAccessToken } from "@/entities/auth";
+import { API_URL } from "@/shared/config";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { UseQueryResult } from "@tanstack/react-query";
@@ -41,7 +42,7 @@ export const DictionaryEntryTopbar = ({
 	const router = useRouter();
 
 	const handleExport = async () => {
-		const token = window.localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY) ?? "";
+		const token = getAccessToken() ?? "";
 		const url = `${API_URL}/admin/dictionary/export?ids=${lemmaId}`;
 		const res = await fetch(url, {
 			headers: token ? { Authorization: `Bearer ${token}` } : {},

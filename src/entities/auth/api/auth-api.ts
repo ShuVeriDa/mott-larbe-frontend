@@ -47,9 +47,9 @@ export const authApi = {
 	validatePasswordResetToken: async (
 		token: string,
 	): Promise<ValidatePasswordResetResponse> => {
-		const { data } = await http.get<ValidatePasswordResetResponse>(
+		const { data } = await http.post<ValidatePasswordResetResponse>(
 			"/auth/password-reset/validate",
-			{ params: { token } },
+			{ token },
 		);
 		return data;
 	},

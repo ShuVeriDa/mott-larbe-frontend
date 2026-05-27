@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { useQueryClient } from "@tanstack/react-query";
-import { API_URL, ACCESS_TOKEN_STORAGE_KEY } from "@/shared/config";
+import { API_URL } from "@/shared/config";
+import { getAccessToken } from "@/entities/auth";
 import { adminTextKeys } from "../api/admin-text-keys";
 import type { SseProgressEvent } from "../api/types";
 
@@ -15,10 +16,7 @@ export const useAdminTextSSE = (textId: string, enabled: boolean) => {
 		const controller = new AbortController();
 
 		const connect = async () => {
-			const token =
-				typeof window !== "undefined"
-					? window.localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY)
-					: null;
+			const token = getAccessToken();
 
 			let response: Response;
 			try {

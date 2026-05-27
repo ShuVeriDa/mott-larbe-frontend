@@ -86,10 +86,12 @@ export const proxy = async (request: NextRequest) => {
 	const refreshExp = refreshTokenValue ? getJwtExp(refreshTokenValue) : null;
 	const maxAge = refreshExp ? Math.max(0, refreshExp - Math.floor(Date.now() / 1000)) : undefined;
 
+	const isProduction = process.env.NODE_ENV === "production";
 	const tokenCookieOptions = {
 		path: "/",
-		sameSite: "lax" as const,
+		sameSite: "strict" as const,
 		httpOnly: false,
+		secure: isProduction,
 		...(maxAge !== undefined ? { maxAge } : {}),
 	};
 
