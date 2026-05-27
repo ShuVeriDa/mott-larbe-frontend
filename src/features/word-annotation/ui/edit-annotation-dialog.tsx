@@ -281,7 +281,7 @@ export const EditAnnotationDialog = ({
 					</DialogTitle>
 				</DialogHeader>
 
-				<div className="space-y-3 border-t border-[0.5px] border-bd-1 px-5 py-4">
+				<div className="space-y-3 border-t-[0.5px] border-bd-1 px-5 py-4">
 					<div>
 						<InputLabel>
 							{t("admin.texts.editPage.wordAnnotation.wordFormLabel")}
@@ -307,7 +307,7 @@ export const EditAnnotationDialog = ({
 					</div>
 				</div>
 
-				<div className="border-t border-[0.5px] border-bd-1">
+				<div className="border-t-[0.5px] border-bd-1">
 					<div className="px-5 pt-3 pb-1">
 						<InputLabel>
 							{t("admin.texts.editPage.wordAnnotation.lemmaLabel")}
@@ -334,7 +334,7 @@ export const EditAnnotationDialog = ({
 					onToggleAll={handleToggleAll}
 				/>
 
-				<div className="flex gap-2 border-t border-[0.5px] border-bd-1 px-5 py-4">
+				<div className="flex gap-2 border-t-[0.5px] border-bd-1 px-5 py-4">
 					<Button
 						size="bare"
 						title={t("reader.annotate.cancel")}

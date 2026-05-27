@@ -7,12 +7,13 @@ import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { ComponentProps } from "react";
 
-export type ReviewSystem = "sm2" | "deck";
+export type ReviewSystem = "sm2" | "deck" | "phrases";
 
 export interface ReviewTopbarProps {
 	system: ReviewSystem;
 	dueCount: number | null;
 	deckCount: number | null;
+	phraseCount: number | null;
 	onChange: (system: ReviewSystem) => void;
 }
 
@@ -20,16 +21,20 @@ export const ReviewTopbar = ({
 	system,
 	dueCount,
 	deckCount,
+	phraseCount,
 	onChange,
 }: ReviewTopbarProps) => {
 	const { t } = useI18n();
 
-	const handleClick: NonNullable<
+	const handleClickSm2: NonNullable<
 		ComponentProps<typeof TabButton>["onClick"]
 	> = () => onChange("sm2");
-	const handleClick2: NonNullable<
+	const handleClickDeck: NonNullable<
 		ComponentProps<typeof TabButton>["onClick"]
 	> = () => onChange("deck");
+	const handleClickPhrases: NonNullable<
+		ComponentProps<typeof TabButton>["onClick"]
+	> = () => onChange("phrases");
 	return (
 		<header className="flex shrink-0 items-center gap-2.5 border-[0.5px] border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-3.5 max-md:py-2.5">
 			<svg
@@ -70,13 +75,19 @@ export const ReviewTopbar = ({
 					label={t("review.tabs.sm2")}
 					count={dueCount}
 					active={system === "sm2"}
-					onClick={handleClick}
+					onClick={handleClickSm2}
 				/>
 				<TabButton
 					label={t("review.tabs.deck")}
 					count={deckCount}
 					active={system === "deck"}
-					onClick={handleClick2}
+					onClick={handleClickDeck}
+				/>
+				<TabButton
+					label={t("review.tabs.phrases")}
+					count={phraseCount}
+					active={system === "phrases"}
+					onClick={handleClickPhrases}
 				/>
 			</div>
 

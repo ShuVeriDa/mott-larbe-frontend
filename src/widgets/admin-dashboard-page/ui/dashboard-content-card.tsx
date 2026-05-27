@@ -1,18 +1,15 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-
 import type { AdminDashboardContent } from "@/entities/admin-dashboard";
 import { useI18n } from "@/shared/lib/i18n";
-import { CEFR_LEVELS, CefrLevel } from "@/shared/types";
+import { CEFR_LEVELS, type CefrLevel } from "@/shared/types";
+import { MiniCard } from "@/shared/ui/mini-card";
+import { Typography } from "@/shared/ui/typography";
 
 const LEVEL_COLORS: Record<string, string> = {
 	A: "var(--grn)",
-	// A: "var(--acc)",
 	B: "var(--pur)",
-	// B: "var(--amb)",
 	C: "var(--red-token)",
-	// C: "var(--ros-t)",
 };
 
 const formatNum = (n: number) => {
@@ -24,9 +21,7 @@ interface DashboardContentCardProps {
 	content: AdminDashboardContent;
 }
 
-export const DashboardContentCard = ({
-	content,
-}: DashboardContentCardProps) => {
+export const DashboardContentCard = ({ content }: DashboardContentCardProps) => {
 	const { t } = useI18n();
 
 	const totalLevel = content.textsByLevel.reduce((s, l) => s + l.count, 0) || 1;
@@ -52,6 +47,11 @@ export const DashboardContentCard = ({
 			value: formatNum(content.readingsInPeriod),
 			sub: t("admin.dashboard.content.perPeriod"),
 		},
+		{
+			label: t("admin.dashboard.content.phrases"),
+			value: String(content.totalPhrases),
+			sub: t("admin.dashboard.content.phraseCategories", { count: content.totalPhraseCategories }),
+		},
 	];
 
 	const levelsSorted = [...content.textsByLevel].sort(
@@ -70,13 +70,7 @@ export const DashboardContentCard = ({
 			<div className="px-4 py-3">
 				<div className="mb-3 grid grid-cols-2 gap-2.5">
 					{miniStats.map(s => (
-						<div key={s.label} className="rounded-[9px] bg-surf-2 px-3 py-2.5">
-							<div className="mb-1 text-[10.5px] text-t-3">{s.label}</div>
-							<div className="text-[18px] font-semibold leading-none text-t-1">
-								{s.value}
-							</div>
-							<div className="mt-0.5 text-[10.5px] text-t-3">{s.sub}</div>
-						</div>
+						<MiniCard key={s.label} label={s.label} value={s.value} sub={s.sub} />
 					))}
 				</div>
 
@@ -90,10 +84,7 @@ export const DashboardContentCard = ({
 									<Typography tag="span" className="text-[11.5px] text-t-2">
 										{lvl.level ?? "—"}
 									</Typography>
-									<Typography
-										tag="span"
-										className="shrink-0 text-[11px] text-t-3"
-									>
+									<Typography tag="span" className="shrink-0 text-[11px] text-t-3">
 										{lvl.count}{" "}
 										{t("admin.dashboard.content.texts").toLowerCase()}
 									</Typography>
@@ -120,7 +111,7 @@ export const DashboardContentCardSkeleton = () => (
 		</div>
 		<div className="px-4 py-3">
 			<div className="mb-3 grid grid-cols-2 gap-2.5">
-				{Array.from({ length: 4 }).map((_, i) => (
+				{Array.from({ length: 5 }).map((_, i) => (
 					<div key={i} className="rounded-[9px] bg-surf-2 px-3 py-2.5">
 						<div className="mb-1.5 h-2.5 w-16 animate-pulse rounded bg-surf-3" />
 						<div className="h-5 w-12 animate-pulse rounded bg-surf-3" />

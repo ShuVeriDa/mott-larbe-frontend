@@ -1,4 +1,6 @@
 export type PhraseLang = "che" | "ru" | "ar" | "en";
+export type PhraseStatus = "NEW" | "LEARNING" | "KNOWN";
+export type PhraseReviewQuality = 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface PhraseWord {
 	id: string;
@@ -20,9 +22,46 @@ export interface Phrase {
 	transliteration: string | null;
 	translation: string;
 	lang: PhraseLang;
+	audioUrl: string | null;
 	saved: boolean;
 	words: PhraseWord[];
 	examples: PhraseExample[];
+}
+
+export interface PhraseDue extends Phrase {
+	status: PhraseStatus;
+	interval: number;
+	repetitions: number;
+	nextReview: string | null;
+}
+
+export interface PhraseReviewStats {
+	dueCount: number;
+	learningCount: number;
+	knownCount: number;
+	reviewedToday: number;
+	streak: number;
+}
+
+export interface PhraseRateResponse {
+	userId: string;
+	phraseId: string;
+	status: PhraseStatus;
+	interval: number;
+	easeFactor: number;
+	repetitions: number;
+	nextReview: string;
+}
+
+export interface PhraseCategoryProgress {
+	id: string;
+	emoji: string;
+	name: string;
+	sortOrder: number;
+	phraseCount: number;
+	knownCount: number;
+	learningCount: number;
+	progressPercent: number;
 }
 
 export interface PhrasebookCategory {
@@ -30,7 +69,7 @@ export interface PhrasebookCategory {
 	emoji: string;
 	name: string;
 	sortOrder: number;
-	count: number;
+	phraseCount: number;
 }
 
 export interface PhrasebookStats {

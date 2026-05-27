@@ -6,13 +6,13 @@ import { useI18n } from "@/shared/lib/i18n";
 
 export const PhrasebookMobileFilters = () => {
 	const { t } = useI18n();
-	const { lang, savedOnly, setLang, setSavedOnly } = usePhrasebookFilters();
+	const { lang, savedOnly, setLang, setSavedOnly, setActiveCategoryId } = usePhrasebookFilters();
 
 	const handleLangAll = () => setLang(null);
 	const handleLangChe = () => setLang("che");
 	const handleLangRu = () => setLang("ru");
-	const handleShowAll = () => setSavedOnly(false);
-	const handleShowSaved = () => setSavedOnly(true);
+	const handleShowAll = () => { setSavedOnly(false); setActiveCategoryId(null); };
+	const handleShowSaved = () => { setSavedOnly(true); setActiveCategoryId(null); };
 
 	return (
 		<div className="flex overflow-x-auto gap-1.5 px-3.5 py-2 shrink-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

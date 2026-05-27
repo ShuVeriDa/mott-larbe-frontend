@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import { useSearchParams } from "next/navigation";
 import type { ReviewSystem } from "../ui/review-topbar";
 
 export type ReviewScreen = "intro" | "card" | "done" | "retry";
@@ -17,10 +18,20 @@ export interface UseReviewFlowResult extends ReviewFlowState {
 	goToRetry: () => void;
 }
 
-export const useReviewFlow = (
-	initial: ReviewSystem = "sm2",
-): UseReviewFlowResult => {
-	const [system, setSystem] = useState<ReviewSystem>(initial);
+const VALID_SYSTEMS: ReviewSystem[] = ["sm2", "deck", "phrases"];
+
+const parseSystem = (value: string | null): ReviewSystem => {
+	if (value && (VALID_SYSTEMS as string[]).includes(value)) {
+		return value as ReviewSystem;
+	}
+	return "sm2";
+};
+
+export const useReviewFlow = (): UseReviewFlowResult => {
+	const searchParams = useSearchParams();
+	const [system, setSystem] = useState<ReviewSystem>(() =>
+		parseSystem(searchParams.get("system")),
+	);
 	const [screen, setScreen] = useState<ReviewScreen>("intro");
 
 	const switchSystem = (next: ReviewSystem) => {

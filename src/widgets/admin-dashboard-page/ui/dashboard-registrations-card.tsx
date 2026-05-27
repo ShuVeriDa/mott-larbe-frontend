@@ -1,21 +1,25 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-
-import Link from "next/link";
+import type { AdminDashboardChart } from "@/entities/admin-dashboard";
 import {
-	ResponsiveContainer,
-	ComposedChart,
+	CHART_AXIS_TICK_STYLE,
+	CHART_TOOLTIP_CONTENT_STYLE,
+	CHART_TOOLTIP_LABEL_STYLE,
+} from "@/shared/lib/chart-config";
+import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import {
 	Bar,
+	CartesianGrid,
+	ComposedChart,
 	Line,
+	ResponsiveContainer,
+	Tooltip,
 	XAxis,
 	YAxis,
-	CartesianGrid,
-	Tooltip,
 } from "recharts";
-import { useI18n } from "@/shared/lib/i18n";
-import { useParams } from "next/navigation";
-import type { AdminDashboardChart } from "@/entities/admin-dashboard";
 
 const formatLabel = (iso: string) => {
 	if (iso.length === 7) {
@@ -72,33 +76,27 @@ export const DashboardRegistrationsCard = ({ chart }: DashboardRegistrationsCard
 						<CartesianGrid vertical={false} stroke="var(--bd-1)" />
 						<XAxis
 							dataKey="label"
-							tick={{ fill: "var(--t-3)", fontSize: 11 }}
+							tick={CHART_AXIS_TICK_STYLE}
 							tickLine={false}
 							axisLine={false}
 							interval="equidistantPreserveStart"
 						/>
 						<YAxis
 							yAxisId="left"
-							tick={{ fill: "var(--t-3)", fontSize: 11 }}
+							tick={CHART_AXIS_TICK_STYLE}
 							tickLine={false}
 							axisLine={false}
 						/>
 						<YAxis
 							yAxisId="right"
 							orientation="right"
-							tick={{ fill: "var(--t-3)", fontSize: 11 }}
+							tick={CHART_AXIS_TICK_STYLE}
 							tickLine={false}
 							axisLine={false}
 						/>
 						<Tooltip
-							contentStyle={{
-								background: "var(--surf)",
-								border: "0.5px solid var(--bd-2)",
-								borderRadius: 8,
-								fontSize: 12,
-								color: "var(--t-1)",
-							}}
-							labelStyle={{ color: "var(--t-2)", fontSize: 11 }}
+							contentStyle={CHART_TOOLTIP_CONTENT_STYLE}
+							labelStyle={CHART_TOOLTIP_LABEL_STYLE}
 							cursor={{ fill: "var(--bd-1)" }}
 						/>
 						<Bar

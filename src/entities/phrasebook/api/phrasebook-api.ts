@@ -7,6 +7,11 @@ import type {
 	PhrasesQuery,
 	SuggestPhraseDto,
 	SuggestPhraseResponse,
+	PhraseDue,
+	PhraseRateResponse,
+	PhraseReviewQuality,
+	PhraseReviewStats,
+	PhraseCategoryProgress,
 } from "./types";
 
 const buildParams = (
@@ -52,6 +57,31 @@ export const phrasebookApi = {
 		const { data } = await http.post<SuggestPhraseResponse>(
 			"/phrasebook/suggestions",
 			body,
+		);
+		return data;
+	},
+
+	reviewStats: async (): Promise<PhraseReviewStats> => {
+		const { data } = await http.get<PhraseReviewStats>("/phrasebook/review/stats");
+		return data;
+	},
+
+	reviewDue: async (params?: { categoryId?: string; savedOnly?: boolean }): Promise<PhraseDue[]> => {
+		const { data } = await http.get<PhraseDue[]>("/phrasebook/review/due", {
+			params,
+		});
+		return data;
+	},
+
+	categoryProgress: async (): Promise<PhraseCategoryProgress[]> => {
+		const { data } = await http.get<PhraseCategoryProgress[]>("/phrasebook/review/categories");
+		return data;
+	},
+
+	ratePhrase: async (phraseId: string, quality: PhraseReviewQuality): Promise<PhraseRateResponse> => {
+		const { data } = await http.post<PhraseRateResponse>(
+			`/phrasebook/progress/${phraseId}/rate`,
+			{ quality },
 		);
 		return data;
 	},

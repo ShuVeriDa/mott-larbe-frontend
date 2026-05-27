@@ -40,6 +40,8 @@ export interface AdminDashboardContent {
 	dictionaryWordsCount: number;
 	readingsInPeriod: number;
 	textsByLevel: AdminDashboardTextByLevel[];
+	totalPhrases: number;
+	totalPhraseCategories: number;
 }
 
 export interface AdminDashboardUser {

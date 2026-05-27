@@ -24,6 +24,10 @@ export const textApi = {
 		return data;
 	},
 
+	markComplete: async (textId: string): Promise<void> => {
+		await http.post(`/progress/text/${textId}/complete`);
+	},
+
 	toggleBookmark: async (textId: string): Promise<BookmarkResponse> => {
 		const { data } = await http.post<BookmarkResponse>(
 			`/texts/${textId}/bookmark`,

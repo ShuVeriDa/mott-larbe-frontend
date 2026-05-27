@@ -58,7 +58,7 @@ const ReaderPageLoading = () => (
 				</div>
 
 				{/* Article header */}
-				<div className="mb-7 border-b border-[0.5px] border-bd-1 pb-6">
+				<div className="mb-7 border-b-[0.5px] border-bd-1 pb-6">
 					{/* Badges */}
 					<div className="mb-3 flex flex-wrap gap-1.5">
 						<Bone className="h-4 w-14" />

@@ -1,6 +1,6 @@
 "use client";
 
-import type { HeatmapMonth, StreakInfo } from "@/entities/statistics";
+import type { HeatmapMonth, HeatmapWeekDay, StatsPeriod, StreakInfo } from "@/entities/statistics";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -9,9 +9,11 @@ import { Heatmap } from "./heatmap";
 interface StreakBlockProps {
 	streak: StreakInfo;
 	heatmap: HeatmapMonth[];
+	heatmapWeek: HeatmapWeekDay[];
+	period?: StatsPeriod;
 }
 
-export const StreakBlock = ({ streak, heatmap }: StreakBlockProps) => {
+export const StreakBlock = ({ streak, heatmap, heatmapWeek, period }: StreakBlockProps) => {
 	const { t } = useI18n();
 
 	return (
@@ -70,7 +72,7 @@ export const StreakBlock = ({ streak, heatmap }: StreakBlockProps) => {
 
 			<div className="w-px shrink-0 self-stretch bg-bd-1 max-md:hidden" />
 
-			<Heatmap months={heatmap} />
+			<Heatmap months={heatmap} weekDays={heatmapWeek} period={period} />
 		</section>
 	);
 };

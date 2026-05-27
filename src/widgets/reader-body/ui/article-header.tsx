@@ -18,7 +18,7 @@ export const ArticleHeader = ({ data, currentPage }: ArticleHeaderProps) => {
 	const { t } = useI18n();
 
 	return (
-		<header className="mb-7 border-b border-[0.5px] border-bd-1 pb-6">
+		<header className="mb-7 border-b-[0.5px] border-bd-1 pb-6">
 			<div className="mb-3 flex flex-wrap gap-1.5">
 				{data.level ? (
 					<Typography

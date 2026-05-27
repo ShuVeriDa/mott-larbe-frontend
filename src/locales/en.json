@@ -1022,9 +1022,19 @@
 			"daysInRow": "days in a row",
 			"record": "Record: {n} days",
 			"milestoneDays": "{n} days",
-			"yearActivity": "Activity for the year",
+			"yearActivity": "Activity this year",
 			"less": "Less",
-			"more": "More"
+			"more": "More",
+			"weekActivity": "Activity this week",
+			"monthActivity": "Activity this month",
+			"dayMon": "Mon",
+			"dayTue": "Tue",
+			"dayWed": "Wed",
+			"dayThu": "Thu",
+			"dayFri": "Fri",
+			"daySat": "Sat",
+			"daySun": "Sun",
+			"allActivity": "All-time activity"
 		},
 		"words": {
 			"title": "Word progress",
@@ -1039,7 +1049,10 @@
 			"title": "Words per day",
 			"meta": "Last 30 days",
 			"metaAll": "For the year",
-			"empty": "No data yet"
+			"empty": "No data yet",
+			"metaWeek": "Last 7 days",
+			"metaMonth": "Last 30 days",
+			"metaYear": "Last year"
 		},
 		"texts": {
 			"title": "Texts progress",
@@ -1061,6 +1074,11 @@
 		"activity": {
 			"title": "Recent activity",
 			"empty": "No activity yet",
+			"unknownText": "Text",
+			"readText": "Read \"{title}\"",
+			"addedWords": "Added {count} words to dictionary",
+			"page": "p. {n}",
+			"reviewDesc": "{total} cards · {accuracy}% correct",
 			"types": {
 				"READ_TEXT": "Read",
 				"ADD_WORDS": "Words added",
@@ -1074,7 +1092,121 @@
 		},
 		"loading": "Loading statistics…",
 		"error": "Failed to load statistics",
-		"retry": "Try again"
+		"retry": "Try again",
+		"phrases": {
+			"title": "Phrasebook",
+			"reviewLink": "Review →",
+			"due": "Due today",
+			"learning": "Learning",
+			"known": "Mastered",
+			"streak": "Day streak",
+			"new": "New",
+			"total": "Total phrases"
+		},
+		"accuracyPhrases": {
+			"title": "Accuracy (phrases)",
+			"meta": "for period",
+			"score": "accuracy",
+			"correct": "Correct",
+			"wrong": "Wrong",
+			"bestStreak": "Best streak",
+			"bestStreakValue": "{n} in a row",
+			"total": "Total answers"
+		},
+		"perDayPhrases": {
+			"title": "Phrases per day",
+			"meta": "for period",
+			"metaAll": "for year",
+			"empty": "No data for this period",
+			"metaWeek": "Last 7 days",
+			"metaMonth": "Last 30 days",
+			"metaYear": "Last year"
+		},
+		"eventsChart": {
+			"title": "Learning events",
+			"openText": "Texts opened",
+			"addToDict": "Words added",
+			"reviewSession": "Review sessions",
+			"empty": "No data for this period"
+		},
+		"vocabGrowth": {
+			"title": "Vocabulary growth",
+			"total": "Total words",
+			"added": "Added",
+			"empty": "No data for this period"
+		},
+		"textLevels": {
+			"title": "Progress by level",
+			"meta": "{count} texts",
+			"texts": "{count} text(s)",
+			"completed": "{count} done",
+			"inProgress": "{count} in progress",
+			"empty": "No texts read yet"
+		},
+		"achievements": {
+			"title": "Achievements",
+			"progress": "Progress"
+		},
+		"goalForecast": {
+			"title": "Vocabulary goal",
+			"goal": "Goal: {n} words",
+			"current": "Current",
+			"remaining": "Remaining",
+			"words": "w.",
+			"forecast": "Goal in {days} days",
+			"avgPerDay": "Pace: {n} w./day",
+			"noData": "Not enough data",
+			"reached": "Goal reached!"
+		},
+		"reviewSessions": {
+			"title": "Review sessions",
+			"sessions": "Sessions",
+			"totalCards": "Total cards",
+			"avgPerSession": "Avg per session",
+			"bestDay": "Best day",
+			"avgDuration": "Avg duration",
+			"mastered": "Words mastered",
+			"cardsUnit": "cards",
+			"wordsUnit": "words",
+			"minutes": "{n} min",
+			"seconds": "{n} sec"
+		},
+		"retention": {
+			"title": "Vocabulary state",
+			"words": "words",
+			"new": "New",
+			"learning": "Learning",
+			"known": "Known",
+			"due": "{n} words due for review",
+			"empty": "Dictionary is empty"
+		},
+		"topWords": {
+			"hardest": "Hardest",
+			"mastered": "Mastered",
+			"empty": "No data for this period"
+		},
+		"weekday": {
+			"title": "Activity by weekday",
+			"sub": "avg events",
+			"empty": "No data",
+			"avgLabel": "avg events"
+		},
+		"readingSpeed": {
+			"title": "Reading speed",
+			"avg": "Average",
+			"best": "Best",
+			"wpm": "w/min",
+			"empty": "No reading session data"
+		},
+		"weakSpots": {
+			"title": "Weak spots",
+			"tabTexts": "Texts",
+			"tabWords": "Words",
+			"tabAccuracy": "Accuracy",
+			"allGood": "All good!",
+			"lastOpened": "Opened",
+			"notReviewed": "{days} d. without review"
+		}
 	},
 	"settings": {
 		"meta": {
@@ -1294,6 +1426,7 @@
 		"tabs": {
 			"sm2": "SuperMemo 2",
 			"deck": "Esalar",
+			"phrases": "Phrases",
 			"aria": "Review system"
 		},
 		"sm2": {
@@ -1307,7 +1440,9 @@
 				"stats": {
 					"due": "Today",
 					"learning": "Learning",
-					"streak": "Day streak"
+					"streak": "Day streak",
+					"known": "Mastered",
+					"knownHint": "Words with a review interval ≥ 21 days"
 				},
 				"queue": {
 					"title": "Queue",
@@ -1471,7 +1606,8 @@
 					"add": "Add",
 					"empty": "No new words — all dictionary words are already in Esalar",
 					"emptyHint": "Read texts to grow your vocabulary"
-				}
+				},
+				"totalWords": "Total words in Esalar: {count}"
 			},
 			"card": {
 				"backToDecks": "Back to Esalar",
@@ -1640,7 +1776,9 @@
 			"bookmarks": "Bookmarks",
 			"focusMode": "Focus mode",
 			"aiHistory": "AI translations",
-			"batchTranslate": "Translate all unknown words"
+			"batchTranslate": "Translate all unknown words",
+			"markComplete": "Mark as read",
+			"completed": "Read"
 		},
 		"body": {
 			"progress": "Reading progress",
@@ -1796,7 +1934,9 @@
 			"dictFailed": "Could not update the dictionary",
 			"bookmarkAdded": "Bookmark saved",
 			"bookmarkRemoved": "Bookmark removed",
-			"bookmarkFailed": "Could not update the bookmark"
+			"bookmarkFailed": "Could not update the bookmark",
+			"markedComplete": "Marked as read",
+			"markCompleteFailed": "Could not mark as read"
 		}
 	},
 	"subscription": {
@@ -2322,7 +2462,9 @@
 				"thisPeriod": "this period",
 				"ofAll": "of all",
 				"chechen": "Chechen",
-				"perPeriod": "per period"
+				"perPeriod": "per period",
+				"phrases": "Phrases in phrasebook",
+				"phraseCategories": "{count} categories"
 			},
 			"recentUsers": {
 				"title": "New users",
@@ -4284,6 +4426,18 @@
 				"goodRetention": "good retention",
 				"retentionGrade": "grade ≥ 3",
 				"vsPrev": "vs prev."
+			},
+			"phrases": {
+				"title": "Phrasebook",
+				"subtitle": "Phrases — SM-2",
+				"totalPhrases": "Total phrases",
+				"categories": "{count} categories",
+				"totalReviews": "Reviews",
+				"vsPrev": "vs prev. period",
+				"retentionRate": "Retention",
+				"avgGrade": "Avg grade {grade} / 5",
+				"learningKnown": "Learning / Mastered",
+				"learningKnownSub": "phrase progress"
 			}
 		},
 		"tracking": {
@@ -4981,7 +5135,8 @@
 			"saved": "Saved"
 		},
 		"categories": {
-			"title": "Categories"
+			"title": "Categories",
+			"review": "Review"
 		},
 		"card": {
 			"save": "Save",
@@ -5016,6 +5171,65 @@
 			"sending": "Sending...",
 			"success": "Thank you! Your suggestion has been sent for review.",
 			"error": "Failed to send suggestion. Please try again."
+		},
+		"save": "Save",
+		"unsave": "Remove from saved",
+		"review": {
+			"pageTitle": "Phrase Review",
+			"meta": {
+				"title": "Phrase Review — Mott Larbe",
+				"description": "Review phrasebook phrases using the SM-2 spaced repetition method."
+			},
+			"startReview": "Start Review",
+			"startCategory": "Review category",
+			"startSaved": "Review saved",
+			"categoryProgress": "progress",
+			"intro": {
+				"title": "Phrasebook Review",
+				"subtitle": "{count} phrases due",
+				"subtitleCategory": "{count} phrases in category",
+				"subtitleSaved": "{count} saved phrases",
+				"empty": "No phrases due. Save phrases from the phrasebook to start!",
+				"loading": "Loading...",
+				"error": "Failed to load phrases",
+				"stats": {
+					"due": "due",
+					"learning": "learning",
+					"known": "known",
+					"knownHint": "Phrases with a review interval of ≥ 21 days",
+					"streak": "day streak"
+				},
+				"modeTitle": "Mode",
+				"queue": {
+					"title": "Up next",
+					"more": "{count} more"
+				}
+			},
+			"card": {
+				"showTranslation": "Show translation",
+				"wordBreakdown": "Word breakdown",
+				"exit": "Exit",
+				"skip": "Skip"
+			},
+			"done": {
+				"title": "Review complete!",
+				"subtitle": "Great work",
+				"easy": "Easy",
+				"good": "Good",
+				"hard": "Hard",
+				"backToPhrasebook": "Back to phrasebook",
+				"reviewAgain": "Review again"
+			},
+			"sidePanel": {
+				"title": "Progress",
+				"passed": "Done",
+				"easy": "Easy",
+				"good": "Good",
+				"hard": "Hard",
+				"streakTitle": "Streak",
+				"streakDays": "{n}d",
+				"queue": "Up next"
+			}
 		}
 	},
 	"apiErrors": {
@@ -5300,5 +5514,826 @@
 			"title": "Delete suggestion",
 			"description": "The suggestion will be permanently deleted."
 		}
-	}
+	},
+	"achievements": {
+		"first_word": {
+			"title": "First step",
+			"desc": "Add your first word"
+		},
+		"words_10": {
+			"title": "10 words",
+			"desc": "Add 10 words"
+		},
+		"words_50": {
+			"title": "50 words",
+			"desc": "Add 50 words"
+		},
+		"words_100": {
+			"title": "100 words",
+			"desc": "Add 100 words"
+		},
+		"words_500": {
+			"title": "500 words",
+			"desc": "Add 500 words"
+		},
+		"words_1000": {
+			"title": "1000 words",
+			"desc": "Add 1000 words"
+		},
+		"known_10": {
+			"title": "Know 10",
+			"desc": "Master 10 words"
+		},
+		"known_100": {
+			"title": "Know 100",
+			"desc": "Master 100 words"
+		},
+		"streak_3": {
+			"title": "3 days",
+			"desc": "3 days in a row"
+		},
+		"streak_7": {
+			"title": "A week",
+			"desc": "7 days in a row"
+		},
+		"streak_30": {
+			"title": "A month",
+			"desc": "30 days in a row"
+		},
+		"streak_100": {
+			"title": "100 days",
+			"desc": "100 days in a row"
+		},
+		"first_text": {
+			"title": "First text",
+			"desc": "Read your first text"
+		},
+		"texts_5": {
+			"title": "5 texts",
+			"desc": "Read 5 texts"
+		},
+		"texts_20": {
+			"title": "20 texts",
+			"desc": "Read 20 texts"
+		},
+		"first_review": {
+			"title": "First review",
+			"desc": "Complete first session"
+		},
+		"reviews_100": {
+			"title": "100 reviews",
+			"desc": "100 cards reviewed"
+		},
+		"reviews_1000": {
+			"title": "1000 reviews",
+			"desc": "1000 cards reviewed"
+		},
+		"days_7": {
+			"title": "7 days",
+			"desc": "Active for 7 days"
+		},
+		"days_30": {
+			"title": "30 days",
+			"desc": "Active for 30 days"
+		},
+		"group": {
+			"vocabulary": "Vocabulary",
+			"streak": "Streak",
+			"texts": "Texts",
+			"reviews": "Reviews",
+			"phrases": "Phrasebook",
+			"time": "Reading time",
+			"account": "Activity",
+			"mastered": "Mastered",
+			"speed": "Speed",
+			"record": "Records",
+			"accuracy": "Accuracy",
+			"learning": "In Progress",
+			"journey": "Progress",
+			"combo": "Combo",
+			"consistency": "Consistency",
+			"pace": "Pace"
+		},
+		"words_250": {
+			"title": "250 words",
+			"desc": "Add 250 words"
+		},
+		"words_2000": {
+			"title": "2000 words",
+			"desc": "Add 2000 words"
+		},
+		"known_50": {
+			"title": "Know 50",
+			"desc": "Master 50 words"
+		},
+		"known_500": {
+			"title": "Know 500",
+			"desc": "Master 500 words"
+		},
+		"words_day_5": {
+			"title": "5 words/day",
+			"desc": "Add 5 words in one day"
+		},
+		"words_day_20": {
+			"title": "20 words/day",
+			"desc": "Add 20 words in one day"
+		},
+		"streak_14": {
+			"title": "2 weeks",
+			"desc": "14 days in a row"
+		},
+		"streak_60": {
+			"title": "2 months",
+			"desc": "60 days in a row"
+		},
+		"texts_3": {
+			"title": "3 texts",
+			"desc": "Read 3 texts"
+		},
+		"texts_10": {
+			"title": "10 texts",
+			"desc": "Read 10 texts"
+		},
+		"texts_50": {
+			"title": "50 texts",
+			"desc": "Read 50 texts"
+		},
+		"reviews_50": {
+			"title": "50 reviews",
+			"desc": "50 cards reviewed"
+		},
+		"reviews_500": {
+			"title": "500 reviews",
+			"desc": "500 cards reviewed"
+		},
+		"reviews_5000": {
+			"title": "5000 reviews",
+			"desc": "5000 cards reviewed"
+		},
+		"first_phrase": {
+			"title": "First phrase",
+			"desc": "Review first phrase"
+		},
+		"phrases_50": {
+			"title": "50 phrases",
+			"desc": "Review 50 phrases"
+		},
+		"phrases_200": {
+			"title": "200 phrases",
+			"desc": "Review 200 phrases"
+		},
+		"read_60min": {
+			"title": "1h reading",
+			"desc": "Read 60 minutes total"
+		},
+		"read_5h": {
+			"title": "5h reading",
+			"desc": "Read 5 hours total"
+		},
+		"read_sessions_10": {
+			"title": "10 sessions",
+			"desc": "Complete 10 reading sessions"
+		},
+		"days_90": {
+			"title": "90 days",
+			"desc": "Active for 90 days"
+		},
+		"days_365": {
+			"title": "1 year",
+			"desc": "Active for 365 days"
+		},
+		"words_25": {
+			"title": "25 Words",
+			"desc": "Added 25 words to vocabulary"
+		},
+		"words_200": {
+			"title": "200 Words",
+			"desc": "Added 200 words to vocabulary"
+		},
+		"words_750": {
+			"title": "750 Words",
+			"desc": "Added 750 words to vocabulary"
+		},
+		"words_1500": {
+			"title": "1500 Words",
+			"desc": "Added 1500 words to vocabulary"
+		},
+		"words_3000": {
+			"title": "3000 Words",
+			"desc": "Added 3000 words to vocabulary"
+		},
+		"words_5000": {
+			"title": "5000 Words",
+			"desc": "Added 5000 words to vocabulary"
+		},
+		"known_1": {
+			"title": "First Mastered",
+			"desc": "First word marked as Known"
+		},
+		"known_250": {
+			"title": "250 Mastered",
+			"desc": "250 words with Known status"
+		},
+		"known_1000": {
+			"title": "1000 Mastered",
+			"desc": "1000 words with Known status"
+		},
+		"words_day_10": {
+			"title": "10 Words in a Day",
+			"desc": "Added 10 words in a single day"
+		},
+		"words_day_50": {
+			"title": "50 Words in a Day",
+			"desc": "Added 50 words in a single day"
+		},
+		"streak_2": {
+			"title": "2-Day Streak",
+			"desc": "2 days of study in a row"
+		},
+		"streak_21": {
+			"title": "21-Day Streak",
+			"desc": "21 days of study in a row"
+		},
+		"streak_180": {
+			"title": "180-Day Streak",
+			"desc": "180 days of study in a row"
+		},
+		"streak_365": {
+			"title": "365-Day Streak",
+			"desc": "A full year of study in a row"
+		},
+		"record_7": {
+			"title": "Record: 7 Days",
+			"desc": "Personal streak record — 7 days"
+		},
+		"record_30": {
+			"title": "Record: 30 Days",
+			"desc": "Personal streak record — 30 days"
+		},
+		"record_100": {
+			"title": "Record: 100 Days",
+			"desc": "Personal streak record — 100 days"
+		},
+		"record_365": {
+			"title": "Record: 1 Year",
+			"desc": "Personal streak record — 365 days"
+		},
+		"texts_2": {
+			"title": "2 Texts",
+			"desc": "Completed 2 texts"
+		},
+		"texts_100": {
+			"title": "100 Texts",
+			"desc": "Completed 100 texts"
+		},
+		"reviews_10": {
+			"title": "10 Reviews",
+			"desc": "Completed 10 review cards"
+		},
+		"reviews_250": {
+			"title": "250 Reviews",
+			"desc": "Completed 250 review cards"
+		},
+		"reviews_2000": {
+			"title": "2000 Reviews",
+			"desc": "Completed 2000 review cards"
+		},
+		"reviews_10000": {
+			"title": "10000 Reviews",
+			"desc": "Completed 10000 review cards"
+		},
+		"acc_60": {
+			"title": "60% Accuracy",
+			"desc": "Average review accuracy at least 60%"
+		},
+		"acc_75": {
+			"title": "75% Accuracy",
+			"desc": "Average review accuracy at least 75%"
+		},
+		"acc_90": {
+			"title": "90% Accuracy",
+			"desc": "Average review accuracy at least 90%"
+		},
+		"acc_95": {
+			"title": "95% Accuracy",
+			"desc": "Average review accuracy at least 95%"
+		},
+		"streak_review_10": {
+			"title": "10 Correct in a Row",
+			"desc": "10 correct answers in a row"
+		},
+		"streak_review_50": {
+			"title": "50 Correct in a Row",
+			"desc": "50 correct answers in a row"
+		},
+		"streak_review_100": {
+			"title": "100 Correct in a Row",
+			"desc": "100 correct answers in a row"
+		},
+		"phrases_10": {
+			"title": "10 Phrases",
+			"desc": "Reviewed 10 phrasebook entries"
+		},
+		"phrases_100": {
+			"title": "100 Phrases",
+			"desc": "Reviewed 100 phrasebook entries"
+		},
+		"phrases_500": {
+			"title": "500 Phrases",
+			"desc": "Reviewed 500 phrasebook entries"
+		},
+		"read_10min": {
+			"title": "10 Min Reading",
+			"desc": "Total 10 minutes of reading"
+		},
+		"read_20h": {
+			"title": "20h Reading",
+			"desc": "Total 20 hours of reading"
+		},
+		"read_50h": {
+			"title": "50h Reading",
+			"desc": "Total 50 hours of reading"
+		},
+		"read_sessions_5": {
+			"title": "5 Reading Sessions",
+			"desc": "Completed 5 reading sessions"
+		},
+		"read_sessions_50": {
+			"title": "50 Reading Sessions",
+			"desc": "Completed 50 reading sessions"
+		},
+		"days_1": {
+			"title": "Day One",
+			"desc": "First day in the app"
+		},
+		"days_3": {
+			"title": "3 Days",
+			"desc": "Three days in the app"
+		},
+		"days_14": {
+			"title": "2 Weeks",
+			"desc": "Two weeks in the app"
+		},
+		"days_180": {
+			"title": "Half a Year",
+			"desc": "Six months in the app"
+		},
+		"learning_words_10": {
+			"title": "10 In Progress",
+			"desc": "10 words with Learning status"
+		},
+		"learning_words_50": {
+			"title": "50 In Progress",
+			"desc": "50 words with Learning status"
+		},
+		"learning_words_100": {
+			"title": "100 In Progress",
+			"desc": "100 words with Learning status"
+		},
+		"words_5": {
+			"title": "5 Words",
+			"desc": "Added 5 words to vocabulary"
+		},
+		"words_75": {
+			"title": "75 Words",
+			"desc": "Added 75 words to vocabulary"
+		},
+		"words_150": {
+			"title": "150 Words",
+			"desc": "Added 150 words to vocabulary"
+		},
+		"words_350": {
+			"title": "350 Words",
+			"desc": "Added 350 words to vocabulary"
+		},
+		"known_5": {
+			"title": "5 Mastered",
+			"desc": "5 words with Known status"
+		},
+		"known_25": {
+			"title": "25 Mastered",
+			"desc": "25 words with Known status"
+		},
+		"words_day_3": {
+			"title": "3 Words in a Day",
+			"desc": "Added 3 words in a single day"
+		},
+		"words_day_15": {
+			"title": "15 Words in a Day",
+			"desc": "Added 15 words in a single day"
+		},
+		"streak_5": {
+			"title": "5-Day Streak",
+			"desc": "5 days of study in a row"
+		},
+		"streak_10": {
+			"title": "10-Day Streak",
+			"desc": "10 days of study in a row"
+		},
+		"streak_45": {
+			"title": "45-Day Streak",
+			"desc": "45 days of study in a row"
+		},
+		"streak_90": {
+			"title": "90-Day Streak",
+			"desc": "90 days of study in a row"
+		},
+		"record_3": {
+			"title": "Record: 3 Days",
+			"desc": "Personal streak record — 3 days"
+		},
+		"record_14": {
+			"title": "Record: 2 Weeks",
+			"desc": "Personal streak record — 14 days"
+		},
+		"record_60": {
+			"title": "Record: 60 Days",
+			"desc": "Personal streak record — 60 days"
+		},
+		"texts_7": {
+			"title": "7 Texts",
+			"desc": "Completed 7 texts"
+		},
+		"texts_15": {
+			"title": "15 Texts",
+			"desc": "Completed 15 texts"
+		},
+		"texts_30": {
+			"title": "30 Texts",
+			"desc": "Completed 30 texts"
+		},
+		"reviews_5": {
+			"title": "5 Reviews",
+			"desc": "Completed 5 review cards"
+		},
+		"reviews_25": {
+			"title": "25 Reviews",
+			"desc": "Completed 25 review cards"
+		},
+		"reviews_200": {
+			"title": "200 Reviews",
+			"desc": "Completed 200 review cards"
+		},
+		"reviews_750": {
+			"title": "750 Reviews",
+			"desc": "Completed 750 review cards"
+		},
+		"reviews_3000": {
+			"title": "3000 Reviews",
+			"desc": "Completed 3000 review cards"
+		},
+		"acc_50": {
+			"title": "50% Accuracy",
+			"desc": "Average review accuracy at least 50%"
+		},
+		"acc_85": {
+			"title": "85% Accuracy",
+			"desc": "Average review accuracy at least 85%"
+		},
+		"streak_review_5": {
+			"title": "5 Correct in a Row",
+			"desc": "5 correct answers in a row"
+		},
+		"streak_review_25": {
+			"title": "25 Correct in a Row",
+			"desc": "25 correct answers in a row"
+		},
+		"phrases_5": {
+			"title": "5 Phrases",
+			"desc": "Reviewed 5 phrasebook entries"
+		},
+		"phrases_25": {
+			"title": "25 Phrases",
+			"desc": "Reviewed 25 phrasebook entries"
+		},
+		"read_5min": {
+			"title": "5 Min Reading",
+			"desc": "Total 5 minutes of reading"
+		},
+		"read_30min": {
+			"title": "30 Min Reading",
+			"desc": "Total 30 minutes of reading"
+		},
+		"read_2h": {
+			"title": "2h Reading",
+			"desc": "Total 2 hours of reading"
+		},
+		"read_10h": {
+			"title": "10h Reading",
+			"desc": "Total 10 hours of reading"
+		},
+		"read_sessions_3": {
+			"title": "3 Reading Sessions",
+			"desc": "Completed 3 reading sessions"
+		},
+		"read_sessions_25": {
+			"title": "25 Reading Sessions",
+			"desc": "Completed 25 reading sessions"
+		},
+		"read_sessions_100": {
+			"title": "100 Reading Sessions",
+			"desc": "Completed 100 reading sessions"
+		},
+		"days_60": {
+			"title": "2 Months",
+			"desc": "Two months in the app"
+		},
+		"days_730": {
+			"title": "2 Years",
+			"desc": "Two years in the app"
+		},
+		"learning_words_5": {
+			"title": "5 In Progress",
+			"desc": "5 words with Learning status"
+		},
+		"learning_words_25": {
+			"title": "25 In Progress",
+			"desc": "25 words with Learning status"
+		},
+		"learning_words_200": {
+			"title": "200 In Progress",
+			"desc": "200 words with Learning status"
+		},
+		"words_4000": {
+			"title": "4000 Words",
+			"desc": "Added 4000 words to vocabulary"
+		},
+		"words_7500": {
+			"title": "7500 Words",
+			"desc": "Added 7500 words to vocabulary"
+		},
+		"words_10000": {
+			"title": "10000 Words",
+			"desc": "Added 10000 words to vocabulary"
+		},
+		"known_2000": {
+			"title": "2000 Mastered",
+			"desc": "2000 words with Known status"
+		},
+		"known_5000": {
+			"title": "5000 Mastered",
+			"desc": "5000 words with Known status"
+		},
+		"texts_200": {
+			"title": "200 Texts",
+			"desc": "Completed 200 texts"
+		},
+		"texts_500": {
+			"title": "500 Texts",
+			"desc": "Completed 500 texts"
+		},
+		"reviews_25000": {
+			"title": "25000 Reviews",
+			"desc": "Completed 25000 review cards"
+		},
+		"reviews_50000": {
+			"title": "50000 Reviews",
+			"desc": "Completed 50000 review cards"
+		},
+		"streak_500": {
+			"title": "500-Day Streak",
+			"desc": "500 days of study in a row"
+		},
+		"streak_730": {
+			"title": "2-Year Streak",
+			"desc": "730 days of study in a row"
+		},
+		"days_1095": {
+			"title": "3 Years",
+			"desc": "Three years in the app"
+		},
+		"read_100h": {
+			"title": "100h Reading",
+			"desc": "Total 100 hours of reading"
+		},
+		"read_200h": {
+			"title": "200h Reading",
+			"desc": "Total 200 hours of reading"
+		},
+		"read_sessions_200": {
+			"title": "200 Reading Sessions",
+			"desc": "Completed 200 reading sessions"
+		},
+		"read_sessions_500": {
+			"title": "500 Reading Sessions",
+			"desc": "Completed 500 reading sessions"
+		},
+		"phrases_1000": {
+			"title": "1000 Phrases",
+			"desc": "Reviewed 1000 phrasebook entries"
+		},
+		"phrases_2000": {
+			"title": "2000 Phrases",
+			"desc": "Reviewed 2000 phrasebook entries"
+		},
+		"acc_99": {
+			"title": "99% Accuracy",
+			"desc": "Average review accuracy at least 99%"
+		},
+		"streak_review_200": {
+			"title": "200 Correct in a Row",
+			"desc": "200 correct answers in a row"
+		},
+		"streak_review_500": {
+			"title": "500 Correct in a Row",
+			"desc": "500 correct answers in a row"
+		},
+		"words_day_100": {
+			"title": "100 Words in a Day",
+			"desc": "Added 100 words in a single day"
+		},
+		"record_180": {
+			"title": "Record: 180 Days",
+			"desc": "Personal streak record — 180 days"
+		},
+		"record_730": {
+			"title": "Record: 2 Years",
+			"desc": "Personal streak record — 730 days"
+		},
+		"words_day_30": {
+			"title": "30 Words in a Day",
+			"desc": "Added 30 words in a single day"
+		},
+		"words_day_75": {
+			"title": "75 Words in a Day",
+			"desc": "Added 75 words in a single day"
+		},
+		"reviews_7500": {
+			"title": "7500 Reviews",
+			"desc": "Completed 7500 review cards"
+		},
+		"reviews_15000": {
+			"title": "15000 Reviews",
+			"desc": "Completed 15000 review cards"
+		},
+		"pace_7d_10": {
+			"title": "First Steps",
+			"desc": "Beginning the language journey"
+		},
+		"pace_7d_50": {
+			"title": "Good Pace",
+			"desc": "Actively building vocabulary"
+		},
+		"pace_month_100": {
+			"title": "A Month In",
+			"desc": "100 words in a month"
+		},
+		"pace_month_500": {
+			"title": "Marathon",
+			"desc": "500 words in a month"
+		},
+		"level_a1_done": {
+			"title": "Level A1",
+			"desc": "First text completed"
+		},
+		"level_b1_done": {
+			"title": "Level B1",
+			"desc": "Intermediate level study"
+		},
+		"level_c1_done": {
+			"title": "Level C1",
+			"desc": "Advanced level study"
+		},
+		"review_days_7": {
+			"title": "Week of Reviews",
+			"desc": "7 days of reviewing in a row"
+		},
+		"review_days_14": {
+			"title": "Two Weeks of Reviews",
+			"desc": "14 days of reviewing in a row"
+		},
+		"review_days_30": {
+			"title": "Month of Reviews",
+			"desc": "30 days of reviewing in a row"
+		},
+		"review_days_60": {
+			"title": "60 Days of Reviews",
+			"desc": "60 days of reviewing in a row"
+		},
+		"review_days_100": {
+			"title": "100 Days of Reviews",
+			"desc": "100 days of reviewing in a row"
+		},
+		"depth_500_reviews": {
+			"title": "Deep Study",
+			"desc": "500 reviews with 50+ words"
+		},
+		"depth_1000_reviews": {
+			"title": "Review Master",
+			"desc": "1000 reviews and 100+ words"
+		},
+		"depth_5000_reviews": {
+			"title": "Review Expert",
+			"desc": "5000 reviews and 200+ words"
+		},
+		"sessions_10": {
+			"title": "10 Sessions",
+			"desc": "Completed 10 study sessions"
+		},
+		"sessions_50": {
+			"title": "50 Sessions",
+			"desc": "Completed 50 study sessions"
+		},
+		"sessions_100": {
+			"title": "100 Sessions",
+			"desc": "Completed 100 study sessions"
+		},
+		"sessions_500": {
+			"title": "500 Sessions",
+			"desc": "Completed 500 study sessions"
+		},
+		"journey_first_known": {
+			"title": "First Known",
+			"desc": "First word fully mastered"
+		},
+		"journey_10pct_known": {
+			"title": "Good Start",
+			"desc": "10% of vocabulary mastered"
+		},
+		"journey_25pct_known": {
+			"title": "Quarter Way",
+			"desc": "25% of vocabulary mastered"
+		},
+		"journey_50pct_known": {
+			"title": "Halfway There",
+			"desc": "50% of vocabulary mastered"
+		},
+		"journey_75pct_known": {
+			"title": "Almost There",
+			"desc": "75% of vocabulary mastered"
+		},
+		"persist_100w_100r": {
+			"title": "Persistence",
+			"desc": "100 words and 100 reviews"
+		},
+		"persist_500w_500r": {
+			"title": "Tenacity",
+			"desc": "500 words and 500 reviews"
+		},
+		"persist_1000w_1000r": {
+			"title": "Unbreakable",
+			"desc": "1000 words and 1000 reviews"
+		},
+		"combo_reader": {
+			"title": "Reader",
+			"desc": "Reading and building vocabulary"
+		},
+		"combo_scholar": {
+			"title": "Scholar",
+			"desc": "Actively reading and learning words"
+		},
+		"combo_master": {
+			"title": "Master",
+			"desc": "Professional level study"
+		},
+		"complete_starter": {
+			"title": "Complete Starter",
+			"desc": "Vocab + reviews + phrasebook"
+		},
+		"complete_learner": {
+			"title": "Complete Learner",
+			"desc": "100 words + 100 reviews + 10 phrases"
+		},
+		"complete_master": {
+			"title": "Complete Master",
+			"desc": "500 words + 500 reviews + 50 phrases"
+		},
+		"complete_expert": {
+			"title": "Complete Expert",
+			"desc": "1000 words + 1000 reviews + 100 phrases"
+		},
+		"long_read_30min": {
+			"title": "Long Read",
+			"desc": "30 minutes of reading total"
+		},
+		"long_read_2h": {
+			"title": "Reading Marathon",
+			"desc": "2 hours of reading total"
+		},
+		"long_read_10h": {
+			"title": "Bookworm",
+			"desc": "10 hours of reading total"
+		},
+		"phrase_reader": {
+			"title": "Phrase Reader",
+			"desc": "Phrasebook + reading"
+		},
+		"phrase_scholar": {
+			"title": "Phrase Scholar",
+			"desc": "100 phrases + 20 reading sessions"
+		},
+		"milestone_50w_50r": {
+			"title": "First Milestone",
+			"desc": "50 words and 50 reviews"
+		},
+		"milestone_200w_200r": {
+			"title": "Second Milestone",
+			"desc": "200 words and 200 reviews"
+		},
+		"milestone_review_all": {
+			"title": "All-Rounder",
+			"desc": "Reviews + knowledge + phrasebook + reading"
+		}
+	},
+	"statistics.weekday.trend": "Trend"
 }

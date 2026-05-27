@@ -1,17 +1,12 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-
-import { Button } from "@/shared/ui/button";
-
-import type {
-	DifficultBy,
-	DifficultTextItem,
-} from "@/entities/admin-analytics";
+import type { DifficultBy, DifficultTextItem } from "@/entities/admin-analytics";
 import { CEFR_LEVEL_BADGE_CLASS } from "@/shared/lib/cefr-colors";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { ComponentProps } from "react";
+import { AdminCard } from "@/shared/ui/admin-card";
+import { AdminTabStrip, type AdminTabStripItem } from "@/shared/ui/admin-tab-strip";
+import { Typography } from "@/shared/ui/typography";
 
 const TABS: DifficultBy[] = ["fail", "pct", "abandon"];
 
@@ -38,8 +33,13 @@ export const AnalyticsDifficultTexts = ({
 }: AnalyticsDifficultTextsProps) => {
 	const { t } = useI18n();
 
+	const tabItems: AdminTabStripItem<DifficultBy>[] = TABS.map(tb => ({
+		key: tb,
+		label: t(`admin.analytics.difficultTexts.tab${tb.charAt(0).toUpperCase() + tb.slice(1)}`),
+	}));
+
 	return (
-		<div className="rounded-card border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="px-4 pt-3.5">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.analytics.difficultTexts.title")}
@@ -49,32 +49,8 @@ export const AnalyticsDifficultTexts = ({
 				</Typography>
 			</div>
 
-			{/* Tab strip */}
-			<div className="-mb-px flex gap-px overflow-x-auto border-b border-bd-1 px-4">
-				{TABS.map(tb => {
-					const handleClick: NonNullable<
-						ComponentProps<"button">["onClick"]
-					> = () => onTabChange(tb);
-					return (
-						<Button
-							key={tb}
-							onClick={handleClick}
-							className={cn(
-								"whitespace-nowrap border-b-2 px-2.5 py-2 text-[12px] font-medium transition-colors rounded-b-none",
-								tb === tab
-									? "border-acc text-t-1"
-									: "border-transparent text-t-3 hover:text-t-2",
-							)}
-						>
-							{t(
-								`admin.analytics.difficultTexts.tab${tb.charAt(0).toUpperCase() + tb.slice(1)}`,
-							)}
-						</Button>
-					);
-				})}
-			</div>
+			<AdminTabStrip tabs={tabItems} activeTab={tab} onTabChange={onTabChange} />
 
-			{/* Rows */}
 			{isLoading || !items
 				? Array.from({ length: 6 }).map((_, i) => (
 						<div
@@ -133,6 +109,6 @@ export const AnalyticsDifficultTexts = ({
 							</div>
 						</div>
 					))}
-		</div>
+		</AdminCard>
 	);
 };

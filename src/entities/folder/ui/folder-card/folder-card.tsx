@@ -193,7 +193,7 @@ export const FolderCard = ({
 					</div>
 				</div>
 
-				<div className="flex items-center justify-between border-t border-[0.5px] border-bd-1 pt-2.5">
+				<div className="flex items-center justify-between border-t-[0.5px] border-bd-1 pt-2.5">
 					<Typography tag="span" className="text-[11px] text-t-3">
 						{folder.total === 0
 							? labels.noWords

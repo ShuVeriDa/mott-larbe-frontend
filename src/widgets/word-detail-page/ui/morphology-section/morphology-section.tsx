@@ -61,7 +61,7 @@ export const MorphologySection = ({
 						{forms.map((form, idx) => (
 							<TableRow
 								key={`${form.form}-${idx}`}
-								className="border-t border-[0.5px] border-bd-1"
+								className="border-t-[0.5px] border-bd-1"
 							>
 								<TableCell className="py-1.5 pr-2 text-[12px] text-t-3">
 									{form.caseLabel ?? form.gramCase ?? form.grammarTag ?? "—"}

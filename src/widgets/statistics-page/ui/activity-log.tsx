@@ -1,6 +1,12 @@
 "use client";
 
-import type { ActivityItem, ActivityType } from "@/entities/statistics";
+import type {
+	ActivityItem,
+	ActivityItemMetaAddWords,
+	ActivityItemMetaReadText,
+	ActivityItemMetaReview,
+	ActivityType,
+} from "@/entities/statistics";
 import { formatRelativeFromNow } from "@/shared/lib/format-relative-time";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -41,6 +47,28 @@ const TONE_BY_TYPE: Record<
 	},
 };
 
+const getActivityStrings = (item: ActivityItem, t: (k: string, v?: Record<string, unknown>) => string) => {
+	if (item.type === "READ_TEXT") {
+		const m = item.meta as ActivityItemMetaReadText;
+		const textTitle = m.textTitle ?? t("statistics.activity.unknownText");
+		const title = t("statistics.activity.readText", { title: textTitle });
+		const description = m.pageNumber != null ? t("statistics.activity.page", { n: m.pageNumber }) : "";
+		return { title, description };
+	}
+	if (item.type === "ADD_WORDS") {
+		const m = item.meta as ActivityItemMetaAddWords;
+		const title = t("statistics.activity.addedWords", { count: m.count });
+		return { title, description: "" };
+	}
+	// REVIEW
+	const m = item.meta as ActivityItemMetaReview;
+	const title = t("statistics.activity.types.REVIEW");
+	const description = m.total > 0
+		? t("statistics.activity.reviewDesc", { total: m.total, accuracy: m.accuracy })
+		: "";
+	return { title, description };
+};
+
 export const ActivityLog = ({ items }: ActivityLogProps) => {
 	const { t } = useI18n();
 
@@ -57,10 +85,11 @@ export const ActivityLog = ({ items }: ActivityLogProps) => {
 					{t("statistics.activity.empty")}
 				</div>
 			) : (
-				<ul className="flex flex-col">
+				<ul className="flex max-h-[220px] flex-col overflow-y-auto">
 					{items.map((item, idx) => {
 						const tone = TONE_BY_TYPE[item.type];
 						const time = formatRelativeFromNow(item.date, t);
+						const { title, description } = getActivityStrings(item, t);
 						return (
 							<li
 								key={`${item.date}-${idx}`}
@@ -84,18 +113,17 @@ export const ActivityLog = ({ items }: ActivityLogProps) => {
 										tag="p"
 										className="truncate text-xs font-medium text-t-1"
 									>
-										{item.title}
+										{title}
 									</Typography>
-									<Typography tag="p" className="truncate text-[11px] text-t-3">
-										{item.description}
+									{description && (
+										<Typography tag="p" className="text-[11px] text-t-3">
+											{description}
+										</Typography>
+									)}
+									<Typography tag="p" className="text-[11px] text-t-3">
+										{time}
 									</Typography>
 								</div>
-								<Typography
-									tag="span"
-									className="whitespace-nowrap text-[11px] text-t-3"
-								>
-									{time}
-								</Typography>
 							</li>
 						);
 					})}

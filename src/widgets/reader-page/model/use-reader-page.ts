@@ -2,6 +2,7 @@
 import { readerContextApi, readerContextKeys, useReaderContext } from "@/entities/reader-context";
 import { useWordLookupStore } from "@/features/word-lookup";
 import { useReaderFocusMode } from "@/features/reader-focus-mode";
+import { useReaderSessionTracker } from "@/features/reader-session-tracker";
 import { useReaderSettingsSync } from "@/features/reader-settings-sync";
 import { useI18n } from "@/shared/lib/i18n";
 import { useQueryClient } from "@tanstack/react-query";
@@ -17,6 +18,8 @@ export const useReaderPage = (textId: string, pageNumber: number) => {
 	const queryClient = useQueryClient();
 	const { data: ctx, isLoading, isError } = useReaderContext(textId, pageNumber);
 	const data = ctx?.page;
+
+	useReaderSessionTracker(textId, pageNumber, data?.wordCount ?? 0);
 
 	const totalPages = data?.totalPages ?? 0;
 

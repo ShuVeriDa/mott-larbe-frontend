@@ -49,6 +49,7 @@ export const ReviewIntro = ({
 	const { t } = useI18n();
 	const dueCount = stats?.dueCount ?? 0;
 	const learningCount = stats?.learningCount ?? 0;
+	const knownCount = stats?.knownCount ?? 0;
 	const streak = stats?.streak ?? 0;
 	const remainder = Math.max(queue.length - QUEUE_PREVIEW, 0);
 
@@ -67,6 +68,12 @@ export const ReviewIntro = ({
 					value={learningCount}
 					label={t("review.sm2.intro.stats.learning")}
 					tone="acc"
+				/>
+				<StatBox
+					value={knownCount}
+					label={t("review.sm2.intro.stats.known")}
+					tone="grn"
+					hint={t("review.sm2.intro.stats.knownHint")}
 				/>
 				<StatBox
 					value={streak}

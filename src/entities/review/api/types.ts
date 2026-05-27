@@ -3,6 +3,7 @@ export type ReviewWordStatus = "NEW" | "LEARNING" | "REVIEW" | "RELEARNING";
 export interface ReviewStats {
 	dueCount: number;
 	learningCount: number;
+	knownCount: number;
 	streak: number;
 }
 

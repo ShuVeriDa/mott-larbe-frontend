@@ -29,7 +29,7 @@ export const LemmaSearchSection = ({
 	const { t } = useI18n();
 
 	return (
-		<div className="border-t border-[0.5px] border-bd-1 px-5 py-3">
+		<div className="border-t-[0.5px] border-bd-1 px-5 py-3">
 			<div className="relative mb-2">
 				<SearchIcon className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-t-3" />
 				<Input

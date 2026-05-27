@@ -30,11 +30,11 @@ export const PhrasebookCategoryChips = () => {
 interface CategoryChipProps {
 	category: PhrasebookCategory;
 	active: boolean;
-	onSelect: (id: string) => void;
+	onSelect: (id: string | null) => void;
 }
 
 const CategoryChip = ({ category, active, onSelect }: CategoryChipProps) => {
-	const handleClick = () => onSelect(category.id);
+	const handleClick = () => onSelect(active ? null : category.id);
 
 	return (
 		<button

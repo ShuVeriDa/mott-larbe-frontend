@@ -150,7 +150,7 @@ export const BatchDeleteAnnotationDialog = ({
 					</DialogTitle>
 				</DialogHeader>
 
-				<div className="border-t border-[0.5px] border-bd-1 px-5 py-3">
+				<div className="border-t-[0.5px] border-bd-1 px-5 py-3">
 					<Typography tag="span" className="text-[12.5px] text-t-2">
 						{t("admin.texts.editPage.wordAnnotation.deleteDialogHint")}
 					</Typography>
@@ -166,7 +166,7 @@ export const BatchDeleteAnnotationDialog = ({
 					onToggleAll={handleToggleAll}
 				/>
 
-				<div className="flex gap-2 border-t border-[0.5px] border-bd-1 px-5 py-4">
+				<div className="flex gap-2 border-t-[0.5px] border-bd-1 px-5 py-4">
 					<Button
 						size="bare"
 						title={t("reader.annotate.cancel")}

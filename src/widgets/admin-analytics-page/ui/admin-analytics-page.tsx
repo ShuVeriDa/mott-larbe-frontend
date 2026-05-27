@@ -10,6 +10,7 @@ import { AnalyticsLevelDist } from "./analytics-level-dist";
 import { AnalyticsMobileTopbar } from "./analytics-mobile-topbar";
 import { AnalyticsPopularTexts } from "./analytics-popular-texts";
 import { AnalyticsReadingFunnel } from "./analytics-reading-funnel";
+import { AnalyticsPhraseStats } from "./analytics-phrase-stats";
 import { AnalyticsSm2Stats } from "./analytics-sm2-stats";
 import { AnalyticsTopUsers } from "./analytics-top-users";
 import { AnalyticsTopWords } from "./analytics-top-words";
@@ -105,7 +106,7 @@ export const AdminAnalyticsPage = () => {
 					/>
 				</div>
 
-				{/* Top words + Funnel + SM-2 */}
+				{/* Top words + Funnel + SM-2 + Phrase stats */}
 				<div className="grid grid-cols-2 gap-3.5 max-md:grid-cols-1">
 					<AnalyticsTopWords
 						words={data?.topUnknownWords}
@@ -117,6 +118,7 @@ export const AdminAnalyticsPage = () => {
 							isLoading={isLoading}
 						/>
 						<AnalyticsSm2Stats stats={data?.sm2Stats} isLoading={isLoading} />
+						<AnalyticsPhraseStats stats={data?.phraseStats} isLoading={isLoading} />
 					</div>
 				</div>
 			</div>

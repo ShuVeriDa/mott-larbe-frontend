@@ -151,6 +151,11 @@ export const ReviewDeckIntro = ({
 						<DeckRow key={key} {...row} />
 					))}
 				</ul>
+				{stats != null && !premiumLocked ? (
+					<Typography className="mt-2 text-center text-[11.5px] text-t-3">
+						{t("review.deck.intro.totalWords", { count: stats.total })}
+					</Typography>
+				) : null}
 			</div>
 
 			{!premiumLocked ? (

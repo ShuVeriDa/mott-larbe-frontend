@@ -1,20 +1,12 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-
-import Link from "next/link";
-import { useI18n } from "@/shared/lib/i18n";
-import { useParams } from "next/navigation";
-import { cn } from "@/shared/lib/cn";
 import type { AdminDashboardUser } from "@/entities/admin-dashboard";
-
-const AVATAR_COLORS = [
-	{ bg: "bg-acc-bg", text: "text-acc-t" },
-	{ bg: "bg-grn-bg", text: "text-grn-t" },
-	{ bg: "bg-pur-bg", text: "text-pur-t" },
-	{ bg: "bg-amb-bg", text: "text-amb-t" },
-	{ bg: "bg-red-bg", text: "text-red-t" },
-];
+import { AVATAR_COLORS } from "@/shared/lib/avatar-colors";
+import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
+import { Typography } from "@/shared/ui/typography";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 const getInitials = (name: string, surname: string) =>
 	`${name[0] ?? ""}${surname[0] ?? ""}`.toUpperCase();
@@ -37,7 +29,8 @@ const subTypeBadge = (
 	};
 	const def = map[type] ?? { cls: "bg-grn-bg text-grn-t", key: "admin.dashboard.recentUsers.active" };
 	return (
-		<Typography tag="span"
+		<Typography
+			tag="span"
 			className={cn(
 				"inline-flex items-center rounded-[5px] px-1.5 py-0.5 text-[10.5px] font-semibold",
 				def.cls,
@@ -70,41 +63,37 @@ export const DashboardRecentUsersCard = ({ users }: DashboardRecentUsersCardProp
 				</Link>
 			</div>
 			<div className="px-4 pb-4 pt-1">
-				{users.map((user, idx) => {
-					const color = AVATAR_COLORS[idx % AVATAR_COLORS.length];
-					return (
-						<Link
-							key={user.id}
-							href={`/${params.lang}/admin/users/${user.id}`}
+				{users.map((user, idx) => (
+					<Link
+						key={user.id}
+						href={`/${params.lang}/admin/users/${user.id}`}
+						className={cn(
+							"flex min-w-0 cursor-pointer items-center gap-2.5 py-2 transition-colors hover:opacity-80",
+							idx < users.length - 1 && "border-b border-bd-1",
+						)}
+					>
+						<div
 							className={cn(
-								"flex min-w-0 cursor-pointer items-center gap-2.5 py-2 transition-colors hover:opacity-80",
-								idx < users.length - 1 && "border-b border-bd-1",
+								"flex size-[30px] shrink-0 items-center justify-center rounded-full text-[11px] font-semibold",
+								AVATAR_COLORS[idx % AVATAR_COLORS.length],
 							)}
 						>
-							<div
-								className={cn(
-									"flex size-[30px] shrink-0 items-center justify-center rounded-full text-[11px] font-semibold",
-									color.bg,
-									color.text,
-								)}
-							>
-								{getInitials(user.name, user.surname)}
+							{getInitials(user.name, user.surname)}
+						</div>
+						<div className="min-w-0 flex-1">
+							<div className="truncate text-[12.5px] font-medium text-t-1">
+								{user.name} {user.surname}
 							</div>
-							<div className="min-w-0 flex-1">
-								<div className="truncate text-[12.5px] font-medium text-t-1">
-									{user.name} {user.surname}
-								</div>
-								<div className="truncate text-[11px] text-t-3">{user.email}</div>
-							</div>
-							<div className="shrink-0">
-								{subTypeBadge(user.subscriptionType, t)}
-							</div>
-							<div className="hidden shrink-0 text-[11px] text-t-3 sm:block">
-								{formatDate(user.createdAt)}
-							</div>
-						</Link>
-					);
-				})}
+							<div className="truncate text-[11px] text-t-3">{user.email}</div>
+						</div>
+						<div className="shrink-0">
+							{subTypeBadge(user.subscriptionType, t)}
+						</div>
+						<div className="hidden shrink-0 text-[11px] text-t-3 sm:block">
+							{formatDate(user.createdAt)}
+						</div>
+					</Link>
+				))}
 			</div>
 		</div>
 	);

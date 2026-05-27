@@ -124,7 +124,7 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 				</div>
 
 				{expanded ? (
-					<div className="mt-2.5 border-t border-[0.5px] border-bd-1 pt-2.5">
+					<div className="mt-2.5 border-t-[0.5px] border-bd-1 pt-2.5">
 						<div className="flex flex-col gap-3.5 md:flex-row md:gap-5">
 							<div className="min-w-0 flex-1">
 								{example ? (

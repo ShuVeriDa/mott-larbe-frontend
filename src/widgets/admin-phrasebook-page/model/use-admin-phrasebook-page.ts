@@ -99,7 +99,7 @@ export const useAdminPhrasebookPage = () => {
 
 	const suggestionsQuery = useQuery({
 		queryKey: adminPhrasebookKeys.suggestions(),
-		queryFn: adminPhrasebookApi.getSuggestions,
+		queryFn: () => adminPhrasebookApi.getSuggestions(),
 		staleTime: 15_000,
 		enabled: tab === "suggestions",
 	});

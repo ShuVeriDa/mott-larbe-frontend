@@ -1,6 +1,8 @@
 import {
 	Bookmark,
 	BookMarked,
+	CheckCircle,
+	Circle,
 	List,
 	Loader2,
 	Maximize2,
@@ -45,6 +47,9 @@ export interface GetTopbarActionsParams {
 	onToggleAiHistory?: () => void;
 	batchTranslateState?: "idle" | "loading" | "done" | "error";
 	onBatchTranslate?: () => void;
+	isCompleted: boolean;
+	completing: boolean;
+	handleMarkComplete: () => void;
 }
 
 export const getTopbarActions = ({
@@ -70,6 +75,9 @@ export const getTopbarActions = ({
 	onToggleAiHistory,
 	batchTranslateState,
 	onBatchTranslate,
+	isCompleted,
+	completing,
+	handleMarkComplete,
 }: GetTopbarActionsParams): TopbarAction[] => {
 	const actions: (TopbarAction | null)[] = [
 		{
@@ -164,6 +172,23 @@ export const getTopbarActions = ({
 					onClick: onToggleFocusMode,
 				}
 			: null,
+		{
+			key: "mark-complete",
+			renderIcon: () =>
+				completing ? (
+					<Loader2 className="size-[15px] animate-spin" strokeWidth={1.4} />
+				) : isCompleted ? (
+					<CheckCircle className="size-[15px]" strokeWidth={1.4} />
+				) : (
+					<Circle className="size-[15px]" strokeWidth={1.4} />
+				),
+			ariaLabel: isCompleted
+				? t("reader.topbar.completed")
+				: t("reader.topbar.markComplete"),
+			ariaPressed: isCompleted,
+			disabled: completing || isCompleted,
+			onClick: handleMarkComplete,
+		},
 		{
 			key: "bookmark",
 			renderIcon: () => (

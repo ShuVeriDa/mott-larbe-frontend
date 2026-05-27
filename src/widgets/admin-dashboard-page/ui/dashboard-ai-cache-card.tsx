@@ -34,7 +34,7 @@ export const DashboardAiCacheCard = ({
 				</Link>
 			</div>
 
-			<div className="grid grid-cols-3 gap-px border-t border-[0.5px] border-bd-1 bg-bd-1">
+			<div className="grid grid-cols-3 gap-px border-t-[0.5px] border-bd-1 bg-bd-1">
 				<div className="bg-surf px-4 py-3">
 					<div className="mb-0.5 text-[11px] text-t-3">
 						{t("aiTranslation.admin.widget.pending")}
@@ -74,7 +74,7 @@ export const DashboardAiCacheCard = ({
 			</div>
 
 			{aiCache.topWords.length > 0 && (
-				<div className="border-t border-[0.5px] border-bd-1 px-4 py-3">
+				<div className="border-t-[0.5px] border-bd-1 px-4 py-3">
 					<div className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
 						{t("aiTranslation.admin.widget.topWords")}
 					</div>
@@ -112,7 +112,7 @@ export const DashboardAiCacheCardSkeleton = () => (
 			<div className="h-4 w-24 animate-pulse rounded bg-surf-3" />
 			<div className="h-3 w-16 animate-pulse rounded bg-surf-3" />
 		</div>
-		<div className="grid grid-cols-3 gap-px border-t border-[0.5px] border-bd-1 bg-bd-1">
+		<div className="grid grid-cols-3 gap-px border-t-[0.5px] border-bd-1 bg-bd-1">
 			<div className="bg-surf px-4 py-3">
 				<div className="mb-1 h-3 w-16 animate-pulse rounded bg-surf-3" />
 				<div className="h-6 w-10 animate-pulse rounded bg-surf-3" />

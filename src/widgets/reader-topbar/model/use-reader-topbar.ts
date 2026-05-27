@@ -1,5 +1,6 @@
 "use client";
 import type { TextPageResponse } from "@/entities/text";
+import { textApi } from "@/entities/text/api/text-api";
 import { useToggleBookmark } from "@/features/bookmark-text";
 import { usePageBookmarkToggle } from "@/features/page-bookmark-toggle";
 import {
@@ -9,6 +10,8 @@ import {
 import { useI18n } from "@/shared/lib/i18n";
 import { LANG_TAG } from "@/shared/lib/lang-tag";
 import { useToast } from "@/shared/lib/toast";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 
 export const useReaderTopbar = (
 	textId: string,
@@ -16,9 +19,20 @@ export const useReaderTopbar = (
 	data: TextPageResponse,
 ) => {
 	const { t } = useI18n();
-	const { mutate: toggleBookmark, isPending: bookmarking } =
-		useToggleBookmark();
+	const { mutate: toggleBookmark, isPending: bookmarking } = useToggleBookmark();
 	const { success, error } = useToast();
+	const [isCompleted, setIsCompleted] = useState(data.progress >= 100);
+
+	const { mutate: markComplete, isPending: completing } = useMutation({
+		mutationFn: () => textApi.markComplete(textId),
+		onSuccess: () => {
+			setIsCompleted(true);
+			success(t("reader.toasts.markedComplete"));
+		},
+		onError: () => error(t("reader.toasts.markCompleteFailed")),
+	});
+
+	const handleMarkComplete = () => markComplete();
 
 	const snippet = data.page.contentRaw.slice(0, 100);
 	const { isBookmarked: isPageBookmarked, handleToggle: togglePageBookmark } =
@@ -85,5 +99,8 @@ export const useReaderTopbar = (
 		handleToggleWordPanel,
 		handleBookmark,
 		metaParts,
+		isCompleted,
+		completing,
+		handleMarkComplete,
 	};
 };

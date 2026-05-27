@@ -70,7 +70,6 @@ export const EmojiPickerInput = ({
 					searchPlaceholder={searchPlaceholder}
 					width={300}
 					height={380}
-					emojiSize={22}
 				/>
 			</PopoverContent>
 		</Popover>

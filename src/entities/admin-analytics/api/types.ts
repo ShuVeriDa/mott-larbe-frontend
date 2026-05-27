@@ -119,6 +119,17 @@ export interface Sm2Stats {
 	avgEaseFactor: number;
 }
 
+export interface PhraseStats {
+	totalPhrases: number;
+	totalCategories: number;
+	totalReviews: number;
+	totalReviewsChangePercent: number | null;
+	learningCount: number;
+	knownCount: number;
+	avgGrade: number;
+	retentionRatePercent: number;
+}
+
 export interface AdminAnalyticsResponse {
 	filters: AnalyticsFilters;
 	insight: AnalyticsInsight;
@@ -140,6 +151,7 @@ export interface AdminAnalyticsResponse {
 	topUnknownWords: TopUnknownWord[];
 	readingFunnel: ReadingFunnel;
 	sm2Stats: Sm2Stats;
+	phraseStats: PhraseStats;
 }
 
 export interface DifficultTextsResponse {

@@ -67,6 +67,9 @@ export const ReaderTopbar = ({
 		handleToggleWordPanel,
 		handleBookmark,
 		metaParts,
+		isCompleted,
+		completing,
+		handleMarkComplete,
 	} = useReaderTopbar(textId, currentPage, data);
 
 	return (
@@ -133,6 +136,9 @@ export const ReaderTopbar = ({
 					onToggleAiHistory,
 					batchTranslateState,
 					onBatchTranslate,
+					isCompleted,
+					completing,
+					handleMarkComplete,
 				}).map(action => (
 					<Button
 						key={action.key}

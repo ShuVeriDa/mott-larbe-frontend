@@ -37,6 +37,18 @@ export interface HeatmapMonth {
 	days: HeatmapDay[];
 }
 
+export interface HeatmapHourCell {
+	hour: number;
+	count: number;
+	level: HeatmapLevel;
+}
+
+export interface HeatmapWeekDay {
+	date: string;
+	label: string;
+	hours: HeatmapHourCell[];
+}
+
 export interface WordsBreakdown {
 	total: number;
 	new: number;
@@ -72,24 +84,220 @@ export interface AccuracyStats {
 
 export type ActivityType = "READ_TEXT" | "ADD_WORDS" | "REVIEW";
 
+export interface ActivityItemMetaReadText {
+	textTitle: string | null;
+	pageNumber: number | null;
+}
+
+export interface ActivityItemMetaAddWords {
+	count: number;
+}
+
+export interface ActivityItemMetaReview {
+	total: number;
+	accuracy: number;
+}
+
+export type ActivityItemMeta =
+	| ActivityItemMetaReadText
+	| ActivityItemMetaAddWords
+	| ActivityItemMetaReview;
+
 export interface ActivityItem {
 	type: ActivityType;
-	title: string;
-	description: string;
 	date: string;
 	icon: string;
+	meta: ActivityItemMeta;
 }
+
+export interface PhrasesBreakdown {
+	total: number;
+	new: number;
+	learning: number;
+	known: number;
+}
+
+export interface PhraseAccuracyStats {
+	percent: number;
+	correct: number;
+	wrong: number;
+	bestStreak: number;
+	total: number;
+}
+
+export interface UserEventsChartSeries {
+	openText: number[];
+	addToDict: number[];
+	reviewSession: number[];
+}
+
+export interface VocabularyGrowthPoint {
+	date: string;
+	total: number;
+	added: number;
+}
+
+export interface UserEventsChart {
+	labels: string[];
+	series: UserEventsChartSeries;
+}
+
+// ─── Achievements ─────────────────────────────────────────────────────────────
+
+export interface Achievement {
+	id: string;
+	icon: string;
+	reached: boolean;
+}
+
+export interface AchievementsData {
+	list: Achievement[];
+	reached: number;
+	total: number;
+}
+
+// ─── Goal forecast ────────────────────────────────────────────────────────────
+
+export interface GoalForecast {
+	goal: number;
+	current: number;
+	remaining: number;
+	avgPerDay: number;
+	daysToGoal: number | null;
+	pct: number;
+}
+
+// ─── Review sessions ──────────────────────────────────────────────────────────
+
+export interface ReviewSessionsStats {
+	totalSessions: number;
+	totalCards: number;
+	avgCardsPerSession: number;
+	bestDayCount: number;
+	avgDurationSeconds: number | null;
+	masteredWords: number;
+}
+
+// ─── Retention ────────────────────────────────────────────────────────────────
+
+export interface RetentionLevel {
+	level: string;
+	count: number;
+}
+
+export interface RetentionData {
+	levels: RetentionLevel[];
+	dueForReview: number;
+	total: number;
+}
+
+// ─── Top words ────────────────────────────────────────────────────────────────
+
+export interface HardWord {
+	word: string;
+	translation: string;
+	level: string;
+	wrongCount: number;
+}
+
+export interface MasteredWord {
+	word: string;
+	translation: string;
+	addedAt: string;
+}
+
+export interface TopWordsData {
+	hardest: HardWord[];
+	recentlyMastered: MasteredWord[];
+}
+
+// ─── Weekday activity ─────────────────────────────────────────────────────────
+
+export interface WeekdayPoint {
+	label: string;
+	total: number;
+	avg: number;
+}
+
+// ─── Reading speed ────────────────────────────────────────────────────────────
+
+export interface ReadingSpeedPoint {
+	date: string;
+	wpm: number;
+}
+
+export interface ReadingSpeedData {
+	avg: number;
+	best: number;
+	points: ReadingSpeedPoint[];
+}
+
+// ─── Weak spots ───────────────────────────────────────────────────────────────
+
+export interface AbandonedText {
+	id: string;
+	title: string;
+	level: string | null;
+	imageUrl: string | null;
+	progressPercent: number;
+	lastOpened: string | null;
+}
+
+export interface StrugglingWord {
+	word: string;
+	translation: string;
+	updatedAt: string;
+	learningLevel: string;
+}
+
+export interface LowAccuracyWord {
+	word: string;
+	translation: string;
+	wrongCount: number;
+}
+
+export interface WeakSpotsData {
+	abandonedTexts: AbandonedText[];
+	strugglingWords: StrugglingWord[];
+	lowAccuracy: LowAccuracyWord[];
+}
+
+// ─── KPI Sparklines ───────────────────────────────────────────────────────────
+
+export interface KpiSparklines {
+	wordsLearned: number[];
+	reviews: number[];
+	readingTime: number[];
+	textsRead: number[];
+}
+
+// ─── Main response ────────────────────────────────────────────────────────────
 
 export interface StatisticsResponse {
 	period: StatsPeriod;
 	header: StatsHeader;
 	streak: StreakInfo;
 	heatmap: HeatmapMonth[];
+	heatmapWeek: HeatmapWeekDay[];
 	words: WordsBreakdown;
 	wordsPerDay: WordsPerDayPoint[];
 	texts: TextProgressItem[];
 	accuracy: AccuracyStats;
 	recentActivity: ActivityItem[];
+	phraseProgress: PhrasesBreakdown;
+	phrasesPerDay: WordsPerDayPoint[];
+	phraseAccuracy: PhraseAccuracyStats;
+	eventsChart: UserEventsChart;
+	vocabularyGrowth: VocabularyGrowthPoint[];
+	achievements: AchievementsData;
+	goalForecast: GoalForecast;
+	reviewSessions: ReviewSessionsStats;
+	retention: RetentionData;
+	topWords: TopWordsData;
+	weekdayActivity: WeekdayPoint[];
+	readingSpeed: ReadingSpeedData;
+	weakSpots: WeakSpotsData;
+	kpiSparklines: KpiSparklines;
 }
 
 export interface StatisticsQuery {

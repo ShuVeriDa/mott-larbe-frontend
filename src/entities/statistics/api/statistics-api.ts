@@ -17,4 +17,11 @@ export const statisticsApi = {
 		const { data } = await http.get<ProfileSummary>("/statistics/me/profile-summary");
 		return data;
 	},
+
+	logReadingSession: (textId: string, durationSeconds: number, wordsRead?: number): Promise<void> => {
+		return http
+			.post("/statistics/reading-time", { textId, durationSeconds, ...(wordsRead !== undefined && { wordsRead }) })
+			.then(() => undefined)
+			.catch(() => undefined);
+	},
 };

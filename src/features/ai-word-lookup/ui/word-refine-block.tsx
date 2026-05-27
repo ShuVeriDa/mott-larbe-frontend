@@ -41,7 +41,7 @@ export const WordRefineBlock = ({
 			<div
 				className={
 					isSm
-						? "border-t border-[0.5px] border-bd-1 px-3.5 py-2"
+						? "border-t-[0.5px] border-bd-1 px-3.5 py-2"
 						: "border-t border-bd-1 px-4 py-2.5"
 				}
 			>
@@ -66,7 +66,7 @@ export const WordRefineBlock = ({
 			<div
 				className={
 					isSm
-						? "border-t border-[0.5px] border-bd-1 px-3.5 py-2.5"
+						? "border-t-[0.5px] border-bd-1 px-3.5 py-2.5"
 						: "border-t border-bd-1 px-4 py-3"
 				}
 			>
@@ -115,7 +115,7 @@ export const WordRefineBlock = ({
 			<div
 				className={
 					isSm
-						? "border-t border-[0.5px] border-bd-1 px-3.5 py-2.5"
+						? "border-t-[0.5px] border-bd-1 px-3.5 py-2.5"
 						: "border-t border-bd-1 px-4 py-3"
 				}
 			>

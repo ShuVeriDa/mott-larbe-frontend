@@ -1,10 +1,8 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import type { AdminDashboardKpi } from "@/entities/admin-dashboard";
-import { ArrowUp, ArrowDown } from "lucide-react";
+import { useI18n } from "@/shared/lib/i18n";
+import { AbsoluteTrend, TrendChip } from "@/shared/ui/trend-chip";
 
 const formatRevenue = (cents: number, currency: string) => {
 	const amount = cents / 100;
@@ -17,36 +15,6 @@ const formatRevenue = (cents: number, currency: string) => {
 };
 
 const formatNum = (n: number) => n.toLocaleString("ru-RU");
-
-interface TrendProps {
-	value: number | null;
-	label: string;
-}
-
-const TrendChip = ({ value, label }: TrendProps) => {
-	if (value === null) return <Typography tag="span" className="text-[11px] text-t-3">{label}</Typography>;
-	const up = value >= 0;
-	const Icon = up ? ArrowUp : ArrowDown;
-	return (
-		<Typography tag="span" className={cn("flex items-center gap-1 text-[11px]", up ? "text-grn-t" : "text-red-t")}>
-			<Icon className="size-3 shrink-0" />
-			{up ? "+" : ""}
-			{value}% {label}
-		</Typography>
-	);
-};
-
-const AbsoluteTrend = ({ value, label }: { value: number; label: string }) => {
-	const up = value >= 0;
-	const Icon = up ? ArrowUp : ArrowDown;
-	return (
-		<Typography tag="span" className={cn("flex items-center gap-1 text-[11px]", up ? "text-grn-t" : "text-red-t")}>
-			<Icon className="size-3 shrink-0" />
-			{up ? "+" : ""}
-			{value} {label}
-		</Typography>
-	);
-};
 
 interface DashboardKpiGridProps {
 	kpi: AdminDashboardKpi;
@@ -100,7 +68,7 @@ export const DashboardKpiGrid = ({ kpi }: DashboardKpiGridProps) => {
 
 	return (
 		<div className="mb-4 grid grid-cols-2 gap-2.5 lg:grid-cols-4 max-sm:gap-2">
-			{cards.map((card) => (
+			{cards.map(card => (
 				<div
 					key={card.label}
 					className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf px-3.5 py-3.5 transition-colors max-sm:px-3 max-sm:py-3"

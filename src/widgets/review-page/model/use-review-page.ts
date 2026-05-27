@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDeckDue, useDeckStats } from "@/entities/deck";
 import type { DeckCard } from "@/entities/deck";
 import { useReviewDue, useReviewStats } from "@/entities/review";
+import { usePhraseReviewStats } from "@/entities/phrasebook";
 import { useSessionMode } from "@/features/session-mode";
 import { useReviewFlow } from "./use-review-flow";
 
@@ -51,8 +52,11 @@ export const useReviewPage = () => {
 	const [liveDeckCounts, setLiveDeckCounts] = useState<DeckCounts>(ZERO_DECK);
 	const [deckAgainCards, setDeckAgainCards] = useState<DeckCard[]>([]);
 
+	const { data: phraseStats } = usePhraseReviewStats();
+
 	const sm2DueBadge = stats?.dueCount ?? null;
 	const deckTotalBadge = deckStats?.total ?? null;
+	const phraseDueBadge = phraseStats?.dueCount ?? null;
 	const premiumLocked = deckStatsError === true;
 	const words = dueWords ?? [];
 
@@ -136,6 +140,7 @@ export const useReviewPage = () => {
 		premiumLocked,
 		sm2DueBadge,
 		deckTotalBadge,
+		phraseDueBadge,
 		sm2Counts,
 		deckCounts,
 		panelSm2Counts,

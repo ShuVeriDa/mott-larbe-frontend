@@ -98,7 +98,7 @@ export const AnnotateWordFormDialog = ({
 					/>
 				)}
 
-				<div className="flex gap-2 border-t border-[0.5px] border-bd-1 px-5 py-4">
+				<div className="flex gap-2 border-t-[0.5px] border-bd-1 px-5 py-4">
 					<Button
 						size="bare"
 						title={t("reader.annotate.cancel")}

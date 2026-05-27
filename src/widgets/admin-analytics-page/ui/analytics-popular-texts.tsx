@@ -1,14 +1,13 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
-import { Button } from "@/shared/ui/button";
-
 import type { PopularBy, PopularTextItem } from "@/entities/admin-analytics";
 import { CEFR_LEVEL_BADGE_CLASS } from "@/shared/lib/cefr-colors";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { ComponentProps } from "react";
+import { AdminCard } from "@/shared/ui/admin-card";
+import { AdminTabStrip, type AdminTabStripItem } from "@/shared/ui/admin-tab-strip";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/table";
+import { Typography } from "@/shared/ui/typography";
 
 const TABS: PopularBy[] = ["opens", "complete", "saved"];
 
@@ -27,8 +26,13 @@ export const AnalyticsPopularTexts = ({
 }: AnalyticsPopularTextsProps) => {
 	const { t } = useI18n();
 
+	const tabItems: AdminTabStripItem<PopularBy>[] = TABS.map(tb => ({
+		key: tb,
+		label: t(`admin.analytics.popularTexts.tab${tb.charAt(0).toUpperCase() + tb.slice(1)}`),
+	}));
+
 	return (
-		<div className="rounded-card border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="px-4 pt-3.5">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.analytics.popularTexts.title")}
@@ -38,32 +42,8 @@ export const AnalyticsPopularTexts = ({
 				</Typography>
 			</div>
 
-			{/* Tab strip */}
-			<div className="-mb-px flex gap-px overflow-x-auto border-b border-bd-1 px-4">
-				{TABS.map(tb => {
-					const handleClick: NonNullable<
-						ComponentProps<"button">["onClick"]
-					> = () => onTabChange(tb);
-					return (
-						<Button
-							key={tb}
-							onClick={handleClick}
-							className={cn(
-								"whitespace-nowrap border-b-2 px-2.5 py-2 text-[12px] font-medium transition-colors rounded-b-none",
-								tb === tab
-									? "border-acc text-t-1"
-									: "border-transparent text-t-3 hover:text-t-2",
-							)}
-						>
-							{t(
-								`admin.analytics.popularTexts.tab${tb.charAt(0).toUpperCase() + tb.slice(1)}`,
-							)}
-						</Button>
-					);
-				})}
-			</div>
+			<AdminTabStrip tabs={tabItems} activeTab={tab} onTabChange={onTabChange} />
 
-			{/* Table */}
 			<div className="overflow-x-auto">
 				<Table className="text-[12.5px]" aria-label={t("admin.analytics.popularTexts.title")}>
 					<TableHeader>
@@ -112,9 +92,7 @@ export const AnalyticsPopularTexts = ({
 										<TableCell className="px-2 py-2.5">
 											<div className="font-medium text-t-1">{item.title}</div>
 											{item.author && (
-												<div className="text-[11.5px] text-t-3">
-													{item.author}
-												</div>
+												<div className="text-[11.5px] text-t-3">{item.author}</div>
 											)}
 										</TableCell>
 										<TableCell className="px-2 py-2.5">
@@ -138,6 +116,6 @@ export const AnalyticsPopularTexts = ({
 					</TableBody>
 				</Table>
 			</div>
-		</div>
+		</AdminCard>
 	);
 };

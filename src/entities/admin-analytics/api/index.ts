@@ -19,6 +19,7 @@ export type {
 	PopularTextItem,
 	PopularTextsResponse,
 	ReadingFunnel,
+	PhraseStats,
 	Sm2Stats,
 	TopActiveUser,
 	TopUnknownWord,
