@@ -40,7 +40,7 @@ export const PeriodTabs = ({ value, onChange, className }: PeriodTabsProps) => {
 						onClick={handleClick}
 						title={t(`statistics.period.${period}`)}
 						className={cn(
-							"rounded-md px-3 py-1 text-xs font-medium transition-colors duration-100 max-md:flex-1",
+							"rounded-md px-3 py-1 text-xs font-medium transition-colors duration-100 max-md:flex-1 max-md:px-1.5 max-md:text-[11px]",
 							active ? "bg-surf text-t-1 shadow-sm" : "text-t-2 hover:text-t-1",
 						)}
 					>

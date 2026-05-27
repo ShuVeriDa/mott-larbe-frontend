@@ -154,7 +154,9 @@ export const StatisticsPage = () => {
 					<div className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">
 						<TextLevelsCard items={data.texts} />
 						<GoalForecastCard data={data.goalForecast} />
-						<ActivityLog items={data.recentActivity} />
+						<div className="max-md:col-span-2 max-sm:col-span-1">
+							<ActivityLog items={data.recentActivity} />
+						</div>
 					</div>
 				</div>
 			)}

@@ -22,7 +22,7 @@ export const WeekdayActivityCard = ({ data }: WeekdayActivityCardProps) => {
 
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4 transition-colors">
-			<header className="mb-3 flex items-center justify-between">
+			<header className="mb-3 gap-1 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.weekday.title")}
 				</Typography>
@@ -37,14 +37,21 @@ export const WeekdayActivityCard = ({ data }: WeekdayActivityCardProps) => {
 				</div>
 			) : (
 				<ResponsiveContainer width="100%" height={160}>
-					<AreaChart data={data} margin={{ top: 4, right: 4, left: -16, bottom: 0 }}>
+					<AreaChart
+						data={data}
+						margin={{ top: 4, right: 4, left: -16, bottom: 0 }}
+					>
 						<defs>
 							<linearGradient id="weekdayGrad" x1="0" y1="0" x2="0" y2="1">
 								<stop offset="5%" stopColor="var(--acc)" stopOpacity={0.3} />
 								<stop offset="95%" stopColor="var(--acc)" stopOpacity={0.02} />
 							</linearGradient>
 						</defs>
-						<CartesianGrid strokeDasharray="0" stroke="var(--bd-1)" vertical={false} />
+						<CartesianGrid
+							strokeDasharray="0"
+							stroke="var(--bd-1)"
+							vertical={false}
+						/>
 						<XAxis
 							dataKey="label"
 							tick={{ fontSize: 10, fill: "var(--t-3)" }}

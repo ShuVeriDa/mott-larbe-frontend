@@ -47,12 +47,18 @@ const TONE_BY_TYPE: Record<
 	},
 };
 
-const getActivityStrings = (item: ActivityItem, t: (k: string, v?: Record<string, unknown>) => string) => {
+const getActivityStrings = (
+	item: ActivityItem,
+	t: (k: string, v?: Record<string, unknown>) => string,
+) => {
 	if (item.type === "READ_TEXT") {
 		const m = item.meta as ActivityItemMetaReadText;
 		const textTitle = m.textTitle ?? t("statistics.activity.unknownText");
 		const title = t("statistics.activity.readText", { title: textTitle });
-		const description = m.pageNumber != null ? t("statistics.activity.page", { n: m.pageNumber }) : "";
+		const description =
+			m.pageNumber != null
+				? t("statistics.activity.page", { n: m.pageNumber })
+				: "";
 		return { title, description };
 	}
 	if (item.type === "ADD_WORDS") {
@@ -63,9 +69,13 @@ const getActivityStrings = (item: ActivityItem, t: (k: string, v?: Record<string
 	// REVIEW
 	const m = item.meta as ActivityItemMetaReview;
 	const title = t("statistics.activity.types.REVIEW");
-	const description = m.total > 0
-		? t("statistics.activity.reviewDesc", { total: m.total, accuracy: m.accuracy })
-		: "";
+	const description =
+		m.total > 0
+			? t("statistics.activity.reviewDesc", {
+					total: m.total,
+					accuracy: m.accuracy,
+				})
+			: "";
 	return { title, description };
 };
 
@@ -74,7 +84,7 @@ export const ActivityLog = ({ items }: ActivityLogProps) => {
 
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4">
-			<header className="mb-3 flex items-center justify-between">
+			<header className="mb-3 gap-1 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.activity.title")}
 				</Typography>

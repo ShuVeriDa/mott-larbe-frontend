@@ -25,23 +25,40 @@ const formatDate = (date: string): string => {
 export const ReadingSpeedCard = ({ data }: ReadingSpeedCardProps) => {
 	const { t } = useI18n();
 	const isEmpty = data.points.length === 0;
-	const chartData = data.points.map(p => ({ label: formatDate(p.date), wpm: p.wpm }));
+	const chartData = data.points.map(p => ({
+		label: formatDate(p.date),
+		wpm: p.wpm,
+	}));
 
 	return (
 		<section className="h-full rounded-card border-[0.5px] border-bd-1 bg-surf p-4 transition-colors">
-			<header className="mb-3 flex items-center justify-between">
+			<header className="mb-3 gap-1 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.readingSpeed.title")}
 				</Typography>
 				{!isEmpty && (
 					<div className="flex items-center gap-3">
 						<div className="text-right">
-							<Typography tag="p" className="text-[10px] text-t-3">{t("statistics.readingSpeed.avg")}</Typography>
-							<Typography tag="p" className="text-[12px] font-semibold text-t-1">{data.avg} {t("statistics.readingSpeed.wpm")}</Typography>
+							<Typography tag="p" className="text-[10px] text-t-3">
+								{t("statistics.readingSpeed.avg")}
+							</Typography>
+							<Typography
+								tag="p"
+								className="text-[12px] font-semibold text-t-1"
+							>
+								{data.avg} {t("statistics.readingSpeed.wpm")}
+							</Typography>
 						</div>
 						<div className="text-right">
-							<Typography tag="p" className="text-[10px] text-t-3">{t("statistics.readingSpeed.best")}</Typography>
-							<Typography tag="p" className="text-[12px] font-semibold text-grn">{data.best} {t("statistics.readingSpeed.wpm")}</Typography>
+							<Typography tag="p" className="text-[10px] text-t-3">
+								{t("statistics.readingSpeed.best")}
+							</Typography>
+							<Typography
+								tag="p"
+								className="text-[12px] font-semibold text-grn"
+							>
+								{data.best} {t("statistics.readingSpeed.wpm")}
+							</Typography>
 						</div>
 					</div>
 				)}
@@ -53,14 +70,21 @@ export const ReadingSpeedCard = ({ data }: ReadingSpeedCardProps) => {
 				</div>
 			) : (
 				<ResponsiveContainer width="100%" height={120}>
-					<AreaChart data={chartData} margin={{ top: 4, right: 4, left: -16, bottom: 0 }}>
+					<AreaChart
+						data={chartData}
+						margin={{ top: 4, right: 4, left: -16, bottom: 0 }}
+					>
 						<defs>
 							<linearGradient id="speedGrad" x1="0" y1="0" x2="0" y2="1">
 								<stop offset="5%" stopColor="var(--grn)" stopOpacity={0.3} />
 								<stop offset="95%" stopColor="var(--grn)" stopOpacity={0.02} />
 							</linearGradient>
 						</defs>
-						<CartesianGrid strokeDasharray="0" stroke="var(--bd-1)" vertical={false} />
+						<CartesianGrid
+							strokeDasharray="0"
+							stroke="var(--bd-1)"
+							vertical={false}
+						/>
 						<XAxis
 							dataKey="label"
 							tick={{ fontSize: 10, fill: "var(--t-3)" }}
@@ -92,7 +116,10 @@ export const ReadingSpeedCard = ({ data }: ReadingSpeedCardProps) => {
 							}}
 							labelStyle={{ color: "var(--t-3)", fontSize: 11 }}
 							cursor={{ stroke: "var(--bd-2)", strokeWidth: 1 }}
-							formatter={(v: number) => [`${v} ${t("statistics.readingSpeed.wpm")}`, ""]}
+							formatter={(v: number) => [
+								`${v} ${t("statistics.readingSpeed.wpm")}`,
+								"",
+							]}
 						/>
 						<Area
 							dataKey="wpm"

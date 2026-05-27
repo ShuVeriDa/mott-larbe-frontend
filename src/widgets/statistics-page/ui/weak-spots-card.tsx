@@ -23,7 +23,8 @@ export const WeakSpotsCard = ({ data, lang }: WeakSpotsCardProps) => {
 	const hasTexts = data.abandonedTexts.length > 0;
 	const hasWords = data.strugglingWords.length > 0;
 	const hasAccuracy = data.lowAccuracy.length > 0;
-	const isEmpty = tab === "texts" ? !hasTexts : tab === "words" ? !hasWords : !hasAccuracy;
+	const isEmpty =
+		tab === "texts" ? !hasTexts : tab === "words" ? !hasWords : !hasAccuracy;
 
 	const formatDate = (iso: string | null) => {
 		if (!iso) return "";
@@ -33,7 +34,7 @@ export const WeakSpotsCard = ({ data, lang }: WeakSpotsCardProps) => {
 
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4 transition-colors">
-			<header className="mb-3 flex items-center justify-between">
+			<header className="mb-3 gap-1 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.weakSpots.title")}
 				</Typography>
@@ -44,13 +45,23 @@ export const WeakSpotsCard = ({ data, lang }: WeakSpotsCardProps) => {
 				{(["texts", "words", "accuracy"] as Tab[]).map(tabKey => (
 					<button
 						key={tabKey}
-						onClick={tabKey === "texts" ? handleTabTexts : tabKey === "words" ? handleTabWords : handleTabAccuracy}
+						onClick={
+							tabKey === "texts"
+								? handleTabTexts
+								: tabKey === "words"
+									? handleTabWords
+									: handleTabAccuracy
+						}
 						className={cn(
 							"rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors",
-							tab === tabKey ? "bg-surf text-t-1 shadow-sm" : "text-t-3 hover:text-t-2",
+							tab === tabKey
+								? "bg-surf text-t-1 shadow-sm"
+								: "text-t-3 hover:text-t-2",
 						)}
 					>
-						{t(`statistics.weakSpots.tab${tabKey.charAt(0).toUpperCase()}${tabKey.slice(1)}`)}
+						{t(
+							`statistics.weakSpots.tab${tabKey.charAt(0).toUpperCase()}${tabKey.slice(1)}`,
+						)}
 					</button>
 				))}
 			</div>
@@ -68,16 +79,23 @@ export const WeakSpotsCard = ({ data, lang }: WeakSpotsCardProps) => {
 							className="flex items-center gap-2.5 rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-2.5 py-2 transition-colors hover:border-bd-2 hover:bg-surf-3"
 						>
 							<div className="min-w-0 flex-1">
-								<Typography tag="p" className="truncate text-[11.5px] font-medium text-t-1">
+								<Typography
+									tag="p"
+									className="truncate text-[11.5px] font-medium text-t-1"
+								>
 									{text.title}
 								</Typography>
 								<Typography tag="p" className="text-[10px] text-t-3">
 									{text.level && <span className="mr-1.5">{text.level}</span>}
-									{t("statistics.weakSpots.lastOpened")} {formatDate(text.lastOpened)}
+									{t("statistics.weakSpots.lastOpened")}{" "}
+									{formatDate(text.lastOpened)}
 								</Typography>
 							</div>
 							<div className="shrink-0 text-right">
-								<Typography tag="p" className="text-[11px] font-semibold text-amb-t">
+								<Typography
+									tag="p"
+									className="text-[11px] font-semibold text-amb-t"
+								>
 									{text.progressPercent}%
 								</Typography>
 							</div>
@@ -89,11 +107,25 @@ export const WeakSpotsCard = ({ data, lang }: WeakSpotsCardProps) => {
 					{data.strugglingWords.map((w, i) => (
 						<div key={i} className="flex items-center gap-2">
 							<div className="min-w-0 flex-1">
-								<Typography tag="span" className="text-[12px] font-semibold text-t-1">{w.word}</Typography>
-								<Typography tag="span" className="ml-1.5 text-[10.5px] text-t-3">{w.translation}</Typography>
+								<Typography
+									tag="span"
+									className="text-[12px] font-semibold text-t-1"
+								>
+									{w.word}
+								</Typography>
+								<Typography
+									tag="span"
+									className="ml-1.5 text-[10.5px] text-t-3"
+								>
+									{w.translation}
+								</Typography>
 							</div>
 							<Typography tag="span" className="shrink-0 text-[10px] text-t-3">
-								{t("statistics.weakSpots.notReviewed", { days: Math.floor((Date.now() - new Date(w.updatedAt).getTime()) / 86400000) })}
+								{t("statistics.weakSpots.notReviewed", {
+									days: Math.floor(
+										(Date.now() - new Date(w.updatedAt).getTime()) / 86400000,
+									),
+								})}
 							</Typography>
 						</div>
 					))}
@@ -103,11 +135,24 @@ export const WeakSpotsCard = ({ data, lang }: WeakSpotsCardProps) => {
 					{data.lowAccuracy.map((w, i) => (
 						<div key={i} className="flex items-center gap-2">
 							<div className="min-w-0 flex-1">
-								<Typography tag="span" className="text-[12px] font-semibold text-t-1">{w.word}</Typography>
-								<Typography tag="span" className="ml-1.5 text-[10.5px] text-t-3">{w.translation}</Typography>
+								<Typography
+									tag="span"
+									className="text-[12px] font-semibold text-t-1"
+								>
+									{w.word}
+								</Typography>
+								<Typography
+									tag="span"
+									className="ml-1.5 text-[10.5px] text-t-3"
+								>
+									{w.translation}
+								</Typography>
 							</div>
 							<div className="shrink-0 rounded-md bg-red/10 px-1.5 py-0.5">
-								<Typography tag="span" className="text-[10px] font-semibold text-red">
+								<Typography
+									tag="span"
+									className="text-[10px] font-semibold text-red"
+								>
 									{w.wrongCount}✗
 								</Typography>
 							</div>

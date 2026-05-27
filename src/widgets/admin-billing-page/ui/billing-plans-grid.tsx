@@ -2,8 +2,8 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { useI18n } from "@/shared/lib/i18n";
 import type { AdminPlan } from "@/entities/admin-billing";
+import { useI18n } from "@/shared/lib/i18n";
 import { BillingPlanCard, BillingPlanCardSkeleton } from "./billing-plan-card";
 
 interface BillingPlansGridProps {
@@ -22,11 +22,11 @@ export const BillingPlansGrid = ({
 	onDeactivate,
 }: BillingPlansGridProps) => {
 	const { t } = useI18n();
-	const maxSubscribers = Math.max(...plans.map((p) => p.subscriberCount), 1);
+	const maxSubscribers = Math.max(...plans.map(p => p.subscriberCount), 1);
 
 	return (
 		<section className="mb-5">
-			<div className="mb-3 flex items-center justify-between">
+			<div className="mb-3 gap-1 flex items-center justify-between">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.plans.plansSection.title")}
 				</Typography>
@@ -37,7 +37,7 @@ export const BillingPlansGrid = ({
 						? Array.from({ length: 5 }).map((_, i) => (
 								<BillingPlanCardSkeleton key={i} />
 							))
-						: plans.map((plan) => (
+						: plans.map(plan => (
 								<BillingPlanCard
 									key={plan.id}
 									plan={plan}

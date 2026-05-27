@@ -12,7 +12,7 @@ export const GoalForecastCard = ({ data }: GoalForecastCardProps) => {
 
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4 transition-colors">
-			<header className="mb-3 flex items-center justify-between">
+			<header className="mb-3 gap-1 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.goalForecast.title")}
 				</Typography>
@@ -47,7 +47,10 @@ export const GoalForecastCard = ({ data }: GoalForecastCardProps) => {
 					</Typography>
 				) : data.daysToGoal !== null ? (
 					<>
-						<Typography tag="p" className="text-[11.5px] font-semibold text-t-1">
+						<Typography
+							tag="p"
+							className="text-[11.5px] font-semibold text-t-1"
+						>
 							{t("statistics.goalForecast.forecast", { days: data.daysToGoal })}
 						</Typography>
 						<Typography tag="p" className="mt-0.5 text-[10.5px] text-t-3">

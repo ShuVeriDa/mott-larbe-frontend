@@ -41,19 +41,19 @@ export const StreakBlock = ({ streak, heatmap, heatmapWeek, period }: StreakBloc
 					{t("statistics.streak.record", { n: streak.record })}
 				</Typography>
 
-				<div className="mt-3 flex gap-2 overflow-x-auto pb-1 max-[480px]:overflow-x-auto">
+				<div className="mt-3 grid grid-cols-4 gap-2 max-[360px]:gap-1.5">
 					{streak.milestones.map(ms => (
 						<div
 							key={ms.days}
 							className={cn(
-								"flex min-w-[52px] shrink-0 flex-col items-center gap-0.5 rounded-lg border-[0.5px] border-bd-1 px-2.5 py-1.5",
+								"flex flex-col items-center gap-0.5 rounded-lg border-[0.5px] border-bd-1 px-2 py-1.5",
 								ms.reached ? "border-amb/20 bg-amb-bg" : "bg-surf-2",
 							)}
 						>
 							<Typography
 								tag="span"
 								className={cn(
-									"text-[13px] font-semibold",
+									"text-[13px] font-semibold max-[360px]:text-[12px]",
 									ms.reached ? "text-amb-t" : "text-t-3",
 								)}
 							>

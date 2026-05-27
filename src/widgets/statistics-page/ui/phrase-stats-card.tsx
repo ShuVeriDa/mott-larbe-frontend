@@ -14,12 +14,18 @@ interface StatRowProps {
 const StatRow = ({ label, value, dotColor }: StatRowProps) => (
 	<div className="flex items-center justify-between gap-2">
 		<div className="flex items-center gap-1.5">
-			<span className={`size-2 shrink-0 rounded-full ${dotColor}`} aria-hidden="true" />
+			<span
+				className={`size-2 shrink-0 rounded-full ${dotColor}`}
+				aria-hidden="true"
+			/>
 			<Typography tag="span" className="text-[11.5px] text-t-2">
 				{label}
 			</Typography>
 		</div>
-		<Typography tag="span" className="text-[11.5px] font-semibold tabular-nums text-t-1">
+		<Typography
+			tag="span"
+			className="text-[11.5px] font-semibold tabular-nums text-t-1"
+		>
 			{value}
 		</Typography>
 	</div>
@@ -31,7 +37,7 @@ export const PhraseStatsCard = () => {
 
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4 transition-colors">
-			<header className="mb-3 flex items-center justify-between">
+			<header className="mb-3 gap-1 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.phrases.title")}
 				</Typography>
@@ -54,11 +60,27 @@ export const PhraseStatsCard = () => {
 				</div>
 			) : (
 				<div className="flex flex-col gap-2">
-					<StatRow label={t("statistics.phrases.due")}      value={data?.dueCount ?? 0}      dotColor="bg-amb" />
-					<StatRow label={t("statistics.phrases.learning")} value={data?.learningCount ?? 0} dotColor="bg-acc" />
-					<StatRow label={t("statistics.phrases.known")}    value={data?.knownCount ?? 0}    dotColor="bg-grn" />
+					<StatRow
+						label={t("statistics.phrases.due")}
+						value={data?.dueCount ?? 0}
+						dotColor="bg-amb"
+					/>
+					<StatRow
+						label={t("statistics.phrases.learning")}
+						value={data?.learningCount ?? 0}
+						dotColor="bg-acc"
+					/>
+					<StatRow
+						label={t("statistics.phrases.known")}
+						value={data?.knownCount ?? 0}
+						dotColor="bg-grn"
+					/>
 					<div className="border-t border-bd-1 pt-2">
-						<StatRow label={t("statistics.phrases.streak")} value={data?.streak ?? 0} dotColor="bg-pur" />
+						<StatRow
+							label={t("statistics.phrases.streak")}
+							value={data?.streak ?? 0}
+							dotColor="bg-pur"
+						/>
 					</div>
 				</div>
 			)}

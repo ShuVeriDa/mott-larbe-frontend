@@ -29,7 +29,7 @@ const StackedBar = ({ segments, total }: StackedBarProps) => {
 	const safeTotal = total || 1;
 	return (
 		<div className="flex h-3 w-full overflow-hidden rounded-full bg-surf-3">
-			{segments.map((seg) => {
+			{segments.map(seg => {
 				const pct = (seg.value / safeTotal) * 100;
 				if (pct <= 0) return null;
 				return (
@@ -52,13 +52,25 @@ interface StatRowProps {
 	percent: number;
 }
 
-const StatRow = ({ label, value, colorClass, textClass, percent }: StatRowProps) => (
+const StatRow = ({
+	label,
+	value,
+	colorClass,
+	textClass,
+	percent,
+}: StatRowProps) => (
 	<div className="flex items-center gap-2">
-		<span className={cn("size-2 shrink-0 rounded-full", colorClass)} aria-hidden="true" />
+		<span
+			className={cn("size-2 shrink-0 rounded-full", colorClass)}
+			aria-hidden="true"
+		/>
 		<Typography tag="span" className="min-w-0 flex-1 text-[11.5px] text-t-2">
 			{label}
 		</Typography>
-		<Typography tag="span" className={cn("text-[11.5px] font-semibold", textClass)}>
+		<Typography
+			tag="span"
+			className={cn("text-[11.5px] font-semibold", textClass)}
+		>
 			{value.toLocaleString()}
 		</Typography>
 		<Typography tag="span" className="w-8 text-right text-[10.5px] text-t-3">
@@ -82,16 +94,58 @@ export const ProgressCard = ({ words, phrases }: ProgressCardProps) => {
 	const phrasesTotal = phrases.total || 1;
 
 	const wordSegments: SegmentDef[] = [
-		{ key: "known", label: t("statistics.words.known"), value: words.known, colorClass: "bg-grn", textClass: "text-grn" },
-		{ key: "learning", label: t("statistics.words.learning"), value: words.learning, colorClass: "bg-acc/70", textClass: "text-acc" },
-		{ key: "new", label: t("statistics.words.new"), value: words.new, colorClass: "bg-amb/70", textClass: "text-amb" },
-		{ key: "remaining", label: t("statistics.words.remaining"), value: remaining, colorClass: "bg-surf-4", textClass: "text-t-3" },
+		{
+			key: "known",
+			label: t("statistics.words.known"),
+			value: words.known,
+			colorClass: "bg-grn",
+			textClass: "text-grn",
+		},
+		{
+			key: "learning",
+			label: t("statistics.words.learning"),
+			value: words.learning,
+			colorClass: "bg-acc/70",
+			textClass: "text-acc",
+		},
+		{
+			key: "new",
+			label: t("statistics.words.new"),
+			value: words.new,
+			colorClass: "bg-amb/70",
+			textClass: "text-amb",
+		},
+		{
+			key: "remaining",
+			label: t("statistics.words.remaining"),
+			value: remaining,
+			colorClass: "bg-surf-4",
+			textClass: "text-t-3",
+		},
 	];
 
 	const phraseSegments: SegmentDef[] = [
-		{ key: "known", label: t("statistics.phrases.known"), value: phrases.known, colorClass: "bg-grn", textClass: "text-grn" },
-		{ key: "learning", label: t("statistics.phrases.learning"), value: phrases.learning, colorClass: "bg-acc/70", textClass: "text-acc" },
-		{ key: "new", label: t("statistics.phrases.new"), value: phrases.new, colorClass: "bg-amb/70", textClass: "text-amb" },
+		{
+			key: "known",
+			label: t("statistics.phrases.known"),
+			value: phrases.known,
+			colorClass: "bg-grn",
+			textClass: "text-grn",
+		},
+		{
+			key: "learning",
+			label: t("statistics.phrases.learning"),
+			value: phrases.learning,
+			colorClass: "bg-acc/70",
+			textClass: "text-acc",
+		},
+		{
+			key: "new",
+			label: t("statistics.phrases.new"),
+			value: phrases.new,
+			colorClass: "bg-amb/70",
+			textClass: "text-amb",
+		},
 	];
 
 	const segments = isWords ? wordSegments : phraseSegments;
@@ -100,11 +154,11 @@ export const ProgressCard = ({ words, phrases }: ProgressCardProps) => {
 
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4">
-			<header className="mb-3 flex items-center justify-between">
+			<header className="mb-3 flex flex-wrap items-center justify-between gap-1">
 				<div className="flex items-center gap-0.5 rounded-base bg-surf-2 p-0.5">
 					<button
 						onClick={handleTabWords}
-						className={`rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors ${
+						className={`min-w-0 rounded-[5px] px-2.5 py-1 text-[11px] font-medium leading-tight transition-colors ${
 							isWords ? "bg-surf text-t-1 shadow-sm" : "text-t-3 hover:text-t-2"
 						}`}
 					>
@@ -112,14 +166,16 @@ export const ProgressCard = ({ words, phrases }: ProgressCardProps) => {
 					</button>
 					<button
 						onClick={handleTabPhrases}
-						className={`rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors ${
-							!isWords ? "bg-surf text-t-1 shadow-sm" : "text-t-3 hover:text-t-2"
+						className={`min-w-0 rounded-[5px] px-2.5 py-1 text-[11px] font-medium leading-tight transition-colors ${
+							!isWords
+								? "bg-surf text-t-1 shadow-sm"
+								: "text-t-3 hover:text-t-2"
 						}`}
 					>
 						{t("statistics.phrases.title")}
 					</button>
 				</div>
-				<Typography tag="span" className="text-[11px] text-t-3">
+				<Typography tag="span" className="shrink-0 text-[11px] text-t-3">
 					{isWords
 						? t("statistics.words.meta", { current: words.total, goal })
 						: `${phrases.total.toLocaleString()} ${t("statistics.phrases.total")}`}
@@ -128,7 +184,10 @@ export const ProgressCard = ({ words, phrases }: ProgressCardProps) => {
 
 			<div className="mb-3">
 				<div className="mb-1.5 flex items-baseline justify-between">
-					<Typography tag="span" className="font-display text-2xl font-bold leading-none text-t-1">
+					<Typography
+						tag="span"
+						className="font-display text-2xl font-bold leading-none text-t-1"
+					>
 						{displayTotal.toLocaleString()}
 					</Typography>
 					<Typography tag="span" className="text-[10.5px] text-t-3">
@@ -141,7 +200,7 @@ export const ProgressCard = ({ words, phrases }: ProgressCardProps) => {
 			</div>
 
 			<div className="flex flex-col gap-1.5">
-				{segments.map((seg) => (
+				{segments.map(seg => (
 					<StatRow
 						key={seg.key}
 						label={seg.label}

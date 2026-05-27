@@ -150,7 +150,7 @@ const YearHeatmap = ({ months }: { months: HeatmapMonth[] }) => {
 	let lastYear = "";
 
 	return (
-		<div className="flex flex-col gap-1 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+		<div className="flex flex-col gap-1">
 			{sorted.map((m) => {
 				const year = m.days[0]?.date.slice(0, 4) ?? "";
 				const showYear = isMultiYear && year !== lastYear;
@@ -162,9 +162,9 @@ const YearHeatmap = ({ months }: { months: HeatmapMonth[] }) => {
 								{year}
 							</div>
 						)}
-						<div className="flex items-center gap-1.5">
+						<div className="flex min-w-0 items-center gap-1.5">
 							<div className="w-[22px] shrink-0 text-[10px] font-medium text-t-3">{m.month}</div>
-							<div className="flex flex-nowrap gap-[2.5px]">
+							<div className="flex min-w-0 flex-wrap gap-[2.5px]">
 								{m.days.map((day) => (
 									<div
 										key={day.date}

@@ -10,9 +10,21 @@ interface RetentionCardProps {
 }
 
 const LEVEL_CONFIG = {
-	NEW:      { colorClass: "bg-amb/70",  stroke: "var(--amb)",  labelKey: "statistics.retention.new" },
-	LEARNING: { colorClass: "bg-acc/70",  stroke: "var(--acc)",  labelKey: "statistics.retention.learning" },
-	KNOWN:    { colorClass: "bg-grn",     stroke: "var(--grn)",  labelKey: "statistics.retention.known" },
+	NEW: {
+		colorClass: "bg-amb/70",
+		stroke: "var(--amb)",
+		labelKey: "statistics.retention.new",
+	},
+	LEARNING: {
+		colorClass: "bg-acc/70",
+		stroke: "var(--acc)",
+		labelKey: "statistics.retention.learning",
+	},
+	KNOWN: {
+		colorClass: "bg-grn",
+		stroke: "var(--grn)",
+		labelKey: "statistics.retention.known",
+	},
 };
 
 export const RetentionCard = ({ data }: RetentionCardProps) => {
@@ -21,16 +33,20 @@ export const RetentionCard = ({ data }: RetentionCardProps) => {
 	const chartData = data.levels
 		.filter(l => l.count > 0)
 		.map(l => ({
-			name: t(LEVEL_CONFIG[l.level as keyof typeof LEVEL_CONFIG]?.labelKey ?? ""),
+			name: t(
+				LEVEL_CONFIG[l.level as keyof typeof LEVEL_CONFIG]?.labelKey ?? "",
+			),
 			value: l.count,
-			stroke: LEVEL_CONFIG[l.level as keyof typeof LEVEL_CONFIG]?.stroke ?? "var(--t-3)",
+			stroke:
+				LEVEL_CONFIG[l.level as keyof typeof LEVEL_CONFIG]?.stroke ??
+				"var(--t-3)",
 		}));
 
 	const isEmpty = data.total === 0;
 
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4 transition-colors">
-			<header className="mb-3 flex items-center justify-between">
+			<header className="mb-3 gap-1 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.retention.title")}
 				</Typography>
@@ -78,13 +94,21 @@ export const RetentionCard = ({ data }: RetentionCardProps) => {
 					<div className="flex flex-1 flex-col gap-2">
 						{data.levels.map(l => {
 							const cfg = LEVEL_CONFIG[l.level as keyof typeof LEVEL_CONFIG];
-							const pct = data.total > 0 ? Math.round((l.count / data.total) * 100) : 0;
+							const pct =
+								data.total > 0 ? Math.round((l.count / data.total) * 100) : 0;
 							return (
 								<div key={l.level}>
 									<div className="mb-0.5 flex items-center justify-between text-[11px]">
 										<div className="flex items-center gap-1.5">
-											<span className={cn("size-2 shrink-0 rounded-full", cfg?.colorClass ?? "bg-surf-3")} />
-											<Typography tag="span" className="text-t-2">{t(cfg?.labelKey ?? "")}</Typography>
+											<span
+												className={cn(
+													"size-2 shrink-0 rounded-full",
+													cfg?.colorClass ?? "bg-surf-3",
+												)}
+											/>
+											<Typography tag="span" className="text-t-2">
+												{t(cfg?.labelKey ?? "")}
+											</Typography>
 										</div>
 										<Typography tag="span" className="font-semibold text-t-1">
 											{l.count.toLocaleString()}
@@ -92,7 +116,10 @@ export const RetentionCard = ({ data }: RetentionCardProps) => {
 									</div>
 									<div className="h-1 overflow-hidden rounded-full bg-surf-3">
 										<div
-											className={cn("h-full rounded-full transition-[width]", cfg?.colorClass ?? "bg-surf-3")}
+											className={cn(
+												"h-full rounded-full transition-[width]",
+												cfg?.colorClass ?? "bg-surf-3",
+											)}
 											style={{ width: `${pct}%` }}
 										/>
 									</div>
@@ -101,7 +128,10 @@ export const RetentionCard = ({ data }: RetentionCardProps) => {
 						})}
 						{data.dueForReview > 0 && (
 							<div className="mt-1 rounded-md bg-amb-bg px-2.5 py-1.5">
-								<Typography tag="p" className="text-[11px] font-medium text-amb-t">
+								<Typography
+									tag="p"
+									className="text-[11px] font-medium text-amb-t"
+								>
 									{t("statistics.retention.due", { n: data.dueForReview })}
 								</Typography>
 							</div>

@@ -91,7 +91,7 @@ export const VocabularyFoldersPage = () => {
 				</section>
 
 				<section aria-labelledby="folders-list-heading">
-					<div className="mb-3 flex items-center justify-between gap-3">
+					<div className="mb-3 gap-1 flex items-center justify-between gap-3">
 						<Typography
 							tag="h2"
 							id="folders-list-heading"

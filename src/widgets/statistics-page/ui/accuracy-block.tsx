@@ -62,7 +62,7 @@ export const AccuracyBlock = ({ accuracy }: AccuracyBlockProps) => {
 
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4">
-			<header className="mb-3 flex items-center justify-between">
+			<header className="mb-3 gap-1 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.accuracy.title")}
 				</Typography>

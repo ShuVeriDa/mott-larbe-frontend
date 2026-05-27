@@ -32,11 +32,20 @@ interface LevelRow {
 }
 
 const buildRows = (items: TextProgressItem[]): LevelRow[] => {
-	const map = new Map<string, { total: number; completed: number; inProgress: number; sumProgress: number }>();
+	const map = new Map<
+		string,
+		{
+			total: number;
+			completed: number;
+			inProgress: number;
+			sumProgress: number;
+		}
+	>();
 
 	for (const item of items) {
 		const lvl = item.level ?? "—";
-		if (!map.has(lvl)) map.set(lvl, { total: 0, completed: 0, inProgress: 0, sumProgress: 0 });
+		if (!map.has(lvl))
+			map.set(lvl, { total: 0, completed: 0, inProgress: 0, sumProgress: 0 });
 		const bucket = map.get(lvl)!;
 		bucket.total++;
 		bucket.sumProgress += item.progressPercent;
@@ -44,18 +53,16 @@ const buildRows = (items: TextProgressItem[]): LevelRow[] => {
 		else if (item.progressPercent > 0) bucket.inProgress++;
 	}
 
-	return LEVEL_ORDER
-		.filter((lvl) => map.has(lvl))
-		.map((lvl) => {
-			const b = map.get(lvl)!;
-			return {
-				level: lvl,
-				total: b.total,
-				completed: b.completed,
-				inProgress: b.inProgress,
-				avgProgress: b.total > 0 ? Math.round(b.sumProgress / b.total) : 0,
-			};
-		});
+	return LEVEL_ORDER.filter(lvl => map.has(lvl)).map(lvl => {
+		const b = map.get(lvl)!;
+		return {
+			level: lvl,
+			total: b.total,
+			completed: b.completed,
+			inProgress: b.inProgress,
+			avgProgress: b.total > 0 ? Math.round(b.sumProgress / b.total) : 0,
+		};
+	});
 };
 
 export const TextLevelsCard = ({ items }: TextLevelsCardProps) => {
@@ -64,7 +71,7 @@ export const TextLevelsCard = ({ items }: TextLevelsCardProps) => {
 
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4 transition-colors">
-			<header className="mb-3 flex items-center justify-between">
+			<header className="mb-3 gap-1 flex items-center justify-between">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("statistics.textLevels.title")}
 				</Typography>
@@ -79,13 +86,16 @@ export const TextLevelsCard = ({ items }: TextLevelsCardProps) => {
 				</div>
 			) : (
 				<div className="flex flex-col gap-2.5">
-					{rows.map((row) => (
+					{rows.map(row => (
 						<div key={row.level}>
 							<div className="mb-1 flex items-center justify-between">
 								<div className="flex items-center gap-2">
 									<Typography
 										tag="span"
-										className={cn("text-[11.5px] font-semibold", LEVEL_TEXT[row.level] ?? "text-t-1")}
+										className={cn(
+											"text-[11.5px] font-semibold",
+											LEVEL_TEXT[row.level] ?? "text-t-1",
+										)}
 									>
 										{t(`shared.cefrLevel.${row.level}`)}
 									</Typography>
@@ -93,11 +103,16 @@ export const TextLevelsCard = ({ items }: TextLevelsCardProps) => {
 										{t("statistics.textLevels.texts", { count: row.total })}
 									</Typography>
 								</div>
-								<span className="shrink-0 text-[11px] font-semibold text-t-1">{row.avgProgress}%</span>
+								<span className="shrink-0 text-[11px] font-semibold text-t-1">
+									{row.avgProgress}%
+								</span>
 							</div>
 							<div className="h-1.5 overflow-hidden rounded-full bg-surf-3">
 								<div
-									className={cn("h-full rounded-full transition-[width]", LEVEL_COLOR[row.level] ?? "bg-acc")}
+									className={cn(
+										"h-full rounded-full transition-[width]",
+										LEVEL_COLOR[row.level] ?? "bg-acc",
+									)}
 									style={{ width: `${row.avgProgress}%` }}
 								/>
 							</div>
