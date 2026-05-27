@@ -44,7 +44,7 @@ export const useLoginForm = ({ successHref }: UseLoginFormParams) => {
 		reset();
 		if (!validate()) return;
 		try {
-			await mutateAsync({ username: email.trim(), password });
+			await mutateAsync({ username: email.trim(), password, remember });
 			router.push(successHref);
 			router.refresh();
 		} catch {

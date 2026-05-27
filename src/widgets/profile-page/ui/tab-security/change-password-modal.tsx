@@ -4,10 +4,11 @@ import { Typography } from "@/shared/ui/typography";
 import { ComponentProps, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
-import { useChangePassword } from "@/entities/auth";
+import { clearAccessToken, useChangePassword } from "@/entities/auth";
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { Modal, ModalActions } from "@/shared/ui/modal";
+import { useRouter } from "next/navigation";
 
 export interface ChangePasswordModalProps {
 	open: boolean;
@@ -18,6 +19,7 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 	const { t } = useI18n();
 	const { success } = useToast();
 	const { mutateAsync, isPending } = useChangePassword();
+	const router = useRouter();
 
 	const [currentPassword, setCurrentPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
@@ -41,7 +43,9 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 		try {
 			await mutateAsync({ currentPassword, newPassword });
 			success(t("profile.security.passwordChanged"));
-			handleClose();
+			clearAccessToken();
+			const lang = window.location.pathname.split("/")[1] ?? "ru";
+			router.push(`/${lang}/auth`);
 		} catch {}
 	};
 

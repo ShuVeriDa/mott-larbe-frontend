@@ -46,15 +46,21 @@ const isOnPublicPage = (): boolean => {
 	return segment === null || PUBLIC_SEGMENTS.has(segment);
 };
 
+const AUTH_LOGOUT_EXCLUDED_PATHS = new Set(["/auth/password/change"]);
+
 http.interceptors.response.use(
 	(response) => response,
 	(error) => {
 		if (typeof window !== "undefined" && error?.response?.status === 401) {
-			clearAccessToken();
-			if (!isOnPublicPage()) {
-				const pathParts = window.location.pathname.split("/");
-				const lang = pathParts[1] ?? "ru";
-				window.location.href = `/${lang}/auth`;
+			const requestPath: string = error?.config?.url ?? "";
+			const isExcluded = AUTH_LOGOUT_EXCLUDED_PATHS.has(requestPath);
+			if (!isExcluded) {
+				clearAccessToken();
+				if (!isOnPublicPage()) {
+					const pathParts = window.location.pathname.split("/");
+					const lang = pathParts[1] ?? "ru";
+					window.location.href = `/${lang}/auth`;
+				}
 			}
 		}
 		return Promise.reject(error);

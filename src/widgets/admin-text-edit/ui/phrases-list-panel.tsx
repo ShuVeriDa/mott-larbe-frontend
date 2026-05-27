@@ -10,6 +10,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
+import { Modal, ModalActions } from "@/shared/ui/modal";
 import {
 	PHRASE_CLICK_EVENT,
 	type PhraseClickDetail,
@@ -92,96 +93,64 @@ const EditModal = ({
 		);
 	};
 
-	return createPortal(
-		<>
-			<div
-				className="fixed inset-0 z-299 bg-black/30 backdrop-blur-[2px]"
-				onClick={onClose}
-				aria-hidden="true"
-			/>
-			<div
-				role="dialog"
-				aria-modal="true"
-				className="fixed left-1/2 top-1/2 z-300 w-[340px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border-[0.5px] border-bd-2 bg-surf shadow-xl"
-			>
-				<div className="flex items-center justify-between border-b-[0.5px] border-bd-1 px-4 py-3">
-					<div className="flex items-center gap-2">
-						<Languages className="size-4 text-violet-500" strokeWidth={1.6} />
-						<Typography
-							tag="span"
-							className="text-[13px] font-semibold text-t-1"
-						>
-							{t("admin.texts.editPage.phraseEditTitle")}
-						</Typography>
-					</div>
-					<Button
-						onClick={onClose}
-						title={t("reader.panel.close")}
-						className="rounded-md p-1 text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
-					>
-						<X className="size-4" />
-					</Button>
-				</div>
-
-				<div className="space-y-3 p-4">
-					<div>
-						<InputLabel>{t("admin.texts.editPage.phraseOriginal")}</InputLabel>
-						<div className="rounded-base border-[0.5px] border-bd-2 bg-surf-2 px-[10px] py-[7px] text-[13px] text-t-2 opacity-70 select-none">
-							{occurrence.phrase.original}
-						</div>
-					</div>
-
-					<div>
-						<InputLabel htmlFor="edit-phrase-translation">
-							{t("admin.texts.editPage.phraseTranslation")}
-						</InputLabel>
-						<Input
-							id="edit-phrase-translation"
-							ref={inputRef}
-							value={translation}
-							onChange={handleTranslationChange}
-							onKeyDown={handleTranslationKeyDown}
-							placeholder={t(
-								"admin.texts.editPage.phraseTranslationPlaceholder",
-							)}
-							aria-label={t("admin.texts.editPage.phraseTranslation")}
-							className="h-[34px] rounded-base bg-surf-2 px-[10px] text-[13px]"
-						/>
-					</div>
-
-					<div>
-						<InputLabel htmlFor="edit-phrase-notes">
-							{t("admin.texts.editPage.phraseNotes")}
-						</InputLabel>
-						<Input
-							id="edit-phrase-notes"
-							value={notes}
-							onChange={handleNotesChange}
-							placeholder={t("admin.texts.editPage.phraseNotesPlaceholder")}
-							aria-label={t("admin.texts.editPage.phraseNotes")}
-							className="h-[34px] rounded-base bg-surf-2 px-[10px] text-[13px]"
-						/>
-					</div>
-
-					<div className="flex gap-2 pt-1">
-						<Button
-							onClick={handleSave}
-							disabled={!translation.trim() || isPending}
-							className="h-[34px] flex-1 rounded-lg bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
-						>
-							{isPending ? "…" : t("admin.texts.editPage.phraseUpdate")}
-						</Button>
-						<Button
-							onClick={onClose}
-							className="h-[34px] rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
-						>
-							{t("admin.texts.editPage.phraseCancel")}
-						</Button>
-					</div>
-				</div>
+	return (
+		<Modal
+			open
+			onClose={onClose}
+			title={
+				<span className="flex items-center gap-2">
+					<Languages className="size-4 text-violet-500" strokeWidth={1.6} />
+					{t("admin.texts.editPage.phraseEditTitle")}
+				</span>
+			}
+		>
+			<InputLabel>{t("admin.texts.editPage.phraseOriginal")}</InputLabel>
+			<div className="mb-3 rounded-base border-[0.5px] border-bd-2 bg-surf-2 px-[10px] py-[7px] text-[13px] text-t-2 opacity-70 select-none">
+				{occurrence.phrase.original}
 			</div>
-		</>,
-		document.body,
+
+			<InputLabel htmlFor="edit-phrase-translation">
+				{t("admin.texts.editPage.phraseTranslation")}
+			</InputLabel>
+			<Input
+				id="edit-phrase-translation"
+				ref={inputRef}
+				value={translation}
+				onChange={handleTranslationChange}
+				onKeyDown={handleTranslationKeyDown}
+				placeholder={t("admin.texts.editPage.phraseTranslationPlaceholder")}
+				aria-label={t("admin.texts.editPage.phraseTranslation")}
+				className="mb-3"
+			/>
+
+			<InputLabel htmlFor="edit-phrase-notes">
+				{t("admin.texts.editPage.phraseNotes")}
+			</InputLabel>
+			<Input
+				id="edit-phrase-notes"
+				value={notes}
+				onChange={handleNotesChange}
+				placeholder={t("admin.texts.editPage.phraseNotesPlaceholder")}
+				aria-label={t("admin.texts.editPage.phraseNotes")}
+				className="mb-3"
+			/>
+
+			<ModalActions>
+				<Button
+					onClick={handleSave}
+					disabled={!translation.trim() || isPending}
+					className="h-[34px] flex-1 rounded-lg bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
+				>
+					{isPending ? "…" : t("admin.texts.editPage.phraseUpdate")}
+				</Button>
+				<Button
+					onClick={onClose}
+					className="h-[34px] rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-4 text-[13px] font-medium text-t-2 transition-colors hover:bg-surf-3"
+				>
+					{t("admin.texts.editPage.phraseCancel")}
+				</Button>
+			</ModalActions>
+		</Modal>
 	);
 };
 

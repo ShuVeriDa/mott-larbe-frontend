@@ -9,12 +9,12 @@ import type {
 import { tokenizationApi, tokenizationKeys } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { Modal } from "@/shared/ui/modal";
 import { Typography } from "@/shared/ui/typography";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { useQuery } from "@tanstack/react-query";
 import { Play, X } from "lucide-react";
 import { ComponentProps } from "react";
-import { createPortal } from "react-dom";
 import { TokenizationLevelBadge } from "./tokenization-level-badge";
 import { TokenizationStatusBadge } from "./tokenization-status-badge";
 
@@ -255,100 +255,93 @@ export const TokenizationTextDetailModal = ({
 		ERROR: t("admin.tokenization.status.ERROR"),
 	};
 
-	const handleInnerClick: NonNullable<ComponentProps<"div">["onClick"]> = e =>
-		e.stopPropagation();
 	const handleRunClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
 		textId && mutations.runText.mutate(textId);
 	const handleResetClick: NonNullable<
 		ComponentProps<"button">["onClick"]
 	> = () => textId && mutations.resetText.mutate(textId);
 
-	return createPortal(
-		<div
-			className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 backdrop-blur-[2px] max-sm:items-end max-sm:p-0"
-			onClick={onClose}
+	return (
+		<Modal
+			open={!!textId}
+			onClose={onClose}
+			className="p-0 max-w-[580px] max-sm:max-w-full flex flex-col max-h-[90vh] max-sm:max-h-[92vh] overflow-hidden"
 		>
-			<div
-				className="flex max-h-[90vh] w-full max-w-[580px] flex-col overflow-hidden rounded-[14px] border border-bd-2 bg-surf shadow-md max-sm:max-h-[92vh] max-sm:rounded-b-none"
-				onClick={handleInnerClick}
-			>
-				{/* Header */}
-				<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-4 py-3.5">
-					<Typography tag="span" className="font-display text-[15px] text-t-1">
-						{t("admin.tokenization.detail.title")}
-					</Typography>
-					<Button
-						size={"bare"}
-						onClick={onClose}
-						title={t("admin.tokenization.detail.closeBtn")}
-						className="flex size-[26px] items-center justify-center rounded-[6px] bg-surf-2 text-t-2 hover:bg-surf-3"
-					>
-						<X className="size-3" />
-					</Button>
-				</div>
-
-				{/* Body */}
-				<div className="flex-1 overflow-y-auto p-4 [&::-webkit-scrollbar]:w-0">
-					{!detail ? (
-						<div className="space-y-3">
-							{Array.from({ length: 4 }).map((_, i) => (
-								<div
-									key={i}
-									className="h-10 animate-pulse rounded-[8px] bg-surf-3"
-								/>
-							))}
-						</div>
-					) : (
-						<>
-							<TokenMetaGrid
-								detail={detail}
-								statusLabels={statusLabels}
-								t={t}
-							/>
-
-							<div className="mb-1 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
-								{t("admin.tokenization.detail.tokensTitle")}
-							</div>
-							<TokensTable tokens={tokens} t={t} />
-						</>
-					)}
-				</div>
-
-				{/* Footer actions */}
-				<div className="flex shrink-0 gap-2 border-t border-bd-1 px-4 py-3.5">
-					<Button
-						variant="action"
-						onClick={handleRunClick}
-						disabled={
-							mutations.runText.isPending ||
-							detail?.processingStatus === "RUNNING"
-						}
-						title={t("admin.tokenization.detail.runBtn")}
-						className="h-[34px] px-4 rounded-lg text-[13px] flex items-center gap-1.5"
-					>
-						<Play className="size-[11px]" />
-						{t("admin.tokenization.detail.runBtn")}
-					</Button>
-					<Button
-						variant="ghost"
-						onClick={handleResetClick}
-						disabled={mutations.resetText.isPending}
-						title={t("admin.tokenization.detail.resetBtn")}
-						className="h-[34px] px-4 rounded-lg text-[13px]"
-					>
-						{t("admin.tokenization.detail.resetBtn")}
-					</Button>
-					<Button
-						variant="bare"
-						onClick={onClose}
-						title={t("admin.tokenization.detail.closeBtn")}
-						className="ml-auto h-[34px] px-3 rounded-lg text-[12px] text-t-3 transition-colors hover:text-t-1"
-					>
-						{t("admin.tokenization.detail.closeBtn")}
-					</Button>
-				</div>
+			{/* Header */}
+			<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-4 py-3.5">
+				<Typography tag="span" className="font-display text-[15px] text-t-1">
+					{t("admin.tokenization.detail.title")}
+				</Typography>
+				<Button
+					size={"bare"}
+					onClick={onClose}
+					title={t("admin.tokenization.detail.closeBtn")}
+					className="flex size-[26px] items-center justify-center rounded-[6px] bg-surf-2 text-t-2 hover:bg-surf-3"
+				>
+					<X className="size-3" />
+				</Button>
 			</div>
-		</div>,
-		document.body,
+
+			{/* Body */}
+			<div className="flex-1 overflow-y-auto p-4 [&::-webkit-scrollbar]:w-0">
+				{!detail ? (
+					<div className="space-y-3">
+						{Array.from({ length: 4 }).map((_, i) => (
+							<div
+								key={i}
+								className="h-10 animate-pulse rounded-[8px] bg-surf-3"
+							/>
+						))}
+					</div>
+				) : (
+					<>
+						<TokenMetaGrid
+							detail={detail}
+							statusLabels={statusLabels}
+							t={t}
+						/>
+
+						<div className="mb-1 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+							{t("admin.tokenization.detail.tokensTitle")}
+						</div>
+						<TokensTable tokens={tokens} t={t} />
+					</>
+				)}
+			</div>
+
+			{/* Footer actions */}
+			<div className="flex shrink-0 gap-2 border-t border-bd-1 px-4 py-3.5">
+				<Button
+					variant="action"
+					onClick={handleRunClick}
+					disabled={
+						mutations.runText.isPending ||
+						detail?.processingStatus === "RUNNING"
+					}
+					title={t("admin.tokenization.detail.runBtn")}
+					className="h-[34px] px-4 rounded-lg text-[13px] flex items-center gap-1.5"
+				>
+					<Play className="size-[11px]" />
+					{t("admin.tokenization.detail.runBtn")}
+				</Button>
+				<Button
+					variant="ghost"
+					onClick={handleResetClick}
+					disabled={mutations.resetText.isPending}
+					title={t("admin.tokenization.detail.resetBtn")}
+					className="h-[34px] px-4 rounded-lg text-[13px]"
+				>
+					{t("admin.tokenization.detail.resetBtn")}
+				</Button>
+				<Button
+					variant="bare"
+					onClick={onClose}
+					title={t("admin.tokenization.detail.closeBtn")}
+					className="ml-auto h-[34px] px-3 rounded-lg text-[12px] text-t-3 transition-colors hover:text-t-1"
+				>
+					{t("admin.tokenization.detail.closeBtn")}
+				</Button>
+			</div>
+		</Modal>
 	);
 };

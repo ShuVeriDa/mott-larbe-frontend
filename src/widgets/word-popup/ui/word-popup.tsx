@@ -228,17 +228,23 @@ export const WordPopup = () => {
 
 	const handleSuggestChange = (open: boolean) => setSuggestOpen(open);
 
-	const handleBackdropClick = () => {
-		if (!suggestOpen) closePopup();
-	};
-
 	useEffect(() => {
 		if (!isVisible) return;
+		const onMouseDown = (event: MouseEvent) => {
+			if (suggestOpen) return;
+			if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+				closePopup();
+			}
+		};
 		const onKey = (event: KeyboardEvent) => {
 			if (event.key === "Escape" && !suggestOpen) closePopup();
 		};
+		document.addEventListener("mousedown", onMouseDown);
 		document.addEventListener("keydown", onKey);
-		return () => document.removeEventListener("keydown", onKey);
+		return () => {
+			document.removeEventListener("mousedown", onMouseDown);
+			document.removeEventListener("keydown", onKey);
+		};
 	}, [isVisible, closePopup, suggestOpen]);
 
 	if (typeof window === "undefined") return null;
@@ -248,11 +254,6 @@ export const WordPopup = () => {
 			{isVisible &&
 				createPortal(
 					<>
-						<div
-							className="fixed inset-0 z-199"
-							onClick={handleBackdropClick}
-							aria-hidden="true"
-						/>
 						<div
 							ref={popupRef}
 							role="dialog"

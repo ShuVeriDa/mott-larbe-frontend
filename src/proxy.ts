@@ -2,7 +2,19 @@ import { type NextRequest, NextResponse } from "next/server";
 import { DEFAULT_LOCALE, LOCALES, type Locale } from "@/i18n/locale-list";
 
 const ACCESS_TOKEN_COOKIE = "access_token";
+const REFRESH_TOKEN_COOKIE = "refreshToken";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:9555/api";
+
+// Reads exp from the JWT payload (no verification — proxy just needs the TTL)
+const getJwtExp = (token: string): number | null => {
+	try {
+		const payload = token.split(".")[1];
+		const decoded = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"));
+		return typeof decoded.exp === "number" ? decoded.exp : null;
+	} catch {
+		return null;
+	}
+};
 
 const getPreferredLocale = (request: NextRequest): Locale => {
 	const acceptLanguage = request.headers.get("accept-language") ?? "";
@@ -68,16 +80,25 @@ export const proxy = async (request: NextRequest) => {
 	const locale = getLocaleFromPathname(pathname);
 	const segment = getRouteSegment(pathname);
 
+	// Mirror the refresh token's TTL for the access token cookie.
+	// If the refresh token lives 30 days (rememberMe), access token cookie should too.
+	const refreshTokenValue = request.cookies.get(REFRESH_TOKEN_COOKIE)?.value;
+	const refreshExp = refreshTokenValue ? getJwtExp(refreshTokenValue) : null;
+	const maxAge = refreshExp ? Math.max(0, refreshExp - Math.floor(Date.now() / 1000)) : undefined;
+
+	const tokenCookieOptions = {
+		path: "/",
+		sameSite: "lax" as const,
+		httpOnly: false,
+		...(maxAge !== undefined ? { maxAge } : {}),
+	};
+
 	const buildNext = (token?: string) => {
 		const requestHeaders = new Headers(request.headers);
 		requestHeaders.set("x-locale", locale);
 		const res = NextResponse.next({ request: { headers: requestHeaders } });
 		if (token) {
-			res.cookies.set(ACCESS_TOKEN_COOKIE, token, {
-				path: "/",
-				sameSite: "lax",
-				httpOnly: false,
-			});
+			res.cookies.set(ACCESS_TOKEN_COOKIE, token, tokenCookieOptions);
 		}
 		return res;
 	};
@@ -85,11 +106,7 @@ export const proxy = async (request: NextRequest) => {
 	const buildRedirect = (path: string, token?: string) => {
 		const res = NextResponse.redirect(new URL(path, request.url));
 		if (token) {
-			res.cookies.set(ACCESS_TOKEN_COOKIE, token, {
-				path: "/",
-				sameSite: "lax",
-				httpOnly: false,
-			});
+			res.cookies.set(ACCESS_TOKEN_COOKIE, token, tokenCookieOptions);
 		}
 		return res;
 	};

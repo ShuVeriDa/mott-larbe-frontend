@@ -1,1 +1,1 @@
-export { API_URL, ACCESS_TOKEN_STORAGE_KEY } from "./api";
+export { API_URL, ACCESS_TOKEN_STORAGE_KEY, REMEMBER_ME_MAX_AGE } from "./api";

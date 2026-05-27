@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
+import { Modal } from "@/shared/ui/modal";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { ComponentProps, ReactNode, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
@@ -9,7 +10,6 @@ import { cn } from "@/shared/lib/cn";
 import { useAdminTextVersionDetail } from "@/entities/admin-text/model/use-admin-text-versions";
 import { X, Download } from "lucide-react";
 import type { VersionLogLevel, VersionPageStatus } from "@/entities/admin-text";
-import { createPortal } from "react-dom";
 
 type ModalTab = "overview" | "pages" | "log";
 
@@ -188,130 +188,117 @@ export const VersionDetailModal = ({
 	const handleRetryClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRetry(versionId);
 	const handleRestoreClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onRestore(versionId);
 
-	return createPortal(
-		<>
-			{/* Backdrop */}
-			<div
-				className="fixed inset-0 z-50 bg-black/45 backdrop-blur-[2px]"
-				onClick={onClose}
-				aria-hidden="true"
-			/>
-
-			{/* Modal box */}
-			<div
-				role="dialog"
-				aria-modal="true"
-				className="fixed inset-0 z-50 flex items-center justify-center p-5 max-sm:items-end max-sm:p-0"
-			>
-				<div className="flex max-h-[80vh] w-[560px] max-w-full flex-col overflow-hidden rounded-[14px] border border-bd-2 bg-surf shadow-lg max-sm:max-h-[88vh] max-sm:w-full max-sm:rounded-b-none max-sm:rounded-t-[16px]">
-					{/* Header */}
-					<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-4.5 py-3.5 max-sm:px-4 max-sm:py-3">
-						<Typography tag="span" className="font-display text-[15px] text-t-1">
-							{version
-								? t("admin.texts.versions.modal.title").replace("{n}", String(version.version))
-								: t("admin.texts.versions.modal.title").replace("{n}", "…")}
-						</Typography>
-						<Button
-							variant="bare"
-							onClick={onClose}
-							title={t("admin.texts.versions.modal.close")}
-							className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
-						>
-							<X className="size-3" />
-						</Button>
-					</div>
-
-					{/* Tabs */}
-					<div className="flex shrink-0 gap-0 border-b border-bd-1 px-4">
-						{tabs.map(({ key, label }) => {
-							const handleTabClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setTab(key);
-							return (
-								<Button
-									key={key}
-									variant="bare"
-									onClick={handleTabClick}
-									title={label}
-									className={cn(
-										"-mb-px border-b-2 px-3 py-2.5 text-[12.5px] transition-colors",
-										tab === key
-											? "border-acc font-medium text-t-1"
-											: "border-transparent text-t-3 hover:text-t-2",
-									)}
-								>
-									{label}
-								</Button>
-							);
-						})}
-					</div>
-
-					{/* Body */}
-					<div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:w-0">
-						{isLoading ? (
-							<div className="p-4">
-								<div className="grid grid-cols-2 gap-2">
-									{[...Array(6)].map((_, i) => (
-										<div key={i} className="h-14 animate-pulse rounded-[8px] bg-surf-2" />
-									))}
-								</div>
-							</div>
-						) : version ? (
-							<>
-								{tab === "overview" && <OverviewTab version={version} t={t} />}
-								{tab === "pages" && <PagesTab version={version} t={t} />}
-								{tab === "log" && <LogTab version={version} t={t} />}
-							</>
-						) : null}
-					</div>
-
-					{/* Footer */}
-					<div className="flex shrink-0 items-center justify-end gap-2 border-t border-bd-1 px-4 py-3 max-sm:px-4 max-sm:pb-5">
-						<Button
-							variant="ghost"
-							onClick={onClose}
-							title={t("admin.texts.versions.modal.close")}
-							className="h-[34px] px-4 rounded-lg text-[13px]"
-						>
-							{t("admin.texts.versions.modal.close")}
-						</Button>
-						{version && (
-							<Button
-								variant="outline"
-								onClick={handleDownloadClick}
-								title={t("admin.texts.versions.modal.download")}
-								className="h-[34px] px-4 rounded-lg text-[13px] flex items-center gap-1.5"
-							>
-								<Download className="size-3" />
-								{t("admin.texts.versions.modal.download")}
-							</Button>
-						)}
-						{canRetry && (
-							<Button
-								variant="bare"
-								onClick={handleRetryClick}
-								disabled={isRetrying}
-								title={isRetrying ? t("admin.texts.versions.modal.retrying") : t("admin.texts.versions.modal.retry")}
-								className="h-[34px] px-4 rounded-lg text-[13px] flex items-center gap-1.5 bg-amb font-semibold text-white hover:opacity-88"
-							>
-								{isRetrying && <Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
-								{isRetrying ? t("admin.texts.versions.modal.retrying") : t("admin.texts.versions.modal.retry")}
-							</Button>
-						)}
-						{canRestore && (
-							<Button
-								variant="action"
-								onClick={handleRestoreClick}
-								disabled={isRestoring}
-								title={isRestoring ? t("admin.texts.versions.modal.restoring") : t("admin.texts.versions.modal.restore")}
-								className="h-[34px] px-4 rounded-lg text-[13px] flex items-center gap-1.5"
-							>
-								{isRestoring && <Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
-								{isRestoring ? t("admin.texts.versions.modal.restoring") : t("admin.texts.versions.modal.restore")}
-							</Button>
-						)}
-					</div>
-				</div>
+	return (
+		<Modal
+			open
+			onClose={onClose}
+			className="p-0 w-[560px] max-w-full max-sm:w-full flex flex-col max-h-[80vh] max-sm:max-h-[88vh] overflow-hidden"
+		>
+			{/* Header */}
+			<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-4.5 py-3.5 max-sm:px-4 max-sm:py-3">
+				<Typography tag="span" className="font-display text-[15px] text-t-1">
+					{version
+						? t("admin.texts.versions.modal.title").replace("{n}", String(version.version))
+						: t("admin.texts.versions.modal.title").replace("{n}", "…")}
+				</Typography>
+				<Button
+					variant="bare"
+					onClick={onClose}
+					title={t("admin.texts.versions.modal.close")}
+					className="flex size-[26px] cursor-pointer items-center justify-center rounded-[6px] bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
+				>
+					<X className="size-3" />
+				</Button>
 			</div>
-		</>,
-		document.body,
+
+			{/* Tabs */}
+			<div className="flex shrink-0 gap-0 border-b border-bd-1 px-4">
+				{tabs.map(({ key, label }) => {
+					const handleTabClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setTab(key);
+					return (
+						<Button
+							key={key}
+							variant="bare"
+							onClick={handleTabClick}
+							title={label}
+							className={cn(
+								"-mb-px border-b-2 px-3 py-2.5 text-[12.5px] transition-colors",
+								tab === key
+									? "border-acc font-medium text-t-1"
+									: "border-transparent text-t-3 hover:text-t-2",
+							)}
+						>
+							{label}
+						</Button>
+					);
+				})}
+			</div>
+
+			{/* Body */}
+			<div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:w-0">
+				{isLoading ? (
+					<div className="p-4">
+						<div className="grid grid-cols-2 gap-2">
+							{[...Array(6)].map((_, i) => (
+								<div key={i} className="h-14 animate-pulse rounded-[8px] bg-surf-2" />
+							))}
+						</div>
+					</div>
+				) : version ? (
+					<>
+						{tab === "overview" && <OverviewTab version={version} t={t} />}
+						{tab === "pages" && <PagesTab version={version} t={t} />}
+						{tab === "log" && <LogTab version={version} t={t} />}
+					</>
+				) : null}
+			</div>
+
+			{/* Footer */}
+			<div className="flex shrink-0 items-center justify-end gap-2 border-t border-bd-1 px-4 py-3 max-sm:pb-5">
+				<Button
+					variant="ghost"
+					onClick={onClose}
+					title={t("admin.texts.versions.modal.close")}
+					className="h-[34px] px-4 rounded-lg text-[13px]"
+				>
+					{t("admin.texts.versions.modal.close")}
+				</Button>
+				{version && (
+					<Button
+						variant="outline"
+						onClick={handleDownloadClick}
+						title={t("admin.texts.versions.modal.download")}
+						className="h-[34px] px-4 rounded-lg text-[13px] flex items-center gap-1.5"
+					>
+						<Download className="size-3" />
+						{t("admin.texts.versions.modal.download")}
+					</Button>
+				)}
+				{canRetry && (
+					<Button
+						variant="bare"
+						onClick={handleRetryClick}
+						disabled={isRetrying}
+						title={isRetrying ? t("admin.texts.versions.modal.retrying") : t("admin.texts.versions.modal.retry")}
+						className="h-[34px] px-4 rounded-lg text-[13px] flex items-center gap-1.5 bg-amb font-semibold text-white hover:opacity-88"
+					>
+						{isRetrying && <Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
+						{isRetrying ? t("admin.texts.versions.modal.retrying") : t("admin.texts.versions.modal.retry")}
+					</Button>
+				)}
+				{canRestore && (
+					<Button
+						variant="action"
+						onClick={handleRestoreClick}
+						disabled={isRestoring}
+						title={isRestoring ? t("admin.texts.versions.modal.restoring") : t("admin.texts.versions.modal.restore")}
+						className="h-[34px] px-4 rounded-lg text-[13px] flex items-center gap-1.5"
+					>
+						{isRestoring && <Typography tag="span" className="inline-block size-3 animate-spin rounded-full border border-white/30 border-t-white" />}
+						{isRestoring ? t("admin.texts.versions.modal.restoring") : t("admin.texts.versions.modal.restore")}
+					</Button>
+				)}
+			</div>
+		</Modal>
 	);
 };
