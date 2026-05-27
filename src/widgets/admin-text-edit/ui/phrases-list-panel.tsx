@@ -104,7 +104,7 @@ const EditModal = ({
 				aria-modal="true"
 				className="fixed left-1/2 top-1/2 z-300 w-[340px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border-[0.5px] border-bd-2 bg-surf shadow-xl"
 			>
-				<div className="flex items-center justify-between border-b border-[0.5px] border-bd-1 px-4 py-3">
+				<div className="flex items-center justify-between border-b-[0.5px] border-bd-1 px-4 py-3">
 					<div className="flex items-center gap-2">
 						<Languages className="size-4 text-violet-500" strokeWidth={1.6} />
 						<Typography
@@ -368,7 +368,7 @@ export const PhrasesListPanel = ({
 					isOpen ? "translate-x-0" : "translate-x-full"
 				}`}
 			>
-				<div className="flex items-center justify-between border-b border-[0.5px] border-bd-1 px-4 py-3">
+				<div className="flex items-center justify-between border-b-[0.5px] border-bd-1 px-4 py-3">
 					<div className="flex items-center gap-2">
 						<Languages className="size-4 text-violet-500" strokeWidth={1.6} />
 						<Typography

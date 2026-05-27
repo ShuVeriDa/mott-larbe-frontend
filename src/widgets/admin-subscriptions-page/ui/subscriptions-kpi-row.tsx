@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
 import type { AdminSubscriptionsStats } from "@/entities/admin-subscription";
+import { useI18n } from "@/shared/lib/i18n";
+import { ReactNode } from "react";
 
 import { Typography } from "@/shared/ui/typography";
 interface Props {
@@ -19,7 +19,7 @@ const KpiCard = ({
 	sub?: ReactNode;
 	isLoading: boolean;
 }) => (
-	<div className="rounded-[11px] border border-bd-1 bg-surf p-3 transition-colors">
+	<div className="rounded-card border border-bd-1 bg-surf p-3 transition-colors">
 		<div className="mb-1.5 text-[11px] font-medium tracking-[0.2px] text-t-3">
 			{label}
 		</div>
@@ -30,9 +30,7 @@ const KpiCard = ({
 				{value}
 			</div>
 		)}
-		{sub && (
-			<div className="text-[11px] text-t-3">{sub}</div>
-		)}
+		{sub && <div className="text-[11px] text-t-3">{sub}</div>}
 	</div>
 );
 
@@ -47,7 +45,9 @@ export const SubscriptionsKpiRow = ({ stats, isLoading }: Props) => {
 				sub={
 					stats?.newThisMonth !== undefined ? (
 						<>
-							<Typography tag="span" className="text-grn-t">+{stats.newThisMonth}</Typography>{" "}
+							<Typography tag="span" className="text-grn-t">
+								+{stats.newThisMonth}
+							</Typography>{" "}
 							{t("admin.subscriptions.kpi.perMonth")}
 						</>
 					) : null
@@ -66,7 +66,9 @@ export const SubscriptionsKpiRow = ({ stats, isLoading }: Props) => {
 				sub={
 					stats?.churnThisMonth !== undefined ? (
 						<>
-							<Typography tag="span" className="text-red-t">+{stats.churnThisMonth}</Typography>{" "}
+							<Typography tag="span" className="text-red-t">
+								+{stats.churnThisMonth}
+							</Typography>{" "}
 							{t("admin.subscriptions.kpi.vsLastMonth")}
 						</>
 					) : null

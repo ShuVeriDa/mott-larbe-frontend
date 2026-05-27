@@ -24,7 +24,7 @@ export const SensesSection = ({ senses }: SensesSectionProps) => {
 					{senses.map((sense, idx) => (
 						<li
 							key={sense.id}
-							className="border-b border-[0.5px] border-bd-1 py-2.5 first:pt-0 last:border-b-0 last:pb-0"
+							className="border-b-[0.5px] border-bd-1 py-2.5 first:pt-0 last:border-b-0 last:pb-0"
 						>
 							<div className="mb-1 text-[10px] font-bold text-t-4">
 								{idx + 1}

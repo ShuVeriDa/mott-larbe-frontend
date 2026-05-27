@@ -24,7 +24,7 @@ export const SectionCard = ({
 		)}
 	>
 		{title || headerExtra ? (
-			<header className="flex flex-wrap items-center justify-between gap-2 border-[0.5px] border-b border-bd-1 px-4 pb-3 pt-3.5 max-md:px-3 max-md:py-2.5">
+			<header className="flex flex-wrap items-center justify-between gap-2 border-b-[0.5px] border-bd-1 px-4 pb-3 pt-3.5 max-md:px-3 max-md:py-2.5">
 				{title ? (
 					<Typography tag="h2" className="text-[12.5px] font-semibold text-t-1">
 						{title}

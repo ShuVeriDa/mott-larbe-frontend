@@ -74,7 +74,7 @@ export const PhrasePopup = () => {
 				style={{ left: position.left, top: position.top }}
 			>
 				{/* Header */}
-				<div className="border-b border-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
+				<div className="border-b-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
 					<div className="mb-0.5 flex items-center gap-2">
 						<Typography
 							tag="span"

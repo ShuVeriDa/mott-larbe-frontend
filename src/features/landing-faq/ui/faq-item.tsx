@@ -23,7 +23,7 @@ export const FaqItem = ({
 }: FaqItemProps) => (
 	<div
 		className={cn(
-			"mb-2.5 overflow-hidden rounded-[11px] border-[0.5px] bg-surf transition-colors",
+			"mb-2.5 overflow-hidden rounded-card border-[0.5px] bg-surf transition-colors",
 			open ? "border-bd-3" : "border-bd-2",
 		)}
 	>

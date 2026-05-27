@@ -166,7 +166,7 @@ export const AiWordPopupBody = ({
 
 	return (
 		<>
-			<div className="border-b border-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
+			<div className="border-b-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
 				<div className="mb-1.5 flex items-start gap-2">
 					<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
 						{word}
@@ -181,7 +181,7 @@ export const AiWordPopupBody = ({
 				</Typography>
 			</div>
 
-			<div className="border-b border-[0.5px] border-bd-1 px-3.5 py-2.5">
+			<div className="border-b-[0.5px] border-bd-1 px-3.5 py-2.5">
 				<div className="flex items-start justify-between gap-2">
 					<div className="text-[14px] font-medium text-t-1">
 						{result.translation}

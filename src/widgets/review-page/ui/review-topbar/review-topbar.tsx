@@ -36,7 +36,7 @@ export const ReviewTopbar = ({
 		ComponentProps<typeof TabButton>["onClick"]
 	> = () => onChange("phrases");
 	return (
-		<header className="flex shrink-0 items-center gap-2.5 border-[0.5px] border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-3.5 max-md:py-2.5">
+		<header className="flex shrink-0 items-center gap-2.5 border-b-[0.5px] border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-3 max-md:py-2">
 			<svg
 				viewBox="0 0 15 15"
 				fill="none"
@@ -69,7 +69,7 @@ export const ReviewTopbar = ({
 			<div
 				role="tablist"
 				aria-label={t("review.tabs.aria")}
-				className="flex gap-0.5 rounded-base border-[0.5px] border-bd-2 bg-surf-2 p-0.5 max-md:flex-1"
+				className="flex min-w-0 gap-0.5 rounded-base border-[0.5px] border-bd-2 bg-surf-2 p-0.5 max-md:flex-1"
 			>
 				<TabButton
 					label={t("review.tabs.sm2")}
@@ -114,7 +114,7 @@ const TabButton = ({ label, count, active, onClick }: TabButtonProps) => (
 		aria-selected={active}
 		onClick={onClick}
 		className={cn(
-			"flex h-[26px] cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-[6px] border-0 px-2.5 text-[12px] font-medium transition-colors duration-150 max-md:flex-1 max-md:justify-center",
+			"flex h-[26px] min-w-0 cursor-pointer items-center gap-1 rounded-[6px] border-0 px-1.5 text-[11px] font-medium transition-colors duration-150 max-md:flex-1 max-md:justify-center md:gap-1.5 md:px-2.5 md:text-[12px]",
 			active
 				? "bg-surf font-semibold text-t-1 shadow-sm"
 				: "bg-transparent text-t-3 hover:text-t-2",
@@ -125,7 +125,7 @@ const TabButton = ({ label, count, active, onClick }: TabButtonProps) => (
 			<Typography
 				tag="span"
 				className={cn(
-					"rounded-[3px] px-1.5 py-px text-[10px] font-bold",
+					"rounded-[3px] px-1 py-px text-[10px] font-bold",
 					active ? "bg-acc-bg text-acc-t" : "bg-amb-bg text-amb-t",
 				)}
 			>

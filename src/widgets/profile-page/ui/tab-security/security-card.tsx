@@ -138,7 +138,7 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 				{rows.map(row => (
 					<div
 						key={row.id}
-						className="flex items-center gap-3 border-b border-[0.5px] border-bd-1 px-4 py-3 last:border-b-0"
+						className="flex items-center gap-3 border-b-[0.5px] border-bd-1 px-4 py-3 last:border-b-0"
 					>
 						<Typography
 							tag="span"

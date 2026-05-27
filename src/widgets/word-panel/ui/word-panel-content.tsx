@@ -32,7 +32,7 @@ const Section = ({
 	title: string;
 	children: ReactNode;
 }) => (
-	<div className="border-b border-[0.5px] border-bd-1 px-4 py-3 last:border-b-0">
+	<div className="border-b-[0.5px] border-bd-1 px-4 py-3 last:border-b-0">
 		<div className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.6px] text-t-3">
 			{title}
 		</div>
@@ -59,7 +59,7 @@ const PanelHeader = ({
 	wordLevel: string | null;
 	baseLabel: string;
 }) => (
-	<div className="border-b border-[0.5px] border-bd-1 px-4 py-4">
+	<div className="border-b-[0.5px] border-bd-1 px-4 py-4">
 		<div className="mb-1 flex items-start gap-2">
 			<div className="font-display text-[22px] font-medium tracking-[-0.3px] text-t-1">
 				{word}

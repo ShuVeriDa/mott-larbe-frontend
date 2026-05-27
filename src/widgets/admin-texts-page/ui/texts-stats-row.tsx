@@ -1,7 +1,7 @@
 "use client";
 
-import { useI18n } from "@/shared/lib/i18n";
 import type { AdminTextsStats } from "@/entities/admin-text";
+import { useI18n } from "@/shared/lib/i18n";
 
 interface TextsStatsRowProps {
 	stats: AdminTextsStats | undefined;
@@ -19,9 +19,13 @@ const StatCard = ({
 	sub?: string;
 	valueClass?: string;
 }) => (
-	<div className="rounded-[11px] border border-bd-1 bg-surf px-3.5 py-3 transition-colors">
-		<div className="mb-1.5 text-[10.5px] font-medium tracking-[0.3px] text-t-3">{label}</div>
-		<div className={`text-[20px] font-semibold leading-none text-t-1 ${valueClass ?? ""}`}>
+	<div className="rounded-card border border-bd-1 bg-surf px-3.5 py-3 transition-colors">
+		<div className="mb-1.5 text-[10.5px] font-medium tracking-[0.3px] text-t-3">
+			{label}
+		</div>
+		<div
+			className={`text-[20px] font-semibold leading-none text-t-1 ${valueClass ?? ""}`}
+		>
 			{value}
 		</div>
 		{sub && <div className="mt-1 text-[10.5px] text-t-3">{sub}</div>}
@@ -29,7 +33,7 @@ const StatCard = ({
 );
 
 const StatSkeleton = () => (
-	<div className="rounded-[11px] border border-bd-1 bg-surf px-3.5 py-3">
+	<div className="rounded-card border border-bd-1 bg-surf px-3.5 py-3">
 		<div className="mb-1.5 h-2.5 w-20 animate-pulse rounded bg-surf-3" />
 		<div className="h-6 w-10 animate-pulse rounded bg-surf-3" />
 		<div className="mt-1 h-2 w-16 animate-pulse rounded bg-surf-3" />
@@ -42,7 +46,9 @@ export const TextsStatsRow = ({ stats, isLoading }: TextsStatsRowProps) => {
 	if (isLoading || !stats) {
 		return (
 			<div className="mb-5 grid grid-cols-5 gap-2.5 max-sm:grid-cols-2 max-sm:gap-2 [&>:last-child]:max-sm:col-span-full">
-				{Array.from({ length: 5 }).map((_, i) => <StatSkeleton key={i} />)}
+				{Array.from({ length: 5 }).map((_, i) => (
+					<StatSkeleton key={i} />
+				))}
 			</div>
 		);
 	}
@@ -52,12 +58,16 @@ export const TextsStatsRow = ({ stats, isLoading }: TextsStatsRowProps) => {
 			<StatCard
 				label={t("admin.texts.stats.total")}
 				value={stats.totalCount}
-				sub={t("admin.texts.stats.totalSub", { count: stats.totalGrowthPerMonth })}
+				sub={t("admin.texts.stats.totalSub", {
+					count: stats.totalGrowthPerMonth,
+				})}
 			/>
 			<StatCard
 				label={t("admin.texts.stats.published")}
 				value={stats.publishedCount}
-				sub={t("admin.texts.stats.publishedSub", { percent: Math.round(stats.publishedPercent) })}
+				sub={t("admin.texts.stats.publishedSub", {
+					percent: Math.round(stats.publishedPercent),
+				})}
 				valueClass="text-grn"
 			/>
 			<StatCard

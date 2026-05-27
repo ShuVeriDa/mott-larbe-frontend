@@ -70,7 +70,7 @@ export const AdminLogsPage = () => {
 					onRangeChange={handleRangeChange}
 				/>
 
-				<div className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf transition-colors">
+				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
 					{items.length === 0 && !isLoading ? (
 						<div className="py-16 text-center text-[13px] text-t-3">
 							{t("admin.logs.empty")}

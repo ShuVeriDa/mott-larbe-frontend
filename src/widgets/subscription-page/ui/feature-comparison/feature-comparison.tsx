@@ -82,7 +82,7 @@ export const FeatureComparison = () => {
 			</Typography>
 
 			<div
-				className="grid items-center gap-1 border-[0.5px] border-b border-bd-1 py-2"
+				className="grid items-center gap-1 border-b-[0.5px] border-bd-1 py-2"
 				style={{
 					gridTemplateColumns: `1fr repeat(${visiblePlans.length}, 64px)`,
 				}}
@@ -113,7 +113,7 @@ export const FeatureComparison = () => {
 			{ROWS.map(row => (
 				<div
 					key={row.labelKey}
-					className="grid items-center gap-1 border-[0.5px] border-b border-bd-1 py-1.5 last:border-b-0"
+					className="grid items-center gap-1 border-b-[0.5px] border-bd-1 py-1.5 last:border-b-0"
 					style={{
 						gridTemplateColumns: `1fr repeat(${visiblePlans.length}, 64px)`,
 					}}

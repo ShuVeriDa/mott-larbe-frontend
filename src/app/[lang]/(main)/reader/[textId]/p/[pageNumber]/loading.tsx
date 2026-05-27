@@ -16,7 +16,7 @@ const Bone = ({
 const ReaderPageLoading = () => (
 	<>
 		{/* Topbar */}
-		<header className="flex h-[46px] shrink-0 items-center gap-2 border-b border-[0.5px] border-bd-1 bg-surf px-4">
+		<header className="flex h-[46px] shrink-0 items-center gap-2 border-b-[0.5px] border-bd-1 bg-surf px-4">
 			{/* Back button */}
 			<Bone className="h-6 w-20" />
 

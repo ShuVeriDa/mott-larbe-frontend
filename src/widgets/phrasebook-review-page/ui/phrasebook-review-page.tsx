@@ -3,10 +3,10 @@
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { usePhrasebookReviewPage } from "../model";
-import { PhraseReviewIntro } from "./phrase-review-intro";
-import { PhraseSession } from "./phrase-session";
 import { PhraseReviewDone } from "./phrase-review-done";
+import { PhraseReviewIntro } from "./phrase-review-intro";
 import { PhraseReviewSidePanel } from "./phrase-review-side-panel";
+import { PhraseSession } from "./phrase-session";
 
 interface PhrasebookReviewPageProps {
 	lang: string;
@@ -14,7 +14,11 @@ interface PhrasebookReviewPageProps {
 	savedOnly?: boolean;
 }
 
-export const PhrasebookReviewPage = ({ lang, categoryId, savedOnly }: PhrasebookReviewPageProps) => {
+export const PhrasebookReviewPage = ({
+	lang,
+	categoryId,
+	savedOnly,
+}: PhrasebookReviewPageProps) => {
 	const { t } = useI18n();
 	const {
 		screen,
@@ -38,7 +42,7 @@ export const PhrasebookReviewPage = ({ lang, categoryId, savedOnly }: Phrasebook
 
 	return (
 		<>
-			<header className="flex shrink-0 items-center gap-2.5 border-[0.5px] border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-3.5 max-md:py-2.5">
+			<header className="flex shrink-0 items-center gap-2.5 border-b-[0.5px] border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-3.5 max-md:py-2.5">
 				<svg
 					viewBox="0 0 15 15"
 					fill="none"

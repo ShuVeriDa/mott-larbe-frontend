@@ -2,8 +2,8 @@
 
 import { Typography } from "@/shared/ui/typography";
 
+import type { PlanCode, PlanRevenueItem } from "@/entities/admin-billing";
 import { useI18n } from "@/shared/lib/i18n";
-import type { PlanRevenueItem, PlanCode } from "@/entities/admin-billing";
 
 const BAR_COLORS: Record<string, string> = {
 	FREE: "bg-surf-4",
@@ -25,12 +25,15 @@ interface BillingRevenueChartProps {
 	isLoading: boolean;
 }
 
-export const BillingRevenueChart = ({ items, isLoading }: BillingRevenueChartProps) => {
+export const BillingRevenueChart = ({
+	items,
+	isLoading,
+}: BillingRevenueChartProps) => {
 	const { t } = useI18n();
-	const maxTotal = Math.max(...items.map((i) => i.totalCents), 1);
+	const maxTotal = Math.max(...items.map(i => i.totalCents), 1);
 
 	return (
-		<div className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf transition-colors">
+		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
 			<div className="border-b border-bd-1 px-4 py-3">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("admin.plans.revenue.title")}
@@ -47,7 +50,7 @@ export const BillingRevenueChart = ({ items, isLoading }: BillingRevenueChartPro
 					<div className="py-4 text-center text-[12.5px] text-t-3">—</div>
 				) : (
 					<div className="space-y-3">
-						{items.map((item) => {
+						{items.map(item => {
 							const pct = Math.max(
 								Math.round((item.totalCents / maxTotal) * 100),
 								item.totalCents > 0 ? 4 : 0,
@@ -57,8 +60,13 @@ export const BillingRevenueChart = ({ items, isLoading }: BillingRevenueChartPro
 							return (
 								<div key={item.planId}>
 									<div className="mb-1 flex items-baseline justify-between gap-2">
-										<Typography tag="span" className="text-[12px] text-t-2">{item.planName}</Typography>
-										<Typography tag="span" className="shrink-0 text-[12.5px] font-semibold text-t-1">
+										<Typography tag="span" className="text-[12px] text-t-2">
+											{item.planName}
+										</Typography>
+										<Typography
+											tag="span"
+											className="shrink-0 text-[12.5px] font-semibold text-t-1"
+										>
 											{fmtMoney(item.totalCents)}
 										</Typography>
 									</div>

@@ -18,7 +18,7 @@ export const FoldersTopbar = ({
 	const { t, lang } = useI18n();
 
 	return (
-		<header className="flex shrink-0 items-center gap-2.5 border-[0.5px] border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
+		<header className="flex shrink-0 items-center gap-2.5 border-b-[0.5px] border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
 			<Link
 				href={`/${lang}/vocabulary`}
 				className="flex items-center gap-1 text-[12.5px] text-t-3 transition-colors hover:text-t-1"

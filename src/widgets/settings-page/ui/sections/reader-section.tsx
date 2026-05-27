@@ -97,7 +97,7 @@ export const ReaderSection = ({ preferences }: ReaderSectionProps) => {
 								onClick={handleClick}
 								aria-pressed={selected}
 								className={cn(
-									"flex items-center gap-2.5 border-[0.5px] border-b border-bd-1 px-4 py-2.5 text-left transition-colors last:border-b-0",
+									"flex items-center gap-2.5 border-b-[0.5px] border-bd-1 px-4 py-2.5 text-left transition-colors last:border-b-0",
 									"hover:bg-surf-2",
 								)}
 							>

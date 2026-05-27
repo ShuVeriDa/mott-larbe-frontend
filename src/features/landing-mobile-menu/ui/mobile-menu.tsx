@@ -50,7 +50,7 @@ export const MobileMenu = ({
 				aria-hidden={!open}
 				aria-label={t("landing.nav.menu")}
 			>
-				<div className="flex items-center justify-between border-[0.5px] border-b border-bd-1 px-[18px] py-[14px]">
+				<div className="flex items-center justify-between border-b-[0.5px] border-bd-1 px-[18px] py-[14px]">
 					<Link
 						href={`/${lang}/dashboard`}
 						className="flex min-w-0 items-center gap-2.5"
@@ -80,7 +80,7 @@ export const MobileMenu = ({
 							key={link.href}
 							href={link.href}
 							onClick={onClose}
-							className="block border-[0.5px] border-b border-bd-1 px-[22px] py-3 text-[15px] text-t-1 transition-colors hover:bg-surf-2"
+							className="block border-b-[0.5px] border-bd-1 px-[22px] py-3 text-[15px] text-t-1 transition-colors hover:bg-surf-2"
 						>
 							{t(link.labelKey)}
 						</Link>

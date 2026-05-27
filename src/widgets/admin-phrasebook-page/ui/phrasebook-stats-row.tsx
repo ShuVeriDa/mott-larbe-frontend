@@ -8,9 +8,13 @@ interface StatCardProps {
 }
 
 const StatCard = ({ label, value, sub, valueClass }: StatCardProps) => (
-	<div className="rounded-[11px] border border-bd-1 bg-surf px-3.5 py-3 transition-colors">
-		<div className="mb-1.5 text-[10.5px] font-medium tracking-[0.3px] text-t-3">{label}</div>
-		<div className={`text-[20px] font-semibold leading-none text-t-1 ${valueClass ?? ""}`}>
+	<div className="rounded-card border border-bd-1 bg-surf px-3.5 py-3 transition-colors">
+		<div className="mb-1.5 text-[10.5px] font-medium tracking-[0.3px] text-t-3">
+			{label}
+		</div>
+		<div
+			className={`text-[20px] font-semibold leading-none text-t-1 ${valueClass ?? ""}`}
+		>
 			{value}
 		</div>
 		{sub && <div className="mt-1 text-[10.5px] text-t-3">{sub}</div>}
@@ -18,7 +22,7 @@ const StatCard = ({ label, value, sub, valueClass }: StatCardProps) => (
 );
 
 const StatSkeleton = () => (
-	<div className="rounded-[11px] border border-bd-1 bg-surf px-3.5 py-3">
+	<div className="rounded-card border border-bd-1 bg-surf px-3.5 py-3">
 		<div className="mb-1.5 h-2.5 w-20 animate-pulse rounded bg-surf-3" />
 		<div className="h-6 w-10 animate-pulse rounded bg-surf-3" />
 		<div className="mt-1 h-2 w-16 animate-pulse rounded bg-surf-3" />

@@ -119,7 +119,7 @@ export const LandingDemo = ({ wordsDict }: LandingDemoProps) => {
 					ref={cardRef}
 					className="relative overflow-hidden rounded-[14px] border-[0.5px] border-bd-2 bg-surf shadow-md max-[640px]:rounded-[12px]"
 				>
-					<div className="flex items-center gap-2.5 border-[0.5px] border-b border-bd-1 bg-surf-2 px-5 py-3.5 max-[640px]:px-3.5 max-[640px]:py-3">
+					<div className="flex items-center gap-2.5 border-b-[0.5px] border-bd-1 bg-surf-2 px-5 py-3.5 max-[640px]:px-3.5 max-[640px]:py-3">
 						<Button
 							aria-hidden="true"
 							className="flex h-7 w-7 items-center justify-center rounded-md border-[0.5px] border-bd-2 bg-transparent text-t-2 max-[640px]:h-[26px] max-[640px]:w-[26px]"

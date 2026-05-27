@@ -75,7 +75,7 @@ export const DataSection = () => {
 			</SettingCard>
 
 			<section className="overflow-hidden rounded-card border-[0.5px] border-red/20 bg-surf">
-				<header className="border-[0.5px] border-b border-red/10 bg-red-bg px-4 pb-2.5 pt-3">
+				<header className="border-b-[0.5px] border-red/10 bg-red-bg px-4 pb-2.5 pt-3">
 					<Typography
 						tag="h3"
 						className="text-[12.5px] font-semibold text-red-t"

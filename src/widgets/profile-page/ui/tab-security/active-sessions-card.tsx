@@ -57,7 +57,7 @@ const SessionRow = ({
 		ComponentProps<typeof Button>["onClick"]
 	> = () => onTerminate(session.id);
 	return (
-		<div className="flex items-center gap-3 border-b border-[0.5px] border-bd-1 px-4 py-2.5 last:border-b-0">
+		<div className="flex items-center gap-3 border-b-[0.5px] border-bd-1 px-4 py-2.5 last:border-b-0">
 			<Typography
 				tag="span"
 				className={`flex size-8 shrink-0 items-center justify-center rounded-[8px] ${

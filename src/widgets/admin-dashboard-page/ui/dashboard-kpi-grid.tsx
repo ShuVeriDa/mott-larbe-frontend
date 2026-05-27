@@ -6,7 +6,8 @@ import { AbsoluteTrend, TrendChip } from "@/shared/ui/trend-chip";
 
 const formatRevenue = (cents: number, currency: string) => {
 	const amount = cents / 100;
-	if (currency === "RUB") return `₽${Math.round(amount).toLocaleString("ru-RU")}`;
+	if (currency === "RUB")
+		return `₽${Math.round(amount).toLocaleString("ru-RU")}`;
 	return new Intl.NumberFormat("en", {
 		style: "currency",
 		currency,
@@ -71,7 +72,7 @@ export const DashboardKpiGrid = ({ kpi }: DashboardKpiGridProps) => {
 			{cards.map(card => (
 				<div
 					key={card.label}
-					className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf px-3.5 py-3.5 transition-colors max-sm:px-3 max-sm:py-3"
+					className="overflow-hidden rounded-card border border-bd-1 bg-surf px-3.5 py-3.5 transition-colors max-sm:px-3 max-sm:py-3"
 				>
 					<div className="mb-1.5 truncate text-[11px] font-medium tracking-wide text-t-3">
 						{card.label}
@@ -91,7 +92,7 @@ export const DashboardKpiGridSkeleton = () => (
 		{Array.from({ length: 4 }).map((_, i) => (
 			<div
 				key={i}
-				className="overflow-hidden rounded-[11px] border border-bd-1 bg-surf px-3.5 py-3.5"
+				className="overflow-hidden rounded-card border border-bd-1 bg-surf px-3.5 py-3.5"
 			>
 				<div className="mb-2 h-2.5 w-24 animate-pulse rounded bg-surf-3" />
 				<div className="mb-2 h-7 w-20 animate-pulse rounded bg-surf-3" />

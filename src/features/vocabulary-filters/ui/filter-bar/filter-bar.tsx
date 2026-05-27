@@ -33,28 +33,37 @@ export const FilterBar = () => {
 	const setCefrLevel = useVocabularyFilters(s => s.setCefrLevel);
 	const setSort = useVocabularyFilters(s => s.setSort);
 
-	const handleAllStatus: NonNullable<ComponentProps<typeof Chip>["onClick"]> = () => setStatus(null);
-	const handleAllLevel: NonNullable<ComponentProps<typeof Chip>["onClick"]> = () => setCefrLevel(null);
-	const handleSortChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = e =>
-		setSort(e.currentTarget.value as DictionarySort);
+	const handleAllStatus: NonNullable<
+		ComponentProps<typeof Chip>["onClick"]
+	> = () => setStatus(null);
+	const handleAllLevel: NonNullable<
+		ComponentProps<typeof Chip>["onClick"]
+	> = () => setCefrLevel(null);
+	const handleSortChange: NonNullable<
+		ComponentProps<typeof Select>["onChange"]
+	> = e => setSort(e.currentTarget.value as DictionarySort);
 
 	return (
 		<div
-			className="@container shrink-0 border-[0.5px] border-b border-bd-1 bg-surf transition-colors duration-200 max-md:hidden"
+			className="@container shrink-0 border-b-[0.5px] border-bd-1 bg-surf transition-colors duration-200 max-md:hidden"
 			role="toolbar"
 			aria-label={t("vocabulary.openFilters")}
 		>
 			{/* Wide: one row */}
 			<div className="hidden items-center gap-1.5 px-[18px] py-2.5 @[700px]:flex">
-				<Typography tag="span" className="shrink-0 whitespace-nowrap text-[11px] font-medium text-t-3">
+				<Typography
+					tag="span"
+					className="shrink-0 whitespace-nowrap text-[11px] font-medium text-t-3"
+				>
 					{t("vocabulary.filterByStatus")}
 				</Typography>
 				<Chip active={status === null} onClick={handleAllStatus}>
 					{t("vocabulary.all")}
 				</Chip>
 				{LEARNING_LEVELS.map(level => {
-					const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> =
-						() => setStatus(level);
+					const handleClick: NonNullable<
+						ComponentProps<typeof Chip>["onClick"]
+					> = () => setStatus(level);
 					return (
 						<Chip key={level} active={status === level} onClick={handleClick}>
 							{t(STATUS_LABELS[level])}
@@ -62,17 +71,25 @@ export const FilterBar = () => {
 					);
 				})}
 				<span aria-hidden="true" className="h-4 w-px shrink-0 bg-bd-2" />
-				<Typography tag="span" className="shrink-0 whitespace-nowrap text-[11px] font-medium text-t-3">
+				<Typography
+					tag="span"
+					className="shrink-0 whitespace-nowrap text-[11px] font-medium text-t-3"
+				>
 					{t("vocabulary.filterByLevel")}
 				</Typography>
 				<Chip active={cefrLevel === null} onClick={handleAllLevel}>
 					{t("vocabulary.all")}
 				</Chip>
 				{CEFR_LEVELS.map(level => {
-					const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> =
-						() => setCefrLevel(level);
+					const handleClick: NonNullable<
+						ComponentProps<typeof Chip>["onClick"]
+					> = () => setCefrLevel(level);
 					return (
-						<Chip key={level} active={cefrLevel === level} onClick={handleClick}>
+						<Chip
+							key={level}
+							active={cefrLevel === level}
+							onClick={handleClick}
+						>
 							{level}
 						</Chip>
 					);
@@ -97,7 +114,10 @@ export const FilterBar = () => {
 				className="grid px-[18px] py-2 @[700px]:hidden"
 				style={{ gridTemplateColumns: "auto 1fr" }}
 			>
-				<Typography tag="span" className="flex items-center whitespace-nowrap pr-3 text-[11px] font-medium text-t-3">
+				<Typography
+					tag="span"
+					className="flex items-center whitespace-nowrap pr-3 text-[11px] font-medium text-t-3"
+				>
 					{t("vocabulary.filterByStatus")}
 				</Typography>
 				<div className="flex items-center gap-1.5 py-1">
@@ -105,8 +125,9 @@ export const FilterBar = () => {
 						{t("vocabulary.all")}
 					</Chip>
 					{LEARNING_LEVELS.map(level => {
-						const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> =
-							() => setStatus(level);
+						const handleClick: NonNullable<
+							ComponentProps<typeof Chip>["onClick"]
+						> = () => setStatus(level);
 						return (
 							<Chip key={level} active={status === level} onClick={handleClick}>
 								{t(STATUS_LABELS[level])}
@@ -115,7 +136,10 @@ export const FilterBar = () => {
 					})}
 				</div>
 
-				<Typography tag="span" className="flex items-center whitespace-nowrap pr-3 text-[11px] font-medium text-t-3">
+				<Typography
+					tag="span"
+					className="flex items-center whitespace-nowrap pr-3 text-[11px] font-medium text-t-3"
+				>
 					{t("vocabulary.filterByLevel")}
 				</Typography>
 				<div className="flex items-center gap-1.5 py-1">
@@ -123,10 +147,15 @@ export const FilterBar = () => {
 						{t("vocabulary.all")}
 					</Chip>
 					{CEFR_LEVELS.map(level => {
-						const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> =
-							() => setCefrLevel(level);
+						const handleClick: NonNullable<
+							ComponentProps<typeof Chip>["onClick"]
+						> = () => setCefrLevel(level);
 						return (
-							<Chip key={level} active={cefrLevel === level} onClick={handleClick}>
+							<Chip
+								key={level}
+								active={cefrLevel === level}
+								onClick={handleClick}
+							>
 								{level}
 							</Chip>
 						);

@@ -23,11 +23,12 @@ export const FlipCard = ({
 		className={cn("w-full max-w-[520px] mb-3.5", className)}
 		style={{ perspective: "1000px" }}
 	>
+		{/* Desktop: 3D flip animation with absolute positioning */}
 		<Button
 			onClick={onFlip}
 			aria-pressed={flipped}
 			className={cn(
-				"relative w-full min-h-[205px] cursor-pointer outline-none",
+				"relative w-full min-h-[205px] cursor-pointer outline-none max-md:hidden",
 				"transition-transform duration-[440ms] [transform-style:preserve-3d]",
 				"focus-visible:[&_.flip-face]:ring-2 focus-visible:[&_.flip-face]:ring-acc/40",
 			)}
@@ -39,8 +40,7 @@ export const FlipCard = ({
 			<div
 				className={cn(
 					"flip-face absolute inset-0 flex flex-col items-center justify-center",
-					"rounded-hero border-[0.5px] border-bd-2 bg-surf p-7 shadow-md",
-					"max-md:p-5 min-h-[205px] max-md:min-h-[185px]",
+					"rounded-hero border-[0.5px] border-bd-2 bg-surf p-7 shadow-md min-h-[205px]",
 				)}
 				style={{
 					backfaceVisibility: "hidden",
@@ -52,8 +52,7 @@ export const FlipCard = ({
 			<div
 				className={cn(
 					"flip-face absolute inset-0 flex flex-col items-start justify-start",
-					"rounded-hero border-[0.5px] border-bd-2 bg-surf px-7 pt-5 pb-7 shadow-md",
-					"max-md:px-5 max-md:pt-4 max-md:pb-5 min-h-[205px] max-md:min-h-[185px]",
+					"rounded-hero border-[0.5px] border-bd-2 bg-surf px-7 pt-5 pb-7 shadow-md min-h-[205px]",
 				)}
 				style={{
 					backfaceVisibility: "hidden",
@@ -64,5 +63,24 @@ export const FlipCard = ({
 				{back}
 			</div>
 		</Button>
+
+		{/* Mobile: simple show/hide, height grows with content */}
+		<button
+			type="button"
+			onClick={onFlip}
+			aria-pressed={flipped}
+			className="hidden w-full cursor-pointer outline-none max-md:block"
+		>
+			<div
+				className={cn(
+					"w-full rounded-hero border-[0.5px] border-bd-2 bg-surf shadow-md",
+					flipped
+						? "flex flex-col items-start px-5 pt-4 pb-5"
+						: "flex flex-col items-center justify-center p-5 min-h-[160px]",
+				)}
+			>
+				{flipped ? back : front}
+			</div>
+		</button>
 	</div>
 );

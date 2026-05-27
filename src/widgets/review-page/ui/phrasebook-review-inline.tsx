@@ -35,7 +35,7 @@ export const PhrasebookReviewPageInline = () => {
 
 	return (
 		<div className="flex flex-1 overflow-hidden">
-			<div className="flex flex-1 flex-col overflow-y-auto bg-panel max-md:overflow-visible">
+			<div className="flex flex-1 flex-col overflow-x-hidden bg-panel md:overflow-y-auto">
 				{screen === "intro" ? (
 					<PhraseReviewIntro
 						stats={stats}

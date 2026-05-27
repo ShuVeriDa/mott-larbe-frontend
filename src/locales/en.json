@@ -505,6 +505,7 @@
 		"review": "Review",
 		"progress": "Statistics",
 		"phrasebook": "Phrasebook",
+		"profile": "Profile",
 		"language": "Language",
 		"chechen": "Chechen",
 		"grammar": "Grammar",
@@ -5182,8 +5183,11 @@
 				"description": "Review phrasebook phrases using the SM-2 spaced repetition method."
 			},
 			"startReview": "Start Review",
+			"startReviewShort": "All",
 			"startCategory": "Review category",
+			"startCategoryShort": "Category",
 			"startSaved": "Review saved",
+			"startSavedShort": "Saved",
 			"categoryProgress": "progress",
 			"intro": {
 				"title": "Phrasebook Review",

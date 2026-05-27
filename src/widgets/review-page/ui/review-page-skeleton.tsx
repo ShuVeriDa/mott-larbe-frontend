@@ -5,7 +5,7 @@ const Bone = ({ className }: { className: string }) => (
 export const ReviewPageSkeleton = () => (
 	<div className="flex flex-1 flex-col overflow-hidden">
 		{/* Topbar */}
-		<div className="flex shrink-0 items-center gap-2.5 border-b border-[0.5px] border-bd-1 bg-surf px-[22px] py-3 max-md:px-3.5 max-md:py-2.5">
+		<div className="flex shrink-0 items-center gap-2.5 border-b-[0.5px] border-bd-1 bg-surf px-[22px] py-3 max-md:px-3.5 max-md:py-2.5">
 			<Bone className="h-3.5 w-3.5 max-md:hidden" />
 			<Bone className="h-4 w-28 max-md:hidden" />
 			<div className="flex gap-0.5 rounded-base border-[0.5px] border-bd-2 bg-surf-2 p-0.5 max-md:flex-1">

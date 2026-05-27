@@ -113,7 +113,7 @@ const CurrentPlanCard = ({
 
 	return (
 		<SettingCard title={t("profile.subscription.currentPlan")} noBody>
-			<div className="flex items-center gap-3 px-4 py-3.5 border-b border-[0.5px] border-bd-1">
+			<div className="flex items-center gap-3 px-4 py-3.5 border-b-[0.5px] border-bd-1">
 				<Typography
 					tag="span"
 					className={`flex size-9 shrink-0 items-center justify-center rounded-[9px] ${isFree ? "bg-surf-2 text-t-2" : "bg-acc-bg text-acc-t"}`}
@@ -151,7 +151,7 @@ const CurrentPlanCard = ({
 			</div>
 
 			{usage ? (
-				<div className="flex flex-col gap-2.5 px-4 py-3.5 border-b border-[0.5px] border-bd-1">
+				<div className="flex flex-col gap-2.5 px-4 py-3.5 border-b-[0.5px] border-bd-1">
 					<LimitBar
 						label={t("profile.subscription.translationsToday")}
 						used={usage.translationsToday}

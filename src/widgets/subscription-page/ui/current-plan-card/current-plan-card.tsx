@@ -73,9 +73,9 @@ export const CurrentPlanCard = ({ subscription }: CurrentPlanCardProps) => {
 				</Badge>
 			}
 		>
-			<div className="flex items-start gap-3.5 border-[0.5px] border-b border-bd-1 px-4 py-4 max-md:px-3 max-md:py-3">
+			<div className="flex items-start gap-3.5 border-b-[0.5px] border-bd-1 px-4 py-4 max-md:px-3 max-md:py-3">
 				<div
-					className="flex size-11 shrink-0 items-center justify-center rounded-[11px] border-[0.5px] border-acc/15 bg-acc-bg max-md:size-[38px] max-md:rounded-[9px]"
+					className="flex size-11 shrink-0 items-center justify-center rounded-card border-[0.5px] border-acc/15 bg-acc-bg max-md:size-[38px] max-md:rounded-[9px]"
 					aria-hidden="true"
 				>
 					{isFree ? <FreePlanIcon /> : <PaidPlanIcon />}

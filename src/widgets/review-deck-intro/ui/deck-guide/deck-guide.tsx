@@ -72,7 +72,7 @@ const GuideHeader = ({ title, onClose }: GuideHeaderProps) => {
 	const handleClose = () => onClose();
 
 	return (
-		<div className="flex shrink-0 items-center justify-between border-b border-[0.5px] border-bd-1 px-5 py-3.5">
+		<div className="flex shrink-0 items-center justify-between border-b-[0.5px] border-bd-1 px-5 py-3.5">
 			<div className="flex items-center gap-2">
 				<BookOpenIcon className="size-4 shrink-0 text-t-3" />
 				<span className="text-[13px] font-semibold text-t-1">{title}</span>

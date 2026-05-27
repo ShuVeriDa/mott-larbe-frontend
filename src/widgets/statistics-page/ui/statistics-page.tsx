@@ -48,7 +48,7 @@ export const StatisticsPage = () => {
 
 	return (
 		<>
-			<header className="flex shrink-0 items-center gap-3 border-[0.5px] border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-md:flex-wrap max-md:px-4 max-md:py-2.5">
+			<header className="flex shrink-0 items-center gap-3 border-b-[0.5px] border-bd-1 bg-surf px-[22px] py-3 transition-colors max-md:flex-wrap max-md:px-4 max-md:py-2.5">
 				<Typography tag="h1" className="text-[13.5px] font-semibold text-t-1">
 					{t("statistics.pageTitle")}
 				</Typography>
@@ -77,7 +77,10 @@ export const StatisticsPage = () => {
 					<Typography tag="p" className="text-sm font-semibold text-t-1">
 						{t("statistics.premium.title")}
 					</Typography>
-					<Typography tag="p" className="max-w-[260px] text-xs leading-relaxed text-t-3">
+					<Typography
+						tag="p"
+						className="max-w-[260px] text-xs leading-relaxed text-t-3"
+					>
 						{t("statistics.premium.description")}
 					</Typography>
 					<Link
@@ -101,12 +104,16 @@ export const StatisticsPage = () => {
 				</div>
 			) : (
 				<div className="flex flex-col gap-3.5 overflow-y-auto px-[22px] pb-7 pt-4 max-md:px-4 max-md:pb-6 max-md:pt-3.5 max-[480px]:px-3 max-[480px]:pb-5 max-[480px]:pt-3">
-
 					{/* Row 1: KPI */}
 					<KpiGrid header={data.header} sparklines={data.kpiSparklines} />
 
 					{/* Row 2: Streak + heatmap */}
-					<StreakBlock streak={data.streak} heatmap={data.heatmap} heatmapWeek={data.heatmapWeek} period={period} />
+					<StreakBlock
+						streak={data.streak}
+						heatmap={data.heatmap}
+						heatmapWeek={data.heatmapWeek}
+						period={period}
+					/>
 
 					{/* Row 3: Achievements */}
 					<AchievementsCard data={data.achievements} />
@@ -114,13 +121,20 @@ export const StatisticsPage = () => {
 					{/* Row 4: Events + Vocabulary growth */}
 					<div className="grid grid-cols-2 gap-3.5 max-md:grid-cols-1">
 						<EventsChart chart={data.eventsChart} />
-						<VocabularyGrowthChart points={data.vocabularyGrowth} period={period} />
+						<VocabularyGrowthChart
+							points={data.vocabularyGrowth}
+							period={period}
+						/>
 					</div>
 
 					{/* Row 5: Progress + Per day */}
 					<div className="grid grid-cols-2 gap-2 max-md:grid-cols-1">
 						<ProgressCard words={data.words} phrases={data.phraseProgress} />
-						<PerDayChart wordsPoints={data.wordsPerDay} phrasesPoints={data.phrasesPerDay} period={period} />
+						<PerDayChart
+							wordsPoints={data.wordsPerDay}
+							phrasesPoints={data.phrasesPerDay}
+							period={period}
+						/>
 					</div>
 
 					{/* Row 6: Retention + Weekday activity */}
@@ -146,7 +160,10 @@ export const StatisticsPage = () => {
 
 					{/* Row 9a: Accuracy + Phrase stats */}
 					<div className="grid grid-cols-2 gap-2 max-sm:grid-cols-1">
-						<AccuracyCard accuracy={data.accuracy} phraseAccuracy={data.phraseAccuracy} />
+						<AccuracyCard
+							accuracy={data.accuracy}
+							phraseAccuracy={data.phraseAccuracy}
+						/>
 						<PhraseStatsCard />
 					</div>
 

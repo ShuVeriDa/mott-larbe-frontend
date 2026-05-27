@@ -2,9 +2,9 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { ReactNode } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
 import type { BillingStats } from "@/entities/admin-billing";
+import { useI18n } from "@/shared/lib/i18n";
+import { ReactNode } from "react";
 
 const fmtNum = (n: number) => n.toLocaleString("ru-RU");
 const fmtMoney = (cents: number) => {
@@ -21,7 +21,7 @@ interface KpiCardProps {
 }
 
 const KpiCard = ({ label, value, sub }: KpiCardProps) => (
-	<div className="rounded-[11px] border border-bd-1 bg-surf px-3.5 py-3 transition-colors">
+	<div className="rounded-card border border-bd-1 bg-surf px-3.5 py-3 transition-colors">
 		<div className="mb-1.5 text-[11px] font-medium tracking-[0.2px] text-t-3">
 			{label}
 		</div>
@@ -35,7 +35,7 @@ const KpiCard = ({ label, value, sub }: KpiCardProps) => (
 );
 
 const KpiCardSkeleton = () => (
-	<div className="rounded-[11px] border border-bd-1 bg-surf px-3.5 py-3">
+	<div className="rounded-card border border-bd-1 bg-surf px-3.5 py-3">
 		<div className="mb-1.5 h-2.5 w-20 animate-pulse rounded bg-surf-3" />
 		<div className="mb-1 h-5 w-16 animate-pulse rounded bg-surf-3" />
 		<div className="h-2.5 w-24 animate-pulse rounded bg-surf-3" />
@@ -71,8 +71,12 @@ export const BillingKpiRow = ({ stats, isLoading }: BillingKpiRowProps) => {
 				value={fmtNum(stats.payingCount)}
 				sub={
 					<>
-						<Typography tag="span" className="text-grn-t">+{stats.payingDeltaLast30}</Typography>
-						<Typography tag="span">{t("admin.plans.kpi.payingMonth")}</Typography>
+						<Typography tag="span" className="text-grn-t">
+							+{stats.payingDeltaLast30}
+						</Typography>
+						<Typography tag="span">
+							{t("admin.plans.kpi.payingMonth")}
+						</Typography>
 					</>
 				}
 			/>
@@ -82,8 +86,14 @@ export const BillingKpiRow = ({ stats, isLoading }: BillingKpiRowProps) => {
 				sub={
 					stats.mrrGrowthPct !== null ? (
 						<>
-							<Typography tag="span" className={stats.mrrGrowthPct >= 0 ? "text-grn-t" : "text-red-t"}>
-								{mrrGrowthSign}{stats.mrrGrowthPct.toFixed(1)}%
+							<Typography
+								tag="span"
+								className={
+									stats.mrrGrowthPct >= 0 ? "text-grn-t" : "text-red-t"
+								}
+							>
+								{mrrGrowthSign}
+								{stats.mrrGrowthPct.toFixed(1)}%
 							</Typography>
 							<Typography tag="span">{t("admin.plans.kpi.mrrMoM")}</Typography>
 						</>
@@ -93,17 +103,27 @@ export const BillingKpiRow = ({ stats, isLoading }: BillingKpiRowProps) => {
 			<KpiCard
 				label={t("admin.plans.kpi.arr")}
 				value={`${fmtMoney(stats.arrCents)} ₽`}
-				sub={<Typography tag="span">{t("admin.plans.kpi.arrForecast")}</Typography>}
+				sub={
+					<Typography tag="span">{t("admin.plans.kpi.arrForecast")}</Typography>
+				}
 			/>
 			<KpiCard
 				label={t("admin.plans.kpi.conversion")}
 				value={`${stats.conversionRate.toFixed(1)}%`}
 				sub={
 					<>
-						<Typography tag="span" className={stats.conversionDeltaPp >= 0 ? "text-grn-t" : "text-red-t"}>
-							{convSign}{stats.conversionDeltaPp.toFixed(1)} пп
+						<Typography
+							tag="span"
+							className={
+								stats.conversionDeltaPp >= 0 ? "text-grn-t" : "text-red-t"
+							}
+						>
+							{convSign}
+							{stats.conversionDeltaPp.toFixed(1)} пп
 						</Typography>
-						<Typography tag="span">{t("admin.plans.kpi.vsLastMonth")}</Typography>
+						<Typography tag="span">
+							{t("admin.plans.kpi.vsLastMonth")}
+						</Typography>
 					</>
 				}
 			/>
@@ -112,10 +132,16 @@ export const BillingKpiRow = ({ stats, isLoading }: BillingKpiRowProps) => {
 				value={`${stats.churnRate.toFixed(1)}%`}
 				sub={
 					<>
-						<Typography tag="span" className={stats.churnDeltaPp <= 0 ? "text-grn-t" : "text-red-t"}>
-							{churnSign}{stats.churnDeltaPp.toFixed(1)} пп
+						<Typography
+							tag="span"
+							className={stats.churnDeltaPp <= 0 ? "text-grn-t" : "text-red-t"}
+						>
+							{churnSign}
+							{stats.churnDeltaPp.toFixed(1)} пп
 						</Typography>
-						<Typography tag="span">{t("admin.plans.kpi.vsLastMonth")}</Typography>
+						<Typography tag="span">
+							{t("admin.plans.kpi.vsLastMonth")}
+						</Typography>
 					</>
 				}
 			/>

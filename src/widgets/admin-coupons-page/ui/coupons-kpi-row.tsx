@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
-import { useI18n } from "@/shared/lib/i18n";
 import type { AdminCouponStats } from "@/entities/admin-coupon";
+import { useI18n } from "@/shared/lib/i18n";
+import { ReactNode } from "react";
 
 import { Typography } from "@/shared/ui/typography";
 interface Props {
@@ -19,12 +19,16 @@ const KpiCard = ({
 	sub: ReactNode;
 	isLoading: boolean;
 }) => (
-	<div className="rounded-[11px] border border-bd-1 bg-surf p-3 transition-colors">
-		<div className="mb-1.5 text-[11px] font-medium tracking-[0.2px] text-t-3">{label}</div>
+	<div className="rounded-card border border-bd-1 bg-surf p-3 transition-colors">
+		<div className="mb-1.5 text-[11px] font-medium tracking-[0.2px] text-t-3">
+			{label}
+		</div>
 		{isLoading ? (
 			<div className="mb-1 h-5 w-16 animate-pulse rounded bg-surf-3" />
 		) : (
-			<div className="mb-0.5 text-[20px] font-semibold leading-none text-t-1">{value}</div>
+			<div className="mb-0.5 text-[20px] font-semibold leading-none text-t-1">
+				{value}
+			</div>
 		)}
 		{isLoading ? (
 			<div className="h-3.5 w-24 animate-pulse rounded bg-surf-3" />
@@ -51,7 +55,10 @@ export const CouponsKpiRow = ({ stats, isLoading }: Props) => {
 			<KpiCard
 				label={t("admin.coupons.kpi.activeCodes")}
 				value={stats?.activeCount ?? 0}
-				sub={t("admin.coupons.kpi.activeOf").replace("{total}", String(stats?.totalCreated ?? 0))}
+				sub={t("admin.coupons.kpi.activeOf").replace(
+					"{total}",
+					String(stats?.totalCreated ?? 0),
+				)}
 				isLoading={isLoading}
 			/>
 			<KpiCard
@@ -59,8 +66,12 @@ export const CouponsKpiRow = ({ stats, isLoading }: Props) => {
 				value={stats?.usagesThisMonth ?? 0}
 				sub={
 					<>
-						<Typography tag="span" className={growth >= 0 ? "text-grn-t" : "text-red-t"}>
-							{growth >= 0 ? "+" : ""}{growth}
+						<Typography
+							tag="span"
+							className={growth >= 0 ? "text-grn-t" : "text-red-t"}
+						>
+							{growth >= 0 ? "+" : ""}
+							{growth}
 						</Typography>{" "}
 						{t("admin.coupons.kpi.usageGrowthSuffix")}
 					</>
@@ -75,11 +86,17 @@ export const CouponsKpiRow = ({ stats, isLoading }: Props) => {
 			/>
 			<KpiCard
 				label={t("admin.coupons.kpi.conversion")}
-				value={stats ? `${Math.round(stats.conversionRate * 1000) / 10}%` : "0%"}
+				value={
+					stats ? `${Math.round(stats.conversionRate * 1000) / 10}%` : "0%"
+				}
 				sub={
 					<>
-						<Typography tag="span" className={convDelta >= 0 ? "text-grn-t" : "text-red-t"}>
-							{convDelta >= 0 ? "+" : ""}{convDelta} пп
+						<Typography
+							tag="span"
+							className={convDelta >= 0 ? "text-grn-t" : "text-red-t"}
+						>
+							{convDelta >= 0 ? "+" : ""}
+							{convDelta} пп
 						</Typography>{" "}
 						{t("admin.coupons.kpi.conversionSuffix")}
 					</>

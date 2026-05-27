@@ -42,7 +42,7 @@ export const FolderPickerPopover = ({
 				className,
 			)}
 		>
-			<div className="border-b border-[0.5px] border-bd-1 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
+			<div className="border-b-[0.5px] border-bd-1 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
 				{t("vocabulary.foldersPage.uncategorized.chooseFolder")}
 			</div>
 			{folders.length === 0 ? (

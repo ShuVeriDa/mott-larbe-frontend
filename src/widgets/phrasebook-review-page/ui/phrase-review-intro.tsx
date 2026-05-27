@@ -49,10 +49,10 @@ export const PhraseReviewIntro = ({
 
 	return (
 		<section
-			className="flex flex-1 flex-col items-center justify-center px-6 py-8 max-md:justify-start max-md:px-5 max-md:pt-7"
+			className="flex flex-1 flex-col items-center justify-center px-6 py-8 max-md:justify-start max-md:px-4 max-md:pt-6"
 			aria-busy={loading}
 		>
-			<div className="mb-5 flex gap-2.5 max-md:w-full max-md:gap-2">
+			<div className="mb-5 flex gap-2 max-md:w-full">
 				<StatBox value={dueCount} label={t("phrasebook.review.intro.stats.due")} tone="amb" />
 				<StatBox value={learningCount} label={t("phrasebook.review.intro.stats.learning")} tone="grn" />
 				<StatBox
@@ -101,7 +101,7 @@ export const PhraseReviewIntro = ({
 			</Button>
 
 			{queue.length > 0 ? (
-				<div className="mt-5 w-full max-w-[420px] border-t border-bd-1 pt-4">
+				<div className="mt-5 w-full max-w-[420px] border-t border-bd-1 pt-4 max-md:max-w-full">
 					<Typography className="mb-2 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
 						{t("phrasebook.review.intro.queue.title")}
 					</Typography>
@@ -121,7 +121,7 @@ export const PhraseReviewIntro = ({
 								>
 									{phrase.original}
 								</Typography>
-								<Typography tag="span" className="shrink-0 truncate text-[12px] text-t-3">
+								<Typography tag="span" className="max-w-[40%] shrink truncate text-[12px] text-t-3">
 									{phrase.translation}
 								</Typography>
 							</li>
@@ -165,20 +165,23 @@ const ModePicker = ({ mode, selectedCategoryId, onModeChange, onCategoryChange }
 	};
 
 	return (
-		<div className="flex flex-col items-center gap-2 w-full max-w-[340px]">
+		<div className="flex w-full max-w-[340px] flex-col items-center gap-2 max-md:max-w-full">
 			<div className="flex w-full gap-1 rounded-base border-[0.5px] border-bd-2 bg-surf-2 p-0.5">
 				<ModeTab
 					label={t("phrasebook.review.startReview")}
+					shortLabel={t("phrasebook.review.startReviewShort")}
 					active={mode === "all"}
 					onClick={handleAll}
 				/>
 				<ModeTab
 					label={t("phrasebook.review.startCategory")}
+					shortLabel={t("phrasebook.review.startCategoryShort")}
 					active={mode === "category"}
 					onClick={handleCategory}
 				/>
 				<ModeTab
 					label={t("phrasebook.review.startSaved")}
+					shortLabel={t("phrasebook.review.startSavedShort")}
 					active={mode === "saved"}
 					onClick={handleSaved}
 				/>
@@ -203,22 +206,24 @@ const ModePicker = ({ mode, selectedCategoryId, onModeChange, onCategoryChange }
 
 interface ModeTabProps {
 	label: string;
+	shortLabel: string;
 	active: boolean;
 	onClick: () => void;
 }
 
-const ModeTab = ({ label, active, onClick }: ModeTabProps) => (
+const ModeTab = ({ label, shortLabel, active, onClick }: ModeTabProps) => (
 	<button
 		type="button"
 		onClick={onClick}
 		className={cn(
-			"flex-1 rounded-[6px] px-2 py-1.5 text-[11.5px] font-medium transition-colors duration-150 cursor-pointer border-0",
+			"min-w-0 flex-1 rounded-[6px] px-1.5 py-1.5 text-[11.5px] font-medium transition-colors duration-150 cursor-pointer border-0 leading-tight text-center",
 			active
 				? "bg-surf font-semibold text-t-1 shadow-sm"
 				: "bg-transparent text-t-3 hover:text-t-2",
 		)}
 	>
-		{label}
+		<span className="max-md:hidden">{label}</span>
+		<span className="md:hidden">{shortLabel}</span>
 	</button>
 );
 
@@ -238,7 +243,7 @@ const toneClasses: Record<NonNullable<StatBoxProps["tone"]>, string> = {
 const StatBox = ({ value, label, tone, hint }: StatBoxProps) => (
 	<div
 		title={hint}
-		className="min-w-[80px] rounded-card border-[0.5px] border-bd-2 bg-surf px-4 py-3 text-center shadow-sm max-md:min-w-0 max-md:flex-1"
+		className="min-w-0 flex-1 rounded-card border-[0.5px] border-bd-2 bg-surf px-3 py-3 text-center shadow-sm md:min-w-[80px] md:flex-none md:px-4"
 	>
 		<div className={`font-display text-[22px] font-semibold leading-[1.1] tabular-nums max-md:text-[20px] ${toneClasses[tone]}`}>
 			{value}

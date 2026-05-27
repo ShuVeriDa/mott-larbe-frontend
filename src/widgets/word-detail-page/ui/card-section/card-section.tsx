@@ -26,7 +26,7 @@ export const CardSection = ({
 		)}
 	>
 		{headless ? null : (
-			<header className="flex items-center justify-between border-b border-[0.5px] border-bd-1 px-4 pt-3 pb-2.5">
+			<header className="flex items-center justify-between border-b-[0.5px] border-bd-1 px-4 pt-3 pb-2.5">
 				<Typography
 					tag="span"
 					className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"

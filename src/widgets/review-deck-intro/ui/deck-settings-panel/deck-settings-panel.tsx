@@ -53,7 +53,7 @@ export const DeckSettingsPanel = () => {
 			<div className="md:hidden block">
 				<Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
 					<SheetTrigger asChild>{trigger}</SheetTrigger>
-					<SheetContent side="bottom" className="rounded-t-xl px-5 pb-8 pt-0">
+					<SheetContent side="bottom" className="rounded-t-xl px-5 pb-[calc(56px+1.5rem+env(safe-area-inset-bottom))] pt-0">
 						<SheetHeader className="px-0 pb-4 pt-5">
 							<SheetTitle className="text-[15px]">
 								{t("review.deck.intro.settings.title")}

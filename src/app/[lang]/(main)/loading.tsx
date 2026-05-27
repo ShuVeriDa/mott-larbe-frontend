@@ -5,7 +5,7 @@ const Bone = ({ className }: { className: string }) => (
 const MainPageLoading = () => (
 	<div className="flex flex-1 flex-col overflow-hidden">
 		{/* Topbar skeleton */}
-		<div className="flex h-[46px] shrink-0 items-center gap-3 border-b border-[0.5px] border-bd-1 bg-surf px-4">
+		<div className="flex h-[46px] shrink-0 items-center gap-3 border-b-[0.5px] border-bd-1 bg-surf px-4">
 			<Bone className="h-5 w-32" />
 			<div className="flex-1" />
 			<Bone className="h-7 w-24" />

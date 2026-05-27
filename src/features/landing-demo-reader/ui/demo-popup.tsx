@@ -52,7 +52,7 @@ export const DemoPopup = ({
 			aria-label={word}
 			style={style}
 			className={cn(
-				"absolute z-30 w-[240px] overflow-hidden rounded-[11px] border-[0.5px] border-bd-2 bg-surf shadow-lg",
+				"absolute z-30 w-[240px] overflow-hidden rounded-card border-[0.5px] border-bd-2 bg-surf shadow-lg",
 				"max-[640px]:left-4 max-[640px]:right-4 max-[640px]:w-[calc(100%-32px)] max-[640px]:max-w-[320px]",
 				"before:absolute before:h-3 before:w-3 before:bg-surf",
 				"before:border-l-[0.5px] before:border-t-[0.5px] before:border-bd-2",
@@ -63,7 +63,7 @@ export const DemoPopup = ({
 					: "before:top-[-6px] before:rotate-45",
 			)}
 		>
-			<div className="border-[0.5px] border-b border-bd-1 px-[13px] pb-[9px] pt-[11px]">
+			<div className="border-b-[0.5px] border-bd-1 px-[13px] pb-[9px] pt-[11px]">
 				<div className="mb-[2px] text-[16px] font-semibold tracking-[-0.2px] text-t-1">
 					{word}
 				</div>
@@ -75,7 +75,7 @@ export const DemoPopup = ({
 					· {data.pos}
 				</div>
 			</div>
-			<div className="border-[0.5px] border-b border-bd-1 px-[13px] py-[9px]">
+			<div className="border-b-[0.5px] border-bd-1 px-[13px] py-[9px]">
 				<div className="mb-[3px] text-[13.5px] font-medium text-t-1">
 					{data.trans}
 				</div>
@@ -86,7 +86,7 @@ export const DemoPopup = ({
 				) : null}
 			</div>
 			{data.tags.length > 0 ? (
-				<div className="flex flex-wrap gap-1 border-[0.5px] border-b border-bd-1 px-[13px] py-[7px]">
+				<div className="flex flex-wrap gap-1 border-b-[0.5px] border-bd-1 px-[13px] py-[7px]">
 					{data.tags.map(tag => (
 						<Typography
 							tag="span"

@@ -45,7 +45,7 @@ const PaymentRow = ({ payment, lang, tStatus }: PaymentRowProps) => {
 	const interval = payment.subscription?.plan.interval;
 
 	return (
-		<div className="flex items-center gap-2.5 border-[0.5px] border-b border-bd-1 px-4 py-3 transition-colors hover:bg-surf-2 last:border-b-0 max-md:px-3">
+		<div className="flex items-center gap-2.5 border-b-[0.5px] border-bd-1 px-4 py-3 transition-colors hover:bg-surf-2 last:border-b-0 max-md:px-3">
 			<div
 				className={cn(
 					"flex size-[30px] shrink-0 items-center justify-center rounded-[8px]",

@@ -69,7 +69,7 @@ export const ShortcutsSection = () => {
 					{group.items.map(item => (
 						<div
 							key={item.labelKey}
-							className="flex items-center justify-between gap-2 border-[0.5px] border-b border-bd-1 px-4 py-2.5 last:border-b-0 max-sm:flex-col max-sm:items-start max-sm:gap-1.5"
+							className="flex items-center justify-between gap-2 border-b-[0.5px] border-bd-1 px-4 py-2.5 last:border-b-0 max-sm:flex-col max-sm:items-start max-sm:gap-1.5"
 						>
 							<Typography tag="span" className="text-[12.5px] text-t-2">
 								{t(item.labelKey)}

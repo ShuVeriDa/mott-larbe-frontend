@@ -72,7 +72,7 @@ const RootLayout = async ({
 			className={cn("h-full", "antialiased", golosText.variable, playfairDisplay.variable, geistMono.variable, lora.variable, merriweather.variable, ptSerif.variable, sourceSerif4.variable, "font-sans", inter.variable, playfairDisplayHeading.variable)}
 			suppressHydrationWarning
 		>
-			<body className="min-h-full flex flex-col" suppressHydrationWarning>
+			<body className="min-h-full flex flex-col md:overflow-hidden" suppressHydrationWarning>
 				<ThemeProvider>
 					<QueryProvider>
 						<PageAnalyticsProvider />

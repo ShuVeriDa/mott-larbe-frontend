@@ -31,7 +31,7 @@ export const LandingNav = ({ loginHref, startHref }: LandingNavProps) => {
 	const { open, openMenu, closeMenu } = useMobileMenu();
 
 	return (
-		<header className="sticky top-0 z-[100] border-[0.5px] border-b border-bd-1 bg-surf/80 backdrop-blur-xl backdrop-saturate-[160%] transition-colors">
+		<header className="sticky top-0 z-[100] border-b-[0.5px] border-bd-1 bg-surf/80 backdrop-blur-xl backdrop-saturate-[160%] transition-colors">
 			<div className="mx-auto w-full max-w-[1120px] px-7 max-[900px]:px-[22px] max-[640px]:px-[18px]">
 				<div className="flex h-[60px] items-center justify-between max-[640px]:h-14">
 					<Link

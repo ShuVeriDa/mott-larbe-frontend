@@ -41,7 +41,7 @@ export const HistoryCard = ({ logs }: HistoryCardProps) => {
 					return (
 						<li
 							key={log.id}
-							className="flex items-center gap-2.5 border-b border-[0.5px] border-bd-1 py-1.5 last:border-b-0"
+							className="flex items-center gap-2.5 border-b-[0.5px] border-bd-1 py-1.5 last:border-b-0"
 						>
 							<Typography
 								tag="span"

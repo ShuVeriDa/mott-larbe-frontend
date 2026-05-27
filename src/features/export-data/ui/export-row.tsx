@@ -8,7 +8,7 @@ export interface ExportRowProps {
 }
 
 export const ExportRow = ({ label, description, actions }: ExportRowProps) => (
-	<div className="flex items-center justify-between gap-3 border-[0.5px] border-b border-bd-1 px-4 py-3 last:border-b-0 max-sm:flex-col max-sm:items-start max-sm:gap-2.5">
+	<div className="flex items-center justify-between gap-3 border-b-[0.5px] border-bd-1 px-4 py-3 last:border-b-0 max-sm:flex-col max-sm:items-start max-sm:gap-2.5">
 		<div className="flex-1">
 			<Typography tag="p" className="text-[12.5px] font-medium text-t-1">
 				{label}

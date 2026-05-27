@@ -79,7 +79,7 @@ export const ReaderMock = () => {
 			</div>
 
 			<div className="overflow-hidden rounded-[14px] border-[0.5px] border-bd-2 bg-surf shadow-lg transition-transform duration-300 -rotate-1 hover:rotate-0 max-[640px]:rotate-0">
-				<div className="flex items-center gap-1.5 border-[0.5px] border-b border-bd-1 bg-surf-2 px-[14px] py-[10px]">
+				<div className="flex items-center gap-1.5 border-b-[0.5px] border-bd-1 bg-surf-2 px-[14px] py-[10px]">
 					<Typography
 						tag="span"
 						aria-hidden="true"
@@ -150,9 +150,9 @@ export const ReaderMock = () => {
 					</Typography>
 				</div>
 
-				<div className="absolute left-[38%] top-[47%] z-[5] w-[240px] overflow-hidden rounded-[11px] border-[0.5px] border-bd-2 bg-surf shadow-lg animate-[popupFloat_4s_ease-in-out_infinite] max-[640px]:left-[32%] max-[640px]:top-1/2 max-[640px]:w-[200px]">
+				<div className="absolute left-[38%] top-[47%] z-[5] w-[240px] overflow-hidden rounded-card border-[0.5px] border-bd-2 bg-surf shadow-lg animate-[popupFloat_4s_ease-in-out_infinite] max-[640px]:left-[32%] max-[640px]:top-1/2 max-[640px]:w-[200px]">
 					<div className="absolute -top-1.5 left-[30px] h-3 w-3 rotate-45 border-l-[0.5px] border-t-[0.5px] border-bd-2 bg-surf" />
-					<div className="border-[0.5px] border-b border-bd-1 px-[13px] pb-[9px] pt-[11px]">
+					<div className="border-b-[0.5px] border-bd-1 px-[13px] pb-[9px] pt-[11px]">
 						<div className="mb-[2px] text-[16px] font-semibold tracking-[-0.2px] text-t-1">
 							{hl}
 						</div>
@@ -164,7 +164,7 @@ export const ReaderMock = () => {
 							· {t("landing.hero.popupPos")}
 						</div>
 					</div>
-					<div className="border-[0.5px] border-b border-bd-1 px-[13px] py-[9px]">
+					<div className="border-b-[0.5px] border-bd-1 px-[13px] py-[9px]">
 						<div className="mb-[3px] text-[13.5px] font-medium text-t-1">
 							{t("landing.hero.popupTrans")}
 						</div>
@@ -173,7 +173,7 @@ export const ReaderMock = () => {
 						</div>
 					</div>
 					{tags.length > 0 ? (
-						<div className="flex flex-wrap gap-1 border-[0.5px] border-b border-bd-1 px-[13px] py-[7px]">
+						<div className="flex flex-wrap gap-1 border-b-[0.5px] border-bd-1 px-[13px] py-[7px]">
 							{tags.map(tag => (
 								<Typography
 									tag="span"

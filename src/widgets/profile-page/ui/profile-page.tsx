@@ -4,8 +4,7 @@ import { useCurrentUser } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { AiSection } from "@/widgets/settings-page";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ProfileHeader } from "./profile-header";
 import { ProfileTabs, type ProfileTabId } from "./profile-tabs";
 import { TabMain } from "./tab-main";
@@ -23,15 +22,16 @@ export interface ProfilePageProps {
 
 export const ProfilePage = ({ lang }: ProfilePageProps) => {
 	const { t } = useI18n();
+	const router = useRouter();
 	const searchParams = useSearchParams();
 	const tabParam = searchParams.get("tab");
-	const [activeTab, setActiveTab] = useState<ProfileTabId>(
-		isValidTab(tabParam) ? tabParam : "main",
-	);
+	const activeTab: ProfileTabId = isValidTab(tabParam) ? tabParam : "main";
 
-	useEffect(() => {
-		if (isValidTab(tabParam)) setActiveTab(tabParam);
-	}, [tabParam]);
+	const handleTabChange = (tab: ProfileTabId) => {
+		const params = new URLSearchParams(searchParams.toString());
+		params.set("tab", tab);
+		router.replace(`?${params.toString()}`);
+	};
 
 	const { data: profile, isLoading, isError } = useCurrentUser();
 	const { data: subscription } = useMySubscription();
@@ -58,15 +58,15 @@ export const ProfilePage = ({ lang }: ProfilePageProps) => {
 
 	return (
 		<>
-			<div className="border-b border-[0.5px] border-bd-1 bg-surf px-[22px] py-3 max-md:hidden sticky top-0 z-10">
+			<div className="border-b-[0.5px] border-bd-1 bg-surf px-[22px] py-3 sticky top-0 z-10 shrink-0">
 				<Typography tag="p" className="text-[13.5px] font-semibold text-t-1">
 					{t("profile.pageTitle")}
 				</Typography>
 			</div>
 
-			<div className="flex flex-col gap-3.5 px-[22px] pt-[18px] pb-10 max-md:px-3.5 max-md:pt-3.5 max-md:pb-[calc(70px+env(safe-area-inset-bottom,0))]">
+			<div className="flex flex-col gap-3.5 px-[22px] pt-[18px] pb-10 max-md:px-3.5 max-md:pt-3.5 max-md:pb-[calc(70px+env(safe-area-inset-bottom,0))] overflow-y-auto">
 				<ProfileHeader profile={profile} subscription={subscription} />
-				<ProfileTabs active={activeTab} onChange={setActiveTab} />
+				<ProfileTabs active={activeTab} onChange={handleTabChange} />
 
 				{activeTab === "main" && <TabMain profile={profile} lang={lang} />}
 				{activeTab === "security" && <TabSecurity profile={profile} />}

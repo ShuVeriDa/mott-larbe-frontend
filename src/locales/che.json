@@ -505,6 +505,7 @@
 		"review": "Карладаккхар",
 		"progress": "Статистика",
 		"phrasebook": "Дешар-йийцарш",
+		"profile": "Профиль",
 		"language": "Мотт",
 		"chechen": "Нохчийн",
 		"grammar": "Грамматика",
@@ -5179,8 +5180,11 @@
 				"description": "SM-2 хааман бухошча нохчийн йийцарш юхадаIа."
 			},
 			"startReview": "Юхадаla дlайолае",
+			"startReviewShort": "Дерриг",
 			"startCategory": "Тоба юхадаIа",
+			"startCategoryShort": "Тоба",
 			"startSaved": "Схьаяьккхарш юхадаIа",
+			"startSavedShort": "Схьаяьккх.",
 			"categoryProgress": "прогресс",
 			"intro": {
 				"title": "Йийцарш юхадаIа",

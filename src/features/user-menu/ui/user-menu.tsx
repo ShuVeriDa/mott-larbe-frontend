@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@/shared/lib/cn";
+import { useI18n } from "@/shared/lib/i18n";
 import { Avatar } from "@/shared/ui/avatar";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { CircleUserRound } from "lucide-react";
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
 import { useUserMenu } from "../model";
 import { UserMenuContent } from "./user-menu-content";
@@ -28,6 +28,7 @@ export const UserMenu = ({
 	bottomNav = false,
 }: UserMenuProps) => {
 	const { user, open, setOpen, initials, displayName } = useUserMenu();
+	const { t } = useI18n();
 
 	if (!user) return null;
 
@@ -38,12 +39,20 @@ export const UserMenu = ({
 					<Button
 						title={displayName}
 						className={cn(
-							"flex flex-1 flex-col items-center justify-center gap-[3px] text-[10px] transition-colors focus-visible:outline-none",
+							"flex flex-1 px-0 flex-col h-full  items-center justify-center gap-[3px] text-[10px] transition-colors focus-visible:outline-none",
 							open ? "text-acc" : "text-t-3",
 						)}
 					>
-						<CircleUserRound size={20} />
-						<Typography tag="span">{displayName}</Typography>
+						<Avatar
+							size="md"
+							className={cn(
+								"transition-shadow ring-2 ring-acc/20 border-none",
+								open && "ring-2 ring-acc/40",
+							)}
+						>
+							{initials}
+						</Avatar>
+						<Typography tag="span">{t("nav.profile")}</Typography>
 					</Button>
 				</DropdownMenuPrimitive.Trigger>
 				<DropdownMenuPrimitive.Portal>

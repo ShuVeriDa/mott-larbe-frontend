@@ -49,7 +49,7 @@ const WordPopupBody = ({
 
 	return (
 		<>
-			<div className="border-b border-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
+			<div className="border-b-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
 				<div className="mb-1 flex items-start gap-2">
 					<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
 						{token.original}
@@ -76,7 +76,7 @@ const WordPopupBody = ({
 					</Typography>
 				</div>
 			</div>
-			<div className="border-b border-[0.5px] border-bd-1 px-3.5 py-2.5">
+			<div className="border-b-[0.5px] border-bd-1 px-3.5 py-2.5">
 				<div
 					className={
 						lookup.lemmaTranslation
@@ -96,7 +96,7 @@ const WordPopupBody = ({
 				) : null}
 			</div>
 			{lookup.tags.length > 0 ? (
-				<div className="flex flex-wrap gap-1 border-b border-[0.5px] border-bd-1 px-3.5 py-2">
+				<div className="flex flex-wrap gap-1 border-b-[0.5px] border-bd-1 px-3.5 py-2">
 					{lookup.tags.slice(0, 3).map(tag => (
 						<Typography
 							tag="span"
@@ -148,7 +148,7 @@ const PhrasePopupBody = ({ phrase }: { phrase: PagePhraseOccurrence }) => {
 	const { t } = useI18n();
 	return (
 		<>
-			<div className="border-b border-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
+			<div className="border-b-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
 				<div className="mb-1 flex items-center gap-1.5">
 					<Typography
 						tag="span"

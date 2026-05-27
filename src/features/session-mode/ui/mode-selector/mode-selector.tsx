@@ -53,7 +53,7 @@ export const ModeSelector = ({ value, onChange }: ModeSelectorProps) => {
 							type="button"
 							onClick={() => onChange(opt.value)}
 							className={cn(
-								"flex flex-1 flex-col items-center gap-1 rounded-card border-[0.5px] px-2 py-2.5 text-center transition-colors",
+								"flex flex-1 flex-col items-center gap-1 rounded-card border-[0.5px] px-2 py-2 text-center transition-colors md:py-2.5",
 								active
 									? "border-acc/40 bg-acc-bg text-acc"
 									: "border-bd-2 bg-surf text-t-3 hover:border-bd-3 hover:bg-surf-2 hover:text-t-2",
@@ -70,7 +70,7 @@ export const ModeSelector = ({ value, onChange }: ModeSelectorProps) => {
 							>
 								{t(opt.labelKey)}
 							</span>
-							<span className="text-[10px] leading-tight text-t-3">
+							<span className="text-[10px] leading-tight text-t-3 max-md:hidden">
 								{t(opt.descKey)}
 							</span>
 						</button>

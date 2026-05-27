@@ -56,7 +56,7 @@ export const PaymentHistoryCard = () => {
 				payments.map(p => (
 					<div
 						key={p.id}
-						className="flex items-center gap-3 border-b border-[0.5px] border-bd-1 px-4 py-2.5 last:border-b-0"
+						className="flex items-center gap-3 border-b-[0.5px] border-bd-1 px-4 py-2.5 last:border-b-0"
 					>
 						<div className="flex-1 min-w-0">
 							<Typography

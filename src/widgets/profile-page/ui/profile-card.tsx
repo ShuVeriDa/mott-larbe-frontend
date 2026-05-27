@@ -21,11 +21,11 @@ export const ProfileCard = ({
 }: ProfileCardProps) => (
 	<section
 		className={cn(
-			"overflow-hidden rounded-[11px] border-[0.5px] border-bd-1 bg-surf transition-colors",
+			"overflow-hidden rounded-card border-[0.5px] border-bd-1 bg-surf transition-colors",
 			className,
 		)}
 	>
-		<header className="flex items-center justify-between gap-2 border-[0.5px] border-b border-bd-1 px-4 pb-2.5 pt-3">
+		<header className="flex items-center justify-between gap-2 border-b-[0.5px] border-bd-1 px-4 pb-2.5 pt-3">
 			<Typography tag="h3" className="text-[12.5px] font-semibold text-t-1">
 				{title}
 			</Typography>

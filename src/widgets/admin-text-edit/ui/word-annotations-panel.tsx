@@ -221,7 +221,7 @@ export const WordAnnotationsPanel = ({
 					isOpen ? "translate-x-0" : "translate-x-full"
 				}`}
 			>
-				<div className="flex items-center justify-between border-b border-[0.5px] border-bd-1 px-4 py-3">
+				<div className="flex items-center justify-between border-b-[0.5px] border-bd-1 px-4 py-3">
 					<div className="flex items-center gap-2">
 						<Link2 className="size-4 text-acc" strokeWidth={1.6} />
 						<Typography

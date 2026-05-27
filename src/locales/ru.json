@@ -505,6 +505,7 @@
 		"review": "Повторение",
 		"progress": "Статистика",
 		"phrasebook": "Разговорник",
+		"profile": "Профиль",
 		"language": "Язык",
 		"chechen": "Чеченский",
 		"grammar": "Грамматика",
@@ -5179,8 +5180,11 @@
 				"description": "Повторяйте фразы разговорника по интервальному методу SM-2."
 			},
 			"startReview": "Начать повторение",
+			"startReviewShort": "Все",
 			"startCategory": "Повторить категорию",
+			"startCategoryShort": "Категория",
 			"startSaved": "Повторить сохранённые",
+			"startSavedShort": "Сохранённые",
 			"categoryProgress": "прогресс",
 			"intro": {
 				"title": "Повторение разговорника",

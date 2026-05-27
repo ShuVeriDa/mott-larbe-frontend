@@ -133,7 +133,7 @@ export const PlanComparisonCard = () => {
 	return (
 		<SettingCard title={t("profile.planComparison.title")} noBody>
 			<div className="px-4 py-3.5">
-				<div className="grid grid-cols-[1fr_repeat(3,68px)] gap-1.5 pb-2 mb-1 border-b border-[0.5px] border-bd-1">
+				<div className="grid grid-cols-[1fr_repeat(3,68px)] gap-1.5 pb-2 mb-1 border-b-[0.5px] border-bd-1">
 					<div />
 					<div className="text-center text-[11px] font-semibold text-t-2">
 						Free
@@ -148,7 +148,7 @@ export const PlanComparisonCard = () => {
 				{rows.map((row, i) => (
 					<div
 						key={row.label}
-						className={`grid grid-cols-[1fr_repeat(3,68px)] gap-1.5 py-[7px] ${i < rows.length - 1 ? "border-b border-[0.5px] border-bd-1" : ""}`}
+						className={`grid grid-cols-[1fr_repeat(3,68px)] gap-1.5 py-[7px] ${i < rows.length - 1 ? "border-b-[0.5px] border-bd-1" : ""}`}
 					>
 						<Typography
 							tag="span"

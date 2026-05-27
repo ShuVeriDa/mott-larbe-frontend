@@ -55,10 +55,10 @@ export const ReviewIntro = ({
 
 	return (
 		<section
-			className="flex flex-1 flex-col items-center justify-center px-6 py-8 max-md:justify-start max-md:px-5 max-md:pt-7"
+			className="flex flex-1 flex-col items-center justify-center px-6 py-8 max-md:justify-start max-md:px-4 max-md:pt-6"
 			aria-busy={loading}
 		>
-			<div className="mb-5 flex gap-2.5 max-md:w-full max-md:gap-2">
+			<div className="mb-5 flex gap-2.5 max-md:w-full max-md:flex-wrap max-md:gap-2">
 				<StatBox
 					value={dueCount}
 					label={t("review.sm2.intro.stats.due")}
@@ -170,7 +170,7 @@ const toneClasses: Record<StatBoxProps["tone"], string> = {
 };
 
 const StatBox = ({ value, label, tone }: StatBoxProps) => (
-	<div className="rounded-card border-[0.5px] border-bd-2 bg-surf px-4 py-3 text-center shadow-sm min-w-[80px] max-md:flex-1 max-md:min-w-0">
+	<div className="min-w-[80px] rounded-card border-[0.5px] border-bd-2 bg-surf px-4 py-3 text-center shadow-sm max-md:min-w-0 max-md:flex-1 max-md:basis-[calc(50%-4px)]">
 		<div
 			className={`font-display text-[22px] font-semibold leading-[1.1] tabular-nums max-md:text-[20px] ${toneClasses[tone]}`}
 		>

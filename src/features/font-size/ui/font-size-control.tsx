@@ -21,7 +21,7 @@ export const FontSizeControl = ({ initialValue }: FontSizeControlProps) => {
 		change(1);
 	return (
 		<>
-			<div className="border-[0.5px] border-b border-bd-1 px-4 py-3.5">
+			<div className="border-b-[0.5px] border-bd-1 px-4 py-3.5">
 				<Typography
 					tag="span"
 					className="block text-[11.5px] font-medium text-t-2"

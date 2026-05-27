@@ -193,7 +193,7 @@ export const UncategorizedSection = ({ count }: UncategorizedSectionProps) => {
 			<div className="overflow-hidden rounded-card border-[0.5px] border-bd-1 bg-surf">
 				<div
 					className={cn(
-						"flex w-full items-center gap-2.5 border-[0.5px] border-b border-bd-1 px-[18px] py-3.5",
+						"flex w-full items-center gap-2.5 border-b-[0.5px] border-bd-1 px-[18px] py-3.5",
 						isPending && "opacity-60",
 					)}
 				>

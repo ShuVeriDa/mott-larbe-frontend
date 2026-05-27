@@ -58,7 +58,7 @@ export const BottomNav = () => {
 			aria-label={t("nav.vocabulary")}
 			className="fixed inset-x-0 bottom-0 z-90 hidden h-[56px] border-[0.5px] border-t border-bd-1 bg-surf pb-[env(safe-area-inset-bottom)] max-md:block"
 		>
-			<div className="mx-auto flex h-full max-w-[1120px] items-stretch">
+			<div className="mx-auto flex gap-1 h-full max-w-[1120px] items-stretch">
 				{items.map((item, i) => {
 					const active =
 						pathname === item.href || (pathname.includes("reader") && i === 1);

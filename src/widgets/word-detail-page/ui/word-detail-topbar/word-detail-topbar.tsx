@@ -66,7 +66,7 @@ export const WordDetailTopbar = ({ entry }: WordDetailTopbarProps) => {
 
 	return (
 		<>
-			<header className="flex shrink-0 items-center gap-2.5 border-b border-[0.5px] border-bd-1 bg-surf px-[22px] py-3 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
+			<header className="flex shrink-0 items-center gap-2.5 border-b-[0.5px] border-bd-1 bg-surf px-[22px] py-3 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
 				<Link
 					href={`/${lang}/vocabulary`}
 					className="inline-flex items-center gap-1.5 whitespace-nowrap p-0 text-[12.5px] text-t-3 transition-colors duration-150 hover:text-t-1 max-md:text-[12px]"
