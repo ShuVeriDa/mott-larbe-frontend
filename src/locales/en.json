@@ -581,7 +581,8 @@
 			"added": "By date",
 			"alpha": "Alphabetical",
 			"review": "By review",
-			"status": "By status"
+			"status": "By status",
+			"label": "Sort"
 		},
 		"review": {
 			"title": "Words waiting for review",

@@ -1,5 +1,6 @@
 "use client";
 import { useDictionaryStats } from "@/entities/dictionary";
+import { FilterControls } from "@/features/vocabulary-filters";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { useMounted } from "@/shared/lib/mounted";
@@ -63,6 +64,7 @@ export const VocabularyDrawer = ({
 					{t("vocabulary.filtersAndFolders")}
 				</Typography>
 				<div className="flex flex-col gap-5 overflow-y-auto px-[18px] py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+					<FilterControls />
 					{stats ? (
 						<div>
 							<Typography

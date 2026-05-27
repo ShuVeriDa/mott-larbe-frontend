@@ -33,79 +33,119 @@ export const FilterBar = () => {
 	const setCefrLevel = useVocabularyFilters(s => s.setCefrLevel);
 	const setSort = useVocabularyFilters(s => s.setSort);
 
-	const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> = () =>
-		setStatus(null);
-	const handleClick2: NonNullable<
-		ComponentProps<typeof Chip>["onClick"]
-	> = () => setCefrLevel(null);
-	const handleChange: NonNullable<
-		ComponentProps<typeof Select>["onChange"]
-	> = e => setSort(e.currentTarget.value as DictionarySort);
+	const handleAllStatus: NonNullable<ComponentProps<typeof Chip>["onClick"]> = () => setStatus(null);
+	const handleAllLevel: NonNullable<ComponentProps<typeof Chip>["onClick"]> = () => setCefrLevel(null);
+	const handleSortChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = e =>
+		setSort(e.currentTarget.value as DictionarySort);
+
 	return (
 		<div
-			className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-[0.5px] border-b border-bd-1 bg-surf px-[18px] py-2.5 transition-colors duration-200 [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden max-md:px-[14px]"
+			className="@container shrink-0 border-[0.5px] border-b border-bd-1 bg-surf transition-colors duration-200 max-md:hidden"
 			role="toolbar"
 			aria-label={t("vocabulary.openFilters")}
 		>
-			<Typography
-				tag="span"
-				className="shrink-0 whitespace-nowrap text-[11px] font-medium text-t-3 max-md:hidden"
+			{/* Wide: one row */}
+			<div className="hidden items-center gap-1.5 px-[18px] py-2.5 @[700px]:flex">
+				<Typography tag="span" className="shrink-0 whitespace-nowrap text-[11px] font-medium text-t-3">
+					{t("vocabulary.filterByStatus")}
+				</Typography>
+				<Chip active={status === null} onClick={handleAllStatus}>
+					{t("vocabulary.all")}
+				</Chip>
+				{LEARNING_LEVELS.map(level => {
+					const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> =
+						() => setStatus(level);
+					return (
+						<Chip key={level} active={status === level} onClick={handleClick}>
+							{t(STATUS_LABELS[level])}
+						</Chip>
+					);
+				})}
+				<span aria-hidden="true" className="h-4 w-px shrink-0 bg-bd-2" />
+				<Typography tag="span" className="shrink-0 whitespace-nowrap text-[11px] font-medium text-t-3">
+					{t("vocabulary.filterByLevel")}
+				</Typography>
+				<Chip active={cefrLevel === null} onClick={handleAllLevel}>
+					{t("vocabulary.all")}
+				</Chip>
+				{CEFR_LEVELS.map(level => {
+					const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> =
+						() => setCefrLevel(level);
+					return (
+						<Chip key={level} active={cefrLevel === level} onClick={handleClick}>
+							{level}
+						</Chip>
+					);
+				})}
+				<Select
+					wrapperClassName="ml-auto w-auto shrink-0"
+					className="h-[26px]! text-[11px]!"
+					value={sort}
+					onChange={handleSortChange}
+					aria-label={t("vocabulary.sort.label")}
+				>
+					{SORT_OPTIONS.map(opt => (
+						<option key={opt} value={opt}>
+							{t(SORT_LABEL_KEY[opt])}
+						</option>
+					))}
+				</Select>
+			</div>
+
+			{/* Narrow: two aligned rows */}
+			<div
+				className="grid px-[18px] py-2 @[700px]:hidden"
+				style={{ gridTemplateColumns: "auto 1fr" }}
 			>
-				{t("vocabulary.filterByStatus")}
-			</Typography>
-			<Chip active={status === null} onClick={handleClick}>
-				{t("vocabulary.all")}
-			</Chip>
-			{LEARNING_LEVELS.map(level => {
-				const handleClick: NonNullable<
-					ComponentProps<typeof Chip>["onClick"]
-				> = () => setStatus(level);
-				return (
-					<Chip key={level} active={status === level} onClick={handleClick}>
-						{t(STATUS_LABELS[level])}
+				<Typography tag="span" className="flex items-center whitespace-nowrap pr-3 text-[11px] font-medium text-t-3">
+					{t("vocabulary.filterByStatus")}
+				</Typography>
+				<div className="flex items-center gap-1.5 py-1">
+					<Chip active={status === null} onClick={handleAllStatus}>
+						{t("vocabulary.all")}
 					</Chip>
-				);
-			})}
+					{LEARNING_LEVELS.map(level => {
+						const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> =
+							() => setStatus(level);
+						return (
+							<Chip key={level} active={status === level} onClick={handleClick}>
+								{t(STATUS_LABELS[level])}
+							</Chip>
+						);
+					})}
+				</div>
 
-			<Typography
-				tag="span"
-				aria-hidden="true"
-				className="h-4 w-px shrink-0 bg-bd-2 max-md:hidden"
-			/>
-
-			<Typography
-				tag="span"
-				className="shrink-0 whitespace-nowrap text-[11px] font-medium text-t-3 max-md:hidden"
-			>
-				{t("vocabulary.filterByLevel")}
-			</Typography>
-			<Chip active={cefrLevel === null} onClick={handleClick2}>
-				{t("vocabulary.all")}
-			</Chip>
-			{CEFR_LEVELS.map(level => {
-				const handleClick: NonNullable<
-					ComponentProps<typeof Chip>["onClick"]
-				> = () => setCefrLevel(level);
-				return (
-					<Chip key={level} active={cefrLevel === level} onClick={handleClick}>
-						{level}
+				<Typography tag="span" className="flex items-center whitespace-nowrap pr-3 text-[11px] font-medium text-t-3">
+					{t("vocabulary.filterByLevel")}
+				</Typography>
+				<div className="flex items-center gap-1.5 py-1">
+					<Chip active={cefrLevel === null} onClick={handleAllLevel}>
+						{t("vocabulary.all")}
 					</Chip>
-				);
-			})}
-
-			<Select
-				wrapperClassName="ml-auto w-auto shrink-0"
-				className="!h-[26px] !text-[11px]"
-				value={sort}
-				onChange={handleChange}
-				aria-label={t("vocabulary.sort.added")}
-			>
-				{SORT_OPTIONS.map(opt => (
-					<option key={opt} value={opt}>
-						{t(SORT_LABEL_KEY[opt])}
-					</option>
-				))}
-			</Select>
+					{CEFR_LEVELS.map(level => {
+						const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> =
+							() => setCefrLevel(level);
+						return (
+							<Chip key={level} active={cefrLevel === level} onClick={handleClick}>
+								{level}
+							</Chip>
+						);
+					})}
+					<Select
+						wrapperClassName="ml-auto w-auto shrink-0"
+						className="h-[26px]! text-[11px]!"
+						value={sort}
+						onChange={handleSortChange}
+						aria-label={t("vocabulary.sort.label")}
+					>
+						{SORT_OPTIONS.map(opt => (
+							<option key={opt} value={opt}>
+								{t(SORT_LABEL_KEY[opt])}
+							</option>
+						))}
+					</Select>
+				</div>
+			</div>
 		</div>
 	);
 };
