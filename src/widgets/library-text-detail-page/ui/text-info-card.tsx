@@ -58,7 +58,7 @@ export const TextInfoCard = ({
 		},
 		{
 			label: t("library.textDetail.info.pages"),
-			value: `${totalPages} / ${wordCount.toLocaleString()} ${t("library.card.wordsUnit")}`,
+			value: `${totalPages} / ${wordCount.toLocaleString()} ${t("library.textDetail.info.wordsUnit")}`,
 		},
 	];
 

@@ -1,15 +1,17 @@
 "use client";
 
 import { useGeminiKeyStatus } from "@/entities/ai-translation";
+import { useTranslationLanguageStore } from "@/features/ai-word-lookup";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { Check, Copy, ExternalLink, Settings, Sparkles, X } from "lucide-react";
+import { Check, ChevronDown, Copy, ExternalLink, Settings, Sparkles, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useAiPhraseTranslate } from "../model/use-ai-phrase-translate";
 import { PhraseRefineBlock } from "./phrase-refine-block";
+import { cn } from "@/shared/lib/cn";
 
 interface PhraseTranslatePopupProps {
 	phrase: string;
@@ -32,6 +34,7 @@ export const PhraseTranslatePopup = ({
 	const { state, refineState, translate, reset, openRefine, refine } =
 		useAiPhraseTranslate();
 	const { data: keyStatus } = useGeminiKeyStatus();
+	const { targetLanguage } = useTranslationLanguageStore();
 	const ref = useRef<HTMLDivElement>(null);
 
 	const hasKey = keyStatus?.hasKey ?? false;
@@ -39,9 +42,9 @@ export const PhraseTranslatePopup = ({
 	useEffect(() => {
 		reset();
 		if (hasKey) {
-			translate(phrase, contextSentence);
+			translate(phrase, contextSentence, targetLanguage);
 		}
-	}, [phrase, contextSentence, hasKey]);
+	}, [phrase, contextSentence, hasKey, targetLanguage]);
 
 	useEffect(() => {
 		const handleMouseDown = (e: MouseEvent) => {
@@ -61,10 +64,11 @@ export const PhraseTranslatePopup = ({
 	}, [onClose]);
 
 	const [copied, setCopied] = useState(false);
+	const [glossOpen, setGlossOpen] = useState(false);
 
 	const handleRefineSubmit = (hint: string) => {
 		if (state.phase !== "done") return;
-		refine(phrase, state.result.translation, hint);
+		refine(phrase, state.result.translation, hint, targetLanguage);
 	};
 
 	const handleCopy = () => {
@@ -73,6 +77,8 @@ export const PhraseTranslatePopup = ({
 		setCopied(true);
 		setTimeout(() => setCopied(false), 1500);
 	};
+
+	const handleGlossToggle = () => setGlossOpen(prev => !prev);
 
 	const POPUP_WIDTH = 280;
 	const SAFE_MARGIN = 10;
@@ -101,14 +107,16 @@ export const PhraseTranslatePopup = ({
 						{t("aiTranslation.phrase.title")}
 					</span>
 				</div>
-				<Button
-					size="bare"
-					onClick={onClose}
-					aria-label={t("reader.sheet.close")}
-					className="rounded p-0.5 text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
-				>
-					<X className="size-3.5" strokeWidth={1.6} />
-				</Button>
+				<div className="flex items-center gap-2">
+						<Button
+						size="bare"
+						onClick={onClose}
+						aria-label={t("reader.sheet.close")}
+						className="rounded p-0.5 text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
+					>
+						<X className="size-3.5" strokeWidth={1.6} />
+					</Button>
+				</div>
 			</div>
 
 			{/* Phrase */}
@@ -186,6 +194,27 @@ export const PhraseTranslatePopup = ({
 						{state.result.notes && (
 							<div className="mt-1 text-[12px] text-t-3">
 								{state.result.notes}
+							</div>
+						)}
+
+						{targetLanguage !== "ru" && state.result.russianGloss && (
+							<div className="mt-2 border-t border-bd-1 pt-1.5">
+								<Button
+									size="bare"
+									onClick={handleGlossToggle}
+									className="flex items-center gap-1 text-[10.5px] text-t-4 hover:text-t-2 transition-colors"
+								>
+									<ChevronDown
+										className={cn("size-3 transition-transform", glossOpen && "rotate-180")}
+										strokeWidth={1.6}
+									/>
+									{t("aiTranslation.popup.russianGloss")}
+								</Button>
+								{glossOpen && (
+									<div className="mt-1 text-[11.5px] text-t-3">
+										{state.result.russianGloss}
+									</div>
+								)}
 							</div>
 						)}
 					</div>

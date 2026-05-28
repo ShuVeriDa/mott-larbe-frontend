@@ -1,6 +1,6 @@
 "use client";
 
-import type { AiPhraseTranslation } from "@/entities/ai-translation";
+import type { AiPhraseTranslation, TranslationLanguage } from "@/entities/ai-translation";
 import { aiTranslationApi } from "@/entities/ai-translation";
 import { getApiErrorCode } from "@/shared/api";
 import { useApiErrorToast } from "@/shared/lib/api-error-toast";
@@ -28,13 +28,18 @@ export const useAiPhraseTranslate = () => {
 	const { toastApiError } = useApiErrorToast();
 	const { t } = useI18n();
 
-	const translate = async (phrase: string, contextSentence?: string) => {
+	const translate = async (
+		phrase: string,
+		contextSentence?: string,
+		targetLanguage?: TranslationLanguage,
+	) => {
 		setState({ phase: "loading" });
 		setRefineState({ phase: "idle" });
 		try {
 			const result = await aiTranslationApi.translatePhrase({
 				phrase,
 				contextSentence,
+				targetLanguage,
 			});
 			setState({ phase: "done", result });
 		} catch (e) {
@@ -56,6 +61,7 @@ export const useAiPhraseTranslate = () => {
 		phrase: string,
 		previousTranslation: string,
 		hint: string,
+		targetLanguage?: TranslationLanguage,
 	) => {
 		setRefineState({ phase: "loading" });
 		try {
@@ -63,6 +69,7 @@ export const useAiPhraseTranslate = () => {
 				phrase,
 				previousTranslation,
 				hint,
+				targetLanguage,
 			});
 			setRefineState({ phase: "done", result });
 		} catch (e) {

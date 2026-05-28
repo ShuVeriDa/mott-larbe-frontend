@@ -1,5 +1,8 @@
 "use client";
 
+import { SUPPORTED_TRANSLATION_LANGUAGES, type TranslationLanguage } from "@/entities/ai-translation";
+import { useTranslationLanguageStore } from "@/features/ai-word-lookup";
+import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -17,6 +20,15 @@ import { useAiSection } from "../../model/use-ai-section";
 import { SectionHeader } from "../section-header";
 import { SettingCard } from "../setting-card";
 
+const LANGUAGE_LABELS: Record<TranslationLanguage, string> = {
+	ru: "Русский",
+	en: "English",
+	ar: "العربية",
+	de: "Deutsch",
+	fr: "Français",
+	tr: "Türkçe",
+};
+
 export const AiSection = () => {
 	const { t } = useI18n();
 	const {
@@ -32,6 +44,7 @@ export const AiSection = () => {
 		handleDelete,
 		handleVerify,
 	} = useAiSection();
+	const { targetLanguage, setTargetLanguage } = useTranslationLanguageStore();
 
 	return (
 		<div className="flex flex-col gap-4">
@@ -200,6 +213,30 @@ export const AiSection = () => {
 						<ExternalLink className="size-3" strokeWidth={1.5} />
 						{t("aiTranslation.settings.getKeyLink")}
 					</a>
+				</div>
+			</SettingCard>
+
+			<SettingCard title={t("aiTranslation.settings.languageLabel")}>
+				<Typography tag="p" className="mb-3 text-[12px] text-t-3">
+					{t("aiTranslation.settings.languageDescription")}
+				</Typography>
+				<div className="flex flex-wrap gap-2">
+					{SUPPORTED_TRANSLATION_LANGUAGES.map((lang: TranslationLanguage) => (
+						<Button
+							key={lang}
+							size="bare"
+							onClick={() => setTargetLanguage(lang)}
+							aria-pressed={lang === targetLanguage}
+							className={cn(
+								"h-8 rounded-base border px-3 text-[12px] font-medium transition-colors",
+								lang === targetLanguage
+									? "border-acc/40 bg-acc/10 text-acc"
+									: "border-bd-2 bg-surf-2 text-t-2 hover:bg-surf-3 hover:text-t-1",
+							)}
+						>
+							{LANGUAGE_LABELS[lang]}
+						</Button>
+					))}
 				</div>
 			</SettingCard>
 		</div>

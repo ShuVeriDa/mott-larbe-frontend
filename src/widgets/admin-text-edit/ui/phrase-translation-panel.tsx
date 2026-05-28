@@ -68,7 +68,9 @@ export const PhraseTranslationPanel = ({
 	const handleNotesChange = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setNotes(e.currentTarget.value);
 
-	const handleTranslationKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+	const handleTranslationKeyDown = (
+		e: React.KeyboardEvent<HTMLInputElement>,
+	) => {
 		if (e.key === "Enter") handleSave();
 	};
 

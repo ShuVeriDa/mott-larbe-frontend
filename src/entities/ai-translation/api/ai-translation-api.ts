@@ -69,7 +69,7 @@ export const aiTranslationApi = {
     return data;
   },
 
-  adminList: async (params: { status?: string; q?: string; page?: number; limit?: number }): Promise<AiCacheListResponse> => {
+  adminList: async (params: { status?: string; q?: string; targetLanguage?: string; page?: number; limit?: number }): Promise<AiCacheListResponse> => {
     const { data } = await http.get<AiCacheListResponse>("/admin/ai-cache", { params });
     return data;
   },

@@ -1,5 +1,6 @@
 export { aiTranslationApi } from "./api/ai-translation-api";
 export { aiTranslationKeys } from "./api/ai-translation-keys";
+export { SUPPORTED_TRANSLATION_LANGUAGES } from "./api/types";
 export type {
   AiCacheEntry,
   AiCacheListResponse,
@@ -13,8 +14,10 @@ export type {
   GeminiKeyStatus,
   GeminiKeyVerifyResult,
   RefinePhraseDto,
+  SaveRefinementDto,
   TranslatePhraseDto,
   TranslateWordDto,
+  TranslationLanguage,
 } from "./api/types";
 export { useGeminiKeyStatus } from "./model/use-gemini-key-status";
 export { useAiWordTranslation } from "./model/use-ai-word-translation";

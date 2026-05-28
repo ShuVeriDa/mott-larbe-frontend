@@ -102,15 +102,12 @@ export const TextHero = ({
 							{t("library.textDetail.cta.notReady")}
 						</Typography>
 					) : isCompleted ? (
-						<Typography
-							tag="span"
-							className={cn(
-								buttonVariants({ variant: "ghost", size: "lg" }),
-								"cursor-default opacity-50",
-							)}
+						<Link
+							href={readerHref}
+							className={buttonVariants({ variant: "action", size: "lg" })}
 						>
 							{t("library.textDetail.cta.completed")}
-						</Typography>
+						</Link>
 					) : (
 						<Link
 							href={readerHref}
@@ -122,7 +119,7 @@ export const TextHero = ({
 						</Link>
 					)}
 
-					{isStarted && !isCompleted && !isNotReady && (
+					{isStarted && !isNotReady && (
 						<Link
 							href={readerHref}
 							className={buttonVariants({ variant: "ghost", size: "lg" })}

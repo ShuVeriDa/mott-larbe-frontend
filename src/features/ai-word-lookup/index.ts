@@ -6,3 +6,5 @@ export { useAiSessionStore } from "./model/ai-session-store";
 export type { AiSessionEntry } from "./model/ai-session-store";
 export { WordRefineBlock } from "./ui/word-refine-block";
 export { useAiKeyNudge } from "./model/use-ai-key-nudge";
+export { useTranslationLanguageStore } from "./model/translation-language-store";
+export { LanguageSelector } from "./ui/language-selector";

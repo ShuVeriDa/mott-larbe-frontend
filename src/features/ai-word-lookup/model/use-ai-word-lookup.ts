@@ -1,6 +1,6 @@
 "use client";
 
-import type { AiWordTranslation } from "@/entities/ai-translation";
+import type { AiWordTranslation, TranslationLanguage } from "@/entities/ai-translation";
 import { aiTranslationApi } from "@/entities/ai-translation";
 import { getApiErrorCode } from "@/shared/api";
 import { useApiErrorToast } from "@/shared/lib/api-error-toast";
@@ -20,12 +20,17 @@ export const useAiWordLookup = () => {
 	const [voted, setVoted] = useState<"up" | "down" | null>(null);
 	const { toastApiError } = useApiErrorToast();
 
-	const translate = async (word: string, contextSentence?: string) => {
+	const translate = async (
+		word: string,
+		contextSentence?: string,
+		targetLanguage?: TranslationLanguage,
+	) => {
 		setState({ phase: "loading" });
 		try {
 			const result = await aiTranslationApi.translateWord({
 				word,
 				contextSentence,
+				targetLanguage,
 			});
 			setState({ phase: "done", result });
 		} catch (err: unknown) {

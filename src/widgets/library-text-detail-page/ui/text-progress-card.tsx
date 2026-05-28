@@ -20,7 +20,7 @@ export const TextProgressCard = ({
 	lastOpened,
 	t,
 }: TextProgressCardProps) => {
-	const donePages = currentPage > 0 ? currentPage - 1 : 0;
+	const donePages = currentPage > 0 ? currentPage : 0;
 	const dotsCount = Math.min(totalPages, MAX_DOTS);
 
 	const formatLastRead = (iso: string | null) => {

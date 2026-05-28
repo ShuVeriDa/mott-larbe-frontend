@@ -6,6 +6,7 @@ import {
 	useAiSessionStore,
 	useAiWordLookup,
 	useAiWordRefine,
+	useTranslationLanguageStore,
 	WordRefineBlock,
 } from "@/features/ai-word-lookup";
 import { cn } from "@/shared/lib/cn";
@@ -15,6 +16,7 @@ import { Typography } from "@/shared/ui/typography";
 import {
 	Check,
 	CheckCircle2,
+	ChevronDown,
 	Clock,
 	Copy,
 	ExternalLink,
@@ -45,14 +47,15 @@ export const AiWordPopupBody = ({
 	const { data: keyStatus } = useGeminiKeyStatus();
 	const addToSession = useAiSessionStore(s => s.add);
 	const { showNudge, dismiss } = useAiKeyNudge();
+	const { targetLanguage } = useTranslationLanguageStore();
 
 	const hasKey = keyStatus?.hasKey ?? false;
 
 	useEffect(() => {
 		if (hasKey) {
-			translate(normalized, contextSentence);
+			translate(normalized, contextSentence, targetLanguage);
 		}
-	}, [normalized, contextSentence, hasKey]);
+	}, [normalized, contextSentence, hasKey, targetLanguage]);
 
 	useEffect(() => {
 		if (state.phase === "done") {
@@ -61,12 +64,13 @@ export const AiWordPopupBody = ({
 	}, [state.phase]);
 
 	const [copied, setCopied] = useState(false);
+	const [glossOpen, setGlossOpen] = useState(false);
 
 	const handleThumbsUp = () => vote("up");
 	const handleThumbsDown = () => vote("down");
 	const handleRefineSubmit = (hint: string) => {
 		if (state.phase !== "done") return;
-		refineWord(word, state.result.translation, hint, contextSentence);
+		refineWord(word, state.result.translation, hint, contextSentence, targetLanguage);
 	};
 	const handleCopy = () => {
 		if (state.phase !== "done") return;
@@ -74,6 +78,7 @@ export const AiWordPopupBody = ({
 		setCopied(true);
 		setTimeout(() => setCopied(false), 1500);
 	};
+	const handleGlossToggle = () => setGlossOpen(prev => !prev);
 
 	if (!hasKey) {
 		return (
@@ -163,22 +168,22 @@ export const AiWordPopupBody = ({
 	}
 
 	const result = state.result;
+	const showGloss = targetLanguage !== "ru" && Boolean(result.russianGloss);
 
 	return (
 		<>
 			<div className="border-b-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
-				<div className="mb-1.5 flex items-start gap-2">
-					<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
-						{word}
+				<div className="mb-1.5 flex items-start justify-between gap-2">
+					<div className="flex items-start gap-2">
+						<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
+							{word}
+						</div>
+						<span className="mt-0.5 flex shrink-0 items-center gap-0.5 rounded-[4px] border-[0.5px] border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
+							<Sparkles className="size-2.5" strokeWidth={1.8} />
+							{t("aiTranslation.popup.badge")}
+						</span>
 					</div>
-					<span className="mt-0.5 flex shrink-0 items-center gap-0.5 rounded-[4px] border-[0.5px] border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
-						<Sparkles className="size-2.5" strokeWidth={1.8} />
-						{t("aiTranslation.popup.badge")}
-					</span>
-				</div>
-				<Typography tag="p" className="text-[10.5px] text-pur-t">
-					{t("aiTranslation.popup.badgeHint")}
-				</Typography>
+					</div>
 			</div>
 
 			<div className="border-b-[0.5px] border-bd-1 px-3.5 py-2.5">
@@ -244,6 +249,27 @@ export const AiWordPopupBody = ({
 				{result.example && (
 					<div className="mt-1.5 text-[11.5px] text-t-3 italic">
 						{result.example}
+					</div>
+				)}
+
+				{showGloss && (
+					<div className="mt-2 border-t border-bd-1 pt-1.5">
+						<Button
+							size="bare"
+							onClick={handleGlossToggle}
+							className="flex items-center gap-1 text-[10.5px] text-t-4 hover:text-t-2 transition-colors"
+						>
+							<ChevronDown
+								className={cn("size-3 transition-transform", glossOpen && "rotate-180")}
+								strokeWidth={1.6}
+							/>
+							{t("aiTranslation.popup.russianGloss")}
+						</Button>
+						{glossOpen && (
+							<div className="mt-1 text-[11.5px] text-t-3">
+								{result.russianGloss}
+							</div>
+						)}
 					</div>
 				)}
 			</div>

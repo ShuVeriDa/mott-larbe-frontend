@@ -2256,6 +2256,7 @@
 				"source": "Source",
 				"added": "Added",
 				"pages": "Pages",
+				"wordsUnit": "words",
 				"noAuthor": "—",
 				"noSource": "—"
 			},
@@ -2303,6 +2304,9 @@
 				"published": "Published"
 			},
 			"level": {
+				"A": "A — Beginner",
+				"B": "B — Intermediate",
+				"C": "C — Advanced",
 				"A1": "A1 — Beginner",
 				"A2": "A2 — Elementary",
 				"B1": "B1 — Intermediate",
@@ -4963,7 +4967,10 @@
 			"sourcePending": "From cache · pending",
 			"sourceFresh": "AI · just now",
 			"error": "AI translation error. Please try again later",
-			"errorLocationNotSupported": "Gemini is not available in your region. Try using a VPN."
+			"errorLocationNotSupported": "Gemini is not available in your region. Try using a VPN.",
+			"russianGloss": "Russian meaning",
+			"languageLabel": "Translation language",
+			"languageDescription": "Choose the language words and phrases will be translated into while reading."
 		},
 		"phrase": {
 			"button": "Translate phrase",

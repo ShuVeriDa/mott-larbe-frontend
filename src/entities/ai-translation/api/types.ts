@@ -1,12 +1,24 @@
 export type AiCacheStatus = "PENDING" | "APPROVED" | "REJECTED";
 export type AiCacheType = "WORD_ONLY" | "WORD_IN_CONTEXT";
+export type TranslationLanguage = "ru" | "en" | "ar" | "de" | "fr" | "tr";
+
+export const SUPPORTED_TRANSLATION_LANGUAGES: TranslationLanguage[] = [
+  "ru",
+  "en",
+  "ar",
+  "de",
+  "fr",
+  "tr",
+];
 
 export interface AiWordTranslation {
   id: string;
   lemma: string;
   contextSentence: string | null;
   cacheType: AiCacheType;
+  targetLanguage: TranslationLanguage;
   translation: string;
+  russianGloss: string | null;
   transliteration: string | null;
   partOfSpeech: string | null;
   example: string | null;
@@ -22,6 +34,7 @@ export interface AiWordTranslation {
 
 export interface AiPhraseTranslation {
   translation: string;
+  russianGloss?: string;
   notes?: string;
 }
 
@@ -37,34 +50,40 @@ export interface GeminiKeyVerifyResult {
 export interface TranslateWordDto {
   word: string;
   contextSentence?: string;
+  targetLanguage?: TranslationLanguage;
 }
 
 export interface TranslatePhraseDto {
   phrase: string;
   contextSentence?: string;
+  targetLanguage?: TranslationLanguage;
 }
 
 export interface RefinePhraseDto {
   phrase: string;
   previousTranslation: string;
   hint: string;
+  targetLanguage?: TranslationLanguage;
 }
 
 export interface SaveRefinementDto {
   word: string;
   translation: string;
   contextSentence?: string;
+  targetLanguage?: TranslationLanguage;
 }
 
 export interface AiCacheEntry {
   id: string;
   lemma: string;
+  cacheType: AiCacheType;
+  targetLanguage: TranslationLanguage;
   translation: string;
+  russianGloss: string | null;
   transliteration: string | null;
   partOfSpeech: string | null;
   example: string | null;
   status: AiCacheStatus;
-  cacheType: AiCacheType;
   requestCount: number;
   thumbsUp: number;
   thumbsDown: number;

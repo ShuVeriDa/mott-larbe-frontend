@@ -2253,6 +2253,7 @@
 				"source": "Хьост",
 				"added": "ТIекхетта",
 				"pages": "АгIонаш",
+				"wordsUnit": "дош",
 				"noAuthor": "—",
 				"noSource": "—"
 			},
@@ -2300,6 +2301,9 @@
 				"published": "ДIахьедина"
 			},
 			"level": {
+				"A": "A — Хьалхара",
+				"B": "B — Юккъерниг",
+				"C": "C — Лакхара",
 				"A1": "A1 — Хьалхара",
 				"A2": "A2 — Лакхара хьалхара",
 				"B1": "B1 — Юккъерниг",
@@ -4960,7 +4964,10 @@
 			"sourcePending": "Кэшах · тергаме",
 			"sourceFresh": "AI · хIинца",
 			"error": "AI-гочдаран гIалат. ТIаьхьа дIа хьажа",
-			"errorLocationNotSupported": "Gemini хьан регионехь ца болу. VPN лела."
+			"errorLocationNotSupported": "Gemini хьан регионехь ца болу. VPN лела.",
+			"russianGloss": "Оьрсийн маьIна",
+			"languageLabel": "Гочдаран мотт",
+			"languageDescription": "Лоха мотт харжа, хIорш гочдархьама юьхь еш хиларехь."
 		},
 		"phrase": {
 			"button": "Дош гочдан",
