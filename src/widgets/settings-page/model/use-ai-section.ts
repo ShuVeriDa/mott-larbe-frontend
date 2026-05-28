@@ -1,6 +1,8 @@
 "use client";
 
-import { aiTranslationApi, useGeminiKeyStatus } from "@/entities/ai-translation";
+import { aiTranslationApi, useGeminiKeyStatus, type GeminiModel } from "@/entities/ai-translation";
+import { useGeminiModelStore, useTranslationLanguageStore } from "@/features/ai-word-lookup";
+import type { TranslationLanguage } from "@/entities/ai-translation";
 import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
@@ -8,12 +10,20 @@ import { useQueryClient } from "@tanstack/react-query";
 import { aiTranslationKeys } from "@/entities/ai-translation";
 import { type ChangeEvent, useState } from "react";
 
+const MODEL_LABEL_KEY: Record<GeminiModel, string> = {
+  "gemini-3.1-flash-lite": "aiTranslation.models.modelFlashLite",
+  "gemini-3.5-flash": "aiTranslation.models.modelFlash",
+  "gemini-3.1-pro": "aiTranslation.models.modelPro",
+};
+
 export const useAiSection = () => {
   const { t } = useI18n();
   const { success, error } = useToast();
   const { toastApiError } = useApiErrorToast();
   const queryClient = useQueryClient();
   const { data: keyStatus } = useGeminiKeyStatus();
+  const { geminiModel, setGeminiModel } = useGeminiModelStore();
+  const { targetLanguage, setTargetLanguage } = useTranslationLanguageStore();
 
   const [keyInput, setKeyInput] = useState("");
   const [showKey, setShowKey] = useState(false);
@@ -75,6 +85,21 @@ export const useAiSection = () => {
     }
   };
 
+  const handleLanguageChange = (lang: TranslationLanguage) => {
+    setTargetLanguage(lang);
+  };
+
+  const handleModelChange = async (model: GeminiModel) => {
+    if (model === geminiModel) return;
+    try {
+      await aiTranslationApi.saveModel(model);
+      setGeminiModel(model);
+      success(t("aiTranslation.settings.modelSaved", { model: t(MODEL_LABEL_KEY[model]) }));
+    } catch (err) {
+      toastApiError(err);
+    }
+  };
+
   return {
     hasKey,
     keyInput,
@@ -82,10 +107,13 @@ export const useAiSection = () => {
     isSaving,
     isDeleting,
     isVerifying,
+    targetLanguage,
     handleKeyChange,
     handleToggleShow,
     handleSave,
     handleDelete,
     handleVerify,
+    handleLanguageChange,
+    handleModelChange,
   };
 };

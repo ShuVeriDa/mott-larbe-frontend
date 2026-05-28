@@ -1,3 +1,5 @@
+export type FallbackReason = "rate_limit" | "billing" | "unavailable";
+
 export type AiCacheStatus = "PENDING" | "APPROVED" | "REJECTED";
 export type AiCacheType = "WORD_ONLY" | "WORD_IN_CONTEXT";
 export type TranslationLanguage = "ru" | "en" | "ar" | "de" | "fr" | "tr";
@@ -10,6 +12,19 @@ export const SUPPORTED_TRANSLATION_LANGUAGES: TranslationLanguage[] = [
   "fr",
   "tr",
 ];
+
+export type GeminiModel =
+  | "gemini-3.1-flash-lite"
+  | "gemini-3.5-flash"
+  | "gemini-3.1-pro";
+
+export const SUPPORTED_GEMINI_MODELS: GeminiModel[] = [
+  "gemini-3.1-flash-lite",
+  "gemini-3.5-flash",
+  "gemini-3.1-pro",
+];
+
+export const DEFAULT_GEMINI_MODEL: GeminiModel = "gemini-3.1-flash-lite";
 
 export interface AiWordTranslation {
   id: string;
@@ -28,6 +43,9 @@ export interface AiWordTranslation {
   thumbsUp: number;
   thumbsDown: number;
   fromCache: boolean;
+  fallbackUsed?: boolean;
+  fallbackReason?: FallbackReason;
+  retryAfterSeconds?: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -36,10 +54,14 @@ export interface AiPhraseTranslation {
   translation: string;
   russianGloss?: string;
   notes?: string;
+  fallbackUsed?: boolean;
+  fallbackReason?: FallbackReason;
+  retryAfterSeconds?: number;
 }
 
 export interface GeminiKeyStatus {
   hasKey: boolean;
+  model: GeminiModel;
 }
 
 export interface GeminiKeyVerifyResult {

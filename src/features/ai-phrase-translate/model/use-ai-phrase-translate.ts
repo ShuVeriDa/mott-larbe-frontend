@@ -5,6 +5,7 @@ import { aiTranslationApi } from "@/entities/ai-translation";
 import { getApiErrorCode } from "@/shared/api";
 import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 import { useI18n } from "@/shared/lib/i18n";
+import { useToast } from "@/shared/lib/toast";
 import { useState } from "react";
 
 export type AiPhraseTranslateState =
@@ -26,6 +27,7 @@ export const useAiPhraseTranslate = () => {
 		phase: "idle",
 	});
 	const { toastApiError } = useApiErrorToast();
+	const { toast } = useToast();
 	const { t } = useI18n();
 
 	const translate = async (
@@ -42,6 +44,9 @@ export const useAiPhraseTranslate = () => {
 				targetLanguage,
 			});
 			setState({ phase: "done", result });
+			if (result.fallbackUsed) {
+				toast(t("aiTranslation.fallback.switched"), "default");
+			}
 		} catch (e) {
 			const code = getApiErrorCode(e);
 			const i18nKey =
@@ -72,6 +77,9 @@ export const useAiPhraseTranslate = () => {
 				targetLanguage,
 			});
 			setRefineState({ phase: "done", result });
+			if (result.fallbackUsed) {
+				toast(t("aiTranslation.fallback.switched"), "default");
+			}
 		} catch (e) {
 			setRefineState({ phase: "error" });
 			toastApiError(e);

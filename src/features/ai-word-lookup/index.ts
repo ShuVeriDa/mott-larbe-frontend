@@ -7,4 +7,7 @@ export type { AiSessionEntry } from "./model/ai-session-store";
 export { WordRefineBlock } from "./ui/word-refine-block";
 export { useAiKeyNudge } from "./model/use-ai-key-nudge";
 export { useTranslationLanguageStore } from "./model/translation-language-store";
+export { useGeminiModelStore } from "./model/gemini-model-store";
+export { useGeminiFallbackStore } from "./model/gemini-fallback-store";
 export { LanguageSelector } from "./ui/language-selector";
+export { ModelSelector } from "./ui/model-selector";

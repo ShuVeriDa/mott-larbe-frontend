@@ -1,17 +1,21 @@
 "use client";
 
-import { SUPPORTED_TRANSLATION_LANGUAGES, type TranslationLanguage } from "@/entities/ai-translation";
-import { useTranslationLanguageStore } from "@/features/ai-word-lookup";
-import { cn } from "@/shared/lib/cn";
+import {
+	SUPPORTED_TRANSLATION_LANGUAGES,
+	type TranslationLanguage,
+} from "@/entities/ai-translation";
+import { ModelSelector } from "@/features/ai-word-lookup";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Typography } from "@/shared/ui/typography";
 import {
+	AlertTriangle,
 	CheckCircle,
 	ExternalLink,
 	Eye,
 	EyeOff,
+	Info,
 	Lock,
 	Sparkles,
 	XCircle,
@@ -19,15 +23,7 @@ import {
 import { useAiSection } from "../../model/use-ai-section";
 import { SectionHeader } from "../section-header";
 import { SettingCard } from "../setting-card";
-
-const LANGUAGE_LABELS: Record<TranslationLanguage, string> = {
-	ru: "Русский",
-	en: "English",
-	ar: "العربية",
-	de: "Deutsch",
-	fr: "Français",
-	tr: "Türkçe",
-};
+import { LanguageButton } from "./language-button";
 
 export const AiSection = () => {
 	const { t } = useI18n();
@@ -38,20 +34,50 @@ export const AiSection = () => {
 		isSaving,
 		isDeleting,
 		isVerifying,
+		targetLanguage,
 		handleKeyChange,
 		handleToggleShow,
 		handleSave,
 		handleDelete,
 		handleVerify,
+		handleLanguageChange,
+		handleModelChange,
 	} = useAiSection();
-	const { targetLanguage, setTargetLanguage } = useTranslationLanguageStore();
 
 	return (
 		<div className="flex flex-col gap-4">
-			<SectionHeader
-				title={t("aiTranslation.settings.title")}
-				subtitle={t("aiTranslation.settings.description")}
-			/>
+			<SectionHeader title={t("aiTranslation.settings.title")} />
+			<SettingCard title={t("aiTranslation.settings.disclaimerTitle")}>
+				<div className="flex flex-col gap-2.5">
+					{(
+						[
+							"disclaimerItem1",
+							"disclaimerItem2",
+							"disclaimerItem3",
+							"disclaimerItem4",
+							"disclaimerItem5",
+							"disclaimerItem6",
+						] as const
+					).map(key => (
+						<div key={key} className="flex items-start gap-2">
+							{key === "disclaimerItem6" ? (
+								<Lock
+									className="mt-0.5 size-3.5 shrink-0 text-grn"
+									strokeWidth={1.6}
+								/>
+							) : (
+								<AlertTriangle
+									className="mt-0.5 size-3.5 shrink-0 text-amber-500"
+									strokeWidth={1.6}
+								/>
+							)}
+							<Typography tag="p" className="text-[12px] text-t-2">
+								{t(`aiTranslation.settings.${key}`)}
+							</Typography>
+						</div>
+					))}
+				</div>
+			</SettingCard>
 
 			{!hasKey && (
 				<SettingCard title={t("aiTranslation.settings.howToTitle")}>
@@ -222,21 +248,29 @@ export const AiSection = () => {
 				</Typography>
 				<div className="flex flex-wrap gap-2">
 					{SUPPORTED_TRANSLATION_LANGUAGES.map((lang: TranslationLanguage) => (
-						<Button
+						<LanguageButton
 							key={lang}
-							size="bare"
-							onClick={() => setTargetLanguage(lang)}
-							aria-pressed={lang === targetLanguage}
-							className={cn(
-								"h-8 rounded-base border px-3 text-[12px] font-medium transition-colors",
-								lang === targetLanguage
-									? "border-acc/40 bg-acc/10 text-acc"
-									: "border-bd-2 bg-surf-2 text-t-2 hover:bg-surf-3 hover:text-t-1",
-							)}
-						>
-							{LANGUAGE_LABELS[lang]}
-						</Button>
+							lang={lang}
+							isActive={lang === targetLanguage}
+							onSelect={handleLanguageChange}
+						/>
 					))}
+				</div>
+			</SettingCard>
+
+			<SettingCard title={t("aiTranslation.settings.modelLabel")}>
+				<Typography tag="p" className="mb-3 text-[12px] text-t-3">
+					{t("aiTranslation.settings.modelDescription")}
+				</Typography>
+				<ModelSelector onModelChange={handleModelChange} />
+				<div className="mt-3 flex items-start gap-2 rounded-base border-[0.5px] border-bd-1 bg-surf-2 px-3 py-2.5">
+					<Info
+						className="mt-0.5 size-3.5 shrink-0 text-t-3"
+						strokeWidth={1.6}
+					/>
+					<Typography tag="p" className="text-[11px] text-t-3">
+						{t("aiTranslation.settings.billingNote")}
+					</Typography>
 				</div>
 			</SettingCard>
 		</div>

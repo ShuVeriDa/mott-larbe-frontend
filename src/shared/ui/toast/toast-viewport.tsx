@@ -2,9 +2,15 @@
 
 import { cn } from "@/shared/lib/cn";
 import { useToastViewport } from "@/shared/lib/toast";
-import { Button } from "@/shared/ui/button";
+import { AlertCircle, CheckCircle2, Info, X } from "lucide-react";
 import { ComponentProps } from "react";
 import { createPortal } from "react-dom";
+
+const ICON = {
+	success: <CheckCircle2 className="mt-px size-4 shrink-0 text-grn" strokeWidth={1.7} />,
+	error: <AlertCircle className="mt-px size-4 shrink-0 text-red-token" strokeWidth={1.7} />,
+	default: <Info className="mt-px size-4 shrink-0 text-acc" strokeWidth={1.7} />,
+};
 
 export const ToastViewport = () => {
 	const { items, mounted, handleDismiss } = useToastViewport();
@@ -16,29 +22,44 @@ export const ToastViewport = () => {
 			role="region"
 			aria-live="polite"
 			aria-label="Notifications"
-			className="pointer-events-none fixed inset-x-0 bottom-6 z-[300] flex flex-col items-center gap-2 px-4"
+			className="pointer-events-none fixed bottom-5 right-4 z-300 flex w-[300px] flex-col gap-2"
 		>
 			{items.map(item => {
-				const handleClick: NonNullable<
-					ComponentProps<"button">["onClick"]
-				> = () => handleDismiss(item.id);
+				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> =
+					() => handleDismiss(item.id);
+
 				return (
-					<Button
+					<div
 						key={item.id}
-						onClick={handleClick}
-						title={item.message}
 						className={cn(
-							"pointer-events-auto min-w-[240px] max-w-[420px] rounded-base px-4 py-2 text-[12.5px] font-medium",
-							"animate-[fadeUp_0.18s_ease] shadow-md",
-							item.variant === "success" &&
-								"border-[0.5px] border-grn/30 bg-grn-bg text-grn-t",
-							item.variant === "error" &&
-								"border-[0.5px] border-red/30 bg-red-bg text-red-t",
-							item.variant === "default" && "bg-t-1 text-bg",
+							"pointer-events-auto flex items-start gap-3 rounded-xl border-[0.5px] px-3.5 py-3 shadow-lg animate-[fadeUp_0.18s_ease]",
+							item.variant === "success" && "border-grn/30 bg-grn-bg",
+							item.variant === "error" && "border-red-token/30 bg-red-bg",
+							item.variant === "default" && "border-acc/20 bg-acc-bg",
 						)}
 					>
-						{item.message}
-					</Button>
+						{ICON[item.variant]}
+						<p className={cn(
+							"flex-1 text-[12.5px] leading-normal",
+							item.variant === "success" && "text-grn-t",
+							item.variant === "error" && "text-red-t",
+							item.variant === "default" && "text-acc-t",
+						)}>
+							{item.message}
+						</p>
+						<button
+							onClick={handleClick}
+							aria-label="Dismiss"
+							className={cn(
+								"mt-px shrink-0 transition-colors",
+								item.variant === "success" && "text-grn/50 hover:text-grn",
+								item.variant === "error" && "text-red-token/50 hover:text-red-token",
+								item.variant === "default" && "text-acc/40 hover:text-acc",
+							)}
+						>
+							<X className="size-3.5" strokeWidth={1.6} />
+						</button>
+					</div>
 				);
 			})}
 		</div>,

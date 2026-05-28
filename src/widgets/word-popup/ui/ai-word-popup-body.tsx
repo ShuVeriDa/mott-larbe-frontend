@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { GeminiLimitBanner } from "./gemini-limit-banner";
 
 interface AiWordPopupBodyProps {
 	word: string;
@@ -172,6 +173,7 @@ export const AiWordPopupBody = ({
 
 	return (
 		<>
+			<GeminiLimitBanner />
 			<div className="border-b-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
 				<div className="mb-1.5 flex items-start justify-between gap-2">
 					<div className="flex items-start gap-2">

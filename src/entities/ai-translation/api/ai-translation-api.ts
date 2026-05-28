@@ -7,6 +7,7 @@ import type {
   DictionaryExportRun,
   GeminiKeyStatus,
   GeminiKeyVerifyResult,
+  GeminiModel,
   RefinePhraseDto,
   SaveRefinementDto,
   TranslatePhraseDto,
@@ -26,6 +27,11 @@ export const aiTranslationApi = {
 
   deleteKey: async (): Promise<GeminiKeyStatus> => {
     const { data } = await http.delete<GeminiKeyStatus>("/ai-translation/key");
+    return data;
+  },
+
+  saveModel: async (model: GeminiModel): Promise<{ model: GeminiModel }> => {
+    const { data } = await http.patch<{ model: GeminiModel }>("/ai-translation/model", { model });
     return data;
   },
 
