@@ -1,6 +1,7 @@
 "use client";
 
 import type { TextPageResponse } from "@/entities/text";
+import { useAiBatchTranslate } from "@/features/ai-batch-translate";
 import { cn } from "@/shared/lib/cn";
 import { MotionButton } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
@@ -11,7 +12,7 @@ import { useReaderTopbar } from "../model/use-reader-topbar";
 import { ReaderPager } from "./reader-pager";
 
 const iconBtnClass = cn(
-	"inline-flex h-[30px] w-[30px] items-center justify-center rounded-base",
+	"inline-flex p-[7px] items-center justify-center rounded-base",
 	"text-t-3 transition-colors duration-100",
 	"hover:bg-surf-2 hover:text-t-2",
 	"aria-pressed:bg-acc-bg aria-pressed:text-acc-t",
@@ -34,8 +35,6 @@ export interface ReaderTopbarProps {
 	onToggleFocusMode?: () => void;
 	aiHistoryOpen?: boolean;
 	onToggleAiHistory?: () => void;
-	batchTranslateState?: "idle" | "loading" | "done" | "error";
-	onBatchTranslate?: () => void;
 }
 
 export const ReaderTopbar = ({
@@ -55,8 +54,6 @@ export const ReaderTopbar = ({
 	onToggleFocusMode,
 	aiHistoryOpen,
 	onToggleAiHistory,
-	batchTranslateState,
-	onBatchTranslate,
 }: ReaderTopbarProps) => {
 	const {
 		t,
@@ -71,6 +68,8 @@ export const ReaderTopbar = ({
 		completing,
 		handleMarkComplete,
 	} = useReaderTopbar(textId, currentPage, data);
+
+	const { state: batchTranslateState, translate: onBatchTranslate } = useAiBatchTranslate(data.tokens);
 
 	const actions = getTopbarActions({
 		t,
@@ -104,7 +103,7 @@ export const ReaderTopbar = ({
 		<header className="flex h-[46px] shrink-0 items-center gap-2 border-b-[0.5px] border-bd-1 bg-surf px-4 max-md:sticky max-md:top-0 max-md:z-80">
 			<Link
 				href={`/${lang}/texts`}
-				className="inline-flex shrink-0 items-center gap-1.5 rounded-base px-2 py-1 text-[12.5px] text-t-2 transition-colors duration-100 hover:bg-surf-2 hover:text-t-1"
+				className="inline-flex shrink-0 items-center gap-1.5 rounded-base px-2 py-1 max-md:p-3 max-md:min-h-[44px] text-[12.5px] text-t-2 transition-colors duration-100 hover:bg-surf-2 hover:text-t-1"
 			>
 				<ChevronLeft className="size-3.5" strokeWidth={1.6} />
 				<Typography tag="span" className="max-md:hidden">

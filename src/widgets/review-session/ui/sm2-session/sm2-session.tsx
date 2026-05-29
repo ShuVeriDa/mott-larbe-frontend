@@ -12,12 +12,23 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useSwipe } from "@/shared/lib/swipe";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSm2Session } from "../../model";
 import { ChoiceCardSm2 } from "../choice-card";
 import { FlashcardBack } from "../flashcard-back";
 import { FlashcardFront } from "../flashcard-front";
 import { TypingCardSm2 } from "../typing-card";
+
+const SWIPE_HINT_KEY = "review_swipe_hint_seen";
+
+const SwipeHint = ({ visible }: { visible: boolean }) => {
+	if (!visible) return null;
+	return (
+		<p className="mt-2 text-center text-[11px] opacity-50 text-t-2 pointer-events-none select-none">
+			← Hard · Easy →
+		</p>
+	);
+};
 
 export interface Sm2SessionProps {
 	words: ReviewDueWord[];
@@ -80,6 +91,9 @@ export const Sm2Session = ({
 	onProgress,
 }: Sm2SessionProps) => {
 	const { t } = useI18n();
+	const [swipeHintVisible, setSwipeHintVisible] = useState(
+		() => typeof window !== "undefined" && !localStorage.getItem(SWIPE_HINT_KEY),
+	);
 	const session = useSm2Session(words);
 	const {
 		current,
@@ -136,10 +150,16 @@ export const Sm2Session = ({
 		return () => window.removeEventListener("keydown", handleKey);
 	}, [flip, flipped, rate]);
 
+	const handleDismissHint = () => {
+		if (!swipeHintVisible) return;
+		localStorage.setItem(SWIPE_HINT_KEY, "1");
+		setSwipeHintVisible(false);
+	};
+
 	const swipe = useSwipe({
 		enabled: flipped,
-		onSwipeLeft: () => rate(0),
-		onSwipeRight: () => rate(5),
+		onSwipeLeft: () => { handleDismissHint(); rate(0); },
+		onSwipeRight: () => { handleDismissHint(); rate(5); },
 	});
 
 	const { options, correctIndex } = buildOptions(words, currentIndex);
@@ -241,12 +261,13 @@ export const Sm2Session = ({
 			)}
 
 			{isFlashcard ? <RatingButtons visible={flipped} onRate={rate} /> : null}
+			{isFlashcard ? <SwipeHint visible={flipped && swipeHintVisible} /> : null}
 
 			<div className="mt-2.5 flex w-full max-w-[520px] items-center gap-2">
 				{onBack ? (
 					<Button
 						onClick={onBack}
-						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
+						className="flex h-10 cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 					>
 						<svg viewBox="0 0 12 12" fill="none" className="size-3">
 							<path
@@ -262,7 +283,7 @@ export const Sm2Session = ({
 				) : null}
 				<Button
 					onClick={skip}
-					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
+					className="flex h-10 cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 				>
 					<svg viewBox="0 0 12 12" fill="none" className="size-3">
 						<path
@@ -280,7 +301,7 @@ export const Sm2Session = ({
 					<Button
 						onClick={toggleMode}
 						aria-label={t("review.sm2.card.modeToggle")}
-						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-surf-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-3"
+						className="flex h-10 cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-surf-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-3"
 					>
 						<svg viewBox="0 0 12 12" fill="none" className="size-3 text-t-3">
 							<path

@@ -3,11 +3,13 @@
 import { useTextToc, type TocEntry } from "@/entities/text-toc";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { useSwipe } from "@/shared/lib/swipe/use-swipe";
 import { Button } from "@/shared/ui/button";
 import {
 	READER_MOBILE_SHEET_OVERLAY_CLASSES,
 	ReaderMobileSheetHeader,
 } from "@/shared/ui/reader-mobile-sheet-header";
+import { SheetDragHandle } from "@/shared/ui/sheet-drag-handle";
 import { Typography } from "@/shared/ui/typography";
 import { List, X } from "lucide-react";
 import { useEffect, type MouseEvent } from "react";
@@ -174,6 +176,7 @@ export const ReaderTocSheet = ({
 	const handleBackdropClick = () => onClose();
 	const handleSheetClick = (e: MouseEvent<HTMLDivElement>) =>
 		e.stopPropagation();
+	const swipe = useSwipe({ onSwipeDown: onClose });
 
 	if (!open || typeof window === "undefined") return null;
 
@@ -187,9 +190,13 @@ export const ReaderTocSheet = ({
 				role="dialog"
 				aria-modal="true"
 				aria-label={t("reader.toc.title")}
-				className="flex max-h-[82vh] min-h-0 w-full flex-col rounded-t-2xl border-t border-bd-1 bg-surf"
+				className="flex max-h-[90dvh] min-h-0 w-full flex-col rounded-t-2xl border-t border-bd-1 bg-surf"
 				onClick={handleSheetClick}
+				onPointerDown={swipe.onPointerDown}
+				onPointerUp={swipe.onPointerUp}
+				onPointerCancel={swipe.onPointerCancel}
 			>
+				<SheetDragHandle />
 				<ReaderMobileSheetHeader
 					title={t("reader.toc.title")}
 					closeAriaLabel={t("reader.panel.close")}

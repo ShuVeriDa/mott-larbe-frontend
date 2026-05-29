@@ -32,6 +32,8 @@ import { useSelectToken, useWordLookupStore } from "@/features/word-lookup";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import { extractSentence } from "@/shared/lib/extract-sentence";
+import { useMounted } from "@/shared/lib/mounted";
+import { useSwipe } from "@/shared/lib/swipe/use-swipe";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { createPortal } from "react-dom";
@@ -46,9 +48,11 @@ import { ReaderProgressBar } from "./reader-progress-bar";
 export interface ReaderBodyProps {
 	data: TextPageResponse;
 	currentPage: number;
+	onNavigate?: (delta: -1 | 1) => void;
 }
 
-export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
+export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) => {
+	const mounted = useMounted();
 	const { lang } = useI18n();
 	const onSelectToken = useSelectToken(data.page.contentRaw);
 	const activeToken = useWordLookupStore(s => s.activeToken);
@@ -131,6 +135,18 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 
 	const handleClosePhraseTranslate = () => setPhraseTranslate(null);
 
+	const swipe = useSwipe({
+		onSwipeLeft: () => {
+			if (window.getSelection()?.toString()) return;
+			onNavigate?.(-1);
+		},
+		onSwipeRight: () => {
+			if (window.getSelection()?.toString()) return;
+			onNavigate?.(1);
+		},
+		enabled: !!onNavigate,
+	});
+
 	const highlightMarks = highlightsVisible
 		? highlights.map(h => ({
 				id: h.id,
@@ -158,6 +174,9 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 			)}
 			data-reader-theme={theme}
 			style={fontVars}
+			onPointerDown={swipe.onPointerDown}
+			onPointerUp={swipe.onPointerUp}
+			onPointerCancel={swipe.onPointerCancel}
 		>
 			<ReaderProgressBar progress={data.progress} />
 			<ArticleHeader data={data} currentPage={currentPage} />
@@ -179,8 +198,7 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 				pageNumber={currentPage}
 			/>
 			{/* Note line group icons — rendered via portal at measured positions */}
-			{typeof window !== "undefined" &&
-				noteGroups.length > 0 &&
+			{mounted && noteGroups.length > 0 &&
 				createPortal(
 					<>
 						{noteGroups.map(group => (
@@ -194,8 +212,7 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 					document.body,
 				)}
 
-			{typeof window !== "undefined" &&
-				selection &&
+			{mounted && selection &&
 				createPortal(
 					<HighlightColorPicker
 						x={selection.x}
@@ -209,7 +226,7 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 					/>,
 					document.body,
 				)}
-			{typeof window !== "undefined" && (
+			{mounted && (
 				<AnimatePresence>
 					{phraseTranslate && (
 						<PhraseTranslatePopup
@@ -223,7 +240,7 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 					)}
 				</AnimatePresence>
 			)}
-			{typeof window !== "undefined" && (
+			{mounted && (
 				<AnimatePresence>
 					{activeNotePopup && (
 						<NoteInlinePopup
@@ -235,7 +252,7 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 					)}
 				</AnimatePresence>
 			)}
-			{typeof window !== "undefined" && (
+			{mounted && (
 				<AnimatePresence>
 					{groupPopup && (
 						<NoteGroupPopup

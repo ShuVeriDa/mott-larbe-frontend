@@ -1,7 +1,9 @@
 import { cn } from "@/shared/lib/cn";
-import { WordPanel } from "@/widgets/word-panel";
 import dynamic from "next/dynamic";
 
+const WordPanel = dynamic(() =>
+	import("@/widgets/word-panel").then(m => ({ default: m.WordPanel })),
+);
 const ReaderSettingsAside = dynamic(() =>
 	import("@/widgets/reader-settings-sheet").then(m => ({
 		default: m.ReaderSettingsAside,

@@ -6,18 +6,22 @@ import type { TextToken } from "@/entities/text";
 import { useWordLookup, type WordLookupResponse } from "@/entities/word";
 import { LearnStatusRow } from "@/features/learn-status";
 import { useWordLookupStore } from "@/features/word-lookup";
+import { useFocusTrap } from "@/shared/lib/focus-trap/use-focus-trap";
+import { useScrollLock } from "@/shared/lib/scroll-lock/use-scroll-lock";
+import { useSwipe } from "@/shared/lib/swipe/use-swipe";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import {
 	READER_MOBILE_SHEET_OVERLAY_CLASSES,
 	ReaderMobileSheetHeader,
 } from "@/shared/ui/reader-mobile-sheet-header";
+import { SheetDragHandle } from "@/shared/ui/sheet-drag-handle";
 import { WordPanelEmpty } from "@/widgets/word-panel";
 import { AddToDictionaryButton } from "@/widgets/word-panel/ui/add-to-dictionary-button";
 import { AiWordSheetBody } from "./ai-word-sheet-body";
 import { Pencil, X } from "lucide-react";
 import type { MouseEvent } from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { EntrySuggestModal } from "@/features/entry-suggest";
 
@@ -140,17 +144,18 @@ export const WordBottomSheet = ({ textId }: { textId: string }) => {
 		sheetOpen && token ? token.id : null,
 	);
 
+	const dialogRef = useRef<HTMLDivElement>(null);
+	useScrollLock(sheetOpen);
+	useFocusTrap(dialogRef, sheetOpen);
+
 	useEffect(() => {
 		if (!sheetOpen) return;
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "Escape") closeSheet();
 		};
 		document.addEventListener("keydown", handleKeyDown);
-		const prev = document.body.style.overflow;
-		document.body.style.overflow = "hidden";
 		return () => {
 			document.removeEventListener("keydown", handleKeyDown);
-			document.body.style.overflow = prev;
 		};
 	}, [sheetOpen, closeSheet]);
 
@@ -158,6 +163,7 @@ export const WordBottomSheet = ({ textId }: { textId: string }) => {
 	const handleSheetClick = (e: MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 	};
+	const swipe = useSwipe({ onSwipeDown: closeSheet });
 
 	if (!sheetOpen || typeof window === "undefined") return null;
 
@@ -168,12 +174,17 @@ export const WordBottomSheet = ({ textId }: { textId: string }) => {
 			onClick={handleBackdropClick}
 		>
 			<div
+				ref={dialogRef}
 				role="dialog"
 				aria-modal="true"
 				aria-label={token?.original ?? t("reader.panel.label")}
-				className="flex max-h-[82vh] min-h-0 w-full flex-col rounded-t-2xl border-t border-bd-1 bg-surf"
+				className="flex max-h-[90dvh] min-h-0 w-full flex-col rounded-t-2xl border-t border-bd-1 bg-surf"
 				onClick={handleSheetClick}
+				onPointerDown={swipe.onPointerDown}
+				onPointerUp={swipe.onPointerUp}
+				onPointerCancel={swipe.onPointerCancel}
 			>
+				<SheetDragHandle />
 				<ReaderMobileSheetHeader
 					title={t("reader.panel.label")}
 					closeAriaLabel={t("reader.panel.close")}

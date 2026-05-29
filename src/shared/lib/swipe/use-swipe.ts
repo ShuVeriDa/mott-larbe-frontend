@@ -4,6 +4,7 @@ interface UseSwipeOptions {
 	threshold?: number;
 	onSwipeLeft?: () => void;
 	onSwipeRight?: () => void;
+	onSwipeDown?: () => void;
 	enabled?: boolean;
 }
 
@@ -17,6 +18,7 @@ export const useSwipe = ({
 	threshold = 40,
 	onSwipeLeft,
 	onSwipeRight,
+	onSwipeDown,
 	enabled = true,
 }: UseSwipeOptions): SwipeHandlers => {
 	const origin = useRef<{ x: number; y: number } | null>(null);
@@ -31,6 +33,12 @@ export const useSwipe = ({
 		const dx = e.clientX - origin.current.x;
 		const dy = e.clientY - origin.current.y;
 		origin.current = null;
+
+		// Vertical swipe down — takes priority when dy dominates
+		if (dy > threshold && dy > Math.abs(dx)) {
+			onSwipeDown?.();
+			return;
+		}
 
 		if (Math.abs(dx) < threshold) return;
 		if (Math.abs(dx) <= Math.abs(dy) * 1.5) return;

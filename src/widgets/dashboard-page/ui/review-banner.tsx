@@ -59,7 +59,7 @@ export const ReviewBanner = ({ dueToday, lang }: ReviewBannerProps) => {
 
 			<Link
 				href={`/${lang}/review`}
-				className="shrink-0 h-[30px] rounded-base bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[0.88] flex items-center shadow-sm max-sm:px-3 max-sm:text-[12px]"
+				className="shrink-0 min-h-[44px] rounded-base bg-acc px-4 text-[12.5px] font-semibold text-white transition-opacity hover:opacity-[0.88] flex items-center shadow-sm max-sm:px-3 max-sm:text-[12px]"
 			>
 				{t("dashboard.reviewBanner.start")}
 			</Link>

@@ -8,6 +8,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 type RailPanel = "word" | "settings" | "notes" | "toc" | "bookmarks" | "aiHistory" | null;
 
@@ -33,10 +34,14 @@ export const useReaderPage = (textId: string, pageNumber: number) => {
 		prefetchPage(pageNumber - 1);
 		prefetchPage(pageNumber + 1);
 	}, [textId, pageNumber, totalPages, lang, queryClient, router]);
-	const clear = useWordLookupStore(s => s.clear);
-	const closePanel = useWordLookupStore(s => s.closePanel);
-	const closeSheet = useWordLookupStore(s => s.closeSheet);
-	const panelOpen = useWordLookupStore(s => s.panelOpen);
+	const { clear, closePanel, closeSheet, panelOpen } = useWordLookupStore(
+		useShallow(s => ({
+			clear: s.clear,
+			closePanel: s.closePanel,
+			closeSheet: s.closeSheet,
+			panelOpen: s.panelOpen,
+		})),
+	);
 
 	const [railPanel, setRailPanel] = useState<RailPanel>(null);
 	const focusMode = useReaderFocusMode();

@@ -51,7 +51,7 @@ export const LibraryTextCard = ({
 		return (
 			<Link
 				href={href}
-				className="animate-in fade-in slide-in-from-bottom-1 group relative flex items-center gap-3 overflow-hidden rounded-base border border-bd-1 bg-surf px-3.5 py-2.5 transition-colors duration-150 hover:border-bd-2 hover:bg-surf-2"
+				className="animate-in fade-in slide-in-from-bottom-1 group relative flex items-center gap-3 overflow-hidden rounded-base border border-bd-1 bg-surf px-3.5 py-3 transition-colors duration-150 hover:border-bd-2 hover:bg-surf-2"
 				style={{
 					animationDelay: `${delay}ms`,
 					animationFillMode: "both",
@@ -263,7 +263,7 @@ const ActionButton = ({
 		return (
 			<Typography
 				tag="span"
-				className="inline-flex h-7 items-center rounded-base border border-grn/20 bg-grn-bg px-3 text-[11px] font-medium text-grn-t"
+				className="inline-flex h-10 items-center rounded-base border border-grn/20 bg-grn-bg px-3 text-[11px] font-medium text-grn-t"
 			>
 				✓&nbsp;{t("library.card.done")}
 			</Typography>
@@ -273,7 +273,7 @@ const ActionButton = ({
 		return (
 			<Typography
 				tag="span"
-				className="inline-flex h-7 items-center rounded-base border border-bd-2 bg-surf-2 px-3 text-[11px] font-medium text-t-2"
+				className="inline-flex h-10 items-center rounded-base border border-bd-2 bg-surf-2 px-3 text-[11px] font-medium text-t-2"
 			>
 				{t("library.card.continue")}
 			</Typography>
@@ -282,7 +282,7 @@ const ActionButton = ({
 	return (
 		<Typography
 			tag="span"
-			className="inline-flex h-7 items-center rounded-base border border-acc/22 bg-acc-bg px-3 text-[11px] font-medium text-acc-t"
+			className="inline-flex h-10 items-center rounded-base border border-acc/22 bg-acc-bg px-3 text-[11px] font-medium text-acc-t"
 		>
 			{t("library.card.start")}
 		</Typography>

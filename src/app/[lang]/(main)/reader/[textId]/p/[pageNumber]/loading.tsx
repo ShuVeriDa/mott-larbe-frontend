@@ -44,8 +44,6 @@ const PARAGRAPHS: string[][] = [
 
 const ReaderPageLoading = () => (
 	<>
-		<style>{`@keyframes shimmer{0%{transform:translateX(-50%)}100%{transform:translateX(0%)}}`}</style>
-
 		{/* Topbar */}
 		<header
 			className="flex h-[46px] shrink-0 items-center gap-2 border-b-[0.5px] border-bd-1 bg-surf px-4"

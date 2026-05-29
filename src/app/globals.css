@@ -565,6 +565,12 @@
 		cursor: pointer;
 	}
 
+	button,
+	a,
+	[role="button"] {
+		touch-action: manipulation;
+	}
+
 	.search-highlight {
 		background-color: color-mix(in srgb, #f5a623 40%, transparent);
 		border-radius: 2px;

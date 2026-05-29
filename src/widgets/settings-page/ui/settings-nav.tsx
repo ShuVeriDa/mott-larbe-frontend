@@ -24,7 +24,7 @@ export const SettingsNav = ({ active, onChange }: SettingsNavProps) => {
 				"flex flex-col gap-0.5  overflow-y-auto border-[0.5px] border-r border-bd-1 p-2.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
 				"w-[200px] shrink-0",
 				"max-md:h-11 max-md:w-full max-md:flex-row max-md:gap-0 max-md:overflow-x-auto max-md:overflow-y-visible max-md:border-b max-md:border-r-0 max-md:bg-surf max-md:p-0",
-				"max-sm:h-[42px]",
+				"max-sm:h-11",
 			)}
 		>
 			{SECTIONS.map(section => {
@@ -41,7 +41,7 @@ export const SettingsNav = ({ active, onChange }: SettingsNavProps) => {
 						className={cn(
 							"flex items-center justify-start gap-2.5 rounded-base px-2.5 py-1.5 text-left font-[inherit] transition-colors duration-100",
 							"max-md:h-11 max-md:shrink-0 max-md:rounded-none max-md:border-b-2 max-md:border-transparent max-md:px-4 max-md:font-normal",
-							"max-sm:h-[42px] max-sm:px-[13px] max-sm:text-[12px]",
+							"max-sm:h-11 max-sm:px-[13px] max-sm:text-[12px]",
 							isActive
 								? "bg-acc-bg text-acc-t font-medium [&_.sn-icon]:text-acc-t max-md:bg-transparent max-md:border-b-acc"
 								: "text-t-2 hover:bg-surf-2 hover:text-t-1 [&_.sn-icon]:text-t-3",

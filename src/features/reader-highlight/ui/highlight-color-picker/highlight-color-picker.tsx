@@ -55,10 +55,20 @@ export const HighlightColorPicker = ({
 		return () => document.removeEventListener("mousedown", handleMouseDown);
 	}, [onDismiss]);
 
+	const POPUP_HALF_W = 130;
+	const POPUP_H = 96;
+	const clampedX = typeof window !== "undefined"
+		? Math.min(Math.max(x, POPUP_HALF_W), window.innerWidth - POPUP_HALF_W)
+		: x;
+	const rawTop = y - 48;
+	const clampedTop = typeof window !== "undefined"
+		? Math.min(Math.max(rawTop, 8), window.innerHeight - POPUP_H - 8)
+		: rawTop;
+
 	const baseStyle = {
 		position: "fixed" as const,
-		left: x,
-		top: y - 48,
+		left: clampedX,
+		top: clampedTop,
 		transform: "translateX(-50%)",
 		zIndex: 9999,
 	};

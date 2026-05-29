@@ -105,7 +105,8 @@ const ReaderTextPageRoutePage = async ({
 	const opts = readerContextQueryOptions(textId, page);
 	await queryClient.prefetchQuery(opts);
 	// Populate derived sub-keys so client hooks (useHighlights, useNotes, usePagePhrases)
-	// find warm cache entries and skip their own fetches on first render.
+	// find warm cache entries on first render without triggering their own fetches.
+	// useReaderContext.queryFn does the same on subsequent client-side navigations.
 	const ctx = queryClient.getQueryData<ReaderContextResponse>(opts.queryKey);
 	if (ctx) {
 		queryClient.setQueryData(textKeys.page(textId, page), ctx.page);

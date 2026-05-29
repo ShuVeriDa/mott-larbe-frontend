@@ -12,6 +12,7 @@ import { LANG_TAG } from "@/shared/lib/lang-tag";
 import { useToast } from "@/shared/lib/toast";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 export const useReaderTopbar = (
 	textId: string,
@@ -38,13 +39,25 @@ export const useReaderTopbar = (
 	const { isBookmarked: isPageBookmarked, handleToggle: togglePageBookmark } =
 		usePageBookmarkToggle(textId, currentPage, snippet);
 
-	const panelOpen = useWordLookupStore(s => s.panelOpen);
-	const surface = useWordLookupStore(s => s.surface);
-	const activeToken = useWordLookupStore(s => s.activeToken);
-	const togglePanel = useWordLookupStore(s => s.togglePanel);
-	const openInSheet = useWordLookupStore(s => s.openInSheet);
-	const openEmptyWordSheet = useWordLookupStore(s => s.openEmptyWordSheet);
-	const closeSheet = useWordLookupStore(s => s.closeSheet);
+	const {
+		panelOpen,
+		surface,
+		activeToken,
+		togglePanel,
+		openInSheet,
+		openEmptyWordSheet,
+		closeSheet,
+	} = useWordLookupStore(
+		useShallow(s => ({
+			panelOpen: s.panelOpen,
+			surface: s.surface,
+			activeToken: s.activeToken,
+			togglePanel: s.togglePanel,
+			openInSheet: s.openInSheet,
+			openEmptyWordSheet: s.openEmptyWordSheet,
+			closeSheet: s.closeSheet,
+		})),
+	);
 
 	const handleToggleWordPanel = () => {
 		if (

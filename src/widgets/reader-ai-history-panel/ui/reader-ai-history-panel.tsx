@@ -3,11 +3,13 @@
 import { useAiSessionStore } from "@/features/ai-word-lookup";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { useSwipe } from "@/shared/lib/swipe/use-swipe";
 import { Button } from "@/shared/ui/button";
 import {
 	READER_MOBILE_SHEET_OVERLAY_CLASSES,
 	ReaderMobileSheetHeader,
 } from "@/shared/ui/reader-mobile-sheet-header";
+import { SheetDragHandle } from "@/shared/ui/sheet-drag-handle";
 import { Typography } from "@/shared/ui/typography";
 import { MessageSquare, Sparkles, X } from "lucide-react";
 import { type MouseEvent, useEffect } from "react";
@@ -153,6 +155,7 @@ export const ReaderAiHistorySheet = ({
 	const handleBackdropClick = () => onClose();
 	const handleSheetClick = (e: MouseEvent<HTMLDivElement>) =>
 		e.stopPropagation();
+	const swipe = useSwipe({ onSwipeDown: onClose });
 
 	if (!open || typeof window === "undefined") return null;
 
@@ -166,9 +169,13 @@ export const ReaderAiHistorySheet = ({
 				role="dialog"
 				aria-modal="true"
 				aria-label={t("aiTranslation.history.title")}
-				className="flex max-h-[82vh] min-h-0 w-full flex-col rounded-t-2xl border-t border-bd-1 bg-surf"
+				className="flex max-h-[90dvh] min-h-0 w-full flex-col rounded-t-2xl border-t border-bd-1 bg-surf"
 				onClick={handleSheetClick}
+				onPointerDown={swipe.onPointerDown}
+				onPointerUp={swipe.onPointerUp}
+				onPointerCancel={swipe.onPointerCancel}
 			>
+				<SheetDragHandle />
 				<ReaderMobileSheetHeader
 					title={t("aiTranslation.history.title")}
 					closeAriaLabel={t("reader.panel.close")}

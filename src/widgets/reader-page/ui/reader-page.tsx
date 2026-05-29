@@ -1,5 +1,4 @@
 "use client";
-import { useAiBatchTranslate } from "@/features/ai-batch-translate";
 import type { TextPageResponse } from "@/entities/text";
 import { ReaderFooter } from "@/widgets/reader-footer";
 import { ReaderTopbar } from "@/widgets/reader-topbar";
@@ -10,6 +9,7 @@ import { ReaderLoading } from "./reader-loading";
 import { ReaderError } from "./reader-error";
 import { ReaderLayout } from "./reader-layout";
 import { ReaderFocusExitButton } from "./reader-focus-exit-button";
+import { ReaderMobileNav } from "./reader-mobile-nav";
 
 const WordBottomSheet = dynamic(() =>
 	import("@/widgets/word-bottom-sheet").then(m => ({ default: m.WordBottomSheet })),
@@ -75,33 +75,28 @@ const ReaderPageInner = ({
 	handleToggleBookmarks,
 	handleToggleAiHistory,
 	handleCloseRail,
-}: ReaderPageInnerProps) => {
-	const { state: batchTranslateState, translate: batchTranslate } = useAiBatchTranslate(data.tokens);
-
-	return (
-		<>
-			{!focusMode.active && (
-				<ReaderTopbar
-					textId={textId}
-					lang={lang}
-					currentPage={pageNumber}
-					data={data}
-					settingsOpen={settingsOpen}
-					onToggleSettings={handleToggleSettings}
-					notesOpen={notesOpen}
-					onToggleNotes={handleToggleNotes}
-					tocOpen={tocOpen}
-					onToggleToc={handleToggleToc}
-					bookmarksOpen={bookmarksOpen}
-					onToggleBookmarks={handleToggleBookmarks}
-					focusModeActive={focusMode.active}
-					onToggleFocusMode={focusMode.toggle}
-					aiHistoryOpen={aiHistoryOpen}
-					onToggleAiHistory={handleToggleAiHistory}
-					batchTranslateState={batchTranslateState}
-					onBatchTranslate={batchTranslate}
-				/>
-			)}
+}: ReaderPageInnerProps) => (
+	<>
+		{!focusMode.active && (
+			<ReaderTopbar
+				textId={textId}
+				lang={lang}
+				currentPage={pageNumber}
+				data={data}
+				settingsOpen={settingsOpen}
+				onToggleSettings={handleToggleSettings}
+				notesOpen={notesOpen}
+				onToggleNotes={handleToggleNotes}
+				tocOpen={tocOpen}
+				onToggleToc={handleToggleToc}
+				bookmarksOpen={bookmarksOpen}
+				onToggleBookmarks={handleToggleBookmarks}
+				focusModeActive={focusMode.active}
+				onToggleFocusMode={focusMode.toggle}
+				aiHistoryOpen={aiHistoryOpen}
+				onToggleAiHistory={handleToggleAiHistory}
+			/>
+		)}
 			<ReaderLayout
 				textId={textId}
 				pageNumber={pageNumber}
@@ -116,6 +111,14 @@ const ReaderPageInner = ({
 				onNavigate={handleNavigate}
 			/>
 			{!focusMode.active && <ReaderFooter />}
+			{!focusMode.active && (
+				<ReaderMobileNav
+					textId={textId}
+					lang={lang}
+					currentPage={pageNumber}
+					totalPages={data.totalPages}
+				/>
+			)}
 			<WordPopup />
 			<WordBottomSheet textId={textId} />
 			<ReaderSettingsSheet open={settingsOpen} onClose={handleCloseRail} textId={textId} pageNumber={pageNumber} />
@@ -139,10 +142,17 @@ const ReaderPageInner = ({
 				onClose={handleCloseRail}
 			/>
 			<ReaderAiHistorySheet open={aiHistoryOpen} onClose={handleCloseRail} />
-			{focusMode.active && <ReaderFocusExitButton onExit={focusMode.toggle} />}
+			{focusMode.active && (
+				<ReaderFocusExitButton
+					onExit={focusMode.toggle}
+					textId={textId}
+					lang={lang}
+					currentPage={pageNumber}
+					totalPages={data.totalPages}
+				/>
+			)}
 		</>
-	);
-};
+);
 
 export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
 	const {

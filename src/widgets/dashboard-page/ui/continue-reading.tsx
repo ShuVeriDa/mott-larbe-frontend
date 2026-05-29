@@ -29,9 +29,11 @@ export const ContinueReading = ({ items, lang }: ContinueReadingProps) => {
 					{t("dashboard.continueReading.viewAll")}
 				</Link>
 			</div>
-			<div className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-[repeat(3,220px)] max-sm:overflow-x-auto max-sm:pb-1 max-sm:[scrollbar-width:none] max-sm:[&::-webkit-scrollbar]:hidden">
+			<div className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-[repeat(3,220px)] max-sm:overflow-x-auto max-sm:pb-1 max-sm:[scrollbar-width:none] max-sm:[&::-webkit-scrollbar]:hidden max-sm:snap-x max-sm:snap-mandatory">
 				{items.slice(0, 3).map((item) => (
-					<ContinueCard key={item.id} item={item} lang={lang} />
+					<div key={item.id} className="max-sm:snap-start">
+						<ContinueCard item={item} lang={lang} />
+					</div>
 				))}
 			</div>
 		</section>

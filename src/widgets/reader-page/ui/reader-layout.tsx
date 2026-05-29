@@ -41,7 +41,11 @@ export const ReaderLayout = ({
 		)}
 	>
 		<div className="flex min-h-0 min-w-0 flex-col overflow-hidden">
-			<ReaderBody data={data} currentPage={pageNumber} />
+			<ReaderBody
+				data={data}
+				currentPage={pageNumber}
+				onNavigate={delta => onNavigate(pageNumber + delta)}
+			/>
 		</div>
 		<ReaderRail
 			textId={textId}
