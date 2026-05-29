@@ -4,6 +4,7 @@ import type { DashboardStats } from "@/entities/dashboard";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { usePathname } from "next/navigation";
+import { LayoutGroup } from "framer-motion";
 import { buildNavSections } from "../lib/nav-config";
 import { NavItem } from "./nav-item";
 import { NavSection } from "./nav-section";
@@ -25,6 +26,7 @@ export const SideNavContent = ({
 
 	return (
 		<div className="flex-1 overflow-y-auto overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+			<LayoutGroup id="nav">
 			{sections.map((section, secIdx) => (
 				<div key={section.titleKey}>
 					{secIdx > 0 ? (
@@ -58,6 +60,7 @@ export const SideNavContent = ({
 				</div>
 			))}
 
+			</LayoutGroup>
 			{stats?.streakDays?.length ? (
 				<div className={cn(isCompactMode && "max-[899px]:hidden")}>
 					<div className="mx-3.5 my-1.5 h-px bg-bd-1" />

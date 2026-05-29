@@ -4,8 +4,10 @@ import { Typography } from "@/shared/ui/typography";
 
 import { ComponentProps } from 'react';
 import { Popover as PopoverPrimitive } from "radix-ui"
+import { motion } from "framer-motion";
 
 import { cn } from "@/shared/lib/cn"
+import { variants } from "@/shared/lib/animation";
 
 function Popover({
   ...props
@@ -23,6 +25,7 @@ function PopoverContent({
   className,
   align = "center",
   sideOffset = 4,
+  children,
   ...props
 }: ComponentProps<typeof PopoverPrimitive.Content>) {
   return (
@@ -32,11 +35,21 @@ function PopoverContent({
         align={align}
         sideOffset={sideOffset}
         className={cn(
-          "z-50 flex w-72 origin-(--radix-popover-content-transform-origin) flex-col gap-4 rounded-md bg-popover p-4 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "z-50 w-72 origin-(--radix-popover-content-transform-origin) rounded-md bg-popover text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden",
           className
         )}
         {...props}
-      />
+        asChild
+      >
+        <motion.div
+          className="flex flex-col gap-4 p-4"
+          variants={variants.scaleIn}
+          initial="hidden"
+          animate="visible"
+        >
+          {children}
+        </motion.div>
+      </PopoverPrimitive.Content>
     </PopoverPrimitive.Portal>
   )
 }

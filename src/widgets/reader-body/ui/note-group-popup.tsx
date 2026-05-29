@@ -1,10 +1,12 @@
 "use client";
 
 import { NoteCard } from "@/entities/note";
+import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { X } from "lucide-react";
+import { motion } from "framer-motion";
 import { type ComponentProps, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import type { NoteGroupPopupState } from "../model/use-inline-notes";
@@ -57,10 +59,14 @@ export const NoteGroupPopup = ({
 	const handleClose: NonNullable<ComponentProps<"button">["onClick"]> = () => onClose();
 
 	return createPortal(
-		<div
+		<motion.div
 			ref={ref}
 			style={{ position: "fixed", left, top: popup.y + 8, zIndex: 9999, width: 264 }}
 			className="rounded-xl border border-bd-1 bg-surf shadow-lg"
+			variants={variants.fadeUp}
+			initial="hidden"
+			animate="visible"
+			exit="exit"
 		>
 			<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-3 py-2">
 				<Typography tag="span" className="text-[11px] font-semibold uppercase tracking-[0.5px] text-t-3">
@@ -87,7 +93,7 @@ export const NoteGroupPopup = ({
 					/>
 				))}
 			</div>
-		</div>,
+		</motion.div>,
 		document.body,
 	);
 };

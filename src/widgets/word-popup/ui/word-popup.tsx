@@ -11,6 +11,8 @@ import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { AddToDictionaryButton } from "@/widgets/word-panel/ui/add-to-dictionary-button";
 import { ExternalLink, Pencil } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { variants } from "@/shared/lib/animation";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AiWordPopupBody } from "./ai-word-popup-body";
@@ -251,15 +253,19 @@ export const WordPopup = () => {
 
 	return (
 		<>
-			{isVisible &&
-				createPortal(
-					<>
-						<div
+			{createPortal(
+				<AnimatePresence>
+					{isVisible && (
+						<motion.div
 							ref={popupRef}
 							role="dialog"
 							aria-label={token?.original ?? phrase?.phrase.original}
 							className="fixed z-200 w-[264px] overflow-hidden rounded-card border-[0.5px] border-bd-2 bg-surf shadow-lg"
 							style={{ left: position.left, top: position.top }}
+							variants={variants.scaleIn}
+							initial="hidden"
+							animate="visible"
+							exit="exit"
 						>
 							{phrase ? (
 								<PhrasePopupBody phrase={phrase} />
@@ -293,10 +299,11 @@ export const WordPopup = () => {
 									/>
 								)
 							) : null}
-						</div>
-					</>,
-					document.body,
-				)}
+						</motion.div>
+					)}
+				</AnimatePresence>,
+				document.body,
+			)}
 			{suggestWord && (
 				<EntrySuggestModal
 					open={suggestOpen}

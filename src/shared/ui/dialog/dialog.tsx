@@ -4,10 +4,12 @@ import { Typography } from "@/shared/ui/typography";
 
 import { Dialog as DialogPrimitive } from "radix-ui";
 import { ComponentProps } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button-base";
 import { XIcon } from "lucide-react";
+import { variants } from "@/shared/lib/animation";
 
 function Dialog({ ...props }: ComponentProps<typeof DialogPrimitive.Root>) {
 	return <DialogPrimitive.Root data-slot="dialog" {...props} />;
@@ -39,7 +41,7 @@ function DialogOverlay({
 		<DialogPrimitive.Overlay
 			data-slot="dialog-overlay"
 			className={cn(
-				"fixed inset-0 isolate z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
+				"fixed inset-0 isolate z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs",
 				className,
 			)}
 			{...props}
@@ -47,41 +49,107 @@ function DialogOverlay({
 	);
 }
 
+// Pass the same `open` value as the parent <Dialog open={open}> to enable exit animations.
+// When omitted, entry animation still plays; exit is handled by Radix's instant unmount.
 function DialogContent({
 	className,
 	children,
 	showCloseButton = true,
+	open,
 	...props
 }: ComponentProps<typeof DialogPrimitive.Content> & {
 	showCloseButton?: boolean;
+	open?: boolean;
 }) {
+	const withExitAnimation = open !== undefined;
+
+	if (withExitAnimation) {
+		return (
+			<AnimatePresence>
+				{open && (
+					<DialogPortal forceMount>
+						<motion.div
+							data-slot="dialog-overlay"
+							className="fixed inset-0 isolate z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs"
+							variants={variants.fadeIn}
+							initial="hidden"
+							animate="visible"
+							exit="exit"
+						/>
+						<DialogPrimitive.Content
+							forceMount
+							data-slot="dialog-content"
+							className={cn(
+								"fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-xl bg-popover p-6 text-sm text-popover-foreground ring-1 ring-foreground/10 outline-none sm:max-w-md",
+								className,
+							)}
+							{...props}
+							asChild
+						>
+							<motion.div
+								variants={variants.scaleIn}
+								initial="hidden"
+								animate="visible"
+								exit="exit"
+							>
+								{children}
+								{showCloseButton && (
+									<DialogPrimitive.Close data-slot="dialog-close" asChild>
+										<Button
+											variant="ghost"
+											className="absolute top-2.5 right-4"
+											size="icon-sm"
+											type="button"
+										>
+											<XIcon />
+											<Typography tag="span" className="sr-only">
+												Close
+											</Typography>
+										</Button>
+									</DialogPrimitive.Close>
+								)}
+							</motion.div>
+						</DialogPrimitive.Content>
+					</DialogPortal>
+				)}
+			</AnimatePresence>
+		);
+	}
+
 	return (
 		<DialogPortal>
 			<DialogOverlay />
 			<DialogPrimitive.Content
 				data-slot="dialog-content"
 				className={cn(
-					"fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-xl bg-popover p-6 text-sm text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none sm:max-w-md data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+					"fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-xl bg-popover p-6 text-sm text-popover-foreground ring-1 ring-foreground/10 outline-none sm:max-w-md",
 					className,
 				)}
 				{...props}
+				asChild
 			>
-				{children}
-				{showCloseButton && (
-					<DialogPrimitive.Close data-slot="dialog-close" asChild>
-						<Button
-							variant="ghost"
-							className="absolute top-2.5 right-4"
-							size="icon-sm"
-							type="button"
-						>
-							<XIcon />
-							<Typography tag="span" className="sr-only">
-								Close
-							</Typography>
-						</Button>
-					</DialogPrimitive.Close>
-				)}
+				<motion.div
+					variants={variants.scaleIn}
+					initial="hidden"
+					animate="visible"
+				>
+					{children}
+					{showCloseButton && (
+						<DialogPrimitive.Close data-slot="dialog-close" asChild>
+							<Button
+								variant="ghost"
+								className="absolute top-2.5 right-4"
+								size="icon-sm"
+								type="button"
+							>
+								<XIcon />
+								<Typography tag="span" className="sr-only">
+									Close
+								</Typography>
+							</Button>
+						</DialogPrimitive.Close>
+					)}
+				</motion.div>
 			</DialogPrimitive.Content>
 		</DialogPortal>
 	);

@@ -3,6 +3,7 @@
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -43,10 +44,11 @@ export const NavItem = ({ href, icon, labelKey, active, isCompactMode = false }:
 				{t(labelKey)}
 			</Typography>
 			{active ? (
-				<Typography
-					tag="span"
+				<motion.span
+					layoutId="nav-indicator"
 					aria-hidden="true"
 					className="absolute left-0 top-[5px] bottom-[5px] w-[2px] rounded-r-[2px] bg-acc"
+					transition={{ type: "spring", stiffness: 380, damping: 30 }}
 				/>
 			) : null}
 		</Link>

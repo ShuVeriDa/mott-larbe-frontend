@@ -9,6 +9,8 @@ import { Check, ChevronDown, Copy, ExternalLink, Settings, Sparkles, X } from "l
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { motion } from "framer-motion";
+import { variants } from "@/shared/lib/animation";
 import { useAiPhraseTranslate } from "../model/use-ai-phrase-translate";
 import { PhraseRefineBlock } from "./phrase-refine-block";
 import { cn } from "@/shared/lib/cn";
@@ -92,12 +94,16 @@ export const PhraseTranslatePopup = ({
 	const top = y - 8;
 
 	return createPortal(
-		<div
+		<motion.div
 			ref={ref}
 			role="dialog"
 			aria-label={t("aiTranslation.phrase.title")}
 			className="fixed z-200 w-[280px] overflow-hidden rounded-card border-[0.5px] border-bd-2 bg-surf shadow-lg"
 			style={{ left, top, transform: "translateY(-100%)" }}
+			variants={variants.fadeUp}
+			initial="hidden"
+			animate="visible"
+			exit="exit"
 		>
 			{/* Header */}
 			<div className="flex items-center justify-between border-b-[0.5px] border-bd-1 px-3.5 py-2.5">
@@ -225,7 +231,8 @@ export const PhraseTranslatePopup = ({
 					/>
 				</>
 			)}
-		</div>,
+		</motion.div>,
 		document.body,
 	);
 };
+

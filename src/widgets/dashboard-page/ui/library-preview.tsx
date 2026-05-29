@@ -1,5 +1,7 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { variants } from "@/shared/lib/animation";
 import { useLibraryPreview } from "../model";
 import { LibraryPreviewCard } from "./library-preview-card";
 import { LibraryPreviewEmpty } from "./library-preview-empty";
@@ -46,11 +48,18 @@ export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 					))}
 				</div>
 			) : items.length > 0 ? (
-				<div className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">
+				<motion.div
+					className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1"
+					variants={variants.staggerContainer}
+					initial="hidden"
+					animate="visible"
+				>
 					{items.map(item => (
-						<LibraryPreviewCard key={item.id} item={item} lang={lang} />
+						<motion.div key={item.id} variants={variants.staggerItem}>
+							<LibraryPreviewCard item={item} lang={lang} />
+						</motion.div>
 					))}
-				</div>
+				</motion.div>
 			) : (
 				<LibraryPreviewEmpty />
 			)}

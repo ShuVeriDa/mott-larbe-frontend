@@ -3,19 +3,29 @@ import { WordPanel } from "@/widgets/word-panel";
 import dynamic from "next/dynamic";
 
 const ReaderSettingsAside = dynamic(() =>
-	import("@/widgets/reader-settings-sheet").then(m => ({ default: m.ReaderSettingsAside })),
+	import("@/widgets/reader-settings-sheet").then(m => ({
+		default: m.ReaderSettingsAside,
+	})),
 );
 const ReaderNotesAside = dynamic(() =>
-	import("@/widgets/reader-notes-panel").then(m => ({ default: m.ReaderNotesAside })),
+	import("@/widgets/reader-notes-panel").then(m => ({
+		default: m.ReaderNotesAside,
+	})),
 );
 const ReaderTocAside = dynamic(() =>
-	import("@/widgets/reader-toc-panel").then(m => ({ default: m.ReaderTocAside })),
+	import("@/widgets/reader-toc-panel").then(m => ({
+		default: m.ReaderTocAside,
+	})),
 );
 const ReaderBookmarksAside = dynamic(() =>
-	import("@/widgets/reader-bookmarks-panel").then(m => ({ default: m.ReaderBookmarksAside })),
+	import("@/widgets/reader-bookmarks-panel").then(m => ({
+		default: m.ReaderBookmarksAside,
+	})),
 );
 const ReaderAiHistoryAside = dynamic(() =>
-	import("@/widgets/reader-ai-history-panel").then(m => ({ default: m.ReaderAiHistoryAside })),
+	import("@/widgets/reader-ai-history-panel").then(m => ({
+		default: m.ReaderAiHistoryAside,
+	})),
 );
 
 interface ReaderRailProps {
@@ -53,7 +63,12 @@ export const ReaderRail = ({
 		)}
 	>
 		<WordPanel textId={textId} />
-		<ReaderSettingsAside open={settingsOpen} onClose={onClose} textId={textId} pageNumber={pageNumber} />
+		<ReaderSettingsAside
+			open={settingsOpen}
+			onClose={onClose}
+			textId={textId}
+			pageNumber={pageNumber}
+		/>
 		<ReaderNotesAside
 			textId={textId}
 			pageNumber={pageNumber}

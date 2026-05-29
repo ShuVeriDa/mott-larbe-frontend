@@ -32,6 +32,7 @@ import { useSelectToken, useWordLookupStore } from "@/features/word-lookup";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import { extractSentence } from "@/shared/lib/extract-sentence";
+import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useInlineNotes } from "../model/use-inline-notes";
@@ -175,6 +176,7 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 				phraseMap={phraseMap}
 				onSelectPhrase={handleSelectPhrase}
 				phraseColorVisible={phraseColorVisible}
+				pageNumber={currentPage}
 			/>
 			{/* Note line group icons — rendered via portal at measured positions */}
 			{typeof window !== "undefined" &&
@@ -207,31 +209,43 @@ export const ReaderBody = ({ data, currentPage }: ReaderBodyProps) => {
 					/>,
 					document.body,
 				)}
-			{typeof window !== "undefined" && phraseTranslate && (
-				<PhraseTranslatePopup
-					phrase={phraseTranslate.phrase}
-					x={phraseTranslate.x}
-					y={phraseTranslate.y}
-					contextSentence={phraseTranslate.contextSentence}
-					lang={lang}
-					onClose={handleClosePhraseTranslate}
-				/>
+			{typeof window !== "undefined" && (
+				<AnimatePresence>
+					{phraseTranslate && (
+						<PhraseTranslatePopup
+							phrase={phraseTranslate.phrase}
+							x={phraseTranslate.x}
+							y={phraseTranslate.y}
+							contextSentence={phraseTranslate.contextSentence}
+							lang={lang}
+							onClose={handleClosePhraseTranslate}
+						/>
+					)}
+				</AnimatePresence>
 			)}
-			{typeof window !== "undefined" && activeNotePopup && (
-				<NoteInlinePopup
-					popup={activeNotePopup}
-					onClose={handleClosePopup}
-					onUpdate={handleUpdateNote}
-					onDelete={handleDeleteNote}
-				/>
+			{typeof window !== "undefined" && (
+				<AnimatePresence>
+					{activeNotePopup && (
+						<NoteInlinePopup
+							popup={activeNotePopup}
+							onClose={handleClosePopup}
+							onUpdate={handleUpdateNote}
+							onDelete={handleDeleteNote}
+						/>
+					)}
+				</AnimatePresence>
 			)}
-			{typeof window !== "undefined" && groupPopup && (
-				<NoteGroupPopup
-					popup={groupPopup}
-					onClose={handleCloseGroupPopup}
-					onUpdate={handleUpdateNote}
-					onDelete={handleDeleteNote}
-				/>
+			{typeof window !== "undefined" && (
+				<AnimatePresence>
+					{groupPopup && (
+						<NoteGroupPopup
+							popup={groupPopup}
+							onClose={handleCloseGroupPopup}
+							onUpdate={handleUpdateNote}
+							onDelete={handleDeleteNote}
+						/>
+					)}
+				</AnimatePresence>
 			)}
 		</article>
 	);

@@ -2,7 +2,7 @@
 
 import type { TextPageResponse } from "@/entities/text";
 import { cn } from "@/shared/lib/cn";
-import { Button } from "@/shared/ui/button";
+import { MotionButton } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
@@ -142,7 +142,7 @@ export const ReaderTopbar = ({
 
 			<div className="flex shrink-0 items-center gap-1">
 				{actions.map(action => (
-					<Button
+					<MotionButton
 						key={action.key}
 						onClick={action.onClick}
 						size="bare"
@@ -150,10 +150,11 @@ export const ReaderTopbar = ({
 						aria-label={action.ariaLabel}
 						title={action.ariaLabel}
 						disabled={action.disabled}
+						whileTap={action.disabled ? {} : { scale: 0.92 }}
 						className={iconBtnClass}
 					>
 						{action.renderIcon()}
-					</Button>
+					</MotionButton>
 				))}
 			</div>
 		</header>

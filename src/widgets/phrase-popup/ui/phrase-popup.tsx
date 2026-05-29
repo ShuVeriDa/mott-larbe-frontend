@@ -4,8 +4,10 @@ import {
 	usePhraseLookupStore,
 	type PhrasePopupAnchor,
 } from "@/features/phrase-lookup";
+import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -59,46 +61,54 @@ export const PhrasePopup = () => {
 		return () => observer.disconnect();
 	}, [isVisible]);
 
-	if (!isVisible || !activePhrase || typeof window === "undefined") return null;
+	if (typeof window === "undefined") return null;
 
-	const { phrase } = activePhrase;
+	const phrase = activePhrase?.phrase;
 
 	return createPortal(
-		<>
-			<div className="fixed inset-0 z-199" onClick={close} aria-hidden="true" />
-			<div
-				ref={popupRef}
-				role="dialog"
-				aria-label={phrase.original}
-				className="fixed z-200 w-[280px] overflow-hidden rounded-card border-[0.5px] border-bd-2 bg-surf shadow-lg"
-				style={{ left: position.left, top: position.top }}
-			>
-				{/* Header */}
-				<div className="border-b-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
-					<div className="mb-0.5 flex items-center gap-2">
-						<Typography
-							tag="span"
-							className="rounded-[4px] border-[0.5px] border-violet-300/40 bg-violet-50 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-violet-500 dark:border-violet-700/40 dark:bg-violet-950 dark:text-violet-400"
-						>
-							{t("reader.phrase.label")}
-						</Typography>
-					</div>
-					<div className="text-[16px] font-semibold tracking-[-0.2px] text-t-1">
-						{phrase.original}
-					</div>
-				</div>
+		<AnimatePresence>
+			{isVisible && phrase && (
+				<>
+					<div className="fixed inset-0 z-199" onClick={close} aria-hidden="true" />
+					<motion.div
+						ref={popupRef}
+						role="dialog"
+						aria-label={phrase.original}
+						className="fixed z-200 w-[280px] overflow-hidden rounded-card border-[0.5px] border-bd-2 bg-surf shadow-lg"
+						style={{ left: position.left, top: position.top }}
+						variants={variants.fadeUp}
+						initial="hidden"
+						animate="visible"
+						exit="exit"
+					>
+						{/* Header */}
+						<div className="border-b-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
+							<div className="mb-0.5 flex items-center gap-2">
+								<Typography
+									tag="span"
+									className="rounded-[4px] border-[0.5px] border-violet-300/40 bg-violet-50 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-violet-500 dark:border-violet-700/40 dark:bg-violet-950 dark:text-violet-400"
+								>
+									{t("reader.phrase.label")}
+								</Typography>
+							</div>
+							<div className="text-[16px] font-semibold tracking-[-0.2px] text-t-1">
+								{phrase.original}
+							</div>
+						</div>
 
-				{/* Translation */}
-				<div className="px-3.5 py-2.5">
-					<div className="text-[14px] font-medium text-t-1">
-						{phrase.translation}
-					</div>
-					{phrase.notes && (
-						<div className="mt-1 text-[11.5px] text-t-3">{phrase.notes}</div>
-					)}
-				</div>
-			</div>
-		</>,
+						{/* Translation */}
+						<div className="px-3.5 py-2.5">
+							<div className="text-[14px] font-medium text-t-1">
+								{phrase.translation}
+							</div>
+							{phrase.notes && (
+								<div className="mt-1 text-[11.5px] text-t-3">{phrase.notes}</div>
+							)}
+						</div>
+					</motion.div>
+				</>
+			)}
+		</AnimatePresence>,
 		document.body,
 	);
 };

@@ -1,7 +1,11 @@
 "use client";
 
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { MotionConfig } from "framer-motion";
 import type { ComponentProps } from 'react';
+
+const isDev = process.env.NODE_ENV === "development";
+
 export const ThemeProvider = ({
 	children,
 	...props
@@ -12,6 +16,8 @@ export const ThemeProvider = ({
 		enableSystem
 		{...props}
 	>
-		{children}
+		<MotionConfig reducedMotion={isDev ? "never" : "user"}>
+			{children}
+		</MotionConfig>
 	</NextThemesProvider>
 );

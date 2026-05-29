@@ -3,6 +3,7 @@ import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { MessageSquareMoreIcon } from "lucide-react";
+import { motion } from "framer-motion";
 import { useRef, type MouseEvent } from "react";
 
 interface NoteGroupIconProps {
@@ -24,29 +25,34 @@ export const NoteGroupIcon = ({ group, onNoteGroupClick }: NoteGroupIconProps) =
 	};
 
 	return (
-		<Button
-			ref={iconRef}
-			data-note-icon="true"
-			title={`${group.noteIds.length > 1 ? `${group.noteIds.length} заметки` : "Заметка"}`}
-			onMouseDown={handleMouseDown}
-			onClick={handleClick}
+		<motion.div
 			style={{
 				position: "fixed",
 				left: group.x,
 				top: group.y,
 				zIndex: 50,
 			}}
-			className={cn(
-				"flex items-center gap-0.5 rounded p-0.5",
-				"text-amber-400 transition-colors hover:bg-amber-50 hover:text-amber-600",
-			)}
+			animate={{ scale: [1, 1.15, 1] }}
+			transition={{ duration: 0.25, ease: "easeOut" }}
 		>
-			<MessageSquareMoreIcon size={14} strokeWidth={1.8} />
-			{group.noteIds.length > 1 && (
-				<Typography tag="span" className="text-[10px] font-semibold leading-none">
-					{group.noteIds.length}
-				</Typography>
-			)}
-		</Button>
+			<Button
+				ref={iconRef}
+				data-note-icon="true"
+				title={`${group.noteIds.length > 1 ? `${group.noteIds.length} заметки` : "Заметка"}`}
+				onMouseDown={handleMouseDown}
+				onClick={handleClick}
+				className={cn(
+					"flex items-center gap-0.5 rounded p-0.5",
+					"text-amber-400 transition-colors hover:bg-amber-50 hover:text-amber-600",
+				)}
+			>
+				<MessageSquareMoreIcon size={14} strokeWidth={1.8} />
+				{group.noteIds.length > 1 && (
+					<Typography tag="span" className="text-[10px] font-semibold leading-none">
+						{group.noteIds.length}
+					</Typography>
+				)}
+			</Button>
+		</motion.div>
 	);
 };

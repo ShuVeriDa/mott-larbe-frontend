@@ -1,6 +1,8 @@
 "use client";
 
 import { cn } from "@/shared/lib/cn";
+import { motion } from "framer-motion";
+import { variants } from "@/shared/lib/animation";
 import {
 	Fragment,
 	type CSSProperties,
@@ -44,6 +46,7 @@ export interface ArticleRichProps {
 	phraseMap?: PhraseMap;
 	onSelectPhrase?: (phrase: PagePhraseOccurrence, anchor: { left: number; top: number; width: number; height: number }) => void;
 	phraseColorVisible?: boolean;
+	pageNumber?: number;
 }
 
 // ── Highlight ranges ──────────────────────────────────────────────────────────
@@ -111,7 +114,9 @@ const makeMarkProps = (r: HlRange): { style: CSSProperties; className: string; "
 		backgroundColor: r.color,
 		borderRadius: "2px",
 		padding: "0 1px",
-		...(r.isNote ? { cursor: "pointer" } : { color: "var(--reader-hl-fg)" }),
+		...(r.isNote
+			? { cursor: "pointer" }
+			: { color: "var(--reader-hl-fg)", animation: "highlightFadeIn 0.15s ease" }),
 	},
 	className: r.isNote ? "reader-article-note-highlight" : "reader-article-highlight",
 	...(r.isNote && r.noteId ? { "data-note-id": r.noteId } : {}),
@@ -336,6 +341,7 @@ export const ArticleRich = ({
 	phraseMap,
 	onSelectPhrase,
 	phraseColorVisible = false,
+	pageNumber,
 }: ArticleRichProps) => {
 	const paragraphs = renderRichContent(contentRich, tokens);
 
@@ -351,33 +357,41 @@ export const ArticleRich = ({
 				letterSpacing: letterSpacing ?? "0.01em",
 			}}
 		>
-			{paragraphs.map((para, idx) => {
-				const paraText = para.segments.map(s => s.value).join("");
-				const hlRanges = highlights.length ? computeHighlightRanges(paraText, highlights) : [];
-				const nRanges = noteMarks.length ? computeNoteRanges(paraText, noteMarks) : [];
-				const allRanges = mergeRanges(hlRanges, nRanges);
-				const isLast = idx === paragraphs.length - 1;
-				const isBlockquote = para.blockType === "blockquote";
+			<motion.div
+				key={pageNumber}
+				variants={variants.staggerContainer}
+				initial="hidden"
+				animate="visible"
+			>
+				{paragraphs.map((para, idx) => {
+					const paraText = para.segments.map(s => s.value).join("");
+					const hlRanges = highlights.length ? computeHighlightRanges(paraText, highlights) : [];
+					const nRanges = noteMarks.length ? computeNoteRanges(paraText, noteMarks) : [];
+					const allRanges = mergeRanges(hlRanges, nRanges);
+					const isLast = idx === paragraphs.length - 1;
+					const isBlockquote = para.blockType === "blockquote";
 
-				return (
-					<Paragraph
-						key={idx}
-						segments={para.segments}
-						allRanges={allRanges}
-						activeTokenId={activeTokenId}
-						onSelectToken={onSelectToken}
-						phraseMap={phraseMap}
-						onSelectPhrase={onSelectPhrase}
-						phraseColorVisible={phraseColorVisible}
-						tag={isBlockquote ? "blockquote" : "p"}
-						className={cn(isBlockquote && "border-l-[3px] border-acc/40 pl-4 text-t-1")}
-						style={{
-							textAlign: para.textAlign,
-							marginBottom: isLast ? 0 : (paragraphSpacing ?? "1.25rem"),
-						}}
-					/>
-				);
-			})}
+					return (
+						<motion.div key={idx} variants={variants.staggerItem}>
+							<Paragraph
+								segments={para.segments}
+								allRanges={allRanges}
+								activeTokenId={activeTokenId}
+								onSelectToken={onSelectToken}
+								phraseMap={phraseMap}
+								onSelectPhrase={onSelectPhrase}
+								phraseColorVisible={phraseColorVisible}
+								tag={isBlockquote ? "blockquote" : "p"}
+								className={cn(isBlockquote && "border-l-[3px] border-acc/40 pl-4 text-t-1")}
+								style={{
+									textAlign: para.textAlign,
+									marginBottom: isLast ? 0 : (paragraphSpacing ?? "1.25rem"),
+								}}
+							/>
+						</motion.div>
+					);
+				})}
+			</motion.div>
 		</div>
 	);
 };
