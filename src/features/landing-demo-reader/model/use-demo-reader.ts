@@ -2,7 +2,6 @@
 
 import { useMutation } from "@tanstack/react-query";
 import {
-	useCallback,
 	useEffect,
 	useRef,
 	useState,
@@ -47,7 +46,7 @@ export const useDemoReader = ({ cardRef, wordsDict }: UseDemoReaderArgs) => {
 			landingApi.lookupByWord({ normalized: word }),
 	});
 
-	const computePosition = useCallback((token: HTMLElement): PopupPosition | null => {
+	const computePosition = (token: HTMLElement): PopupPosition | null => {
 		const card = cardRef.current;
 		if (!card) return null;
 		const cardBox = card.getBoundingClientRect();
@@ -70,7 +69,7 @@ export const useDemoReader = ({ cardRef, wordsDict }: UseDemoReaderArgs) => {
 			above = true;
 		}
 		return { top, left, arrowX, above };
-	}, [cardRef]);
+	};
 
 	const open = (word: string, token: HTMLElement) => {
 		tokenRefs.current.set(word, token);
@@ -82,11 +81,11 @@ export const useDemoReader = ({ cardRef, wordsDict }: UseDemoReaderArgs) => {
 		lookup.mutate(word);
 	};
 
-	const close = useCallback(() => {
+	const close = () => {
 		setActiveWord(null);
 		setActiveData(null);
 		setPosition(null);
-	}, []);
+	};
 
 	const toggle = (word: string, token: HTMLElement) => {
 		if (activeWord === word) {
@@ -136,7 +135,7 @@ export const useDemoReader = ({ cardRef, wordsDict }: UseDemoReaderArgs) => {
 			window.removeEventListener("resize", reposition);
 			window.removeEventListener("scroll", reposition);
 		};
-	}, [activeWord, computePosition]);
+	}, [activeWord]);
 
 	return {
 		activeWord,

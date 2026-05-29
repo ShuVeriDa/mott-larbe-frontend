@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useReaderFocusMode = () => {
 	const [active, setActive] = useState(false);
 
-	const toggle = useCallback(() => setActive(v => !v), []);
+	const toggle = () => setActive(v => !v);
 
 	useEffect(() => {
 		if (!active) return;

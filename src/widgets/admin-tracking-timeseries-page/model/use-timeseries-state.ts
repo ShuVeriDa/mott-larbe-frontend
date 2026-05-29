@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
 import type { AnalyticsMetric, AnalyticsGranularity } from "@/features/admin-analytics";
 
 const METRICS: AnalyticsMetric[] = [
@@ -34,27 +33,15 @@ export const useTimeseriesState = () => {
 	const granularity: AnalyticsGranularity = isGranularity(rawGran) ? rawGran : "day";
 	const compare = rawCompare === "1";
 
-	const update = useCallback(
-		(patch: Record<string, string>) => {
-			const params = new URLSearchParams(searchParams.toString());
-			for (const [k, v] of Object.entries(patch)) params.set(k, v);
-			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-		},
-		[pathname, router, searchParams],
-	);
+	const update = (patch: Record<string, string>) => {
+		const params = new URLSearchParams(searchParams.toString());
+		for (const [k, v] of Object.entries(patch)) params.set(k, v);
+		router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+	};
 
-	const setMetric = useCallback(
-		(m: AnalyticsMetric) => update({ metric: m }),
-		[update],
-	);
-	const setGranularity = useCallback(
-		(g: AnalyticsGranularity) => update({ gran: g }),
-		[update],
-	);
-	const setCompare = useCallback(
-		(v: boolean) => update({ compare: v ? "1" : "0" }),
-		[update],
-	);
+	const setMetric = (m: AnalyticsMetric) => update({ metric: m });
+	const setGranularity = (g: AnalyticsGranularity) => update({ gran: g });
+	const setCompare = (v: boolean) => update({ compare: v ? "1" : "0" });
 
 	return { metric, granularity, compare, setMetric, setGranularity, setCompare, METRICS, GRANULARITIES };
 };

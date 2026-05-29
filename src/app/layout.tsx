@@ -57,6 +57,25 @@ const sourceSerif4 = Source_Serif_4({
 export const metadata: Metadata = {
 	title: "Mott & Larbe",
 	description: "Mott & Larbe",
+	manifest: "/manifest.webmanifest",
+	appleWebApp: {
+		capable: true,
+		statusBarStyle: "black-translucent",
+		title: "Мотт Ларбе",
+		startupImage: "/icons/apple-touch-icon.png",
+	},
+	formatDetection: {
+		telephone: false,
+	},
+	icons: {
+		icon: [
+			{ url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+			{ url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
+		],
+		apple: [
+			{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+		],
+	},
 };
 
 const RootLayout = async ({
@@ -72,6 +91,10 @@ const RootLayout = async ({
 			className={cn("h-full", "antialiased", golosText.variable, playfairDisplay.variable, geistMono.variable, lora.variable, merriweather.variable, ptSerif.variable, sourceSerif4.variable, "font-sans", inter.variable, playfairDisplayHeading.variable)}
 			suppressHydrationWarning
 		>
+			<head>
+				<meta name="theme-color" content="#121210" media="(prefers-color-scheme: dark)" />
+				<meta name="theme-color" content="#f5f4f0" media="(prefers-color-scheme: light)" />
+			</head>
 			<body className="min-h-full flex flex-col md:overflow-hidden" suppressHydrationWarning>
 				<ThemeProvider>
 					<QueryProvider>

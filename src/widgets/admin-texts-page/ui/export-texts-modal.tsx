@@ -9,7 +9,6 @@ import { CheckSquare, Download, Search, Square } from "lucide-react";
 import {
 	ChangeEvent,
 	ComponentProps,
-	useMemo,
 	useState,
 } from "react";
 import { Modal, ModalActions } from "@/shared/ui/modal";
@@ -46,15 +45,11 @@ export const ExportTextsModal = ({
 	const checkedIds: Set<string> =
 		manualCheckedIds ?? (!isLoading ? new Set(allTexts.map(t => t.id)) : new Set());
 
-	const filtered = useMemo(
-		() =>
-			search.trim()
-				? allTexts.filter(t =>
-						t.title.toLowerCase().includes(search.trim().toLowerCase()),
-					)
-				: allTexts,
-		[allTexts, search],
-	);
+	const filtered = search.trim()
+		? allTexts.filter(t =>
+				t.title.toLowerCase().includes(search.trim().toLowerCase()),
+			)
+		: allTexts;
 
 	const allFilteredChecked =
 		filtered.length > 0 && filtered.every(t => checkedIds.has(t.id));

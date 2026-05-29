@@ -1,5 +1,4 @@
 "use client";
-import { useMemo } from "react";
 import { useReviewPage } from "../model";
 import { ReviewIntro } from "@/widgets/review-intro";
 import { Sm2Session } from "@/widgets/review-session";
@@ -53,7 +52,7 @@ export const ReviewPage = () => {
 		handleGoSm2,
 	} = useReviewPage();
 
-	const retryDue = useMemo<DeckDueResponse>(() => ({
+	const retryDue: DeckDueResponse = {
 		new: deckAgainCards,
 		old: [],
 		retired: [],
@@ -61,7 +60,7 @@ export const ReviewPage = () => {
 		numbered: [],
 		currentNumberedDeck: 1,
 		maxNumberedDeck: 0,
-	}), [deckAgainCards]);
+	};
 
 	if (statsLoading && dueLoading && screen === "intro") return <ReviewPageSkeleton />;
 

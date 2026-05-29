@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 
 /**
@@ -13,20 +12,18 @@ export type PhraseMap = Map<number, PagePhraseOccurrence>;
 export const usePhraseMap = (
   phrases: PagePhraseOccurrence[] | undefined,
 ): PhraseMap => {
-  return useMemo(() => {
-    const map = new Map<number, PagePhraseOccurrence>();
-    if (!phrases) return map;
-    for (const occ of phrases) {
-      for (
-        let pos = occ.startTokenPosition;
-        pos <= occ.endTokenPosition;
-        pos++
-      ) {
-        map.set(pos, occ);
-      }
+  const map = new Map<number, PagePhraseOccurrence>();
+  if (!phrases) return map;
+  for (const occ of phrases) {
+    for (
+      let pos = occ.startTokenPosition;
+      pos <= occ.endTokenPosition;
+      pos++
+    ) {
+      map.set(pos, occ);
     }
-    return map;
-  }, [phrases]);
+  }
+  return map;
 };
 
 /**

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface SelectionState {
 	text: string;
@@ -11,10 +11,10 @@ export interface SelectionState {
 export const useTextSelection = (containerRef: React.RefObject<HTMLElement | null>) => {
 	const [selection, setSelection] = useState<SelectionState | null>(null);
 
-	const clearSelection = useCallback(() => {
+	const clearSelection = () => {
 		setSelection(null);
 		window.getSelection()?.removeAllRanges();
-	}, []);
+	};
 
 	useEffect(() => {
 		const handleMouseUp = () => {

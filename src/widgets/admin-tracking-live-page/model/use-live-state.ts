@@ -73,13 +73,13 @@ export const useLiveState = () => {
 		return () => clearInterval(id);
 	}, [fetchEvents]);
 
-	const handleTogglePause = useCallback(() => setPaused((p) => !p), []);
-	const handleClear = useCallback(() => setEvents([]), []);
-	const handleFilterChange = useCallback((type: AnalyticsLiveEventType | null) => {
+	const handleTogglePause = () => setPaused((p) => !p);
+	const handleClear = () => setEvents([]);
+	const handleFilterChange = (type: AnalyticsLiveEventType | null) => {
 		setFilter(type);
 		setEvents([]);
 		maxIdRef.current = undefined;
-	}, []);
+	};
 
 	const visibleEvents = filter ? events.filter((e) => e.eventType === filter) : events;
 

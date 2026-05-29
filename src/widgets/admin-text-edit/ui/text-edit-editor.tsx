@@ -16,7 +16,6 @@ import { Typography } from "@/shared/ui/typography";
 import {
 	type ComponentProps,
 	useEffect,
-	useMemo,
 	useRef,
 	useState,
 } from "react";
@@ -37,6 +36,8 @@ import {
 } from "./word-annotations-panel";
 
 export const ANNOTATE_WORD_FORM_EVENT = "admin:annotate-word-form";
+
+const editorExtensions = [PhraseHighlightExtension, WordAnnotationHighlightExtension];
 
 interface TextEditEditorProps {
 	title: string;
@@ -82,10 +83,7 @@ export const TextEditEditor = ({
 
 	// Load phrases for current page to highlight in editor
 	const { data: phrasesData } = useAdminPagePhrases(textId, activePage + 1);
-	const phraseTexts = useMemo(
-		() => (phrasesData ?? []).map(p => p.phrase.original).filter(Boolean),
-		[phrasesData],
-	);
+	const phraseTexts = (phrasesData ?? []).map(p => p.phrase.original).filter(Boolean);
 	const phraseTextsRef = useRef<string[]>(phraseTexts);
 	useEffect(() => {
 		phraseTextsRef.current = phraseTexts;
@@ -101,11 +99,6 @@ export const TextEditEditor = ({
 	useEffect(() => {
 		annotatedFormsRef.current = annotatedForms;
 	}, [annotatedForms]);
-
-	const editorExtensions = useMemo(
-		() => [PhraseHighlightExtension, WordAnnotationHighlightExtension],
-		[],
-	);
 
 	useEffect(() => {
 		const editor = editorRef.current;

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 import type {
 	AnalyticsRange,
 	AnalyticsRangeError,
@@ -73,57 +73,40 @@ export const useAnalyticsRange = (
 	const urlTo = searchParams.get("to");
 	const urlPreset = detectPreset(urlFrom, urlTo);
 
-	const initial = useMemo<{ preset: AnalyticsRangePreset; range: AnalyticsRange }>(
-		() => {
-			if (syncWithUrl && urlPreset) {
-				return {
-					preset: urlPreset,
-					range: { from: urlFrom as string, to: urlTo as string },
-				};
-			}
-			return { preset: defaultPreset, range: computeRange(defaultPreset) };
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[],
-	);
+	const [preset, setPresetState] = useState<AnalyticsRangePreset>(() => {
+		if (syncWithUrl && urlPreset) return urlPreset;
+		return defaultPreset;
+	});
+	const [range, setRange] = useState<AnalyticsRange>(() => {
+		if (syncWithUrl && urlPreset) return { from: urlFrom as string, to: urlTo as string };
+		return computeRange(defaultPreset);
+	});
 
-	const [preset, setPresetState] = useState<AnalyticsRangePreset>(initial.preset);
-	const [range, setRange] = useState<AnalyticsRange>(initial.range);
+	const writeUrl = (next: AnalyticsRange) => {
+		if (!syncWithUrl) return;
+		const params = new URLSearchParams(searchParams.toString());
+		params.set("from", next.from);
+		params.set("to", next.to);
+		router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+	};
 
-	const writeUrl = useCallback(
-		(next: AnalyticsRange) => {
-			if (!syncWithUrl) return;
-			const params = new URLSearchParams(searchParams.toString());
-			params.set("from", next.from);
-			params.set("to", next.to);
-			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-		},
-		[pathname, router, searchParams, syncWithUrl],
-	);
+	const setPreset = (next: AnalyticsRangePreset) => {
+		setPresetState(next);
+		if (next !== "custom") {
+			const r = computeRange(next);
+			setRange(r);
+			writeUrl(r);
+		}
+	};
 
-	const setPreset = useCallback(
-		(next: AnalyticsRangePreset) => {
-			setPresetState(next);
-			if (next !== "custom") {
-				const r = computeRange(next);
-				setRange(r);
-				writeUrl(r);
-			}
-		},
-		[writeUrl],
-	);
-
-	const setCustomRange = useCallback(
-		(patch: Partial<AnalyticsRange>) => {
-			setPresetState("custom");
-			setRange((prev) => {
-				const next = { ...prev, ...patch };
-				if (validate(next) === null) writeUrl(next);
-				return next;
-			});
-		},
-		[writeUrl],
-	);
+	const setCustomRange = (patch: Partial<AnalyticsRange>) => {
+		setPresetState("custom");
+		setRange((prev) => {
+			const next = { ...prev, ...patch };
+			if (validate(next) === null) writeUrl(next);
+			return next;
+		});
+	};
 
 	const error = validate(range);
 

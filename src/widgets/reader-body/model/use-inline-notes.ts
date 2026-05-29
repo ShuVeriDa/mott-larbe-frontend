@@ -7,7 +7,7 @@ import {
 	useUpdateNote,
 	type Note,
 } from "@/entities/note";
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 
 export interface NoteMarkItem {
 	id: string;
@@ -39,27 +39,22 @@ export const useInlineNotes = (textId: string, pageNumber: number) => {
 	// Group popup: shown when a line has multiple notes
 	const [groupPopup, setGroupPopup] = useState<NoteGroupPopupState | null>(null);
 
-	const noteMarks = useMemo<NoteMarkItem[]>(
-		() =>
-			notes
-				.filter(n => !!n.selectedText)
-				.map(n => ({
-					id: n.id,
-					selectedText: n.selectedText!,
-					isActive: n.id === activeNoteId,
-				})),
-		[notes, activeNoteId],
-	);
+	const noteMarks: NoteMarkItem[] = notes
+		.filter(n => !!n.selectedText)
+		.map(n => ({
+			id: n.id,
+			selectedText: n.selectedText!,
+			isActive: n.id === activeNoteId,
+		}));
 
-	const activeNotePopup = useMemo<NotePopupState | null>(() => {
+	const activeNotePopup: NotePopupState | null = (() => {
 		if (!activeNoteId || !popupPosition) return null;
 		const note = notes.find(n => n.id === activeNoteId) ?? null;
 		if (!note) return null;
 		return { note, ...popupPosition };
-	}, [activeNoteId, popupPosition, notes]);
+	})();
 
-	// Called by NoteGroupIcon when user clicks a line's icon
-	const handleNoteGroupClick = useCallback((noteIds: string[], x: number, y: number) => {
+	const handleNoteGroupClick = (noteIds: string[], x: number, y: number) => {
 		const groupNotes = noteIds
 			.map(id => notes.find(n => n.id === id))
 			.filter((n): n is Note => !!n);
@@ -73,56 +68,46 @@ export const useInlineNotes = (textId: string, pageNumber: number) => {
 			setActiveNoteId(null);
 			setPopupPosition(null);
 		}
-	}, [notes]);
+	};
 
-	// Called from group popup when user picks a specific note
-	const handleNoteIconClick = useCallback((noteId: string, x: number, y: number) => {
+	const handleNoteIconClick = (noteId: string, x: number, y: number) => {
 		setActiveNoteId(noteId);
 		setPopupPosition({ x, y });
 		setGroupPopup(null);
-	}, []);
+	};
 
-	const handleClosePopup = useCallback(() => {
+	const handleClosePopup = () => {
 		setActiveNoteId(null);
 		setPopupPosition(null);
-	}, []);
+	};
 
-	const handleCloseGroupPopup = useCallback(() => {
+	const handleCloseGroupPopup = () => {
 		setGroupPopup(null);
-	}, []);
+	};
 
-	const handleAddNote = useCallback(
-		(selectedText: string, body: string) => {
-			createNote({ textId, pageNumber, selectedText, body });
-		},
-		[createNote, textId, pageNumber],
-	);
+	const handleAddNote = (selectedText: string, body: string) => {
+		createNote({ textId, pageNumber, selectedText, body });
+	};
 
-	const handleUpdateNote = useCallback(
-		(id: string, body: string) => {
-			updateNote({ id, dto: { body } });
-		},
-		[updateNote],
-	);
+	const handleUpdateNote = (id: string, body: string) => {
+		updateNote({ id, dto: { body } });
+	};
 
-	const handleDeleteNote = useCallback(
-		(id: string) => {
-			deleteNote(id);
-			if (activeNoteId === id) {
-				setActiveNoteId(null);
-				setPopupPosition(null);
+	const handleDeleteNote = (id: string) => {
+		deleteNote(id);
+		if (activeNoteId === id) {
+			setActiveNoteId(null);
+			setPopupPosition(null);
+		}
+		if (groupPopup) {
+			const remaining = groupPopup.notes.filter(n => n.id !== id);
+			if (remaining.length === 0) {
+				setGroupPopup(null);
+			} else {
+				setGroupPopup(prev => prev ? { ...prev, notes: remaining } : null);
 			}
-			if (groupPopup) {
-				const remaining = groupPopup.notes.filter(n => n.id !== id);
-				if (remaining.length === 0) {
-					setGroupPopup(null);
-				} else {
-					setGroupPopup(prev => prev ? { ...prev, notes: remaining } : null);
-				}
-			}
-		},
-		[deleteNote, activeNoteId, groupPopup],
-	);
+		}
+	};
 
 	return {
 		noteMarks,
