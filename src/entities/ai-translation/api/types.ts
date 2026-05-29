@@ -36,6 +36,8 @@ export interface AiWordTranslation {
   russianGloss: string | null;
   transliteration: string | null;
   partOfSpeech: string | null;
+  baseForm: string | null;
+  nounClass: string | null;
   example: string | null;
   source: string;
   status: AiCacheStatus;
@@ -104,6 +106,8 @@ export interface AiCacheEntry {
   russianGloss: string | null;
   transliteration: string | null;
   partOfSpeech: string | null;
+  baseForm: string | null;
+  nounClass: string | null;
   example: string | null;
   status: AiCacheStatus;
   requestCount: number;

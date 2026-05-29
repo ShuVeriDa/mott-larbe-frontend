@@ -1,5 +1,5 @@
 import { http } from "@/shared/api";
-import type { WordCorpusExample, WordLookupResponse } from "./types";
+import type { WordLookupResponse } from "./types";
 
 export const wordApi = {
 	lookup: async (tokenId: string): Promise<WordLookupResponse> => {
@@ -9,10 +9,4 @@ export const wordApi = {
 		return data;
 	},
 
-	examples: async (lemmaId: string): Promise<WordCorpusExample[]> => {
-		const { data } = await http.get<WordCorpusExample[]>(
-			`/words/${lemmaId}/examples`,
-		);
-		return data;
-	},
 };

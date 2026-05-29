@@ -1,4 +1,42 @@
 {
+	"posNah": {
+		"сущ": "цӀердош",
+		"прил": "билгалдош",
+		"числ": "терахьдош",
+		"мест": "цӀерметдош",
+		"гл": "хандош",
+		"нареч": "куцдош",
+		"прич": "ардамдош",
+		"дееприч": "тIeардамдош",
+		"межд": "айдардош",
+		"междомет": "айдардош",
+		"союз": "хуттург",
+		"предлог": "дешхьалхе",
+		"послелог": "дештӀаьхье",
+		"частица": "дакъалг",
+		"собир": "гулдаран терахьдош",
+		"звукоподр": "гӀовгӀа-терадеш",
+		"масд": "хандошан цӀердош"
+	},
+	"posLabel": {
+		"сущ": "Noun",
+		"прил": "Adjective",
+		"числ": "Numeral",
+		"мест": "Pronoun",
+		"гл": "Verb",
+		"нареч": "Adverb",
+		"прич": "Participle",
+		"дееприч": "Gerund",
+		"межд": "Interjection",
+		"междомет": "Interjection",
+		"союз": "Conjunction",
+		"предлог": "Preposition",
+		"послелог": "Postposition",
+		"частица": "Particle",
+		"собир": "Collective",
+		"звукоподр": "Onomatopoeia",
+		"масд": "Masdar"
+	},
 	"landing": {
 		"meta": {
 			"title": "Mott Larbe — learn Chechen through reading",
@@ -1810,6 +1848,8 @@
 		},
 		"popup": {
 			"loading": "Loading…",
+			"badge": "Dictionary",
+			"nounClass": "Class",
 			"addToDictionary": "Add",
 			"inDictionary": "Saved",
 			"openPanel": "Open in panel",

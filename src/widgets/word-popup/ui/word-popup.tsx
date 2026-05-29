@@ -1,18 +1,16 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-
 import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 import type { TextToken } from "@/entities/text";
 import { useWordLookup, type WordLookupResponse } from "@/entities/word";
 import { EntrySuggestModal } from "@/features/entry-suggest";
 import { useWordLookupStore, type PopupAnchor } from "@/features/word-lookup";
+import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { AddToDictionaryButton } from "@/widgets/word-panel/ui/add-to-dictionary-button";
-import { ExternalLink, Pencil } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { variants } from "@/shared/lib/animation";
+import { BookOpen, ExternalLink, Pencil } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AiWordPopupBody } from "./ai-word-popup-body";
@@ -51,66 +49,82 @@ const WordPopupBody = ({
 
 	return (
 		<>
+			{/* Шапка: слово + badge */}
 			<div className="border-b-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
-				<div className="mb-1 flex items-start gap-2">
+				<div className="flex items-start gap-2">
 					<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
 						{token.original}
 					</div>
+					<span className="mt-0.5 flex shrink-0 items-center gap-1 rounded-[4px] border-[0.5px] border-grn/30 bg-grn/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-grn">
+						<BookOpen className="size-2.5" strokeWidth={1.8} />
+						{t("reader.popup.badge")}
+					</span>
 					{lookup.wordLevel ? (
-						<Typography
-							tag="span"
-							className={`mt-0.5 shrink-0 rounded-[4px] border-[0.5px] px-1.5 py-0.5 text-[9.5px] font-bold uppercase tracking-[0.4px] ${
+						<span
+							className={`mt-0.5 flex shrink-0 items-center rounded-[4px] border-[0.5px] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] ${
 								lookup.wordLevel === "A"
-									? "bg-grn/15 text-grn border-grn/30"
+									? "border-grn/30 bg-grn/15 text-grn"
 									: lookup.wordLevel === "B"
-										? "bg-acc/15 text-acc border-acc/30"
-										: "bg-red/15 text-red border-red/30"
+										? "border-acc/30 bg-acc/15 text-acc"
+										: "border-red/30 bg-red/15 text-red"
 							}`}
 						>
 							{lookup.wordLevel}
-						</Typography>
+						</span>
 					) : null}
 				</div>
-				<div className="text-[11.5px] text-t-3">
-					{t("reader.panel.baseForm")}:{" "}
-					<Typography tag="strong" className="font-medium text-t-2">
-						{lookup.baseForm}
-					</Typography>
-				</div>
 			</div>
+
+			{/* Тело: перевод + мета */}
 			<div className="border-b-[0.5px] border-bd-1 px-3.5 py-2.5">
-				<div
-					className={
-						lookup.lemmaTranslation
-							? "mb-1 text-[14px] font-medium text-t-1"
-							: "text-[14px] font-medium text-t-1"
-					}
-				>
+				<div className="text-[14px] font-medium text-t-1">
 					{lookup.translation}
 				</div>
-				{lookup.lemmaTranslation ? (
-					<div className="text-[11.5px] text-t-3">
+				{lookup.baseForm ? (
+					<div className="mt-1 text-[11.5px] text-t-3">
 						{t("reader.panel.baseForm")}:{" "}
-						<Typography tag="span" className="font-medium text-t-2">
-							{lookup.lemmaTranslation}
-						</Typography>
+						<span className="font-medium text-t-2">{lookup.baseForm}</span>
+					</div>
+				) : null}
+				{lookup.grammar
+					? (() => {
+							const key = lookup.grammar.replace(/\.$/, "");
+							const nah = t(`posNah.${key}`);
+							const label = t(`posLabel.${key}`);
+							const display =
+								nah !== `posNah.${key}`
+									? `${nah} / ${label !== `posLabel.${key}` ? label : lookup.grammar}`
+									: lookup.grammar;
+							return (
+								<div className="mt-0.5 text-[11.5px] text-t-3">
+									{t("aiTranslation.popup.partOfSpeech")}:{" "}
+									<span className="text-t-2">{display}</span>
+								</div>
+							);
+						})()
+					: null}
+				{(lookup.nounClass ?? lookup.nounClassPlural) ? (
+					<div className="mt-0.5 text-[11.5px] text-t-3">
+						{t("reader.popup.nounClass")}:{" "}
+						<span className="text-t-2">
+							{lookup.nounClass ?? "—"} / {lookup.nounClassPlural ?? "—"}
+						</span>
+					</div>
+				) : null}
+				{lookup.meanings[0]?.examples[0] ? (
+					<div className="mt-1.5 text-[11.5px] italic text-t-3">
+						{lookup.meanings[0].examples[0].text}{" "}
+						{lookup.meanings[0].examples[0].translation ? (
+							<span className="not-italic">
+								— {lookup.meanings[0].examples[0].translation}
+							</span>
+						) : null}
 					</div>
 				) : null}
 			</div>
-			{lookup.tags.length > 0 ? (
-				<div className="flex flex-wrap gap-1 border-b-[0.5px] border-bd-1 px-3.5 py-2">
-					{lookup.tags.slice(0, 3).map(tag => (
-						<Typography
-							tag="span"
-							key={tag}
-							className="rounded-[4px] border-[0.5px] border-bd-1 bg-surf-2 px-[7px] py-0.5 text-[10.5px] font-medium text-t-2"
-						>
-							{tag}
-						</Typography>
-					))}
-				</div>
-			) : null}
-			<div className="flex gap-1.5 p-2.5">
+
+			{/* Футер: кнопки */}
+			<div className="flex items-center justify-between gap-2 px-3.5 py-2">
 				<AddToDictionaryButton
 					tokenId={token.id}
 					word={token.original}
@@ -119,26 +133,28 @@ const WordPopupBody = ({
 					dictionaryEntryId={lookup.dictionaryEntryId}
 					currentFolderId={lookup.dictionaryFolder?.id ?? null}
 					currentFolderName={lookup.dictionaryFolder?.name ?? null}
-					className="h-[30px] text-[11.5px]"
+					className="h-7 text-[11.5px]"
 				/>
-				<Button
-					size={"bare"}
-					onClick={onSuggestOpen}
-					aria-label={t("suggest.button")}
-					title={t("suggest.button")}
-					className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-base border-[0.5px] border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
-				>
-					<Pencil className="size-3.5" strokeWidth={1.4} />
-				</Button>
-				<Button
-					size={"bare"}
-					onClick={onOpenInPanel}
-					aria-label={t("reader.popup.openPanel")}
-					title={t("reader.popup.openPanel")}
-					className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-base border-[0.5px] border-bd-1 bg-surf-2 text-t-2 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
-				>
-					<ExternalLink className="size-3.5" strokeWidth={1.4} />
-				</Button>
+				<div className="flex gap-1.5">
+					<Button
+						size="bare"
+						onClick={onSuggestOpen}
+						aria-label={t("suggest.button")}
+						title={t("suggest.button")}
+						className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-base border-[0.5px] border-bd-1 bg-surf-2 text-t-3 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
+					>
+						<Pencil className="size-3" strokeWidth={1.5} />
+					</Button>
+					<Button
+						size="bare"
+						onClick={onOpenInPanel}
+						aria-label={t("reader.popup.openPanel")}
+						title={t("reader.popup.openPanel")}
+						className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-base border-[0.5px] border-bd-1 bg-surf-2 text-t-3 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
+					>
+						<ExternalLink className="size-3" strokeWidth={1.5} />
+					</Button>
+				</div>
 			</div>
 		</>
 	);
@@ -151,24 +167,27 @@ const PhrasePopupBody = ({ phrase }: { phrase: PagePhraseOccurrence }) => {
 	return (
 		<>
 			<div className="border-b-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
-				<div className="mb-1 flex items-center gap-1.5">
-					<Typography
-						tag="span"
-						className="rounded-[4px] border-[0.5px] border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t"
-					>
-						{t("reader.phrase.label")}
-					</Typography>
-				</div>
-				<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
-					{phrase.phrase.original}
+				<div className="mb-1.5 flex items-start justify-between gap-2">
+					<div className="flex items-start gap-2">
+						<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
+							{phrase.phrase.original}
+						</div>
+						<span className="mt-0.5 flex shrink-0 items-center gap-1 rounded-[4px] border-[0.5px] border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
+							{t("reader.phrase.label")}
+						</span>
+					</div>
 				</div>
 			</div>
-			<div className="px-3.5 py-2.5">
-				<div className="text-[14px] font-medium text-t-1">
-					{phrase.phrase.translation}
+			<div className="border-b-[0.5px] border-bd-1 px-3.5 py-2.5">
+				<div className="flex items-start justify-between gap-2">
+					<div className="text-[14px] font-medium text-t-1">
+						{phrase.phrase.translation}
+					</div>
 				</div>
 				{phrase.phrase.notes && (
-					<div className="mt-1 text-[12px] text-t-3">{phrase.phrase.notes}</div>
+					<div className="mt-1 text-[11.5px] text-t-3">
+						{phrase.phrase.notes}
+					</div>
 				)}
 			</div>
 		</>
@@ -234,7 +253,10 @@ export const WordPopup = () => {
 		if (!isVisible) return;
 		const onMouseDown = (event: MouseEvent) => {
 			if (suggestOpen) return;
-			if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+			if (
+				popupRef.current &&
+				!popupRef.current.contains(event.target as Node)
+			) {
 				closePopup();
 			}
 		};

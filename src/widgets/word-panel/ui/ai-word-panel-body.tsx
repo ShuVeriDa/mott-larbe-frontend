@@ -13,7 +13,6 @@ import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { useWordLookupStore } from "@/features/word-lookup";
 import {
 	Check,
 	CheckCircle2,
@@ -28,21 +27,21 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { GeminiLimitBanner } from "./gemini-limit-banner";
+import { GeminiLimitBanner } from "../../word-popup/ui/gemini-limit-banner";
 
-interface AiWordPopupBodyProps {
+interface AiWordPanelBodyProps {
 	word: string;
 	normalized: string;
 	contextSentence?: string;
 	lang: string;
 }
 
-export const AiWordPopupBody = ({
+export const AiWordPanelBody = ({
 	word,
 	normalized,
 	contextSentence,
 	lang,
-}: AiWordPopupBodyProps) => {
+}: AiWordPanelBodyProps) => {
 	const { t } = useI18n();
 	const { state, voted, translate, vote } = useAiWordLookup();
 	const { refineState, openRefine, refine: refineWord } = useAiWordRefine();
@@ -50,18 +49,21 @@ export const AiWordPopupBody = ({
 	const addToSession = useAiSessionStore(s => s.add);
 	const { showNudge, dismiss } = useAiKeyNudge();
 	const { targetLanguage } = useTranslationLanguageStore();
-	const openInPanel = useWordLookupStore(s => s.openInPanel);
-	const activeToken = useWordLookupStore(s => s.activeToken);
 
 	const hasKey = keyStatus?.hasKey ?? false;
 	const sessionEntry = useAiSessionStore(s => s.entries.find(e => e.word === word) ?? null);
 
 	useEffect(() => {
-		if (!hasKey || sessionEntry) return;
+		if (!hasKey) return;
+		if (sessionEntry) return;
 		translate(normalized, contextSentence, targetLanguage);
 		// translate исключён из deps намеренно — это нестабильная функция из useState-хука
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [normalized, contextSentence, hasKey, sessionEntry, targetLanguage]);
+
+	const displayState = sessionEntry
+		? ({ phase: "done", result: sessionEntry.translation } as const)
+		: state;
 
 	useEffect(() => {
 		if (state.phase === "done") {
@@ -69,24 +71,14 @@ export const AiWordPopupBody = ({
 		}
 	}, [state.phase]);
 
-	const displayState = sessionEntry
-		? ({ phase: "done", result: sessionEntry.translation } as const)
-		: state;
-
 	const [copied, setCopied] = useState(false);
 	const [glossOpen, setGlossOpen] = useState(false);
 
 	const handleThumbsUp = () => vote("up");
 	const handleThumbsDown = () => vote("down");
 	const handleRefineSubmit = (hint: string) => {
-		if (state.phase !== "done") return;
-		refineWord(
-			word,
-			state.result.translation,
-			hint,
-			contextSentence,
-			targetLanguage,
-		);
+		if (displayState.phase !== "done") return;
+		refineWord(word, displayState.result.translation, hint, contextSentence, targetLanguage);
 	};
 	const handleCopy = () => {
 		if (displayState.phase !== "done") return;
@@ -95,13 +87,10 @@ export const AiWordPopupBody = ({
 		setTimeout(() => setCopied(false), 1500);
 	};
 	const handleGlossToggle = () => setGlossOpen(prev => !prev);
-	const handleOpenInPanel = () => {
-		if (activeToken) openInPanel(activeToken, contextSentence);
-	};
 
 	if (!hasKey) {
 		return (
-			<div className="flex flex-col gap-2.5 px-3.5 py-3">
+			<div className="flex flex-col gap-2.5 px-4 py-4">
 				<div className="flex items-start gap-2">
 					<div className="relative mt-0.5 shrink-0">
 						<Sparkles className="size-3.5 text-pur-t" strokeWidth={1.6} />
@@ -147,7 +136,7 @@ export const AiWordPopupBody = ({
 
 	if (displayState.phase === "loading" || displayState.phase === "idle") {
 		return (
-			<div className="flex flex-col items-center justify-center gap-2 p-6">
+			<div className="flex flex-1 flex-col items-center justify-center gap-2 p-6">
 				<div className="size-[18px] animate-spin rounded-full border-2 border-surf-3 border-t-acc" />
 				<div className="text-[12px] text-t-3">
 					{t("aiTranslation.popup.translating")}
@@ -158,7 +147,7 @@ export const AiWordPopupBody = ({
 
 	if (displayState.phase === "not_chechen") {
 		return (
-			<div className="px-3.5 py-3">
+			<div className="px-4 py-4">
 				<Typography tag="p" className="text-[12.5px] text-t-3">
 					{t("aiTranslation.popup.notChechen")}
 				</Typography>
@@ -168,7 +157,7 @@ export const AiWordPopupBody = ({
 
 	if (displayState.phase === "location_not_supported") {
 		return (
-			<div className="px-3.5 py-3">
+			<div className="px-4 py-4">
 				<Typography tag="p" className="text-[12.5px] text-t-3">
 					{t("aiTranslation.phrase.errorLocationNotSupported")}
 				</Typography>
@@ -178,7 +167,7 @@ export const AiWordPopupBody = ({
 
 	if (displayState.phase === "error" || displayState.phase === "no_key") {
 		return (
-			<div className="px-3.5 py-3">
+			<div className="px-4 py-4">
 				<Typography tag="p" className="text-[12.5px] text-red-t">
 					{t("aiTranslation.popup.error")}
 				</Typography>
@@ -190,25 +179,29 @@ export const AiWordPopupBody = ({
 	const showGloss = targetLanguage !== "ru" && Boolean(result.russianGloss);
 
 	return (
-		<>
+		<div className="flex flex-1 flex-col overflow-y-auto [scrollbar-width:thin]">
 			<GeminiLimitBanner />
-			<div className="border-b-[0.5px] border-bd-1 px-3.5 pt-3.5 pb-2.5">
-				<div className="mb-1.5 flex items-start justify-between gap-2">
-					<div className="flex items-start gap-2">
-						<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
-							{word}
-						</div>
-						<span className="mt-0.5 flex shrink-0 items-center gap-1 rounded-[4px] border-[0.5px] border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
-							<Sparkles className="size-2.5" strokeWidth={1.8} />
-							{t("aiTranslation.popup.badge")}
-						</span>
+
+			{/* Шапка */}
+			<div className="border-b-[0.5px] border-bd-1 px-4 py-4">
+				<div className="mb-1 flex items-start gap-2">
+					<div className="font-display text-[22px] font-medium tracking-[-0.3px] text-t-1">
+						{word}
 					</div>
+					<span className="mt-1.5 flex shrink-0 items-center gap-1 rounded-[4px] border-[0.5px] border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
+						<Sparkles className="size-2.5" strokeWidth={1.8} />
+						{t("aiTranslation.popup.badge")}
+					</span>
 				</div>
 			</div>
 
-			<div className="border-b-[0.5px] border-bd-1 px-3.5 py-2.5">
+			{/* Перевод */}
+			<div className="border-b-[0.5px] border-bd-1 px-4 py-3">
+				<div className="mb-1 text-[10.5px] font-semibold uppercase tracking-[0.6px] text-t-3">
+					{t("reader.panel.sections.translation")}
+				</div>
 				<div className="flex items-start justify-between gap-2">
-					<div className="text-[14px] font-medium text-t-1">
+					<div className="text-[15px] font-medium text-t-1">
 						{result.translation}
 					</div>
 					<Button
@@ -219,9 +212,9 @@ export const AiWordPopupBody = ({
 						className="mt-0.5 shrink-0 rounded p-0.5 text-t-4 transition-colors hover:text-t-2"
 					>
 						{copied ? (
-							<Check className="size-3" strokeWidth={1.8} />
+							<Check className="size-3.5" strokeWidth={1.8} />
 						) : (
-							<Copy className="size-3" strokeWidth={1.5} />
+							<Copy className="size-3.5" strokeWidth={1.5} />
 						)}
 					</Button>
 				</div>
@@ -253,43 +246,37 @@ export const AiWordPopupBody = ({
 					)}
 				</div>
 				{result.partOfSpeech && (
-					<div className="mt-1.5 text-[11.5px] text-t-3">
+					<div className="mt-1.5 text-[12px] text-t-3">
 						{t("aiTranslation.popup.partOfSpeech")}:{" "}
 						<span className="text-t-2">{result.partOfSpeech}</span>
 					</div>
 				)}
 				{result.transliteration && (
-					<div className="mt-0.5 text-[11.5px] text-t-3">
+					<div className="mt-0.5 text-[12px] text-t-3">
 						{t("aiTranslation.popup.transliteration")}:{" "}
-						<span className="font-medium text-t-2">
-							{result.transliteration}
-						</span>
+						<span className="font-medium text-t-2">{result.transliteration}</span>
 					</div>
 				)}
 				{result.example && (
-					<div className="mt-1.5 text-[11.5px] text-t-3 italic">
+					<div className="mt-2 text-[12px] italic text-t-3">
 						{result.example}
 					</div>
 				)}
-
 				{showGloss && (
 					<div className="mt-2 border-t border-bd-1 pt-1.5">
 						<Button
 							size="bare"
 							onClick={handleGlossToggle}
-							className="flex items-center gap-1 text-[10.5px] text-t-4 hover:text-t-2 transition-colors"
+							className="flex items-center gap-1 text-[10.5px] text-t-4 transition-colors hover:text-t-2"
 						>
 							<ChevronDown
-								className={cn(
-									"size-3 transition-transform",
-									glossOpen && "rotate-180",
-								)}
+								className={cn("size-3 transition-transform", glossOpen && "rotate-180")}
 								strokeWidth={1.6}
 							/>
 							{t("aiTranslation.popup.russianGloss")}
 						</Button>
 						{glossOpen && (
-							<div className="mt-1 text-[11.5px] text-t-3">
+							<div className="mt-1 text-[12px] text-t-3">
 								{result.russianGloss}
 							</div>
 						)}
@@ -297,7 +284,8 @@ export const AiWordPopupBody = ({
 				)}
 			</div>
 
-			<div className="flex items-center justify-between gap-2 px-3.5 py-2">
+			{/* Голосование */}
+			<div className="border-b-[0.5px] border-bd-1 px-4 py-2.5">
 				<div className="flex gap-1.5">
 					<Button
 						size="bare"
@@ -305,7 +293,7 @@ export const AiWordPopupBody = ({
 						disabled={Boolean(voted)}
 						aria-label={t("aiTranslation.admin.thumbsUp")}
 						title={t("aiTranslation.admin.thumbsUp")}
-						className={`flex h-7 items-center gap-1 rounded-base px-2 text-[11.5px] border-[0.5px] transition-colors ${
+						className={`flex h-7 items-center gap-1 rounded-base border-[0.5px] px-2 text-[11.5px] transition-colors ${
 							voted === "up"
 								? "border-grn/40 bg-grn/10 text-grn"
 								: "border-bd-1 bg-surf-2 text-t-3 hover:text-t-1"
@@ -320,7 +308,7 @@ export const AiWordPopupBody = ({
 						disabled={Boolean(voted)}
 						aria-label={t("aiTranslation.admin.thumbsDown")}
 						title={t("aiTranslation.admin.thumbsDown")}
-						className={`flex h-7 items-center gap-1 rounded-base px-2 text-[11.5px] border-[0.5px] transition-colors ${
+						className={`flex h-7 items-center gap-1 rounded-base border-[0.5px] px-2 text-[11.5px] transition-colors ${
 							voted === "down"
 								? "border-red/40 bg-red/10 text-red"
 								: "border-bd-1 bg-surf-2 text-t-3 hover:text-t-1"
@@ -330,22 +318,14 @@ export const AiWordPopupBody = ({
 						{result.thumbsDown + (voted === "down" ? 1 : 0)}
 					</Button>
 				</div>
-				<Button
-					size="bare"
-					onClick={handleOpenInPanel}
-					aria-label={t("reader.popup.openPanel")}
-					title={t("reader.popup.openPanel")}
-					className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-base border-[0.5px] border-bd-1 bg-surf-2 text-t-3 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
-				>
-					<ExternalLink className="size-3" strokeWidth={1.5} />
-				</Button>
 			</div>
+
 			<WordRefineBlock
 				refineState={refineState}
 				size="sm"
 				onOpen={openRefine}
 				onSubmit={handleRefineSubmit}
 			/>
-		</>
+		</div>
 	);
 };

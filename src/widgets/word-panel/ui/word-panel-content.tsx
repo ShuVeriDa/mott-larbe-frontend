@@ -11,10 +11,12 @@ import {
 } from "@/entities/word";
 import { EntrySuggestModal } from "@/features/entry-suggest";
 import { LearnStatusRow } from "@/features/learn-status";
+import { useWordLookupStore } from "@/features/word-lookup";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Pencil } from "lucide-react";
 import { ReactNode, useState } from "react";
+import { AiWordPanelBody } from "./ai-word-panel-body";
 import { AddToDictionaryButton } from "./add-to-dictionary-button";
 import { WordExamplesList } from "./word-examples-list";
 import { WordFormsChips } from "./word-forms-chips";
@@ -49,51 +51,71 @@ const WORD_LEVEL_COLORS: Record<string, string> = {
 const PanelHeader = ({
 	word,
 	baseForm,
-	tags,
 	wordLevel,
+	grammar,
+	nounClass,
+	nounClassPlural,
 	baseLabel,
+	posLabel,
+	nounClassLabel,
 }: {
 	word: string;
 	baseForm: string;
-	tags: readonly string[];
 	wordLevel: string | null;
+	grammar: string | null;
+	nounClass: string | null;
+	nounClassPlural: string | null;
 	baseLabel: string;
-}) => (
-	<div className="border-b-[0.5px] border-bd-1 px-4 py-4">
-		<div className="mb-1 flex items-start gap-2">
-			<div className="font-display text-[22px] font-medium tracking-[-0.3px] text-t-1">
-				{word}
-			</div>
-			{wordLevel ? (
-				<Typography
-					tag="span"
-					className={`mt-1.5 shrink-0 rounded-[4px] border-[0.5px] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.4px] ${WORD_LEVEL_COLORS[wordLevel] ?? "bg-surf-2 text-t-3 border-bd-1"}`}
-				>
-					{wordLevel}
-				</Typography>
-			) : null}
-		</div>
-		<div className="mb-2 text-[12px] text-t-3">
-			{baseLabel}:{" "}
-			<Typography tag="strong" className="font-medium text-t-2">
-				{baseForm}
-			</Typography>
-		</div>
-		{tags.length > 0 ? (
-			<div className="flex flex-wrap gap-1">
-				{tags.map(tag => (
+	posLabel: string;
+	nounClassLabel: string;
+}) => {
+	const { t } = useI18n();
+	return (
+		<div className="border-b-[0.5px] border-bd-1 px-4 py-4">
+			<div className="mb-1 flex items-start gap-2">
+				<div className="font-display text-[22px] font-medium tracking-[-0.3px] text-t-1">
+					{word}
+				</div>
+				{wordLevel ? (
 					<Typography
 						tag="span"
-						key={tag}
-						className="rounded-[5px] border-[0.5px] border-bd-1 bg-surf-2 px-2 py-0.5 text-[10.5px] font-medium text-t-2"
+						className={`mt-1.5 shrink-0 rounded-[4px] border-[0.5px] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.4px] ${WORD_LEVEL_COLORS[wordLevel] ?? "bg-surf-2 text-t-3 border-bd-1"}`}
 					>
-						{tag}
+						{wordLevel}
 					</Typography>
-				))}
+				) : null}
 			</div>
-		) : null}
-	</div>
-);
+			<div className="mb-1 text-[12px] text-t-3">
+				{baseLabel}:{" "}
+				<Typography tag="strong" className="font-medium text-t-2">
+					{baseForm}
+				</Typography>
+			</div>
+			{grammar ? (() => {
+				const key = grammar.replace(/\.$/, "");
+				const nah = t(`posNah.${key}`);
+				const label = t(`posLabel.${key}`);
+				const display = nah !== `posNah.${key}`
+					? `${nah} / ${label !== `posLabel.${key}` ? label : grammar}`
+					: grammar;
+				return (
+					<div className="mb-1 text-[12px] text-t-3">
+						{posLabel}:{" "}
+						<span className="font-medium text-t-2">{display}</span>
+					</div>
+				);
+			})() : null}
+			{(nounClass ?? nounClassPlural) ? (
+				<div className="text-[12px] text-t-3">
+					{nounClassLabel}:{" "}
+					<span className="font-medium text-t-2">
+						{nounClass ?? "—"} / {nounClassPlural ?? "—"}
+					</span>
+				</div>
+			) : null}
+		</div>
+	);
+};
 
 const MeaningsList = ({
 	meanings,
@@ -160,7 +182,7 @@ const GRAMMAR_LABELS: Record<string, string> = {
 
 const GrammarFormsList = ({ forms }: { forms: WordLookupGrammar }) => {
 	const entries = Object.entries(forms).filter(
-		([, v]) => v != null && v !== "",
+		([k, v]) => v != null && v !== "" && k !== "pluralClass",
 	);
 	if (!entries.length) return null;
 	return (
@@ -198,9 +220,13 @@ const PanelBody = ({
 			<PanelHeader
 				word={token.original}
 				baseForm={lookup.baseForm ?? token.original}
-				tags={lookup.tags}
 				wordLevel={lookup.wordLevel}
+				grammar={lookup.grammar}
+				nounClass={lookup.nounClass}
+				nounClassPlural={lookup.nounClassPlural}
 				baseLabel={t("reader.panel.baseForm")}
+				posLabel={t("aiTranslation.popup.partOfSpeech")}
+				nounClassLabel={t("reader.popup.nounClass")}
 			/>
 			<Section title={t("reader.panel.sections.translation")}>
 				{lookup.meanings.length > 0 ? (
@@ -240,7 +266,6 @@ const PanelBody = ({
 			{lookup.lemmaId ? (
 				<Section title={t("reader.panel.sections.examples")}>
 					<WordExamplesList
-						lemmaId={lookup.lemmaId}
 						fallback={lookup.meanings.flatMap(m => m.examples)}
 						highlight={token.original}
 					/>
@@ -290,7 +315,8 @@ const PanelBody = ({
 
 export const WordPanelContent = ({ token, textId }: WordPanelContentProps) => {
 	const { data, isLoading, isError } = useWordLookup(token.id);
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
+	const contextSentence = useWordLookupStore(s => s.contextSentence);
 
 	if (isLoading) return <WordPanelLoader />;
 	if (isError || !data) {
@@ -298,6 +324,17 @@ export const WordPanelContent = ({ token, textId }: WordPanelContentProps) => {
 			<div className="flex flex-1 items-center justify-center p-6 text-center text-[12px] text-red">
 				{t("reader.panel.error")}
 			</div>
+		);
+	}
+
+	if (!data.translation) {
+		return (
+			<AiWordPanelBody
+				word={token.original}
+				normalized={token.normalized}
+				contextSentence={contextSentence}
+				lang={lang}
+			/>
 		);
 	}
 
