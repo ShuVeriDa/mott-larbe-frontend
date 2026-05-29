@@ -25,7 +25,7 @@ export const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 	return (
 		<Link
 			href={`/${lang}/reader/${item.id}/p/${item.lastPageNumber}`}
-			className="group flex flex-col overflow-hidden rounded-card border-[0.5px] border border-bd-1 bg-surf transition-all hover:-translate-y-px hover:border-bd-2 hover:shadow-md"
+			className="group flex flex-col overflow-hidden rounded-card border-[0.5px] border border-bd-1 bg-surf transition-[transform,border-color,box-shadow] duration-150 hover:-translate-y-px hover:border-bd-2 hover:shadow-md"
 		>
 			<div className="relative h-[5px] w-full bg-surf-3">
 				<div
@@ -55,7 +55,7 @@ export const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 				<div className="mb-[3px] flex-1 text-[13px] font-semibold leading-[1.35] text-t-1">
 					{item.title}
 				</div>
-				<div className="mb-3 text-[11px] text-t-3">
+				<div className="mb-3 text-[11px] text-t-2">
 					{t("dashboard.continueReading.pageOf", {
 						current: item.lastPageNumber,
 						total: item.totalPages,

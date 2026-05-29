@@ -11,6 +11,7 @@ const buttonClass = cn(
 	"inline-flex h-7 w-7 items-center justify-center rounded-base",
 	"border-[0.5px] border-bd-1 bg-surf-2 text-t-2",
 	"transition-colors duration-150 hover:border-bd-2 hover:text-t-1",
+	"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1",
 	"aria-disabled:opacity-30 aria-disabled:pointer-events-none",
 );
 

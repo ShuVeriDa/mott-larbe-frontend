@@ -185,7 +185,7 @@ export const getTopbarActions = ({
 			ariaLabel: isCompleted
 				? t("reader.topbar.completed")
 				: t("reader.topbar.markComplete"),
-			ariaPressed: isCompleted,
+			ariaPressed: undefined,
 			disabled: completing || isCompleted,
 			onClick: handleMarkComplete,
 		},

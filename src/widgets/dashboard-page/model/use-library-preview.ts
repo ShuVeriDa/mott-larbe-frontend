@@ -16,7 +16,7 @@ export const useLibraryPreview = (lang: string) => {
 	>();
 	const [filterLevel, setFilterLevel] = useState<CefrLevel | undefined>();
 
-	const { data: library } = useLibraryTexts({
+	const { data: library, isPending } = useLibraryTexts({
 		orderBy: "newest",
 		limit: 6,
 		language: filterLang ? [filterLang] : undefined,
@@ -45,6 +45,7 @@ export const useLibraryPreview = (lang: string) => {
 	return {
 		filterLang,
 		filterLevel,
+		isPending,
 		items,
 		viewAllHref,
 		langFilters: LANG_FILTERS,

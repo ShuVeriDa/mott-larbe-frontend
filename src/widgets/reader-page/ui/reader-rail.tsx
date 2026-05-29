@@ -1,10 +1,22 @@
 import { cn } from "@/shared/lib/cn";
-import { ReaderAiHistoryAside } from "@/widgets/reader-ai-history-panel";
-import { ReaderBookmarksAside } from "@/widgets/reader-bookmarks-panel";
-import { ReaderNotesAside } from "@/widgets/reader-notes-panel";
-import { ReaderSettingsAside } from "@/widgets/reader-settings-sheet";
-import { ReaderTocAside } from "@/widgets/reader-toc-panel";
 import { WordPanel } from "@/widgets/word-panel";
+import dynamic from "next/dynamic";
+
+const ReaderSettingsAside = dynamic(() =>
+	import("@/widgets/reader-settings-sheet").then(m => ({ default: m.ReaderSettingsAside })),
+);
+const ReaderNotesAside = dynamic(() =>
+	import("@/widgets/reader-notes-panel").then(m => ({ default: m.ReaderNotesAside })),
+);
+const ReaderTocAside = dynamic(() =>
+	import("@/widgets/reader-toc-panel").then(m => ({ default: m.ReaderTocAside })),
+);
+const ReaderBookmarksAside = dynamic(() =>
+	import("@/widgets/reader-bookmarks-panel").then(m => ({ default: m.ReaderBookmarksAside })),
+);
+const ReaderAiHistoryAside = dynamic(() =>
+	import("@/widgets/reader-ai-history-panel").then(m => ({ default: m.ReaderAiHistoryAside })),
+);
 
 interface ReaderRailProps {
 	textId: string;
@@ -33,7 +45,7 @@ export const ReaderRail = ({
 }: ReaderRailProps) => (
 	<div
 		className={cn(
-			"flex min-h-0 min-w-0 overflow-hidden transition-[opacity,transform] duration-200 ease-out",
+			"flex min-h-0 min-w-0 overflow-hidden transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none",
 			"max-[767px]:contents",
 			desktopRailExpanded
 				? "min-[768px]:translate-x-0 min-[768px]:opacity-100"

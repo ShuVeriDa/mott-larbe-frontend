@@ -1,6 +1,6 @@
 "use client";
 import type { TextPageResponse } from "@/entities/text";
-import { textApi } from "@/entities/text/api/text-api";
+import { textApi } from "@/entities/text";
 import { useToggleBookmark } from "@/features/bookmark-text";
 import { usePageBookmarkToggle } from "@/features/page-bookmark-toggle";
 import {
@@ -79,12 +79,7 @@ export const useReaderTopbar = (
 		});
 	};
 
-	const level =
-		data.level === "A"
-			? t("settings.learning.levelA")
-			: data.level === "B"
-				? t("shared.cefrLevel.levelB")
-				: t("shared.cefrLevel.levelC");
+	const level = data.level ? t(`shared.cefrLevel.${data.level}`) : "";
 
 	const metaParts = [data.author, level, LANG_TAG[data.language]].filter(
 		Boolean,

@@ -4,10 +4,10 @@ import { useDashboard } from "@/entities/dashboard";
 import { useCurrentUser } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import { useRouter } from "next/navigation";
-import { type ComponentProps, type SyntheticEvent, useState } from "react";
+import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 
 export const useDashboardPage = () => {
-	const { t, lang } = useI18n();
+	const { lang } = useI18n();
 	const router = useRouter();
 	const [searchQuery, setSearchQuery] = useState("");
 
@@ -24,13 +24,12 @@ export const useDashboardPage = () => {
 		}
 	};
 
-	const handleSearchChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+	const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
 		setSearchQuery(e.currentTarget.value);
 
-	const handleRetry: NonNullable<ComponentProps<"button">["onClick"]> = () => refetch();
+	const handleRetry = () => refetch();
 
 	return {
-		t,
 		lang,
 		searchQuery,
 		data,

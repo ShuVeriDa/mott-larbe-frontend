@@ -1,8 +1,8 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { dashboardKeys } from "@/entities/dashboard/api/dashboard-keys";
-import type { DashboardResponse } from "@/entities/dashboard/api/types";
+import { dashboardKeys } from "@/entities/dashboard";
+import type { DashboardResponse } from "@/entities/dashboard";
 import { userApi, userKeys } from "../api";
 
 export const useCurrentUser = () => {

@@ -3,10 +3,9 @@
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { type ComponentProps } from "react";
 
 interface DashboardErrorProps {
-	onRetry: NonNullable<ComponentProps<"button">["onClick"]>;
+	onRetry: () => void;
 }
 
 export const DashboardError = ({ onRetry }: DashboardErrorProps) => {

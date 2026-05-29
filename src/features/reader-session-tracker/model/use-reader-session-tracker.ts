@@ -1,5 +1,6 @@
 "use client";
-import { ACCESS_TOKEN_STORAGE_KEY, API_URL } from "@/shared/config";
+import { getAccessToken } from "@/entities/auth";
+import { API_URL } from "@/shared/config";
 import { useEffect, useRef } from "react";
 
 const MIN_DURATION_S = 10;
@@ -7,10 +8,7 @@ const MIN_DURATION_S = 10;
 const flush = (textId: string, durationSeconds: number, wordsRead: number | undefined) => {
 	if (durationSeconds < MIN_DURATION_S) return;
 
-	const match = typeof document !== "undefined"
-		? document.cookie.match(new RegExp(`(?:^|; )${ACCESS_TOKEN_STORAGE_KEY}=([^;]*)`))
-		: null;
-	const token = match ? decodeURIComponent(match[1]) : null;
+	const token = getAccessToken();
 	if (!token) return;
 
 	const body = JSON.stringify({

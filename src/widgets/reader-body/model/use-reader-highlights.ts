@@ -22,7 +22,7 @@ const overlaps = (a: { start: number; end: number }, b: { start: number; end: nu
 	a.start < b.end && b.start < a.end;
 
 export const useReaderHighlights = (textId: string, pageNumber: number, contentRaw: string) => {
-	const articleRef = useRef<HTMLDivElement | null>(null);
+	const articleRef = useRef<HTMLDivElement>(null);
 	const { selection, clearSelection } = useTextSelection(articleRef);
 
 	const { data: highlights = [] } = useHighlights(textId, pageNumber);
@@ -38,6 +38,7 @@ export const useReaderHighlights = (textId: string, pageNumber: number, contentR
 
 	const handlePickColor = (color: HighlightColor | string) => {
 		if (!selection) return;
+		if (selection.text.length > 2_000) return;
 
 		const newOffset = findOffset(contentRaw, selection.text);
 		if (!newOffset) {

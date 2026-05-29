@@ -6,7 +6,11 @@ import {
 	getDictionary,
 	hasLocale,
 } from "@/i18n/locales";
-import { textApi, textKeys } from "@/entities/text";
+import { readerContextQueryOptions } from "@/entities/reader-context";
+import type { ReaderContextResponse } from "@/entities/reader-context";
+import { textKeys } from "@/entities/text";
+import { highlightKeys } from "@/entities/highlight";
+import { noteKeys } from "@/entities/note";
 import { ReaderPage } from "@/widgets/reader-page";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/shared/lib/query-client";
@@ -40,16 +44,11 @@ export const generateMetadata = async ({
 	const meta = dict.reader.meta;
 	const path = `/reader/${textId}/p/${page}`;
 
-	// Prefetch into the shared per-request QueryClient so the page component
-	// reuses the same data without a second network call.
 	const queryClient = getQueryClient();
-	await queryClient.prefetchQuery({
-		queryKey: textKeys.page(textId, page),
-		queryFn: () => textApi.getPage(textId, page),
-	});
-	const pageData = queryClient.getQueryData(textKeys.page(textId, page)) as
-		| { title?: string; imageUrl?: string | null }
-		| undefined;
+	const opts = readerContextQueryOptions(textId, page);
+	await queryClient.prefetchQuery(opts);
+	const ctx = queryClient.getQueryData<ReaderContextResponse>(opts.queryKey);
+	const pageData = ctx?.page;
 
 	const rawTitle = meta.title.replace("{page}", String(page));
 	const title = pageData?.title
@@ -100,13 +99,20 @@ const ReaderTextPageRoutePage = async ({
 	const page = parsePage(pageNumber);
 	if (!page) notFound();
 
-	// Data is already in the QueryClient if generateMetadata ran first;
-	// prefetchQuery is a no-op when the key is already populated.
+	// generateMetadata already prefetched readerContext via the same cache()-wrapped
+	// QueryClient — this is a no-op if metadata ran first, and a safety net if not.
 	const queryClient = getQueryClient();
-	await queryClient.prefetchQuery({
-		queryKey: textKeys.page(textId, page),
-		queryFn: () => textApi.getPage(textId, page),
-	});
+	const opts = readerContextQueryOptions(textId, page);
+	await queryClient.prefetchQuery(opts);
+	// Populate derived sub-keys so client hooks (useHighlights, useNotes, usePagePhrases)
+	// find warm cache entries and skip their own fetches on first render.
+	const ctx = queryClient.getQueryData<ReaderContextResponse>(opts.queryKey);
+	if (ctx) {
+		queryClient.setQueryData(textKeys.page(textId, page), ctx.page);
+		queryClient.setQueryData(textKeys.phrases(textId, page), ctx.phrases);
+		queryClient.setQueryData(highlightKeys.page(textId, page), ctx.highlights);
+		queryClient.setQueryData(noteKeys.page(textId, page), ctx.notes);
+	}
 
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>

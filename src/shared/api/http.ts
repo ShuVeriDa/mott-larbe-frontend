@@ -1,6 +1,7 @@
 import axios, { isAxiosError } from "axios";
 import { ACCESS_TOKEN_STORAGE_KEY, API_URL } from "@/shared/config";
-import { clearAccessToken, setAccessToken, getAccessToken } from "@/entities/auth";
+import { clearAccessToken, setAccessToken } from "@/entities/auth";
+import { escapeCookieName } from "@/shared/lib/cookie";
 
 export interface ApiErrorBody {
   statusCode: number;
@@ -27,7 +28,7 @@ export const http = axios.create({
 http.interceptors.request.use((config) => {
 	if (typeof window !== "undefined") {
 		const match = document.cookie.match(
-			new RegExp(`(?:^|; )${ACCESS_TOKEN_STORAGE_KEY}=([^;]*)`),
+			new RegExp(`(?:^|; )${escapeCookieName(ACCESS_TOKEN_STORAGE_KEY)}=([^;]*)`),
 		);
 		const token = match ? decodeURIComponent(match[1]) : null;
 		if (token) {

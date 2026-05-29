@@ -19,7 +19,7 @@ export const ContinueReading = ({ items, lang }: ContinueReadingProps) => {
 	return (
 		<section>
 			<div className="mb-2.5 flex items-center justify-between">
-				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
+				<Typography tag="h2" className="text-[13px] font-semibold text-t-1">
 					{t("dashboard.continueReading.title")}
 				</Typography>
 				<Link

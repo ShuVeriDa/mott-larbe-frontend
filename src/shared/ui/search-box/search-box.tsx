@@ -34,7 +34,7 @@ export const SearchBox = ({
 		/>
 		<Input
 			data-slot="search-box-input"
-			type="text"
+			type="search"
 			autoComplete="off"
 			variant={variant === "toolbar" ? "search-toolbar" : "search-panel"}
 			className={className}

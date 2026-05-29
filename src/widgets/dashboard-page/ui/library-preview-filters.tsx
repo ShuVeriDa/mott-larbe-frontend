@@ -2,7 +2,7 @@
 
 import type { LibraryTextLanguage } from "@/entities/library-text";
 import { useI18n } from "@/shared/lib/i18n";
-import { LANG_TAG } from "@/shared/lib/lang-tag/lang-tag";
+import { LANG_TAG } from "@/shared/lib/lang-tag";
 import type { CefrLevel } from "@/shared/types";
 import { LibraryPreviewFilterButton } from "./library-preview-filter-button";
 
@@ -40,14 +40,12 @@ export const LibraryPreviewFilters = ({
 					{t("dashboard.library.langAll")}
 				</LibraryPreviewFilterButton>
 				{langFilters.slice(0, 1).map(languageFilter => {
-					const handleLanguageClick = () => {
-						onLanguageFilterToggle(languageFilter);
-					};
+					const handleClick = () => onLanguageFilterToggle(languageFilter);
 					return (
 						<LibraryPreviewFilterButton
 							key={languageFilter}
 							active={filterLang === languageFilter}
-							onClick={handleLanguageClick}
+							onClick={handleClick}
 							title={LANG_TAG[languageFilter]}
 						>
 							{LANG_TAG[languageFilter]}
@@ -67,14 +65,12 @@ export const LibraryPreviewFilters = ({
 					{t("dashboard.library.levelAll")}
 				</LibraryPreviewFilterButton>
 				{levelFilters.map(levelFilter => {
-					const handleLevelClick = () => {
-						onLevelFilterToggle(levelFilter);
-					};
+					const handleClick = () => onLevelFilterToggle(levelFilter);
 					return (
 						<LibraryPreviewFilterButton
 							key={levelFilter}
 							active={filterLevel === levelFilter}
-							onClick={handleLevelClick}
+							onClick={handleClick}
 							title={t(`shared.cefrLevel.${levelFilter}`)}
 						>
 							{t(`shared.cefrLevel.${levelFilter}`)}

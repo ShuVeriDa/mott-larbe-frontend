@@ -1,13 +1,9 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-
 import type { TextPageResponse } from "@/entities/text";
 import { useI18n } from "@/shared/lib/i18n";
 import { LANG_TAG } from "@/shared/lib/lang-tag";
-
-const badgeClass =
-	"inline-flex items-center rounded px-[7px] py-0.5 text-[10px] font-bold";
 
 export interface ArticleHeaderProps {
 	data: TextPageResponse;
@@ -17,58 +13,72 @@ export interface ArticleHeaderProps {
 export const ArticleHeader = ({ data, currentPage }: ArticleHeaderProps) => {
 	const { t } = useI18n();
 
+	const level = data.level ?? null;
+	const lang = LANG_TAG[data.language] ?? data.language;
+	const tagNames = data.tags?.map(tag => tag.name) ?? [];
+
+	// Editorial meta line: LEVEL · LANG · #tag · #tag
+	const metaTokens = [
+		level,
+		lang,
+		...tagNames.map(n => `#${n}`),
+	].filter(Boolean);
+
 	return (
-		<header className="mb-7 border-b-[0.5px] border-bd-1 pb-6">
-			<div className="mb-3 flex flex-wrap gap-1.5">
-				{data.level ? (
-					<Typography
-						tag="span"
-						className={`${badgeClass} bg-amb-bg text-amb-t`}
-					>
-						{t(`shared.cefrLevel.${data.level}`)}
-					</Typography>
-				) : null}
-				<Typography tag="span" className={`${badgeClass} bg-surf-3 text-t-2`}>
-					{LANG_TAG[data.language]}
-				</Typography>
-				{data.tags?.map(tag => (
-					<Typography
-						key={tag.id}
-						tag="span"
-						className="inline-flex items-center gap-1 rounded border border-bd-2 bg-surf px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-t-2 transition-colors"
-					>
-						#{tag.name}
-					</Typography>
-				))}
-			</div>
+		<header className="mb-8">
+			{/* Meta line — editorial caption style */}
+			{metaTokens.length > 0 && (
+				<div className="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1">
+					{metaTokens.map((token, i) => (
+						<span key={i} className="flex items-center gap-x-2">
+							<Typography
+								tag="span"
+								className="font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-t-3"
+							>
+								{token}
+							</Typography>
+							{i < metaTokens.length - 1 && (
+								<span className="text-[10px] text-t-4" aria-hidden="true">·</span>
+							)}
+						</span>
+					))}
+				</div>
+			)}
+
+			{/* Rule above title */}
+			<div className="mb-4 h-px w-full bg-bd-2" />
+
+			{/* Book title */}
 			<Typography
 				tag="h1"
-				className="mb-2.5 font-display text-[clamp(1.5rem,3vw,2rem)] font-medium leading-[1.35] tracking-[-0.3px] text-t-1"
+				className="mb-1 font-display text-[clamp(1.5rem,3vw,2rem)] font-medium leading-[1.25] tracking-[-0.3px] text-t-1"
 			>
 				{data.title}
 			</Typography>
+
+			{/* Chapter / page title — italic */}
 			{data.page.title ? (
 				<Typography
 					tag="h2"
-					className="mb-2.5 text-[clamp(1rem,2vw,1.25rem)] font-medium leading-snug tracking-[-0.1px] text-t-2"
+					className="mb-3 font-display text-[clamp(0.95rem,2vw,1.15rem)] font-normal italic leading-snug text-t-2"
 				>
 					{data.page.title}
 				</Typography>
-			) : null}
-			<div className="flex flex-wrap items-center gap-2">
-				{data.author ? (
+			) : (
+				<div className="mb-3" />
+			)}
+
+			{/* Byline — author · wordcount · page */}
+			<div className="flex flex-wrap items-center gap-x-3 gap-y-0.5">
+				{data.author && (
 					<Typography tag="span" className="text-[12px] text-t-2">
 						{data.author}
 					</Typography>
-				) : null}
-				{data.author ? (
-					<Typography
-						tag="span"
-						aria-hidden="true"
-						className="size-0.5 rounded-full bg-t-4"
-					/>
-				) : null}
-				<Typography tag="span" className="text-[12px] text-t-3">
+				)}
+				{data.author && (
+					<span className="h-3 w-px bg-bd-2" aria-hidden="true" />
+				)}
+				<Typography tag="span" className="text-[12px] tabular-nums text-t-3">
 					{t("reader.body.byline", {
 						count: data.wordCount,
 						current: currentPage,

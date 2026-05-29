@@ -1,8 +1,11 @@
 import { ACCESS_TOKEN_STORAGE_KEY, REMEMBER_ME_MAX_AGE } from "@/shared/config";
+import { escapeCookieName } from "@/shared/lib/cookie";
 
 const getCookie = (name: string): string | null => {
 	if (typeof window === "undefined") return null;
-	const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+	const match = document.cookie.match(
+		new RegExp(`(?:^|; )${escapeCookieName(name)}=([^;]*)`),
+	);
 	return match ? decodeURIComponent(match[1]) : null;
 };
 

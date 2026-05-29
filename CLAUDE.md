@@ -438,21 +438,26 @@ const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
 
 Project uses **React 19** (stable, released December 5, 2024).
 
-### Memoization — do not use manually
+### Memoization — React Compiler handles it automatically
 
-React Compiler handles memoization automatically.
+Do not use `useMemo` / `useCallback` / `React.memo` for performance. The compiler memoizes automatically.
 
-```ts
-// ❌ wrong
-useMemo(() => compute(a, b), [a, b]);
-useCallback(fn, [deps]);
+```tsx
+// ❌ wrong — manual memoization everywhere
+const processed = useMemo(() => transform(data), [data]);
+const handleClick = useCallback(() => submit(processed), [processed]);
 
-// ✅ exception only: explicitly heavy computations (sorting 10k+ items, d3, canvas)
+// ✅ correct — write plain code, compiler optimises
+const processed = transform(data);
+const handleClick = () => submit(processed);
+
+// ✅ exception only: semantically stable refs, heavy computations (10k+ sort, d3, canvas)
+const sorted = useMemo(() => hugeList.sort(comparator), [hugeList]);
 ```
 
 ### forwardRef — do not use
 
-`ref` now works as a regular prop.
+`ref` is now a regular prop in React 19.
 
 ```tsx
 // ❌ wrong
@@ -468,61 +473,156 @@ const Input = ({ ref, ...props }: Props & { ref?: Ref<HTMLInputElement> }) => (
 
 ### New hooks — use instead of old patterns
 
-| Old pattern               | React 19           |
-| ------------------------- | ------------------ |
-| `useContext()`            | `use(Context)`     |
-| manual form state         | `useActionState()` |
-| manual optimistic UI      | `useOptimistic()`  |
-| prop drilling form status | `useFormStatus()`  |
+| Old pattern | React 19 |
+|---|---|
+| `useContext(ctx)` | `use(ctx)` — works in conditionals and loops |
+| multiple `useState` for form | `useActionState()` |
+| manual optimistic state | `useOptimistic()` |
+| prop-drilled form pending | `useFormStatus()` |
+
+### useActionState — replaces manual form state
 
 ```tsx
-// use() — works in conditionals and loops
-const user = use(UserContext);
-const data = use(fetchDataPromise); // + Suspense
-
-// useActionState() — for forms
-const [state, action, isPending] = useActionState(submitForm, initialState);
-
-// useOptimistic() — optimistic UI
-const [optimisticList, addOptimistic] = useOptimistic(list);
-
-// useFormStatus() — parent form status
-const { pending } = useFormStatus();
-```
-
-### Actions — instead of onSubmit
-
-```tsx
-// ❌ wrong
-<form onSubmit={handleSubmit}>
+// ❌ wrong — three useState for one form
+const [isPending, setIsPending] = useState(false);
+const [error, setError] = useState<string | null>(null);
+const handleSubmit = async (e) => {
+  setIsPending(true);
+  try { await submit(e) } catch (err) { setError(err.message) }
+  finally { setIsPending(false) }
+};
 
 // ✅ correct
-<form action={submitAction}>
+import { useActionState } from 'react';
+
+type State = { success: boolean; error: string | null };
+
+const [state, formAction, isPending] = useActionState<State, FormData>(
+  async (prev, formData) => {
+    try {
+      await submitForm(formData);
+      return { success: true, error: null };
+    } catch (e) {
+      return { success: false, error: (e as Error).message };
+    }
+  },
+  { success: false, error: null }
+);
+
+return (
+  <form action={formAction}>
+    <SubmitButton />
+    {state.error && <p>{state.error}</p>}
+  </form>
+);
+```
+
+### useFormStatus — must be inside a child of `<form>`
+
+```tsx
+// ❌ wrong — same level as <form>, doesn't work
+const BadForm = () => {
+  const { pending } = useFormStatus(); // ← not connected to the form below!
+  return <form action={action}><button disabled={pending}>Submit</button></form>;
+};
+
+// ✅ correct — SubmitButton is a child rendered inside <form>
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+  return <button type="submit" disabled={pending}>{pending ? 'Sending…' : 'Submit'}</button>;
+};
+
+const GoodForm = () => (
+  <form action={formAction}>
+    <input name="title" />
+    <SubmitButton />
+  </form>
+);
+```
+
+### useOptimistic — instant UI, auto-rollback on error
+
+```tsx
+// ❌ wrong — user waits for server
+const handleLike = async () => {
+  const newCount = await likePost(postId);
+  setLikeCount(newCount);
+};
+
+// ✅ correct
+const [optimisticLikes, addOptimisticLike] = useOptimistic(
+  likes,
+  (current, increment: number) => current + increment
+);
+const handleLike = async () => {
+  addOptimisticLike(1);             // instant UI update
+  try { await likePost(postId); }
+  catch { /* React auto-reverts */ }
+};
+
+// ⚠️ never use useOptimistic for critical operations (payments, destructive deletes)
+```
+
+### Server Actions — `'use server'` in `api/` layer
+
+```tsx
+// features/post-form/api/actions.ts
+'use server';
+import { revalidatePath } from 'next/cache';
+
+export const createPost = async (prev: unknown, formData: FormData) => {
+  await db.posts.create({ data: { title: formData.get('title') as string } });
+  revalidatePath('/posts');
+  return { success: true };
+};
+
+// features/post-form/ui/post-form.tsx
+'use client';
+export const PostForm = () => {
+  const [state, formAction, isPending] = useActionState(createPost, null);
+  return (
+    <form action={formAction}>
+      <input name="title" />
+      <SubmitButton />
+    </form>
+  );
+};
+```
+
+### Server Components & Directives
+
+- Server Components are the **default**. No `'use client'` unless hooks or event handlers are needed.
+- `'use server'` marks **Server Actions only** — never put it on a Server Component file.
+- **Never put `'use client'` on a layout** — it makes the entire subtree client-side.
+- Fetch data directly in Server Components with `async/await`. Do not use hooks for fetching there.
+
+```tsx
+// ❌ wrong — 'use client' on layout poisons the whole tree
+'use client';
+export default function Layout({ children }) { return <div>{children}</div>; }
+
+// ✅ correct — 'use client' only on the leaf that needs interactivity
+// features/counter/ui/counter.tsx
+'use client';
+export const Counter = () => {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(c => c + 1)}>{count}</button>;
+};
+
+// app/page.tsx — stays a Server Component
+export default async function Page() {
+  const data = await fetchData();
+  return <div><h1>{data.title}</h1><Counter /></div>;
+}
 ```
 
 ### Document Metadata — native, no react-helmet
 
 ```tsx
-// ✅ works directly inside a component — React hoists to <head>
+// ✅ React hoists these to <head> automatically
 <title>Page Title</title>
 <meta name="description" content="..." />
 ```
-
-### Resource Loading APIs
-
-```tsx
-import { preload, preinit } from "react-dom";
-
-preload("/fonts/font.woff2", { as: "font" });
-preinit("/scripts/analytics.js", { as: "script" });
-```
-
-### Server Components & Directives
-
-- Server Components are the **default** in Next.js App Router.
-- Add `'use client'` **only** when hooks or interactivity are required.
-- `'use server'` is for **Server Actions only** — not for Server Components.
-- Think twice before adding `'use client'`.
 
 ---
 
@@ -547,6 +647,150 @@ preinit("/scripts/analytics.js", { as: "script" });
 - **Server-rendered data**: use async Server Components with `fetch()`. Add `loading.tsx` siblings for Suspense boundaries. Do not use hooks here.
 - **Client-side remote data** (requires reactivity, caching, refetching): TanStack Query v5 (`useQuery`, `useMutation`) inside Client Components. Query keys are typed arrays defined in the entity/feature `api/` folder.
 - **Client/UI state**: Zustand v5. Stores live in `shared/` or the feature's `model/` folder.
+
+---
+
+## TanStack Query v5 — Patterns
+
+### queryOptions — single source of truth
+
+Never inline `queryKey` + `queryFn` directly in `useQuery`. Always define them once with `queryOptions()` and reuse everywhere:
+
+```tsx
+// ❌ wrong — key and fn duplicated across call sites
+useQuery({ queryKey: ['users', id], queryFn: () => fetchUser(id) })
+queryClient.prefetchQuery({ queryKey: ['users', id], queryFn: () => fetchUser(id) })
+
+// ✅ correct — defined once in entities/user/model/queries.ts
+export const userQueryOptions = (id: string) =>
+  queryOptions({ queryKey: ['entities', 'user', id], queryFn: () => fetchUser(id), staleTime: 1000 * 60 * 5 })
+
+// Used everywhere:
+useQuery(userQueryOptions(id))
+queryClient.prefetchQuery(userQueryOptions(id))
+```
+
+### queryKey must include all parameters
+
+Every value the `queryFn` depends on must be in `queryKey`:
+
+```tsx
+// ❌ wrong — filters ignored in cache key
+useQuery({ queryKey: ['items'], queryFn: () => fetchItems(filters) })
+
+// ✅ correct
+useQuery({ queryKey: ['items', filters], queryFn: () => fetchItems(filters) })
+```
+
+### staleTime must always be set explicitly
+
+Default `staleTime: 0` causes refetch on every mount. Always configure intentionally.
+
+### useSuspenseQuery — no `enabled`, condition goes to parent
+
+```tsx
+// ❌ wrong — enabled not supported in useSuspenseQuery
+const { data } = useSuspenseQuery({ ...opts, enabled: !!userId })
+
+// ✅ correct — guard in the parent, pass guaranteed value down
+if (!userId) return <NoUserSelected />
+// ↓ child receives guaranteed userId: string
+const { data } = useSuspenseQuery(userQueryOptions(userId))
+```
+
+Always wrap `useSuspenseQuery` consumers in both `<Suspense>` and `<ErrorBoundary>`.
+
+### isPending vs isLoading
+
+- `isPending` — no data in cache yet (first load). Use this for skeleton screens.
+- `isFetching` — request in flight (includes background refetches).
+- `isLoading` — `isPending && isFetching`.
+
+---
+
+## useEffect — Rules
+
+Three cases where `useEffect` is wrong:
+
+**1. Derived state — compute during render instead:**
+```tsx
+// ❌ wrong
+useEffect(() => { setFiltered(items.filter(i => i.active)) }, [items])
+
+// ✅ correct
+const filtered = items.filter(i => i.active)
+```
+
+**2. Event side-effects — put in the handler instead:**
+```tsx
+// ❌ wrong
+useEffect(() => { if (query) analytics.track('search', { query }) }, [query])
+
+// ✅ correct
+const handleSearch = (q: string) => { setQuery(q); analytics.track('search', { query: q }) }
+```
+
+**3. Async fetch — always include cleanup and full deps:**
+```tsx
+// ❌ wrong — missing userId dep, no cancel
+useEffect(() => { fetchUser(userId).then(setUser) }, [])
+
+// ✅ correct
+useEffect(() => {
+  let cancelled = false
+  fetchUser(userId).then(data => { if (!cancelled) setUser(data) })
+  return () => { cancelled = true }
+}, [userId])
+```
+
+---
+
+## Suspense & Streaming
+
+Wrap independent async sections in their own `<Suspense>` boundaries — never one boundary for the whole layout:
+
+```tsx
+// ❌ wrong — one boundary blocks entire screen
+<Suspense fallback={<Spinner />}><Header /><MainContent /><Sidebar /></Suspense>
+
+// ✅ correct — independent streaming
+<>
+  <Header />
+  <Suspense fallback={<ContentSkeleton />}><MainContent /></Suspense>
+  <Suspense fallback={<SidebarSkeleton />}><Sidebar /></Suspense>
+</>
+```
+
+Every `<Suspense>` must be wrapped in `<ErrorBoundary>`. Use skeleton fallbacks, not spinners.
+
+Use `loading.tsx` in Next.js App Router as an automatic Suspense boundary for the route segment.
+
+### use() hook — promise must be created outside the component
+
+```tsx
+// ❌ wrong — new promise on every render, Suspense loops
+const data = use(fetchComments(postId))
+
+// ✅ correct — promise created outside, passed as prop
+function Post({ postId }) {
+  const commentsPromise = fetchComments(postId) // outside (or useMemo)
+  return <Suspense fallback={<Skeleton />}><Comments promise={commentsPromise} /></Suspense>
+}
+function Comments({ promise }) {
+  const comments = use(promise)
+  return <ul>{comments.map(...)}</ul>
+}
+```
+
+Prefer `useSuspenseQuery` from TanStack Query over raw `use()` for data fetching.
+
+---
+
+## FSD — Import Rules
+
+- Import slices only through their public barrel: `import { X } from '@/entities/user'`, never `import { X } from '@/entities/user/model/queries'`.
+- `queryOptions` live in `model/`, Server Actions in `api/`, components in `ui/`.
+- Layers import only downward: `app → widgets → features → entities → shared`. Never upward.
 
 ---
 

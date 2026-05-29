@@ -13,7 +13,7 @@ export const LibraryPreviewHeader = ({ viewAllHref }: LibraryPreviewHeaderProps)
 
 	return (
 		<div className="mb-2.5 flex items-center justify-between gap-2">
-			<Typography tag="span" className="text-[13px] font-semibold text-t-1">
+			<Typography tag="h2" className="text-[13px] font-semibold text-t-1">
 				{t("dashboard.library.title")}
 			</Typography>
 			<Link

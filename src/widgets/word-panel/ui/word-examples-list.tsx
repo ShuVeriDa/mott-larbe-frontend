@@ -11,6 +11,25 @@ export interface WordExamplesListProps {
 	highlight: string;
 }
 
+const escapeRegExp = (value: string) =>
+	value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const HighlightedText = ({ text, highlight }: { text: string; highlight: string }) => {
+	if (!highlight) return <>{text}</>;
+	const parts = text.split(new RegExp(`(${escapeRegExp(highlight)})`, "gi"));
+	return (
+		<>
+			{parts.map((part, i) =>
+				part.toLowerCase() === highlight.toLowerCase() ? (
+					<span key={i} className="text-acc font-medium">{part}</span>
+				) : (
+					part
+				),
+			)}
+		</>
+	);
+};
+
 export const WordExamplesList = ({
 	lemmaId,
 	fallback,
@@ -32,16 +51,9 @@ export const WordExamplesList = ({
 			) : null}
 			{examples.map((example, idx) => (
 				<div key={idx}>
-					<div
-						className="text-[13px] leading-[1.6] text-t-1"
-						dangerouslySetInnerHTML={{
-							__html: example.text.replace(
-								new RegExp(escapeRegExp(highlight), "gi"),
-								(match) =>
-									`<Typography tag="span" class="text-acc font-medium">${match}</Typography>`,
-							),
-						}}
-					/>
+					<div className="text-[13px] leading-[1.6] text-t-1">
+						<HighlightedText text={example.text} highlight={highlight} />
+					</div>
 					{example.translation ? (
 						<div className="text-[12px] italic text-t-3">
 							{example.translation}
@@ -52,6 +64,3 @@ export const WordExamplesList = ({
 		</div>
 	);
 };
-
-const escapeRegExp = (value: string) =>
-	value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

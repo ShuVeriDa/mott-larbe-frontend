@@ -1,6 +1,8 @@
+"use client";
+
 import type { LibraryTextListItem } from "@/entities/library-text";
 import { useI18n } from "@/shared/lib/i18n";
-import { LANG_TAG } from "@/shared/lib/lang-tag/lang-tag";
+import { LANG_TAG } from "@/shared/lib/lang-tag";
 import { Typography } from "@/shared/ui/typography";
 import type { LibraryPreviewLevelStyle } from "../lib/library-preview-level-styles";
 
@@ -26,7 +28,7 @@ export const LibraryPreviewCardMeta = ({
 						{t(`shared.cefrLevel.${item.level}`)}
 					</Typography>
 				) : null}
-				<Typography tag="span" className="text-[10px] font-medium text-t-3">
+				<Typography tag="span" className="text-[10px] font-medium text-t-2">
 					{LANG_TAG[item.language] ?? item.language}
 				</Typography>
 			</div>

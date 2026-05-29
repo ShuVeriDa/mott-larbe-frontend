@@ -14,6 +14,7 @@ export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 	const {
 		filterLang,
 		filterLevel,
+		isPending,
 		items,
 		viewAllHref,
 		langFilters,
@@ -38,7 +39,13 @@ export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 				onLevelFilterToggle={handleLevelFilterToggle}
 			/>
 
-			{items.length > 0 ? (
+			{isPending ? (
+				<div className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">
+					{Array.from({ length: 6 }).map((_, i) => (
+						<div key={i} className="h-[178px] animate-pulse rounded-card bg-surf-2" />
+					))}
+				</div>
+			) : items.length > 0 ? (
 				<div className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">
 					{items.map(item => (
 						<LibraryPreviewCard key={item.id} item={item} lang={lang} />

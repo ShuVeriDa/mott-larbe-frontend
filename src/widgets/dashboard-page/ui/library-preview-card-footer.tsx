@@ -1,3 +1,5 @@
+"use client";
+
 import type { LibraryTextListItem } from "@/entities/library-text";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";

@@ -1,7 +1,5 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-
 import { useI18n } from "@/shared/lib/i18n";
 
 export interface ReaderProgressBarProps {
@@ -13,26 +11,38 @@ export const ReaderProgressBar = ({ progress }: ReaderProgressBarProps) => {
 	const value = Math.max(0, Math.min(100, Math.round(progress)));
 
 	return (
-		<div className="mb-7" aria-live="polite">
-			<div className="mb-2 flex justify-between">
-				<Typography tag="span" className="text-[11px] text-t-3">
-					{t("reader.body.progress")}
-				</Typography>
-				<Typography tag="span" className="text-[11px] font-semibold text-acc tabular-nums">
-					{value}%
-				</Typography>
-			</div>
-			<div
-				role="progressbar"
-				aria-valuenow={value}
-				aria-valuemin={0}
-				aria-valuemax={100}
-				className="h-[3px] overflow-hidden rounded-full bg-surf-3"
-			>
+		<div
+			className="pointer-events-none absolute inset-y-0 left-0 hidden select-none min-[768px]:flex"
+			aria-live="polite"
+			role="progressbar"
+			aria-valuenow={value}
+			aria-valuemin={0}
+			aria-valuemax={100}
+			aria-label={t("reader.body.progress")}
+		>
+			{/* Track */}
+			<div className="relative flex h-full w-[2px] items-end bg-bd-1">
+				{/* Fill — grows from bottom */}
 				<div
-					className="h-full rounded-full bg-acc transition-[width] duration-300"
-					style={{ width: `${value}%` }}
+					className="w-full origin-bottom bg-acc/40 transition-transform duration-500 ease-out motion-reduce:transition-none"
+					style={{
+						height: "100%",
+						transform: `scaleY(${value / 100})`,
+					}}
 				/>
+				{/* Marker dot + label */}
+				<div
+					className="absolute left-1/2 -translate-x-1/2 transition-[bottom] duration-500 ease-out motion-reduce:transition-none"
+					style={{ bottom: `${value}%` }}
+				>
+					<div className="size-[5px] -translate-x-[1.5px] rounded-full bg-acc" />
+					<span
+						className="absolute left-3 top-1/2 -translate-y-1/2 whitespace-nowrap font-mono text-[9px] tabular-nums text-acc/70"
+						aria-hidden="true"
+					>
+						{value}%
+					</span>
+				</div>
 			</div>
 		</div>
 	);

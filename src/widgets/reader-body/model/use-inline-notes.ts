@@ -86,11 +86,15 @@ export const useInlineNotes = (textId: string, pageNumber: number) => {
 	};
 
 	const handleAddNote = (selectedText: string, body: string) => {
-		createNote({ textId, pageNumber, selectedText, body });
+		const trimmedBody = body.trim().slice(0, 10_000);
+		if (!trimmedBody) return;
+		createNote({ textId, pageNumber, selectedText: selectedText.slice(0, 2_000), body: trimmedBody });
 	};
 
 	const handleUpdateNote = (id: string, body: string) => {
-		updateNote({ id, dto: { body } });
+		const trimmedBody = body.trim().slice(0, 10_000);
+		if (!trimmedBody) return;
+		updateNote({ id, dto: { body: trimmedBody } });
 	};
 
 	const handleDeleteNote = (id: string) => {

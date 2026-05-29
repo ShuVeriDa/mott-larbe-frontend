@@ -72,6 +72,34 @@ export const ReaderTopbar = ({
 		handleMarkComplete,
 	} = useReaderTopbar(textId, currentPage, data);
 
+	const actions = getTopbarActions({
+		t,
+		wordPanelTogglePressed,
+		handleToggleWordPanel,
+		tocOpen,
+		onToggleToc,
+		isPageBookmarked,
+		togglePageBookmark,
+		bookmarksOpen,
+		onToggleBookmarks,
+		notesOpen,
+		onToggleNotes,
+		settingsOpen,
+		onToggleSettings,
+		focusModeActive,
+		onToggleFocusMode,
+		bookmarked: data.bookmarked,
+		bookmarking,
+		handleBookmark,
+		aiHistoryOpen,
+		onToggleAiHistory,
+		batchTranslateState,
+		onBatchTranslate,
+		isCompleted,
+		completing,
+		handleMarkComplete,
+	});
+
 	return (
 		<header className="flex h-[46px] shrink-0 items-center gap-2 border-b-[0.5px] border-bd-1 bg-surf px-4 max-md:sticky max-md:top-0 max-md:z-80">
 			<Link
@@ -113,33 +141,7 @@ export const ReaderTopbar = ({
 			/>
 
 			<div className="flex shrink-0 items-center gap-1">
-				{getTopbarActions({
-					t,
-					wordPanelTogglePressed,
-					handleToggleWordPanel,
-					tocOpen,
-					onToggleToc,
-					isPageBookmarked,
-					togglePageBookmark,
-					bookmarksOpen,
-					onToggleBookmarks,
-					notesOpen,
-					onToggleNotes,
-					settingsOpen,
-					onToggleSettings,
-					focusModeActive,
-					onToggleFocusMode,
-					bookmarked: data.bookmarked,
-					bookmarking,
-					handleBookmark,
-					aiHistoryOpen,
-					onToggleAiHistory,
-					batchTranslateState,
-					onBatchTranslate,
-					isCompleted,
-					completing,
-					handleMarkComplete,
-				}).map(action => (
+				{actions.map(action => (
 					<Button
 						key={action.key}
 						onClick={action.onClick}

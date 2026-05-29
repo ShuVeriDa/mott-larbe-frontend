@@ -32,7 +32,8 @@ export const ReaderLayout = ({
 }: ReaderLayoutProps) => (
 	<div
 		className={cn(
-			"grid min-h-0 flex-1 overflow-hidden bg-surf transition-[grid-template-columns] duration-300 ease-out",
+			"grid min-h-0 flex-1 overflow-hidden bg-surf",
+			"transition-[grid-template-columns] duration-300 ease-out motion-reduce:transition-none",
 			"max-[767px]:grid-cols-1 max-[767px]:overflow-visible",
 			desktopRailExpanded
 				? "min-[768px]:grid-cols-[1fr_296px]"

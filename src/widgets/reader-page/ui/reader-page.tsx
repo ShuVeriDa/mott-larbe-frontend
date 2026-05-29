@@ -1,20 +1,34 @@
 "use client";
 import { useAiBatchTranslate } from "@/features/ai-batch-translate";
 import type { TextPageResponse } from "@/entities/text";
-import { ReaderAiHistorySheet } from "@/widgets/reader-ai-history-panel";
 import { ReaderFooter } from "@/widgets/reader-footer";
-import { ReaderNotesSheet } from "@/widgets/reader-notes-panel";
-import { ReaderSettingsSheet } from "@/widgets/reader-settings-sheet";
-import { ReaderTocSheet } from "@/widgets/reader-toc-panel";
-import { ReaderBookmarksSheet } from "@/widgets/reader-bookmarks-panel";
 import { ReaderTopbar } from "@/widgets/reader-topbar";
-import { WordBottomSheet } from "@/widgets/word-bottom-sheet";
 import { WordPopup } from "@/widgets/word-popup";
+import dynamic from "next/dynamic";
 import { useReaderPage } from "../model/use-reader-page";
 import { ReaderLoading } from "./reader-loading";
 import { ReaderError } from "./reader-error";
 import { ReaderLayout } from "./reader-layout";
 import { ReaderFocusExitButton } from "./reader-focus-exit-button";
+
+const WordBottomSheet = dynamic(() =>
+	import("@/widgets/word-bottom-sheet").then(m => ({ default: m.WordBottomSheet })),
+);
+const ReaderSettingsSheet = dynamic(() =>
+	import("@/widgets/reader-settings-sheet").then(m => ({ default: m.ReaderSettingsSheet })),
+);
+const ReaderNotesSheet = dynamic(() =>
+	import("@/widgets/reader-notes-panel").then(m => ({ default: m.ReaderNotesSheet })),
+);
+const ReaderTocSheet = dynamic(() =>
+	import("@/widgets/reader-toc-panel").then(m => ({ default: m.ReaderTocSheet })),
+);
+const ReaderBookmarksSheet = dynamic(() =>
+	import("@/widgets/reader-bookmarks-panel").then(m => ({ default: m.ReaderBookmarksSheet })),
+);
+const ReaderAiHistorySheet = dynamic(() =>
+	import("@/widgets/reader-ai-history-panel").then(m => ({ default: m.ReaderAiHistorySheet })),
+);
 
 export interface ReaderPageProps {
 	textId: string;

@@ -1,9 +1,9 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { textKeys } from "@/entities/text/api/text-keys";
-import { highlightKeys } from "@/entities/highlight/api/highlight-keys";
-import { noteKeys } from "@/entities/note/api/note-keys";
+import { textKeys } from "@/entities/text";
+import { highlightKeys } from "@/entities/highlight";
+import { noteKeys } from "@/entities/note";
 import { readerContextApi, readerContextKeys } from "../api";
 
 export const useReaderContext = (textId: string, pageNumber: number) => {

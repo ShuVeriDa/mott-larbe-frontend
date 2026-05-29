@@ -1,3 +1,5 @@
+"use client";
+
 import { useI18n } from "@/shared/lib/i18n";
 
 export const ReaderLoading = () => {
