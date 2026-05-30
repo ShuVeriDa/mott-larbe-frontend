@@ -2,7 +2,6 @@ import {
 	BookOpen,
 	ChartNoAxesCombined,
 	House,
-	LibraryBig,
 	RefreshCw,
 	WholeWord,
 } from "lucide-react";
@@ -26,11 +25,6 @@ export const buildNavSections = (lang: string): NavSection[] => [
 				href: () => `/${lang}/dashboard`,
 				icon: House,
 				labelKey: "nav.home",
-			},
-			{
-				href: () => `/${lang}/texts`,
-				icon: LibraryBig,
-				labelKey: "nav.texts",
 			},
 			{
 				href: () => `/${lang}/vocabulary`,

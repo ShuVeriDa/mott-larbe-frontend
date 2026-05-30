@@ -1,77 +1,43 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-
-import { Button } from "@/shared/ui/button";
-import { useEffect, useRef } from 'react';
-import { useQueryClient } from "@tanstack/react-query";
-import { useLibraryFilters } from "@/features/library-filters";
-import {
-	libraryTextKeys,
-	useInfiniteLibraryTexts,
-	type LibraryTextCounts,
-} from "@/entities/library-text";
 import { useI18n } from "@/shared/lib/i18n";
-import { LibraryTopbar } from "@/widgets/library-topbar";
-import { LibraryFilterBar } from "@/widgets/library-filter-bar";
-import { LibraryStatsRow } from "@/widgets/library-stats-row";
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 import { LibraryTextCards } from "@/widgets/library-text-cards";
+import { LibraryTopbar } from "@/widgets/library-topbar";
+import { useLibraryPage, type LibraryPageState } from "../model/use-library-page";
 
-const EMPTY_COUNTS: LibraryTextCounts = {
-	total: 0,
-	new: 0,
-	inProgress: 0,
-	completed: 0,
-};
+interface LibraryPageProps {
+	hideTopbar?: boolean;
+	state?: LibraryPageState;
+}
 
-export const LibraryPage = () => {
+export const LibraryPage = ({ hideTopbar, state }: LibraryPageProps) => {
 	const { t } = useI18n();
-	const qc = useQueryClient();
-	const { level, lang, status, sort, view, search } = useLibraryFilters();
-	const sentinelRef = useRef<HTMLDivElement>(null);
-
-	const query = useInfiniteLibraryTexts({
-		language: lang !== "all" ? [lang] : undefined,
-		level: level !== "all" ? [level] : undefined,
-		status: status !== "all" ? status : undefined,
-		orderBy: sort,
-		search: search || undefined,
-	});
-	const { hasNextPage, isFetchingNextPage, fetchNextPage } = query;
-
-	useEffect(() => {
-		const sentinel = sentinelRef.current;
-		if (!sentinel) return;
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				if (
-					entry.isIntersecting &&
-					hasNextPage &&
-					!isFetchingNextPage
-				) {
-					fetchNextPage();
-				}
-			},
-			{ rootMargin: "200px" },
-		);
-		observer.observe(sentinel);
-		return () => observer.disconnect();
-	}, [fetchNextPage, hasNextPage, isFetchingNextPage]);
-
-	const handleRefresh = () => {
-		qc.invalidateQueries({ queryKey: libraryTextKeys.root });
-	};
-
-	const counts = query.data?.pages[0]?.counts ?? EMPTY_COUNTS;
-	const items = query.data?.pages.flatMap((p) => p.items) ?? [];
+	const ownState = useLibraryPage();
+	const { query, counts, items, view, sort, sentinelRef, handleRefresh } =
+		state ?? ownState;
 
 	return (
 		<div className="flex flex-1 flex-col overflow-hidden max-md:overflow-visible">
-			<LibraryTopbar totalCount={counts.total} onRefresh={handleRefresh} />
-			<LibraryFilterBar />
-			<LibraryStatsRow counts={counts} />
+			{!hideTopbar && (
+				<LibraryTopbar counts={counts} onRefresh={handleRefresh} />
+			)}
 
-			<div className="flex-1 overflow-y-auto px-5 pb-10 pt-5 [scrollbar-color:var(--bd-2)_transparent] [scrollbar-width:thin] max-sm:px-3 max-sm:pt-3 [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-thumb]:rounded-[2px] [&::-webkit-scrollbar-thumb]:bg-bd-2">
+			<div className="flex-1 overflow-y-auto px-5 pb-10 pt-0 [scrollbar-color:var(--bd-2)_transparent] [scrollbar-width:thin] max-sm:px-3 max-sm:pt-3 [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-thumb]:rounded-[2px] [&::-webkit-scrollbar-thumb]:bg-bd-2">
+				{hideTopbar && (
+					<div className="mb-4 mt-4 flex items-center gap-3">
+						<Typography tag="h2" className="text-[13px] font-semibold text-t-2">
+							{t("library.title")}
+						</Typography>
+						<div className="h-px flex-1 bg-bd-1" />
+						{counts.total > 0 && (
+							<Typography tag="span" className="text-[11px] text-t-3">
+								{counts.total}
+							</Typography>
+						)}
+					</div>
+				)}
 				{query.isPending && (
 					<div className="grid grid-cols-[repeat(auto-fill,minmax(272px,1fr))] gap-3 max-sm:grid-cols-1 max-[380px]:grid-cols-1">
 						{Array.from({ length: 6 }).map((_, i) => (
@@ -82,7 +48,9 @@ export const LibraryPage = () => {
 
 				{query.isError && (
 					<div className="flex flex-col items-center justify-center gap-2 py-16 text-t-3">
-						<Typography tag="p" className="text-sm text-t-2">{t("library.error")}</Typography>
+						<Typography tag="p" className="text-sm text-t-2">
+							{t("library.error")}
+						</Typography>
 						<Button
 							onClick={handleRefresh}
 							className="text-xs text-acc-t hover:underline"

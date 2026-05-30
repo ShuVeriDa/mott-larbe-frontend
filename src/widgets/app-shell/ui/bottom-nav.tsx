@@ -10,7 +10,6 @@ import {
 	HomeIcon,
 	PhrasebookIcon,
 	ReviewIcon,
-	TextsIcon,
 	VocabularyIcon,
 } from "./nav-icons";
 
@@ -25,11 +24,6 @@ const buildItems = (lang: string): BottomNavItem[] => [
 		href: `/${lang}/dashboard`,
 		icon: <HomeIcon className="size-5" />,
 		labelKey: "nav.home",
-	},
-	{
-		href: `/${lang}/texts`,
-		icon: <TextsIcon className="size-5" />,
-		labelKey: "nav.texts",
 	},
 	{
 		href: `/${lang}/vocabulary`,
@@ -61,7 +55,7 @@ export const BottomNav = () => {
 			<div className="mx-auto flex gap-1 h-full max-w-[1120px] items-stretch">
 				{items.map((item, i) => {
 					const active =
-						pathname === item.href || (pathname.includes("reader") && i === 1);
+						pathname === item.href || (pathname.includes("reader") && i === 0);
 					return (
 						<Link
 							key={item.href}

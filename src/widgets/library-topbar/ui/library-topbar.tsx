@@ -1,45 +1,75 @@
 "use client";
 
+import type { LibraryTextCounts } from "@/entities/library-text";
 import { useLibraryFilters } from "@/features/library-filters";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { SearchBox } from "@/shared/ui/search-box";
 import { Typography } from "@/shared/ui/typography";
-import { ChangeEvent } from "react";
+import { LibraryFilterBar } from "@/widgets/library-filter-bar";
+import { ChangeEvent, useRef, useState } from "react";
 
 interface LibraryTopbarProps {
-	totalCount: number;
+	counts: LibraryTextCounts;
 	onRefresh: () => void;
+	title?: string;
 }
 
 export const LibraryTopbar = ({
-	totalCount,
+	counts,
 	onRefresh,
+	title,
 }: LibraryTopbarProps) => {
 	const { t } = useI18n();
 	const { search, setSearch } = useLibraryFilters();
 
+	const [inputValue, setInputValue] = useState(search);
+	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
 	const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-		setSearch(e.currentTarget.value);
+		const value = e.currentTarget.value;
+		setInputValue(value);
+		if (timerRef.current) clearTimeout(timerRef.current);
+		timerRef.current = setTimeout(() => setSearch(value), 400);
 	};
 
 	return (
-		<header>
-			<div className="flex h-12 shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-5 max-sm:px-3">
+		<div>
+			<div className="flex shrink-0 items-center gap-2.5 border-b-[0.5px] border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
 				<Typography
-					tag="span"
-					className="font-display text-sm font-medium tracking-[-0.1px] text-t-1"
+					tag="h1"
+					className="shrink-0 text-[13.5px] font-semibold text-t-1 max-md:text-[15px]"
 				>
-					{t("library.title")}
+					{title ?? t("library.title")}
 				</Typography>
-				<Typography tag="span" className="hidden text-xs text-t-3 sm:block">
-					{t("library.total", { count: String(totalCount) })}
-				</Typography>
+
+				<div className="hidden items-center gap-3 sm:flex">
+					<StatDot className="bg-t-3" />
+					<Typography tag="span" className="text-[11px] text-t-3">
+						<Typography tag="span" className="font-semibold text-t-2">{counts.total}</Typography>
+						&nbsp;{t("library.stats.total")}
+					</Typography>
+					<StatDot className="bg-grn" />
+					<Typography tag="span" className="text-[11px] text-t-3">
+						<Typography tag="span" className="font-semibold text-t-2">{counts.completed}</Typography>
+						&nbsp;{t("library.stats.done")}
+					</Typography>
+					<StatDot className="bg-acc" />
+					<Typography tag="span" className="text-[11px] text-t-3">
+						<Typography tag="span" className="font-semibold text-t-2">{counts.inProgress}</Typography>
+						&nbsp;{t("library.stats.reading")}
+					</Typography>
+					<StatDot className="bg-t-4" />
+					<Typography tag="span" className="text-[11px] text-t-3">
+						<Typography tag="span" className="font-semibold text-t-2">{counts.new}</Typography>
+						&nbsp;{t("library.stats.new")}
+					</Typography>
+				</div>
 
 				<div className="flex-1" />
 
 				<SearchBox
-					value={search}
+					value={inputValue}
 					onChange={handleSearch}
 					placeholder={t("library.searchPlaceholder")}
 					wrapperClassName="hidden sm:flex w-[200px] focus-within:w-[240px] transition-[width] duration-150"
@@ -59,16 +89,21 @@ export const LibraryTopbar = ({
 
 			<div className="flex shrink-0 border-b border-bd-1 bg-surf px-3 py-2 sm:hidden">
 				<SearchBox
-					value={search}
+					value={inputValue}
 					onChange={handleSearch}
 					placeholder={t("library.searchMobilePlaceholder")}
 					wrapperClassName="w-full h-9"
 					className="text-[13px]"
 				/>
 			</div>
-		</header>
+			<LibraryFilterBar />
+		</div>
 	);
 };
+
+const StatDot = ({ className }: { className: string }) => (
+	<span className={`size-1.5 shrink-0 rounded-full ${className}`} />
+);
 
 const RefreshIcon = () => (
 	<svg

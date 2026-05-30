@@ -29,7 +29,7 @@ export const useLibraryFilterStore = create<LibraryFilterState>((set) => ({
 	level: "all",
 	lang: "all",
 	status: "all",
-	sort: "level",
+	sort: "newest",
 	view: "grid",
 	search: "",
 	setLevel: (level) => set({ level }),

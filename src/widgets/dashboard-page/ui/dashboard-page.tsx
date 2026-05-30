@@ -4,36 +4,12 @@ import { useDashboardPage } from "../model";
 import { DashboardContent } from "./dashboard-content";
 import { DashboardError } from "./dashboard-error";
 import { DashboardSkeleton } from "./dashboard-skeleton";
-import { DashboardHeader } from "./dashboard-header";
 
 export const DashboardPage = () => {
-	const {
-		lang,
-		searchQuery,
-		data,
-		isLoading,
-		isError,
-		user,
-		handleSearchSubmit,
-		handleSearchChange,
-		handleRetry,
-	} = useDashboardPage();
+	const { lang, data, isLoading, isError, user, handleRetry } = useDashboardPage();
 
-	return (
-		<>
-			<DashboardHeader
-				searchQuery={searchQuery}
-				onSearchChange={handleSearchChange}
-				onSearchSubmit={handleSearchSubmit}
-			/>
+	if (isLoading) return <DashboardSkeleton />;
+	if (isError || !data) return <DashboardError onRetry={handleRetry} />;
 
-			{isLoading ? (
-				<DashboardSkeleton />
-			) : isError || !data ? (
-				<DashboardError onRetry={handleRetry} />
-			) : (
-				<DashboardContent data={data} user={user} lang={lang} />
-			)}
-		</>
-	);
+	return <DashboardContent data={data} user={user} lang={lang} />;
 };

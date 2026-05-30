@@ -8,8 +8,9 @@ import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
 import { CefrBadge } from "@/shared/ui/cefr-badge";
+import { BookOpen } from "lucide-react";
 import Link from "next/link";
-import { ComponentProps } from "react";
+import { type CSSProperties } from "react";
 
 interface LibraryTextCardProps {
 	item: LibraryTextListItem;
@@ -23,6 +24,44 @@ const getLevelBar = (level: CefrLevel | null): string => {
 	if (level === "B") return "from-amb";
 	return "from-red";
 };
+
+type LevelCover = { cov: string; stripe: string; glow: string };
+
+const LEVEL_COVER: Record<CefrLevel, LevelCover> = {
+	A: { cov: "bg-grn-bg", stripe: "var(--grn)", glow: "#22c55e" },
+	B: { cov: "bg-pur-bg", stripe: "var(--pur)", glow: "#6d4ed4" },
+	C: { cov: "bg-amb-bg", stripe: "var(--amb)", glow: "#f59e0b" },
+};
+
+const getLevelCover = (level: CefrLevel | null): LevelCover =>
+	LEVEL_COVER[(level as CefrLevel) ?? ""] ?? LEVEL_COVER.B;
+
+const LEVEL_PROGRESS: Record<
+	CefrLevel,
+	{ fill: string; color: string; badgeBg: string; badgeText: string }
+> = {
+	A: {
+		fill: "bg-grn",
+		color: "var(--grn)",
+		badgeBg: "bg-grn-bg",
+		badgeText: "text-grn-t",
+	},
+	B: {
+		fill: "bg-pur",
+		color: "var(--pur)",
+		badgeBg: "bg-pur-bg",
+		badgeText: "text-pur-t",
+	},
+	C: {
+		fill: "bg-amb",
+		color: "var(--amb)",
+		badgeBg: "bg-amb-bg",
+		badgeText: "text-amb-t",
+	},
+};
+
+const getLevelProgress = (level: CefrLevel | null) =>
+	LEVEL_PROGRESS[(level as CefrLevel) ?? ""] ?? LEVEL_PROGRESS.B;
 
 const getProgressConfig = (percent: number, status: string) => {
 	if (status === "COMPLETED") return { fill: "bg-grn", label: "done" };
@@ -40,18 +79,19 @@ export const LibraryTextCard = ({
 }: LibraryTextCardProps) => {
 	const { t, lang } = useI18n();
 	const levelBar = getLevelBar(item.level);
+	const levelProgress = getLevelProgress(item.level);
 	const progressConfig = getProgressConfig(
 		item.progressPercent,
 		item.progressStatus,
 	);
-	const href = `/${lang}/reader/${item.id}/p/1`;
+	const href = `/${lang}/texts/${item.id}`;
 	const delay = Math.min(index * 30, 330);
 
 	if (view === "list") {
 		return (
 			<Link
 				href={href}
-				className="animate-in fade-in slide-in-from-bottom-1 group relative flex items-center gap-3 overflow-hidden rounded-base border border-bd-1 bg-surf px-3.5 py-3 transition-colors duration-150 hover:border-bd-2 hover:bg-surf-2"
+				className="animate-in fade-in slide-in-from-bottom-1 group relative flex items-center gap-3 overflow-hidden rounded-base border border-bd-1 bg-surf px-3.5 py-3 transition-colors duration-150 hover:border-bd-2 hover:bg-surf-2 "
 				style={{
 					animationDelay: `${delay}ms`,
 					animationFillMode: "both",
@@ -119,7 +159,14 @@ export const LibraryTextCard = ({
 				)}
 
 				<div className="flex shrink-0 flex-col items-end gap-1.5">
-					<ActionButton status={item.progressStatus} t={t} />
+					{item.progressStatus === "COMPLETED" && (
+						<Typography
+							tag="span"
+							className="rounded px-1.5 py-px text-[10px] font-medium bg-grn-bg text-grn-t"
+						>
+							✓&nbsp;{t("library.card.done")}
+						</Typography>
+					)}
 					{item.isNew && (
 						<Typography
 							tag="span"
@@ -133,166 +180,114 @@ export const LibraryTextCard = ({
 		);
 	}
 
-	const handleMenuClick: NonNullable<
-		ComponentProps<"button">["onClick"]
-	> = e => {
-		e.preventDefault();
-		e.stopPropagation();
-	};
+	const cover = getLevelCover(item.level);
+
 	return (
 		<Link
 			href={href}
-			className="animate-in fade-in slide-in-from-bottom-2 group relative flex flex-col gap-2.5 overflow-hidden rounded-card border border-bd-1 bg-surf px-4 py-3.5 transition-[border-color,background-color,transform,box-shadow] duration-150 hover:-translate-y-px hover:border-bd-2 hover:bg-surf-2 hover:shadow-md active:translate-y-0 [@media(hover:none)]:hover:translate-y-0 [@media(hover:none)]:hover:shadow-none [@media(hover:none)]:active:bg-surf-2"
-			style={{
-				animationDelay: `${delay}ms`,
-				animationFillMode: "both",
-				animationDuration: "250ms",
-			}}
+			className="animate-in fade-in slide-in-from-bottom-2 group relative flex w-[224px] max-sm:w-[calc(50%-6px)] max-[380px]:w-full flex-col overflow-hidden rounded-card border border-bd-1 bg-surf transition-[border-color,transform,box-shadow] duration-200 hover:border-bd-2 hover:[box-shadow:0_4px_14px_2px_var(--card-glow)] active:translate-y-0 [@media(hover:none)]:hover:translate-y-0 [@media(hover:none)]:hover:shadow-none"
+			style={
+				{
+					animationDelay: `${delay}ms`,
+					animationFillMode: "both",
+					animationDuration: "250ms",
+					"--card-glow": `${cover.glow}90`,
+				} as CSSProperties
+			}
 		>
-			<Typography
-				tag="span"
-				aria-hidden="true"
+			{/* Cover */}
+			<div
 				className={cn(
-					"absolute left-0 right-0 top-0 h-[2px] opacity-0 transition-opacity duration-150 group-hover:opacity-100 bg-linear-to-r",
-					levelBar,
-					"to-transparent",
+					"relative flex h-[160px] items-center justify-center sm:h-[260px]",
+					cover.cov,
 				)}
-			/>
-
-			<div className="flex items-start justify-between gap-2">
-				<div className="flex items-center gap-1">
-					<CefrBadge level={item.level} />
-					{/* <Typography
+			>
+				<div
+					aria-hidden="true"
+					className="absolute bottom-0 left-0 top-0 w-[3px]"
+					style={{ background: cover.stripe }}
+				/>
+				<BookOpen
+					size={28}
+					aria-hidden="true"
+					className="opacity-60 sm:size-8"
+					style={{ color: cover.stripe }}
+				/>
+				{item.isNew && (
+					<Typography
 						tag="span"
-						className="rounded border border-bd-1 bg-surf-2 px-[7px] py-[2px] text-[10px] text-t-3"
+						className="absolute right-2 top-2 rounded bg-acc-bg px-[5px] py-px text-[9px] font-bold uppercase tracking-wider text-acc-t"
 					>
-						{t(`library.lang.${item.language}`)}
-					</Typography> */}
-					{item.tags[0] &&
-						item.tags.slice(0, 3).map(tag => (
-							<Typography
-								key={tag.id}
-								tag="span"
-								className="rounded border border-bd-2 bg-surf px-[7px] py-[2px] text-[10px] text-t-2 "
-							>
-								#{tag.name}
-							</Typography>
-						))}
+						{t("library.card.badgeNew")}
+					</Typography>
+				)}
+			</div>
 
-					{item.isNew && (
+			{/* Body */}
+			<div className="flex flex-col gap-2 p-3">
+				<div className="flex items-start justify-between gap-1">
+					<Typography
+						tag="p"
+						className="line-clamp-2 text-[13.5px] font-medium leading-[1.4] tracking-[-0.15px] text-t-1"
+					>
+						{item.title}
+					</Typography>
+					<CefrBadge level={item.level} />
+				</div>
+
+				<div>
+					<div className="mt-1 flex flex-wrap items-center gap-1 text-[11px] text-t-3">
+						<Typography tag="span">
+							{formatWords(item.wordCount)}&nbsp;{t("library.card.wordsUnit")}
+						</Typography>
 						<Typography
 							tag="span"
-							className="rounded bg-acc-bg px-[5px] py-px text-[9px] font-bold uppercase tracking-wider text-acc-t"
-						>
-							{t("library.card.badgeNew")}
+							className="h-[2px] w-[2px] shrink-0 rounded-full bg-t-4"
+						/>
+						<Typography tag="span">
+							≈{item.readingTime}&nbsp;{t("library.card.minUnit")}
 						</Typography>
-					)}
+					</div>
 				</div>
-				{/* <Button
-					onClick={handleMenuClick}
-					size={"bare"}
-					className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[5px] text-t-4 transition-colors duration-100 hover:bg-surf-3 hover:text-t-2"
-					aria-label="Меню"
-				>
-					<DotsIcon />
-				</Button> */}
-			</div>
 
-			<div>
-				<Typography
-					tag="p"
-					className="text-[14px] font-medium leading-[1.4] tracking-[-0.15px] text-t-1"
-				>
-					{item.title}
-				</Typography>
-				<div className="mt-1 flex flex-wrap items-center gap-1 text-[11px] text-t-3">
-					<Typography tag="span">
-						{formatWords(item.wordCount)}&nbsp;{t("library.card.wordsUnit")}
-					</Typography>
-					<Typography
-						tag="span"
-						className="h-[2px] w-[2px] shrink-0 rounded-full bg-t-4"
-					/>
-					<Typography tag="span">
-						≈{item.readingTime}&nbsp;{t("library.card.minUnit")}
-					</Typography>
-					<Typography
-						tag="span"
-						className="h-[2px] w-[2px] shrink-0 rounded-full bg-t-4"
-					/>
-					<Typography tag="span">{item.language}</Typography>
-				</div>
-			</div>
-
-			{item.progressPercent > 0 && (
 				<div>
 					<div className="mb-1 flex justify-between text-[10px] text-t-3">
-						<Typography tag="span">{t("library.card.progress")}</Typography>
-						<Typography tag="span">{item.progressPercent}%</Typography>
+						{item.progressStatus === "COMPLETED" ? (
+							<Typography
+								tag="span"
+								className={cn(
+									"rounded px-1.5 py-px text-[10px] font-medium",
+									levelProgress.badgeBg,
+									levelProgress.badgeText,
+								)}
+							>
+								✓&nbsp;{t("library.card.done")}
+							</Typography>
+						) : (
+							<Typography tag="span" style={{ color: levelProgress.color }}>
+								{t("library.card.progress")}
+							</Typography>
+						)}
+						<Typography tag="span" style={{ color: levelProgress.color }}>
+							{item.progressStatus === "COMPLETED"
+								? "100%"
+								: `${item.progressPercent}%`}
+						</Typography>
 					</div>
-					<div className="h-[3px] overflow-hidden rounded-full bg-surf-3">
+					<div className="h-[2px] overflow-hidden rounded-full bg-surf-3">
 						<div
-							className={cn(
-								"h-full rounded-full transition-[width] duration-500",
-								progressConfig.fill,
-							)}
-							style={{ width: `${item.progressPercent}%` }}
+							className="h-full rounded-full transition-[width] duration-500"
+							style={{
+								width: `${item.progressPercent}%`,
+								background:
+									item.progressPercent > 0
+										? levelProgress.color
+										: "transparent",
+							}}
 						/>
 					</div>
 				</div>
-			)}
-
-			<div className="mt-0.5 flex items-center justify-between">
-				<ActionButton status={item.progressStatus} t={t} />
-				<Typography tag="span" className="text-[10px] text-t-4 max-sm:hidden">
-					{item.wordCount.toLocaleString()}&nbsp;{t("library.card.tokens")}
-				</Typography>
 			</div>
 		</Link>
 	);
 };
-
-const ActionButton = ({
-	status,
-	t,
-}: {
-	status: string;
-	t: (key: string) => string;
-}) => {
-	if (status === "COMPLETED") {
-		return (
-			<Typography
-				tag="span"
-				className="inline-flex h-10 items-center rounded-base border border-grn/20 bg-grn-bg px-3 text-[11px] font-medium text-grn-t"
-			>
-				✓&nbsp;{t("library.card.done")}
-			</Typography>
-		);
-	}
-	if (status === "IN_PROGRESS") {
-		return (
-			<Typography
-				tag="span"
-				className="inline-flex h-10 items-center rounded-base border border-bd-2 bg-surf-2 px-3 text-[11px] font-medium text-t-2"
-			>
-				{t("library.card.continue")}
-			</Typography>
-		);
-	}
-	return (
-		<Typography
-			tag="span"
-			className="inline-flex h-10 items-center rounded-base border border-acc/22 bg-acc-bg px-3 text-[11px] font-medium text-acc-t"
-		>
-			{t("library.card.start")}
-		</Typography>
-	);
-};
-
-const DotsIcon = () => (
-	<svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-		<circle cx="6" cy="2" r=".9" />
-		<circle cx="6" cy="6" r=".9" />
-		<circle cx="6" cy="10" r=".9" />
-	</svg>
-);

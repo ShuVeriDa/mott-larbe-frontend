@@ -49,9 +49,7 @@ export const LibraryTextCards = ({
 	}
 
 	const gridClass = cn(
-		view === "grid"
-			? "grid grid-cols-[repeat(auto-fill,minmax(272px,1fr))] gap-3 max-sm:grid-cols-2 max-[380px]:grid-cols-1"
-			: "flex flex-col gap-1.5",
+		view === "grid" ? "flex flex-wrap gap-3" : "flex flex-col gap-1.5",
 	);
 
 	if (sort === "level") {

@@ -5,10 +5,10 @@ import type { CefrLevel } from "@/shared/types";
 import { Badge } from "@/shared/ui/badge";
 import { Typography } from "@/shared/ui/typography";
 
-const CEFR_VARIANT: Record<CefrLevel, "grn" | "amb" | "red"> = {
+const CEFR_VARIANT: Record<CefrLevel, "grn" | "pur" | "amb"> = {
 	A: "grn",
-	B: "amb",
-	C: "red",
+	B: "pur",
+	C: "amb",
 };
 
 interface CefrBadgeProps {

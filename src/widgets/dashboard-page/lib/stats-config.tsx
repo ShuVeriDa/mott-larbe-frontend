@@ -65,23 +65,4 @@ export const getStatsConfig = (stats: DashboardStats): StatItemConfig[] => [
 			</svg>
 		),
 	},
-	{
-		key: "dueToday",
-		value: stats.dueToday.total,
-		labelKey: "dashboard.stats.dueToday",
-		iconBgClass: "bg-pur-bg",
-		icon: (
-			<svg
-				viewBox="0 0 14 14"
-				fill="none"
-				stroke="currentColor"
-				strokeWidth="1.4"
-				className="size-[13px] text-pur-t"
-				aria-hidden="true"
-			>
-				<circle cx="7" cy="7" r="5" />
-				<path d="M7 4.5v3l1.5 1.5" strokeLinecap="round" />
-			</svg>
-		),
-	},
 ];

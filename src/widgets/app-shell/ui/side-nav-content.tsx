@@ -44,7 +44,7 @@ export const SideNavContent = ({
 					{section.items.map((item, i) => {
 						const href = item.href(lang);
 						const active =
-							pathname === href || (i === 1 && pathname.includes("reader"));
+							pathname === href || (i === 0 && pathname.includes("reader"));
 						const Icon = item.icon;
 						return (
 							<NavItem

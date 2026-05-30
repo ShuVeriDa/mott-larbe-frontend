@@ -1,5 +1,5 @@
-import type { LibraryPreviewLevelStyle } from "../lib/library-preview-level-styles";
 import { BookOpen } from "lucide-react";
+import type { LibraryPreviewLevelStyle } from "../lib/library-preview-level-styles";
 
 interface LibraryPreviewCardCoverProps {
 	colors: LibraryPreviewLevelStyle;
@@ -9,7 +9,7 @@ export const LibraryPreviewCardCover = ({
 	colors,
 }: LibraryPreviewCardCoverProps) => (
 	<div
-		className={`relative flex h-[72px] items-center justify-center ${colors.cov}`}
+		className={`relative flex h-[180px] items-center justify-center md:h-[217px] lg:h-[290px] ${colors.cov}`}
 	>
 		<div
 			aria-hidden="true"
@@ -19,7 +19,7 @@ export const LibraryPreviewCardCover = ({
 		<BookOpen
 			size={26}
 			aria-hidden="true"
-			className="opacity-70"
+			className="opacity-70 md:size-8 lg:size-10"
 			style={{ color: colors.stripe }}
 		/>
 	</div>
