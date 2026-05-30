@@ -114,7 +114,7 @@ export const LibraryTextCard = ({
 					>
 						{item.title}
 					</Typography>
-					<div className="mt-0.5 flex items-center gap-1 text-[11px] text-t-3">
+					<div className="mt-0.5 flex flex-wrap items-center gap-1 text-[11px] text-t-3">
 						<CefrBadge level={item.level} />
 						<Typography
 							tag="span"
@@ -141,7 +141,7 @@ export const LibraryTextCard = ({
 				</div>
 
 				{item.progressPercent > 0 && (
-					<div className="w-[140px] shrink-0">
+					<div className="w-[140px] shrink-0 max-sm:hidden">
 						<div className="mb-1 flex justify-between text-[10px] text-t-3">
 							<Typography tag="span">{t("library.card.progress")}</Typography>
 							<Typography tag="span">{item.progressPercent}%</Typography>

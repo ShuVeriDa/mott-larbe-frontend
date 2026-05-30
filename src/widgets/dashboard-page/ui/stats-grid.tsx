@@ -15,7 +15,7 @@ export const StatsGrid = ({ stats, lang }: StatsGridProps) => {
 	const statsConfig = getStatsConfig(stats);
 
 	return (
-		<div className="grid grid-cols-4 gap-2 max-md:grid-cols-2 max-sm:gap-[7px]">
+		<div className="grid grid-cols-4 gap-2 max-md:grid-cols-2 max-sm:gap-[7px] max-[380px]:grid-cols-1">
 			{statsConfig.map(item => (
 				<StatCard
 					key={item.key}

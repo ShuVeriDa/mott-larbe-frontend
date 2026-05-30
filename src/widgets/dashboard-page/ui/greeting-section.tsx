@@ -21,7 +21,7 @@ export const GreetingSection = ({ user, lang, stats }: GreetingSectionProps) => 
 		<div className="flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start max-sm:gap-3">
 			<GreetingIntro user={user} lang={lang} />
 
-			<div className="flex shrink-0 items-center gap-2 max-sm:w-full max-sm:flex-wrap">
+			<div className="flex shrink-0 items-center gap-2 max-sm:w-full max-sm:flex-wrap md:flex-wrap">
 				<StatPill
 					value={stats.textsRead}
 					label={t("dashboard.stats.textsRead")}
@@ -46,10 +46,10 @@ export const GreetingSection = ({ user, lang, stats }: GreetingSectionProps) => 
 				{stats.dueToday.total > 0 && (
 					<Link
 						href={`/${lang}/review`}
-						className="flex items-center gap-2 rounded-lg border border-pur-bg bg-pur-bg px-3 py-1.5 transition-all duration-150 hover:border-pur-t/20 hover:brightness-95"
+						className="flex items-center gap-2 rounded-lg border border-pur-bg bg-pur-bg px-3 py-[10px] transition-all duration-150 hover:border-pur-t/20 hover:brightness-95"
 					>
 						<ReviewIcon />
-						<div className="flex items-baseline gap-1">
+						<div className="flex min-w-0 items-baseline gap-1">
 							<Typography tag="span" className="text-[13px] font-bold leading-none text-pur-t">
 								{stats.dueToday.total}
 							</Typography>
