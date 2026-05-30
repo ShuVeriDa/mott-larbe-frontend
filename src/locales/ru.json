@@ -1818,7 +1818,8 @@
 			"aiHistory": "AI-переводы",
 			"batchTranslate": "Перевести все неизвестные слова",
 			"markComplete": "Отметить как прочитанное",
-			"completed": "Прочитано"
+			"completed": "Прочитано",
+			"more": "Ещё"
 		},
 		"body": {
 			"progress": "Прогресс по тексту",
@@ -2296,6 +2297,9 @@
 				"wordsUnit": "слов",
 				"noAuthor": "—",
 				"noSource": "—"
+			},
+			"tags": {
+				"label": "Теги"
 			},
 			"pagesCard": {
 				"label": "Страницы",

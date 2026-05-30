@@ -9,7 +9,6 @@ import { ReaderLoading } from "./reader-loading";
 import { ReaderError } from "./reader-error";
 import { ReaderLayout } from "./reader-layout";
 import { ReaderFocusExitButton } from "./reader-focus-exit-button";
-import { ReaderMobileNav } from "./reader-mobile-nav";
 
 const WordBottomSheet = dynamic(() =>
 	import("@/widgets/word-bottom-sheet").then(m => ({ default: m.WordBottomSheet })),
@@ -111,14 +110,6 @@ const ReaderPageInner = ({
 				onNavigate={handleNavigate}
 			/>
 			{!focusMode.active && <ReaderFooter />}
-			{!focusMode.active && (
-				<ReaderMobileNav
-					textId={textId}
-					lang={lang}
-					currentPage={pageNumber}
-					totalPages={data.totalPages}
-				/>
-			)}
 			<WordPopup />
 			<WordBottomSheet textId={textId} />
 			<ReaderSettingsSheet open={settingsOpen} onClose={handleCloseRail} textId={textId} pageNumber={pageNumber} />

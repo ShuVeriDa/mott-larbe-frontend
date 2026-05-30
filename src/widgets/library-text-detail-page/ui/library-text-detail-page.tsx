@@ -21,6 +21,7 @@ import { TextInfoCard } from "./text-info-card";
 import { TextPagesCard } from "./text-pages-card";
 import { TextRelated } from "./text-related";
 import { TextReportDialog } from "./text-report-dialog";
+import { TextTagsCard } from "./text-tags-card";
 
 interface LibraryTextDetailPageProps {
 	id: string;
@@ -203,6 +204,12 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 					/>
 
 					<TextDescription description={text.description} t={t} />
+
+					{text.tags.length > 0 && (
+						<div className="mb-4">
+							<TextTagsCard tags={text.tags} t={t} />
+						</div>
+					)}
 
 					<div className="grid grid-cols-2 gap-3 mb-4 animate-[fadeUp_0.3s_0.1s_ease_both] max-sm:grid-cols-1 max-sm:gap-2.5">
 						<TextProgressCard

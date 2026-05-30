@@ -1818,7 +1818,8 @@
 			"aiHistory": "AI translations",
 			"batchTranslate": "Translate all unknown words",
 			"markComplete": "Mark as read",
-			"completed": "Read"
+			"completed": "Read",
+			"more": "More"
 		},
 		"body": {
 			"progress": "Reading progress",
@@ -2299,6 +2300,9 @@
 				"wordsUnit": "words",
 				"noAuthor": "—",
 				"noSource": "—"
+			},
+			"tags": {
+				"label": "Tags"
 			},
 			"pagesCard": {
 				"label": "Pages",

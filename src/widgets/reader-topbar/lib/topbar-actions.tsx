@@ -22,6 +22,7 @@ export type TopbarAction = {
 	ariaPressed: boolean | undefined;
 	disabled?: boolean;
 	onClick: () => void;
+	priority?: "primary" | "secondary";
 };
 
 export interface GetTopbarActionsParams {
@@ -88,6 +89,7 @@ export const getTopbarActions = ({
 			ariaLabel: t("reader.topbar.togglePanel"),
 			ariaPressed: wordPanelTogglePressed,
 			onClick: handleToggleWordPanel,
+			priority: "primary",
 		},
 		onToggleToc
 			? {
@@ -96,6 +98,7 @@ export const getTopbarActions = ({
 					ariaLabel: t("reader.topbar.toc"),
 					ariaPressed: tocOpen,
 					onClick: onToggleToc,
+					priority: "primary",
 				}
 			: null,
 		{
@@ -110,6 +113,7 @@ export const getTopbarActions = ({
 			ariaLabel: t("reader.topbar.bookmarks"),
 			ariaPressed: isPageBookmarked,
 			onClick: togglePageBookmark,
+			priority: "secondary",
 		},
 		onToggleBookmarks
 			? {
@@ -118,6 +122,7 @@ export const getTopbarActions = ({
 					ariaLabel: t("reader.topbar.bookmarksList"),
 					ariaPressed: bookmarksOpen,
 					onClick: onToggleBookmarks,
+					priority: "secondary",
 				}
 			: null,
 		{
@@ -128,6 +133,7 @@ export const getTopbarActions = ({
 			ariaLabel: t("reader.topbar.notes"),
 			ariaPressed: notesOpen,
 			onClick: onToggleNotes,
+			priority: "secondary",
 		},
 		{
 			key: "settings",
@@ -135,6 +141,7 @@ export const getTopbarActions = ({
 			ariaLabel: t("reader.topbar.settings"),
 			ariaPressed: settingsOpen,
 			onClick: onToggleSettings,
+			priority: "primary",
 		},
 		onToggleAiHistory
 			? {
@@ -143,6 +150,7 @@ export const getTopbarActions = ({
 					ariaLabel: t("reader.topbar.aiHistory"),
 					ariaPressed: aiHistoryOpen,
 					onClick: onToggleAiHistory,
+					priority: "secondary",
 				}
 			: null,
 		onBatchTranslate
@@ -156,6 +164,7 @@ export const getTopbarActions = ({
 					ariaPressed: undefined,
 					disabled: batchTranslateState === "loading",
 					onClick: onBatchTranslate,
+					priority: "secondary",
 				}
 			: null,
 		onToggleFocusMode
@@ -170,6 +179,7 @@ export const getTopbarActions = ({
 					ariaLabel: t("reader.topbar.focusMode"),
 					ariaPressed: focusModeActive,
 					onClick: onToggleFocusMode,
+					priority: "primary",
 				}
 			: null,
 		{
@@ -188,6 +198,7 @@ export const getTopbarActions = ({
 			ariaPressed: undefined,
 			disabled: completing || isCompleted,
 			onClick: handleMarkComplete,
+			priority: "secondary",
 		},
 		{
 			key: "bookmark",
@@ -202,6 +213,7 @@ export const getTopbarActions = ({
 			ariaPressed: Boolean(bookmarked),
 			disabled: bookmarking,
 			onClick: handleBookmark,
+			priority: "secondary",
 		},
 	];
 

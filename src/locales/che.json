@@ -1818,7 +1818,8 @@
 			"aiHistory": "AI-гочдарш",
 			"batchTranslate": "Ца хаарш дешнаш гочде",
 			"markComplete": "Доьшна хилла билгал де",
-			"completed": "Доьшна"
+			"completed": "Доьшна",
+			"more": "Кхин"
 		},
 		"body": {
 			"progress": "Доьшаран прогресс",
@@ -2296,6 +2297,9 @@
 				"wordsUnit": "дош",
 				"noAuthor": "—",
 				"noSource": "—"
+			},
+			"tags": {
+				"label": "Тегаш"
 			},
 			"pagesCard": {
 				"label": "АгIонаш",
