@@ -23,7 +23,7 @@ export const useLoginForm = ({ successHref }: UseLoginFormParams) => {
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [remember, setRemember] = useState(true);
+	const [remember, setRemember] = useState(false);
 	const [showPw, setShowPw] = useState(false);
 	const [errors, setErrors] = useState<LoginErrors>({});
 

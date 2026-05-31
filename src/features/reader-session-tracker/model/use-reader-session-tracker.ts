@@ -1,5 +1,4 @@
 "use client";
-import { getAccessToken } from "@/entities/auth";
 import { API_URL } from "@/shared/config";
 import { useEffect, useRef } from "react";
 
@@ -8,22 +7,18 @@ const MIN_DURATION_S = 10;
 const flush = (textId: string, durationSeconds: number, wordsRead: number | undefined) => {
 	if (durationSeconds < MIN_DURATION_S) return;
 
-	const token = getAccessToken();
-	if (!token) return;
-
 	const body = JSON.stringify({
 		textId,
 		durationSeconds,
 		...(wordsRead ? { wordsRead } : {}),
 	});
 
-	// keepalive: true ensures the request completes even when the page is unloading
+	// keepalive: true ensures the request completes even when the page is unloading.
+	// credentials: "include" sends the httpOnly access_token cookie automatically.
 	void fetch(`${API_URL}/statistics/reading-time`, {
 		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`,
-		},
+		credentials: "include",
+		headers: { "Content-Type": "application/json" },
 		body,
 		keepalive: true,
 	}).catch(() => undefined);

@@ -2,19 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { DEFAULT_LOCALE, LOCALES, type Locale } from "@/i18n/locale-list";
 
 const ACCESS_TOKEN_COOKIE = "access_token";
-const REFRESH_TOKEN_COOKIE = "refreshToken";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:9555/api";
-
-// Reads exp from the JWT payload (no verification — proxy just needs the TTL)
-const getJwtExp = (token: string): number | null => {
-	try {
-		const payload = token.split(".")[1];
-		const decoded = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"));
-		return typeof decoded.exp === "number" ? decoded.exp : null;
-	} catch {
-		return null;
-	}
-};
 
 const getPreferredLocale = (request: NextRequest): Locale => {
 	const acceptLanguage = request.headers.get("accept-language") ?? "";
@@ -47,17 +35,27 @@ const isPublicOnlyRoute = (segment: string | null): boolean =>
 const isProtectedRoute = (segment: string | null): boolean =>
 	segment !== null && segment !== "auth" && segment !== "reset-password";
 
-const tryRefresh = async (request: NextRequest): Promise<string | null> => {
+// Calls the backend refresh endpoint. The backend sets access_token via
+// Set-Cookie (httpOnly) in the response — we forward those cookies to the
+// browser via NextResponse.
+const tryRefresh = async (
+	request: NextRequest,
+): Promise<Response | null> => {
 	try {
 		const res = await fetch(`${API_URL}/auth/login/access-token`, {
 			method: "POST",
 			headers: { cookie: request.headers.get("cookie") ?? "" },
 		});
 		if (!res.ok) return null;
-		const data = (await res.json()) as { accessToken?: string };
-		return data.accessToken ?? null;
+		return res;
 	} catch {
 		return null;
+	}
+};
+
+const forwardSetCookies = (from: Response, to: NextResponse): void => {
+	for (const value of from.headers.getSetCookie()) {
+		to.headers.append("Set-Cookie", value);
 	}
 };
 
@@ -80,38 +78,14 @@ export const proxy = async (request: NextRequest) => {
 	const locale = getLocaleFromPathname(pathname);
 	const segment = getRouteSegment(pathname);
 
-	// Mirror the refresh token's TTL for the access token cookie.
-	// If the refresh token lives 30 days (rememberMe), access token cookie should too.
-	const refreshTokenValue = request.cookies.get(REFRESH_TOKEN_COOKIE)?.value;
-	const refreshExp = refreshTokenValue ? getJwtExp(refreshTokenValue) : null;
-	const maxAge = refreshExp ? Math.max(0, refreshExp - Math.floor(Date.now() / 1000)) : undefined;
-
-	const isProduction = process.env.NODE_ENV === "production";
-	const tokenCookieOptions = {
-		path: "/",
-		sameSite: "strict" as const,
-		httpOnly: false,
-		secure: isProduction,
-		...(maxAge !== undefined ? { maxAge } : {}),
-	};
-
-	const buildNext = (token?: string) => {
+	const buildNext = () => {
 		const requestHeaders = new Headers(request.headers);
 		requestHeaders.set("x-locale", locale);
-		const res = NextResponse.next({ request: { headers: requestHeaders } });
-		if (token) {
-			res.cookies.set(ACCESS_TOKEN_COOKIE, token, tokenCookieOptions);
-		}
-		return res;
+		return NextResponse.next({ request: { headers: requestHeaders } });
 	};
 
-	const buildRedirect = (path: string, token?: string) => {
-		const res = NextResponse.redirect(new URL(path, request.url));
-		if (token) {
-			res.cookies.set(ACCESS_TOKEN_COOKIE, token, tokenCookieOptions);
-		}
-		return res;
-	};
+	const buildRedirect = (path: string) =>
+		NextResponse.redirect(new URL(path, request.url));
 
 	const existingToken = request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
 
@@ -122,14 +96,19 @@ export const proxy = async (request: NextRequest) => {
 		return buildNext();
 	}
 
-	// No token — attempt silent refresh via httpOnly refresh token cookie
-	const newToken = await tryRefresh(request);
+	// No access token — attempt silent refresh via httpOnly refresh token cookie.
+	// The backend will issue a new access_token cookie via Set-Cookie.
+	const refreshRes = await tryRefresh(request);
 
-	if (newToken) {
+	if (refreshRes) {
 		if (isPublicOnlyRoute(segment)) {
-			return buildRedirect(`/${locale}/dashboard`, newToken);
+			const res = buildRedirect(`/${locale}/dashboard`);
+			forwardSetCookies(refreshRes, res);
+			return res;
 		}
-		return buildNext(newToken);
+		const res = buildNext();
+		forwardSetCookies(refreshRes, res);
+		return res;
 	}
 
 	// Not authenticated

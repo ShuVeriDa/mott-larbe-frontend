@@ -6,7 +6,6 @@ import { Button } from "@/shared/ui/button";
 
 import { ComponentProps } from 'react';
 import type { AdminDictNavEntry } from "@/entities/dictionary";
-import { getAccessToken } from "@/entities/auth";
 import { API_URL } from "@/shared/config";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -42,11 +41,8 @@ export const DictionaryEntryTopbar = ({
 	const router = useRouter();
 
 	const handleExport = async () => {
-		const token = getAccessToken() ?? "";
 		const url = `${API_URL}/admin/dictionary/export?ids=${lemmaId}`;
-		const res = await fetch(url, {
-			headers: token ? { Authorization: `Bearer ${token}` } : {},
-		});
+		const res = await fetch(url, { credentials: "include" });
 		if (!res.ok) return;
 		const blob = await res.blob();
 		const objectUrl = URL.createObjectURL(blob);

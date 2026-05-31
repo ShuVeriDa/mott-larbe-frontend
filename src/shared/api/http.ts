@@ -1,7 +1,5 @@
 import axios, { isAxiosError } from "axios";
-import { ACCESS_TOKEN_STORAGE_KEY, API_URL } from "@/shared/config";
-import { clearAccessToken, setAccessToken } from "@/entities/auth";
-import { escapeCookieName } from "@/shared/lib/cookie";
+import { API_URL } from "@/shared/config";
 
 export interface ApiErrorBody {
   statusCode: number;
@@ -20,22 +18,11 @@ export const getApiErrorCode = (error: unknown): string => {
   return "INTERNAL_SERVER_ERROR";
 };
 
+// withCredentials: true ensures the httpOnly access_token cookie is sent
+// automatically with every request — no client-side token reading needed.
 export const http = axios.create({
 	baseURL: API_URL,
 	withCredentials: true,
-});
-
-http.interceptors.request.use((config) => {
-	if (typeof window !== "undefined") {
-		const match = document.cookie.match(
-			new RegExp(`(?:^|; )${escapeCookieName(ACCESS_TOKEN_STORAGE_KEY)}=([^;]*)`),
-		);
-		const token = match ? decodeURIComponent(match[1]) : null;
-		if (token) {
-			config.headers.set("Authorization", `Bearer ${token}`);
-		}
-	}
-	return config;
 });
 
 const PUBLIC_SEGMENTS = new Set(["auth", "reset-password"]);
@@ -47,31 +34,23 @@ const isOnPublicPage = (): boolean => {
 };
 
 const redirectToAuth = (): void => {
-	clearAccessToken();
 	if (!isOnPublicPage()) {
 		const lang = window.location.pathname.split("/")[1] ?? "ru";
 		window.location.href = `/${lang}/auth`;
 	}
 };
 
-interface AuthResponse {
-	accessToken: string;
-	rememberMe?: boolean;
-}
+let refreshPromise: Promise<boolean> | null = null;
 
-let refreshPromise: Promise<string | null> | null = null;
-
-const tryRefreshToken = (): Promise<string | null> => {
+// After a successful refresh the backend sets a new access_token cookie via
+// Set-Cookie — the browser picks it up automatically for the retry request.
+const tryRefreshToken = (): Promise<boolean> => {
 	if (refreshPromise) return refreshPromise;
 
 	refreshPromise = http
-		.post<AuthResponse>("/auth/login/access-token")
-		.then((res) => {
-			const { accessToken, rememberMe } = res.data;
-			setAccessToken(accessToken, rememberMe ?? false);
-			return accessToken;
-		})
-		.catch(() => null)
+		.post("/auth/login/access-token")
+		.then(() => true)
+		.catch(() => false)
 		.finally(() => {
 			refreshPromise = null;
 		});
@@ -85,28 +64,36 @@ const REFRESH_PATH = "/auth/login/access-token";
 http.interceptors.response.use(
 	(response) => response,
 	async (error) => {
-		if (typeof window === "undefined" || error?.response?.status !== 401) {
-			return Promise.reject(error);
+		if (typeof window === "undefined") return Promise.reject(error);
+
+		const status: number = error?.response?.status;
+		const requestPath: string = error?.config?.url ?? "";
+
+		// Surface rate-limit errors with retry timing so the UI can show feedback.
+		if (status === 429) {
+			const retryAfter = error.response?.headers?.["retry-after"];
+			const enriched = Object.assign(error, {
+				isRateLimit: true,
+				retryAfterSeconds: retryAfter ? Number(retryAfter) : 60,
+			});
+			return Promise.reject(enriched);
 		}
 
-		const requestPath: string = error?.config?.url ?? "";
+		if (status !== 401) return Promise.reject(error);
 
 		if (AUTH_LOGOUT_EXCLUDED_PATHS.has(requestPath) || requestPath === REFRESH_PATH) {
 			return Promise.reject(error);
 		}
 
-		const newToken = await tryRefreshToken();
+		const refreshed = await tryRefreshToken();
 
-		if (!newToken) {
+		if (!refreshed) {
 			redirectToAuth();
 			return Promise.reject(error);
 		}
 
-		const retryConfig = { ...error.config };
-		retryConfig.headers = { ...retryConfig.headers };
-		retryConfig.headers["Authorization"] = `Bearer ${newToken}`;
-		retryConfig._retry = true;
-
+		// Cookie is updated by the browser — just retry without manual header injection.
+		const retryConfig = { ...error.config, _retry: true };
 		return http(retryConfig);
 	},
 );

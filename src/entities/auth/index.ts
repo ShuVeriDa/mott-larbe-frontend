@@ -16,11 +16,7 @@ export type {
 	ValidatePasswordResetReason,
 	ValidatePasswordResetResponse,
 } from "./api";
-export {
-	clearAccessToken,
-	getAccessToken,
-	setAccessToken,
-} from "./lib/access-token";
+export { clearAccessToken } from "./lib/access-token";
 export {
 	useChangePassword,
 	useRequestEmailChange,

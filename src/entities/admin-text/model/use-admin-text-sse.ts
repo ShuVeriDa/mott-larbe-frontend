@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { useQueryClient } from "@tanstack/react-query";
 import { API_URL } from "@/shared/config";
-import { getAccessToken } from "@/entities/auth";
 import { adminTextKeys } from "../api/admin-text-keys";
 import type { SseProgressEvent } from "../api/types";
 
@@ -16,17 +15,13 @@ export const useAdminTextSSE = (textId: string, enabled: boolean) => {
 		const controller = new AbortController();
 
 		const connect = async () => {
-			const token = getAccessToken();
-
 			let response: Response;
 			try {
 				response = await fetch(
 					`${API_URL}/admin/texts/${textId}/process/stream`,
 					{
-						headers: {
-							Accept: "text/event-stream",
-							...(token ? { Authorization: `Bearer ${token}` } : {}),
-						},
+						credentials: "include",
+						headers: { Accept: "text/event-stream" },
 						signal: controller.signal,
 					},
 				);

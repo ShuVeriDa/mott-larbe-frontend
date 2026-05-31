@@ -1,5 +1,1 @@
-export {
-	clearAccessToken,
-	getAccessToken,
-	setAccessToken,
-} from "./access-token";
+export { clearAccessToken } from "./access-token";

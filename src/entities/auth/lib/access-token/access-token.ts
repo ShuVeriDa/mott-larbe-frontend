@@ -1,31 +1,10 @@
-import { ACCESS_TOKEN_STORAGE_KEY, REMEMBER_ME_MAX_AGE } from "@/shared/config";
-import { escapeCookieName } from "@/shared/lib/cookie";
-
-const getCookie = (name: string): string | null => {
-	if (typeof window === "undefined") return null;
-	const match = document.cookie.match(
-		new RegExp(`(?:^|; )${escapeCookieName(name)}=([^;]*)`),
-	);
-	return match ? decodeURIComponent(match[1]) : null;
+// The access_token cookie is httpOnly and is managed exclusively by the
+// backend (Set-Cookie) and Next.js proxy. Client-side JavaScript cannot
+// read or write it — that is intentional to prevent XSS token theft.
+//
+// clearAccessToken is kept as a no-op shim so existing import sites compile
+// without changes while the actual cookie removal happens server-side
+// (backend removeAccessTokenFromResponse on logout / proxy on refresh failure).
+export const clearAccessToken = (): void => {
+	// httpOnly cookies cannot be cleared from JS — the backend handles this.
 };
-
-const cookieFlags = (): string => {
-	const secure =
-		typeof window !== "undefined" && window.location.protocol === "https:"
-			? "; Secure"
-			: "";
-	return `; path=/; SameSite=Strict${secure}`;
-};
-
-export const setAccessToken = (token: string, remember = false) => {
-	if (typeof window === "undefined") return;
-	const maxAge = remember ? `; max-age=${REMEMBER_ME_MAX_AGE}` : "";
-	document.cookie = `${ACCESS_TOKEN_STORAGE_KEY}=${token}${cookieFlags()}${maxAge}`;
-};
-
-export const clearAccessToken = () => {
-	if (typeof window === "undefined") return;
-	document.cookie = `${ACCESS_TOKEN_STORAGE_KEY}=; max-age=0${cookieFlags()}`;
-};
-
-export const getAccessToken = (): string | null => getCookie(ACCESS_TOKEN_STORAGE_KEY);
