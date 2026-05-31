@@ -1,11 +1,12 @@
 import { ReactNode } from 'react';
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Golos_Text, Geist_Mono, Inter, Lora, Merriweather, PT_Serif, Source_Serif_4 } from "next/font/google";
 import { headers } from "next/headers";
 import { QueryProvider } from "@/shared/ui/query-provider";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
 import { TooltipProvider } from "@/shared/ui/tooltip";
 import { PageAnalyticsProvider } from "@/shared/lib/page-analytics";
+import { SwRegister } from "@/shared/lib/sw-register";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -54,6 +55,15 @@ const sourceSerif4 = Source_Serif_4({
 	weight: ["300", "400", "600"],
 });
 
+export const viewport: Viewport = {
+	themeColor: [
+		{ media: "(prefers-color-scheme: dark)", color: "#121210" },
+		{ media: "(prefers-color-scheme: light)", color: "#f5f4f0" },
+	],
+	width: "device-width",
+	initialScale: 1,
+};
+
 export const metadata: Metadata = {
 	title: "Mott & Larbe",
 	description: "Mott & Larbe",
@@ -91,14 +101,11 @@ const RootLayout = async ({
 			className={cn("h-full", "antialiased", golosText.variable, playfairDisplay.variable, geistMono.variable, lora.variable, merriweather.variable, ptSerif.variable, sourceSerif4.variable, "font-sans", inter.variable, playfairDisplayHeading.variable)}
 			suppressHydrationWarning
 		>
-			<head>
-				<meta name="theme-color" content="#121210" media="(prefers-color-scheme: dark)" />
-				<meta name="theme-color" content="#f5f4f0" media="(prefers-color-scheme: light)" />
-			</head>
 			<body className="min-h-full flex flex-col md:overflow-hidden" suppressHydrationWarning>
 				<ThemeProvider>
 					<QueryProvider>
 						<PageAnalyticsProvider />
+					<SwRegister />
 						<TooltipProvider>{children}</TooltipProvider>
 					</QueryProvider>
 				</ThemeProvider>

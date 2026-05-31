@@ -1877,7 +1877,7 @@
 			"size": "Размер текста",
 			"font": "Шрифт",
 			"columnWidth": "Ширина колонки",
-			"pagePadding": "Отступы страницы",
+			"pagePadding": "Поля",
 			"paddingCompact": "Узкие",
 			"paddingNormal": "Обычные",
 			"paddingWide": "Широкие",

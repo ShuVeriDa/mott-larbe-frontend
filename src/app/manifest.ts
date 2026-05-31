@@ -4,11 +4,12 @@ const manifest = (): MetadataRoute.Manifest => ({
 	name: "Мотт Ларбе",
 	short_name: "Мотт Ларбе",
 	description: "Языковая платформа для изучения языков",
-	start_url: "/",
+	start_url: "/ru",
 	display: "standalone",
 	background_color: "#121210",
 	theme_color: "#121210",
 	scope: "/",
+	id: "/",
 	icons: [
 		{
 			src: "/icons/icon-192x192.png",

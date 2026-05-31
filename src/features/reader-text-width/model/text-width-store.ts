@@ -18,11 +18,10 @@ export const COLUMN_WIDTH_PX: Record<ReaderColumnWidth, string> = {
 	full: "100%",
 };
 
-// Page padding as responsive tailwind classes with vw-based fallback for mobile
 export const PAGE_PADDING_CLASS: Record<ReaderPagePadding, string> = {
-	compact: "px-[4vw] sm:px-[3vw] lg:px-[2vw]",
-	normal: "px-[8vw] sm:px-[6vw] lg:px-[4vw]",
-	wide: "px-[14vw] sm:px-[10vw] lg:px-[6vw]",
+	compact: "px-3 sm:px-[3vw] lg:px-[2vw]",
+	normal: "px-5 sm:px-[6vw] lg:px-[4vw]",
+	wide: "px-10 sm:px-[10vw] lg:px-[6vw]",
 };
 
 export const LINE_HEIGHT_VALUE: Record<ReaderLineHeight, number> = {

@@ -1880,7 +1880,7 @@
 			"size": "Text size",
 			"font": "Font",
 			"columnWidth": "Column width",
-			"pagePadding": "Page padding",
+			"pagePadding": "Margins",
 			"paddingCompact": "Compact",
 			"paddingNormal": "Normal",
 			"paddingWide": "Wide",

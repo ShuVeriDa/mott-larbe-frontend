@@ -83,14 +83,16 @@ export const ReaderSettingsBody = ({
 				className={cn("flex", gap, compact ? "gap-1" : "gap-1.5")}
 			/>
 
-			<ReaderSettingsSectionLabel
-				label={t("reader.settings.columnWidth")}
-				compact={compact}
-			/>
-			<ColumnWidthGroup
-				className={cn("flex", gap, compact ? "gap-1" : "gap-1.5")}
-				buttonClassName={btnH}
-			/>
+			<div className="max-[767px]:hidden">
+				<ReaderSettingsSectionLabel
+					label={t("reader.settings.columnWidth")}
+					compact={compact}
+				/>
+				<ColumnWidthGroup
+					className={cn("flex", gap, compact ? "gap-1" : "gap-1.5")}
+					buttonClassName={btnH}
+				/>
+			</div>
 
 			<ReaderSettingsSectionLabel
 				label={t("reader.settings.pagePadding")}
