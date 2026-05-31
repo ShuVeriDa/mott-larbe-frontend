@@ -583,7 +583,10 @@
 				"support": "Support",
 				"learner": "Learner"
 			}
-		}
+		},
+		"contribute": "Contribute",
+		"suggestions": "My suggestions",
+		"suggestText": "Suggest a text"
 	},
 	"vocabulary": {
 		"title": "Vocabulary",
@@ -2987,7 +2990,8 @@
 			"openMenu": "Open menu",
 			"subscriptions": "Subscriptions",
 			"tracking": "Traffic",
-			"phrasebook": "Phrasebook"
+			"phrasebook": "Phrasebook",
+			"textSubmissions": "Text submissions"
 		},
 		"users": {
 			"title": "Users",
@@ -5129,6 +5133,32 @@
 			"rawTranslate": "Translation",
 			"rawWord": "Word",
 			"rawWordAlt": "Alternative spelling",
+			"notes": "Notes",
+			"title": "Title",
+			"author": "Author",
+			"source": "Source",
+			"description": "Description"
+		}
+	},
+	"suggestText": {
+		"title": "Suggest an edit",
+		"textLabel": "Text:",
+		"fieldLabel": "Field",
+		"newValueLabel": "New value",
+		"newValuePlaceholder": "Enter your suggestion…",
+		"commentLabel": "Comment",
+		"commentPlaceholder": "Why should this be changed?",
+		"cancel": "Cancel",
+		"submit": "Submit",
+		"submitting": "Submitting…",
+		"success": "Your suggestion has been submitted for review",
+		"error": "Failed to submit suggestion. Please try again.",
+		"button": "Suggest edit",
+		"fields": {
+			"title": "Title",
+			"author": "Author",
+			"source": "Source",
+			"description": "Description",
 			"notes": "Notes"
 		}
 	},
@@ -5149,7 +5179,8 @@
 		"newValue": "After",
 		"comment": "Comment",
 		"reviewComment": "Editor's note",
-		"submittedAt": "Submitted"
+		"submittedAt": "Submitted",
+		"selectToView": "Select an item to view details"
 	},
 	"adminSuggestions": {
 		"meta": {
@@ -5191,7 +5222,15 @@
 		"rejected": "Rejected",
 		"successApprove": "Suggestion approved and applied",
 		"successReject": "Suggestion rejected",
-		"errorReview": "Failed to update status"
+		"errorReview": "Failed to update status",
+		"text": "Text",
+		"typeFilter": {
+			"all": "All types",
+			"entry": "Word edits",
+			"text": "Text edits"
+		},
+		"sortNewest": "Newest first",
+		"sortOldest": "Oldest first"
 	},
 	"phrasebook": {
 		"title": "Phrasebook",
@@ -6422,5 +6461,101 @@
 			"desc": "Reviews + knowledge + phrasebook + reading"
 		}
 	},
-	"statistics.weekday.trend": "Trend"
+	"statistics.weekday.trend": "Trend",
+	"myTextSubmissions": {
+		"meta": {
+			"title": "My text submissions | Mott Larbe",
+			"description": "Texts you have submitted for review"
+		},
+		"title": "My text submissions",
+		"empty": "You haven't submitted any texts yet",
+		"status": {
+			"PENDING": "Pending review",
+			"APPROVED": "Approved",
+			"REJECTED": "Rejected"
+		},
+		"submittedAt": "Submitted",
+		"language": "Language",
+		"author": "Author",
+		"sourceUrl": "Link",
+		"reviewComment": "Editor's note",
+		"selectToView": "Select a submission to view details"
+	},
+	"adminTextSubmissions": {
+		"meta": {
+			"title": "Text Submissions — Admin | Mott Larbe",
+			"description": "Review user-submitted texts"
+		},
+		"title": "Text Submissions",
+		"subtitle": "{total} submissions",
+		"empty": "No submissions found",
+		"emptySearch": "Nothing found",
+		"selectToReview": "Select a submission to review",
+		"back": "Back",
+		"stats": {
+			"total": "Total",
+			"pending": "Pending",
+			"approved": "Approved",
+			"rejected": "Rejected"
+		},
+		"status": {
+			"PENDING": "Pending",
+			"APPROVED": "Approved",
+			"REJECTED": "Rejected"
+		},
+		"filter": {
+			"all": "All",
+			"pending": "Pending",
+			"approved": "Approved",
+			"rejected": "Rejected"
+		},
+		"fields": {
+			"title": "Title",
+			"language": "Language",
+			"author": "Author",
+			"sourceUrl": "Link",
+			"content": "Content",
+			"comment": "Comment",
+			"reviewComment": "Editor's comment"
+		},
+		"approve": "Approve",
+		"reject": "Reject",
+		"successApprove": "Submission approved",
+		"successReject": "Submission rejected",
+		"errorReview": "Failed to update status",
+		"sortNewest": "Newest first",
+		"sortOldest": "Oldest first"
+	},
+	"suggestTextPage": {
+		"meta": {
+			"title": "Suggest a text | Mott Larbe",
+			"description": "Propose a new text or book for the library"
+		},
+		"title": "Suggest a text",
+		"description": "Know a great Chechen text, book, or article? Let us know — our editors will review it and add it to the library.",
+		"form": {
+			"title": "Title",
+			"titlePlaceholder": "Title of the text or book",
+			"language": "Language",
+			"author": "Author",
+			"authorPlaceholder": "Optional",
+			"sourceUrl": "Link",
+			"sourceUrlPlaceholder": "https://…",
+			"content": "Text (paste)",
+			"contentPlaceholder": "Paste the text here…",
+			"comment": "Comment",
+			"commentPlaceholder": "Anything else we should know?",
+			"sourceRequired": "Please provide a link or paste the text",
+			"submit": "Submit",
+			"submitting": "Submitting…"
+		},
+		"success": "Thank you! Your suggestion has been submitted.",
+		"error": "Failed to submit. Please try again.",
+		"languages": {
+			"che": "Chechen",
+			"ru": "Russian",
+			"en": "English",
+			"other": "Other"
+		}
+	}
 }

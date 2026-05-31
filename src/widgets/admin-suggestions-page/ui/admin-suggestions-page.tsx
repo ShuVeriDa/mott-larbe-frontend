@@ -11,28 +11,29 @@ export const AdminSuggestionsPage = () => {
 	const { t } = useI18n();
 
 	const {
-		suggestions,
-		stats,
-		isLoading,
-		statusFilter,
-		query,
-		selectedId,
-		selectedSuggestion,
-		reviewComment,
-		isReviewing,
-		handleStatusFilterChange,
-		handleQueryChange,
-		handleSelect,
-		handleReviewCommentChange,
-		handleApprove,
-		handleReject,
+		suggestions, stats, total, isLoading,
+		statusFilter, typeFilter, query, order,
+		page, pageSize,
+		selectedId, selectedSuggestion,
+		reviewComment, isReviewing,
+		handleStatusFilterChange, handleTypeFilterChange,
+		handleQueryChange, handleOrderChange,
+		handlePageChange, handlePageSizeChange,
+		handleSelect, handleReviewCommentChange,
+		handleApprove, handleReject,
 	} = useAdminSuggestionsPage();
 
-	const total = stats?.total ?? 0;
+	const statsTotal = stats?.total ?? 0;
 
 	return (
 		<div className="flex h-full flex-col overflow-hidden">
-			<SuggestionsTopbar total={total} isLoading={isLoading} t={t} />
+			<SuggestionsTopbar
+				total={statsTotal}
+				isLoading={isLoading}
+				typeFilter={typeFilter}
+				onTypeFilterChange={handleTypeFilterChange}
+				t={t}
+			/>
 
 			<AdminSuggestionsStats stats={stats} t={t} />
 
@@ -44,8 +45,15 @@ export const AdminSuggestionsPage = () => {
 						selectedId={selectedId}
 						search={query}
 						statusFilter={statusFilter}
+						order={order}
+						page={page}
+						pageSize={pageSize}
+						total={total}
 						onSearchChange={handleQueryChange}
 						onStatusChange={handleStatusFilterChange}
+						onOrderChange={handleOrderChange}
+						onPageChange={handlePageChange}
+						onPageSizeChange={handlePageSizeChange}
 						onSelect={handleSelect}
 						t={t}
 					/>

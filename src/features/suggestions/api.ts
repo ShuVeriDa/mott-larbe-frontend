@@ -31,6 +31,11 @@ export const suggestionsApi = {
 		return data;
 	},
 
+	async getTextFields(): Promise<{ fields: string[] }> {
+		const { data } = await http.get<{ fields: string[] }>("/suggestions/text-fields");
+		return data;
+	},
+
 	async getById(id: string): Promise<Suggestion> {
 		const { data } = await http.get<Suggestion>(`/suggestions/${id}`);
 		return data;

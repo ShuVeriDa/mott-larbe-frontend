@@ -1,8 +1,10 @@
 export type {
 	Suggestion,
 	SuggestionStatus,
+	SuggestionType,
 	SuggestionUser,
 	SuggestionEntry,
+	SuggestionText,
 	SuggestionStats,
 	SuggestionsListResponse,
 	SuggestionsListMeta,

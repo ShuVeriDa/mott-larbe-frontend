@@ -12,10 +12,16 @@ export interface SuggestionEntry {
 	rawWord: string;
 }
 
+export interface SuggestionText {
+	id: string;
+	title: string;
+}
+
 export interface Suggestion {
 	id: string;
 	userId: string;
-	entryId: string;
+	entryId: string | null;
+	textId: string | null;
 	field: string;
 	oldValue: string | null;
 	newValue: string;
@@ -26,13 +32,14 @@ export interface Suggestion {
 	reviewComment?: string;
 	user?: SuggestionUser;
 	reviewer?: SuggestionUser;
-	entry?: SuggestionEntry;
+	entry?: SuggestionEntry | null;
+	text?: SuggestionText | null;
 	createdAt: string;
 }
 
 export interface AdjacentSuggestion {
 	id: string;
-	entry: { word: string };
+	label: string | null;
 }
 
 export interface AdjacentSuggestions {
@@ -41,13 +48,20 @@ export interface AdjacentSuggestions {
 }
 
 export interface CreateSuggestionDto {
-	normalized: string;
-	rawWord: string;
-	currentTranslation: string;
+	// entry path (existing)
+	normalized?: string;
+	rawWord?: string;
+	currentTranslation?: string;
+	entryId?: string;
+	// text path (new)
+	textId?: string;
+	// shared
 	field: string;
 	newValue: string;
 	comment?: string;
 }
+
+export type SuggestionType = "entry" | "text";
 
 export interface ReviewSuggestionDto {
 	decision: ReviewDecision;
@@ -56,6 +70,7 @@ export interface ReviewSuggestionDto {
 
 export interface GetSuggestionsParams {
 	status?: SuggestionStatus;
+	type?: SuggestionType;
 	order?: "asc" | "desc";
 	q?: string;
 	limit?: number;
@@ -64,6 +79,7 @@ export interface GetSuggestionsParams {
 
 export interface GetMySuggestionsParams {
 	status?: SuggestionStatus;
+	order?: "asc" | "desc";
 	limit?: number;
 	offset?: number;
 }

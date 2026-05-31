@@ -90,7 +90,7 @@ export const adminUnknownWordApi = {
 			"/admin/texts",
 			{ params: { limit: 100 } },
 		);
-		return data.items;
+		return data.items ?? [];
 	},
 
 	searchLemmas: async (q: string): Promise<LemmaSearchItem[]> => {

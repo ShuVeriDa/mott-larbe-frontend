@@ -3,7 +3,7 @@
 import { Typography } from "@/shared/ui/typography";
 
 import type { AdminFeedbackMessage } from "@/entities/feedback";
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { FeedbackMessageBubble } from "./feedback-message-bubble";
 
 const formatDateDivider = (iso: string): string =>
@@ -44,12 +44,9 @@ export const FeedbackMessagesList = ({
 				const showDivider =
 					i === 0 || !isSameDay(messages[i - 1].createdAt, msg.createdAt);
 				return (
-					<>
+					<Fragment key={msg.id}>
 						{showDivider && (
-							<div
-								key={`divider-${msg.id}`}
-								className="relative my-1 text-center text-[10.5px] text-t-3"
-							>
+							<div className="relative my-1 text-center text-[10.5px] text-t-3">
 								<Typography tag="span" className="relative z-10 bg-bg px-2">
 									{formatDateDivider(msg.createdAt)}
 								</Typography>
@@ -57,11 +54,10 @@ export const FeedbackMessagesList = ({
 							</div>
 						)}
 						<FeedbackMessageBubble
-							key={msg.id}
 							message={msg}
 							noteLabel={noteLabel}
 						/>
-					</>
+					</Fragment>
 				);
 			})}
 			<div ref={bottomRef} />

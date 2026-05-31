@@ -19,6 +19,7 @@ import {
 	Quote,
 	Link2,
 	BookMarked,
+	BookPlus,
 } from "lucide-react";
 
 export interface AdminNavItem {
@@ -119,6 +120,11 @@ export const buildAdminNavSections = (t: (key: string) => string, lang: string):
 				href: () => `/${lang}/admin/suggestions`,
 				label: () => t("admin.nav.suggestions"),
 				icon: Pencil,
+			},
+			{
+				href: () => `/${lang}/admin/text-submissions`,
+				label: () => t("admin.nav.textSubmissions"),
+				icon: BookPlus,
 			},
 		],
 	},

@@ -4,7 +4,7 @@ import type { DeckDailyWordCount } from "@/entities/deck";
 import { useDeckSettings, useUpdateDeckSettings } from "@/entities/deck";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const DAILY_OPTIONS: DeckDailyWordCount[] = [3, 5, 10];
 const NUMBERED_DECKS_OPTIONS = [1, 2, 3, 4, 5] as const;
@@ -20,18 +20,16 @@ export const DeckSettingsForm = ({ onSaved }: DeckSettingsFormProps) => {
 	const { data: settings } = useDeckSettings();
 	const { mutate: updateSettings, isPending } = useUpdateDeckSettings();
 
-	const [dailyWordCount, setDailyWordCount] = useState<DeckDailyWordCount>(5);
-	const [deckMaxSize, setDeckMaxSize] = useState(90);
-	const [dailyNumberedDecks, setDailyNumberedDecks] = useState(1);
+	const [dailyWordCount, setDailyWordCount] = useState<DeckDailyWordCount>(
+		() => settings?.dailyWordCount ?? 5,
+	);
+	const [deckMaxSize, setDeckMaxSize] = useState(
+		() => settings?.deckMaxSize ?? 90,
+	);
+	const [dailyNumberedDecks, setDailyNumberedDecks] = useState(
+		() => settings?.dailyNumberedDecks ?? 1,
+	);
 	const [savedFlash, setSavedFlash] = useState(false);
-
-	useEffect(() => {
-		if (settings) {
-			setDailyWordCount(settings.dailyWordCount);
-			setDeckMaxSize(settings.deckMaxSize);
-			setDailyNumberedDecks(settings.dailyNumberedDecks);
-		}
-	}, [settings]);
 
 	const isDirty =
 		settings &&

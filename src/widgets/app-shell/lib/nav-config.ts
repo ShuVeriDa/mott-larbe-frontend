@@ -1,7 +1,9 @@
 import {
 	BookOpen,
+	BookPlus,
 	ChartNoAxesCombined,
 	House,
+	Pencil,
 	RefreshCw,
 	WholeWord,
 } from "lucide-react";
@@ -45,6 +47,21 @@ export const buildNavSections = (lang: string): NavSection[] => [
 				href: () => `/${lang}/progress`,
 				icon: ChartNoAxesCombined,
 				labelKey: "nav.progress",
+			},
+		],
+	},
+	{
+		titleKey: "nav.contribute",
+		items: [
+			{
+				href: () => `/${lang}/suggestions`,
+				icon: Pencil,
+				labelKey: "nav.suggestions",
+			},
+			{
+				href: () => `/${lang}/suggest-text`,
+				icon: BookPlus,
+				labelKey: "nav.suggestText",
 			},
 		],
 	},

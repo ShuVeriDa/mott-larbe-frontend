@@ -583,7 +583,10 @@
 				"support": "Поддержка",
 				"learner": "Студент"
 			}
-		}
+		},
+		"contribute": "Участие",
+		"suggestions": "Мои правки",
+		"suggestText": "Предложить текст"
 	},
 	"vocabulary": {
 		"title": "Словарь",
@@ -2984,7 +2987,8 @@
 			"closeMenu": "Закрыть меню",
 			"openMenu": "Открыть меню",
 			"subscriptions": "Подписки",
-			"phrasebook": "Разговорник"
+			"phrasebook": "Разговорник",
+			"textSubmissions": "Предложения текстов"
 		},
 		"users": {
 			"title": "Пользователи",
@@ -5126,6 +5130,32 @@
 			"rawTranslate": "Перевод",
 			"rawWord": "Слово",
 			"rawWordAlt": "Альтернативное написание",
+			"notes": "Примечания",
+			"title": "Название",
+			"author": "Автор",
+			"source": "Источник",
+			"description": "Описание"
+		}
+	},
+	"suggestText": {
+		"title": "Предложить правку",
+		"textLabel": "Текст:",
+		"fieldLabel": "Поле",
+		"newValueLabel": "Новое значение",
+		"newValuePlaceholder": "Введите ваше предложение…",
+		"commentLabel": "Комментарий",
+		"commentPlaceholder": "Почему это нужно изменить?",
+		"cancel": "Отмена",
+		"submit": "Отправить",
+		"submitting": "Отправка…",
+		"success": "Ваше предложение отправлено на рассмотрение",
+		"error": "Не удалось отправить предложение. Попробуйте ещё раз.",
+		"button": "Предложить правку",
+		"fields": {
+			"title": "Название",
+			"author": "Автор",
+			"source": "Источник",
+			"description": "Описание",
 			"notes": "Примечания"
 		}
 	},
@@ -5146,7 +5176,8 @@
 		"newValue": "Стало",
 		"comment": "Комментарий",
 		"reviewComment": "Ответ редактора",
-		"submittedAt": "Отправлено"
+		"submittedAt": "Отправлено",
+		"selectToView": "Выберите элемент для просмотра"
 	},
 	"adminSuggestions": {
 		"meta": {
@@ -5154,7 +5185,7 @@
 			"description": "Модерация предложений от пользователей"
 		},
 		"title": "Предложения правок",
-		"subtitle": "{total, plural, one {# предложение} few {# предложения} other {# предложений}}",
+		"subtitle": "{total} предложений",
 		"empty": "Нет предложений",
 		"emptySearch": "Ничего не найдено",
 		"selectToReview": "Выберите предложение для рассмотрения",
@@ -5188,7 +5219,15 @@
 		"rejected": "Отклонено",
 		"successApprove": "Правка одобрена и применена",
 		"successReject": "Предложение отклонено",
-		"errorReview": "Не удалось обновить статус"
+		"errorReview": "Не удалось обновить статус",
+		"text": "Текст",
+		"typeFilter": {
+			"all": "Все типы",
+			"entry": "Правки слов",
+			"text": "Правки текстов"
+		},
+		"sortNewest": "Сначала новые",
+		"sortOldest": "Сначала старые"
 	},
 	"phrasebook": {
 		"title": "Разговорник",
@@ -6419,5 +6458,101 @@
 			"desc": "Повторения + знания + разговорник + чтение"
 		}
 	},
-	"statistics.weekday.trend": "Тренд"
+	"statistics.weekday.trend": "Тренд",
+	"myTextSubmissions": {
+		"meta": {
+			"title": "Мои предложения текстов | Мотт Ларбе",
+			"description": "Тексты, отправленные вами на рассмотрение"
+		},
+		"title": "Мои предложения текстов",
+		"empty": "Вы ещё не отправляли предложений текстов",
+		"status": {
+			"PENDING": "На рассмотрении",
+			"APPROVED": "Одобрено",
+			"REJECTED": "Отклонено"
+		},
+		"submittedAt": "Отправлено",
+		"language": "Язык",
+		"author": "Автор",
+		"sourceUrl": "Ссылка",
+		"reviewComment": "Комментарий редактора",
+		"selectToView": "Выберите заявку для просмотра"
+	},
+	"adminTextSubmissions": {
+		"meta": {
+			"title": "Предложения текстов — Admin | Mott Larbe",
+			"description": "Модерация пользовательских предложений текстов"
+		},
+		"title": "Предложения текстов",
+		"subtitle": "{total} заявок",
+		"empty": "Заявок не найдено",
+		"emptySearch": "Ничего не найдено",
+		"selectToReview": "Выберите заявку для рассмотрения",
+		"back": "Назад",
+		"stats": {
+			"total": "Всего",
+			"pending": "На рассмотрении",
+			"approved": "Одобрено",
+			"rejected": "Отклонено"
+		},
+		"status": {
+			"PENDING": "На рассмотрении",
+			"APPROVED": "Одобрено",
+			"REJECTED": "Отклонено"
+		},
+		"filter": {
+			"all": "Все",
+			"pending": "На рассмотрении",
+			"approved": "Одобрено",
+			"rejected": "Отклонено"
+		},
+		"fields": {
+			"title": "Название",
+			"language": "Язык",
+			"author": "Автор",
+			"sourceUrl": "Ссылка",
+			"content": "Контент",
+			"comment": "Комментарий",
+			"reviewComment": "Комментарий редактора"
+		},
+		"approve": "Одобрить",
+		"reject": "Отклонить",
+		"successApprove": "Заявка одобрена",
+		"successReject": "Заявка отклонена",
+		"errorReview": "Не удалось обновить статус",
+		"sortNewest": "Сначала новые",
+		"sortOldest": "Сначала старые"
+	},
+	"suggestTextPage": {
+		"meta": {
+			"title": "Предложить текст | Mott Larbe",
+			"description": "Предложите новый текст или книгу для библиотеки"
+		},
+		"title": "Предложить текст",
+		"description": "Знаете хороший чеченский текст, книгу или статью? Расскажите нам — наши редакторы проверят и добавят его в библиотеку.",
+		"form": {
+			"title": "Название",
+			"titlePlaceholder": "Название текста или книги",
+			"language": "Язык",
+			"author": "Автор",
+			"authorPlaceholder": "Необязательно",
+			"sourceUrl": "Ссылка",
+			"sourceUrlPlaceholder": "https://…",
+			"content": "Текст (вставить)",
+			"contentPlaceholder": "Вставьте текст сюда…",
+			"comment": "Комментарий",
+			"commentPlaceholder": "Что ещё нам стоит знать?",
+			"sourceRequired": "Укажите ссылку или вставьте текст",
+			"submit": "Отправить",
+			"submitting": "Отправка…"
+		},
+		"success": "Спасибо! Ваше предложение отправлено на рассмотрение.",
+		"error": "Не удалось отправить. Попробуйте ещё раз.",
+		"languages": {
+			"che": "Чеченский",
+			"ru": "Русский",
+			"en": "Английский",
+			"other": "Другой"
+		}
+	}
 }

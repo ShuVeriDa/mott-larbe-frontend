@@ -583,7 +583,10 @@
 				"support": "Гӏо дар",
 				"learner": "ХӀотамо"
 			}
-		}
+		},
+		"contribute": "ДӀахецнарш",
+		"suggestions": "Со хьажийнарш",
+		"suggestText": "Текст хьажийна"
 	},
 	"vocabulary": {
 		"title": "Дошам",
@@ -2984,7 +2987,8 @@
 			"openMenu": "Меню хьала а тохо",
 			"subscriptions": "Подписках",
 			"tracking": "Трафик",
-			"phrasebook": "Разговорник"
+			"phrasebook": "Разговорник",
+			"textSubmissions": "Текстийн хьажийнарш"
 		},
 		"users": {
 			"title": "Нийсархой",
@@ -5126,6 +5130,32 @@
 			"rawTranslate": "Гочдар",
 			"rawWord": "Дош",
 			"rawWordAlt": "Кхин йоза",
+			"notes": "Хаамаш",
+			"title": "ЦӀe",
+			"author": "Авторан цӀe",
+			"source": "Хьосту",
+			"description": "Сурт"
+		}
+	},
+	"suggestText": {
+		"title": "Хийцам хьажийна",
+		"textLabel": "Текст:",
+		"fieldLabel": "Dóla",
+		"newValueLabel": "Керла мах",
+		"newValuePlaceholder": "Хьан хьажийнарг",
+		"commentLabel": "Коммент",
+		"commentPlaceholder": "Хlун бахьана хийца деза?",
+		"cancel": "Дlадита",
+		"submit": "Хьажийна",
+		"submitting": "Хьажийнийла…",
+		"success": "Хьан хьажийнарг тlекхиира хьовсарна",
+		"error": "Хьажийна хила ца хилира. Юха хlума до.",
+		"button": "Хийцам хьажийна",
+		"fields": {
+			"title": "ЦӀe",
+			"author": "Авторан цӀe",
+			"source": "Хьосту",
+			"description": "Сурт",
 			"notes": "Хаамаш"
 		}
 	},
@@ -5146,7 +5176,8 @@
 		"newValue": "Хир",
 		"comment": "Коммент",
 		"reviewComment": "Редактора жоп",
-		"submittedAt": "Дахийтина"
+		"submittedAt": "Дахийтина",
+		"selectToView": "Хьовсийтархьама харжийна"
 	},
 	"adminSuggestions": {
 		"meta": {
@@ -5154,7 +5185,7 @@
 			"description": "Пользователан хьехамаш модераци"
 		},
 		"title": "Хьехамаш",
-		"subtitle": "{total} хьехам",
+		"subtitle": "{total} хьажийнарш",
 		"empty": "Хьехамаш яц",
 		"emptySearch": "Ца карийра",
 		"selectToReview": "Хьехам харжа",
@@ -5188,7 +5219,15 @@
 		"rejected": "Дlахоьссина",
 		"successApprove": "Хьехам ладоьгlна, хийцам бина",
 		"successReject": "Хьехам дlахоьссина",
-		"errorReview": "Статус хийца ца хилира"
+		"errorReview": "Статус хийца ца хилира",
+		"text": "Текст",
+		"typeFilter": {
+			"all": "Дерриге",
+			"entry": "Дешнийн хийцамаш",
+			"text": "Текстийн хийцамаш"
+		},
+		"sortNewest": "Керланиг хьалха",
+		"sortOldest": "Хьалхара хьалха"
 	},
 	"phrasebook": {
 		"title": "Дешар-йийцарш",
@@ -6419,5 +6458,101 @@
 			"desc": "Повторения + знания + разговорник + чтение"
 		}
 	},
-	"statistics.weekday.trend": "Тренд"
+	"statistics.weekday.trend": "Тренд",
+	"myTextSubmissions": {
+		"meta": {
+			"title": "Со хьажийнарш | Мотт Ларбе",
+			"description": "Хьо хьажийна текстийн тlекхам"
+		},
+		"title": "Со хьажийнарш",
+		"empty": "Хьо хьажийна текстийн тlекхам дац",
+		"status": {
+			"PENDING": "Хьовсучу",
+			"APPROVED": "Кабул дина",
+			"REJECTED": "Дlадаьхна"
+		},
+		"submittedAt": "Хьажийна",
+		"language": "Мотт",
+		"author": "Авторан цlе",
+		"sourceUrl": "Хlоттам",
+		"reviewComment": "Редакторан коммент",
+		"selectToView": "Хьажийна хьовсийтархьама харжийна"
+	},
+	"adminTextSubmissions": {
+		"meta": {
+			"title": "Текстийн хьажийнарш — Admin | Mott Larbe",
+			"description": "Пользователийн хьажийнарш хьовсуш"
+		},
+		"title": "Текстийн хьажийнарш",
+		"subtitle": "{total} хьажийнарш",
+		"empty": "Хьажийнарш карийна дац",
+		"emptySearch": "Хӏума карийна дац",
+		"selectToReview": "Хьовсийтархьама хьажийна харжийна",
+		"back": "ТӀаьхьа",
+		"stats": {
+			"total": "Дерриге",
+			"pending": "Хьовсучу",
+			"approved": "Кабул дина",
+			"rejected": "ДӀадаьхна"
+		},
+		"status": {
+			"PENDING": "Хьовсучу",
+			"APPROVED": "Кабул дина",
+			"REJECTED": "ДӀадаьхна"
+		},
+		"filter": {
+			"all": "Дерриге",
+			"pending": "Хьовсучу",
+			"approved": "Кабул дина",
+			"rejected": "ДӀадаьхна"
+		},
+		"fields": {
+			"title": "ЦӀе",
+			"language": "Мотт",
+			"author": "Авторан цӀе",
+			"sourceUrl": "ХӀоттам",
+			"content": "Текст",
+			"comment": "Коммент",
+			"reviewComment": "Редакторан коммент"
+		},
+		"approve": "Кабул дан",
+		"reject": "ДӀадаха",
+		"successApprove": "Хьажийна кабул дина",
+		"successReject": "Хьажийна дӀадаьхна",
+		"errorReview": "Статус хийца хила ца хилира",
+		"sortNewest": "Керланиг хьалха",
+		"sortOldest": "Хьалхара хьалха"
+	},
+	"suggestTextPage": {
+		"meta": {
+			"title": "Текст хьажийна | Mott Larbe",
+			"description": "Библиотекина керла текст е жайна хьажийна"
+		},
+		"title": "Текст хьажийна",
+		"description": "ХӀинца чеченийн текст е жайна хаьа хьуна? ВайшимгӀа хьажийна — редакторша хьовсур ду, библиотекина тӀетоьхур ду.",
+		"form": {
+			"title": "ЦӀе",
+			"titlePlaceholder": "Текстан е жайнан цӀе",
+			"language": "Мотт",
+			"author": "Авторан цӀе",
+			"authorPlaceholder": "Дезанзалерчарниг",
+			"sourceUrl": "ХӀоттам",
+			"sourceUrlPlaceholder": "https://…",
+			"content": "Текст (туьйсийна)",
+			"contentPlaceholder": "Кхуза текст туьйси…",
+			"comment": "Коммент",
+			"commentPlaceholder": "ТӀаьхьара хӀума а?",
+			"sourceRequired": "ХӀоттам е текст луш хила деза",
+			"submit": "Хьажийна",
+			"submitting": "Хьажийнийла…"
+		},
+		"success": "БаркалӀа! Хьан хьажийнарг тӀекхиира.",
+		"error": "Хьажийна хила ца хилира. Юха хӀума до.",
+		"languages": {
+			"che": "Нохчийн",
+			"ru": "ОьрсийнII",
+			"en": "ГӀалгӀайн",
+			"other": "КхинV"
+		}
+	}
 }
