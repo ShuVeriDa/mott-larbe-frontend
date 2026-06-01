@@ -72,9 +72,10 @@ http.interceptors.response.use(
 		// Surface rate-limit errors with retry timing so the UI can show feedback.
 		if (status === 429) {
 			const retryAfter = error.response?.headers?.["retry-after"];
+			const raw = Number(retryAfter);
 			const enriched = Object.assign(error, {
 				isRateLimit: true,
-				retryAfterSeconds: retryAfter ? Number(retryAfter) : 60,
+				retryAfterSeconds: Number.isFinite(raw) && raw > 0 ? Math.min(raw, 3600) : 60,
 			});
 			return Promise.reject(enriched);
 		}
@@ -82,6 +83,12 @@ http.interceptors.response.use(
 		if (status !== 401) return Promise.reject(error);
 
 		if (AUTH_LOGOUT_EXCLUDED_PATHS.has(requestPath) || requestPath === REFRESH_PATH) {
+			return Promise.reject(error);
+		}
+
+		// Prevent a second refresh attempt if the retry itself returns 401.
+		if (error.config?._retry) {
+			redirectToAuth();
 			return Promise.reject(error);
 		}
 

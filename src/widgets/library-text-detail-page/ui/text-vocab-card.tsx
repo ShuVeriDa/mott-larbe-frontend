@@ -1,6 +1,7 @@
 import type { LibraryTextWordStats } from "@/entities/library-text";
-
 import { Typography } from "@/shared/ui/typography";
+import { VocabStat } from "./vocab-stat";
+
 type Translator = (key: string, vars?: Record<string, string | number>) => string;
 
 interface TextVocabCardProps {
@@ -15,7 +16,7 @@ export const TextVocabCard = ({ wordStats, t }: TextVocabCardProps) => {
 
 	return (
 		<div className="bg-surf border border-bd-1 rounded-card px-[17px] py-[15px]">
-			<Typography tag="p" className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-3">
+			<Typography tag="h2" className="text-[10px] font-semibold tracking-widest uppercase text-t-3 mb-3">
 				{t("library.textDetail.vocab.label")}
 			</Typography>
 
@@ -55,20 +56,3 @@ export const TextVocabCard = ({ wordStats, t }: TextVocabCardProps) => {
 	);
 };
 
-const VocabStat = ({
-	dotClass,
-	value,
-	label,
-}: {
-	dotClass: string;
-	value: number;
-	label: string;
-}) => (
-	<div className="flex-1 flex flex-col items-center px-1 py-2.5 bg-surf-2 rounded-base">
-		<Typography tag="span" className={`w-1.5 h-1.5 rounded-full mb-1.5 ${dotClass}`} />
-		<Typography tag="span" className="font-display text-[20px] font-normal text-t-1 leading-none">
-			{value}
-		</Typography>
-		<Typography tag="span" className="text-[10px] text-t-3 mt-0.5">{label}</Typography>
-	</div>
-);

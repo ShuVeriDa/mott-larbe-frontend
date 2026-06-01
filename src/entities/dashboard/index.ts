@@ -1,4 +1,4 @@
-export { dashboardApi, dashboardKeys } from "./api";
+export { dashboardApi, dashboardKeys, dashboardQueryOptions } from "./api";
 export type {
 	DashboardContinueItem,
 	DashboardDueToday,

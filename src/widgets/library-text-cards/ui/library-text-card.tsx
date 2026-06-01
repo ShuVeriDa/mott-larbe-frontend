@@ -91,7 +91,7 @@ export const LibraryTextCard = ({
 		return (
 			<Link
 				href={href}
-				className="animate-in fade-in slide-in-from-bottom-1 group relative flex items-center gap-3 overflow-hidden rounded-base border border-bd-1 bg-surf px-3.5 py-3 transition-colors duration-150 hover:border-bd-2 hover:bg-surf-2 "
+				className="animate-in fade-in slide-in-from-bottom-1 motion-reduce:animate-none group relative flex items-center gap-3 overflow-hidden rounded-base border border-bd-1 bg-surf px-3.5 py-3 transition-colors duration-150 hover:border-bd-2 hover:bg-surf-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc focus-visible:ring-offset-1"
 				style={{
 					animationDelay: `${delay}ms`,
 					animationFillMode: "both",
@@ -185,7 +185,7 @@ export const LibraryTextCard = ({
 	return (
 		<Link
 			href={href}
-			className="animate-in fade-in slide-in-from-bottom-2 group relative flex w-[224px] max-sm:w-[calc(50%-6px)] max-[380px]:w-full flex-col overflow-hidden rounded-card border border-bd-1 bg-surf transition-[border-color,transform,box-shadow] duration-200 hover:border-bd-2 hover:[box-shadow:0_4px_14px_2px_var(--card-glow)] active:translate-y-0 [@media(hover:none)]:hover:translate-y-0 [@media(hover:none)]:hover:shadow-none"
+			className="animate-in fade-in slide-in-from-bottom-2 motion-reduce:animate-none group relative flex w-[224px] max-sm:w-[calc(50%-6px)] max-[380px]:w-full flex-col overflow-hidden rounded-card border border-bd-1 bg-surf transition-[border-color,transform,box-shadow] duration-200 hover:border-bd-2 hover:[box-shadow:0_4px_14px_2px_var(--card-glow)] active:translate-y-0 [@media(hover:none)]:hover:translate-y-0 [@media(hover:none)]:hover:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc focus-visible:ring-offset-1"
 			style={
 				{
 					animationDelay: `${delay}ms`,

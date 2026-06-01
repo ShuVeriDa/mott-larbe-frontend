@@ -2,7 +2,10 @@
 
 import { useLibraryPreview } from "../model";
 import { HorizontalScrollRow } from "./horizontal-scroll-row";
-import { LibraryPreviewCard, LibraryPreviewCardSkeleton } from "./library-preview-card";
+import {
+	LibraryPreviewCard,
+	LibraryPreviewCardSkeleton,
+} from "./library-preview-card";
 import { LibraryPreviewEmpty } from "./library-preview-empty";
 import { LibraryPreviewFilters } from "./library-preview-filters";
 import { LibraryPreviewHeader } from "./library-preview-header";
@@ -13,7 +16,7 @@ export interface LibraryPreviewProps {
 
 const SKELETON_COUNT = 6;
 
-const itemClass = "w-[120px] shrink-0 md:w-[148px] lg:w-[168px] xl:w-[196px]";
+const itemClass = "w-[136px] shrink-0 md:w-[148px] lg:w-[168px] xl:w-[196px]";
 
 export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 	const {

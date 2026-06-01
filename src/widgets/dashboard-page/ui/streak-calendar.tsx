@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import type { DashboardStreakDay } from "@/entities/dashboard";
 import { useI18n } from "@/shared/lib/i18n";
@@ -28,7 +28,7 @@ export const StreakCalendar = ({ streakDays, streak, streakRecord, lang }: Strea
 				</div>
 				<Link
 					href={`/${lang}/progress`}
-					className="text-[11.5px] text-acc transition-colors hover:underline"
+					className="rounded-sm text-[11.5px] text-acc outline-none transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 				>
 					{t("dashboard.streak.details")}
 				</Link>
@@ -79,7 +79,7 @@ const StreakDay = ({ day }: StreakDayProps) => {
 			/>
 			<Typography
 				tag="span"
-				className={`text-[10px] ${isToday ? "font-semibold text-t-1" : "text-t-3"}`}
+				className={`text-[10px] ${isToday ? "font-semibold text-t-1" : "text-t-2"}`}
 			>
 				{day.label}
 			</Typography>
@@ -98,7 +98,7 @@ const StreakStat = ({ value, label, colorClass }: StreakStatProps) => (
 		<Typography tag="span" className={`text-[22px] font-bold leading-none ${colorClass}`}>
 			{value}
 		</Typography>
-		<Typography tag="span" className="text-[11px] text-t-3">
+		<Typography tag="span" className="text-[11px] text-t-2">
 			{label}
 		</Typography>
 	</div>

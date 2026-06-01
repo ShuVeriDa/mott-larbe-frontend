@@ -20,11 +20,13 @@ export const LibraryFilterBarGenreSelect = ({ genreId, onGenreChange }: LibraryF
 		...genres.map(g => ({ value: g.id, label: g.name })),
 	];
 
+	const handleChange = (v: string) => onGenreChange(v || null);
 	return (
 		<FilterSelect
 			value={genreId ?? ""}
 			options={options}
-			onChange={v => onGenreChange(v || null)}
+			onChange={handleChange}
+			aria-label={t("dashboard.genres.title")}
 		/>
 	);
 };

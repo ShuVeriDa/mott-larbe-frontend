@@ -7,7 +7,7 @@ import { useI18n } from "@/shared/lib/i18n";
 export const useDashboardPage = () => {
 	const { lang } = useI18n();
 
-	const { data, isLoading, isError, refetch } = useDashboard();
+	const { data, isPending, isError, refetch } = useDashboard();
 	const { data: user } = useCurrentUser();
 
 	const handleRetry = () => refetch();
@@ -15,7 +15,7 @@ export const useDashboardPage = () => {
 	return {
 		lang,
 		data,
-		isLoading,
+		isPending,
 		isError,
 		user,
 		handleRetry,

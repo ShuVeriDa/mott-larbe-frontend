@@ -64,7 +64,7 @@ export const TextInfoCard = ({
 
 	return (
 		<div className="bg-surf border border-bd-1 rounded-card px-[17px] py-[15px]">
-			<Typography tag="p" className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-3">
+			<Typography tag="h2" className="text-[10px] font-semibold tracking-widest uppercase text-t-3 mb-3">
 				{t("library.textDetail.info.label")}
 			</Typography>
 			<div className="grid grid-cols-2 gap-x-3 gap-y-2.5">

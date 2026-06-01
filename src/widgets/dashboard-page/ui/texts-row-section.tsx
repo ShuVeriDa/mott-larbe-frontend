@@ -42,7 +42,7 @@ export const TextsRowSection = ({
 					{Array.from({ length: SKELETON_COUNT }).map((_, i) => (
 						<div
 							key={i}
-							className="w-[120px] shrink-0 md:w-[148px] lg:w-[168px] xl:w-[196px]"
+							className="w-[136px] shrink-0 md:w-[148px] lg:w-[168px] xl:w-[196px]"
 						>
 							<LibraryPreviewCardSkeleton />
 						</div>
@@ -53,7 +53,7 @@ export const TextsRowSection = ({
 					{items.map(item => (
 						<div
 							key={item.id}
-							className="w-[120px] shrink-0 md:w-[148px] lg:w-[168px] xl:w-[196px]"
+							className="w-[136px] shrink-0 md:w-[148px] lg:w-[168px] xl:w-[196px]"
 						>
 							<LibraryPreviewCard item={item} lang={lang} />
 						</div>

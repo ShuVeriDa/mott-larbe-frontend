@@ -36,7 +36,7 @@ export const TextProgressCard = ({
 
 	return (
 		<div className="bg-surf border border-bd-1 rounded-card px-[17px] py-[15px]">
-			<Typography tag="p" className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-3">
+			<Typography tag="h2" className="text-[10px] font-semibold tracking-widest uppercase text-t-3 mb-3">
 				{t("library.textDetail.progress.label")}
 			</Typography>
 			<Typography tag="p" className="font-display text-[30px] font-normal text-t-1 leading-none mb-0.5 max-sm:text-[26px]">

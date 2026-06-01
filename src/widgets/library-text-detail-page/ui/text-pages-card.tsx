@@ -1,7 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 import type { LibraryTextPage } from "@/entities/library-text";
-
 import { Typography } from "@/shared/ui/typography";
+import { CheckIcon } from "./check-icon";
 type Translator = (key: string, vars?: Record<string, string | number>) => string;
 
 interface TextPagesCardProps {
@@ -21,7 +21,7 @@ export const TextPagesCard = ({
 
 	return (
 		<div className="bg-surf border border-bd-1 rounded-card px-[17px] py-[15px]">
-			<Typography tag="p" className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-3">
+			<Typography tag="h2" className="text-[10px] font-semibold tracking-widest uppercase text-t-3 mb-3">
 				{t("library.textDetail.pagesCard.label")}
 			</Typography>
 			<div className="flex flex-col gap-0.5 max-h-[190px] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-sm:max-h-[160px]">
@@ -38,7 +38,7 @@ export const TextPagesCard = ({
 					return (
 						<div
 							key={page.id}
-							className="flex items-center gap-2 px-1.5 py-[5px] rounded-base hover:bg-surf-2 transition-colors cursor-default"
+							className="flex items-center gap-2 px-1.5 py-[5px] rounded-base"
 						>
 							<Typography tag="span"
 								className={cn(
@@ -66,7 +66,7 @@ export const TextPagesCard = ({
 							</Typography>
 							{isDone && <CheckIcon />}
 							{isCur && (
-								<Typography tag="span" className="text-[9px] font-semibold tracking-[0.04em] text-acc-t bg-acc-bg border border-acc/20 px-1.5 py-[1px] rounded-[3px]">
+								<Typography tag="span" className="text-[11px] font-semibold tracking-[0.04em] text-acc-t bg-acc-bg border border-acc/20 px-1.5 py-px rounded-[3px]">
 									{t("library.textDetail.pagesCard.current")}
 								</Typography>
 							)}
@@ -78,18 +78,3 @@ export const TextPagesCard = ({
 	);
 };
 
-const CheckIcon = () => (
-	<svg
-		width="11"
-		height="11"
-		viewBox="0 0 12 12"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.5"
-		strokeLinecap="round"
-		strokeLinejoin="round"
-		className="text-grn-t shrink-0"
-	>
-		<polyline points="2,6 5,9 10,3" />
-	</svg>
-);

@@ -8,7 +8,7 @@ interface StatCardProps {
 }
 
 export const StatCard = ({ value, label, iconBgClass, icon }: StatCardProps) => (
-	<div className="cursor-default rounded-card border border-bd-1 bg-surf p-[13px_14px] transition-[border-color,box-shadow] duration-150 hover:border-bd-2 hover:shadow-sm">
+	<div className="cursor-default rounded-card border border-bd-1 bg-surf p-[13px_14px]">
 		<div
 			className={`mb-2.5 flex size-7 items-center justify-center rounded-base ${iconBgClass}`}
 		>

@@ -13,7 +13,7 @@ export const LibraryPreviewEmpty = () => {
 			<Typography tag="span" className="text-[12.5px] font-medium text-t-2">
 				{t("dashboard.library.emptyTitle")}
 			</Typography>
-			<Typography tag="span" className="text-[11px] text-t-3">
+			<Typography tag="span" className="text-[11px] text-t-2">
 				{t("dashboard.library.emptyDesc")}
 			</Typography>
 		</div>

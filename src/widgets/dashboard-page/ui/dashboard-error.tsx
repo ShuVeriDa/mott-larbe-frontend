@@ -16,11 +16,7 @@ export const DashboardError = ({ onRetry }: DashboardErrorProps) => {
 			<Typography tag="p" className="text-sm text-red">
 				{t("dashboard.error")}
 			</Typography>
-			<Button
-				onClick={onRetry}
-				title={t("dashboard.retry")}
-				className="rounded-md bg-acc px-4 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
-			>
+			<Button variant="action" size="default" onClick={onRetry}>
 				{t("dashboard.retry")}
 			</Button>
 		</div>

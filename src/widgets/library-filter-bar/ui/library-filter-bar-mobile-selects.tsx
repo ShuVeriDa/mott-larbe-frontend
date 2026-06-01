@@ -25,11 +25,13 @@ export const LibraryFilterBarLevelSelect = ({ level, onLevelChange }: LevelSelec
 		{ value: "all", label: t("library.filterLevel") },
 		...LIBRARY_FILTER_BAR_CEFR_LEVELS.map(l => ({ value: l, label: t(`shared.cefrLevel.${l}`) })),
 	];
+	const handleChange = (v: string) => onLevelChange(v as CefrLevel | "all");
 	return (
 		<FilterSelect
 			value={level}
 			options={options}
-			onChange={v => onLevelChange(v as CefrLevel | "all")}
+			onChange={handleChange}
+			aria-label={t("library.filterLevel")}
 		/>
 	);
 };
@@ -45,11 +47,13 @@ export const LibraryFilterBarLangSelect = ({ lang, onLangChange }: LangSelectPro
 		{ value: "all", label: t("library.filterLang") },
 		...LIBRARY_FILTER_BAR_LANG_OPTIONS.map(l => ({ value: l, label: t(`library.lang.${l}`) })),
 	];
+	const handleLangChange = (v: string) => onLangChange(v as LibraryTextLanguage | "all");
 	return (
 		<FilterSelect
 			value={lang}
 			options={options}
-			onChange={v => onLangChange(v as LibraryTextLanguage | "all")}
+			onChange={handleLangChange}
+			aria-label={t("library.filterLang")}
 		/>
 	);
 };
@@ -65,11 +69,13 @@ export const LibraryFilterBarProgressSelect = ({ status, onStatusChange }: Progr
 		{ value: "all", label: t("library.filterProgress") },
 		...LIBRARY_FILTER_BAR_PROGRESS_STATUSES.map(s => ({ value: s, label: t(libraryFilterProgressLabelKey(s)) })),
 	];
+	const handleStatusChange = (v: string) => onStatusChange(v as LibraryProgressStatus | "all");
 	return (
 		<FilterSelect
 			value={status}
 			options={options}
-			onChange={v => onStatusChange(v as LibraryProgressStatus | "all")}
+			onChange={handleStatusChange}
+			aria-label={t("library.filterProgress")}
 		/>
 	);
 };

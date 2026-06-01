@@ -118,7 +118,7 @@ const HeroSlide = ({ item, lang, isActive }: HeroSlideProps) => {
 		<Link
 			href={`/${lang}/texts/${item.id}`}
 			tabIndex={isActive ? 0 : -1}
-			className="group relative flex h-[200px] w-full overflow-hidden rounded-card border border-bd-1 bg-surf transition-[border-color,box-shadow] hover:border-bd-2 hover:[box-shadow:0_4px_20px_4px_var(--card-glow)] md:h-[240px] lg:h-[280px]"
+			className="group relative flex h-[200px] w-full overflow-hidden rounded-card border border-bd-1 bg-surf outline-none transition-[border-color,box-shadow] hover:border-bd-2 hover:[box-shadow:0_4px_20px_4px_var(--card-glow)] focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1 md:h-[240px] lg:h-[280px]"
 			style={{ "--card-glow": `${colors.glow}60` } as CSSProperties}
 		>
 			{/* Colored background */}

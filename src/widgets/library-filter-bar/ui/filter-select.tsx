@@ -12,6 +12,7 @@ interface FilterSelectProps {
 	options: FilterSelectOption[];
 	onChange: (value: string) => void;
 	placeholder?: string;
+	"aria-label"?: string;
 }
 
 export const FilterSelect = ({
@@ -19,6 +20,7 @@ export const FilterSelect = ({
 	options,
 	onChange,
 	placeholder,
+	"aria-label": ariaLabel,
 }: FilterSelectProps) => {
 	const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
 		onChange(e.currentTarget.value);
@@ -27,6 +29,7 @@ export const FilterSelect = ({
 		<Select
 			value={value}
 			onChange={handleChange}
+			aria-label={ariaLabel}
 			wrapperClassName="w-auto shrink-0"
 			className="h-[26px] text-[11px] pl-2 pr-6 rounded-[5px] bg-surf-1"
 		>

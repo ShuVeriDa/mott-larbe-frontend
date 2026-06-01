@@ -16,11 +16,13 @@ export const LibraryFilterBarSortSelect = ({ sort, onSortChange }: LibraryFilter
 		value,
 		label: t(labelKey),
 	}));
+	const handleChange = (v: string) => onSortChange(v as LibrarySortOption);
 	return (
 		<FilterSelect
 			value={sort}
 			options={options}
-			onChange={v => onSortChange(v as LibrarySortOption)}
+			onChange={handleChange}
+			aria-label={t("library.sort.label")}
 		/>
 	);
 };

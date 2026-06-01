@@ -1,44 +1,125 @@
-import { DEFAULT_LOCALE, LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
-import { TextsCatalogPage } from "@/widgets/texts-catalog-page";
+import { getDictionary, hasLocale, LOCALES } from "@/i18n/locales";
+import { libraryTextApi, libraryTextKeys } from "@/entities/library-text";
+import { getQueryClient } from "@/shared/lib/query-client";
+import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
+import { TextsCatalogSkeleton } from "@/widgets/texts-catalog-page/ui/texts-catalog-skeleton";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
+const TextsCatalogPage = dynamic(
+	() => import("@/widgets/texts-catalog-page").then((m) => m.TextsCatalogPage),
+	{ loading: () => <TextsCatalogSkeleton /> },
+);
 
-export const generateMetadata = async (props: {
-	params: Promise<{ lang: string }>;
-}): Promise<Metadata> => {
-	const { lang } = await props.params;
-	if (!hasLocale(lang)) return {};
-
-	const dict = await getDictionary(lang);
-	const path = "/texts";
-	const title = dict.library.meta.title;
-	const description = dict.library.meta.description;
-
-	const languages: Record<string, string> = {};
-	for (const locale of LOCALES) {
-		languages[locale] = `${SITE_URL}/${locale}${path}`;
-	}
-	languages["x-default"] = `${SITE_URL}/${DEFAULT_LOCALE}${path}`;
-
-	return {
-		title,
-		description,
-		alternates: { canonical: `${SITE_URL}/${lang}${path}`, languages },
-		openGraph: { type: "website", url: `${SITE_URL}/${lang}${path}`, title, description, locale: lang, siteName: "Mott Larbe" },
-		robots: { index: false, follow: false },
-	};
-};
+export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
 interface PageProps {
 	params: Promise<{ lang: string }>;
 }
 
+export const generateMetadata = async ({
+	params,
+}: PageProps): Promise<Metadata> => {
+	const { lang } = await params;
+	if (!hasLocale(lang)) notFound();
+
+	const dict = await getDictionary(lang);
+	const path = "/texts";
+	const { title, description } = dict.library.meta;
+	const { canonical, languages } = buildAlternates(lang, path);
+
+	return {
+		title,
+		description,
+		alternates: { canonical, languages },
+		openGraph: buildOpenGraph(lang, path, title, description),
+		twitter: {
+			card: "summary_large_image",
+			title,
+			description,
+			images: [`${SITE_URL}/opengraph-image.png`],
+		},
+		robots: { index: true, follow: true },
+	};
+};
+
+const TextsJsonLd = ({
+	lang,
+	title,
+	description,
+}: {
+	lang: string;
+	title: string;
+	description: string;
+}) => {
+	const pageUrl = `${SITE_URL}/${lang}/texts`;
+	const homeUrl = `${SITE_URL}/${lang}`;
+
+	const schema = {
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "CollectionPage",
+				"@id": pageUrl,
+				url: pageUrl,
+				name: title,
+				description,
+				inLanguage: lang,
+				isPartOf: { "@id": homeUrl },
+			},
+			{
+				"@type": "BreadcrumbList",
+				itemListElement: [
+					{
+						"@type": "ListItem",
+						position: 1,
+						name: "Mott Larbe",
+						item: homeUrl,
+					},
+					{
+						"@type": "ListItem",
+						position: 2,
+						name: title,
+						item: pageUrl,
+					},
+				],
+			},
+		],
+	};
+
+	return (
+		<script
+			type="application/ld+json"
+			dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+		/>
+	);
+};
+
 const TextsCatalogRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
-	return <TextsCatalogPage />;
+
+	const dict = await getDictionary(lang);
+	const { title, description } = dict.library.meta;
+
+	const queryClient = getQueryClient();
+	await queryClient.prefetchInfiniteQuery({
+		queryKey: libraryTextKeys.infinite({}),
+		queryFn: ({ pageParam }) =>
+			libraryTextApi.list({ page: pageParam as number, limit: 20 }),
+		initialPageParam: 1,
+	});
+
+	return (
+		<>
+			<TextsJsonLd lang={lang} title={title} description={description} />
+			<HydrationBoundary state={dehydrate(queryClient)}>
+				<TextsCatalogPage />
+			</HydrationBoundary>
+		</>
+	);
 };
 
 export default TextsCatalogRoutePage;

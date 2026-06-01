@@ -22,12 +22,17 @@ import { TextPagesCard } from "./text-pages-card";
 import { TextRelated } from "./text-related";
 import { TextReportDialog } from "./text-report-dialog";
 import { TextTagsCard } from "./text-tags-card";
+import { BookmarkMenuIcon } from "./bookmark-menu-icon";
+import { FlagIcon } from "./flag-icon";
+import { DetailSkeleton } from "./detail-skeleton";
+import type { LibraryTextDetail } from "@/entities/library-text";
 
 interface LibraryTextDetailPageProps {
 	id: string;
+	initialData?: LibraryTextDetail;
 }
 
-export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
+export const LibraryTextDetailPage = ({ id, initialData }: LibraryTextDetailPageProps) => {
 	const {
 		t,
 		lang,
@@ -41,7 +46,7 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 		handleRetry,
 		handleToggleBookmark,
 		handleOpenReport,
-	} = useLibraryTextDetailPage(id);
+	} = useLibraryTextDetailPage(id, initialData);
 
 	if (detail.isPending) return <DetailSkeleton />;
 
@@ -74,10 +79,10 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 	return (
 		<div className="flex flex-1 flex-col overflow-hidden">
 			{/* Topbar */}
-			<div className="h-12 bg-panel border-b border-bd-1 flex items-center gap-2.5 px-5 shrink-0 max-sm:h-11 max-sm:px-3.5">
+			<header className="h-12 bg-panel border-b border-bd-1 flex items-center gap-2.5 px-5 shrink-0 max-sm:h-11 max-sm:px-3.5">
 				<Link
 					href={`/${lang}/texts`}
-					className="flex items-center gap-1.5 text-xs text-t-2 hover:text-t-1 hover:bg-surf-2 px-2 py-1 rounded-base transition-colors"
+					className="flex items-center gap-1.5 text-xs text-t-2 hover:text-t-1 hover:bg-surf-2 px-2 py-1 rounded-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 				>
 					<svg
 						width="11"
@@ -86,24 +91,29 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 						fill="none"
 						stroke="currentColor"
 						strokeWidth="1.5"
+						aria-hidden="true"
 					>
 						<path d="M10 12L6 8l4-4" />
 					</svg>
 					{t("library.textDetail.back")}
 				</Link>
 
-				<Typography tag="span" className="w-px h-3.5 bg-bd-2" />
+				<Typography tag="span" className="w-px h-3.5 bg-bd-2" aria-hidden="true" />
 
-				<Typography tag="span" className="text-xs text-t-3 hidden sm:flex items-center gap-1.5">
-					<Link
-						href={`/${lang}/texts`}
-						className="hover:text-t-2 transition-colors"
-					>
-						{t("nav.texts")}
-					</Link>
-					<Typography tag="span" className="text-t-4">/</Typography>
-					<Typography tag="span" className="text-t-2">{t("library.textDetail.breadcrumb")}</Typography>
-				</Typography>
+				<nav aria-label={t("library.textDetail.breadcrumbNav")} className="hidden sm:flex">
+					<ol className="flex items-center gap-1.5 text-xs text-t-3">
+						<li>
+							<Link
+								href={`/${lang}/texts`}
+								className="hover:text-t-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1 rounded-sm"
+							>
+								{t("nav.texts")}
+							</Link>
+						</li>
+						<li aria-hidden="true" className="text-t-4">/</li>
+						<li aria-current="page" className="text-t-2">{t("library.textDetail.breadcrumb")}</li>
+					</ol>
+				</nav>
 
 				<div className="ml-auto flex items-center gap-1.5">
 					<Button
@@ -182,10 +192,10 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
-			</div>
+			</header>
 
 			{/* Scrollable content */}
-			<div className="flex-1 overflow-y-auto px-8 pb-12 pt-7 [scrollbar-color:var(--bd-2)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-thumb]:rounded-[2px] [&::-webkit-scrollbar-thumb]:bg-bd-2 max-sm:px-3.5 max-sm:pt-4 max-md:px-5">
+			<main className="flex-1 overflow-y-auto px-8 pb-12 pt-7 [scrollbar-color:var(--bd-2)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-thumb]:rounded-[2px] [&::-webkit-scrollbar-thumb]:bg-bd-2 max-sm:px-3.5 max-sm:pt-4 max-md:px-5">
 				<div className="max-w-[860px]">
 					<TextHero
 						id={id}
@@ -245,7 +255,7 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 						<TextRelated items={related.data} lang={lang} t={t} />
 					)}
 				</div>
-			</div>
+			</main>
 
 			<TextReportDialog
 				id={id}
@@ -257,63 +267,3 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 	);
 };
 
-const BookmarkMenuIcon = ({ filled }: { filled: boolean }) => (
-	<svg
-		width="13"
-		height="13"
-		viewBox="0 0 16 16"
-		fill={filled ? "currentColor" : "none"}
-		stroke="currentColor"
-		strokeWidth="1.5"
-		strokeLinecap="round"
-		strokeLinejoin="round"
-	>
-		<path d="M4 2h8a1 1 0 0 1 1 1v11l-5-3-5 3V3a1 1 0 0 1 1-1z" />
-	</svg>
-);
-
-const FlagIcon = () => (
-	<svg
-		width="13"
-		height="13"
-		viewBox="0 0 16 16"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.5"
-		strokeLinecap="round"
-		strokeLinejoin="round"
-	>
-		<path d="M3 2v12M3 2h8l-2 3.5L11 9H3" />
-	</svg>
-);
-
-const DetailSkeleton = () => (
-	<div className="flex flex-1 flex-col overflow-hidden">
-		<div className="h-12 bg-panel border-b border-bd-1 shrink-0" />
-		<div className="flex-1 overflow-y-auto px-8 pb-12 pt-7 max-sm:px-3.5 max-sm:pt-4 max-md:px-5">
-			<div className="max-w-[860px] animate-pulse">
-				<div className="flex gap-5 mb-6">
-					<div className="w-[88px] h-[126px] rounded-card bg-surf-3 shrink-0" />
-					<div className="flex-1 flex flex-col gap-3 pt-1">
-						<div className="flex gap-1.5">
-							<div className="h-5 w-8 rounded bg-surf-3" />
-							<div className="h-5 w-16 rounded bg-surf-3" />
-						</div>
-						<div className="h-6 w-2/3 rounded bg-surf-3" />
-						<div className="h-4 w-1/2 rounded bg-surf-3" />
-						<div className="flex gap-2">
-							<div className="h-9 w-28 rounded-base bg-surf-3" />
-							<div className="h-9 w-20 rounded-base bg-surf-3" />
-						</div>
-					</div>
-				</div>
-				<div className="h-20 rounded-card bg-surf-3 mb-4" />
-				<div className="grid grid-cols-2 gap-3 max-sm:grid-cols-1">
-					{Array.from({ length: 4 }).map((_, i) => (
-						<div key={i} className="h-44 rounded-card bg-surf-3" />
-					))}
-				</div>
-			</div>
-		</div>
-	</div>
-);

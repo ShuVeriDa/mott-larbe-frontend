@@ -24,7 +24,7 @@ export const SectionHeader = ({
 		{href && linkLabel && (
 			<Link
 				href={href}
-				className="shrink-0 text-[11.5px] text-acc transition-colors hover:underline"
+				className="shrink-0 rounded-sm text-[11.5px] text-acc outline-none transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 			>
 				{linkLabel}
 			</Link>

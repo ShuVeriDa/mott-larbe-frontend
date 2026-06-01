@@ -5,11 +5,10 @@ import { useLibraryFilters } from "@/features/library-filters";
 import { useI18n } from "@/shared/lib/i18n";
 import { SearchBox } from "@/shared/ui/search-box";
 import { Typography } from "@/shared/ui/typography";
-import { LibraryFilterBar } from "@/widgets/library-filter-bar";
-import { LibraryFilterBarSortSelect } from "@/widgets/library-filter-bar/ui/library-filter-bar-sort-select";
-import { LibraryFilterViewToggle } from "@/widgets/library-filter-bar/ui/library-filter-view-toggle";
+import { LibraryFilterBar, LibraryFilterBarSortSelect, LibraryFilterViewToggle } from "@/widgets/library-filter-bar";
 import type { ChangeEvent } from "react";
 import { useRef, useState } from "react";
+import { StatDot } from "./stat-dot";
 
 interface LibraryTopbarProps {
 	counts: LibraryTextCounts;
@@ -101,7 +100,3 @@ export const LibraryTopbar = ({ counts, title }: LibraryTopbarProps) => {
 		</div>
 	);
 };
-
-const StatDot = ({ className }: { className: string }) => (
-	<span className={`size-1.5 shrink-0 rounded-full ${className}`} />
-);

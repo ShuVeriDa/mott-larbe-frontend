@@ -44,15 +44,18 @@ export const ContinueReading = ({ items, lang }: ContinueReadingProps) => {
 				</Typography>
 				<Link
 					href={`/${lang}/texts?status=IN_PROGRESS`}
-					className="text-[11.5px] text-acc transition-colors hover:underline"
+					className="rounded-sm text-[11.5px] text-acc outline-none transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 				>
 					{t("dashboard.continueReading.viewAll")}
 				</Link>
 			</div>
 
 			<HorizontalScrollRow>
-				{items.slice(0, 6).map((item) => (
-					<div key={item.id} className="w-[120px] shrink-0 md:w-[148px] lg:w-[168px] xl:w-[196px]">
+				{items.slice(0, 6).map(item => (
+					<div
+						key={item.id}
+						className="w-[136px] shrink-0 md:w-[148px] lg:w-[168px] xl:w-[196px]"
+					>
 						<LibraryPreviewCard
 							item={toListItem(item)}
 							lang={lang}

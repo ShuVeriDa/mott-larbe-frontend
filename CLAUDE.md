@@ -192,6 +192,30 @@ Extract into a **separate file** when **any** of the following is true:
 Only truly anonymous JSX with zero props and zero logic may stay inline in the parent file.
 As soon as a piece of JSX or logic gets a name — it gets its own file.
 
+#### One component per file — enforced
+
+**Never define more than one component in a single file.** This is `react/no-multi-comp` — enforced unconditionally.
+
+```tsx
+// ❌ wrong — two components in one file
+const Avatar = ({ src }: { src: string }) => <img src={src} />;
+const UserCard = ({ user }: { user: User }) => (
+  <div><Avatar src={user.avatar} /><span>{user.name}</span></div>
+);
+
+// ✅ correct — each component in its own file
+// ui/avatar.tsx
+export const Avatar = ({ src }: { src: string }) => <img src={src} />;
+
+// ui/user-card.tsx
+import { Avatar } from './avatar';
+export const UserCard = ({ user }: { user: User }) => (
+  <div><Avatar src={user.avatar} /><span>{user.name}</span></div>
+);
+```
+
+**Only exception:** a props interface stays in the same file as its component — it is not a component.
+
 #### File structure inside a slice
 
 Named sub-components → `ui/`, utilities and config → `lib/`, hooks → `model/`:

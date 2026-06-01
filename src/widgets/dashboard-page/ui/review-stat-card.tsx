@@ -15,7 +15,7 @@ export const ReviewStatCard = ({ dueToday, lang }: ReviewStatCardProps) => {
 	return (
 		<Link
 			href={`/${lang}/review`}
-			className="group w-full relative cursor-pointer rounded-card border border-bd-1 bg-surf p-[13px_14px] transition-[border-color,box-shadow] duration-150 hover:border-bd-2 hover:shadow-sm flex flex-col"
+			className="group relative flex w-full flex-col cursor-pointer rounded-card border border-bd-1 bg-surf p-[13px_14px] outline-none transition-[border-color,box-shadow] duration-150 hover:border-bd-2 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 		>
 			<div className="mb-2.5 flex size-7 items-center justify-center rounded-base bg-pur-bg">
 				<svg

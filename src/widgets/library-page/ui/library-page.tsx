@@ -9,6 +9,7 @@ import {
 	useLibraryPage,
 	type LibraryPageState,
 } from "../model/use-library-page";
+import { CardSkeleton } from "./card-skeleton";
 
 interface LibraryPageProps {
 	hideTopbar?: boolean;
@@ -23,7 +24,7 @@ export const LibraryPage = ({ hideTopbar, state }: LibraryPageProps) => {
 
 
 	return (
-		<div className="flex flex-1 flex-col overflow-hidden max-md:overflow-visible">
+		<main className="flex flex-1 flex-col overflow-hidden max-md:overflow-visible">
 			{!hideTopbar && (
 				<LibraryTopbar counts={counts} />
 			)}
@@ -78,18 +79,6 @@ export const LibraryPage = ({ hideTopbar, state }: LibraryPageProps) => {
 					</>
 				)}
 			</div>
-		</div>
+		</main>
 	);
 };
-
-const CardSkeleton = () => (
-	<div className="animate-pulse rounded-card border border-bd-1 bg-surf p-4">
-		<div className="mb-3 flex gap-2">
-			<div className="h-5 w-8 rounded bg-surf-3" />
-			<div className="h-5 w-14 rounded bg-surf-3" />
-		</div>
-		<div className="mb-1.5 h-4 w-3/4 rounded bg-surf-3" />
-		<div className="mb-3 h-3 w-1/2 rounded bg-surf-3" />
-		<div className="h-7 w-20 rounded-base bg-surf-3" />
-	</div>
-);

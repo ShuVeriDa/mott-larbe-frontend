@@ -25,7 +25,7 @@ export const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 	return (
 		<Link
 			href={`/${lang}/reader/${item.id}/p/${item.lastPageNumber}`}
-			className="group flex flex-col overflow-hidden rounded-card border-[0.5px] border border-bd-1 bg-surf transition-[transform,border-color,box-shadow] duration-150 hover:-translate-y-px hover:border-bd-2 hover:shadow-md"
+			className="group flex flex-col overflow-hidden rounded-card border-[0.5px] border border-bd-1 bg-surf outline-none transition-[transform,border-color,box-shadow] duration-150 hover:-translate-y-px hover:border-bd-2 hover:shadow-md focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 		>
 			<div className="relative h-[5px] w-full bg-surf-3">
 				<div
@@ -46,7 +46,7 @@ export const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 					/>
 					<Typography
 						tag="span"
-						className="text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3"
+						className="text-[10px] font-semibold uppercase tracking-[0.5px] text-t-2"
 					>
 						{langLabel}
 					</Typography>

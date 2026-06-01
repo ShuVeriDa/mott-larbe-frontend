@@ -6,10 +6,12 @@ import { Typography } from "@/shared/ui/typography";
 interface TextCoverProps {
 	language: LibraryTextLanguage;
 	imageUrl: string | null;
+	title: string;
+	priority?: boolean;
 	className?: string;
 }
 
-export const TextCover = ({ language, imageUrl, className }: TextCoverProps) => (
+export const TextCover = ({ language, imageUrl, title, priority, className }: TextCoverProps) => (
 	<div
 		className={cn(
 			"relative w-[88px] h-[126px] rounded-card border border-bd-2 bg-surf shrink-0 overflow-hidden",
@@ -20,11 +22,11 @@ export const TextCover = ({ language, imageUrl, className }: TextCoverProps) => 
 		{imageUrl ? (
 			<Image
 				src={imageUrl}
-				alt=""
+				alt={title}
 				fill
-				sizes="88px"
+				sizes="(max-width: 640px) 72px, 88px"
 				className="object-cover"
-				unoptimized
+				priority={priority}
 			/>
 		) : (
 			<div className="px-2.5 pt-2.5 w-full flex flex-col gap-1">

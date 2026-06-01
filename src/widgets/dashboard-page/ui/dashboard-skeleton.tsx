@@ -38,9 +38,10 @@ const RowSkeleton = ({ delay = 0 }: { delay?: number }) => (
 	</div>
 );
 
-export const DashboardSkeleton = () => (
+export const DashboardSkeleton = ({ label = "Загрузка дашборда…" }: { label?: string }) => (
 	<div
 		aria-busy="true"
+		aria-label={label}
 		className="flex flex-col gap-5 overflow-y-auto px-[22px] pb-8 pt-4 max-md:px-4 max-sm:gap-4 max-sm:px-3.5 max-sm:pt-3.5"
 	>
 		{/* Greeting */}

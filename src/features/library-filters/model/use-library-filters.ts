@@ -38,9 +38,12 @@ export const useLibraryFilters = () => {
 	const status: LibraryProgressStatus | "all" = (searchParams.get("status") as LibraryProgressStatus | null) ?? "all";
 	const sort: LibrarySortOption = (searchParams.get("sort") as LibrarySortOption | null) ?? DEFAULT_SORT;
 	const view: LibraryView = (searchParams.get("view") as LibraryView | null) ?? DEFAULT_VIEW;
-	const search = searchParams.get("q") ?? "";
+	const search = (searchParams.get("q") ?? "").trim().slice(0, 256);
 	const genreId = searchParams.get("genre");
-	const maxWords = searchParams.get("maxWords") ? Number(searchParams.get("maxWords")) : null;
+	const maxWords = (() => {
+		const raw = Number(searchParams.get("maxWords"));
+		return Number.isFinite(raw) && raw > 0 ? raw : null;
+	})();
 
 	const setLevel = (v: CefrLevel | "all") => set({ level: v });
 	const setLang = (v: LibraryTextLanguage | "all") => set({ lang: v });

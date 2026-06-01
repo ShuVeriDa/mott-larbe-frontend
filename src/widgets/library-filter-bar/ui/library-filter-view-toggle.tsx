@@ -1,10 +1,9 @@
 "use client";
 
 import type { LibraryView } from "@/features/library-filters";
-import { Button } from "@/shared/ui/button";
-import { cn } from "@/shared/lib/cn";
-import type { ComponentType, ReactNode } from "react";
+import type { ComponentType } from "react";
 import { Grid2x2, List } from "lucide-react";
+import { ViewBtn } from "./view-btn";
 
 const VIEW_TOGGLE_ENTRIES: ReadonlyArray<{
 	view: LibraryView;
@@ -41,30 +40,4 @@ export const LibraryFilterViewToggle = ({
 			);
 		})}
 	</div>
-);
-
-const ViewBtn = ({
-	children,
-	active,
-	onClick,
-	"aria-label": ariaLabel,
-}: {
-	children: ReactNode;
-	active: boolean;
-	onClick: () => void;
-	"aria-label": string;
-}) => (
-	<Button
-		onClick={onClick}
-		size={"bare"}
-		aria-label={ariaLabel}
-		title={ariaLabel}
-		aria-pressed={active}
-		className={cn(
-			"flex h-[26px] w-[26px] items-center justify-center transition-all duration-100",
-			active ? "bg-surf-2 text-acc-t" : "bg-transparent text-t-3",
-		)}
-	>
-		{children}
-	</Button>
 );

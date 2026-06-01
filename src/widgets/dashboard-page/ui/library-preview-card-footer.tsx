@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import type { LibraryTextListItem } from "@/entities/library-text";
 import { useI18n } from "@/shared/lib/i18n";
@@ -32,7 +32,7 @@ export const LibraryPreviewCardFooter = ({
 			</div>
 
 			<div className="flex items-center justify-between">
-				<Typography tag="span" className="text-[11px] text-t-3">
+				<Typography tag="span" className="text-[11px] text-t-2">
 					{t("dashboard.library.words", {
 						count: item.wordCount.toLocaleString(),
 					})}
@@ -41,14 +41,14 @@ export const LibraryPreviewCardFooter = ({
 					<Typography
 						tag="span"
 						className="text-[11px] font-semibold"
-						style={{ color: colors.stripe }}
+						style={{ color: colors.stripeText }}
 					>
 						{pct}%
 					</Typography>
 				) : (
 					<Typography
 						tag="span"
-						className="text-[11px] font-medium text-t-3"
+						className="text-[11px] font-medium text-t-2"
 					>
 						{t("dashboard.library.newText")}
 					</Typography>

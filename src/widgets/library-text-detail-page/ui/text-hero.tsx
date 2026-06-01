@@ -52,7 +52,7 @@ export const TextHero = ({
 
 	return (
 		<div className="flex gap-5 mb-6 animate-[fadeUp_0.3s_ease_both] max-sm:gap-3.5">
-			<TextCover language={language} imageUrl={imageUrl} />
+			<TextCover language={language} imageUrl={imageUrl} title={title} priority />
 
 			<div className="flex-1 min-w-0 flex flex-col gap-2.5">
 				<div className="flex items-center gap-1.5 flex-wrap">

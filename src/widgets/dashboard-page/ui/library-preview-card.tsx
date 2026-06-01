@@ -21,7 +21,7 @@ export const LibraryPreviewCard = ({ item, lang, href }: LibraryPreviewCardProps
 	return (
 		<Link
 			href={href ?? `/${lang}/texts/${item.id}`}
-			className="group block cursor-pointer overflow-hidden rounded-card border-[0.5px] border-bd-1 bg-surf transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-px hover:border-bd-2 hover:[box-shadow:0_4px_14px_2px_var(--card-glow)]"
+			className="group block cursor-pointer overflow-hidden rounded-card border-[0.5px] border-bd-1 bg-surf outline-none transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-px hover:border-bd-2 hover:[box-shadow:0_4px_14px_2px_var(--card-glow)] focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 			style={{ "--card-glow": `${colors.glow}90` } as CSSProperties}
 		>
 			<LibraryPreviewCardCover colors={colors} />

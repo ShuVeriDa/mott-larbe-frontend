@@ -27,14 +27,14 @@ const securityHeaders = [
 	...(isDev
 		? []
 		: [{ key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" }]),
-	// Basic CSP — 'unsafe-inline' needed for Next.js inline styles/scripts.
-	// connect-src includes the API origin explicitly so XHR/fetch/SSE work.
-	// Tighten with nonces via proxy.ts when ready for strict-dynamic.
+	// CSP is set dynamically per-request by middleware (nonce + strict-dynamic).
+	// This static header is a fallback for paths that bypass middleware
+	// (e.g. _next/static, direct asset requests).
 	{
 		key: "Content-Security-Policy",
 		value: [
 			"default-src 'self'",
-			"script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+			"script-src 'self' 'unsafe-inline'", // fallback only; middleware overrides with nonce
 			"style-src 'self' 'unsafe-inline'",
 			"img-src 'self' data: blob: https:",
 			"font-src 'self'",
@@ -48,9 +48,17 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
 	allowedDevOrigins: isDev ? ["192.168.31.52"] : [],
+	trailingSlash: false,
 	reactCompiler: true,
+	cacheComponents: true,
 	experimental: {
 		optimizePackageImports: ["lucide-react", "framer-motion"],
+	},
+	async redirects() {
+		return [
+			{ source: "/index", destination: "/", permanent: true },
+			{ source: "/home",  destination: "/", permanent: true },
+		];
 	},
 	images: {
 		remotePatterns: [
@@ -64,6 +72,10 @@ const nextConfig: NextConfig = {
 			{
 				source: "/(.*)",
 				headers: securityHeaders,
+			},
+			{
+				source: "/*/reader/(.*)",
+				headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
 			},
 			{
 				source: "/sw.js",

@@ -2215,7 +2215,7 @@
 	"library": {
 		"meta": {
 			"title": "Library — Mott Larbe",
-			"description": "Library of Chechen and Russian texts at levels A1–C2 with progress tracking and spaced repetition."
+			"description": "Explore Chechen and Russian texts at levels A1–C2. Track reading progress, build vocabulary with spaced repetition, and filter by level, genre, or language."
 		},
 		"title": "Library",
 		"total": "{count} texts",
@@ -2372,7 +2372,8 @@
 			"error": "Failed to load",
 			"retry": "Try again"
 		},
-		"resetFilters": "Reset"
+		"resetFilters": "Reset",
+		"filtersLabel": "Filter texts"
 	},
 	"feedback": {
 		"meta": {
@@ -2430,7 +2431,7 @@
 	"dashboard": {
 		"meta": {
 			"title": "Home — Mott Larbe",
-			"description": "Your personal learning dashboard: reading progress, vocabulary stats, and review schedule."
+			"description": "Your personal Mott Larbe dashboard: track reading progress, grow your Chechen vocabulary, monitor streak and word stats, schedule spaced repetition reviews. All your learning in one place."
 		},
 		"pageTitle": "Home",
 		"searchPlaceholder": "Search texts...",

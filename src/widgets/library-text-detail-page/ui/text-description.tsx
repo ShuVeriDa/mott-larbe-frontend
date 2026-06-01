@@ -11,7 +11,7 @@ export const TextDescription = ({ description, t }: TextDescriptionProps) => {
 
 	return (
 		<div className="bg-surf border border-bd-1 rounded-card px-[18px] py-4 mb-4 animate-[fadeUp_0.3s_0.06s_ease_both]">
-			<Typography tag="p" className="text-[10px] font-semibold tracking-[0.1em] uppercase text-t-3 mb-2.5">
+			<Typography tag="h2" className="text-[10px] font-semibold tracking-widest uppercase text-t-3 mb-2.5">
 				{t("library.textDetail.description")}
 			</Typography>
 			<Typography tag="p" className="text-[13.5px] text-t-2 leading-[1.68]">{description}</Typography>

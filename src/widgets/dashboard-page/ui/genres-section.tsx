@@ -76,7 +76,7 @@ const GenreCard = ({ genre, lang }: GenreCardProps) => {
 	return (
 		<Link
 			href={`/${lang}/texts?genreId=${genre.id}`}
-			className="group flex w-[68px] shrink-0 flex-col items-center gap-1.5 rounded-card border border-bd-1 bg-surf p-2 transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-px hover:border-bd-2 hover:[box-shadow:0_4px_14px_2px_var(--genre-glow)] md:w-[76px] md:p-2.5 lg:w-[82px] xl:w-[92px] xl:p-3"
+			className="group flex w-[68px] shrink-0 flex-col items-center gap-1.5 rounded-card border border-bd-1 bg-surf p-2 outline-none transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-px hover:border-bd-2 hover:[box-shadow:0_4px_14px_2px_var(--genre-glow)] focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1 md:w-[76px] md:p-2.5 lg:w-[82px] xl:w-[92px] xl:p-3"
 			style={{ "--genre-glow": `${colors.glow}90` } as CSSProperties}
 		>
 			<div
@@ -86,7 +86,7 @@ const GenreCard = ({ genre, lang }: GenreCardProps) => {
 			</div>
 			<Typography
 				tag="span"
-				className="line-clamp-2 text-center text-[10px] leading-tight text-t-2 md:text-[11px]"
+				className="line-clamp-2 text-center text-[11.5px] leading-tight text-t-2 md:text-[12px]"
 			>
 				{genre.name}
 			</Typography>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-import { ComponentProps, useState } from "react";
+import { ComponentProps, FormEvent, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import {
 	Dialog,
@@ -36,7 +36,7 @@ interface TextReportDialogProps {
 export const TextReportDialog = ({ id, open, onOpenChange, t }: TextReportDialogProps) => {
 	const [reason, setReason] = useState<TextReportReason>("SPAM");
 	const [comment, setComment] = useState("");
-	const [submitted, setSubmitted] = useState<"success" | "duplicate" | null>(null);
+	const [submitted, setSubmitted] = useState<"success" | "duplicate" | "error" | null>(null);
 
 	const mutation = useMutation({
 		mutationFn: () =>
@@ -51,7 +51,7 @@ export const TextReportDialog = ({ id, open, onOpenChange, t }: TextReportDialog
 				typeof err === "object" &&
 				"response" in err &&
 				(err as { response?: { status?: number } }).response?.status;
-			setSubmitted(status === 409 ? "duplicate" : null);
+			setSubmitted(status === 409 ? "duplicate" : "error");
 		},
 	});
 
@@ -65,13 +65,17 @@ export const TextReportDialog = ({ id, open, onOpenChange, t }: TextReportDialog
 		onOpenChange(next);
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = (e: FormEvent) => {
+		e.preventDefault();
 		mutation.mutate();
 	};
 
-		const handleChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => setReason(e.currentTarget.value as TextReportReason);
-	const handleChange2: NonNullable<ComponentProps<typeof Textarea>["onChange"]> = (e) => setComment(e.currentTarget.value);
-return (
+	const handleReasonChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) =>
+		setReason(e.currentTarget.value as TextReportReason);
+	const handleCommentChange: NonNullable<ComponentProps<typeof Textarea>["onChange"]> = (e) =>
+		setComment(e.currentTarget.value);
+
+	return (
 		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent>
 				<DialogHeader>
@@ -80,24 +84,29 @@ return (
 					</DialogTitle>
 				</DialogHeader>
 
-				{submitted === "success" ? (
-					<Typography tag="p" className="text-sm text-t-2">
-						{t("library.textDetail.reportDialog.success")}
-					</Typography>
-				) : submitted === "duplicate" ? (
-					<Typography tag="p" className="text-sm text-t-2">
-						{t("library.textDetail.reportDialog.alreadyReported")}
-					</Typography>
-				) : (
-					<form action={handleSubmit} className="flex flex-col gap-4">
+				<div aria-live="polite" aria-atomic="true">
+					{submitted === "success" ? (
+						<Typography tag="p" className="text-sm text-t-2">
+							{t("library.textDetail.reportDialog.success")}
+						</Typography>
+					) : submitted === "duplicate" ? (
+						<Typography tag="p" className="text-sm text-t-2">
+							{t("library.textDetail.reportDialog.alreadyReported")}
+						</Typography>
+					) : submitted === "error" ? (
+						<Typography tag="p" className="text-sm text-err">
+							{t("library.textDetail.reportDialog.error")}
+						</Typography>
+					) : null}
+				</div>
+
+				{submitted == null && (
+					<form onSubmit={handleSubmit} className="flex flex-col gap-4">
 						<div className="flex flex-col gap-1.5">
-							<Typography tag="span" className="text-xs text-t-3">
+							<label htmlFor="report-reason" className="text-xs text-t-3">
 								{t("library.textDetail.reportDialog.reason")}
-							</Typography>
-							<Select
-								value={reason}
-								onChange={handleChange}
-							>
+							</label>
+							<Select id="report-reason" value={reason} onChange={handleReasonChange}>
 								{REPORT_REASONS.map((r) => (
 									<option key={r} value={r}>
 										{t(`library.textDetail.reportDialog.reasons.${r}`)}
@@ -107,14 +116,16 @@ return (
 						</div>
 
 						<div className="flex flex-col gap-1.5">
-							<Typography tag="span" className="text-xs text-t-3">
+							<label htmlFor="report-comment" className="text-xs text-t-3">
 								{t("library.textDetail.reportDialog.comment")}
-							</Typography>
+							</label>
 							<Textarea
+								id="report-comment"
 								value={comment}
-								onChange={handleChange2}
+								onChange={handleCommentChange}
 								placeholder={t("library.textDetail.reportDialog.commentPlaceholder")}
 								rows={3}
+								maxLength={1000}
 								className="resize-none text-sm"
 							/>
 						</div>

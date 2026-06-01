@@ -46,26 +46,26 @@ export const libraryTextApi = {
 	},
 
 	getById: async (id: string): Promise<LibraryTextDetail> => {
-		const { data } = await http.get<LibraryTextDetail>(`/texts/${id}`);
+		const { data } = await http.get<LibraryTextDetail>(`/texts/${encodeURIComponent(id)}`);
 		return data;
 	},
 
 	getRelated: async (id: string): Promise<LibraryRelatedText[]> => {
 		const { data } = await http.get<LibraryRelatedText[]>(
-			`/texts/${id}/related`,
+			`/texts/${encodeURIComponent(id)}/related`,
 		);
 		return data;
 	},
 
 	toggleBookmark: async (id: string): Promise<{ bookmarked: boolean }> => {
 		const { data } = await http.post<{ bookmarked: boolean }>(
-			`/texts/${id}/bookmark`,
+			`/texts/${encodeURIComponent(id)}/bookmark`,
 		);
 		return data;
 	},
 
 	reportText: async (id: string, body: TextReportBody): Promise<TextReportResponse> => {
-		const { data } = await http.post<TextReportResponse>(`/texts/${id}/report`, body);
+		const { data } = await http.post<TextReportResponse>(`/texts/${encodeURIComponent(id)}/report`, body);
 		return data;
 	},
 };

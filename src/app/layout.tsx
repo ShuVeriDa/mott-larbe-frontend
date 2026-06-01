@@ -64,9 +64,55 @@ export const viewport: Viewport = {
 	initialScale: 1,
 };
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
+
+const ROOT_JSON_LD = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "WebSite",
+			"@id": `${SITE_URL}/#website`,
+			url: SITE_URL,
+			name: "Mott Larbe",
+			description: "Языковая платформа для изучения чеченского языка через реальные тексты",
+			inLanguage: ["ce", "ru", "en"],
+			potentialAction: {
+				"@type": "SearchAction",
+				target: { "@type": "EntryPoint", urlTemplate: `${SITE_URL}/ru/texts?q={search_term_string}` },
+				"query-input": "required name=search_term_string",
+			},
+		},
+		{
+			"@type": "Organization",
+			"@id": `${SITE_URL}/#organization`,
+			name: "Mott Larbe",
+			url: SITE_URL,
+			logo: {
+				"@type": "ImageObject",
+				url: `${SITE_URL}/icons/icon-512x512.png`,
+				width: 512,
+				height: 512,
+			},
+			sameAs: [],
+		},
+	],
+};
+
 export const metadata: Metadata = {
-	title: "Mott & Larbe",
-	description: "Mott & Larbe",
+	metadataBase: new URL(SITE_URL),
+	title: {
+		template: "%s | Mott Larbe",
+		default: "Mott Larbe — изучай чеченский через чтение",
+	},
+	description: "Языковая платформа для изучения чеченского языка: реальные тексты с переводом по клику, морфологический разбор, личный словарь и интервальные повторения. Уровни A1–C2.",
+	keywords: ["чеченский язык", "изучение чеченского", "нохчийн мотт", "Mott Larbe", "чтение на чеченском"],
+	authors: [{ name: "Mott Larbe" }],
+	creator: "Mott Larbe",
+	openGraph: {
+		siteName: "Mott Larbe",
+		type: "website",
+		locale: "ru_RU",
+	},
 	manifest: "/manifest.webmanifest",
 	appleWebApp: {
 		capable: true,
@@ -93,7 +139,9 @@ const RootLayout = async ({
 }: Readonly<{
 	children: ReactNode;
 }>) => {
-	const locale = (await headers()).get("x-locale") ?? "ru";
+	const hdrs = await headers();
+	const locale = hdrs.get("x-locale") ?? "ru";
+	const nonce = hdrs.get("x-nonce") ?? undefined;
 
 	return (
 		<html
@@ -102,7 +150,12 @@ const RootLayout = async ({
 			suppressHydrationWarning
 		>
 			<body className="min-h-full flex flex-col md:overflow-hidden" suppressHydrationWarning>
-				<ThemeProvider>
+				<script
+					nonce={nonce}
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(ROOT_JSON_LD).replace(/</g, "\\u003c") }}
+				/>
+				<ThemeProvider nonce={nonce}>
 					<QueryProvider>
 						<PageAnalyticsProvider />
 					<SwRegister />

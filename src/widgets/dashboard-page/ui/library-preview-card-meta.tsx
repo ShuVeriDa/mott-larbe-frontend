@@ -37,7 +37,7 @@ export const LibraryPreviewCardMeta = ({
 				{item.title}
 			</div>
 			{item.author ? (
-				<div className="mb-2 truncate text-[11px] text-t-3">{item.author}</div>
+				<div className="mb-2 truncate text-[11px] text-t-2">{item.author}</div>
 			) : (
 				<div className="mb-2" />
 			)}

@@ -3,6 +3,7 @@
 import { useI18n } from "@/shared/lib/i18n";
 import { LibraryPage, LibraryPageTopbar, useLibraryPage } from "@/widgets/library-page";
 import { Suspense } from "react";
+import { TextsCatalogSkeleton } from "./texts-catalog-skeleton";
 
 const TextsCatalogInner = () => {
 	const { t } = useI18n();
@@ -17,7 +18,7 @@ const TextsCatalogInner = () => {
 };
 
 export const TextsCatalogPage = () => (
-	<Suspense>
+	<Suspense fallback={<TextsCatalogSkeleton />}>
 		<TextsCatalogInner />
 	</Suspense>
 );
