@@ -11,7 +11,8 @@ const dictionaries = {
 export type Dictionary = Awaited<ReturnType<(typeof dictionaries)["ru"]>>;
 
 export const getDictionary = cache(
-	async (locale: Locale): Promise<Dictionary> => dictionaries[locale](),
+	async (locale: Locale): Promise<Dictionary> =>
+		dictionaries[locale]() as Promise<Dictionary>,
 );
 
 export { DEFAULT_LOCALE, LOCALES, hasLocale } from "./locale-list";

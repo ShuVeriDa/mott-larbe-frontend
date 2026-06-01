@@ -21,6 +21,7 @@ export const AdminTextCreatePage = () => {
 		level,
 		author,
 		source,
+		genreId,
 		tags,
 		description,
 		coverPreviewUrl,
@@ -44,6 +45,7 @@ export const AdminTextCreatePage = () => {
 		setAuthor,
 		setDescription,
 		setSource,
+		setGenreId,
 		setAutoTokenizeOnSave,
 		setUseNormalization,
 		setUseMorphAnalysis,
@@ -86,6 +88,7 @@ export const AdminTextCreatePage = () => {
 					level={level}
 					author={author}
 					source={source}
+					genreId={genreId}
 					tags={tags}
 					allTags={allTags}
 					description={description}
@@ -100,6 +103,7 @@ export const AdminTextCreatePage = () => {
 					onLevelChange={setLevel}
 					onAuthorChange={setAuthor}
 					onSourceChange={setSource}
+					onGenreChange={setGenreId}
 					onTagAdd={handleAddTag}
 					onTagRemove={handleRemoveTag}
 					onDescriptionChange={setDescription}

@@ -31,6 +31,7 @@ interface TextEditMetaPanelProps {
 	level: TextLevel | null;
 	author: string;
 	source: string;
+	genreId?: string | null;
 	tags: string[];
 	description: string;
 	coverPreviewUrl: string | null;
@@ -48,6 +49,7 @@ interface TextEditMetaPanelProps {
 	onLevelChange: (v: TextLevel | null) => void;
 	onAuthorChange: (v: string) => void;
 	onSourceChange: (v: string) => void;
+	onGenreChange: (v: string | null) => void;
 	onTagAdd: (tag: string) => void;
 	onTagRemove: (tag: string) => void;
 	onDescriptionChange: (v: string) => void;
@@ -68,6 +70,7 @@ export const TextEditMetaPanel = ({
 	level,
 	author,
 	source,
+	genreId,
 	tags,
 	description,
 	coverPreviewUrl,
@@ -85,6 +88,7 @@ export const TextEditMetaPanel = ({
 	onLevelChange,
 	onAuthorChange,
 	onSourceChange,
+	onGenreChange,
 	onTagAdd,
 	onTagRemove,
 	onDescriptionChange,
@@ -121,6 +125,7 @@ export const TextEditMetaPanel = ({
 			level={level}
 			author={author}
 			source={source}
+			genreId={genreId}
 			tags={tagItems}
 			tagInputValue={tagInputValue}
 			onStatusChange={onStatusChange}
@@ -128,6 +133,7 @@ export const TextEditMetaPanel = ({
 			onLevelChange={onLevelChange}
 			onAuthorChange={onAuthorChange}
 			onSourceChange={onSourceChange}
+			onGenreChange={onGenreChange}
 			onTagAdd={onTagAdd}
 			onTagRemove={index => {
 				const targetTag = tags[index];

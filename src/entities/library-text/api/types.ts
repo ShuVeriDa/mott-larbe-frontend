@@ -8,7 +8,8 @@ export type LibrarySortOption =
 	| "alpha"
 	| "progress"
 	| "length"
-	| "level";
+	| "level"
+	| "popular";
 
 export interface TextTagDto {
 	id: string;
@@ -55,6 +56,8 @@ export interface GetLibraryTextsQuery {
 	search?: string;
 	page?: number;
 	limit?: number;
+	genreId?: string;
+	maxWords?: number;
 }
 
 // ── Detail ──────────────────────────────────────────────────────────────────

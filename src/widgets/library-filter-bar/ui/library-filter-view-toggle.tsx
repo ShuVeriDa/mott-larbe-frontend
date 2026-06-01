@@ -26,7 +26,7 @@ export const LibraryFilterViewToggle = ({
 	onViewChange,
 	t,
 }: LibraryFilterViewToggleProps) => (
-	<div className="flex shrink-0 overflow-hidden rounded-base border border-bd-2 max-sm:hidden">
+	<div className="flex shrink-0 overflow-hidden rounded-base border border-bd-2">
 		{VIEW_TOGGLE_ENTRIES.map(({ view: mode, labelKey, Icon }) => {
 			const handleClick = () => onViewChange(mode);
 			return (

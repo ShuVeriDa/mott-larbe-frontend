@@ -4,10 +4,10 @@ import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { ComponentProps } from "react";
-import { useReaderTextWidth, type ReaderTextWidth } from "../../model";
+import { useReaderTextLayout, type ReaderColumnWidth } from "../../model";
 
-const OPTIONS: Array<{ value: ReaderTextWidth; labelKey: string }> = [
-	{ value: "small", labelKey: "reader.settings.widthSmall" },
+const OPTIONS: Array<{ value: ReaderColumnWidth; labelKey: string }> = [
+	{ value: "sm", labelKey: "reader.settings.widthSmall" },
 	{ value: "full", labelKey: "reader.settings.widthFull" },
 ];
 
@@ -21,8 +21,8 @@ export const TextWidthToggle = ({
 	buttonClassName,
 }: TextWidthToggleProps) => {
 	const { t } = useI18n();
-	const width = useReaderTextWidth(s => s.width);
-	const setWidth = useReaderTextWidth(s => s.setWidth);
+	const width = useReaderTextLayout(s => s.columnWidth);
+	const setWidth = useReaderTextLayout(s => s.setColumnWidth);
 
 	return (
 		<div

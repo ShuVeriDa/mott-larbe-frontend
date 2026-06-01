@@ -10,12 +10,11 @@ interface LibraryPageTopbarProps {
 
 export const LibraryPageTopbar = ({ title, state }: LibraryPageTopbarProps) => {
 	const ownState = useLibraryPage();
-	const { counts, handleRefresh } = state ?? ownState;
+	const { counts } = state ?? ownState;
 
 	return (
 		<LibraryTopbar
 			counts={counts}
-			onRefresh={handleRefresh}
 			title={title}
 		/>
 	);

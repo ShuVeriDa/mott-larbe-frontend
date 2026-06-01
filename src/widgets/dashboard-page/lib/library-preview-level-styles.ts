@@ -24,8 +24,10 @@ export const getLibraryPreviewLevelColors = (
 	LIBRARY_PREVIEW_LEVEL_CLASSES[(level as CefrLevel) ?? ""] ??
 	DEFAULT_LEVEL_COLORS;
 
-export const getLibraryPreviewProgressBarColor = (pct: number): string => {
-	if (pct >= 80) return "var(--grn)";
-	if (pct > 0) return "var(--acc)";
+export const getLibraryPreviewProgressBarColor = (
+	pct: number,
+	stripe: string,
+): string => {
+	if (pct > 0) return stripe;
 	return "transparent";
 };

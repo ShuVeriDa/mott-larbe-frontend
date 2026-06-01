@@ -20,6 +20,8 @@ export const libraryTextApi = {
 				...(query.status ? { status: query.status } : {}),
 				...(query.orderBy ? { orderBy: query.orderBy } : {}),
 				...(query.search ? { search: query.search } : {}),
+				...(query.genreId ? { genreId: query.genreId } : {}),
+				...(query.maxWords ? { maxWords: query.maxWords } : {}),
 				page: query.page ?? 1,
 				limit: query.limit ?? 50,
 			},

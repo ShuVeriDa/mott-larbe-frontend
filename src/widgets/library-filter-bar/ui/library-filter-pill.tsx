@@ -24,7 +24,7 @@ export const LibraryFilterPill = ({
 		aria-pressed={active}
 		title={title}
 		className={cn(
-			"h-[26px] shrink-0 cursor-pointer rounded-full border px-2.5 text-[11px] font-medium transition-all duration-100 [-webkit-tap-highlight-color:transparent]",
+			"h-[22px] shrink-0 cursor-pointer rounded-full border px-2 text-[10px] font-medium transition-all duration-100 [-webkit-tap-highlight-color:transparent] @[900px]:h-[26px] @[900px]:px-2.5 @[900px]:text-[11px]",
 			className,
 		)}
 	>

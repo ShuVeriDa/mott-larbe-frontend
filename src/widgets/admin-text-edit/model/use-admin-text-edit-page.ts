@@ -55,6 +55,7 @@ export const useAdminTextEditPage = (id: string) => {
 	const [level, setLevel] = useState<TextLevel | null>(null);
 	const [author, setAuthor] = useState("");
 	const [source, setSource] = useState("");
+	const [genreId, setGenreId] = useState<string | null>(null);
 	const [tags, setTags] = useState<string[]>([]);
 	const [description, setDescription] = useState("");
 	const [pendingCoverFile, setPendingCoverFile] = useState<File | null>(null);
@@ -77,6 +78,7 @@ export const useAdminTextEditPage = (id: string) => {
 			setLevel(textData.level);
 			setAuthor(textData.author ?? "");
 			setSource(textData.source ?? "");
+			setGenreId((textData as unknown as Record<string, unknown>).genreId as string | null ?? null);
 			setDescription(textData.description ?? "");
 			setCoverPreviewUrl(textData.imageUrl);
 			setAutoTokenizeOnSave(textData.autoTokenizeOnSave);
@@ -175,6 +177,7 @@ export const useAdminTextEditPage = (id: string) => {
 					description: description.trim() || undefined,
 					author: author.trim() || undefined,
 					source: source.trim() || null,
+					genreId: genreId ?? null,
 					tagNames: tags.length ? tags : undefined,
 					status: targetStatus,
 					autoTokenizeOnSave,
@@ -242,6 +245,7 @@ export const useAdminTextEditPage = (id: string) => {
 		level,
 		author,
 		source,
+		genreId,
 		tags,
 		description,
 		coverPreviewUrl,
@@ -271,6 +275,7 @@ export const useAdminTextEditPage = (id: string) => {
 		setAuthor: (v: string) => { setAuthor(v); markUnsaved(); },
 		setDescription: (v: string) => { setDescription(v); markUnsaved(); },
 		setSource: (v: string) => { setSource(v); markUnsaved(); },
+		setGenreId: (v: string | null) => { setGenreId(v); markUnsaved(); },
 		setAutoTokenizeOnSave: (v: boolean) => { setAutoTokenizeOnSave(v); markUnsaved(); },
 		setUseNormalization: (v: boolean) => { setUseNormalization(v); markUnsaved(); },
 		setUseMorphAnalysis: (v: boolean) => { setUseMorphAnalysis(v); markUnsaved(); },

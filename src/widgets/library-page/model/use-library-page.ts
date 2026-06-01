@@ -20,7 +20,7 @@ const EMPTY_COUNTS: LibraryTextCounts = {
 
 export const useLibraryPage = () => {
 	const qc = useQueryClient();
-	const { level, lang, status, sort, view, search } = useLibraryFilters();
+	const { level, lang, status, sort, view, search, genreId, maxWords } = useLibraryFilters();
 	const sentinelRef = useRef<HTMLDivElement>(null);
 
 	const query = useInfiniteLibraryTexts({
@@ -29,6 +29,8 @@ export const useLibraryPage = () => {
 		status: status !== "all" ? status : undefined,
 		orderBy: sort,
 		search: search || undefined,
+		genreId: genreId ?? undefined,
+		maxWords: maxWords ?? undefined,
 	});
 	const { hasNextPage, isFetchingNextPage, fetchNextPage } = query;
 

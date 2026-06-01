@@ -23,57 +23,71 @@ const ShimmerBlock = ({
 	</div>
 );
 
-export const DashboardSkeleton = () => (
-	<div
-		aria-busy="true"
-		className="flex flex-col gap-3.5 overflow-y-auto px-[22px] pb-7 pt-4 max-md:px-4 max-sm:px-3.5 max-sm:pb-5 max-sm:pt-3.5"
-	>
-		{/* greeting */}
-		<div className="flex items-start justify-between gap-4">
-			<div className="flex flex-col gap-2">
-				<ShimmerBlock className="h-7 w-56 rounded-md" delay={0} />
-				<ShimmerBlock className="h-4 w-44 rounded-md" delay={60} />
-			</div>
-			<ShimmerBlock className="h-8 w-36 rounded-base" delay={120} />
-		</div>
-
-		{/* stats grid */}
-		<div className="grid grid-cols-4 gap-2 max-md:grid-cols-2">
-			{Array.from({ length: 4 }).map((_, i) => (
+const RowSkeleton = ({ delay = 0 }: { delay?: number }) => (
+	<div className="flex flex-col gap-2.5">
+		<ShimmerBlock className="h-4 w-36 rounded-md" delay={delay} />
+		<div className="flex gap-2.5 overflow-hidden">
+			{Array.from({ length: 5 }).map((_, i) => (
 				<ShimmerBlock
 					key={i}
-					className="h-[96px] rounded-card"
-					delay={i * 60}
+					className="h-[230px] w-[160px] shrink-0 rounded-card"
+					delay={delay + i * 40}
 				/>
 			))}
 		</div>
+	</div>
+);
 
-		{/* review banner */}
-		<ShimmerBlock className="h-[84px] rounded-card" delay={120} />
+export const DashboardSkeleton = () => (
+	<div
+		aria-busy="true"
+		className="flex flex-col gap-5 overflow-y-auto px-[22px] pb-8 pt-4 max-md:px-4 max-sm:gap-4 max-sm:px-3.5 max-sm:pt-3.5"
+	>
+		{/* Greeting */}
+		<div className="flex items-start justify-between gap-4">
+			<div className="flex flex-col gap-2">
+				<ShimmerBlock className="h-7 w-52 rounded-md" delay={0} />
+				<ShimmerBlock className="h-4 w-40 rounded-md" delay={60} />
+			</div>
+			<ShimmerBlock className="h-8 w-32 rounded-base" delay={120} />
+		</div>
 
-		{/* continue reading */}
+		{/* Stats grid */}
+		<div className="grid grid-cols-4 gap-2 max-md:grid-cols-2">
+			{Array.from({ length: 4 }).map((_, i) => (
+				<ShimmerBlock key={i} className="h-[92px] rounded-card" delay={i * 50} />
+			))}
+		</div>
+
+		{/* Review banner */}
+		<ShimmerBlock className="h-[82px] rounded-card" delay={100} />
+
+		{/* Streak calendar */}
+		<ShimmerBlock className="h-[120px] rounded-card" delay={120} />
+
+		{/* Continue reading */}
 		<div className="flex flex-col gap-2.5">
 			<ShimmerBlock className="h-4 w-32 rounded-md" delay={0} />
 			<div className="grid grid-cols-3 gap-2 max-md:grid-cols-2">
 				{Array.from({ length: 3 }).map((_, i) => (
-					<ShimmerBlock
-						key={i}
-						className="h-[148px] rounded-card"
-						delay={i * 60}
-					/>
+					<ShimmerBlock key={i} className="h-[136px] rounded-card" delay={i * 50} />
 				))}
 			</div>
 		</div>
 
-		{/* library */}
+		{/* Text rows */}
+		<RowSkeleton delay={0} />
+		<RowSkeleton delay={80} />
+
+		{/* Tags */}
 		<div className="flex flex-col gap-2.5">
-			<ShimmerBlock className="h-4 w-28 rounded-md" delay={0} />
-			<div className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">
-				{Array.from({ length: 6 }).map((_, i) => (
+			<ShimmerBlock className="h-4 w-24 rounded-md" delay={0} />
+			<div className="flex gap-2.5 overflow-hidden">
+				{Array.from({ length: 8 }).map((_, i) => (
 					<ShimmerBlock
 						key={i}
-						className="h-[178px] rounded-card"
-						delay={i * 50}
+						className="h-[88px] w-[80px] shrink-0 rounded-card"
+						delay={i * 30}
 					/>
 				))}
 			</div>

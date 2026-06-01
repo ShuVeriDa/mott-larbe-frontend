@@ -1,9 +1,8 @@
 "use client";
 
-import { variants } from "@/shared/lib/animation";
-import { motion } from "framer-motion";
 import { useLibraryPreview } from "../model";
-import { LibraryPreviewCard } from "./library-preview-card";
+import { HorizontalScrollRow } from "./horizontal-scroll-row";
+import { LibraryPreviewCard, LibraryPreviewCardSkeleton } from "./library-preview-card";
 import { LibraryPreviewEmpty } from "./library-preview-empty";
 import { LibraryPreviewFilters } from "./library-preview-filters";
 import { LibraryPreviewHeader } from "./library-preview-header";
@@ -14,11 +13,7 @@ export interface LibraryPreviewProps {
 
 const SKELETON_COUNT = 6;
 
-const listClass =
-	"flex gap-2 max-md:snap-x max-md:snap-mandatory max-md:overflow-x-auto max-md:pb-1 max-md:[scrollbar-width:none] max-md:[&::-webkit-scrollbar]:hidden md:flex-wrap";
-
-const itemClass =
-	"w-[140px] shrink-0 max-md:snap-start md:w-[168px] lg:w-[224px]";
+const itemClass = "w-[120px] shrink-0 md:w-[148px] lg:w-[168px] xl:w-[196px]";
 
 export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 	const {
@@ -50,27 +45,21 @@ export const LibraryPreview = ({ lang }: LibraryPreviewProps) => {
 			/>
 
 			{isPending ? (
-				<div className={listClass}>
+				<div className="flex gap-2 overflow-hidden">
 					{Array.from({ length: SKELETON_COUNT }).map((_, i) => (
-						<div
-							key={i}
-							className={`${itemClass} animate-pulse rounded-card bg-surf-2 h-[260px] md:h-[300px] lg:h-[380px]`}
-						/>
+						<div key={i} className={itemClass}>
+							<LibraryPreviewCardSkeleton />
+						</div>
 					))}
 				</div>
 			) : items.length > 0 ? (
-				<motion.div
-					className={listClass}
-					variants={variants.staggerContainer}
-					initial="hidden"
-					animate="visible"
-				>
+				<HorizontalScrollRow>
 					{items.map(item => (
-						<motion.div key={item.id} className={itemClass} variants={variants.staggerItem}>
+						<div key={item.id} className={itemClass}>
 							<LibraryPreviewCard item={item} lang={lang} />
-						</motion.div>
+						</div>
 					))}
-				</motion.div>
+				</HorizontalScrollRow>
 			) : (
 				<LibraryPreviewEmpty />
 			)}

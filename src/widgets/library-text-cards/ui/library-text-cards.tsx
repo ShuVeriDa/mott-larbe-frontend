@@ -4,11 +4,12 @@ import { Typography } from "@/shared/ui/typography";
 
 import type { LibraryTextListItem } from "@/entities/library-text";
 import type { LibraryView } from "@/features/library-filters";
-import { cn } from "@/shared/lib/cn";
+
 import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
 import { CEFR_LEVELS } from "@/shared/types";
 import { CefrBadge } from "@/shared/ui/cefr-badge";
+import { LibraryPreviewCard } from "@/widgets/dashboard-page/ui/library-preview-card";
 import { LibraryTextCard } from "./library-text-card";
 
 interface LibraryTextCardsProps {
@@ -22,7 +23,7 @@ export const LibraryTextCards = ({
 	view,
 	sort,
 }: LibraryTextCardsProps) => {
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
 
 	if (items.length === 0) {
 		return (
@@ -48,9 +49,20 @@ export const LibraryTextCards = ({
 		);
 	}
 
-	const gridClass = cn(
-		view === "grid" ? "flex flex-wrap gap-3 max-sm:gap-2" : "flex flex-col gap-1.5",
-	);
+	if (view === "list") {
+		return (
+			<div className="flex flex-col gap-1.5">
+				{items.map((item, i) => (
+					<LibraryTextCard key={item.id} item={item} view="list" index={i} />
+				))}
+			</div>
+		);
+	}
+
+	// Grid view — использует LibraryPreviewCard как на dashboard
+	const gridClass =
+		"grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3 sm:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(180px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(196px,1fr))] lg:gap-4";
+	const cardClass = "min-w-0";
 
 	if (sort === "level") {
 		const groups = new Map<CefrLevel, LibraryTextListItem[]>();
@@ -61,7 +73,6 @@ export const LibraryTextCards = ({
 		}
 		const orderedLevels = CEFR_LEVELS.filter(l => groups.has(l));
 
-		let globalIndex = 0;
 		return (
 			<div className="flex flex-col gap-0">
 				{orderedLevels.map(lvl => {
@@ -79,17 +90,11 @@ export const LibraryTextCards = ({
 								</Typography>
 							</div>
 							<div className={gridClass}>
-								{group.map(item => {
-									const idx = globalIndex++;
-									return (
-										<LibraryTextCard
-											key={item.id}
-											item={item}
-											view={view}
-											index={idx}
-										/>
-									);
-								})}
+								{group.map(item => (
+									<div key={item.id} className={cardClass}>
+										<LibraryPreviewCard item={item} lang={lang} />
+									</div>
+								))}
 							</div>
 						</div>
 					);
@@ -100,8 +105,10 @@ export const LibraryTextCards = ({
 
 	return (
 		<div className={gridClass}>
-			{items.map((item, i) => (
-				<LibraryTextCard key={item.id} item={item} view={view} index={i} />
+			{items.map(item => (
+				<div key={item.id} className={cardClass}>
+					<LibraryPreviewCard item={item} lang={lang} />
+				</div>
 			))}
 		</div>
 	);

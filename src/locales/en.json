@@ -621,7 +621,7 @@
 		},
 		"sort": {
 			"added": "By date",
-			"alpha": "Alphabetical",
+			"alpha": "A–Z",
 			"review": "By review",
 			"status": "By status",
 			"label": "Sort"
@@ -774,6 +774,7 @@
 			"declensionClass": "{name} class",
 			"sections": {
 				"senses": "Meanings",
+				"genres": "Genres",
 				"morphology": "Declension",
 				"contexts": "Found in texts",
 				"contextsAll": "all →",
@@ -2238,11 +2239,12 @@
 		"sort": {
 			"label": "Sort",
 			"level": "By level",
-			"newest": "Newest first",
-			"oldest": "Oldest first",
-			"alpha": "Alphabetical",
-			"progress": "By progress",
-			"length": "By length"
+			"newest": "Newest",
+			"oldest": "Oldest",
+			"alpha": "A–Z",
+			"progress": "Progress",
+			"length": "By length",
+			"popular": "Popular"
 		},
 		"view": {
 			"grid": "Grid",
@@ -2369,7 +2371,8 @@
 			"notFound": "Text not found",
 			"error": "Failed to load",
 			"retry": "Try again"
-		}
+		},
+		"resetFilters": "Reset"
 	},
 	"feedback": {
 		"meta": {
@@ -2471,7 +2474,44 @@
 			"levelAll": "All"
 		},
 		"error": "Failed to load dashboard",
-		"retry": "Try again"
+		"retry": "Try again",
+		"viewAll": "all →",
+		"streak": {
+			"title": "Activity",
+			"current": "day streak",
+			"record": "record",
+			"details": "details →"
+		},
+		"genres": {
+			"title": "Genres",
+			"beginner": "Beginner",
+			"intermediate": "Intermediate",
+			"advanced": "Advanced",
+			"chechen": "Chechen",
+			"russian": "Russian",
+			"short": "Short reads",
+			"new": "New",
+			"popular": "Popular"
+		},
+		"byLevel": {
+			"title": "Texts at {level} level"
+		},
+		"popularTexts": {
+			"title": "Popular texts"
+		},
+		"recentTexts": {
+			"title": "New texts"
+		},
+		"shortTexts": {
+			"title": "Short texts"
+		}
+	},
+	"common": {
+		"save": "Save",
+		"saving": "Saving…",
+		"cancel": "Cancel",
+		"edit": "Edit",
+		"delete": "Delete"
 	},
 	"admin": {
 		"dashboard": {
@@ -2992,6 +3032,28 @@
 			"tracking": "Traffic",
 			"phrasebook": "Phrasebook",
 			"textSubmissions": "Text submissions"
+		},
+		"genres": {
+			"title": "Genres",
+			"subtitle": "Text library genres",
+			"create": "Add genre",
+			"empty": "No genres created",
+			"deleteConfirm": "Delete genre \"{name}\"?",
+			"table": {
+				"name": "Name",
+				"slug": "Slug",
+				"sortOrder": "Order",
+				"texts": "Texts",
+				"actions": "Actions"
+			},
+			"modal": {
+				"createTitle": "New genre",
+				"editTitle": "Edit genre",
+				"name": "Name",
+				"namePlaceholder": "Poetry",
+				"slug": "Slug",
+				"sortOrder": "Sort order"
+			}
 		},
 		"users": {
 			"title": "Users",
@@ -3584,6 +3646,8 @@
 				"authorPlaceholder": "Author name",
 				"sourceLabel": "Source URL",
 				"sourcePlaceholder": "https://…",
+				"genreLabel": "Genre",
+				"genreNone": "No genre",
 				"tagsAddPlaceholder": "Add tags…",
 				"tagsHint": "Press Enter to add a tag",
 				"descriptionPlaceholder": "Brief description of the text…",

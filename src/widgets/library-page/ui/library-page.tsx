@@ -5,7 +5,10 @@ import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { LibraryTextCards } from "@/widgets/library-text-cards";
 import { LibraryTopbar } from "@/widgets/library-topbar";
-import { useLibraryPage, type LibraryPageState } from "../model/use-library-page";
+import {
+	useLibraryPage,
+	type LibraryPageState,
+} from "../model/use-library-page";
 
 interface LibraryPageProps {
 	hideTopbar?: boolean;
@@ -18,13 +21,14 @@ export const LibraryPage = ({ hideTopbar, state }: LibraryPageProps) => {
 	const { query, counts, items, view, sort, sentinelRef, handleRefresh } =
 		state ?? ownState;
 
+
 	return (
 		<div className="flex flex-1 flex-col overflow-hidden max-md:overflow-visible">
 			{!hideTopbar && (
-				<LibraryTopbar counts={counts} onRefresh={handleRefresh} />
+				<LibraryTopbar counts={counts} />
 			)}
 
-			<div className="flex-1 overflow-y-auto px-5 pb-10 pt-0 [scrollbar-color:var(--bd-2)_transparent] [scrollbar-width:thin] max-sm:px-3 max-sm:pt-3 [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-thumb]:rounded-[2px] [&::-webkit-scrollbar-thumb]:bg-bd-2">
+			<div className="flex-1 overflow-y-auto px-5 pb-10 pt-0 [scrollbar-color:var(--bd-2)_transparent] [scrollbar-width:thin] max-sm:px-3  [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-thumb]:rounded-[2px] [&::-webkit-scrollbar-thumb]:bg-bd-2">
 				{hideTopbar && (
 					<div className="mb-4 mt-4 flex items-center gap-3">
 						<Typography tag="h2" className="text-[13px] font-semibold text-t-2">

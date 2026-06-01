@@ -58,7 +58,7 @@
 			"close": "Закрыть"
 		},
 		"hero": {
-			"eyebrow": "Чеченский · A1–C2",
+			"eyebrow": "Нохчийн · A1–C2",
 			"titleStart": "Изучайте чеченский",
 			"titleEm": "через чтение",
 			"titleEnd": "— слово за словом",
@@ -545,7 +545,7 @@
 		"phrasebook": "Разговорник",
 		"profile": "Профиль",
 		"language": "Язык",
-		"chechen": "Чеченский",
+		"chechen": "Нохчийн",
 		"grammar": "Грамматика",
 		"freePlan": "Free план",
 		"freePlanDesc": "До 200 слов в словаре. Разблокируйте больше возможностей.",
@@ -621,7 +621,7 @@
 		},
 		"sort": {
 			"added": "По дате",
-			"alpha": "По алфавиту",
+			"alpha": "А–Я",
 			"review": "По повторению",
 			"status": "По статусу",
 			"label": "Сортировка"
@@ -1288,7 +1288,7 @@
 			"sub": "Параметры изучаемого языка и дневные цели",
 			"languageLevel": "Язык и уровень",
 			"learningLang": "Изучаемый язык",
-			"learningLangChe": "Чеченский (CHE)",
+			"learningLangChe": "Нохчийн (CHE)",
 			"learningLangRu": "Русский (RU)",
 			"level": "Уровень",
 			"levelA": "A — Начальный",
@@ -2223,23 +2223,24 @@
 		"filterProgress": "Прогресс",
 		"all": "Все",
 		"lang": {
-			"CHE": "Чеченский",
+			"CHE": "Нохчийн",
 			"RU": "Русский",
 			"EN": "Английский"
 		},
 		"progress": {
 			"new": "Новые",
 			"inprogress": "Читаю",
-			"completed": "Завершённые"
+			"completed": "Завершено"
 		},
 		"sort": {
 			"label": "Сортировка",
 			"level": "По уровню",
-			"newest": "Сначала новые",
-			"oldest": "Сначала старые",
-			"alpha": "По алфавиту",
-			"progress": "По прогрессу",
-			"length": "По длине"
+			"newest": "Новые",
+			"oldest": "Старые",
+			"alpha": "А–Я",
+			"progress": "Прогресс",
+			"length": "По длине",
+			"popular": "Популярные"
 		},
 		"view": {
 			"grid": "Сетка",
@@ -2359,14 +2360,15 @@
 				"C2": "C2 — Мастерство"
 			},
 			"lang": {
-				"CHE": "Чеченский (CHE)",
+				"CHE": "Нохчийн (CHE)",
 				"RU": "Русский (RU)",
 				"EN": "Английский (EN)"
 			},
 			"notFound": "Текст не найден",
 			"error": "Не удалось загрузить",
 			"retry": "Попробовать снова"
-		}
+		},
+		"resetFilters": "Сбросить"
 	},
 	"feedback": {
 		"meta": {
@@ -2468,7 +2470,44 @@
 			"levelAll": "Все"
 		},
 		"error": "Не удалось загрузить данные",
-		"retry": "Попробовать снова"
+		"retry": "Попробовать снова",
+		"viewAll": "все →",
+		"streak": {
+			"title": "Активность",
+			"current": "дней подряд",
+			"record": "рекорд",
+			"details": "подробнее →"
+		},
+		"genres": {
+			"title": "Жанры",
+			"beginner": "Начальный",
+			"intermediate": "Средний",
+			"advanced": "Продвинутый",
+			"chechen": "Чеченский",
+			"russian": "Русский",
+			"short": "Короткие",
+			"new": "Новинки",
+			"popular": "Популярное"
+		},
+		"byLevel": {
+			"title": "Тексты уровня {level}"
+		},
+		"popularTexts": {
+			"title": "Популярные тексты"
+		},
+		"recentTexts": {
+			"title": "Новые тексты"
+		},
+		"shortTexts": {
+			"title": "Короткие тексты"
+		}
+	},
+	"common": {
+		"save": "Сохранить",
+		"saving": "Сохранение…",
+		"cancel": "Отмена",
+		"edit": "Редактировать",
+		"delete": "Удалить"
 	},
 	"admin": {
 		"dashboard": {
@@ -2972,6 +3011,7 @@
 			"wordAnnotations": "Аннотации слов",
 			"tokenization": "Токенизация",
 			"dictionary": "Словарь",
+			"genres": "Жанры",
 			"morphology": "Морфология",
 			"unknownWords": "Неизвестные слова",
 			"usersList": "Пользователи",
@@ -2989,6 +3029,28 @@
 			"subscriptions": "Подписки",
 			"phrasebook": "Разговорник",
 			"textSubmissions": "Предложения текстов"
+		},
+		"genres": {
+			"title": "Жанры",
+			"subtitle": "Жанры текстов библиотеки",
+			"create": "Добавить жанр",
+			"empty": "Жанры не созданы",
+			"deleteConfirm": "Удалить жанр \"{name}\"?",
+			"table": {
+				"name": "Название",
+				"slug": "Слаг",
+				"sortOrder": "Порядок",
+				"texts": "Текстов",
+				"actions": "Действия"
+			},
+			"modal": {
+				"createTitle": "Новый жанр",
+				"editTitle": "Редактировать жанр",
+				"name": "Название",
+				"namePlaceholder": "Поэзия",
+				"slug": "Слаг",
+				"sortOrder": "Порядок сортировки"
+			}
 		},
 		"users": {
 			"title": "Пользователи",
@@ -3492,7 +3554,7 @@
 					"off": "Выкл",
 					"runBtn": "Запустить обработку",
 					"runBtnRunning": "Обрабатывается…",
-					"langCHE": "Чеченский",
+					"langCHE": "Нохчийн",
 					"langRU": "Русский",
 					"langAR": "Арабский",
 					"langEN": "Английский"
@@ -3574,13 +3636,15 @@
 					"pageStats": "Статистика страниц"
 				},
 				"langLabel": "Язык",
-				"langChe": "Чеченский",
+				"langChe": "Нохчийн",
 				"langRu": "Русский",
 				"levelLabel": "Уровень",
 				"authorLabel": "Автор",
 				"authorPlaceholder": "Имя автора",
 				"sourceLabel": "Источник (URL)",
 				"sourcePlaceholder": "https://…",
+				"genreLabel": "Жанр",
+				"genreNone": "Без жанра",
 				"tagsAddPlaceholder": "Добавить теги…",
 				"tagsHint": "Нажмите Enter для добавления тега",
 				"descriptionPlaceholder": "Краткое описание текста…",
@@ -4270,7 +4334,7 @@
 				"allPos": "Все части речи",
 				"allLevels": "Все уровни",
 				"allLanguages": "Все языки",
-				"langCHE": "Чеченский",
+				"langCHE": "Нохчийн",
 				"langRU": "Русский",
 				"sortAlpha": "По алфавиту",
 				"sortFrequencyDesc": "По частотности",
@@ -4321,7 +4385,7 @@
 				"normalizedLabel": "Нормализованная форма",
 				"normalizedPlaceholder": "нормализованная форма строчными",
 				"languageLabel": "Язык",
-				"langChe": "Чеченский",
+				"langChe": "Нохчийн",
 				"langRu": "Русский",
 				"posLabel": "Часть речи",
 				"posNone": "Не указана",
@@ -6549,7 +6613,7 @@
 		"success": "Спасибо! Ваше предложение отправлено на рассмотрение.",
 		"error": "Не удалось отправить. Попробуйте ещё раз.",
 		"languages": {
-			"che": "Чеченский",
+			"che": "Нохчийн",
 			"ru": "Русский",
 			"en": "Английский",
 			"other": "Другой"

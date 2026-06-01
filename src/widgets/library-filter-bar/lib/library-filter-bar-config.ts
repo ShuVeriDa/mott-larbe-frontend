@@ -11,8 +11,9 @@ export const LIBRARY_FILTER_BAR_CEFR_LEVELS: readonly CefrLevel[] = [
 ];
 
 /** Languages shown as filter pills (subset of `LibraryTextLanguage`). */
-export const LIBRARY_FILTER_BAR_LANG_OPTIONS: readonly LibraryTextLanguage[] =
-	["CHE"];
+export const LIBRARY_FILTER_BAR_LANG_OPTIONS: readonly LibraryTextLanguage[] = [
+	"CHE",
+];
 
 export const LIBRARY_FILTER_BAR_PROGRESS_STATUSES: readonly LibraryProgressStatus[] =
 	["NEW", "IN_PROGRESS", "COMPLETED"];
@@ -23,7 +24,10 @@ export const LIBRARY_FILTER_ACC_PILL_ACTIVE =
 export const LIBRARY_FILTER_ACC_PILL_IDLE =
 	"border-bd-2 bg-transparent text-t-2 hover:bg-surf-2 hover:text-t-1";
 
-export const libraryFilterLevelPillClass = (level: CefrLevel, active: boolean) => {
+export const libraryFilterLevelPillClass = (
+	level: CefrLevel,
+	active: boolean,
+) => {
 	if (active) {
 		if (level === "A") return "bg-grn-bg border-grn/25 text-grn-t";
 		if (level === "B") return "bg-amb-bg border-amb/25 text-amb-t";

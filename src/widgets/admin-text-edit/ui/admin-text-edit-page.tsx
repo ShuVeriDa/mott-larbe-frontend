@@ -67,6 +67,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 		level,
 		author,
 		source,
+		genreId,
 		tags,
 		description,
 		coverPreviewUrl,
@@ -96,6 +97,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 		setAuthor,
 		setDescription,
 		setSource,
+		setGenreId,
 		setAutoTokenizeOnSave,
 		setUseNormalization,
 		setUseMorphAnalysis,
@@ -230,6 +232,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					level={level}
 					author={author}
 					source={source}
+					genreId={genreId}
 					tags={tags}
 					description={description}
 					coverPreviewUrl={coverPreviewUrl}
@@ -247,6 +250,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					onLevelChange={setLevel}
 					onAuthorChange={setAuthor}
 					onSourceChange={setSource}
+					onGenreChange={setGenreId}
 					onTagAdd={handleAddTag}
 					onTagRemove={handleRemoveTag}
 					onDescriptionChange={setDescription}

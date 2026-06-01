@@ -6,6 +6,7 @@ import type {
 	TextLevel,
 	TextStatus,
 } from "@/entities/admin-text";
+import { useGenres } from "@/entities/genre";
 import { useI18n } from "@/shared/lib/i18n";
 import {
 	FieldInput,
@@ -33,6 +34,7 @@ interface AdminTextMetaPanelShellProps {
 	level: TextLevel | null;
 	author: string;
 	source: string;
+	genreId?: string | null;
 	tags: { id?: string; name: string }[];
 	allTags?: AdminTag[];
 	tagInputValue: string;
@@ -42,6 +44,7 @@ interface AdminTextMetaPanelShellProps {
 	onLevelChange: (v: TextLevel | null) => void;
 	onAuthorChange: (v: string) => void;
 	onSourceChange: (v: string) => void;
+	onGenreChange: (v: string | null) => void;
 	onTagAdd: (name: string, id?: string) => void;
 	onTagRemove: (index: number) => void;
 	onTagInputChange: (v: string) => void;
@@ -55,6 +58,7 @@ export const AdminTextMetaPanelShell = ({
 	level,
 	author,
 	source,
+	genreId,
 	tags,
 	allTags,
 	tagInputValue,
@@ -64,6 +68,7 @@ export const AdminTextMetaPanelShell = ({
 	onLevelChange,
 	onAuthorChange,
 	onSourceChange,
+	onGenreChange,
 	onTagAdd,
 	onTagRemove,
 	onTagInputChange,
@@ -71,6 +76,7 @@ export const AdminTextMetaPanelShell = ({
 	children,
 }: AdminTextMetaPanelShellProps) => {
 	const { t } = useI18n();
+	const { data: genres = [] } = useGenres();
 	const [metaOpen, setMetaOpen] = useState(false);
 
 	const handleToggleMeta: NonNullable<
@@ -82,6 +88,9 @@ export const AdminTextMetaPanelShell = ({
 	const handleSourceChange: NonNullable<
 		ComponentProps<typeof FieldInput>["onChange"]
 	> = e => onSourceChange(e.currentTarget.value);
+	const handleGenreChange: NonNullable<
+		ComponentProps<"select">["onChange"]
+	> = e => onGenreChange(e.currentTarget.value || null);
 	const handleLevelClick: NonNullable<
 		ComponentProps<"button">["onClick"]
 	> = e => {
@@ -155,7 +164,7 @@ export const AdminTextMetaPanelShell = ({
 					/>
 				</div>
 
-				<div>
+				<div className="mb-[11px]">
 					<FieldLabel>{t("admin.texts.createPage.sourceLabel")}</FieldLabel>
 					<FieldInput
 						type="url"
@@ -163,6 +172,20 @@ export const AdminTextMetaPanelShell = ({
 						onChange={handleSourceChange}
 						placeholder={t("admin.texts.createPage.sourcePlaceholder")}
 					/>
+				</div>
+
+				<div>
+					<FieldLabel>{t("admin.texts.createPage.genreLabel")}</FieldLabel>
+					<select
+						value={genreId ?? ""}
+						onChange={handleGenreChange}
+						className="h-[30px] w-full rounded-base border border-bd-2 bg-surf px-2 text-[12.5px] text-t-1 outline-none transition-colors focus:border-acc"
+					>
+						<option value="">{t("admin.texts.createPage.genreNone")}</option>
+						{genres.map(g => (
+							<option key={g.id} value={g.id}>{g.name}</option>
+						))}
+					</select>
 				</div>
 			</MetaSection>
 

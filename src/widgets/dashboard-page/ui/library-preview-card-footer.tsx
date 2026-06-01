@@ -3,16 +3,19 @@
 import type { LibraryTextListItem } from "@/entities/library-text";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import type { LibraryPreviewLevelStyle } from "../lib/library-preview-level-styles";
 import { getLibraryPreviewProgressBarColor } from "../lib/library-preview-level-styles";
 
 interface LibraryPreviewCardFooterProps {
 	item: Pick<LibraryTextListItem, "wordCount">;
 	pct: number;
+	colors: LibraryPreviewLevelStyle;
 }
 
 export const LibraryPreviewCardFooter = ({
 	item,
 	pct,
+	colors,
 }: LibraryPreviewCardFooterProps) => {
 	const { t } = useI18n();
 
@@ -23,7 +26,7 @@ export const LibraryPreviewCardFooter = ({
 					className="h-full rounded-[2px] transition-[width]"
 					style={{
 						width: `${pct}%`,
-						background: getLibraryPreviewProgressBarColor(pct),
+						background: getLibraryPreviewProgressBarColor(pct, colors.stripe),
 					}}
 				/>
 			</div>
@@ -38,7 +41,7 @@ export const LibraryPreviewCardFooter = ({
 					<Typography
 						tag="span"
 						className="text-[11px] font-semibold"
-						style={{ color: pct >= 80 ? "var(--grn)" : "var(--acc)" }}
+						style={{ color: colors.stripe }}
 					>
 						{pct}%
 					</Typography>

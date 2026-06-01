@@ -21,4 +21,5 @@ export {
 	useInfiniteLibraryTexts,
 	useLibraryTextDetail,
 	useLibraryTextRelated,
+	useLibraryTags,
 } from "./model";

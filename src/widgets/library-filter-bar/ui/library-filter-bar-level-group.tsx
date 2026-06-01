@@ -1,8 +1,8 @@
 "use client";
 
+import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
 import { Typography } from "@/shared/ui/typography";
-import { useI18n } from "@/shared/lib/i18n";
 import {
 	LIBRARY_FILTER_ACC_PILL_ACTIVE,
 	LIBRARY_FILTER_ACC_PILL_IDLE,
@@ -38,7 +38,9 @@ export const LibraryFilterBarLevelGroup = ({
 				onClick={handleAllClick}
 				title={t("library.all")}
 				className={
-					level === "all" ? LIBRARY_FILTER_ACC_PILL_ACTIVE : LIBRARY_FILTER_ACC_PILL_IDLE
+					level === "all"
+						? LIBRARY_FILTER_ACC_PILL_ACTIVE
+						: LIBRARY_FILTER_ACC_PILL_IDLE
 				}
 			>
 				{t("library.all")}

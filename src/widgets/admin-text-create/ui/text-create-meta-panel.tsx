@@ -29,6 +29,7 @@ interface TextCreateMetaPanelProps {
 	level: TextLevel | null;
 	author: string;
 	source: string;
+	genreId?: string | null;
 	tags: TagEntry[];
 	allTags: AdminTag[];
 	description: string;
@@ -43,6 +44,7 @@ interface TextCreateMetaPanelProps {
 	onLevelChange: (v: TextLevel | null) => void;
 	onAuthorChange: (v: string) => void;
 	onSourceChange: (v: string) => void;
+	onGenreChange: (v: string | null) => void;
 	onTagAdd: (name: string, id?: string) => void;
 	onTagRemove: (index: number) => void;
 	onDescriptionChange: (v: string) => void;
@@ -61,6 +63,7 @@ export const TextCreateMetaPanel = ({
 	level,
 	author,
 	source,
+	genreId,
 	tags,
 	allTags,
 	description,
@@ -75,6 +78,7 @@ export const TextCreateMetaPanel = ({
 	onLevelChange,
 	onAuthorChange,
 	onSourceChange,
+	onGenreChange,
 	onTagAdd,
 	onTagRemove,
 	onDescriptionChange,
@@ -111,6 +115,7 @@ export const TextCreateMetaPanel = ({
 			level={level}
 			author={author}
 			source={source}
+			genreId={genreId}
 			tags={tags}
 			allTags={allTags}
 			tagInputValue={tagInputValue}
@@ -120,6 +125,7 @@ export const TextCreateMetaPanel = ({
 			onLevelChange={onLevelChange}
 			onAuthorChange={onAuthorChange}
 			onSourceChange={onSourceChange}
+			onGenreChange={onGenreChange}
 			onTagAdd={onTagAdd}
 			onTagRemove={onTagRemove}
 			onTagInputChange={setTagInputValue}

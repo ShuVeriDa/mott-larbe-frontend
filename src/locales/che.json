@@ -774,6 +774,7 @@
 			"declensionClass": "{name} класс",
 			"sections": {
 				"senses": "Маьнеш",
+				"genres": "Жанраш",
 				"morphology": "Легар",
 				"contexts": "Текстийн юкъахь",
 				"contextsAll": "дерриге →",
@@ -2235,11 +2236,12 @@
 		"sort": {
 			"label": "Сортировка",
 			"level": "Дарж тIехь",
-			"newest": "Хьалха керла",
-			"oldest": "Хьалха хьалха",
-			"alpha": "Алфавит тIехь",
-			"progress": "Прогресс тIехь",
-			"length": "Йовхо тIехь"
+			"newest": "Керла",
+			"oldest": "Хьалха",
+			"alpha": "А–Я",
+			"progress": "Прогресс",
+			"length": "Йовхо тIехь",
+			"popular": "Машхур"
 		},
 		"view": {
 			"grid": "Карточкаш",
@@ -2366,7 +2368,8 @@
 			"notFound": "Йозан ца карийра",
 			"error": "Схьалаца ца хилира",
 			"retry": "Кхин хIотта"
-		}
+		},
+		"resetFilters": "ДӀадахьа"
 	},
 	"feedback": {
 		"meta": {
@@ -2468,7 +2471,44 @@
 			"levelAll": "Дерриге"
 		},
 		"error": "Хаамаш схьалаца хIума хилла",
-		"retry": "Юха хьажа"
+		"retry": "Юха хьажа",
+		"viewAll": "дерриге →",
+		"streak": {
+			"title": "Жигаралла",
+			"current": "де дӀадаьлла",
+			"record": "рекорд",
+			"details": "хаза →"
+		},
+		"genres": {
+			"title": "Жанраш",
+			"beginner": "Хьалхара",
+			"intermediate": "Юккъера",
+			"advanced": "Лакхара",
+			"chechen": "Нохчийн",
+			"russian": "Оьрсийн",
+			"short": "Доца",
+			"new": "Керла",
+			"popular": "Машхур"
+		},
+		"byLevel": {
+			"title": "{level} дарже йолу тексташ"
+		},
+		"popularTexts": {
+			"title": "Машхур тексташ"
+		},
+		"recentTexts": {
+			"title": "Керла тексташ"
+		},
+		"shortTexts": {
+			"title": "Доца тексташ"
+		}
+	},
+	"common": {
+		"save": "Сохранить",
+		"saving": "Lаме…",
+		"cancel": "Юха",
+		"edit": "Нисде",
+		"delete": "Дlаяккха"
 	},
 	"admin": {
 		"dashboard": {
@@ -2989,6 +3029,28 @@
 			"tracking": "Трафик",
 			"phrasebook": "Разговорник",
 			"textSubmissions": "Текстийн хьажийнарш"
+		},
+		"genres": {
+			"title": "Жанраш",
+			"subtitle": "Библиотекан тексташна жанраш",
+			"create": "Жанр кхолла",
+			"empty": "Жанраш дац",
+			"deleteConfirm": "\"{name}\" жанр дIаяккха?",
+			"table": {
+				"name": "Цlе",
+				"slug": "Слаг",
+				"sortOrder": "Дарже",
+				"texts": "Тексташ",
+				"actions": "Гlуллакхаш"
+			},
+			"modal": {
+				"createTitle": "Керла жанр",
+				"editTitle": "Жанр нисде",
+				"name": "Цlе",
+				"namePlaceholder": "Поэзи",
+				"slug": "Слаг",
+				"sortOrder": "Дарже"
+			}
 		},
 		"users": {
 			"title": "Нийсархой",
@@ -3581,6 +3643,8 @@
 				"authorPlaceholder": "Авторан цIе",
 				"sourceLabel": "Хьажа (URL)",
 				"sourcePlaceholder": "https://…",
+				"genreLabel": "Жанр",
+				"genreNone": "Жанр доцуш",
 				"tagsAddPlaceholder": "Теганаш тIетоха…",
 				"tagsHint": "Enter тохка теганаш тIетоха",
 				"descriptionPlaceholder": "Йозанийн юккъера сурт…",

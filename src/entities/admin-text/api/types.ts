@@ -108,6 +108,7 @@ export interface UpdateTextDto {
 	description?: string;
 	author?: string;
 	source?: string | null;
+	genreId?: string | null;
 	imageUrl?: string | null;
 	pages?: CreateTextPageDto[];
 	tagIds?: string[];

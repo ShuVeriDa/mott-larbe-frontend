@@ -4,6 +4,7 @@ export type {
 	DashboardDueToday,
 	DashboardPlan,
 	DashboardResponse,
+	DashboardSections,
 	DashboardStats,
 	DashboardStreakDay,
 	DashboardWords,

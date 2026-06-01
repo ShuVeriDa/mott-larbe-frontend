@@ -52,10 +52,19 @@ export interface DashboardPlan {
 	translationsLimit: number | null;
 }
 
+export interface DashboardSections {
+	recentTexts: import("@/entities/library-text/api/types").LibraryTextListItem[];
+	popularTexts: import("@/entities/library-text/api/types").LibraryTextListItem[];
+	shortTexts: import("@/entities/library-text/api/types").LibraryTextListItem[];
+	byLevelTexts: import("@/entities/library-text/api/types").LibraryTextListItem[];
+	userLevel: string | null;
+}
+
 export interface DashboardResponse {
 	user: import("@/entities/user/api/types").UserProfile;
 	subscription: import("@/entities/subscription/api/types").Subscription | null;
 	stats: DashboardStats;
 	continueReading: DashboardContinueItem[];
 	plan: DashboardPlan;
+	sections: DashboardSections;
 }
