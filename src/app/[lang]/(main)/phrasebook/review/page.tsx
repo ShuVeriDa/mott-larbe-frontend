@@ -6,6 +6,7 @@ import {
 	getDictionary,
 	hasLocale,
 } from "@/i18n/locales";
+import { buildOpenGraph } from "@/shared/lib/seo";
 import { PhrasebookReviewPage } from "@/widgets/phrasebook-review-page";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
@@ -33,18 +34,12 @@ export const generateMetadata = async (props: {
 			canonical: `${SITE_URL}/${lang}${path}`,
 			languages,
 		},
-		openGraph: {
-			type: "website",
-			url: `${SITE_URL}/${lang}${path}`,
-			title: meta.title,
-			description: meta.description,
-			locale: lang,
-			siteName: "Mott Larbe",
-		},
+		openGraph: buildOpenGraph(lang, path, meta.title, meta.description),
 		twitter: {
 			card: "summary_large_image",
 			title: meta.title,
 			description: meta.description,
+			images: [`${SITE_URL}/opengraph-image.png`],
 		},
 		robots: {
 			index: false,

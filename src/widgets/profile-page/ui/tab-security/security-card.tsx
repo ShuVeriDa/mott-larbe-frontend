@@ -5,49 +5,11 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { ComponentProps, useState } from "react";
+import { type ComponentProps, useState } from "react";
 import { ProfileCard as SettingCard } from "../profile-card";
 import { ChangeEmailModal } from "./change-email-modal";
 import { ChangePasswordModal } from "./change-password-modal";
-
-const LockIcon = () => (
-	<svg
-		viewBox="0 0 16 16"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.4"
-		className="size-3.5"
-	>
-		<rect x="4" y="7" width="8" height="7" rx="1.5" />
-		<path d="M5.5 7V5.5a2.5 2.5 0 0 1 5 0V7" strokeLinecap="round" />
-	</svg>
-);
-
-const EmailIcon = () => (
-	<svg
-		viewBox="0 0 16 16"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.4"
-		className="size-3.5"
-	>
-		<rect x="2" y="4" width="12" height="9" rx="1.5" />
-		<path d="M2 6l6 4 6-4" strokeLinecap="round" />
-	</svg>
-);
-
-const SessionsIcon = () => (
-	<svg
-		viewBox="0 0 16 16"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.4"
-		className="size-3.5"
-	>
-		<rect x="2.5" y="2.5" width="11" height="11" rx="2" />
-		<path d="M5.5 8l2 2 3-3" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
-);
+import { EmailIcon, LockIcon, SessionsIcon } from "./security-card-icons";
 
 export interface SecurityCardProps {
 	profile: UserProfile;
@@ -62,6 +24,7 @@ export const SecurityCard = ({ profile }: SecurityCardProps) => {
 		useTerminateAllSessions();
 
 	const handleTerminateAll = () => {
+		if (!window.confirm(t("profile.security.terminateAllConfirm"))) return;
 		terminateAll(undefined, {
 			onSuccess: () => success(t("settings.toasts.allSessionsTerminated")),
 			onError: () => error(t("profile.toasts.error")),

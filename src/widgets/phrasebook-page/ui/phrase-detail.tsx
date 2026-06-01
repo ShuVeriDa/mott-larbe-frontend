@@ -34,9 +34,9 @@ export const PhraseDetail = ({ phrase }: PhraseDetailProps) => {
 		<div className="border-t border-bd-1 px-3.5 py-3 flex flex-col gap-2.5">
 			{phrase.words.length > 0 && (
 				<div>
-					<div className="text-[10px] font-semibold text-t-3 uppercase tracking-[0.6px] mb-1.5">
+					<h3 className="text-[10px] font-semibold text-t-3 uppercase tracking-[0.6px] mb-1.5">
 						{t("phrasebook.detail.wordBreakdown")}
-					</div>
+					</h3>
 					<div className="flex flex-wrap gap-1.5">
 						{phrase.words.map((word) => (
 							<PhraseWordToken
@@ -51,9 +51,9 @@ export const PhraseDetail = ({ phrase }: PhraseDetailProps) => {
 
 			{phrase.examples.length > 0 && (
 				<div>
-					<div className="text-[10px] font-semibold text-t-3 uppercase tracking-[0.6px] mb-1.5">
+					<h3 className="text-[10px] font-semibold text-t-3 uppercase tracking-[0.6px] mb-1.5">
 						{t("phrasebook.detail.examples")}
-					</div>
+					</h3>
 					<div className="flex flex-col gap-1.5">
 						{phrase.examples.map((ex) => (
 							<div

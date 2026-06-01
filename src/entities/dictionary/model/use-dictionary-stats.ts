@@ -7,4 +7,5 @@ export const useDictionaryStats = () =>
 	useQuery({
 		queryKey: dictionaryKeys.stats(),
 		queryFn: () => dictionaryApi.stats(),
+		staleTime: 60_000,
 	});

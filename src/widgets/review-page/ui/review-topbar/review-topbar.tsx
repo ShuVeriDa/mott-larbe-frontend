@@ -1,11 +1,8 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-
-import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
-import { ComponentProps } from "react";
+import { TabButton } from "./tab-button";
 
 export type ReviewSystem = "sm2" | "deck" | "phrases";
 
@@ -26,15 +23,10 @@ export const ReviewTopbar = ({
 }: ReviewTopbarProps) => {
 	const { t } = useI18n();
 
-	const handleClickSm2: NonNullable<
-		ComponentProps<typeof TabButton>["onClick"]
-	> = () => onChange("sm2");
-	const handleClickDeck: NonNullable<
-		ComponentProps<typeof TabButton>["onClick"]
-	> = () => onChange("deck");
-	const handleClickPhrases: NonNullable<
-		ComponentProps<typeof TabButton>["onClick"]
-	> = () => onChange("phrases");
+	const handleClickSm2 = () => onChange("sm2");
+	const handleClickDeck = () => onChange("deck");
+	const handleClickPhrases = () => onChange("phrases");
+
 	return (
 		<header className="flex shrink-0 items-center gap-2.5 border-b-[0.5px] border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-3 max-md:py-2">
 			<svg
@@ -100,37 +92,3 @@ export const ReviewTopbar = ({
 		</header>
 	);
 };
-
-interface TabButtonProps {
-	label: string;
-	count: number | null;
-	active: boolean;
-	onClick: () => void;
-}
-
-const TabButton = ({ label, count, active, onClick }: TabButtonProps) => (
-	<Button
-		role="tab"
-		aria-selected={active}
-		onClick={onClick}
-		className={cn(
-			"flex h-[26px] min-w-0 cursor-pointer items-center gap-1 rounded-[6px] border-0 px-1.5 text-[11px] font-medium transition-colors duration-150 max-md:flex-1 max-md:justify-center md:gap-1.5 md:px-2.5 md:text-[12px]",
-			active
-				? "bg-surf font-semibold text-t-1 shadow-sm"
-				: "bg-transparent text-t-3 hover:text-t-2",
-		)}
-	>
-		{label}
-		{count !== null && count > 0 ? (
-			<Typography
-				tag="span"
-				className={cn(
-					"rounded-[3px] px-1 py-px text-[10px] font-bold",
-					active ? "bg-acc-bg text-acc-t" : "bg-amb-bg text-amb-t",
-				)}
-			>
-				{count}
-			</Typography>
-		) : null}
-	</Button>
-);

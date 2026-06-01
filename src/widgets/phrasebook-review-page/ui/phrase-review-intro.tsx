@@ -1,11 +1,12 @@
 "use client";
 
-import { usePhrasebookCategories, type PhraseDue, type PhraseReviewStats } from "@/entities/phrasebook";
-import { cn } from "@/shared/lib/cn";
+import type { PhraseDue, PhraseReviewStats } from "@/entities/phrasebook";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import type { PhraseReviewMode } from "../model";
+import { ModePicker } from "./mode-picker";
+import { StatBox } from "./stat-box";
 
 interface PhraseReviewIntroProps {
 	stats: PhraseReviewStats | undefined;
@@ -44,7 +45,6 @@ export const PhraseReviewIntro = ({
 	const dueCount = stats?.dueCount ?? 0;
 	const learningCount = stats?.learningCount ?? 0;
 	const knownCount = stats?.knownCount ?? 0;
-	const streak = stats?.streak ?? 0;
 	const remainder = Math.max(queue.length - QUEUE_PREVIEW, 0);
 
 	return (
@@ -115,6 +115,7 @@ export const PhraseReviewIntro = ({
 									aria-hidden="true"
 									className={`size-1.5 shrink-0 rounded-full ${statusDotClass(phrase.status)}`}
 								/>
+								<span className="sr-only">{phrase.status}</span>
 								<Typography
 									tag="span"
 									className="flex-1 truncate text-[13px] font-medium text-t-1"
@@ -137,125 +138,3 @@ export const PhraseReviewIntro = ({
 		</section>
 	);
 };
-
-interface ModePickerProps {
-	mode: PhraseReviewMode;
-	selectedCategoryId: string | undefined;
-	onModeChange: (mode: PhraseReviewMode) => void;
-	onCategoryChange: (id: string | undefined) => void;
-}
-
-const ModePicker = ({ mode, selectedCategoryId, onModeChange, onCategoryChange }: ModePickerProps) => {
-	const { t } = useI18n();
-	const { data: categories } = usePhrasebookCategories();
-
-	const handleAll = () => {
-		onModeChange("all");
-		onCategoryChange(undefined);
-	};
-	const handleCategory = () => {
-		onModeChange("category");
-		if (!selectedCategoryId && categories?.[0]) {
-			onCategoryChange(categories[0].id);
-		}
-	};
-	const handleSaved = () => {
-		onModeChange("saved");
-		onCategoryChange(undefined);
-	};
-
-	return (
-		<div className="flex w-full max-w-[340px] flex-col items-center gap-2 max-md:max-w-full">
-			<div className="flex w-full gap-1 rounded-base border-[0.5px] border-bd-2 bg-surf-2 p-0.5">
-				<ModeTab
-					label={t("phrasebook.review.startReview")}
-					shortLabel={t("phrasebook.review.startReviewShort")}
-					active={mode === "all"}
-					onClick={handleAll}
-				/>
-				<ModeTab
-					label={t("phrasebook.review.startCategory")}
-					shortLabel={t("phrasebook.review.startCategoryShort")}
-					active={mode === "category"}
-					onClick={handleCategory}
-				/>
-				<ModeTab
-					label={t("phrasebook.review.startSaved")}
-					shortLabel={t("phrasebook.review.startSavedShort")}
-					active={mode === "saved"}
-					onClick={handleSaved}
-				/>
-			</div>
-
-			{mode === "category" && categories && categories.length > 0 ? (
-				<select
-					value={selectedCategoryId ?? ""}
-					onChange={(e) => onCategoryChange(e.currentTarget.value || undefined)}
-					className="w-full rounded-base border-[0.5px] border-bd-2 bg-surf px-3 py-2 text-[13px] text-t-1 cursor-pointer outline-none focus:border-acc"
-				>
-					{categories.map((cat) => (
-						<option key={cat.id} value={cat.id}>
-							{cat.emoji} {cat.name} ({cat.phraseCount})
-						</option>
-					))}
-				</select>
-			) : null}
-		</div>
-	);
-};
-
-interface ModeTabProps {
-	label: string;
-	shortLabel: string;
-	active: boolean;
-	onClick: () => void;
-}
-
-const ModeTab = ({ label, shortLabel, active, onClick }: ModeTabProps) => (
-	<button
-		type="button"
-		onClick={onClick}
-		className={cn(
-			"min-w-0 flex-1 rounded-[6px] px-1.5 py-1.5 text-[11.5px] font-medium transition-colors duration-150 cursor-pointer border-0 leading-tight text-center",
-			active
-				? "bg-surf font-semibold text-t-1 shadow-sm"
-				: "bg-transparent text-t-3 hover:text-t-2",
-		)}
-	>
-		<span className="max-md:hidden">{label}</span>
-		<span className="md:hidden">{shortLabel}</span>
-	</button>
-);
-
-interface StatBoxProps {
-	value: number;
-	label: string;
-	tone: "amb" | "acc" | "grn";
-	hint?: string;
-}
-
-const toneClasses: Record<NonNullable<StatBoxProps["tone"]>, string> = {
-	amb: "text-amb",
-	acc: "text-acc",
-	grn: "text-grn",
-};
-
-const StatBox = ({ value, label, tone, hint }: StatBoxProps) => (
-	<div
-		title={hint}
-		className="min-w-0 flex-1 rounded-card border-[0.5px] border-bd-2 bg-surf px-3 py-3 text-center shadow-sm md:min-w-[80px] md:flex-none md:px-4"
-	>
-		<div className={`font-display text-[22px] font-semibold leading-[1.1] tabular-nums max-md:text-[20px] ${toneClasses[tone]}`}>
-			{value}
-		</div>
-		<div className="mt-1 flex items-center justify-center gap-0.5 text-[11px] text-t-3">
-			{label}
-			{hint ? (
-				<svg viewBox="0 0 12 12" fill="none" className="size-3 shrink-0 text-t-4 opacity-60">
-					<circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.1" />
-					<path d="M6 5.5v3M6 4h.01" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
-				</svg>
-			) : null}
-		</div>
-	</div>
-);

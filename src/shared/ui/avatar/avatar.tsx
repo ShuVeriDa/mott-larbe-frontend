@@ -2,12 +2,13 @@
 
 import { cn } from "@/shared/lib/cn";
 import { cva, type VariantProps } from "class-variance-authority";
+import NextImage from "next/image";
 import { Avatar as AvatarPrimitive } from "radix-ui";
 import type { ComponentProps } from "react";
 
 export const avatarVariants = cva(
 	[
-		"inline-flex items-center justify-center shrink-0 select-none overflow-hidden",
+		"relative inline-flex items-center justify-center shrink-0 select-none overflow-hidden",
 		"rounded-full bg-acc-bg text-acc-t font-semibold uppercase",
 	],
 	{
@@ -44,10 +45,13 @@ export const Avatar = ({
 		{...props}
 	>
 		{src ? (
-			<AvatarPrimitive.Image
+			<NextImage
 				src={src}
 				alt={alt ?? ""}
-				className="size-full object-cover"
+				fill
+				className="object-cover"
+				sizes="128px"
+				unoptimized={src.startsWith("data:")}
 			/>
 		) : null}
 		<AvatarPrimitive.Fallback

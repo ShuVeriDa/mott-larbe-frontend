@@ -1,5 +1,6 @@
 "use client";
 
+import { ChangeEvent, useState } from "react";
 import type { PhraseLang } from "@/entities/phrasebook";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
@@ -9,8 +10,8 @@ import { Select } from "@/shared/ui/select";
 import { Textarea } from "@/shared/ui/textarea";
 import { MessageSquarePlus } from "lucide-react";
 import { toast } from "sonner";
-import { useState } from "react";
 import { useSuggestPhrase } from "../model/use-suggest-phrase";
+import { RequiredMark } from "@/shared/ui/required-mark";
 
 interface SuggestPhraseModalProps {
 	open: boolean;
@@ -31,29 +32,32 @@ export const SuggestPhraseModal = ({
 	const { t } = useI18n();
 	const { mutate, isPending } = useSuggestPhrase();
 	const [form, setForm] = useState(INITIAL);
+	const [submitError, setSubmitError] = useState<string | null>(null);
 
-	const handleOriginalChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+	const handleOriginalChange = (e: ChangeEvent<HTMLInputElement>) =>
 		setForm((prev) => ({ ...prev, original: e.currentTarget.value }));
 
-	const handleTranslationChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+	const handleTranslationChange = (e: ChangeEvent<HTMLInputElement>) =>
 		setForm((prev) => ({ ...prev, translation: e.currentTarget.value }));
 
-	const handleLangChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+	const handleLangChange = (e: ChangeEvent<HTMLSelectElement>) =>
 		setForm((prev) => ({
 			...prev,
 			lang: e.currentTarget.value as PhraseLang,
 		}));
 
-	const handleContextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+	const handleContextChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
 		setForm((prev) => ({ ...prev, context: e.currentTarget.value }));
 
 	const handleClose = () => {
 		setForm(INITIAL);
+		setSubmitError(null);
 		onClose();
 	};
 
 	const handleSubmit = () => {
 		if (!form.original.trim() || !form.translation.trim()) return;
+		setSubmitError(null);
 		mutate(
 			{
 				original: form.original.trim(),
@@ -67,7 +71,7 @@ export const SuggestPhraseModal = ({
 					handleClose();
 				},
 				onError: () => {
-					toast.error(t("phrasebook.suggestModal.error"));
+					setSubmitError(t("phrasebook.suggestModal.error"));
 				},
 			},
 		);
@@ -84,9 +88,21 @@ export const SuggestPhraseModal = ({
 				</span>
 			}
 		>
-			<form action={handleSubmit}>
+			<form action={handleSubmit} aria-describedby={submitError ? "sp-error" : undefined}>
+				{submitError && (
+					<div
+						id="sp-error"
+						role="alert"
+						aria-live="polite"
+						className="mb-3 rounded-base px-3 py-2 bg-red-50 dark:bg-red-950/30 text-[12.5px] text-red-600 dark:text-red-400"
+					>
+						{submitError}
+					</div>
+				)}
+
 				<InputLabel htmlFor="sp-original">
 					{t("phrasebook.suggestModal.originalLabel")}
+					<RequiredMark />
 				</InputLabel>
 				<Input
 					id="sp-original"
@@ -95,10 +111,12 @@ export const SuggestPhraseModal = ({
 					placeholder={t("phrasebook.suggestModal.originalPlaceholder")}
 					className="mb-3"
 					required
+					aria-required="true"
 				/>
 
 				<InputLabel htmlFor="sp-translation">
 					{t("phrasebook.suggestModal.translationLabel")}
+					<RequiredMark />
 				</InputLabel>
 				<Input
 					id="sp-translation"
@@ -107,6 +125,7 @@ export const SuggestPhraseModal = ({
 					placeholder={t("phrasebook.suggestModal.translationPlaceholder")}
 					className="mb-3"
 					required
+					aria-required="true"
 				/>
 
 				<InputLabel htmlFor="sp-lang">
@@ -152,6 +171,7 @@ export const SuggestPhraseModal = ({
 							!form.original.trim() ||
 							!form.translation.trim()
 						}
+						aria-busy={isPending}
 						className="h-[34px] flex-1 rounded-lg text-[13px]"
 					>
 						{isPending

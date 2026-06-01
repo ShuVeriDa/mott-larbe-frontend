@@ -1,12 +1,12 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-
-import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
+import { type ComponentProps } from "react";
 
-export type ProfileTabId = "main" | "security" | "subscription" | "ai";
+export const PROFILE_TAB_IDS = ["main", "security", "subscription", "ai"] as const;
+export type ProfileTabId = (typeof PROFILE_TAB_IDS)[number];
 
 export interface ProfileTabsProps {
 	active: ProfileTabId;

@@ -1,32 +1,35 @@
 "use client";
 
+import { usePhraseReviewStats } from "@/entities/phrasebook";
 import { useStatistics, type StatsPeriod } from "@/entities/statistics";
 import { PeriodTabs } from "@/features/stats-period-tabs";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { ComponentProps, useState } from "react";
+import { useState } from "react";
 import { AccuracyCard } from "./accuracy-card";
-import { AchievementsCard } from "./achievements-card";
 import { ActivityLog } from "./activity-log";
-import { EventsChart } from "./events-chart";
 import { GoalForecastCard } from "./goal-forecast-card";
 import { KpiGrid } from "./kpi-grid";
 import { PageSkeleton } from "./page-skeleton";
-import { PerDayChart } from "./per-day-chart";
 import { PhraseStatsCard } from "./phrase-stats-card";
 import { ProgressCard } from "./progress-card";
-import { ReadingSpeedCard } from "./reading-speed-card";
-import { RetentionCard } from "./retention-card";
 import { ReviewSessionsCard } from "./review-sessions-card";
-import { StreakBlock } from "./streak-block";
 import { TextLevelsCard } from "./text-levels-card";
 import { TextsProgress } from "./texts-progress";
 import { TopWordsCard } from "./top-words-card";
-import { VocabularyGrowthChart } from "./vocabulary-growth-chart";
 import { WeakSpotsCard } from "./weak-spots-card";
-import { WeekdayActivityCard } from "./weekday-activity-card";
+
+const AchievementsCard = dynamic(() => import("./achievements-card").then(m => m.AchievementsCard), { ssr: false });
+const EventsChart = dynamic(() => import("./events-chart").then(m => m.EventsChart), { ssr: false });
+const PerDayChart = dynamic(() => import("./per-day-chart").then(m => m.PerDayChart), { ssr: false });
+const ReadingSpeedCard = dynamic(() => import("./reading-speed-card").then(m => m.ReadingSpeedCard), { ssr: false });
+const RetentionCard = dynamic(() => import("./retention-card").then(m => m.RetentionCard), { ssr: false });
+const StreakBlock = dynamic(() => import("./streak-block").then(m => m.StreakBlock), { ssr: false });
+const VocabularyGrowthChart = dynamic(() => import("./vocabulary-growth-chart").then(m => m.VocabularyGrowthChart), { ssr: false });
+const WeekdayActivityCard = dynamic(() => import("./weekday-activity-card").then(m => m.WeekdayActivityCard), { ssr: false });
 
 const is403 = (err: unknown): boolean => {
 	if (!err || typeof err !== "object") return false;
@@ -42,9 +45,9 @@ export const StatisticsPage = () => {
 		period,
 		activityLimit: 15,
 	});
+	const phraseStats = usePhraseReviewStats();
 
-	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-		refetch();
+	const handleClick = () => refetch();
 
 	return (
 		<>
@@ -164,7 +167,7 @@ export const StatisticsPage = () => {
 							accuracy={data.accuracy}
 							phraseAccuracy={data.phraseAccuracy}
 						/>
-						<PhraseStatsCard />
+						<PhraseStatsCard phraseStats={phraseStats} />
 					</div>
 
 					{/* Row 9b: Text levels + Goal forecast + Activity log */}

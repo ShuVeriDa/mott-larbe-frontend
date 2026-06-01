@@ -1,9 +1,11 @@
 "use client";
 import type { PhrasesBreakdown, WordsBreakdown } from "@/entities/statistics";
-import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { useState } from "react";
+import type { ProgressSegmentDef } from "./progress-stacked-bar";
+import { ProgressStackedBar } from "./progress-stacked-bar";
+import { ProgressStatRow } from "./progress-stat-row";
 
 interface ProgressCardProps {
 	words: WordsBreakdown;
@@ -11,73 +13,6 @@ interface ProgressCardProps {
 }
 
 type Tab = "words" | "phrases";
-
-interface SegmentDef {
-	key: string;
-	label: string;
-	value: number;
-	colorClass: string;
-	textClass: string;
-}
-
-interface StackedBarProps {
-	segments: SegmentDef[];
-	total: number;
-}
-
-const StackedBar = ({ segments, total }: StackedBarProps) => {
-	const safeTotal = total || 1;
-	return (
-		<div className="flex h-3 w-full overflow-hidden rounded-full bg-surf-3">
-			{segments.map(seg => {
-				const pct = (seg.value / safeTotal) * 100;
-				if (pct <= 0) return null;
-				return (
-					<div
-						key={seg.key}
-						className={cn("h-full transition-[width]", seg.colorClass)}
-						style={{ width: `${pct}%` }}
-					/>
-				);
-			})}
-		</div>
-	);
-};
-
-interface StatRowProps {
-	label: string;
-	value: number;
-	colorClass: string;
-	textClass: string;
-	percent: number;
-}
-
-const StatRow = ({
-	label,
-	value,
-	colorClass,
-	textClass,
-	percent,
-}: StatRowProps) => (
-	<div className="flex items-center gap-2">
-		<span
-			className={cn("size-2 shrink-0 rounded-full", colorClass)}
-			aria-hidden="true"
-		/>
-		<Typography tag="span" className="min-w-0 flex-1 text-[11.5px] text-t-2">
-			{label}
-		</Typography>
-		<Typography
-			tag="span"
-			className={cn("text-[11.5px] font-semibold", textClass)}
-		>
-			{value.toLocaleString()}
-		</Typography>
-		<Typography tag="span" className="w-8 text-right text-[10.5px] text-t-3">
-			{percent > 0 ? `${Math.round(percent)}%` : "—"}
-		</Typography>
-	</div>
-);
 
 export const ProgressCard = ({ words, phrases }: ProgressCardProps) => {
 	const { t } = useI18n();
@@ -93,7 +28,7 @@ export const ProgressCard = ({ words, phrases }: ProgressCardProps) => {
 	const wordsTotal = words.total || 1;
 	const phrasesTotal = phrases.total || 1;
 
-	const wordSegments: SegmentDef[] = [
+	const wordSegments: ProgressSegmentDef[] = [
 		{
 			key: "known",
 			label: t("statistics.words.known"),
@@ -124,7 +59,7 @@ export const ProgressCard = ({ words, phrases }: ProgressCardProps) => {
 		},
 	];
 
-	const phraseSegments: SegmentDef[] = [
+	const phraseSegments: ProgressSegmentDef[] = [
 		{
 			key: "known",
 			label: t("statistics.phrases.known"),
@@ -155,18 +90,22 @@ export const ProgressCard = ({ words, phrases }: ProgressCardProps) => {
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4">
 			<header className="mb-3 flex flex-wrap items-center justify-between gap-1">
-				<div className="flex items-center gap-0.5 rounded-base bg-surf-2 p-0.5">
+				<div role="tablist" className="flex items-center gap-0.5 rounded-base bg-surf-2 p-0.5">
 					<button
+						role="tab"
+						aria-selected={isWords}
 						onClick={handleTabWords}
-						className={`min-w-0 rounded-[5px] px-2.5 py-1 text-[11px] font-medium leading-tight transition-colors ${
+						className={`min-w-0 rounded-[5px] px-2.5 py-1 text-[11px] font-medium leading-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1 ${
 							isWords ? "bg-surf text-t-1 shadow-sm" : "text-t-3 hover:text-t-2"
 						}`}
 					>
 						{t("statistics.words.title")}
 					</button>
 					<button
+						role="tab"
+						aria-selected={!isWords}
 						onClick={handleTabPhrases}
-						className={`min-w-0 rounded-[5px] px-2.5 py-1 text-[11px] font-medium leading-tight transition-colors ${
+						className={`min-w-0 rounded-[5px] px-2.5 py-1 text-[11px] font-medium leading-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1 ${
 							!isWords
 								? "bg-surf text-t-1 shadow-sm"
 								: "text-t-3 hover:text-t-2"
@@ -196,12 +135,12 @@ export const ProgressCard = ({ words, phrases }: ProgressCardProps) => {
 							: `${Math.round((phrases.known / phrasesTotal) * 100)}% ${t("statistics.phrases.known").toLowerCase()}`}
 					</Typography>
 				</div>
-				<StackedBar segments={segments} total={barTotal} />
+				<ProgressStackedBar segments={segments} total={barTotal} />
 			</div>
 
 			<div className="flex flex-col gap-1.5">
 				{segments.map(seg => (
-					<StatRow
+					<ProgressStatRow
 						key={seg.key}
 						label={seg.label}
 						value={seg.value}

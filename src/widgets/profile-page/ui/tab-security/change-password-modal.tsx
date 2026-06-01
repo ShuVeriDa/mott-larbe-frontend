@@ -67,6 +67,7 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 					<Input
 						id="cp-current"
 						type="password"
+						autoComplete="current-password"
 						value={currentPassword}
 						onChange={handleCurrentPasswordChange}
 						required
@@ -77,6 +78,7 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 					<Input
 						id="cp-new"
 						type="password"
+						autoComplete="new-password"
 						value={newPassword}
 						onChange={handleNewPasswordChange}
 						required
@@ -87,6 +89,7 @@ export const ChangePasswordModal = ({ open, onClose }: ChangePasswordModalProps)
 					<Input
 						id="cp-confirm"
 						type="password"
+						autoComplete="new-password"
 						value={confirmPassword}
 						onChange={handleConfirmPasswordChange}
 						required

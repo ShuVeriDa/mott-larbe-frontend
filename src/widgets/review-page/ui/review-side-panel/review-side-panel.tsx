@@ -5,6 +5,7 @@ import { Typography } from "@/shared/ui/typography";
 import { getPrimaryTranslation, type ReviewDueWord } from "@/entities/review";
 import type { ReviewSystem } from "../review-topbar";
 import type { ReviewScreen } from "../../model";
+import { StatRow } from "./stat-row";
 
 interface Sm2Counts {
 	easy: number;
@@ -122,29 +123,3 @@ export const ReviewSidePanel = ({
 		</aside>
 	);
 };
-
-const toneClass: Record<"grn" | "acc" | "amb" | "neu", string> = {
-	grn: "text-grn",
-	acc: "text-acc",
-	amb: "text-amb",
-	neu: "text-t-2",
-};
-
-const StatRow = ({
-	label,
-	value,
-	tone,
-}: {
-	label: string;
-	value: number;
-	tone: "grn" | "acc" | "amb" | "neu";
-}) => (
-	<div className="flex items-center justify-between gap-2">
-		<Typography className="text-[12px] text-t-3">{label}</Typography>
-		<Typography
-			className={`text-[13px] font-semibold tabular-nums ${toneClass[tone]}`}
-		>
-			{value}
-		</Typography>
-	</div>
-);

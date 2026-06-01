@@ -48,7 +48,7 @@ export const ReviewBanner = ({ lang }: ReviewBannerProps) => {
 			</div>
 			<Link
 				href={`/${lang}/review`}
-				className="inline-flex h-7 shrink-0 items-center rounded-base bg-amb px-3.5 text-[11.5px] font-semibold text-white transition-opacity hover:opacity-[0.88]"
+				className="inline-flex h-7 shrink-0 items-center rounded-base bg-amb px-3.5 text-[11.5px] font-semibold text-white transition-opacity hover:opacity-[0.88] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amb focus-visible:ring-offset-2"
 			>
 				{t("vocabulary.review.button")}
 			</Link>

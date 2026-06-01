@@ -9,6 +9,8 @@ import { useSwipe } from "@/shared/lib/swipe";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { usePhraseSession, type PhraseCounts } from "../model";
+import { PhraseFront } from "./phrase-front";
+import { PhraseBack } from "./phrase-back";
 
 interface PhraseSessionProps {
 	phrases: PhraseDue[];
@@ -19,19 +21,11 @@ interface PhraseSessionProps {
 
 export const PhraseSession = ({ phrases, onFinish, onBack, onProgress }: PhraseSessionProps) => {
 	const { t } = useI18n();
-	const { current, currentIndex, total, flipped, counts, isFinished, flip, skip, rate } =
-		usePhraseSession(phrases);
+	const { current, currentIndex, total, flipped, flip, skip, rate } =
+		usePhraseSession({ phrases, onFinish, onProgress });
 
 	useEffect(() => {
-		onProgress?.(currentIndex, total, counts);
-	}, [counts, currentIndex, onProgress, total]);
-
-	useEffect(() => {
-		if (isFinished) onFinish(counts);
-	}, [counts, isFinished, onFinish]);
-
-	useEffect(() => {
-		const handleKey = (e: KeyboardEvent) => {
+		const handleKeyDown = (e: KeyboardEvent) => {
 			const tag = (e.target as HTMLElement | null)?.tagName;
 			if (tag === "INPUT" || tag === "TEXTAREA") return;
 			if (e.key === " " || e.key === "Enter") {
@@ -47,14 +41,17 @@ export const PhraseSession = ({ phrases, onFinish, onBack, onProgress }: PhraseS
 				rate(quality);
 			}
 		};
-		window.addEventListener("keydown", handleKey);
-		return () => window.removeEventListener("keydown", handleKey);
-	}, [flip, flipped, rate]);
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [flip, rate, flipped]);
+
+	const handleSwipeLeft = () => rate(0);
+	const handleSwipeRight = () => rate(5);
 
 	const swipe = useSwipe({
 		enabled: flipped,
-		onSwipeLeft: () => rate(0),
-		onSwipeRight: () => rate(5),
+		onSwipeLeft: handleSwipeLeft,
+		onSwipeRight: handleSwipeRight,
 	});
 
 	if (!current) return null;
@@ -130,108 +127,6 @@ export const PhraseSession = ({ phrases, onFinish, onBack, onProgress }: PhraseS
 					{t("phrasebook.review.card.skip")}
 				</Button>
 			</div>
-		</div>
-	);
-};
-
-interface PhraseFrontProps {
-	phrase: PhraseDue;
-	cardNumber: number;
-}
-
-const LANG_DOT_COLOR: Record<string, string> = {
-	che: "#e53935",
-	ru: "#3b82f6",
-	ar: "#f59e0b",
-	en: "#22c55e",
-};
-
-const PhraseFront = ({ phrase, cardNumber }: PhraseFrontProps) => {
-	const { t } = useI18n();
-	const dotColor = LANG_DOT_COLOR[phrase.lang] ?? LANG_DOT_COLOR.che;
-
-	return (
-		<>
-			<Typography
-				tag="span"
-				className="absolute right-3.5 top-3 text-[10.5px] text-t-3"
-			>
-				#{cardNumber}
-			</Typography>
-			<div className="flex flex-col items-center gap-1">
-				<span
-					className="mb-1 h-1.5 w-1.5 rounded-full"
-					style={{ backgroundColor: dotColor }}
-					aria-label={phrase.lang.toUpperCase()}
-				/>
-				<Typography
-					tag="h2"
-					className="mb-0.5 text-center font-display text-[30px] font-normal leading-[1.25] tracking-[-0.3px] text-t-1 max-md:text-[26px]"
-				>
-					{phrase.original}
-				</Typography>
-				{phrase.transliteration ? (
-					<Typography className="text-center text-[13px] italic text-t-3">
-						{phrase.transliteration}
-					</Typography>
-				) : null}
-			</div>
-			<Typography className="mt-3.5 flex items-center gap-1 text-[12px] text-t-3 opacity-60">
-				<svg viewBox="0 0 13 13" fill="none" className="size-3">
-					<circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.2" />
-					<path d="M6.5 5v1.5l1 1" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-				</svg>
-				{t("review.sm2.card.flipHint")}
-			</Typography>
-		</>
-	);
-};
-
-interface PhraseBackProps {
-	phrase: PhraseDue;
-}
-
-const PhraseBack = ({ phrase }: PhraseBackProps) => {
-	const { t } = useI18n();
-
-	return (
-		<div className="flex w-full flex-col items-center">
-			<div className="mb-3 flex w-full flex-col items-center border-b border-bd-1 pb-3">
-				<Typography tag="h2" className="mb-0.5 font-display text-[21px] font-normal text-t-1">
-					{phrase.original}
-				</Typography>
-				{phrase.transliteration ? (
-					<Typography className="mb-1 text-center text-[13px] italic text-t-3">
-						{phrase.transliteration}
-					</Typography>
-				) : null}
-				<Typography className="text-center text-[17px] font-medium text-acc">
-					{phrase.translation}
-				</Typography>
-			</div>
-
-			{phrase.words.length > 0 ? (
-				<div className="w-full">
-					<Typography className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
-						{t("phrasebook.review.card.wordBreakdown")}
-					</Typography>
-					<div className="flex flex-wrap gap-1">
-						{phrase.words.map((w) => (
-							<div
-								key={w.id}
-								className="rounded-[4px] border-[0.5px] border-bd-2 bg-surf-2 px-2 py-1"
-							>
-								<Typography tag="span" className="block text-[12px] font-medium text-t-1">
-									{w.original}
-								</Typography>
-								<Typography tag="span" className="block text-[11px] text-t-3">
-									{w.translation}
-								</Typography>
-							</div>
-						))}
-					</div>
-				</div>
-			) : null}
 		</div>
 	);
 };

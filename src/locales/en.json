@@ -656,7 +656,9 @@
 			"folderLabel": "Folder",
 			"levelLabel": "CEFR level",
 			"cancel": "Cancel",
-			"submit": "Add"
+			"submit": "Add",
+			"submitting": "Adding...",
+			"error": "Failed to add word. Please try again."
 		},
 		"folderModal": {
 			"title": "New folder",
@@ -1042,7 +1044,7 @@
 	"statistics": {
 		"meta": {
 			"title": "Statistics — Mott Larbe",
-			"description": "Track your progress: words learned, reading time, streak, review accuracy and activity heatmap."
+			"description": "Track your Chechen learning progress: words learned, reading time, daily streak, review accuracy, heatmap and vocabulary growth charts."
 		},
 		"pageTitle": "Statistics",
 		"period": {
@@ -2096,8 +2098,8 @@
 	},
 	"profile": {
 		"meta": {
-			"title": "Profile — Mott Larbe",
-			"description": "Manage your personal data, security settings, and subscription plan."
+			"title": "Profile",
+			"description": "Manage your personal data, security settings, and subscription on Mott Larbe. Update your password, email, learning language and level, and view payment history."
 		},
 		"pageTitle": "Profile",
 		"loading": "Loading profile…",
@@ -2176,7 +2178,8 @@
 			"changeEmailDesc": "Enter your new email and current password. A confirmation link will be sent to the new address.",
 			"newEmail": "New email",
 			"emailChangeSent": "Confirmation link sent to the new email address",
-			"unknownLocation": "Unknown"
+			"unknownLocation": "Unknown",
+			"terminateAllConfirm": "Terminate all active sessions? You will be signed out on all devices except this one."
 		},
 		"subscription": {
 			"currentPlan": "Current plan",
@@ -5301,7 +5304,7 @@
 		"title": "Phrasebook",
 		"meta": {
 			"title": "Phrasebook — Mott Larbe",
-			"description": "Chechen phrasebook: phrases with translation, transliteration and word-by-word breakdown by category."
+			"description": "Chechen phrasebook with translation, transliteration and word-by-word breakdown. Learn everyday phrases by category at your own pace."
 		},
 		"searchPlaceholder": "Search phrases...",
 		"phraseCount": "{count} phrases",
@@ -5374,6 +5377,9 @@
 			"startCategoryShort": "Category",
 			"startSaved": "Review saved",
 			"startSavedShort": "Saved",
+			"categorySelect": {
+				"label": "Select category"
+			},
 			"categoryProgress": "progress",
 			"intro": {
 				"title": "Phrasebook Review",

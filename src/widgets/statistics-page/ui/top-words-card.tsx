@@ -25,10 +25,12 @@ export const TopWordsCard = ({ data }: TopWordsCardProps) => {
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4 transition-colors">
 			<header className="mb-3 gap-1 flex items-center justify-between">
-				<div className="flex items-center gap-0.5 rounded-base bg-surf-2 p-0.5">
+				<div role="tablist" className="flex items-center gap-0.5 rounded-base bg-surf-2 p-0.5">
 					<button
+						role="tab"
+						aria-selected={isHardest}
 						onClick={handleTabHardest}
-						className={`rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors ${
+						className={`rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1 ${
 							isHardest
 								? "bg-surf text-t-1 shadow-sm"
 								: "text-t-3 hover:text-t-2"
@@ -37,8 +39,10 @@ export const TopWordsCard = ({ data }: TopWordsCardProps) => {
 						{t("statistics.topWords.hardest")}
 					</button>
 					<button
+						role="tab"
+						aria-selected={!isHardest}
 						onClick={handleTabMastered}
-						className={`rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors ${
+						className={`rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1 ${
 							!isHardest
 								? "bg-surf text-t-1 shadow-sm"
 								: "text-t-3 hover:text-t-2"

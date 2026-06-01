@@ -1,8 +1,6 @@
 "use client";
 
 import {
-	isUnlimited,
-	UNLIMITED_SYMBOL,
 	useMySubscription,
 	useUsage,
 	type Subscription,
@@ -13,6 +11,7 @@ import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import Link from "next/link";
 import { ProfileCard as SettingCard } from "../profile-card";
+import { LimitBar } from "./limit-bar";
 
 const FreeIcon = () => (
 	<svg
@@ -38,42 +37,6 @@ const PremiumIcon = () => (
 		<path d="M2 11l2.5-5L8 9l3.5-7L14 11H2z" strokeLinejoin="round" />
 	</svg>
 );
-
-interface LimitBarProps {
-	label: string;
-	used: number;
-	max: number | undefined;
-	color: string;
-}
-
-const LimitBar = ({ label, used, max, color }: LimitBarProps) => {
-	const unlimited = isUnlimited(max);
-	const pct =
-		unlimited || !max ? 0 : Math.min(100, Math.round((used / max) * 100));
-	const displayMax = unlimited ? UNLIMITED_SYMBOL : max;
-
-	return (
-		<div className="flex flex-col gap-1">
-			<div className="flex justify-between text-[12px]">
-				<Typography tag="span" className="text-t-2">
-					{label}
-				</Typography>
-				<Typography tag="span" className="text-t-2">
-					<Typography tag="strong" className="text-t-1">
-						{used}
-					</Typography>{" "}
-					/ {displayMax}
-				</Typography>
-			</div>
-			<div className="h-[3px] rounded-[2px] bg-surf-3 overflow-hidden">
-				<div
-					className={`h-full rounded-[2px] ${color}`}
-					style={{ width: `${pct}%` }}
-				/>
-			</div>
-		</div>
-	);
-};
 
 const getStatusLabel = (
 	sub: Subscription,
@@ -168,11 +131,11 @@ const CurrentPlanCard = ({
 			) : null}
 
 			<div className="px-4 py-3.5">
-				<Link href={`/${lang}/subscription`}>
-					<Button variant="action" className="w-full h-8 text-[12.5px]">
+				<Button asChild variant="action" className="w-full h-8 text-[12.5px]">
+					<Link href={`/${lang}/subscription`}>
 						{t("profile.subscription.upgradePlan")}
-					</Button>
-				</Link>
+					</Link>
+				</Button>
 			</div>
 		</SettingCard>
 	);

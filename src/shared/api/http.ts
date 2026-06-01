@@ -20,9 +20,12 @@ export const getApiErrorCode = (error: unknown): string => {
 
 // withCredentials: true ensures the httpOnly access_token cookie is sent
 // automatically with every request — no client-side token reading needed.
+// X-Requested-With is a custom header that browsers block in simple CORS
+// requests, giving the backend an additional CSRF signal to verify.
 export const http = axios.create({
 	baseURL: API_URL,
 	withCredentials: true,
+	headers: { "X-Requested-With": "XMLHttpRequest" },
 });
 
 const PUBLIC_SEGMENTS = new Set(["auth", "reset-password"]);

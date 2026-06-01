@@ -1,6 +1,6 @@
 "use client";
 
-import type { Subscription } from "@/entities/subscription";
+import { useMySubscription } from "@/entities/subscription";
 import type { UserProfile } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import { Avatar } from "@/shared/ui/avatar";
@@ -20,24 +20,26 @@ const getDisplayName = (profile: UserProfile): string => {
 	return profile.username;
 };
 
+const INTL_LOCALE: Record<string, string> = { che: "ce", ru: "ru", en: "en" };
+
 const getMemberSince = (
 	createdAt: string,
+	lang: string,
 	t: (key: string) => string,
 ): string => {
 	const date = new Date(createdAt);
-	return `${t("profile.header.memberSince")} ${date.toLocaleDateString("ru", { month: "long", year: "numeric" })}`;
+	const intlLocale = INTL_LOCALE[lang] ?? lang;
+	return `${t("profile.header.memberSince")} ${date.toLocaleDateString(intlLocale, { month: "long", year: "numeric" })}`;
 };
 
 export interface ProfileHeaderProps {
 	profile: UserProfile;
-	subscription: Subscription | null | undefined;
+	lang: string;
 }
 
-export const ProfileHeader = ({
-	profile,
-	subscription,
-}: ProfileHeaderProps) => {
+export const ProfileHeader = ({ profile, lang }: ProfileHeaderProps) => {
 	const { t } = useI18n();
+	const { data: subscription } = useMySubscription();
 
 	const planName = subscription?.plan?.name ?? t("profile.header.freePlan");
 	const isPremium =
@@ -70,7 +72,7 @@ export const ProfileHeader = ({
 							className="size-[3px] rounded-full bg-surf-4 shrink-0 max-sm:hidden"
 						/>
 						<Typography tag="span" className="max-sm:block max-sm:w-full">
-							{getMemberSince(profile.createdAt, t)}
+							{getMemberSince(profile.createdAt, lang, t)}
 						</Typography>
 						<Typography
 							tag="span"

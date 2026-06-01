@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams, useSearchParams } from "next/navigation";
+import { DEFAULT_LOCALE } from "@/i18n/locales";
 import { usePhrasebookReviewPage } from "@/widgets/phrasebook-review-page/model";
 import { PhraseReviewIntro } from "@/widgets/phrasebook-review-page/ui/phrase-review-intro";
 import { PhraseSession } from "@/widgets/phrasebook-review-page/ui/phrase-session";
@@ -9,7 +10,7 @@ import { PhraseReviewSidePanel } from "@/widgets/phrasebook-review-page/ui/phras
 
 export const PhrasebookReviewPageInline = () => {
 	const params = useParams<{ lang: string }>();
-	const lang = params.lang ?? "ru";
+	const lang = params.lang ?? DEFAULT_LOCALE;
 	const searchParams = useSearchParams();
 	const categoryId = searchParams.get("category") ?? undefined;
 

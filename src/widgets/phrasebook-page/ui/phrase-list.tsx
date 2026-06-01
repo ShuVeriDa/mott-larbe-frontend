@@ -25,7 +25,7 @@ export const PhraseList = () => {
 		...(debouncedSearch ? { search: debouncedSearch } : {}),
 	};
 
-	const { data: phrases, isLoading } = usePhrases(query);
+	const { data: phrases, isPending } = usePhrases(query);
 
 	const activeCategory = activeCategoryId
 		? categories?.find(c => c.id === activeCategoryId)
@@ -35,10 +35,10 @@ export const PhraseList = () => {
 		<div className="flex-1 flex flex-col min-w-0 gap-2.5">
 			{activeCategory && (
 				<div className="flex items-center gap-1.5 shrink-0">
-					<span className="text-[16px]">{activeCategory.emoji}</span>
-					<span className="font-display text-[14px] font-semibold text-t-1">
+					<span className="text-[16px]" aria-hidden="true">{activeCategory.emoji}</span>
+					<h2 className="font-display text-[14px] font-semibold text-t-1">
 						{activeCategory.name}
-					</span>
+					</h2>
 					<span className="text-[12px] text-t-3">
 						{phrases?.length
 							? t("phrasebook.phraseCount", { count: phrases.length })
@@ -48,7 +48,7 @@ export const PhraseList = () => {
 			)}
 
 			<div className="flex-1 overflow-y-auto flex flex-col gap-1.5 pb-1 [&::-webkit-scrollbar]:hidden">
-				{isLoading ? (
+				{isPending ? (
 					<PhraseListSkeleton />
 				) : !phrases?.length ? (
 					<PhraseEmptyState />

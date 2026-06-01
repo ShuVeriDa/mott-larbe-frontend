@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import {
-	DEFAULT_LOCALE,
-	LOCALES,
-	getDictionary,
-	hasLocale,
-} from "@/i18n/locales";
-import { ProfilePage } from "@/widgets/profile-page";
+import { getDictionary, hasLocale } from "@/i18n/locales";
+import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
+import { ProfilePage, ProfilePageSkeleton } from "@/widgets/profile-page";
+import { ErrorBoundary } from "@/shared/ui/error-boundary";
+import { Suspense } from "react";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
+const PATH = "/profile";
 
 export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
@@ -17,34 +15,19 @@ export const generateMetadata = async (props: {
 	if (!hasLocale(lang)) return {};
 
 	const dict = await getDictionary(lang);
-	const meta = dict.profile.meta;
-	const path = "/profile";
-
-	const languages: Record<string, string> = {};
-	for (const locale of LOCALES) {
-		languages[locale] = `${SITE_URL}/${locale}${path}`;
-	}
-	languages["x-default"] = `${SITE_URL}/${DEFAULT_LOCALE}${path}`;
+	const { title, description } = dict.profile.meta;
+	const { canonical, languages } = buildAlternates(lang, PATH);
 
 	return {
-		title: meta.title,
-		description: meta.description,
-		alternates: {
-			canonical: `${SITE_URL}/${lang}${path}`,
-			languages,
-		},
-		openGraph: {
-			type: "website",
-			url: `${SITE_URL}/${lang}${path}`,
-			title: meta.title,
-			description: meta.description,
-			locale: lang,
-			siteName: "Mott Larbe",
-		},
+		title,
+		description,
+		alternates: { canonical, languages },
+		openGraph: buildOpenGraph(lang, PATH, title, description),
 		twitter: {
-			card: "summary",
-			title: meta.title,
-			description: meta.description,
+			card: "summary_large_image",
+			title,
+			description,
+			images: [`${SITE_URL}/opengraph-image.png`],
 		},
 		robots: {
 			index: false,
@@ -61,7 +44,13 @@ const ProfileRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
-	return <ProfilePage lang={lang} />;
+	return (
+		<ErrorBoundary fallback={<ProfilePageSkeleton />}>
+			<Suspense fallback={<ProfilePageSkeleton />}>
+				<ProfilePage lang={lang} />
+			</Suspense>
+		</ErrorBoundary>
+	);
 };
 
 export default ProfileRoutePage;

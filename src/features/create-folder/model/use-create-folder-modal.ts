@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
 import {
 	buildInitialFolderForm,
 	type FolderFormValue,
 } from "@/entities/folder";
 import { useI18n } from "@/shared/lib/i18n";
+import { getApiErrorCode } from "@/shared/api/http";
 import { useCreateFolder } from "./use-create-folder";
 
 interface UseCreateFolderModalParams {
@@ -50,7 +50,8 @@ export const useCreateFolderModal = ({
 			reset();
 			onClose();
 		} catch (errorValue) {
-			if (axios.isAxiosError(errorValue) && errorValue.response?.status === 403) {
+			const code = getApiErrorCode(errorValue);
+			if (code === "SUBSCRIPTION_REQUIRED" || code === "SUBSCRIPTION_EXPIRED" || code === "FOLDER_LIMIT_REACHED") {
 				handleClose();
 				onForbidden?.();
 				return;

@@ -3,6 +3,7 @@ import type { WeakSpotsData } from "@/entities/statistics";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import Link from "next/link";
 import { useState } from "react";
 
 interface WeakSpotsCardProps {
@@ -41,10 +42,12 @@ export const WeakSpotsCard = ({ data, lang }: WeakSpotsCardProps) => {
 			</header>
 
 			{/* Tabs */}
-			<div className="mb-3 flex items-center gap-0.5 rounded-base bg-surf-2 p-0.5 w-fit">
+			<div role="tablist" className="mb-3 flex items-center gap-0.5 rounded-base bg-surf-2 p-0.5 w-fit">
 				{(["texts", "words", "accuracy"] as Tab[]).map(tabKey => (
 					<button
 						key={tabKey}
+						role="tab"
+						aria-selected={tab === tabKey}
 						onClick={
 							tabKey === "texts"
 								? handleTabTexts
@@ -53,7 +56,7 @@ export const WeakSpotsCard = ({ data, lang }: WeakSpotsCardProps) => {
 									: handleTabAccuracy
 						}
 						className={cn(
-							"rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors",
+							"rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1",
 							tab === tabKey
 								? "bg-surf text-t-1 shadow-sm"
 								: "text-t-3 hover:text-t-2",
@@ -67,13 +70,16 @@ export const WeakSpotsCard = ({ data, lang }: WeakSpotsCardProps) => {
 			</div>
 
 			{isEmpty ? (
-				<div className="flex h-20 items-center justify-center text-center text-[11px] text-grn">
+				<div className="flex h-20 items-center justify-center gap-1.5 text-center text-[11px] text-grn">
+					<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-3.5 shrink-0" aria-hidden="true">
+						<path d="M3 8.5l3.5 3.5 6.5-7" strokeLinecap="round" strokeLinejoin="round" />
+					</svg>
 					{t("statistics.weakSpots.allGood")}
 				</div>
 			) : tab === "texts" ? (
 				<div className="flex flex-col gap-2">
 					{data.abandonedTexts.map(text => (
-						<a
+						<Link
 							key={text.id}
 							href={`/${lang}/texts/${text.id}`}
 							className="flex items-center gap-2.5 rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-2.5 py-2 transition-colors hover:border-bd-2 hover:bg-surf-3"
@@ -99,7 +105,7 @@ export const WeakSpotsCard = ({ data, lang }: WeakSpotsCardProps) => {
 									{text.progressPercent}%
 								</Typography>
 							</div>
-						</a>
+						</Link>
 					))}
 				</div>
 			) : tab === "words" ? (

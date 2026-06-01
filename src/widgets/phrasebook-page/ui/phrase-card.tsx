@@ -1,11 +1,13 @@
 "use client";
 
+import { MouseEvent } from "react";
 import type { Phrase } from "@/entities/phrasebook";
 import { usePhrasebookFilters } from "@/features/phrasebook-filters";
 import { useSavePhrase } from "@/features/save-phrase";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { toast } from "sonner";
+import { PhraseActionButton } from "./phrase-action-button";
 import { PhraseDetail } from "./phrase-detail";
 
 const LANG_DOT_COLOR: Record<string, string> = {
@@ -27,13 +29,13 @@ export const PhraseCard = ({ phrase }: PhraseCardProps) => {
 
 	const handleToggle = () => toggleOpenPhraseId(phrase.id);
 
-	const handleSave = (e: React.MouseEvent) => {
+	const handleSave = (e: MouseEvent) => {
 		e.stopPropagation();
 		if (isPending) return;
 		toggleSave(phrase.id);
 	};
 
-	const handleCopy = (e: React.MouseEvent) => {
+	const handleCopy = (e: MouseEvent) => {
 		e.stopPropagation();
 		navigator.clipboard
 			.writeText(phrase.original)
@@ -124,32 +126,3 @@ export const PhraseCard = ({ phrase }: PhraseCardProps) => {
 	);
 };
 
-interface PhraseActionButtonProps {
-	onClick: (e: React.MouseEvent) => void;
-	active?: boolean;
-	title?: string;
-	children: React.ReactNode;
-}
-
-const PhraseActionButton = ({
-	onClick,
-	active,
-	title,
-	children,
-}: PhraseActionButtonProps) => (
-	<button
-		type="button"
-		onClick={onClick}
-		title={title}
-		className={cn(
-			"w-[26px] h-[26px] rounded-base flex items-center justify-center",
-			"bg-transparent border-[0.5px] border-transparent cursor-pointer",
-			"transition-colors duration-100",
-			active
-				? "text-acc-t bg-acc-bg"
-				: "text-t-3 hover:bg-surf-2 hover:border-bd-1 hover:text-t-2",
-		)}
-	>
-		{children}
-	</button>
-);

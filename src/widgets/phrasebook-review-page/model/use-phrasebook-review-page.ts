@@ -2,15 +2,10 @@
 
 import { useState } from "react";
 import { usePhraseReviewDue, usePhraseReviewStats } from "@/entities/phrasebook";
+import type { PhraseCounts } from "./use-phrase-session";
 
 export type PhraseReviewScreen = "intro" | "card" | "done";
 export type PhraseReviewMode = "all" | "category" | "saved";
-
-export interface PhraseCounts {
-	easy: number;
-	good: number;
-	hard: number;
-}
 
 const ZERO_COUNTS: PhraseCounts = { easy: 0, good: 0, hard: 0 };
 

@@ -1,50 +1,43 @@
-import {
-	DEFAULT_LOCALE,
-	LOCALES,
-	getDictionary,
-	hasLocale,
-} from "@/i18n/locales";
-import { PhrasebookPage } from "@/widgets/phrasebook-page";
+import { getDictionary, hasLocale, LOCALES } from "@/i18n/locales";
+import { phrasebookApi, phrasebookKeys } from "@/entities/phrasebook";
+import { getQueryClient } from "@/shared/lib/query-client";
+import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
+import { PhrasebookPageSkeleton } from "@/widgets/phrasebook-page";
+import { ErrorBoundary } from "@/shared/ui/error-boundary";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
+import PhrasebookJsonLd from "./phrasebook-json-ld";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
+const PhrasebookPage = dynamic(
+	() => import("@/widgets/phrasebook-page").then((m) => m.PhrasebookPage),
+	{ loading: () => <PhrasebookPageSkeleton /> },
+);
+
+export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
 export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
 }): Promise<Metadata> => {
 	const { lang } = await props.params;
-	if (!hasLocale(lang)) return {};
+	if (!hasLocale(lang)) notFound();
 
 	const dict = await getDictionary(lang);
-	const meta = dict.phrasebook.meta;
 	const path = "/phrasebook";
-
-	const languages: Record<string, string> = {};
-	for (const locale of LOCALES) {
-		languages[locale] = `${SITE_URL}/${locale}${path}`;
-	}
-	languages["x-default"] = `${SITE_URL}/${DEFAULT_LOCALE}${path}`;
+	const { title, description } = dict.phrasebook.meta;
+	const { canonical, languages } = buildAlternates(lang, path);
 
 	return {
-		title: meta.title,
-		description: meta.description,
-		alternates: {
-			canonical: `${SITE_URL}/${lang}${path}`,
-			languages,
-		},
-		openGraph: {
-			type: "website",
-			url: `${SITE_URL}/${lang}${path}`,
-			title: meta.title,
-			description: meta.description,
-			locale: lang,
-			siteName: "Mott Larbe",
-		},
+		title,
+		description,
+		alternates: { canonical, languages },
+		openGraph: buildOpenGraph(lang, path, title, description),
 		twitter: {
 			card: "summary_large_image",
-			title: meta.title,
-			description: meta.description,
+			title,
+			description,
+			images: [`${SITE_URL}/opengraph-image.png`],
 		},
 		robots: {
 			index: true,
@@ -61,7 +54,33 @@ const PhrasebookRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
-	return <PhrasebookPage />;
+	const dict = await getDictionary(lang);
+	const { title, description } = dict.phrasebook.meta;
+
+	const queryClient = getQueryClient();
+	await Promise.all([
+		queryClient.prefetchQuery({
+			queryKey: phrasebookKeys.categories(),
+			queryFn: () => phrasebookApi.categories(),
+			staleTime: 5 * 60 * 1000,
+		}),
+		queryClient.prefetchQuery({
+			queryKey: phrasebookKeys.stats(),
+			queryFn: () => phrasebookApi.stats(),
+			staleTime: 2 * 60 * 1000,
+		}),
+	]);
+
+	return (
+		<>
+			<PhrasebookJsonLd lang={lang} title={title} description={description} />
+			<ErrorBoundary fallback={<PhrasebookPageSkeleton />}>
+				<HydrationBoundary state={dehydrate(queryClient)}>
+					<PhrasebookPage />
+				</HydrationBoundary>
+			</ErrorBoundary>
+		</>
+	);
 };
 
 export default PhrasebookRoutePage;

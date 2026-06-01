@@ -21,23 +21,10 @@ interface PerDayChartProps {
 
 type Tab = "words" | "phrases";
 
-const formatLabel = (date: string, period?: StatsPeriod): string => {
+const formatLabel = (date: string, period?: StatsPeriod, lang?: string): string => {
 	const d = new Date(date);
 	if (period === "year" || period === "all") {
-		return [
-			"янв",
-			"фев",
-			"мар",
-			"апр",
-			"май",
-			"июн",
-			"июл",
-			"авг",
-			"сен",
-			"окт",
-			"ноя",
-			"дек",
-		][d.getUTCMonth()];
+		return new Intl.DateTimeFormat(lang ?? "ru", { month: "short", timeZone: "UTC" }).format(d);
 	}
 	return `${String(d.getUTCDate()).padStart(2, "0")}.${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
 };
@@ -47,7 +34,7 @@ export const PerDayChart = ({
 	phrasesPoints,
 	period,
 }: PerDayChartProps) => {
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
 	const [tab, setTab] = useState<Tab>("words");
 
 	const handleTabWords = () => setTab("words");
@@ -57,7 +44,7 @@ export const PerDayChart = ({
 	const rawPoints = isWords ? wordsPoints : phrasesPoints;
 
 	const data = rawPoints.map(p => ({
-		label: formatLabel(p.date, period),
+		label: formatLabel(p.date, period, lang),
 		count: p.count,
 	}));
 
@@ -74,18 +61,22 @@ export const PerDayChart = ({
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4">
 			<header className="mb-3 flex flex-wrap items-center justify-between gap-1">
-				<div className="flex items-center gap-0.5 rounded-base bg-surf-2 p-0.5">
+				<div role="tablist" className="flex items-center gap-0.5 rounded-base bg-surf-2 p-0.5">
 					<button
+						role="tab"
+						aria-selected={isWords}
 						onClick={handleTabWords}
-						className={`min-w-0 rounded-[5px] px-2.5 py-1 text-[11px] font-medium leading-tight transition-colors ${
+						className={`min-w-0 rounded-[5px] px-2.5 py-1 text-[11px] font-medium leading-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1 ${
 							isWords ? "bg-surf text-t-1 shadow-sm" : "text-t-3 hover:text-t-2"
 						}`}
 					>
 						{t("statistics.words.title")}
 					</button>
 					<button
+						role="tab"
+						aria-selected={!isWords}
 						onClick={handleTabPhrases}
-						className={`min-w-0 rounded-[5px] px-2.5 py-1 text-[11px] font-medium leading-tight transition-colors ${
+						className={`min-w-0 rounded-[5px] px-2.5 py-1 text-[11px] font-medium leading-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1 ${
 							!isWords
 								? "bg-surf text-t-1 shadow-sm"
 								: "text-t-3 hover:text-t-2"
@@ -108,6 +99,7 @@ export const PerDayChart = ({
 						: t("statistics.perDayPhrases.empty")}
 				</div>
 			) : (
+				<div role="img" aria-label={isWords ? t("statistics.perDay.meta") : t("statistics.perDayPhrases.meta")}>
 				<ResponsiveContainer width="100%" height={120}>
 					<AreaChart
 						data={data}
@@ -176,6 +168,7 @@ export const PerDayChart = ({
 						/>
 					</AreaChart>
 				</ResponsiveContainer>
+				</div>
 			)}
 		</section>
 	);

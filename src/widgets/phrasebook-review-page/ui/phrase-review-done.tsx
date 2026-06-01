@@ -5,6 +5,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { Button, buttonVariants } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import type { PhraseCounts } from "../model";
+import { DoneStat } from "./done-stat";
 
 interface PhraseReviewDoneProps {
 	counts: PhraseCounts;
@@ -59,24 +60,3 @@ export const PhraseReviewDone = ({ counts, lang, onReviewAgain }: PhraseReviewDo
 		</section>
 	);
 };
-
-interface DoneStatProps {
-	value: number;
-	label: string;
-	tone: "grn" | "acc" | "amb";
-}
-
-const toneClasses: Record<DoneStatProps["tone"], string> = {
-	grn: "text-grn",
-	acc: "text-acc",
-	amb: "text-amb",
-};
-
-const DoneStat = ({ value, label, tone }: DoneStatProps) => (
-	<div className="min-w-[78px] rounded-card border-[0.5px] border-bd-2 bg-surf px-4 py-3 text-center shadow-sm max-md:min-w-0 max-md:flex-1">
-		<div className={`font-display text-[22px] font-semibold leading-[1.1] tabular-nums ${toneClasses[tone]}`}>
-			{value}
-		</div>
-		<div className="mt-0.5 text-[11px] text-t-3">{label}</div>
-	</div>
-);

@@ -7,5 +7,5 @@ export const usePhraseReviewStats = () =>
 	useQuery({
 		queryKey: phrasebookKeys.reviewStats(),
 		queryFn: () => phrasebookApi.reviewStats(),
-		staleTime: 0,
+		staleTime: 30_000,
 	});

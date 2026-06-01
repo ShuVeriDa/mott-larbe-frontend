@@ -74,7 +74,7 @@ const nextConfig: NextConfig = {
 				headers: securityHeaders,
 			},
 			{
-				source: "/*/reader/(.*)",
+				source: "/:lang(che|ru|en)/(reader|review|dashboard|admin|profile|settings|progress)(.*)",
 				headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
 			},
 			{

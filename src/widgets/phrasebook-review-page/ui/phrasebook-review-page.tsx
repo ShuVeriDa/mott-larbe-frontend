@@ -1,12 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { usePhrasebookReviewPage } from "../model";
 import { PhraseReviewDone } from "./phrase-review-done";
 import { PhraseReviewIntro } from "./phrase-review-intro";
 import { PhraseReviewSidePanel } from "./phrase-review-side-panel";
-import { PhraseSession } from "./phrase-session";
+
+const PhraseSession = dynamic(
+	() => import("./phrase-session").then((m) => ({ default: m.PhraseSession })),
+	{ ssr: false },
+);
 
 interface PhrasebookReviewPageProps {
 	lang: string;
@@ -57,14 +62,14 @@ export const PhrasebookReviewPage = ({
 					/>
 				</svg>
 				<Typography
-					tag="h1"
+					tag="span"
 					className="whitespace-nowrap text-[13.5px] font-semibold text-t-1 max-md:hidden"
 				>
 					{t("phrasebook.review.pageTitle")}
 				</Typography>
 			</header>
 
-			<div className="flex flex-1 overflow-hidden">
+			<main className="flex flex-1 overflow-hidden">
 				<div className="flex flex-1 flex-col overflow-y-auto bg-panel max-md:overflow-visible">
 					{screen === "intro" ? (
 						<PhraseReviewIntro
@@ -104,7 +109,7 @@ export const PhrasebookReviewPage = ({
 					counts={panelCounts}
 					nextPhrases={nextPhrases}
 				/>
-			</div>
+			</main>
 		</>
 	);
 };

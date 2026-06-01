@@ -7,4 +7,5 @@ export const useDueWords = () =>
 	useQuery({
 		queryKey: dictionaryKeys.due(),
 		queryFn: () => dictionaryApi.due(),
+		staleTime: 60_000,
 	});

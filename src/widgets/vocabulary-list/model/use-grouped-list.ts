@@ -41,6 +41,7 @@ export const useGroupedList = () => {
 			return {
 				queryKey: dictionaryKeys.list(q),
 				queryFn: () => dictionaryApi.list(q),
+				staleTime: 30_000,
 			};
 		}),
 	});

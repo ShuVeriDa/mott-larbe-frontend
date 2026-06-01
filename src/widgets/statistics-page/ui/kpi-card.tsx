@@ -67,7 +67,7 @@ export const KpiCard = ({ label, value, delta, tone, icon, sparkline }: KpiCardP
 					{icon}
 				</div>
 				{hasActivity && (
-					<div className="h-8 w-16 opacity-60">
+					<div className="h-8 w-16 opacity-60" role="img" aria-label={label}>
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart data={sparkData}>
 								<Line

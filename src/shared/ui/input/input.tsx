@@ -15,20 +15,20 @@ export const inputVariants = cva(
 				default: [
 					"h-[34px] px-[10px] bg-surf-2 border-[0.5px] border-bd-2",
 					"text-[13px]",
-					"focus:border-acc",
+					"focus:border-acc focus-visible:ring-2 focus-visible:ring-acc/50 focus-visible:ring-offset-0",
 					"disabled:opacity-40 disabled:cursor-not-allowed",
 				],
 				"search-toolbar": [
 					"h-full pl-[30px] pr-2.5 text-[12.5px]",
 					"[&::-webkit-search-cancel-button]:appearance-none",
-					"focus:border-acc",
+					"focus:border-acc focus-visible:ring-2 focus-visible:ring-acc/50 focus-visible:ring-offset-0",
 					"border-bd-2 bg-surf",
 					"disabled:opacity-40 disabled:cursor-not-allowed",
 				],
 				"search-panel": [
 					"h-full pl-[30px] pr-2.5 text-[12.5px]",
 					"[&::-webkit-search-cancel-button]:appearance-none",
-					"focus:border-acc",
+					"focus:border-acc focus-visible:ring-2 focus-visible:ring-acc/50 focus-visible:ring-offset-0",
 					"border-bd-1 bg-surf-2 focus:bg-surf",
 					"disabled:opacity-40 disabled:cursor-not-allowed",
 				],

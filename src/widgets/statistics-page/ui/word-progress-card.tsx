@@ -2,6 +2,7 @@
 import type { WordsBreakdown } from "@/entities/statistics";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { WordLegendRow } from "./word-legend-row";
 
 interface WordProgressCardProps {
 	words: WordsBreakdown;
@@ -9,36 +10,6 @@ interface WordProgressCardProps {
 
 const RADIUS = 36;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
-
-interface LegendRowProps {
-	label: string;
-	value: number;
-	colorClass: string;
-	percent: number;
-}
-
-const LegendRow = ({ label, value, colorClass, percent }: LegendRowProps) => (
-	<div>
-		<div className="flex items-center justify-between">
-			<div className="flex items-center gap-1.5 text-[11.5px] text-t-2">
-				<Typography
-					tag="span"
-					className={`size-2 shrink-0 rounded-full ${colorClass}`}
-				/>
-				{label}
-			</div>
-			<Typography tag="span" className="text-xs font-semibold text-t-1">
-				{value.toLocaleString()}
-			</Typography>
-		</div>
-		<div className="mt-0.5 h-[3px] overflow-hidden rounded-[2px] bg-surf-3">
-			<div
-				className={`h-full rounded-[2px] ${colorClass}`}
-				style={{ width: `${Math.min(100, percent)}%` }}
-			/>
-		</div>
-	</div>
-);
 
 export const WordProgressCard = ({ words }: WordProgressCardProps) => {
 	const { t } = useI18n();
@@ -144,26 +115,26 @@ export const WordProgressCard = ({ words }: WordProgressCardProps) => {
 				</div>
 
 				<div className="flex flex-1 flex-col gap-1.5">
-					<LegendRow
+					<WordLegendRow
 						label={t("statistics.words.known")}
 						value={known}
 						colorClass="bg-grn"
 						percent={ratios.known * 100}
 					/>
-					<LegendRow
+					<WordLegendRow
 						label={t("statistics.words.learning")}
 						value={learning}
 						colorClass="bg-acc"
 						percent={ratios.learning * 100}
 					/>
-					<LegendRow
+					<WordLegendRow
 						label={t("statistics.words.new")}
 						value={isNew}
 						colorClass="bg-amb"
 						percent={ratios.new * 100}
 					/>
 					<div className="mt-1.5 border-t border-bd-1 pt-1.5">
-						<LegendRow
+						<WordLegendRow
 							label={t("statistics.words.remaining")}
 							value={remaining}
 							colorClass="bg-surf-4"

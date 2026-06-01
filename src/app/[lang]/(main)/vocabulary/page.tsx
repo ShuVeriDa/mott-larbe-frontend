@@ -1,50 +1,33 @@
-import {
-	DEFAULT_LOCALE,
-	LOCALES,
-	getDictionary,
-	hasLocale,
-} from "@/i18n/locales";
+import { getDictionary, hasLocale, LOCALES } from "@/i18n/locales";
+import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
 import { VocabularyPage } from "@/widgets/vocabulary-page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import VocabularyJsonLd from "./vocabulary-json-ld";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
+export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
 export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
 }): Promise<Metadata> => {
 	const { lang } = await props.params;
-	if (!hasLocale(lang)) return {};
+	if (!hasLocale(lang)) notFound();
 
 	const dict = await getDictionary(lang);
-	const meta = dict.vocabulary.meta;
 	const path = "/vocabulary";
-
-	const languages: Record<string, string> = {};
-	for (const locale of LOCALES) {
-		languages[locale] = `${SITE_URL}/${locale}${path}`;
-	}
-	languages["x-default"] = `${SITE_URL}/${DEFAULT_LOCALE}${path}`;
+	const { title, description } = dict.vocabulary.meta;
+	const { canonical, languages } = buildAlternates(lang, path);
 
 	return {
-		title: meta.title,
-		description: meta.description,
-		alternates: {
-			canonical: `${SITE_URL}/${lang}${path}`,
-			languages,
-		},
-		openGraph: {
-			type: "website",
-			url: `${SITE_URL}/${lang}${path}`,
-			title: meta.title,
-			description: meta.description,
-			locale: lang,
-			siteName: "Mott Larbe",
-		},
+		title,
+		description,
+		alternates: { canonical, languages },
+		openGraph: buildOpenGraph(lang, path, title, description),
 		twitter: {
 			card: "summary_large_image",
-			title: meta.title,
-			description: meta.description,
+			title,
+			description,
+			images: [`${SITE_URL}/opengraph-image.png`],
 		},
 		robots: {
 			index: true,
@@ -61,7 +44,15 @@ const VocabularyRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
-	return <VocabularyPage />;
+	const dict = await getDictionary(lang);
+	const { title, description } = dict.vocabulary.meta;
+
+	return (
+		<>
+			<VocabularyJsonLd lang={lang} title={title} description={description} />
+			<VocabularyPage />
+		</>
+	);
 };
 
 export default VocabularyRoutePage;

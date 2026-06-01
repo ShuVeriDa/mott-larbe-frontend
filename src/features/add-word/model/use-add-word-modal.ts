@@ -1,9 +1,9 @@
 "use client";
 
-import axios from "axios";
 import { type ComponentProps, useState } from "react";
 import { useFolders } from "@/entities/folder";
 import { useI18n } from "@/shared/lib/i18n";
+import { getApiErrorCode } from "@/shared/api/http";
 import { type CefrLevel } from "@/shared/types";
 import { useAddWord } from "./use-add-word";
 
@@ -43,8 +43,11 @@ export const useAddWordModal = ({ onClose }: UseAddWordModalParams) => {
 			reset();
 			onClose();
 		} catch (errorValue) {
-			if (axios.isAxiosError(errorValue) && errorValue.response?.status === 403) {
+			const code = getApiErrorCode(errorValue);
+			if (code === "VOCABULARY_LIMIT_REACHED") {
 				setError(t("vocabulary.limitReached"));
+			} else {
+				setError(t("vocabulary.addModal.error"));
 			}
 		}
 	};

@@ -18,8 +18,9 @@ export const PhraseWordToken = ({ word, onClick }: PhraseWordTokenProps) => {
 			className={cn(
 				"bg-surf-2 border-[0.5px] border-bd-1 rounded-base",
 				"px-2 py-1 text-center cursor-pointer",
-				"transition-colors duration-100",
+				"transition-colors duration-150 motion-reduce:transition-none",
 				"hover:border-acc hover:bg-acc-bg [&:hover_.token-orig]:text-acc-t",
+				"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc focus-visible:ring-offset-1",
 			)}
 		>
 			<div className="token-orig text-[12.5px] font-semibold text-t-1 leading-tight">

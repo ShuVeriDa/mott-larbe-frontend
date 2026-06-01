@@ -22,27 +22,27 @@ export const DeleteWordButton = ({
 	const { mutate, isPending } = useDeleteWord();
 	const [confirmOpen, setConfirmOpen] = useState(false);
 
-		const handleClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = (e) => {
-					e.stopPropagation();
-					setConfirmOpen(true);
-				};
+	const handleDeleteClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = (e) => {
+		e.stopPropagation();
+		setConfirmOpen(true);
+	};
 	const handleClose: NonNullable<ComponentProps<typeof Modal>["onClose"]> = () => setConfirmOpen(false);
-	const handleClick2: NonNullable<ComponentProps<typeof Button>["onClick"]> = (e) => {
-							e.stopPropagation();
-							setConfirmOpen(false);
-						};
-	const handleClick3: NonNullable<ComponentProps<typeof Button>["onClick"]> = (e) => {
-							e.stopPropagation();
-							mutate(wordId);
-							setConfirmOpen(false);
-						};
+	const handleCancelClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = (e) => {
+		e.stopPropagation();
+		setConfirmOpen(false);
+	};
+	const handleConfirmClick: NonNullable<ComponentProps<typeof Button>["onClick"]> = (e) => {
+		e.stopPropagation();
+		mutate(wordId);
+		setConfirmOpen(false);
+	};
 return (
 		<>
 			<Button
 				variant="danger"
 				size="default"
 				disabled={isPending}
-				onClick={handleClick}
+				onClick={handleDeleteClick}
 				className={className}
 			>
 				{t("vocabulary.card.delete")}
@@ -58,7 +58,8 @@ return (
 				</Typography>
 				<ModalActions>
 					<Button
-						onClick={handleClick2}
+						type="button"
+						onClick={handleCancelClick}
 						variant="ghost"
 						className="h-[34px] px-4 rounded-lg text-[13px]"
 					>
@@ -66,7 +67,7 @@ return (
 					</Button>
 					<Button
 						disabled={isPending}
-						onClick={handleClick3}
+						onClick={handleConfirmClick}
 						variant="bare"
 						className="h-[34px] px-4 rounded-lg text-[13px] font-semibold text-white bg-red hover:opacity-85 flex-1"
 					>

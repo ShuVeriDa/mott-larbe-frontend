@@ -132,6 +132,11 @@ export const metadata: Metadata = {
 			{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
 		],
 	},
+	...(process.env.NEXT_PUBLIC_GSC_VERIFICATION && {
+		verification: {
+			google: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
+		},
+	}),
 };
 
 const RootLayout = async ({

@@ -5,6 +5,7 @@ import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { Modal, ModalActions } from "@/shared/ui/modal";
+import { RequiredMark } from "@/shared/ui/required-mark";
 import { Select } from "@/shared/ui/select";
 import { CEFR_LEVELS } from "@/shared/types";
 import { useAddWordModal } from "../../model";
@@ -40,6 +41,7 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 			<form action={handleSubmit}>
 				<InputLabel htmlFor="add-word-input">
 					{t("vocabulary.addModal.wordLabel")}
+					<RequiredMark />
 				</InputLabel>
 				<Input
 					id="add-word-input"
@@ -48,10 +50,12 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 					placeholder={t("vocabulary.addModal.wordPlaceholder")}
 					className="mb-3"
 					required
+					aria-required="true"
 				/>
 
 				<InputLabel htmlFor="add-word-translation">
 					{t("vocabulary.addModal.translationLabel")}
+					<RequiredMark />
 				</InputLabel>
 				<Input
 					id="add-word-translation"
@@ -60,6 +64,7 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 					placeholder={t("vocabulary.addModal.translationPlaceholder")}
 					className="mb-3"
 					required
+					aria-required="true"
 				/>
 
 				<InputLabel htmlFor="add-word-folder">
@@ -104,6 +109,7 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 
 				<ModalActions>
 					<Button
+						type="button"
 						onClick={onClose}
 						variant="ghost"
 						className="h-[34px] px-4 rounded-lg text-[13px]"
@@ -114,9 +120,10 @@ export const AddWordModal = ({ open, onClose }: AddWordModalProps) => {
 						type="submit"
 						disabled={isPending}
 						variant="action"
+						aria-busy={isPending}
 						className="h-[34px] px-4 rounded-lg text-[13px] flex-1"
 					>
-						{t("vocabulary.addModal.submit")}
+						{isPending ? t("vocabulary.addModal.submitting") : t("vocabulary.addModal.submit")}
 					</Button>
 				</ModalActions>
 			</form>

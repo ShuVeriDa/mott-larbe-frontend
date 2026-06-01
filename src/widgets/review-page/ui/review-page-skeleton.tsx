@@ -1,6 +1,4 @@
-const Bone = ({ className }: { className: string }) => (
-	<div className={`animate-pulse rounded bg-surf-3 ${className}`} />
-);
+import { Bone } from "./bone";
 
 export const ReviewPageSkeleton = () => (
 	<div className="flex flex-1 flex-col overflow-hidden">

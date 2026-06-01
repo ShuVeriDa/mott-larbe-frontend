@@ -26,7 +26,7 @@ export const ProfileCard = ({
 		)}
 	>
 		<header className="flex items-center justify-between gap-2 border-b-[0.5px] border-bd-1 px-4 pb-2.5 pt-3">
-			<Typography tag="h3" className="text-[12.5px] font-semibold text-t-1">
+			<Typography tag="h2" className="text-[12.5px] font-semibold text-t-1">
 				{title}
 			</Typography>
 			{headExtra}

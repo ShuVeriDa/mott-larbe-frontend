@@ -61,7 +61,7 @@ export const RetentionCard = ({ data }: RetentionCardProps) => {
 				</div>
 			) : (
 				<div className="flex items-center gap-4">
-					<div className="size-[100px] shrink-0">
+					<div className="size-[100px] shrink-0" role="img" aria-label={t("statistics.retention.title")}>
 						<ResponsiveContainer width="100%" height="100%">
 							<PieChart>
 								<Pie

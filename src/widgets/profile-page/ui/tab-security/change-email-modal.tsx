@@ -48,6 +48,7 @@ return (
 					<Input
 						id="ce-email"
 						type="email"
+						autoComplete="email"
 						value={newEmail}
 						onChange={handleChange}
 						required
@@ -58,6 +59,7 @@ return (
 					<Input
 						id="ce-password"
 						type="password"
+						autoComplete="current-password"
 						value={password}
 						onChange={handleChange2}
 						required

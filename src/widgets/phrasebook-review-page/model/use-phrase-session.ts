@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRatePhrase } from "@/features/rate-phrase";
 import type { PhraseDue, PhraseReviewQuality } from "@/entities/phrasebook";
 
@@ -16,44 +16,66 @@ export interface UsePhraseSessionResult {
 	total: number;
 	flipped: boolean;
 	counts: PhraseCounts;
-	isFinished: boolean;
 	flip: () => void;
 	skip: () => void;
 	rate: (quality: PhraseReviewQuality) => void;
 }
 
-export const usePhraseSession = (phrases: PhraseDue[]): UsePhraseSessionResult => {
+interface UsePhraseSessionOptions {
+	phrases: PhraseDue[];
+	onFinish?: (counts: PhraseCounts) => void;
+	onProgress?: (idx: number, total: number, counts: PhraseCounts) => void;
+}
+
+export const usePhraseSession = ({
+	phrases,
+	onFinish,
+	onProgress,
+}: UsePhraseSessionOptions): UsePhraseSessionResult => {
 	const [index, setIndex] = useState(0);
 	const [flipped, setFlipped] = useState(false);
 	const [counts, setCounts] = useState<PhraseCounts>({ easy: 0, good: 0, hard: 0 });
 	const { mutate: rateMutation } = useRatePhrase();
 
+	const indexRef = useRef(index);
+	const countsRef = useRef(counts);
+	indexRef.current = index;
+	countsRef.current = counts;
+
 	const total = phrases.length;
 	const current = phrases[index] ?? null;
-	const isFinished = total > 0 && index >= total;
 
-	const advance = () => {
+	const advance = (nextIndex: number, nextCounts: PhraseCounts) => {
 		setFlipped(false);
-		setIndex((i) => i + 1);
+		setIndex(nextIndex);
+		if (nextIndex >= total) {
+			onFinish?.(nextCounts);
+		} else {
+			onProgress?.(nextIndex, total, nextCounts);
+		}
 	};
 
 	const flip = () => setFlipped((v) => !v);
 
 	const skip = () => {
-		if (!current) return;
-		advance();
+		const nextIndex = indexRef.current + 1;
+		advance(nextIndex, countsRef.current);
 	};
 
 	const rate = (quality: PhraseReviewQuality) => {
-		if (!current) return;
-		setCounts((prev) => {
-			if (quality >= 5) return { ...prev, easy: prev.easy + 1 };
-			if (quality >= 3) return { ...prev, good: prev.good + 1 };
-			return { ...prev, hard: prev.hard + 1 };
-		});
-		rateMutation({ phraseId: current.id, quality });
-		advance();
+		const prev = countsRef.current;
+		const nextCounts =
+			quality >= 5
+				? { ...prev, easy: prev.easy + 1 }
+				: quality >= 3
+					? { ...prev, good: prev.good + 1 }
+					: { ...prev, hard: prev.hard + 1 };
+		countsRef.current = nextCounts;
+		setCounts(nextCounts);
+		rateMutation({ phraseId: phrases[indexRef.current]!.id, quality });
+		advance(indexRef.current + 1, nextCounts);
+		indexRef.current += 1;
 	};
 
-	return { current, currentIndex: index, total, flipped, counts, isFinished, flip, skip, rate };
+	return { current, currentIndex: index, total, flipped, counts, flip, skip, rate };
 };

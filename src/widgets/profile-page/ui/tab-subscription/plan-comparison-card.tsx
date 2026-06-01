@@ -4,27 +4,7 @@ import { UNLIMITED_SYMBOL, usePlans, type Plan } from "@/entities/subscription";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { ProfileCard as SettingCard } from "../profile-card";
-
-const CheckIcon = () => (
-	<svg
-		viewBox="0 0 12 12"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.5"
-		className="size-3 text-grn-t"
-	>
-		<path d="M2 6l3 3 5-5" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
-);
-
-const DashIcon = () => (
-	<Typography
-		tag="span"
-		className="inline-block w-3 text-center text-[12px] text-t-4"
-	>
-		—
-	</Typography>
-);
+import { PlanCellValue } from "./plan-cell-value";
 
 interface FeatureRow {
 	label: string;
@@ -98,23 +78,6 @@ const buildRows = (
 	];
 };
 
-const CellValue = ({
-	value,
-	color,
-}: {
-	value: string | boolean;
-	color: string;
-}) => {
-	if (typeof value === "boolean") {
-		return value ? <CheckIcon /> : <DashIcon />;
-	}
-	return (
-		<Typography tag="span" className={`text-[12px] font-semibold ${color}`}>
-			{value}
-		</Typography>
-	);
-};
-
 export const PlanComparisonCard = () => {
 	const { t } = useI18n();
 	const { data: plans } = usePlans();
@@ -157,13 +120,13 @@ export const PlanComparisonCard = () => {
 							{row.label}
 						</Typography>
 						<div className="flex items-center justify-center">
-							<CellValue value={row.free} color="text-t-2" />
+							<PlanCellValue value={row.free} color="text-t-2" />
 						</div>
 						<div className="flex items-center justify-center">
-							<CellValue value={row.premium} color="text-acc-t" />
+							<PlanCellValue value={row.premium} color="text-acc-t" />
 						</div>
 						<div className="flex items-center justify-center">
-							<CellValue value={row.pro} color="text-pur-t" />
+							<PlanCellValue value={row.pro} color="text-pur-t" />
 						</div>
 					</div>
 				))}

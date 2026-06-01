@@ -48,7 +48,7 @@ export const PhrasebookPage = () => {
 			</div>
 
 			{/* ── Main content ── */}
-			<div className="flex min-h-0 flex-1 overflow-hidden flex-col">
+			<main className="flex min-h-0 flex-1 overflow-hidden flex-col">
 				<div className="flex flex-col gap-3.5 p-[22px] flex-1 min-h-0 overflow-auto max-md:p-0 max-md:overflow-hidden">
 					{/* Desktop: overview strip */}
 					<div className="max-md:hidden">
@@ -71,14 +71,14 @@ export const PhrasebookPage = () => {
 						</div>
 
 						{/* Phrase list */}
-						<div className="flex-1 min-w-0 flex flex-col max-md:overflow-hidden max-md:flex-1">
+						<section className="flex-1 min-w-0 flex flex-col max-md:overflow-hidden max-md:flex-1" aria-label="Phrases">
 							<div className="flex-1 overflow-y-auto flex flex-col gap-1.5 max-md:px-3 max-md:py-2.5 max-md:pb-[calc(72px+env(safe-area-inset-bottom)+8px)] [&::-webkit-scrollbar]:hidden">
 								<PhraseList />
 							</div>
-						</div>
+						</section>
 					</div>
 				</div>
-			</div>
+			</main>
 
 			<SuggestPhraseModal open={suggestOpen} onClose={handleSuggestClose} />
 		</>

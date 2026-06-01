@@ -29,7 +29,7 @@ export const FlipCard = ({
 			aria-pressed={flipped}
 			className={cn(
 				"relative w-full min-h-[205px] cursor-pointer outline-none max-md:hidden",
-				"transition-transform duration-[440ms] [transform-style:preserve-3d]",
+				"motion-safe:transition-transform motion-safe:duration-320 transform-3d",
 				"focus-visible:[&_.flip-face]:ring-2 focus-visible:[&_.flip-face]:ring-acc/40",
 			)}
 			style={{

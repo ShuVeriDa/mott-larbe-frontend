@@ -3,56 +3,11 @@
 import type { AccuracyStats } from "@/entities/statistics";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { AccuracyRowBlock } from "./accuracy-row-block";
 
 interface AccuracyBlockProps {
 	accuracy: AccuracyStats;
 }
-
-interface AccuracyRowProps {
-	label: string;
-	value: string | number;
-	dotColor?: string;
-	statColor?: string;
-	percent?: number;
-	barColor?: string;
-}
-
-const AccuracyRow = ({
-	label,
-	value,
-	dotColor,
-	statColor,
-	percent,
-	barColor,
-}: AccuracyRowProps) => (
-	<div>
-		<div className="flex items-center justify-between">
-			<div className="flex items-center gap-1.5 text-xs text-t-2">
-				{dotColor ? (
-					<Typography
-						tag="span"
-						className={`size-[7px] rounded-full ${dotColor}`}
-					/>
-				) : null}
-				{label}
-			</div>
-			<Typography
-				tag="span"
-				className={`text-xs font-semibold ${statColor ?? "text-t-1"}`}
-			>
-				{value}
-			</Typography>
-		</div>
-		{typeof percent === "number" && barColor ? (
-			<div className="mt-1 h-1 overflow-hidden rounded-[2px] bg-surf-3">
-				<div
-					className={`h-full rounded-[2px] ${barColor}`}
-					style={{ width: `${Math.min(100, Math.max(0, percent))}%` }}
-				/>
-			</div>
-		) : null}
-	</div>
-);
 
 export const AccuracyBlock = ({ accuracy }: AccuracyBlockProps) => {
 	const { t } = useI18n();
@@ -87,7 +42,7 @@ export const AccuracyBlock = ({ accuracy }: AccuracyBlockProps) => {
 				<div className="w-px shrink-0 self-stretch bg-bd-1 max-[480px]:hidden" />
 
 				<div className="flex flex-1 flex-col gap-2">
-					<AccuracyRow
+					<AccuracyRowBlock
 						label={t("statistics.accuracy.correct")}
 						value={accuracy.correct.toLocaleString()}
 						dotColor="bg-grn"
@@ -95,7 +50,7 @@ export const AccuracyBlock = ({ accuracy }: AccuracyBlockProps) => {
 						percent={correctPct}
 						barColor="bg-grn"
 					/>
-					<AccuracyRow
+					<AccuracyRowBlock
 						label={t("statistics.accuracy.wrong")}
 						value={accuracy.wrong.toLocaleString()}
 						dotColor="bg-amb"

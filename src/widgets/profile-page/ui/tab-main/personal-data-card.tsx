@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-import { ComponentProps, useState } from "react";
+import { type ComponentProps, useState } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
@@ -36,11 +36,16 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 		} catch {}
 	};
 
-		const handleChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setName(e.currentTarget.value);
-	const handleChange2: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setSurname(e.currentTarget.value);
-	const handleChange3: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setUsername(e.currentTarget.value);
-	const handleChange4: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setPhone(e.currentTarget.value);
-return (
+		const handleNameChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) =>
+		setName(e.currentTarget.value);
+	const handleSurnameChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) =>
+		setSurname(e.currentTarget.value);
+	const handleUsernameChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) =>
+		setUsername(e.currentTarget.value);
+	const handlePhoneChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) =>
+		setPhone(e.currentTarget.value);
+
+	return (
 		<SettingCard title={t("profile.personalData.title")}>
 			<form action={handleSubmit} className="flex flex-col gap-3">
 				<div className="grid grid-cols-2 gap-2.5 max-sm:grid-cols-1">
@@ -49,7 +54,7 @@ return (
 						<Input
 							id="profile-name"
 							value={name}
-							onChange={handleChange}
+							onChange={handleNameChange}
 							placeholder={t("profile.personalData.firstNamePlaceholder")}
 						/>
 					</div>
@@ -58,7 +63,7 @@ return (
 						<Input
 							id="profile-surname"
 							value={surname}
-							onChange={handleChange2}
+							onChange={handleSurnameChange}
 							placeholder={t("profile.personalData.lastNamePlaceholder")}
 						/>
 					</div>
@@ -69,7 +74,7 @@ return (
 					<Input
 						id="profile-username"
 						value={username}
-						onChange={handleChange3}
+						onChange={handleUsernameChange}
 						placeholder="username"
 					/>
 				</div>
@@ -83,7 +88,7 @@ return (
 						disabled
 						className="opacity-60 cursor-not-allowed"
 					/>
-					<Typography tag="p" className="mt-1 text-[11px] text-t-3">{t("profile.personalData.emailHint")}</Typography>
+					<Typography tag="p" className="mt-1 text-[12px] text-t-3">{t("profile.personalData.emailHint")}</Typography>
 				</div>
 
 				<div>
@@ -92,7 +97,7 @@ return (
 						id="profile-phone"
 						type="tel"
 						value={phone}
-						onChange={handleChange4}
+						onChange={handlePhoneChange}
 						placeholder="+7 900 000-00-00"
 					/>
 				</div>

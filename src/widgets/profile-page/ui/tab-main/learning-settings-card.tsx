@@ -6,7 +6,7 @@ import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { InputLabel } from "@/shared/ui/input";
 import { Select } from "@/shared/ui/select";
-import { ComponentProps, useState } from "react";
+import { type ComponentProps, useState } from "react";
 import { ProfileCard as SettingCard } from "../profile-card";
 
 const LANGUAGES: { value: UserLanguage; label: string }[] = [
@@ -16,10 +16,7 @@ const LANGUAGES: { value: UserLanguage; label: string }[] = [
 
 const LEVELS: { value: UserLevel; label: string }[] = [
 	{ value: "A", label: "settings.learning.levelA" },
-	// { value: "A", label: "settings.learning.levelA" },
 	{ value: "B", label: "settings.learning.levelB" },
-	// { value: "B", label: "settings.learning.levelB" },
-	// { value: "C", label: "settings.learning.levelC" },
 	{ value: "C", label: "settings.learning.levelC" },
 ];
 
@@ -48,9 +45,9 @@ export const LearningSettingsCard = ({
 		}
 	};
 
-	const handleChange: NonNullable<ComponentProps<"select">["onChange"]> = e =>
+	const handleLanguageChange: NonNullable<ComponentProps<"select">["onChange"]> = e =>
 		setLanguage(e.currentTarget.value as UserLanguage);
-	const handleChange2: NonNullable<ComponentProps<"select">["onChange"]> = e =>
+	const handleLevelChange: NonNullable<ComponentProps<"select">["onChange"]> = e =>
 		setLevel(e.currentTarget.value as UserLevel);
 	return (
 		<SettingCard title={t("profile.learningSettings.title")}>
@@ -64,7 +61,7 @@ export const LearningSettingsCard = ({
 							variant="lg"
 							id="profile-language"
 							value={language}
-							onChange={handleChange}
+							onChange={handleLanguageChange}
 						>
 							{LANGUAGES.map(({ value, label }) => (
 								<option key={value} value={value}>
@@ -81,7 +78,7 @@ export const LearningSettingsCard = ({
 							variant="lg"
 							id="profile-level"
 							value={level}
-							onChange={handleChange2}
+							onChange={handleLevelChange}
 						>
 							{LEVELS.map(({ value, label }) => (
 								<option key={value} value={value}>

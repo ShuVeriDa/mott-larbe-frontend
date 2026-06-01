@@ -19,19 +19,19 @@ interface VocabularyGrowthChartProps {
 	period?: StatsPeriod;
 }
 
-const formatLabel = (date: string, period?: StatsPeriod): string => {
+const formatLabel = (date: string, period?: StatsPeriod, lang?: string): string => {
 	const d = new Date(date);
 	if (period === "year" || period === "all") {
-		return ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"][d.getUTCMonth()];
+		return new Intl.DateTimeFormat(lang ?? "ru", { month: "short", timeZone: "UTC" }).format(d);
 	}
 	return `${String(d.getUTCDate()).padStart(2, "0")}.${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
 };
 
 export const VocabularyGrowthChart = ({ points, period }: VocabularyGrowthChartProps) => {
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
 
 	const data = points.map((p) => ({
-		label: formatLabel(p.date, period),
+		label: formatLabel(p.date, period, lang),
 		total: p.total,
 		added: p.added,
 	}));

@@ -4,42 +4,12 @@ import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { useState } from "react";
+import { AccuracyRow } from "./accuracy-row";
 
 interface AccuracyCardProps {
 	accuracy: AccuracyStats;
 	phraseAccuracy: PhraseAccuracyStats;
 }
-
-interface AccuracyRowProps {
-	label: string;
-	value: string | number;
-	dotColor?: string;
-	statColor?: string;
-	percent?: number;
-	barColor?: string;
-}
-
-const AccuracyRow = ({ label, value, dotColor, statColor, percent, barColor }: AccuracyRowProps) => (
-	<div>
-		<div className="flex items-center justify-between">
-			<div className="flex items-center gap-1.5 text-[11px] text-t-2">
-				{dotColor ? <span className={`size-[7px] shrink-0 rounded-full ${dotColor}`} /> : null}
-				{label}
-			</div>
-			<Typography tag="span" className={`text-[11px] font-semibold ${statColor ?? "text-t-1"}`}>
-				{value}
-			</Typography>
-		</div>
-		{typeof percent === "number" && barColor ? (
-			<div className="mt-1 h-1 overflow-hidden rounded-[2px] bg-surf-3">
-				<div
-					className={`h-full rounded-[2px] ${barColor}`}
-					style={{ width: `${Math.min(100, Math.max(0, percent))}%` }}
-				/>
-			</div>
-		) : null}
-	</div>
-);
 
 type Tab = "words" | "phrases";
 
@@ -58,20 +28,24 @@ export const AccuracyCard = ({ accuracy, phraseAccuracy }: AccuracyCardProps) =>
 	return (
 		<section className="rounded-card border-[0.5px] border-bd-1 bg-surf p-4 transition-colors">
 			<header className="mb-3 flex flex-wrap items-center justify-between gap-1.5">
-				<div className="flex items-center gap-0.5 rounded-base bg-surf-2 p-0.5">
+				<div role="tablist" className="flex items-center gap-0.5 rounded-base bg-surf-2 p-0.5">
 					<button
+						role="tab"
+						aria-selected={isWords}
 						onClick={handleTabWords}
 						className={cn(
-							"rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors",
+							"rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1",
 							isWords ? "bg-surf text-t-1 shadow-sm" : "text-t-3 hover:text-t-2",
 						)}
 					>
 						{t("statistics.words.title")}
 					</button>
 					<button
+						role="tab"
+						aria-selected={!isWords}
 						onClick={handleTabPhrases}
 						className={cn(
-							"rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors",
+							"rounded-[5px] px-2.5 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1",
 							!isWords ? "bg-surf text-t-1 shadow-sm" : "text-t-3 hover:text-t-2",
 						)}
 					>

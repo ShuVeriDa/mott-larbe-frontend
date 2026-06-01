@@ -5,7 +5,7 @@ import { cn } from "@/shared/lib/cn";
 const skeletonVariants = cva("rounded-md", {
   variants: {
     variant: {
-      pulse: "animate-pulse bg-muted",
+      pulse: "animate-pulse motion-reduce:animate-none bg-muted",
       shimmer: "overflow-hidden bg-surf-3",
     },
   },

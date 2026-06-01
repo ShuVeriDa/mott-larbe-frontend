@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useParams } from "next/navigation";
+import { DEFAULT_LOCALE } from "@/i18n/locales";
 import { useDeckDue, useDeckStats } from "@/entities/deck";
 import type { DeckCard } from "@/entities/deck";
 import { useReviewDue, useReviewStats } from "@/entities/review";
@@ -23,6 +25,8 @@ const ZERO_SM2: Sm2Counts = { easy: 0, good: 0, hard: 0 };
 const ZERO_DECK: DeckCounts = { know: 0, again: 0 };
 
 export const useReviewPage = () => {
+	const params = useParams<{ lang: string }>();
+	const lang = params.lang ?? DEFAULT_LOCALE;
 	const { system, screen, switchSystem, goToCard, goToDone, goToIntro, goToRetry } =
 		useReviewFlow();
 	const { mode: sessionMode, setMode: setSessionMode } = useSessionMode();
@@ -118,7 +122,7 @@ export const useReviewPage = () => {
 
 	const handleTryDeck = () => switchSystem("deck");
 	const handleUpgrade = () => {
-		window.location.assign("/subscription");
+		window.location.assign(`/${lang}/subscription`);
 	};
 	const handleGoSm2 = () => switchSystem("sm2");
 

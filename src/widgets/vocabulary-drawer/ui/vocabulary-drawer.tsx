@@ -28,10 +28,15 @@ export const VocabularyDrawer = ({
 		if (!open) return;
 		const prev = document.body.style.overflow;
 		document.body.style.overflow = "hidden";
+		const handleKey = (e: KeyboardEvent) => {
+			if (e.key === "Escape") onClose();
+		};
+		document.addEventListener("keydown", handleKey);
 		return () => {
 			document.body.style.overflow = prev;
+			document.removeEventListener("keydown", handleKey);
 		};
-	}, [open]);
+	}, [open, onClose]);
 
 	if (!mounted) return null;
 
@@ -51,7 +56,7 @@ export const VocabularyDrawer = ({
 				aria-label={t("vocabulary.filtersAndFolders")}
 				className={cn(
 					"fixed inset-x-0 bottom-0 z-160 flex max-h-[80vh] flex-col rounded-t-2xl bg-surf",
-					"transition-transform duration-300 ease-[cubic-bezier(.32,.72,0,1)]",
+					"motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-[cubic-bezier(.32,.72,0,1)]",
 					"pb-[env(safe-area-inset-bottom)]",
 					open ? "translate-y-0" : "translate-y-full",
 				)}
