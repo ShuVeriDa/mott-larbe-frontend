@@ -117,7 +117,7 @@ export const ReviewDeckIntro = ({
 	return (
 		<section className="flex flex-1 flex-col items-center justify-center px-5 py-7 max-md:justify-start max-md:px-4 max-md:pt-6">
 			<Typography
-				tag="h1"
+				tag="h2"
 				className="mb-1 text-center font-display text-[20px] font-normal text-t-1"
 			>
 				{t("review.deck.intro.title")}

@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { DEFAULT_LOCALE } from "@/i18n/locales";
 import { useDeckDue, useDeckStats } from "@/entities/deck";
 import type { DeckCard } from "@/entities/deck";
-import { useReviewDue, useReviewStats } from "@/entities/review";
+import { useSuspenseReviewStats, useSuspenseReviewDue } from "@/entities/review";
 import { usePhraseReviewStats } from "@/entities/phrasebook";
 import { useSessionMode } from "@/features/session-mode";
 import { useReviewFlow } from "./use-review-flow";
@@ -30,14 +30,11 @@ export const useReviewPage = () => {
 	const { system, screen, switchSystem, goToCard, goToDone, goToIntro, goToRetry } =
 		useReviewFlow();
 	const { mode: sessionMode, setMode: setSessionMode } = useSessionMode();
-	const { data: stats, isLoading: statsLoading } = useReviewStats();
 
-	const dueLimit = stats?.dueCount && stats.dueCount > 0 ? stats.dueCount : 20;
-	const {
-		data: dueWords,
-		isLoading: dueLoading,
-		isError: dueError,
-	} = useReviewDue(dueLimit);
+	const { data: stats } = useSuspenseReviewStats();
+
+	const dueLimit = stats.dueCount > 0 ? stats.dueCount : 20;
+	const { data: dueWords } = useSuspenseReviewDue(dueLimit);
 
 	const isDeckEnabled = system === "deck" && screen !== "intro";
 	const { data: deckStats, isError: deckStatsError } = useDeckStats({
@@ -58,7 +55,7 @@ export const useReviewPage = () => {
 
 	const { data: phraseStats } = usePhraseReviewStats();
 
-	const sm2DueBadge = stats?.dueCount ?? null;
+	const sm2DueBadge = stats.dueCount ?? null;
 	const deckTotalBadge = deckStats?.total ?? null;
 	const phraseDueBadge = phraseStats?.dueCount ?? null;
 	const premiumLocked = deckStatsError === true;
@@ -132,10 +129,7 @@ export const useReviewPage = () => {
 		switchSystem,
 		goToIntro,
 		stats,
-		statsLoading,
 		words,
-		dueLoading,
-		dueError,
 		deckStats,
 		deckLoading,
 		deckDueError,

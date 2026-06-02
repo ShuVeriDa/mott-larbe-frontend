@@ -60,7 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		for (const locale of LOCALES) {
 			entries.push({
 				url: `${SITE_URL}/${locale}${localePath}`,
-				lastModified: new Date("2025-06-01"),
+				lastModified: new Date(),
 				changeFrequency,
 				priority,
 				alternates: { languages },

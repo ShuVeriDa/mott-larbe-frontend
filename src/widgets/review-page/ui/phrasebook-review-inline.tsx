@@ -1,12 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useParams, useSearchParams } from "next/navigation";
 import { DEFAULT_LOCALE } from "@/i18n/locales";
 import { usePhrasebookReviewPage } from "@/widgets/phrasebook-review-page/model";
 import { PhraseReviewIntro } from "@/widgets/phrasebook-review-page/ui/phrase-review-intro";
-import { PhraseSession } from "@/widgets/phrasebook-review-page/ui/phrase-session";
 import { PhraseReviewDone } from "@/widgets/phrasebook-review-page/ui/phrase-review-done";
 import { PhraseReviewSidePanel } from "@/widgets/phrasebook-review-page/ui/phrase-review-side-panel";
+
+const PhraseSession = dynamic(
+	() => import("@/widgets/phrasebook-review-page/ui/phrase-session").then((m) => ({ default: m.PhraseSession })),
+	{ ssr: false },
+);
 
 export const PhrasebookReviewPageInline = () => {
 	const params = useParams<{ lang: string }>();

@@ -187,8 +187,8 @@ export const DeckSession = ({
 			<div className="mb-4 flex w-full max-w-[520px] items-center gap-2.5">
 				<div className="h-1 flex-1 overflow-hidden rounded-full bg-surf-3">
 					<div
-						className="h-full rounded-full bg-acc transition-[width] duration-400"
-						style={{ width: `${progressPct}%` }}
+						className="h-full origin-left rounded-full bg-acc transition-transform duration-400"
+						style={{ transform: `scaleX(${progressPct / 100})` }}
 					/>
 				</div>
 				<Typography

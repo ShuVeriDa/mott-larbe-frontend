@@ -64,7 +64,7 @@ export const PhraseReviewIntro = ({
 			</div>
 
 			<Typography
-				tag="h1"
+				tag="h2"
 				className="mb-1.5 text-center font-display text-[21px] font-normal text-t-1"
 			>
 				{t("phrasebook.review.intro.title")}

@@ -12,7 +12,7 @@ export type {
 	ReviewStats,
 	ReviewWordStatus,
 } from "./api";
-export { useReviewStats, useReviewDue } from "./model";
+export { useReviewStats, useReviewDue, useSuspenseReviewStats, useSuspenseReviewDue } from "./model";
 export {
 	getAlternateTranslations,
 	getPrimaryTranslation,

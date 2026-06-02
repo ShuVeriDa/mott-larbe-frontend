@@ -1,16 +1,25 @@
 "use client";
+
+import dynamic from "next/dynamic";
 import { useReviewPage } from "../model";
 import { ReviewIntro } from "@/widgets/review-intro";
-import { Sm2Session } from "@/widgets/review-session";
 import { ReviewDone } from "@/widgets/review-done";
 import { ReviewDeckIntro } from "@/widgets/review-deck-intro";
-import { DeckSession } from "@/widgets/review-deck-session";
 import { ReviewDeckDone } from "@/widgets/review-deck-done";
 import { PhrasebookReviewPageInline } from "./phrasebook-review-inline";
 import type { DeckDueResponse } from "@/entities/deck";
 import { ReviewTopbar } from "./review-topbar";
 import { ReviewSidePanel } from "./review-side-panel";
-import { ReviewPageSkeleton } from "./review-page-skeleton";
+
+const Sm2Session = dynamic(
+	() => import("@/widgets/review-session").then((m) => ({ default: m.Sm2Session })),
+	{ ssr: false },
+);
+
+const DeckSession = dynamic(
+	() => import("@/widgets/review-deck-session").then((m) => ({ default: m.DeckSession })),
+	{ ssr: false },
+);
 
 export const ReviewPage = () => {
 	const {
@@ -19,10 +28,7 @@ export const ReviewPage = () => {
 		switchSystem,
 		goToIntro,
 		stats,
-		statsLoading,
 		words,
-		dueLoading,
-		dueError,
 		deckStats,
 		deckLoading,
 		deckDueError,
@@ -62,8 +68,6 @@ export const ReviewPage = () => {
 		maxNumberedDeck: 0,
 	};
 
-	if (statsLoading && dueLoading && screen === "intro") return <ReviewPageSkeleton />;
-
 	return (
 		<>
 			<ReviewTopbar
@@ -83,8 +87,8 @@ export const ReviewPage = () => {
 							<ReviewIntro
 								stats={stats}
 								queue={words}
-								loading={statsLoading || dueLoading}
-								error={dueError}
+								loading={false}
+								error={false}
 								sessionMode={sessionMode}
 								onModeChange={setSessionMode}
 								onStart={handleStartSm2}
@@ -159,7 +163,7 @@ export const ReviewPage = () => {
 						<ReviewSidePanel
 							system={system}
 							screen={screen}
-							streak={stats?.streak ?? 0}
+							streak={stats.streak ?? 0}
 							sm2Counts={panelSm2Counts}
 							deckCounts={panelDeckCounts}
 							nextWords={nextWords}

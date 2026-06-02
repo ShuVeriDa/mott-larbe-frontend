@@ -1,2 +1,2 @@
-export { useReviewStats } from "./use-review-stats";
-export { useReviewDue } from "./use-review-due";
+export { useReviewStats, useSuspenseReviewStats } from "./use-review-stats";
+export { useReviewDue, useSuspenseReviewDue } from "./use-review-due";
