@@ -44,11 +44,15 @@ export const LibraryFilterBar = ({
 
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [usePills, setUsePills] = useState(false);
+	const [isDesktop, setIsDesktop] = useState(false);
 
 	useEffect(() => {
 		const el = containerRef.current;
 		if (!el) return;
-		const check = () => setUsePills(el.clientWidth >= 1200);
+		const check = () => {
+			setUsePills(el.clientWidth >= 1200);
+			setIsDesktop(el.clientWidth >= 640);
+		};
 		check();
 		const ro = new ResizeObserver(check);
 		ro.observe(el);
@@ -100,7 +104,7 @@ export const LibraryFilterBar = ({
 					onGenreChange={setGenreId}
 				/>
 
-				{(!mobileHideSortView || usePills) && (
+				{(!mobileHideSortView || isDesktop) && (
 					<>
 						<LibraryFilterDivider />
 						<LibraryFilterBarSortSelect sort={sort} onSortChange={setSort} />

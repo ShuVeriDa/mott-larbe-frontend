@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useParams, useSearchParams } from "next/navigation";
-import { DEFAULT_LOCALE } from "@/i18n/locales";
+import { DEFAULT_LOCALE } from "@/i18n/locale-list";
 import { usePhrasebookReviewPage } from "@/widgets/phrasebook-review-page/model";
 import { PhraseReviewIntro } from "@/widgets/phrasebook-review-page/ui/phrase-review-intro";
 import { PhraseReviewDone } from "@/widgets/phrasebook-review-page/ui/phrase-review-done";

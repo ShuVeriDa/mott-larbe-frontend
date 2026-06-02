@@ -39,34 +39,59 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
 	};
 };
 
+interface FaqDictItem {
+	q: string;
+	a: string;
+}
+
 const LandingRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
 	const dict = await getDictionary(lang);
-	const { description } = dict.landing.meta;
+	const { title, description } = dict.landing.meta;
 	const url = `${SITE_URL}/${lang}`;
 
-	const jsonLd = {
+	const webPageJsonLd = {
 		"@context": "https://schema.org",
-		"@type": "WebSite",
-		name: "Mott Larbe",
+		"@type": "WebPage",
+		"@id": `${url}/#webpage`,
 		url,
+		name: title,
 		description,
 		inLanguage: lang,
-		potentialAction: {
-			"@type": "SearchAction",
-			target: { "@type": "EntryPoint", urlTemplate: `${url}/texts?q={search_term_string}` },
-			"query-input": "required name=search_term_string",
-		},
+		isPartOf: { "@id": `${SITE_URL}/#website` },
 	};
+
+	const faqItems = (
+		(dict as unknown as { landing?: { faq?: { items?: FaqDictItem[] } } })
+			.landing?.faq?.items ?? []
+	);
+
+	const faqJsonLd = faqItems.length > 0
+		? {
+			"@context": "https://schema.org",
+			"@type": "FAQPage",
+			mainEntity: faqItems.map(({ q, a }) => ({
+				"@type": "Question",
+				name: q,
+				acceptedAnswer: { "@type": "Answer", text: a },
+			})),
+		}
+		: null;
 
 	return (
 		<>
 			<script
 				type="application/ld+json"
-				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageJsonLd).replace(/</g, "\\u003c") }}
 			/>
+			{faqJsonLd && (
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
+				/>
+			)}
 			<LandingPage />
 		</>
 	);

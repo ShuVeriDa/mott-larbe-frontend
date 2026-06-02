@@ -54,7 +54,8 @@ export const FaqItem = ({
 			role="region"
 			aria-labelledby={`${id}-trigger`}
 			className={cn(
-				"grid overflow-hidden text-[14px] leading-[1.6] text-t-2 transition-[grid-template-rows,padding] duration-300 ease-in-out",
+				"grid overflow-hidden text-[14px] leading-[1.6] text-t-2 transition-[grid-template-rows,padding]",
+				open ? "duration-300 ease-out" : "duration-200 ease-in",
 				open ? "grid-rows-[1fr] px-5 pb-5" : "grid-rows-[0fr] px-5",
 			)}
 		>

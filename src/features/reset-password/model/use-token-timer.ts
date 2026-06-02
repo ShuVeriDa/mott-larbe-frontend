@@ -37,7 +37,7 @@ export const useTokenTimer = (
 
 		const id = setInterval(() => {
 			if (!tick()) clearInterval(id);
-		}, 60_000);
+		}, 10_000);
 
 		return () => clearInterval(id);
 	}, [expiresAt]);

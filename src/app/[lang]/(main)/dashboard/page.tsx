@@ -4,10 +4,7 @@ import {
 	getDictionary,
 	hasLocale,
 } from "@/i18n/locales";
-import { dashboardQueryOptions } from "@/entities/dashboard";
 import { DashboardPageDynamic } from "@/widgets/dashboard-page";
-import { getQueryClient } from "@/shared/lib/query-client";
-import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -64,14 +61,7 @@ const DashboardRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
-	const queryClient = getQueryClient();
-	await queryClient.prefetchQuery(dashboardQueryOptions());
-
-	return (
-		<HydrationBoundary state={dehydrate(queryClient)}>
-			<DashboardPageDynamic />
-		</HydrationBoundary>
-	);
+	return <DashboardPageDynamic />;
 };
 
 export default DashboardRoutePage;

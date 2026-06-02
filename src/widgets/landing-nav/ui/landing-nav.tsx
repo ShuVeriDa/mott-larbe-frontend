@@ -61,7 +61,7 @@ export const LandingNav = ({ loginHref, startHref }: LandingNavProps) => {
 							<Link
 								key={link.href}
 								href={link.href}
-								className="rounded-md px-3 py-[7px] text-[13px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1"
+								className="rounded-md px-3 py-[7px] text-[13px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 							>
 								{t(link.labelKey)}
 							</Link>
@@ -72,13 +72,13 @@ export const LandingNav = ({ loginHref, startHref }: LandingNavProps) => {
 						<LandingThemeToggle />
 						<Link
 							href={loginHref}
-							className="inline-flex h-[34px] items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3.5 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-2 max-[900px]:hidden"
+							className="inline-flex h-[34px] items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3.5 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-2 max-[900px]:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 						>
 							{t("landing.nav.login")}
 						</Link>
 						<Link
 							href={startHref}
-							className="inline-flex h-[34px] items-center gap-1.5 rounded-base bg-acc px-3.5 text-[13px] font-semibold text-white shadow-[0_2px_6px_rgba(34,84,211,0.25)] transition-opacity hover:opacity-[0.92] max-[900px]:hidden"
+							className="inline-flex h-[34px] items-center gap-1.5 rounded-base bg-acc px-3.5 text-[13px] font-semibold text-white shadow-[0_2px_6px_rgba(34,84,211,0.25)] transition-opacity hover:opacity-[0.92] max-[900px]:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 						>
 							{t("landing.nav.start")}
 						</Link>

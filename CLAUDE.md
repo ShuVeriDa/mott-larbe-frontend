@@ -2,7 +2,9 @@
 
 # Project Rules & Coding Standards
 
-## Stack versions
+## Stack versions — ALWAYS check before writing any code
+
+> **Critical:** This is Next.js 16.2.5 and React 19.2.4. APIs differ significantly from earlier versions. These versions affect every area: routing, components, hooks, forms, SEO metadata, security, server actions, and more. Apply the correct APIs for these exact versions in ALL tasks without exception.
 
 - **Next.js**: 16.2.5 — before writing any code, read `node_modules/next/dist/docs/` for current API. APIs differ from earlier versions.
 - **React**: 19.2.4 — use React 19 APIs (use(), useOptimistic, useActionState, etc. where appropriate).

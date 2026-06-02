@@ -8,6 +8,7 @@ import { BrandMark } from "@/shared/ui/brand-mark";
 import { Typography } from "@/shared/ui/typography";
 import { X } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 export interface MobileMenuLink {
 	href: string;
@@ -30,18 +31,36 @@ export const MobileMenu = ({
 	startHref,
 }: MobileMenuProps) => {
 	const { t, lang } = useI18n();
+	const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+	// Close on Escape key
+	useEffect(() => {
+		if (!open) return;
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape") onClose();
+		};
+		document.addEventListener("keydown", handleKeyDown);
+		return () => document.removeEventListener("keydown", handleKeyDown);
+	}, [open, onClose]);
+
+	// Move focus to close button when drawer opens
+	useEffect(() => {
+		if (open) closeButtonRef.current?.focus();
+	}, [open]);
 
 	return (
 		<>
 			<div
 				className={cn(
-					"fixed inset-0 z-[199] bg-black/45 transition-opacity duration-200 md:hidden",
+					"fixed inset-0 z-[199] bg-black/45 transition-opacity duration-300 md:hidden",
 					open ? "opacity-100" : "pointer-events-none opacity-0",
 				)}
 				onClick={onClose}
 				aria-hidden="true"
 			/>
 			<aside
+				role="dialog"
+				aria-modal="true"
 				className={cn(
 					"fixed inset-y-0 right-0 z-[200] flex w-[min(300px,88vw)] flex-col bg-surf border-[0.5px] border-l border-bd-2",
 					"transition-transform duration-300 ease-[cubic-bezier(.4,0,.2,1)] md:hidden",
@@ -65,6 +84,7 @@ export const MobileMenu = ({
 						</Typography>
 					</Link>
 					<Button
+						ref={closeButtonRef}
 						onClick={onClose}
 						aria-label={t("landing.nav.close")}
 						title={t("landing.nav.close")}
@@ -80,7 +100,7 @@ export const MobileMenu = ({
 							key={link.href}
 							href={link.href}
 							onClick={onClose}
-							className="block border-b-[0.5px] border-bd-1 px-[22px] py-3 text-[15px] text-t-1 transition-colors hover:bg-surf-2"
+							className="block border-b-[0.5px] border-bd-1 px-[22px] py-3 text-[15px] text-t-1 transition-colors hover:bg-surf-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-acc/70"
 						>
 							{t(link.labelKey)}
 						</Link>
@@ -91,14 +111,14 @@ export const MobileMenu = ({
 					<Link
 						href={loginHref}
 						onClick={onClose}
-						className="flex h-10 w-full items-center justify-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent text-[13px] font-medium text-t-1 transition-colors hover:bg-surf-2"
+						className="flex h-10 w-full items-center justify-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent text-[13px] font-medium text-t-1 transition-colors hover:bg-surf-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 					>
 						{t("landing.nav.login")}
 					</Link>
 					<Link
 						href={startHref}
 						onClick={onClose}
-						className="flex h-10 w-full items-center justify-center gap-1.5 rounded-base bg-acc text-[13px] font-semibold text-white shadow-[0_2px_6px_rgba(34,84,211,0.25)] transition-opacity hover:opacity-[0.92]"
+						className="flex h-10 w-full items-center justify-center gap-1.5 rounded-base bg-acc text-[13px] font-semibold text-white shadow-[0_2px_6px_rgba(34,84,211,0.25)] transition-opacity hover:opacity-[0.92] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 					>
 						{t("landing.nav.start")}
 					</Link>

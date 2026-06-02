@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import { DEFAULT_LOCALE } from "@/i18n/locales";
+import { DEFAULT_LOCALE } from "@/i18n/locale-list";
 import { useDeckDue, useDeckStats } from "@/entities/deck";
 import type { DeckCard } from "@/entities/deck";
 import { useSuspenseReviewStats, useSuspenseReviewDue } from "@/entities/review";

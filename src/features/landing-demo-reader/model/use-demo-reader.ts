@@ -44,6 +44,8 @@ export const useDemoReader = ({ cardRef, wordsDict }: UseDemoReaderArgs) => {
 		mutationKey: landingKeys.wordLookup("demo"),
 		mutationFn: (word: string) =>
 			landingApi.lookupByWord({ normalized: word }),
+		// Silently ignore 401/network errors — the popup falls back to local dict data
+		onError: () => undefined,
 	});
 
 	const computePosition = (token: HTMLElement): PopupPosition | null => {

@@ -26,8 +26,9 @@ export const ResetStepEmailSent = ({
 }: ResetStepEmailSentProps) => {
 	const { t } = useI18n();
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => void onResend();
-return (
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => void onResend();
+
+	return (
 		<section aria-labelledby="reset-step-email-sent-title">
 			<div className="mb-[18px] inline-flex h-[52px] w-[52px] items-center justify-center rounded-[13px] bg-acc-bg text-acc">
 				<Mail size={24} strokeWidth={1.7} />

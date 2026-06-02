@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { AuthLang } from "@/entities/auth";
 import { useI18n } from "@/shared/lib/i18n";
 import {
@@ -30,7 +30,7 @@ export const useResetFlow = () => {
 	const tokenFromUrl = searchParams.get("token");
 
 	const [step, setStep] = useState<ResetStep>(tokenFromUrl ? 3 : 1);
-	const [isExpired, setIsExpired] = useState(() => !tokenFromUrl);
+	const [isExpiredState, setIsExpiredState] = useState(false);
 	const [email, setEmail] = useState("");
 	const [requestError, setRequestError] = useState<string | null>(null);
 	const [confirmError, setConfirmError] = useState<ResetErrorReason | null>(
@@ -42,19 +42,19 @@ export const useResetFlow = () => {
 	const confirmMutation = useConfirmReset();
 	const resendTimer = useResendTimer({ durationSeconds: 60 });
 
-	const goExpired = () => setIsExpired(true);
+	// Derive expiry synchronously: either the user triggered it (e.g. timer fired, submit failed)
+	// or token validation returned invalid/errored — avoids a useEffect one-render flash.
+	const isTokenInvalid =
+		tokenValidation.isError ||
+		(tokenValidation.data != null && !tokenValidation.data.valid);
+	const isExpired = isExpiredState || isTokenInvalid;
+
+	const goExpired = () => setIsExpiredState(true);
 
 	const goRequestReset = () => {
-		setIsExpired(false);
+		setIsExpiredState(false);
 		setStep(1);
 	};
-
-	useEffect(() => {
-		if (tokenValidation.data && !tokenValidation.data.valid) {
-			// eslint-disable-next-line react-hooks/set-state-in-effect -- transition UI to explicit expired state
-			goExpired();
-		}
-	}, [tokenValidation.data]);
 
 	const submitEmail = async (rawEmail: string) => {
 		setRequestError(null);

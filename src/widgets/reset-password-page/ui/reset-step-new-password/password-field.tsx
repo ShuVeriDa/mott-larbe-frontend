@@ -33,8 +33,9 @@ export const PasswordField = ({
 		onChange(e.currentTarget.value);
 	};
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setVisible((prev) => !prev);
-return (
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setVisible((prev) => !prev);
+
+	return (
 		<>
 			<Typography
 				tag="label"

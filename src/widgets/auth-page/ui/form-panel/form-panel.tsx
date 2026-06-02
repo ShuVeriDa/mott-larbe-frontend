@@ -31,9 +31,9 @@ export const FormPanel = ({
 	const { t } = useI18n();
 	const isLogin = mode === "login";
 
-	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+	const handleRegisterClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
 		onModeChange("register");
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+	const handleLoginClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
 		onModeChange("login");
 	return (
 		<section className="relative flex flex-col bg-panel px-12 py-10 max-[900px]:px-8 max-[900px]:pb-12 max-[900px]:pt-8 max-[640px]:px-5 max-[640px]:pb-9 max-[640px]:pt-[22px]">
@@ -70,7 +70,7 @@ export const FormPanel = ({
 							<>
 								{t("auth.crosslink.noAccount")}{" "}
 								<Button
-									onClick={handleClick}
+									onClick={handleRegisterClick}
 									title={t("auth.crosslink.signup")}
 									className="font-semibold text-acc-t hover:underline"
 									variant="bare"
@@ -82,7 +82,7 @@ export const FormPanel = ({
 							<>
 								{t("auth.crosslink.haveAccount")}{" "}
 								<Button
-									onClick={handleClick2}
+									onClick={handleLoginClick}
 									title={t("auth.crosslink.signin")}
 									className="font-semibold text-acc-t hover:underline"
 									variant="bare"

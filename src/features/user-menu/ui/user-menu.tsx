@@ -2,6 +2,7 @@
 
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { useMounted } from "@/shared/lib/mounted";
 import { Avatar } from "@/shared/ui/avatar";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
@@ -23,14 +24,50 @@ interface UserMenuProps {
 	bottomNav?: boolean;
 }
 
+const BottomNavSkeleton = () => (
+	<div className="flex flex-1 flex-col items-center justify-center gap-[3px]">
+		<div className="size-5 animate-pulse rounded-full bg-surf-3" />
+		<div className="h-2 w-8 animate-pulse rounded bg-surf-3" />
+	</div>
+);
+
+const SideNavSkeleton = ({ isCompactMode }: { isCompactMode: boolean }) => (
+	<div
+		className={cn(
+			"flex w-full items-center gap-2.5 px-3.5 py-1.5 pb-3",
+			isCompactMode && "max-[899px]:justify-center max-[899px]:gap-0 max-[899px]:px-0 max-[899px]:py-2",
+		)}
+	>
+		<div className="size-[30px] shrink-0 animate-pulse rounded-full bg-surf-3" />
+		<div
+			className={cn(
+				"min-w-0 flex-1 space-y-1.5",
+				isCompactMode && "max-[899px]:hidden",
+			)}
+		>
+			<div className="h-2.5 w-24 animate-pulse rounded bg-surf-3" />
+			<div className="h-2 w-32 animate-pulse rounded bg-surf-3" />
+		</div>
+	</div>
+);
+
 export const UserMenu = ({
 	isCompactMode = false,
 	bottomNav = false,
 }: UserMenuProps) => {
+	const mounted = useMounted();
 	const { user, open, setOpen, initials, displayName } = useUserMenu();
 	const { t } = useI18n();
 
-	if (!user) return null;
+	// useMounted returns false on SSR and on the first client render (via
+	// useSyncExternalStore's getServerSnapshot), so both sides render the
+	// skeleton — no hydration mismatch. After paint, mounted flips to true
+	// and the real menu appears.
+	if (!mounted || !user) {
+		return bottomNav
+			? <BottomNavSkeleton />
+			: <SideNavSkeleton isCompactMode={isCompactMode} />;
+	}
 
 	if (bottomNav) {
 		return (
@@ -39,7 +76,7 @@ export const UserMenu = ({
 					<Button
 						title={displayName}
 						className={cn(
-							"flex flex-1 px-0 flex-col h-full  items-center justify-center gap-[3px] text-[10px] transition-colors focus-visible:outline-none",
+							"flex flex-1 px-0 flex-col h-full items-center justify-center gap-[3px] text-[10px] transition-colors focus-visible:outline-none",
 							open ? "text-acc" : "text-t-3",
 						)}
 					>

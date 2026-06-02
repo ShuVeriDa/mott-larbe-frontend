@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useI18n } from "@/shared/lib/i18n";
 import { BrandMark } from "@/shared/ui/brand-mark";
 import { Typography } from "@/shared/ui/typography";
-import { AuthLanguageSwitcher } from "../auth-language-switcher";
+import { AuthLanguageSwitcher } from "@/features/auth-language-switcher";
 import { AuthThemeToggle } from "../auth-theme-toggle";
 
 interface AuthTopbarProps {

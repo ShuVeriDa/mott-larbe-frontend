@@ -34,7 +34,7 @@ const securityHeaders = [
 		key: "Content-Security-Policy",
 		value: [
 			"default-src 'self'",
-			"script-src 'self' 'unsafe-inline'", // fallback only; middleware overrides with nonce
+			`script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`, // fallback only; middleware overrides with nonce
 			"style-src 'self' 'unsafe-inline'",
 			"img-src 'self' data: blob: https:",
 			"font-src 'self'",
@@ -50,6 +50,9 @@ const nextConfig: NextConfig = {
 	allowedDevOrigins: isDev ? ["192.168.31.52"] : [],
 	trailingSlash: false,
 	reactCompiler: true,
+	env: {
+		NEXT_PUBLIC_BUILD_TIME: new Date().toISOString(),
+	},
 	cacheComponents: true,
 	experimental: {
 		optimizePackageImports: ["lucide-react", "framer-motion"],

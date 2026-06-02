@@ -118,11 +118,13 @@ export const LandingFooter = () => {
 					<Typography tag="span">{t("landing.footer.copy")}</Typography>
 					<div className="flex gap-1.5">
 						{SOCIALS.map(s => (
-							<Link
+							<a
 								key={s.label}
 								href={s.href}
 								aria-label={s.label}
-								className="flex h-8 w-8 items-center justify-center rounded-base border-[0.5px] border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex h-8 w-8 items-center justify-center rounded-base border-[0.5px] border-bd-2 bg-surf text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 							>
 								<svg
 									viewBox="0 0 24 24"
@@ -133,7 +135,7 @@ export const LandingFooter = () => {
 								>
 									<path d={s.path} />
 								</svg>
-							</Link>
+							</a>
 						))}
 					</div>
 				</div>

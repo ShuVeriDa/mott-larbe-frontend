@@ -62,14 +62,14 @@ export const LandingHero = ({ startHref }: LandingHeroProps) => {
 					<div className="flex flex-wrap gap-2.5 max-[640px]:flex-col">
 						<Link
 							href={startHref}
-							className="inline-flex h-[46px] items-center gap-1.5 rounded-[9px] bg-acc px-[22px] text-[14.5px] font-semibold text-white shadow-[0_2px_6px_rgba(34,84,211,0.25)] transition-opacity hover:opacity-[0.92] max-[640px]:w-full max-[640px]:justify-center"
+							className="inline-flex h-[46px] items-center gap-1.5 rounded-[9px] bg-acc px-[22px] text-[14.5px] font-semibold text-white shadow-[0_2px_6px_rgba(34,84,211,0.25)] transition-opacity hover:opacity-[0.92] max-[640px]:w-full max-[640px]:justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-2"
 						>
 							{t("landing.hero.start")}
 							<ArrowRight size={14} strokeWidth={1.8} />
 						</Link>
 						<Link
 							href="#how"
-							className="inline-flex h-[46px] items-center gap-1.5 rounded-[9px] border-[0.5px] border-bd-2 bg-transparent px-5 text-[14px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-2 max-[640px]:w-full max-[640px]:justify-center"
+							className="inline-flex h-[46px] items-center gap-1.5 rounded-[9px] border-[0.5px] border-bd-2 bg-transparent px-5 text-[14px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-2 max-[640px]:w-full max-[640px]:justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 						>
 							<PlayCircle size={14} strokeWidth={1.5} />
 							{t("landing.hero.how")}

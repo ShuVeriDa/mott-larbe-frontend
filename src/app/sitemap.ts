@@ -53,14 +53,18 @@ const fetchPublicTexts = async (): Promise<SitemapText[]> => {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const entries: MetadataRoute.Sitemap = [];
 
-	// Static routes — one entry per locale
+	// Static routes — one entry per locale.
+	// BUILD_TIME is injected at build time so the date is stable across requests
+	// and doesn't mislead crawlers into thinking content changes every minute.
+	const buildTime = new Date(process.env.NEXT_PUBLIC_BUILD_TIME ?? Date.now());
+
 	for (const { path, priority, changeFrequency } of STATIC_ROUTES) {
 		const localePath = path === "/" ? "" : path;
 		const { languages } = buildSeoAlternates(LOCALES[0], localePath);
 		for (const locale of LOCALES) {
 			entries.push({
 				url: `${SITE_URL}/${locale}${localePath}`,
-				lastModified: new Date(),
+				lastModified: buildTime,
 				changeFrequency,
 				priority,
 				alternates: { languages },

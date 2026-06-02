@@ -62,6 +62,7 @@ const forwardSetCookies = (from: Response, to: NextResponse): void => {
 export const proxy = async (request: NextRequest) => {
 	const { pathname } = request.nextUrl;
 
+	if (pathname.includes("/.well-known/")) return NextResponse.next();
 	// Locale redirect for paths without a locale prefix
 	const matchedLocale = LOCALES.find(
 		(locale) =>
@@ -121,6 +122,6 @@ export const proxy = async (request: NextRequest) => {
 
 export const config = {
 	matcher: [
-		"/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|opengraph-image|twitter-image|manifest|icon|apple-icon|sw\\.js).*)",
+		"/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|opengraph-image|twitter-image|manifest|icon|apple-icon|sw\\.js|\\.well-known).*)",
 	],
 };

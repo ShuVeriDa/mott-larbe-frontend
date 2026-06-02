@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Golos_Text, Geist_Mono, Inter, Lora, Merriweather, PT_Serif, Source_Serif_4 } from "next/font/google";
-import { headers } from "next/headers";
 import { QueryProvider } from "@/shared/ui/query-provider";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
 import { TooltipProvider } from "@/shared/ui/tooltip";
@@ -104,7 +103,7 @@ export const metadata: Metadata = {
 		template: "%s | Mott Larbe",
 		default: "Mott Larbe — изучай чеченский через чтение",
 	},
-	description: "Языковая платформа для изучения чеченского языка: реальные тексты с переводом по клику, морфологический разбор, личный словарь и интервальные повторения. Уровни A1–C2.",
+	description: "Языковая платформа для изучения чеченского: тексты с переводом по клику, морфологический разбор, личный словарь и интервальные повторения. Уровни A1–C2.",
 	keywords: ["чеченский язык", "изучение чеченского", "нохчийн мотт", "Mott Larbe", "чтение на чеченском"],
 	authors: [{ name: "Mott Larbe" }],
 	creator: "Mott Larbe",
@@ -112,6 +111,7 @@ export const metadata: Metadata = {
 		siteName: "Mott Larbe",
 		type: "website",
 		locale: "ru_RU",
+		images: [{ url: "/opengraph-image.png", width: 1200, height: 630 }],
 	},
 	manifest: "/manifest.webmanifest",
 	appleWebApp: {
@@ -139,37 +139,36 @@ export const metadata: Metadata = {
 	}),
 };
 
-const RootLayout = async ({
-	children,
-}: Readonly<{
-	children: ReactNode;
-}>) => {
-	const hdrs = await headers();
-	const locale = hdrs.get("x-locale") ?? "ru";
-	const nonce = hdrs.get("x-nonce") ?? undefined;
+const fontVars = cn(
+	"h-full antialiased",
+	golosText.variable,
+	playfairDisplay.variable,
+	geistMono.variable,
+	lora.variable,
+	merriweather.variable,
+	ptSerif.variable,
+	sourceSerif4.variable,
+	"font-sans",
+	inter.variable,
+	playfairDisplayHeading.variable,
+);
 
-	return (
-		<html
-			lang={locale}
-			className={cn("h-full", "antialiased", golosText.variable, playfairDisplay.variable, geistMono.variable, lora.variable, merriweather.variable, ptSerif.variable, sourceSerif4.variable, "font-sans", inter.variable, playfairDisplayHeading.variable)}
-			suppressHydrationWarning
-		>
-			<body className="min-h-full flex flex-col md:overflow-hidden" suppressHydrationWarning>
-				<script
-					nonce={nonce}
-					type="application/ld+json"
-					dangerouslySetInnerHTML={{ __html: JSON.stringify(ROOT_JSON_LD).replace(/</g, "\\u003c") }}
-				/>
-				<ThemeProvider nonce={nonce}>
-					<QueryProvider>
-						<PageAnalyticsProvider />
+const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => (
+	<html lang="ru" className={fontVars} suppressHydrationWarning>
+		<body className="min-h-full flex flex-col md:overflow-hidden" suppressHydrationWarning>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(ROOT_JSON_LD).replace(/</g, "\\u003c") }}
+			/>
+			<ThemeProvider>
+				<QueryProvider>
+					<PageAnalyticsProvider />
 					<SwRegister />
-						<TooltipProvider>{children}</TooltipProvider>
-					</QueryProvider>
-				</ThemeProvider>
-			</body>
-		</html>
-	);
-};
+					<TooltipProvider>{children}</TooltipProvider>
+				</QueryProvider>
+			</ThemeProvider>
+		</body>
+	</html>
+);
 
 export default RootLayout;

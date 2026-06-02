@@ -21,24 +21,25 @@ export const DemoToken = ({
 	onSelect,
 	children,
 }: DemoTokenProps) => {
-	const handle = (e: MouseEvent<HTMLSpanElement>) => {
+	const handleClick = (e: MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		onSelect(word, e.currentTarget);
 	};
 
-		const handleKeyDown: NonNullable<ComponentProps<"span">["onKeyDown"]> = (e) => {
-				if (e.key === "Enter" || e.key === " ") {
-					e.preventDefault();
-					onSelect(word, e.currentTarget as HTMLElement);
-				}
-			};
-return (
+	const handleKeyDown: NonNullable<ComponentProps<"span">["onKeyDown"]> = (e) => {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			onSelect(word, e.currentTarget as HTMLElement);
+		}
+	};
+
+	return (
 		<Typography tag="span"
 			data-demo-token
 			data-word={word}
 			role="button"
 			tabIndex={0}
-			onClick={handle}
+			onClick={handleClick}
 			onKeyDown={handleKeyDown}
 			className={cn(
 				"inline cursor-pointer rounded-[3px] px-[2px] py-[1px] transition-colors hover:bg-acc/10",

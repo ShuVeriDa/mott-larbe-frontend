@@ -15,8 +15,9 @@ export const AuthThemeToggle = () => {
 
 	const dark = mounted && resolvedTheme === "dark";
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setTheme(dark ? "light" : "dark");
-return (
+	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => setTheme(dark ? "light" : "dark");
+
+	return (
 		<Button
 			onClick={handleClick}
 			aria-label={t("auth.resetPassword.theme")}

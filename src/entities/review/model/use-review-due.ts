@@ -13,4 +13,5 @@ export const useSuspenseReviewDue = (limit: number) =>
 	useSuspenseQuery({
 		queryKey: reviewKeys.due(limit),
 		queryFn: () => reviewApi.due(limit),
+		networkMode: "offlineFirst",
 	});

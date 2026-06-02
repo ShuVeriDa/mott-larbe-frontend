@@ -37,7 +37,7 @@ export const LandingStats = () => {
 	return (
 		<section
 			className="border-[0.5px] border-y border-bd-1 bg-surf-2 py-7"
-			aria-label="Stats"
+			aria-label={t("landing.stats.ariaLabel")}
 		>
 			<div className="mx-auto w-full max-w-[1120px] px-7 max-[900px]:px-[22px] max-[640px]:px-[18px]">
 				<div className="grid grid-cols-4 gap-5 max-[900px]:grid-cols-2 max-[900px]:gap-6 max-[380px]:grid-cols-1">

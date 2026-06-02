@@ -6,20 +6,25 @@ export interface SidebarSectionProps {
 	title: string;
 	children: ReactNode;
 	className?: string;
+	action?: ReactNode;
 }
 
 export const SidebarSection = ({
 	title,
 	children,
 	className,
+	action,
 }: SidebarSectionProps) => (
 	<div className={className}>
-		<Typography
-			tag="h3"
-			className="mb-2 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3"
-		>
-			{title}
-		</Typography>
+		<div className="mb-2 flex items-center justify-between">
+			<Typography
+				tag="h3"
+				className="text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3"
+			>
+				{title}
+			</Typography>
+			{action}
+		</div>
 		{children}
 	</div>
 );
