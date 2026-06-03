@@ -586,6 +586,7 @@
       }
     },
     "contribute": "Участие",
+    "myTexts": "Мои тексты",
     "suggestions": "Мои правки",
     "suggestText": "Предложить текст"
   },
@@ -6541,6 +6542,7 @@
     "title": "Мои предложения текстов",
     "empty": "Вы ещё не отправляли предложений текстов",
     "status": {
+      "DRAFT": "Черновик",
       "PENDING": "На рассмотрении",
       "APPROVED": "Одобрено",
       "REJECTED": "Отклонено"
@@ -6567,9 +6569,11 @@
       "total": "Всего",
       "pending": "На рассмотрении",
       "approved": "Одобрено",
-      "rejected": "Отклонено"
+      "rejected": "Отклонено",
+      "draft": "черновики"
     },
     "status": {
+      "DRAFT": "Черновик",
       "PENDING": "На рассмотрении",
       "APPROVED": "Одобрено",
       "REJECTED": "Отклонено"
@@ -6587,7 +6591,18 @@
       "sourceUrl": "Ссылка",
       "content": "Контент",
       "comment": "Комментарий",
-      "reviewComment": "Комментарий редактора"
+      "reviewComment": "Комментарий редактора",
+      "license": "Лицензия"
+    },
+    "submissionType": {
+      "ORIGINAL": "Личное произведение",
+      "EXTERNAL": "Чужой текст"
+    },
+    "licenseType": {
+      "PUBLIC_DOMAIN": "Общественное достояние",
+      "CC": "Creative Commons",
+      "PERMISSION": "С разрешения автора",
+      "UNKNOWN": "Неизвестно"
     },
     "approve": "Одобрить",
     "reject": "Отклонить",
@@ -6627,6 +6642,119 @@
       "ru": "Русский",
       "en": "Английский",
       "other": "Другой"
+    }
+  },
+  "myTexts": {
+    "meta": {
+      "title": "Мои тексты | Mott Larbe",
+      "description": "Личная библиотека текстов",
+      "createTitle": "Добавить текст | Mott Larbe",
+      "editTitle": "Редактировать текст | Mott Larbe",
+      "readerTitle": "Читать | Mott Larbe",
+      "submitTitle": "Подать на публикацию | Mott Larbe",
+      "submitEditTitle": "Редактировать заявку | Mott Larbe"
+    },
+    "title": "Мои тексты",
+    "empty": "Нет текстов",
+    "emptyAll": "У вас пока нет добавленных текстов",
+    "emptyOriginal": "У вас пока нет личных произведений",
+    "emptyExternal": "У вас пока нет текстов других авторов",
+    "createFirst": "Добавить первый текст",
+    "createOriginal": "Добавить своё произведение",
+    "createExternal": "Добавить текст автора",
+    "create": "Добавить",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "deleteAriaLabel": "Удалить текст",
+    "saving": "Сохранение…",
+    "cancel": "Отмена",
+    "showingOf": "Показано {shown} из {total}",
+    "tabs": {
+      "all": "Все",
+      "myWorks": "Мои работы",
+      "external": "Чужие тексты"
+    },
+    "status": {
+      "draft": "Черновик",
+      "pending": "На рассмотрении",
+      "approved": "Опубликован",
+      "rejected": "Отклонён"
+    },
+    "type": {
+      "original": "Моё произведение",
+      "originalDesc": "Текст, написанный вами",
+      "external": "Чужой текст",
+      "externalDesc": "Текст другого автора"
+    },
+    "fields": {
+      "title": "Название",
+      "titlePlaceholder": "Введите название",
+      "type": "Тип",
+      "author": "Автор",
+      "authorPlaceholder": "Имя автора",
+      "language": "Язык",
+      "languageOptions": {
+        "che": "Нохчийн",
+        "ru": "Русский",
+        "ar": "Арабский",
+        "en": "Английский"
+      },
+      "sourceUrl": "Ссылка на источник",
+      "licenseType": "Лицензия",
+      "licenseTypePlaceholder": "Выберите лицензию",
+      "publicationYear": "Год публикации",
+      "comment": "Комментарий",
+      "optional": "(необязательно)"
+    },
+    "license": {
+      "publicDomain": "Общественное достояние",
+      "cc": "Creative Commons",
+      "permission": "С разрешения автора",
+      "unknown": "Неизвестно"
+    },
+    "autoSave": {
+      "saving": "Сохранение…",
+      "saved": "Сохранено",
+      "error": "Не удалось сохранить"
+    },
+    "validation": {
+      "titleRequired": "Введите название",
+      "sourceUrlInvalid": "Ссылка должна начинаться с http:// или https://",
+      "licenseRequired": "Выберите лицензию для чужого текста",
+      "contentTooLarge": "Текст слишком большой (более 400 КБ). Пожалуйста, сократите."
+    },
+    "editor": {
+      "placeholder": "Начните вводить текст…"
+    },
+    "reader": {
+      "ariaLabel": "Содержимое текста"
+    },
+    "deleteConfirmTitle": "Удалить текст?",
+    "deleteConfirmBody": "Это действие нельзя отменить. Текст будет удалён навсегда.",
+    "deleteConfirm": "Удалить",
+    "deleteError": "Не удалось удалить текст",
+    "editSuccess": "Текст обновлён",
+    "editError": "Не удалось сохранить",
+    "createSuccess": "Текст добавлен",
+    "createError": "Не удалось добавить текст",
+    "submit": {
+      "new": "Подать на публикацию",
+      "createTitle": "Новая заявка",
+      "editTitle": "Редактировать заявку",
+      "saveDraft": "Сохранить черновик",
+      "sendToModeration": "Отправить на модерацию",
+      "draftSaved": "Черновик сохранён",
+      "saveError": "Не удалось сохранить",
+      "error": "Не удалось отправить",
+      "success": "Заявка отправлена на рассмотрение",
+      "confirmTitle": "Отправить на модерацию?",
+      "confirmBody": "После отправки вы не сможете редактировать заявку до решения администрации.",
+      "copyFromMyTexts": "Скопировать из моих текстов",
+      "copyPickerTitle": "Выберите текст для копирования"
+    },
+    "rejection": {
+      "label": "Причина отклонения",
+      "resubmit": "Исправить и отправить снова"
     }
   }
 }

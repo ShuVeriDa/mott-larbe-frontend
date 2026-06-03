@@ -1,5 +1,6 @@
 import { ReviewListItem, ReviewListItemSkeleton } from "@/shared/ui/review-list-item";
 import type { TextSubmission } from "@/features/text-submission";
+import { TextSubmissionSubmissionTypeBadge } from "./text-submission-submission-type-badge";
 
 interface TextSubmissionListItemProps {
 	item: TextSubmission;
@@ -9,7 +10,7 @@ interface TextSubmissionListItemProps {
 }
 
 export const TextSubmissionListItem = ({
-	item, isActive, onSelect,
+	item, isActive, onSelect, t,
 }: TextSubmissionListItemProps) => (
 	<ReviewListItem
 		id={item.id}
@@ -18,6 +19,12 @@ export const TextSubmissionListItem = ({
 		status={item.status}
 		isActive={isActive}
 		onSelect={onSelect}
+		rightSlot={
+			<TextSubmissionSubmissionTypeBadge
+				submissionType={item.submissionType}
+				t={t}
+			/>
+		}
 	/>
 );
 

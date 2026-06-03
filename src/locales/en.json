@@ -586,6 +586,7 @@
       }
     },
     "contribute": "Contribute",
+    "myTexts": "My Texts",
     "suggestions": "My suggestions",
     "suggestText": "Suggest a text"
   },
@@ -6544,6 +6545,7 @@
     "title": "My text submissions",
     "empty": "You haven't submitted any texts yet",
     "status": {
+      "DRAFT": "Draft",
       "PENDING": "Pending review",
       "APPROVED": "Approved",
       "REJECTED": "Rejected"
@@ -6570,9 +6572,11 @@
       "total": "Total",
       "pending": "Pending",
       "approved": "Approved",
-      "rejected": "Rejected"
+      "rejected": "Rejected",
+      "draft": "drafts"
     },
     "status": {
+      "DRAFT": "Draft",
       "PENDING": "Pending",
       "APPROVED": "Approved",
       "REJECTED": "Rejected"
@@ -6590,7 +6594,18 @@
       "sourceUrl": "Link",
       "content": "Content",
       "comment": "Comment",
-      "reviewComment": "Editor's comment"
+      "reviewComment": "Editor's comment",
+      "license": "License"
+    },
+    "submissionType": {
+      "ORIGINAL": "Original work",
+      "EXTERNAL": "External text"
+    },
+    "licenseType": {
+      "PUBLIC_DOMAIN": "Public domain",
+      "CC": "Creative Commons",
+      "PERMISSION": "With author's permission",
+      "UNKNOWN": "Unknown"
     },
     "approve": "Approve",
     "reject": "Reject",
@@ -6630,6 +6645,119 @@
       "ru": "Russian",
       "en": "English",
       "other": "Other"
+    }
+  },
+  "myTexts": {
+    "meta": {
+      "title": "My Texts | Mott Larbe",
+      "description": "Personal text library",
+      "createTitle": "Add Text | Mott Larbe",
+      "editTitle": "Edit Text | Mott Larbe",
+      "readerTitle": "Read | Mott Larbe",
+      "submitTitle": "Submit for Publication | Mott Larbe",
+      "submitEditTitle": "Edit Submission | Mott Larbe"
+    },
+    "title": "My Texts",
+    "empty": "No texts",
+    "emptyAll": "You haven't added any texts yet",
+    "emptyOriginal": "You haven't added any original works yet",
+    "emptyExternal": "You haven't added any texts by other authors yet",
+    "createFirst": "Add your first text",
+    "createOriginal": "Add an original work",
+    "createExternal": "Add a text by another author",
+    "create": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteAriaLabel": "Delete text",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "showingOf": "Showing {shown} of {total}",
+    "tabs": {
+      "all": "All",
+      "myWorks": "My Works",
+      "external": "External"
+    },
+    "status": {
+      "draft": "Draft",
+      "pending": "Under review",
+      "approved": "Published",
+      "rejected": "Rejected"
+    },
+    "type": {
+      "original": "My original work",
+      "originalDesc": "A text written by you",
+      "external": "External text",
+      "externalDesc": "A text by another author"
+    },
+    "fields": {
+      "title": "Title",
+      "titlePlaceholder": "Enter title",
+      "type": "Type",
+      "author": "Author",
+      "authorPlaceholder": "Author name",
+      "language": "Language",
+      "languageOptions": {
+        "che": "Chechen",
+        "ru": "Russian",
+        "ar": "Arabic",
+        "en": "English"
+      },
+      "sourceUrl": "Source URL",
+      "licenseType": "License",
+      "licenseTypePlaceholder": "Select license",
+      "publicationYear": "Publication year",
+      "comment": "Comment",
+      "optional": "(optional)"
+    },
+    "license": {
+      "publicDomain": "Public domain",
+      "cc": "Creative Commons",
+      "permission": "With author's permission",
+      "unknown": "Unknown"
+    },
+    "autoSave": {
+      "saving": "Saving…",
+      "saved": "Saved",
+      "error": "Auto-save failed"
+    },
+    "validation": {
+      "titleRequired": "Please enter a title",
+      "sourceUrlInvalid": "URL must start with http:// or https://",
+      "licenseRequired": "Please select a license for external texts",
+      "contentTooLarge": "Content is too large (over 400 KB). Please shorten it."
+    },
+    "editor": {
+      "placeholder": "Start typing…"
+    },
+    "reader": {
+      "ariaLabel": "Text content"
+    },
+    "deleteConfirmTitle": "Delete text?",
+    "deleteConfirmBody": "This action cannot be undone. The text will be permanently deleted.",
+    "deleteConfirm": "Delete",
+    "deleteError": "Failed to delete text",
+    "editSuccess": "Text updated",
+    "editError": "Failed to save",
+    "createSuccess": "Text added",
+    "createError": "Failed to add text",
+    "submit": {
+      "new": "Submit for publication",
+      "createTitle": "New submission",
+      "editTitle": "Edit submission",
+      "saveDraft": "Save draft",
+      "sendToModeration": "Send for review",
+      "draftSaved": "Draft saved",
+      "saveError": "Failed to save",
+      "error": "Failed to submit",
+      "success": "Submission sent for review",
+      "confirmTitle": "Send for review?",
+      "confirmBody": "After submitting you won't be able to edit until a decision is made.",
+      "copyFromMyTexts": "Copy from my texts",
+      "copyPickerTitle": "Select a text to copy"
+    },
+    "rejection": {
+      "label": "Rejection reason",
+      "resubmit": "Fix and resubmit"
     }
   }
 }

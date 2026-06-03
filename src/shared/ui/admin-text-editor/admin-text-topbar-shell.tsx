@@ -24,6 +24,10 @@ interface AdminTextTopbarShellProps {
 	showSavedCheck?: boolean;
 	leftAfterBreadcrumb?: ReactNode;
 	rightBeforeStatus?: ReactNode;
+	/** Override the back/breadcrumb href. Defaults to /{lang}/admin/texts */
+	backHref?: string;
+	/** Override the breadcrumb section label. Defaults to admin.texts.title */
+	backLabel?: string;
 	onSaveDraft: () => void;
 	onPrimaryAction: () => void;
 	onToggleMetaPanel: () => void;
@@ -46,11 +50,15 @@ export const AdminTextTopbarShell = ({
 	showSavedCheck = false,
 	leftAfterBreadcrumb,
 	rightBeforeStatus,
+	backHref,
+	backLabel,
 	onSaveDraft,
 	onPrimaryAction,
 	onToggleMetaPanel,
 }: AdminTextTopbarShellProps) => {
 	const { t, lang } = useI18n();
+	const resolvedBackHref = backHref ?? `/${lang}/admin/texts`;
+	const resolvedBackLabel = backLabel ?? t("admin.texts.title");
 	const handleToggleMetaPanel: NonNullable<
 		ComponentProps<"button">["onClick"]
 	> = () => onToggleMetaPanel();
@@ -59,7 +67,7 @@ export const AdminTextTopbarShell = ({
 		<header className="flex min-h-[52px] items-center gap-2 border-b border-bd-1 bg-surf px-5 transition-colors max-sm:gap-1.5 max-sm:px-3.5">
 			<div className="flex min-w-0 flex-1 items-center gap-2">
 				<Link
-					href={`/${lang}/admin/texts`}
+					href={resolvedBackHref}
 					className="flex h-7 w-7 shrink-0 items-center justify-center rounded-base border border-bd-2 bg-surf text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1"
 					aria-label={backAriaLabel}
 				>
@@ -71,10 +79,10 @@ export const AdminTextTopbarShell = ({
 					aria-label="breadcrumb"
 				>
 					<Link
-						href={`/${lang}/admin/texts`}
+						href={resolvedBackHref}
 						className="shrink-0 transition-colors hover:text-t-2 max-[600px]:hidden"
 					>
-						{t("admin.texts.title")}
+						{resolvedBackLabel}
 					</Link>
 					<Typography
 						tag="span"

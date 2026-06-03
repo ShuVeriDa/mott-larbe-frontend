@@ -4,12 +4,14 @@ import { Typography } from "@/shared/ui/typography";
 import type { TextSubmission, TextSubmissionStatus } from "@/features/text-submission";
 
 const statusBar: Record<TextSubmissionStatus, string> = {
+	DRAFT: "bg-surf-3",
 	PENDING: "bg-yellow-400",
 	APPROVED: "bg-green-500",
 	REJECTED: "bg-red-400",
 };
 
 const statusLabel: Record<TextSubmissionStatus, string> = {
+	DRAFT: "text-t-3",
 	PENDING: "text-yellow-700 dark:text-yellow-400",
 	APPROVED: "text-green-700 dark:text-green-400",
 	REJECTED: "text-red-600 dark:text-red-400",

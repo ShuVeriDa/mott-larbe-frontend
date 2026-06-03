@@ -5,6 +5,8 @@ export interface AdminStats {
 	pending: number;
 	approved: number;
 	rejected: number;
+	// Optional: shown as an informational chip (not included in total for admin queue)
+	draft?: number;
 }
 
 interface AdminStatsBarProps {
@@ -30,7 +32,7 @@ export const AdminStatsBar = ({ stats, i18nPrefix, t }: AdminStatsBarProps) => {
 	}));
 
 	return (
-		<div className="flex shrink-0 items-center gap-5 border-b border-bd-1 bg-surf px-5 py-2.5 max-sm:px-3">
+		<div className="flex shrink-0 flex-wrap items-center gap-5 border-b border-bd-1 bg-surf px-5 py-2.5 max-sm:px-3">
 			{items.map(({ key, value, color }) => (
 				<div key={key} className="flex items-baseline gap-1.5">
 					<Typography tag="span" className={`font-display text-[15px] font-bold ${color}`}>
@@ -41,6 +43,17 @@ export const AdminStatsBar = ({ stats, i18nPrefix, t }: AdminStatsBarProps) => {
 					</Typography>
 				</div>
 			))}
+			{/* Draft count — informational only, drafts are NOT in the admin queue */}
+			{stats.draft !== undefined && stats.draft > 0 && (
+				<div className="flex items-baseline gap-1.5 rounded-full bg-surf-2 px-2.5 py-0.5">
+					<Typography tag="span" className="font-display text-[13px] font-semibold text-t-3">
+						{stats.draft}
+					</Typography>
+					<Typography tag="span" className="text-[11px] text-t-4">
+						{t(`${i18nPrefix}.stats.draft`)}
+					</Typography>
+				</div>
+			)}
 		</div>
 	);
 };

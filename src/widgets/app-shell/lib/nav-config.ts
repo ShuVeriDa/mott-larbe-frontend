@@ -3,6 +3,7 @@ import {
 	BookPlus,
 	ChartNoAxesCombined,
 	House,
+	Library,
 	Pencil,
 	RefreshCw,
 	WholeWord,
@@ -53,6 +54,11 @@ export const buildNavSections = (lang: string): NavSection[] => [
 	{
 		titleKey: "nav.contribute",
 		items: [
+			{
+				href: () => `/${lang}/my-texts`,
+				icon: Library,
+				labelKey: "nav.myTexts",
+			},
 			{
 				href: () => `/${lang}/suggestions`,
 				icon: Pencil,

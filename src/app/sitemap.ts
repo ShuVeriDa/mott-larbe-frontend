@@ -3,6 +3,10 @@ import { LOCALES } from "@/i18n/locales";
 import { API_URL } from "@/shared/config";
 import { SITE_URL, buildAlternates as buildSeoAlternates } from "@/shared/lib/seo";
 
+// EXCLUDED routes (owner-private, noindexed — must NEVER be added here):
+//   /my-texts/**  — private user text library (robots: noindex set in page metadata)
+// Adding these would mislead crawlers into indexing private user content.
+
 const STATIC_ROUTES: Array<{ path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }> = [
 	{ path: "/",             priority: 1.0, changeFrequency: "daily" },
 	{ path: "/texts",        priority: 0.9, changeFrequency: "daily" },

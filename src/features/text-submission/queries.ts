@@ -7,6 +7,7 @@ import type {
 	GetMyTextSubmissionsParams,
 	GetTextSubmissionsParams,
 	ReviewTextSubmissionDto,
+	UpdateTextSubmissionDto,
 } from "./types";
 
 export const textSubmissionKeys = {
@@ -16,8 +17,12 @@ export const textSubmissionKeys = {
 	list: (params?: GetTextSubmissionsParams) =>
 		[...textSubmissionKeys.all, "list", params] as const,
 	detail: (id: string) => [...textSubmissionKeys.all, "detail", id] as const,
+	// Owner-scoped draft detail — separate cache slot from admin detail
+	ownedDetail: (id: string) => [...textSubmissionKeys.all, "owned-detail", id] as const,
 	stats: () => [...textSubmissionKeys.all, "stats"] as const,
 };
+
+// ─── Existing hooks — unchanged ────────────────────────────────────────────
 
 export const useMyTextSubmissions = (params?: GetMyTextSubmissionsParams) =>
 	useQuery({
@@ -67,6 +72,63 @@ export const useReviewTextSubmission = () => {
 			qc.setQueryData(textSubmissionKeys.detail(data.id), data);
 			qc.invalidateQueries({ queryKey: textSubmissionKeys.list() });
 			qc.invalidateQueries({ queryKey: textSubmissionKeys.stats() });
+		},
+	});
+};
+
+// ─── New hooks (owner draft lifecycle) ────────────────────────────────────
+
+// Owner-scoped single draft/rejected submission with full content.
+// Defense in depth: caller should redirect if data.userId !== currentUserId.
+// staleTime: 30s — draft status changes frequently.
+export const useOwnedTextSubmission = (id: string) =>
+	useQuery({
+		queryKey: textSubmissionKeys.ownedDetail(id),
+		queryFn: () => textSubmissionsApi.getOwnedById(id),
+		enabled: !!id,
+		staleTime: 30_000,
+	});
+
+export const useUpdateTextSubmission = () => {
+	const qc = useQueryClient();
+	return useMutation({
+		mutationFn: ({ id, dto }: { id: string; dto: UpdateTextSubmissionDto }) =>
+			textSubmissionsApi.update(id, dto),
+		// retry: 0 — write ops must not be silently retried
+		retry: 0,
+		onSuccess: (data) => {
+			qc.setQueryData(textSubmissionKeys.ownedDetail(data.id), data);
+			qc.invalidateQueries({ queryKey: textSubmissionKeys.mine() });
+		},
+	});
+};
+
+export const useDeleteTextSubmission = () => {
+	const qc = useQueryClient();
+	return useMutation({
+		mutationFn: (id: string) => textSubmissionsApi.remove(id),
+		retry: 0,
+		onSuccess: (_data, id) => {
+			qc.removeQueries({ queryKey: textSubmissionKeys.ownedDetail(id) });
+			qc.invalidateQueries({ queryKey: textSubmissionKeys.mine() });
+		},
+	});
+};
+
+export const useSubmitTextSubmission = () => {
+	const qc = useQueryClient();
+	return useMutation({
+		mutationFn: (id: string) => textSubmissionsApi.submit(id),
+		retry: 0,
+		onSuccess: (data) => {
+			qc.setQueryData(textSubmissionKeys.ownedDetail(data.id), data);
+			qc.invalidateQueries({ queryKey: textSubmissionKeys.mine() });
+			qc.invalidateQueries({ queryKey: textSubmissionKeys.stats() });
+		},
+		// Re-fetch actual status on error so UI reflects real server state
+		onError: (_err, id) => {
+			qc.invalidateQueries({ queryKey: textSubmissionKeys.ownedDetail(id) });
+			qc.invalidateQueries({ queryKey: textSubmissionKeys.mine() });
 		},
 	});
 };
