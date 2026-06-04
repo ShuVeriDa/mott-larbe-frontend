@@ -98,6 +98,10 @@ export const useReaderTopbar = (
 		Boolean,
 	);
 
+	const submittedByName = data.submittedBy
+		? [data.submittedBy.name, data.submittedBy.surname].filter(Boolean).join(" ") || data.submittedBy.username
+		: null;
+
 	return {
 		t,
 		bookmarking,
@@ -107,6 +111,7 @@ export const useReaderTopbar = (
 		handleToggleWordPanel,
 		handleBookmark,
 		metaParts,
+		submittedByName,
 		isCompleted,
 		completing,
 		handleMarkComplete,

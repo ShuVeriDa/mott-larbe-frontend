@@ -32,6 +32,14 @@ const ReaderAiHistorySheet = dynamic(() =>
 export interface ReaderPageProps {
 	textId: string;
 	pageNumber: number;
+	/** Route base for navigation. Default "reader". Pass "my-texts" for UserText. */
+	routeBase?: string;
+	/** Override API function for fetching reader context. Default: /reader-context. */
+	apiFn?: (textId: string, pageNumber: number) => Promise<import("@/entities/reader-context").ReaderContextResponse>;
+	/** Override back button href. Default: /{lang}/texts */
+	backHref?: string;
+	/** Override back button label. */
+	backLabel?: string;
 }
 
 interface ReaderPageInnerProps {
@@ -53,6 +61,8 @@ interface ReaderPageInnerProps {
 	handleToggleBookmarks: () => void;
 	handleToggleAiHistory: () => void;
 	handleCloseRail: () => void;
+	backHref?: string;
+	backLabel?: string;
 }
 
 const ReaderPageInner = ({
@@ -74,6 +84,8 @@ const ReaderPageInner = ({
 	handleToggleBookmarks,
 	handleToggleAiHistory,
 	handleCloseRail,
+	backHref,
+	backLabel,
 }: ReaderPageInnerProps) => (
 	<>
 		{!focusMode.active && (
@@ -94,6 +106,8 @@ const ReaderPageInner = ({
 				onToggleFocusMode={focusMode.toggle}
 				aiHistoryOpen={aiHistoryOpen}
 				onToggleAiHistory={handleToggleAiHistory}
+				backHref={backHref}
+				backLabel={backLabel}
 			/>
 		)}
 			<ReaderLayout
@@ -145,7 +159,7 @@ const ReaderPageInner = ({
 		</>
 );
 
-export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
+export const ReaderPage = ({ textId, pageNumber, routeBase = "reader", apiFn, backHref, backLabel }: ReaderPageProps) => {
 	const {
 		data,
 		isLoading,
@@ -165,7 +179,7 @@ export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
 		handleToggleBookmarks,
 		handleToggleAiHistory,
 		handleCloseRail,
-	} = useReaderPage(textId, pageNumber);
+	} = useReaderPage(textId, pageNumber, routeBase, apiFn);
 
 	if (isLoading) return <ReaderLoading />;
 	if (isError || !data) return <ReaderError />;
@@ -190,6 +204,8 @@ export const ReaderPage = ({ textId, pageNumber }: ReaderPageProps) => {
 			handleToggleBookmarks={handleToggleBookmarks}
 			handleToggleAiHistory={handleToggleAiHistory}
 			handleCloseRail={handleCloseRail}
+			backHref={backHref}
+			backLabel={backLabel}
 		/>
 	);
 };

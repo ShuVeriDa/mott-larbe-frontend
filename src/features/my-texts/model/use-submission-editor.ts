@@ -19,6 +19,11 @@ import {
 const EMPTY_DOC: TipTapDoc = { type: "doc", content: [] };
 const CONTENT_WARN_BYTES = 400_000;
 
+export interface SubmissionPageContent {
+  doc: TipTapDoc;
+  title: string;
+}
+
 export interface SubmissionFormFieldErrors {
   title?: string;
   sourceUrl?: string;
@@ -37,11 +42,24 @@ export interface UseSubmissionEditorProps {
     submissionType: SubmissionType;
     author: string;
     sourceUrl: string;
-    contentRich: TipTapDoc;
+    pages: SubmissionPageContent[];
   }>;
   lang: string;
   onSaved?: (id: string) => void;
 }
+
+const submissionToPages = (submission: TextSubmission): SubmissionPageContent[] => {
+  if (submission.pages && submission.pages.length > 0) {
+    return [...submission.pages]
+      .sort((a, b) => a.pageNumber - b.pageNumber)
+      .map((p) => ({ doc: p.contentRich, title: p.title ?? "" }));
+  }
+  // Legacy fallback: single contentRich field
+  if (submission.contentRich) {
+    return [{ doc: submission.contentRich, title: "" }];
+  }
+  return [{ doc: EMPTY_DOC, title: "" }];
+};
 
 export const useSubmissionEditor = ({
   mode,
@@ -86,17 +104,16 @@ export const useSubmissionEditor = ({
   const [publicationYear, setPublicationYear] = useState<string>(
     () => existingDraft?.publicationYear?.toString() ?? "",
   );
-  const [contentRich, setContentRich] = useState<TipTapDoc>(
-    () => initial?.contentRich ?? existingDraft?.contentRich ?? EMPTY_DOC,
+  const [pages, setPages] = useState<SubmissionPageContent[]>(
+    () => initial?.pages ?? (existingDraft ? submissionToPages(existingDraft) : [{ doc: EMPTY_DOC, title: "" }]),
   );
+  const [activePage, setActivePage] = useState(0);
   const [fieldErrors, setFieldErrors] = useState<SubmissionFormFieldErrors>({});
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
-  // UI-only fields (stored locally, not yet persisted to TextSubmission schema)
+  // UI-only fields (not yet persisted to TextSubmission schema)
   const [description, setDescription] = useState("");
   const [genreId, setGenreId] = useState<string | null>(null);
   const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null);
-  const [pageTitles, setPageTitles] = useState<string[]>([""]);
-  const [activePage] = useState(0);
 
   // Sync state when draft loads (edit mode)
   useEffect(() => {
@@ -108,23 +125,39 @@ export const useSubmissionEditor = ({
     setSourceUrl(existingDraft.sourceUrl ?? "");
     setLicenseType(existingDraft.licenseType ?? "");
     setPublicationYear(existingDraft.publicationYear?.toString() ?? "");
-    if (existingDraft.contentRich) setContentRich(existingDraft.contentRich);
+    setPages(submissionToPages(existingDraft));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [existingDraft?.id]);
+
+  // Sync state when initial values arrive asynchronously (from=userTextId flow)
+  const initialRef = useRef(initial);
+  useEffect(() => {
+    if (!initial || initial === initialRef.current) return;
+    initialRef.current = initial;
+    setTitle(initial.title ?? "");
+    if (initial.language) setLanguage(initial.language);
+    if (initial.submissionType) setSubmissionType(initial.submissionType);
+    setAuthor(initial.author ?? "");
+    setSourceUrl(initial.sourceUrl ?? "");
+    if (initial.pages) setPages(initial.pages);
+  }, [initial]);
 
   // ─── Derived ─────────────────────────────────────────────────────────────
 
   const isExternal = submissionType === "EXTERNAL";
-  const contentBytes = JSON.stringify(contentRich).length;
-  const isContentTooLarge = contentBytes > CONTENT_WARN_BYTES;
+  const totalContentBytes = pages.reduce(
+    (sum, p) => sum + JSON.stringify(p.doc).length,
+    0,
+  );
+  const isContentTooLarge = totalContentBytes > CONTENT_WARN_BYTES;
   const savedIdRef = useRef<string | null>(draftId ?? null);
-  const lastSavedContentRef = useRef<TipTapDoc>(
-    initial?.contentRich ?? existingDraft?.contentRich ?? EMPTY_DOC,
+  const lastSavedPagesRef = useRef<SubmissionPageContent[]>(
+    initial?.pages ?? (existingDraft ? submissionToPages(existingDraft) : [{ doc: EMPTY_DOC, title: "" }]),
   );
 
   // ─── Auto-save (edit mode only) ───────────────────────────────────────────
 
-  const debouncedContent = useDebounce(contentRich, 30_000);
+  const debouncedPages = useDebounce(pages, 30_000);
   const [autoSaveStatus, setAutoSaveStatus] = useState<
     "idle" | "saving" | "saved" | "error"
   >("idle");
@@ -133,36 +166,44 @@ export const useSubmissionEditor = ({
     const id = savedIdRef.current;
     if (mode !== "edit" || !id) return;
     const isSame =
-      JSON.stringify(debouncedContent) ===
-      JSON.stringify(lastSavedContentRef.current);
+      JSON.stringify(debouncedPages) ===
+      JSON.stringify(lastSavedPagesRef.current);
     if (isSame) return;
 
     setAutoSaveStatus("saving");
     updateMutation.mutate(
-      { id, dto: { contentRich: debouncedContent } },
+      {
+        id,
+        dto: {
+          pages: debouncedPages.map((p, i) => ({
+            pageNumber: i + 1,
+            title: p.title || undefined,
+            contentRich: p.doc,
+          })),
+        },
+      },
       {
         onSuccess: () => {
-          lastSavedContentRef.current = debouncedContent;
+          lastSavedPagesRef.current = debouncedPages;
           setAutoSaveStatus("saved");
         },
         onError: () => setAutoSaveStatus("error"),
       },
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedContent]);
+  }, [debouncedPages]);
 
   // ─── Unsaved changes guard ────────────────────────────────────────────────
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       const hasUnsaved =
-        JSON.stringify(contentRich) !==
-        JSON.stringify(lastSavedContentRef.current);
+        JSON.stringify(pages) !== JSON.stringify(lastSavedPagesRef.current);
       if (hasUnsaved) e.preventDefault();
     };
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [contentRich]);
+  }, [pages]);
 
   // ─── Validation ───────────────────────────────────────────────────────────
 
@@ -179,6 +220,15 @@ export const useSubmissionEditor = ({
     return Object.keys(errors).length === 0;
   };
 
+  // ─── Build pages DTO ─────────────────────────────────────────────────────
+
+  const buildPagesDto = () =>
+    pages.map((p, i) => ({
+      pageNumber: i + 1,
+      title: p.title || undefined,
+      contentRich: p.doc,
+    }));
+
   // ─── Save draft (create or update) ───────────────────────────────────────
 
   const handleSaveDraft = () => {
@@ -193,7 +243,7 @@ export const useSubmissionEditor = ({
       licenseType: isExternal && licenseType ? licenseType : undefined,
       publicationYear:
         isExternal && publicationYear ? parseInt(publicationYear, 10) : undefined,
-      contentRich,
+      pages: buildPagesDto(),
       status: "DRAFT" as const,
     };
 
@@ -201,7 +251,7 @@ export const useSubmissionEditor = ({
       createMutation.mutate(dto, {
         onSuccess: (data) => {
           savedIdRef.current = data.id;
-          lastSavedContentRef.current = contentRich;
+          lastSavedPagesRef.current = pages;
           success(t("myTexts.submit.draftSaved"));
           if (onSaved) {
             onSaved(data.id);
@@ -218,7 +268,7 @@ export const useSubmissionEditor = ({
         { id, dto },
         {
           onSuccess: () => {
-            lastSavedContentRef.current = contentRich;
+            lastSavedPagesRef.current = pages;
             setAutoSaveStatus("saved");
             success(t("myTexts.submit.draftSaved"));
           },
@@ -236,19 +286,77 @@ export const useSubmissionEditor = ({
   };
 
   const handleConfirmSubmit = () => {
-    const id = savedIdRef.current;
-    if (!id) return;
     setShowSubmitConfirm(false);
-    submitMutation.mutate(id, {
-      onSuccess: () => {
-        success(t("myTexts.submit.success"));
-        router.push(`/${lang}/my-texts`);
+
+    const existingId = savedIdRef.current;
+
+    const doSubmit = (id: string) => {
+      submitMutation.mutate(id, {
+        onSuccess: () => {
+          success(t("myTexts.submit.success"));
+          router.push(`/${lang}/my-texts`);
+        },
+        onError: () => toastError(t("myTexts.submit.error")),
+      });
+    };
+
+    if (existingId) {
+      doSubmit(existingId);
+      return;
+    }
+
+    // create mode: draft not yet saved — create it first, then submit
+    const dto = {
+      title: title.trim(),
+      language,
+      submissionType,
+      author: submissionType === "ORIGINAL" ? undefined : author || undefined,
+      sourceUrl: sourceUrl || undefined,
+      licenseType: isExternal && licenseType ? licenseType : undefined,
+      publicationYear:
+        isExternal && publicationYear ? parseInt(publicationYear, 10) : undefined,
+      pages: buildPagesDto(),
+      status: "DRAFT" as const,
+    };
+
+    createMutation.mutate(dto, {
+      onSuccess: (data) => {
+        savedIdRef.current = data.id;
+        lastSavedPagesRef.current = pages;
+        doSubmit(data.id);
       },
-      onError: () => toastError(t("myTexts.submit.error")),
+      onError: () => toastError(t("myTexts.submit.saveError")),
     });
   };
 
   const handleCancelSubmit = () => setShowSubmitConfirm(false);
+
+  // ─── Page management ──────────────────────────────────────────────────────
+
+  const handlePageContentChange = (doc: TipTapDoc) => {
+    setPages((prev) => prev.map((p, i) => (i === activePage ? { ...p, doc } : p)));
+    if (fieldErrors.contentRich)
+      setFieldErrors((prev) => ({ ...prev, contentRich: undefined }));
+  };
+
+  const handlePageTitleChange = (value: string) => {
+    setPages((prev) =>
+      prev.map((p, i) => (i === activePage ? { ...p, title: value } : p)),
+    );
+  };
+
+  const handleAddPage = () => {
+    setPages((prev) => [...prev, { doc: EMPTY_DOC, title: "" }]);
+    setActivePage(pages.length);
+  };
+
+  const handleSelectPage = (index: number) => setActivePage(index);
+
+  const handleDeletePage = (index: number) => {
+    if (pages.length <= 1) return;
+    setPages((prev) => prev.filter((_, i) => i !== index));
+    setActivePage((prev) => Math.min(prev, pages.length - 2));
+  };
 
   // ─── Named handlers ───────────────────────────────────────────────────────
 
@@ -263,7 +371,6 @@ export const useSubmissionEditor = ({
 
   const handleSubmissionTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSubmissionType(e.currentTarget.value as SubmissionType);
-    // Clear license errors when switching away from EXTERNAL
     if (e.currentTarget.value !== "EXTERNAL")
       setFieldErrors((p) => ({ ...p, licenseType: undefined }));
   };
@@ -288,12 +395,6 @@ export const useSubmissionEditor = ({
     setPublicationYear(e.currentTarget.value);
   };
 
-  const handleContentUpdate = (doc: TipTapDoc) => {
-    setContentRich(doc);
-    if (fieldErrors.contentRich)
-      setFieldErrors((p) => ({ ...p, contentRich: undefined }));
-  };
-
   const isPending =
     createMutation.isPending ||
     updateMutation.isPending ||
@@ -301,14 +402,11 @@ export const useSubmissionEditor = ({
 
   const isLoadingDraft = mode === "edit" && draftId ? draftQuery.isPending : false;
 
-  // UI-only handlers (not yet persisted to backend)
+  // UI-only handlers
   const handleDescriptionChange = (v: string) => setDescription(v);
   const handleGenreChange = (v: string | null) => setGenreId(v);
   const handleCoverSelect = (file: File) => setCoverPreviewUrl(URL.createObjectURL(file));
   const handleCoverRemove = () => setCoverPreviewUrl(null);
-  const handlePageTitleChange = (value: string) => {
-    setPageTitles(prev => prev.map((t, i) => i === activePage ? value : t));
-  };
 
   return {
     t,
@@ -320,7 +418,8 @@ export const useSubmissionEditor = ({
     sourceUrl,
     licenseType,
     publicationYear,
-    contentRich,
+    pages,
+    activePage,
     fieldErrors,
     isExternal,
     isContentTooLarge,
@@ -333,8 +432,6 @@ export const useSubmissionEditor = ({
     description,
     genreId,
     coverPreviewUrl,
-    pageTitles,
-    activePage,
     // Handlers
     handleTitleChange,
     handleLanguageChange,
@@ -343,7 +440,11 @@ export const useSubmissionEditor = ({
     handleSourceUrlChange,
     handleLicenseTypeChange,
     handlePublicationYearChange,
-    handleContentUpdate,
+    handlePageContentChange,
+    handlePageTitleChange,
+    handleAddPage,
+    handleSelectPage,
+    handleDeletePage,
     handleSaveDraft,
     handleRequestSubmit,
     handleConfirmSubmit,
@@ -352,6 +453,5 @@ export const useSubmissionEditor = ({
     handleGenreChange,
     handleCoverSelect,
     handleCoverRemove,
-    handlePageTitleChange,
   };
 };

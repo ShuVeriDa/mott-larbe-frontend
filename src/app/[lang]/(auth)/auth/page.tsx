@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import {
 	DEFAULT_LOCALE,
@@ -62,7 +63,7 @@ interface PageProps {
 	searchParams: Promise<{ mode?: string }>;
 }
 
-const AuthRoutePage = async ({ params, searchParams }: PageProps) => {
+const AuthPageContent = async ({ params, searchParams }: PageProps) => {
 	const { lang } = await params;
 	const { mode } = await searchParams;
 	if (!hasLocale(lang)) notFound();
@@ -100,5 +101,11 @@ const AuthRoutePage = async ({ params, searchParams }: PageProps) => {
 		</>
 	);
 };
+
+const AuthRoutePage = (props: PageProps) => (
+	<Suspense>
+		<AuthPageContent {...props} />
+	</Suspense>
+);
 
 export default AuthRoutePage;

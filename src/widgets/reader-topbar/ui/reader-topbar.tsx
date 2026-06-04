@@ -41,6 +41,10 @@ export interface ReaderTopbarProps {
 	onToggleFocusMode?: () => void;
 	aiHistoryOpen?: boolean;
 	onToggleAiHistory?: () => void;
+	/** Override back link href. Default: /{lang}/texts */
+	backHref?: string;
+	/** Override back link label. Default: reader.topbar.back */
+	backLabel?: string;
 }
 
 export const ReaderTopbar = ({
@@ -60,6 +64,8 @@ export const ReaderTopbar = ({
 	onToggleFocusMode,
 	aiHistoryOpen,
 	onToggleAiHistory,
+	backHref,
+	backLabel,
 }: ReaderTopbarProps) => {
 	const {
 		t,
@@ -70,6 +76,7 @@ export const ReaderTopbar = ({
 		handleToggleWordPanel,
 		handleBookmark,
 		metaParts,
+		submittedByName,
 		isCompleted,
 		completing,
 		handleMarkComplete,
@@ -111,12 +118,12 @@ export const ReaderTopbar = ({
 	return (
 		<header className="flex h-[46px] shrink-0 items-center gap-2 border-b-[0.5px] border-bd-1 bg-surf px-4 max-md:sticky max-md:top-0 max-md:z-80">
 			<Link
-				href={`/${lang}/texts`}
+				href={backHref ?? `/${lang}/texts`}
 				className="inline-flex shrink-0 items-center gap-1.5 rounded-base px-2 py-1 max-md:p-3 max-md:min-h-[44px] text-[12.5px] text-t-2 transition-colors duration-100 hover:bg-surf-2 hover:text-t-1"
 			>
 				<ChevronLeft className="size-3.5" strokeWidth={1.6} />
 				<Typography tag="span" className="max-md:hidden">
-					{t("reader.topbar.back")}
+					{backLabel ?? t("reader.topbar.back")}
 				</Typography>
 			</Link>
 
@@ -131,7 +138,10 @@ export const ReaderTopbar = ({
 					{data.title}
 				</div>
 				<div className="truncate text-[11px] text-t-3 max-md:hidden">
-					{metaParts.join(" · ")}
+					{[
+						...metaParts,
+						...(submittedByName ? [t("reader.topbar.submittedBy", { name: submittedByName })] : []),
+					].join(" · ")}
 				</div>
 			</div>
 

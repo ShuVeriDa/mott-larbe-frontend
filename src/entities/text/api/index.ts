@@ -7,6 +7,7 @@ export type {
 	TextPageResponse,
 	TextPageTag,
 	TextProgressResponse,
+	TextSubmittedBy,
 	TextToken,
 	TipTapDoc,
 	TipTapNode,

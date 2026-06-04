@@ -24,7 +24,7 @@ export const UserTextCreatePage = ({ lang }: UserTextCreatePageProps) => {
     handleDescriptionChange, handleGenreChange, handleCoverSelect, handleCoverRemove,
     handlePageContentChange, handlePageTitleChange,
     handleAddPage, handleSelectPage, handleDeletePage,
-    handleSaveDraft, handlePrimaryAction,
+    handleSaveDraft, handlePrimaryAction, handleSubmitForReview,
   } = useUserTextCreatePage(lang);
 
   return (
@@ -40,6 +40,7 @@ export const UserTextCreatePage = ({ lang }: UserTextCreatePageProps) => {
           onSaveDraft={handleSaveDraft}
           onPrimaryAction={handlePrimaryAction}
           onToggleMetaPanel={handleToggleMetaPanel}
+          onSubmitForReview={handleSubmitForReview}
         />
       }
       editor={

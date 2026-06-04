@@ -7,6 +7,11 @@ const SubmissionCreatePageLazy = dynamic(
   { ssr: false },
 );
 
-export const SubmissionCreatePageClient = ({ lang }: { lang: string }) => (
-  <SubmissionCreatePageLazy lang={lang} />
+interface SubmissionCreatePageClientProps {
+  lang: string;
+  fromUserTextId?: string;
+}
+
+export const SubmissionCreatePageClient = ({ lang, fromUserTextId }: SubmissionCreatePageClientProps) => (
+  <SubmissionCreatePageLazy lang={lang} fromUserTextId={fromUserTextId} />
 );

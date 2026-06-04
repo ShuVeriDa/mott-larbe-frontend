@@ -9,7 +9,6 @@ import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import TextAlign from "@tiptap/extension-text-align";
 import { TextStyle } from "@tiptap/extension-text-style";
-import Underline from "@tiptap/extension-underline";
 import type { Extension } from "@tiptap/core";
 import type { Editor } from "@tiptap/react";
 import { Tiptap, useEditor } from "@tiptap/react";
@@ -104,8 +103,8 @@ export const NotionEditor = ({
 	const editor = useEditor({
 		immediatelyRender: false,
 		extensions: [
+			// StarterKit already bundles Underline — configure it here, don't add separately
 			StarterKit.configure({ heading: { levels: [1, 2, 3, 4] } }),
-			Underline,
 			Superscript,
 			Subscript,
 			TextAlign.configure({ types: ["heading", "paragraph"] }),

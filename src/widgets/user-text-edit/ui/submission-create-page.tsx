@@ -7,39 +7,42 @@ import {
   AdminTextConfirmModal,
 } from "@/shared/ui/admin-text-editor";
 import { useSubmissionEditor } from "@/features/my-texts/model/use-submission-editor";
+import { useInitialFromUserText } from "@/features/my-texts/model/use-initial-from-user-text";
 import { UserTextEditTopbar } from "./user-text-edit-topbar";
 import { UserTextEditEditor } from "./user-text-edit-editor";
 import { UserTextEditMetaPanel } from "./user-text-edit-meta-panel";
 import type { SubmissionLicenseType } from "@/features/text-submission";
-import type { TipTapDoc } from "@/shared/ui/notion-editor";
 
 interface SubmissionCreatePageProps {
   lang: string;
+  fromUserTextId?: string;
 }
 
-export const SubmissionCreatePage = ({ lang }: SubmissionCreatePageProps) => {
+export const SubmissionCreatePage = ({ lang, fromUserTextId }: SubmissionCreatePageProps) => {
   const [isMetaPanelVisible, setIsMetaPanelVisible] = useState(true);
   const handleToggleMetaPanel = () => setIsMetaPanelVisible(v => !v);
+
+  const { initial } = useInitialFromUserText(fromUserTextId);
 
   const {
     t,
     title, language, submissionType, author, sourceUrl,
-    licenseType, publicationYear, contentRich,
+    licenseType, publicationYear,
+    pages, activePage,
     fieldErrors, isPending, showSubmitConfirm,
-    description, genreId, coverPreviewUrl, pageTitles,
+    description, genreId, coverPreviewUrl,
     handleTitleChange, handleLanguageChange, handleSubmissionTypeChange,
     handleAuthorChange, handleSourceUrlChange,
     handleLicenseTypeChange, handlePublicationYearChange,
-    handleContentUpdate, handlePageTitleChange,
+    handlePageContentChange, handlePageTitleChange,
+    handleAddPage, handleSelectPage, handleDeletePage,
     handleDescriptionChange, handleGenreChange, handleCoverSelect, handleCoverRemove,
     handleSaveDraft, handleRequestSubmit,
     handleConfirmSubmit, handleCancelSubmit,
-  } = useSubmissionEditor({ mode: "create", lang });
+  } = useSubmissionEditor({ mode: "create", lang, initial });
 
   const handleTitleDirect = (value: string) =>
     handleTitleChange({ currentTarget: { value } } as React.ChangeEvent<HTMLInputElement>);
-
-  const handlePageContentChange = (doc: TipTapDoc) => handleContentUpdate(doc);
 
   const handleLanguageDirect = (v: string) =>
     handleLanguageChange({ currentTarget: { value: v } } as React.ChangeEvent<HTMLSelectElement>);
@@ -81,15 +84,15 @@ export const SubmissionCreatePage = ({ lang }: SubmissionCreatePageProps) => {
         editor={
           <UserTextEditEditor
             title={title}
-            pages={[{ doc: contentRich }]}
-            pageTitles={pageTitles}
-            activePage={0}
+            pages={pages}
+            pageTitles={pages.map((p) => p.title)}
+            activePage={activePage}
             onTitleChange={handleTitleDirect}
             onPageContentChange={handlePageContentChange}
             onPageTitleChange={handlePageTitleChange}
-            onAddPage={() => undefined}
-            onSelectPage={() => undefined}
-            onDeletePage={() => undefined}
+            onAddPage={handleAddPage}
+            onSelectPage={handleSelectPage}
+            onDeletePage={handleDeletePage}
             onSaveDraft={handleSaveDraft}
             onPrimaryAction={handleRequestSubmit}
           />

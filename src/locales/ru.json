@@ -1828,7 +1828,8 @@
       "batchTranslate": "Перевести все неизвестные слова",
       "markComplete": "Отметить как прочитанное",
       "completed": "Прочитано",
-      "more": "Ещё"
+      "more": "Ещё",
+      "submittedBy": "Предложил: {name}"
     },
     "body": {
       "progress": "Прогресс по тексту",
@@ -3427,7 +3428,8 @@
         "tokens": "{count} токенов",
         "notProcessed": "не обработан",
         "readsMobile": "прочтений",
-        "errorMeta": "Ошибка: неизвестные леммы"
+        "errorMeta": "Ошибка: неизвестные леммы",
+        "submittedBy": "Предложил: {name}"
       },
       "status": {
         "published": "Опубликован",
@@ -6592,7 +6594,8 @@
       "content": "Контент",
       "comment": "Комментарий",
       "reviewComment": "Комментарий редактора",
-      "license": "Лицензия"
+      "license": "Лицензия",
+      "createdText": "Создан черновик"
     },
     "submissionType": {
       "ORIGINAL": "Личное произведение",
@@ -6610,7 +6613,16 @@
     "successReject": "Заявка отклонена",
     "errorReview": "Не удалось обновить статус",
     "sortNewest": "Сначала новые",
-    "sortOldest": "Сначала старые"
+    "sortOldest": "Сначала старые",
+    "openDraft": "Открыть в редакторе",
+    "preview": {
+      "read": "Читать",
+      "prev": "Назад",
+      "next": "Вперёд",
+      "pagination": "Навигация по страницам",
+      "noContent": "Нет контента для просмотра",
+      "error": "Не удалось загрузить заявку"
+    }
   },
   "suggestTextPage": {
     "meta": {
@@ -6663,6 +6675,8 @@
     "createOriginal": "Добавить своё произведение",
     "createExternal": "Добавить текст автора",
     "create": "Добавить",
+    "save": "Сохранить",
+    "read": "Читать",
     "edit": "Редактировать",
     "delete": "Удалить",
     "deleteAriaLabel": "Удалить текст",

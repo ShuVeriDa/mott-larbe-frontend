@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Pencil, Trash2 } from "lucide-react";
+import { BookOpen, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
@@ -34,7 +34,7 @@ export const UserTextCard = ({ item, lang, onDelete, t }: UserTextCardProps) => 
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <Link
-              href={`/${lang}/my-texts/${item.id}`}
+              href={`/${lang}/my-texts/${item.id}/p/1`}
               className="line-clamp-2 text-[13px] font-medium text-t-1 font-display hover:text-acc"
             >
               {item.title}
@@ -63,6 +63,12 @@ export const UserTextCard = ({ item, lang, onDelete, t }: UserTextCardProps) => 
 
         {/* Action row */}
         <div className="flex items-center gap-2">
+          <Button asChild variant="ghost" className="h-7 px-2 text-[12px] text-t-3 hover:text-t-1">
+            <Link href={`/${lang}/my-texts/${item.id}/p/1`}>
+              <BookOpen className="mr-1 size-3.5" aria-hidden="true" />
+              {t("myTexts.read")}
+            </Link>
+          </Button>
           <Button asChild variant="ghost" className="h-7 px-2 text-[12px] text-t-3 hover:text-t-1">
             <Link href={`/${lang}/my-texts/${item.id}/edit`}>
               <Pencil className="mr-1 size-3.5" aria-hidden="true" />

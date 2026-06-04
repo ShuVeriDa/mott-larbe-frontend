@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useSuspenseQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/shared/lib/toast";
 import {
   userTextListQueryOptions,
   userTextKeys,
   useDeleteUserText,
 } from "@/entities/user-text";
-import { UserTextList } from "./user-text-list";
+import { UserTextList, UserTextListSkeleton } from "./user-text-list";
 import { UserTextDeleteDialog } from "./user-text-delete-dialog";
 import type { MyTextsTab } from "./my-texts-tabs";
 
@@ -24,7 +24,6 @@ const TAB_TO_TYPE = {
   external: "EXTERNAL" as const,
 };
 
-// This component calls useSuspenseQuery — it MUST be wrapped in <Suspense> by the parent.
 export const MyTextsTabsContent = ({ activeTab, lang, t }: MyTextsTabsContentProps) => {
   const qc = useQueryClient();
   const { error: toastError } = useToast();
@@ -32,12 +31,16 @@ export const MyTextsTabsContent = ({ activeTab, lang, t }: MyTextsTabsContentPro
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   const typeFilter = TAB_TO_TYPE[activeTab];
-  const { data } = useSuspenseQuery(
-    userTextListQueryOptions({ type: typeFilter, limit: 20 }),
-  );
+  // enabled: false during SSR — this endpoint requires auth cookie unavailable on server
+  const { data, isPending } = useQuery({
+    ...userTextListQueryOptions({ type: typeFilter, limit: 20 }),
+    enabled: typeof window !== "undefined",
+  });
 
-  const items = data.data;
-  const total = data.meta.total;
+  if (isPending) return <UserTextListSkeleton />;
+
+  const items = data?.data ?? [];
+  const total = data?.meta.total ?? 0;
 
   const handleDeleteRequest = (id: string) => setDeleteConfirmId(id);
   const handleDeleteCancel = () => setDeleteConfirmId(null);

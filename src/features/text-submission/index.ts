@@ -16,6 +16,8 @@ export type {
 	// New
 	SubmissionType,
 	SubmissionLicenseType,
+	TextSubmissionPage,
+	CreateTextSubmissionPageDto,
 } from "./types";
 
 // ─── API ───────────────────────────────────────────────────────────────────

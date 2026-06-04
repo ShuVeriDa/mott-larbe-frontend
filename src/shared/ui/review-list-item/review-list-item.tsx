@@ -45,7 +45,10 @@ export const ReviewListItem = ({
 						{subtitle}
 					</Typography>
 				</div>
-				{rightSlot ?? <StatusDot status={status} className="mt-1.5" />}
+				<div className="flex shrink-0 flex-col items-end gap-1.5">
+					<StatusDot status={status} className="mt-1" />
+					{rightSlot}
+				</div>
 			</div>
 		</div>
 	);

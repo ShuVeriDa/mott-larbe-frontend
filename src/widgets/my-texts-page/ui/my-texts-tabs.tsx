@@ -1,11 +1,9 @@
 "use client";
 
-import { Suspense } from "react";
 import { TabBar, TabItem } from "@/shared/ui/tabs";
 import { Tabs, TabContent } from "@/shared/ui/tabs/tabs";
 import { ErrorBoundary } from "@/shared/ui/error-boundary";
 import { useSearchParams, useRouter } from "next/navigation";
-import { UserTextDeleteDialog } from "./user-text-delete-dialog";
 import { UserTextListSkeleton } from "./user-text-list";
 import { MyTextsTabsContent } from "./my-texts-tabs-content";
 import { useI18n } from "@/shared/lib/i18n";
@@ -57,17 +55,15 @@ export const MyTextsTabs = ({ lang }: MyTextsTabsProps) => {
         </TabBar>
       </div>
 
-      {/* Tab panels — each wraps the data-fetching component in Suspense+ErrorBoundary */}
+      {/* Tab panels — MyTextsTabsContent handles its own loading/error states */}
       {TABS.map((tab) => (
         <TabContent key={tab.value} value={tab.value}>
           <ErrorBoundary fallback={<UserTextListSkeleton />}>
-            <Suspense fallback={<UserTextListSkeleton />}>
-              <MyTextsTabsContent
-                activeTab={activeTab}
-                lang={lang}
-                t={t}
-              />
-            </Suspense>
+            <MyTextsTabsContent
+              activeTab={activeTab}
+              lang={lang}
+              t={t}
+            />
           </ErrorBoundary>
         </TabContent>
       ))}

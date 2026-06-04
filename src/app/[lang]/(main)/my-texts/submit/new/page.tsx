@@ -39,13 +39,16 @@ export const generateMetadata = async (props: {
 
 interface PageProps {
 	params: Promise<{ lang: string }>;
+	searchParams: Promise<{ from?: string }>;
 }
 
-const MyTextsSubmitNewPage = async ({ params }: PageProps) => {
+const MyTextsSubmitNewPage = async ({ params, searchParams }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
-	return <SubmissionCreatePageClient lang={lang} />;
+	const { from } = await searchParams;
+
+	return <SubmissionCreatePageClient lang={lang} fromUserTextId={from} />;
 };
 
 export default MyTextsSubmitNewPage;

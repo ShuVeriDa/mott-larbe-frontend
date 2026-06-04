@@ -6,6 +6,7 @@ export type {
 	TextPageResponse,
 	TextPageTag,
 	TextProgressResponse,
+	TextSubmittedBy,
 	TextToken,
 } from "./api";
 export { useTextPage, useTextProgress, usePagePhrases } from "./model";

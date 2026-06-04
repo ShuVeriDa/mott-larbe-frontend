@@ -104,6 +104,13 @@ const TextTableRow = ({
 								{text.tags.map(tag => tag.name).join(", ")}
 							</Typography>
 						)}
+						{text.submittedBy && (
+							<Typography tag="span" className="text-t-3">
+								{t("admin.texts.table.submittedBy", {
+									name: [text.submittedBy.name, text.submittedBy.surname].filter(Boolean).join(" ") || text.submittedBy.username,
+								})}
+							</Typography>
+						)}
 					</Typography>
 				</div>
 			</TableCell>

@@ -12,7 +12,6 @@ import { UserTextEditTopbar } from "./user-text-edit-topbar";
 import { UserTextEditEditor } from "./user-text-edit-editor";
 import { UserTextEditMetaPanel } from "./user-text-edit-meta-panel";
 import type { SubmissionLicenseType } from "@/features/text-submission";
-import type { TipTapDoc } from "@/shared/ui/notion-editor";
 
 // Loading skeleton matching editor layout
 const EditorPageSkeleton = () => (
@@ -51,13 +50,15 @@ const SubmissionEditPageInner = ({
   const {
     t,
     title, language, submissionType, author, sourceUrl,
-    licenseType, publicationYear, contentRich,
+    licenseType, publicationYear,
+    pages, activePage,
     fieldErrors, isPending, showSubmitConfirm,
-    description, genreId, coverPreviewUrl, pageTitles,
+    description, genreId, coverPreviewUrl,
     handleTitleChange, handleLanguageChange, handleSubmissionTypeChange,
     handleAuthorChange, handleSourceUrlChange,
     handleLicenseTypeChange, handlePublicationYearChange,
-    handleContentUpdate, handlePageTitleChange,
+    handlePageContentChange, handlePageTitleChange,
+    handleAddPage, handleSelectPage, handleDeletePage,
     handleDescriptionChange, handleGenreChange, handleCoverSelect, handleCoverRemove,
     handleSaveDraft, handleRequestSubmit,
     handleConfirmSubmit, handleCancelSubmit,
@@ -65,8 +66,6 @@ const SubmissionEditPageInner = ({
 
   const handleTitleDirect = (value: string) =>
     handleTitleChange({ currentTarget: { value } } as React.ChangeEvent<HTMLInputElement>);
-
-  const handlePageContentChange = (doc: TipTapDoc) => handleContentUpdate(doc);
 
   const handleLanguageDirect = (v: string) =>
     handleLanguageChange({ currentTarget: { value: v } } as React.ChangeEvent<HTMLSelectElement>);
@@ -108,15 +107,15 @@ const SubmissionEditPageInner = ({
         editor={
           <UserTextEditEditor
             title={title}
-            pages={[{ doc: contentRich }]}
-            pageTitles={pageTitles}
-            activePage={0}
+            pages={pages}
+            pageTitles={pages.map((p) => p.title)}
+            activePage={activePage}
             onTitleChange={handleTitleDirect}
             onPageContentChange={handlePageContentChange}
             onPageTitleChange={handlePageTitleChange}
-            onAddPage={() => undefined}
-            onSelectPage={() => undefined}
-            onDeletePage={() => undefined}
+            onAddPage={handleAddPage}
+            onSelectPage={handleSelectPage}
+            onDeletePage={handleDeletePage}
             onSaveDraft={handleSaveDraft}
             onPrimaryAction={handleRequestSubmit}
           />

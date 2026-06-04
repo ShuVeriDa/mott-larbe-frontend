@@ -1,5 +1,20 @@
 import type { TipTapDoc } from "@/shared/ui/notion-editor";
 
+// ─── Pages ─────────────────────────────────────────────────────────────────
+
+export interface TextSubmissionPage {
+	id: string;
+	pageNumber: number;
+	title?: string;
+	contentRich: TipTapDoc;
+}
+
+export interface CreateTextSubmissionPageDto {
+	pageNumber: number;
+	title?: string;
+	contentRich: TipTapDoc;
+}
+
 // ─── Existing types — unchanged ────────────────────────────────────────────
 
 export type TextSubmissionStatus = "PENDING" | "APPROVED" | "REJECTED" | "DRAFT";
@@ -28,9 +43,11 @@ export interface TextSubmission {
 	publicationYear?: number;
 	// C2 fallback rule: new TipTap rich content (new flow)
 	contentRich?: TipTapDoc;
+	pages?: TextSubmissionPage[];
 	reviewedBy?: string;
 	reviewedAt?: string;
 	reviewComment?: string;
+	textId?: string;
 	updatedAt: string;
 	user?: TextSubmissionUser;
 	reviewer?: TextSubmissionUser;
@@ -49,6 +66,7 @@ export interface CreateTextSubmissionDto {
 	licenseType?: SubmissionLicenseType;
 	publicationYear?: number;
 	contentRich?: TipTapDoc;
+	pages?: CreateTextSubmissionPageDto[];
 	status?: TextSubmissionStatus;
 }
 
@@ -63,6 +81,7 @@ export interface UpdateTextSubmissionDto {
 	licenseType?: SubmissionLicenseType;
 	publicationYear?: number;
 	contentRich?: TipTapDoc;
+	pages?: CreateTextSubmissionPageDto[];
 }
 
 export interface ReviewTextSubmissionDto {

@@ -46,6 +46,13 @@ export interface TextPageTag {
 	name: string;
 }
 
+export interface TextSubmittedBy {
+	id: string;
+	name: string | null;
+	surname: string | null;
+	username: string;
+}
+
 export interface TextPageResponse {
 	id: string;
 	title: string;
@@ -60,6 +67,7 @@ export interface TextPageResponse {
 	page: TextPageData;
 	tokens: TextToken[];
 	bookmarked?: boolean;
+	submittedBy?: TextSubmittedBy | null;
 }
 
 export interface TextProgressResponse {

@@ -22,6 +22,35 @@ export interface PageContent {
   doc: TipTapDoc;
 }
 
+// Multi-page storage format inside UserText.content
+// { type: "multi-page", pages: TipTapDoc[] }
+interface MultiPageContent { type: "multi-page"; pages: TipTapDoc[] }
+
+const packPages = (pages: PageContent[]): TipTapDoc => {
+  const packed: MultiPageContent = { type: "multi-page", pages: pages.map(p => p.doc) };
+  // Stored as a TipTapDoc-compatible structure via the `attrs` field
+  return { type: "doc", content: [{ type: "multi_page_wrapper", attrs: packed }] } as unknown as TipTapDoc;
+};
+
+const unpackPages = (content: unknown): PageContent[] => {
+  if (!content || typeof content !== "object") return [{ doc: EMPTY_DOC }];
+  const c = content as Record<string, unknown>;
+
+  // Detect multi-page format
+  if (Array.isArray(c.content) && c.content.length === 1) {
+    const first = c.content[0] as Record<string, unknown>;
+    if (first?.type === "multi_page_wrapper" && first?.attrs) {
+      const packed = first.attrs as MultiPageContent;
+      if (packed.type === "multi-page" && Array.isArray(packed.pages)) {
+        return packed.pages.map(doc => ({ doc: doc as TipTapDoc }));
+      }
+    }
+  }
+
+  // Legacy single-page content — return as-is
+  return [{ doc: content as TipTapDoc }];
+};
+
 // ─── Create mode hook ─────────────────────────────────────────────────────────
 
 export const useUserTextCreatePage = (lang: string) => {
@@ -86,25 +115,32 @@ export const useUserTextCreatePage = (lang: string) => {
     markUnsaved();
   };
 
-  const handleSave = () => {
+  const handleSave = (onSuccess?: (id: string) => void) => {
     if (!title.trim()) { toastError(t("myTexts.validation.titleRequired")); return; }
-
-    const mergedContent = pages.flatMap(p => p.doc.content ?? []);
-    const mergedDoc: TipTapDoc = { type: "doc", content: mergedContent };
 
     createMutation.mutate(
       { title: title.trim(), language, type,
         author: type === "ORIGINAL" ? undefined : author || undefined,
-        sourceUrl: sourceUrl || undefined, content: mergedDoc },
+        sourceUrl: sourceUrl || undefined, content: packPages(pages) },
       {
         onSuccess: (data) => {
           setIsUnsaved(false);
-          success(t("myTexts.createSuccess"));
-          router.push(`/${lang}/my-texts/${data.id}/edit`);
+          if (onSuccess) {
+            onSuccess(data.id);
+          } else {
+            success(t("myTexts.createSuccess"));
+            router.push(`/${lang}/my-texts/${data.id}/edit`);
+          }
         },
         onError: () => toastError(t("myTexts.createError")),
       }
     );
+  };
+
+  const handleSubmitForReview = () => {
+    handleSave((id) => {
+      router.push(`/${lang}/my-texts/submit/new?from=${id}`);
+    });
   };
 
   return {
@@ -117,8 +153,9 @@ export const useUserTextCreatePage = (lang: string) => {
     handleDescriptionChange, handleGenreChange, handleCoverSelect, handleCoverRemove,
     handlePageContentChange, handlePageTitleChange,
     handleAddPage, handleSelectPage, handleDeletePage,
-    handleSaveDraft: handleSave,
-    handlePrimaryAction: handleSave,
+    handleSaveDraft: () => handleSave(),
+    handlePrimaryAction: () => handleSave(),
+    handleSubmitForReview,
   };
 };
 
@@ -140,8 +177,10 @@ export const useUserTextEditPage = (id: string, lang: string) => {
   const [description, setDescription] = useState("");
   const [genreId, setGenreId] = useState<string | null>(null);
   const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null);
-  const [pages, setPages] = useState<PageContent[]>([{ doc: userText.content }]);
-  const [pageTitles, setPageTitles] = useState<string[]>([""]);
+  const [pages, setPages] = useState<PageContent[]>(() => unpackPages(userText.content));
+  const [pageTitles, setPageTitles] = useState<string[]>(() =>
+    Array.from({ length: unpackPages(userText.content).length }, () => "")
+  );
   const [activePage, setActivePage] = useState(0);
   const [isUnsaved, setIsUnsaved] = useState(false);
 
@@ -185,28 +224,33 @@ export const useUserTextEditPage = (id: string, lang: string) => {
     markUnsaved();
   };
 
-  const buildSavePayload = () => {
-    const mergedContent = pages.flatMap(p => p.doc.content ?? []);
-    const mergedDoc: TipTapDoc = { type: "doc", content: mergedContent };
-    return {
-      title: title.trim(),
-      language,
-      type,
-      author: type === "ORIGINAL" ? undefined : author || undefined,
-      sourceUrl: sourceUrl || undefined,
-      content: mergedDoc,
-    };
-  };
+  const buildSavePayload = () => ({
+    title: title.trim(),
+    language,
+    type,
+    author: type === "ORIGINAL" ? undefined : author || undefined,
+    sourceUrl: sourceUrl || undefined,
+    content: packPages(pages),
+  });
 
-  const handleSaveDraft = () => {
+  const handleSaveDraft = (onSuccess?: () => void) => {
     if (!title.trim()) { toastError(t("myTexts.validation.titleRequired")); return; }
     updateMutation.mutate(
       { id, dto: buildSavePayload() },
       {
-        onSuccess: () => { setIsUnsaved(false); success(t("myTexts.editSuccess")); },
+        onSuccess: () => {
+          setIsUnsaved(false);
+          if (onSuccess) { onSuccess(); } else { success(t("myTexts.editSuccess")); }
+        },
         onError: () => toastError(t("myTexts.editError")),
       }
     );
+  };
+
+  const handleSubmitForReview = () => {
+    handleSaveDraft(() => {
+      router.push(`/${lang}/my-texts/submit/new?from=${id}`);
+    });
   };
 
   return {
@@ -219,7 +263,8 @@ export const useUserTextEditPage = (id: string, lang: string) => {
     handleTitleChange, handleLanguageChange, handleTypeChange,
     handleAuthorChange, handleSourceChange,
     handlePageContentChange, handleAddPage, handleSelectPage, handleDeletePage,
-    handleSaveDraft,
-    handlePrimaryAction: handleSaveDraft,
+    handleSaveDraft: () => handleSaveDraft(),
+    handlePrimaryAction: () => handleSaveDraft(),
+    handleSubmitForReview,
   };
 };

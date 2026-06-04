@@ -1829,7 +1829,8 @@
       "batchTranslate": "Translate all unknown words",
       "markComplete": "Mark as read",
       "completed": "Read",
-      "more": "More"
+      "more": "More",
+      "submittedBy": "Submitted by {name}"
     },
     "body": {
       "progress": "Reading progress",
@@ -3430,7 +3431,8 @@
         "tokens": "{count} tokens",
         "notProcessed": "not processed",
         "readsMobile": "reads",
-        "errorMeta": "Error: unknown lemmas"
+        "errorMeta": "Error: unknown lemmas",
+        "submittedBy": "Submitted by {name}"
       },
       "status": {
         "published": "Published",
@@ -6595,7 +6597,8 @@
       "content": "Content",
       "comment": "Comment",
       "reviewComment": "Editor's comment",
-      "license": "License"
+      "license": "License",
+      "createdText": "Created draft"
     },
     "submissionType": {
       "ORIGINAL": "Original work",
@@ -6613,7 +6616,16 @@
     "successReject": "Submission rejected",
     "errorReview": "Failed to update status",
     "sortNewest": "Newest first",
-    "sortOldest": "Oldest first"
+    "sortOldest": "Oldest first",
+    "openDraft": "Open in editor",
+    "preview": {
+      "read": "Read",
+      "prev": "Previous",
+      "next": "Next",
+      "pagination": "Page navigation",
+      "noContent": "No content to preview",
+      "error": "Failed to load submission"
+    }
   },
   "suggestTextPage": {
     "meta": {
@@ -6666,6 +6678,8 @@
     "createOriginal": "Add an original work",
     "createExternal": "Add a text by another author",
     "create": "Add",
+    "save": "Save",
+    "read": "Read",
     "edit": "Edit",
     "delete": "Delete",
     "deleteAriaLabel": "Delete text",

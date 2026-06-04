@@ -3,6 +3,7 @@
 import { Suspense, useState } from "react";
 import { ErrorBoundary } from "@/shared/ui/error-boundary";
 import { AdminTextPageShell } from "@/shared/ui/admin-text-editor";
+import { useI18n } from "@/shared/lib/i18n";
 import { useUserTextEditPage } from "../model/use-user-text-edit-page";
 import { UserTextEditTopbar } from "./user-text-edit-topbar";
 import { UserTextEditEditor } from "./user-text-edit-editor";
@@ -19,6 +20,7 @@ interface UserTextEditPageInnerProps {
 const UserTextEditPageInner = ({
   id, lang, isMetaPanelVisible, onToggleMetaPanel,
 }: UserTextEditPageInnerProps) => {
+  const { t } = useI18n();
   const {
     title, language, type, author, sourceUrl,
     description, coverPreviewUrl, genreId,
@@ -28,7 +30,7 @@ const UserTextEditPageInner = ({
     handleDescriptionChange, handleGenreChange, handleCoverSelect, handleCoverRemove,
     handlePageContentChange, handlePageTitleChange,
     handleAddPage, handleSelectPage, handleDeletePage,
-    handleSaveDraft, handlePrimaryAction,
+    handleSaveDraft, handlePrimaryAction, handleSubmitForReview,
   } = useUserTextEditPage(id, lang);
 
   return (
@@ -44,6 +46,7 @@ const UserTextEditPageInner = ({
           onSaveDraft={handleSaveDraft}
           onPrimaryAction={handlePrimaryAction}
           onToggleMetaPanel={onToggleMetaPanel}
+          onSubmitForReview={handleSubmitForReview}
         />
       }
       editor={
@@ -82,6 +85,7 @@ const UserTextEditPageInner = ({
           onGenreChange={handleGenreChange}
           onSaveDraft={handleSaveDraft}
           onPrimaryAction={handlePrimaryAction}
+          primaryLabel={isSaving ? t("myTexts.autoSave.saving") : t("myTexts.save")}
         />
       }
     />

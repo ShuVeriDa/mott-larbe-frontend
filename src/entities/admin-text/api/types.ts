@@ -11,6 +11,13 @@ export interface TextTag {
 	name: string;
 }
 
+export interface TextSubmittedBy {
+	id: string;
+	name: string | null;
+	surname: string | null;
+	username: string;
+}
+
 export interface AdminTextListItem {
 	id: string;
 	title: string;
@@ -25,6 +32,7 @@ export interface AdminTextListItem {
 	tags: TextTag[];
 	readCount: number;
 	createdAt: string;
+	submittedBy?: TextSubmittedBy | null;
 }
 
 export interface AdminTextsListResponse {
@@ -151,6 +159,7 @@ export interface AdminTextDetail {
 	tokenCount: number;
 	createdAt: string;
 	updatedAt: string;
+	submittedBy?: TextSubmittedBy | null;
 }
 
 export type ProcessingTrigger = "MANUAL" | "AUTO_ON_SAVE" | "AUTO_ON_CREATE";

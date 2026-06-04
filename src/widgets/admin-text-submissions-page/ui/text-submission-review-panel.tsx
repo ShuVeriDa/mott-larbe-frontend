@@ -1,11 +1,11 @@
 "use client";
 
 import { ChangeEvent } from "react";
-import { ExternalLink } from "lucide-react";
-import { Suspense } from "react";
+import { ExternalLink, FileEdit, BookOpen } from "lucide-react";
+import Link from "next/link";
 import { Typography } from "@/shared/ui/typography";
-import { ErrorBoundary } from "@/shared/ui/error-boundary";
-import { NotionEditor } from "@/shared/ui/notion-editor";
+import { Button } from "@/shared/ui/button";
+import { useI18n } from "@/shared/lib/i18n";
 import {
 	InfoCard,
 	ReviewPanelEmpty,
@@ -16,8 +16,6 @@ import {
 import type { TextSubmission } from "@/features/text-submission";
 import { TextSubmissionSubmissionTypeBadge } from "./text-submission-submission-type-badge";
 import { TextSubmissionLicenseInfo } from "./text-submission-license-info";
-
-const MAX_CONTENT_PREVIEW = 500;
 
 interface TextSubmissionReviewPanelProps {
 	submission: TextSubmission | null;
@@ -31,22 +29,12 @@ interface TextSubmissionReviewPanelProps {
 	t: (key: string) => string;
 }
 
-// C2 fallback: renders contentRich first, falls back to plain content/sourceUrl
-// Wrapped in ErrorBoundary so malformed TipTap JSON cannot crash the panel (m4)
-const RichContentFallback = ({ content }: { content?: string }) => (
-	<Typography tag="p" className="whitespace-pre-wrap text-[13px] text-t-2 leading-relaxed">
-		{content
-			? content.length > MAX_CONTENT_PREVIEW
-				? content.slice(0, MAX_CONTENT_PREVIEW) + "…"
-				: content
-			: "—"}
-	</Typography>
-);
-
 export const TextSubmissionReviewPanel = ({
 	submission, comment, isPending, showDetail,
 	onCommentChange, onApprove, onReject, onBack, t,
 }: TextSubmissionReviewPanelProps) => {
+	const { lang } = useI18n();
+
 	if (!submission) {
 		return <ReviewPanelEmpty text={t("adminTextSubmissions.selectToReview")} hiddenOnMobile />;
 	}
@@ -58,20 +46,6 @@ export const TextSubmissionReviewPanel = ({
 		new Date(submission.createdAt).toLocaleDateString(),
 	];
 
-	// C2 fallback rule: use contentRich first, fall back to plain content string
-	const hasRichContent =
-		submission.contentRich !== null &&
-		submission.contentRich !== undefined &&
-		typeof submission.contentRich === "object" &&
-		"type" in (submission.contentRich as object);
-
-	const contentPreview =
-		!hasRichContent && submission.content
-			? submission.content.length > MAX_CONTENT_PREVIEW
-				? submission.content.slice(0, MAX_CONTENT_PREVIEW) + "…"
-				: submission.content
-			: null;
-
 	return (
 		<ReviewPanelShell
 			mobileOverlay
@@ -79,19 +53,27 @@ export const TextSubmissionReviewPanel = ({
 			onBack={onBack}
 			backLabel={t("adminTextSubmissions.back")}
 		>
-			<ReviewPanelHeader
-				title={submission.title}
-				subtitle={subtitleParts.join(" · ")}
-				status={submission.status}
-				statusLabel={t(`adminTextSubmissions.status.${submission.status}`)}
-			/>
-
-			{/* Submission type chip — helps admin apply correct review criteria */}
-			<div className="mb-4 flex items-center gap-2">
-				<TextSubmissionSubmissionTypeBadge
-					submissionType={submission.submissionType}
-					t={t}
-				/>
+			<div className="mb-4 flex items-start justify-between gap-3">
+				<div className="min-w-0 flex-1">
+					<ReviewPanelHeader
+						title={submission.title}
+						subtitle={subtitleParts.join(" · ")}
+						status={submission.status}
+						statusLabel={t(`adminTextSubmissions.status.${submission.status}`)}
+					/>
+					<div className="mt-2">
+						<TextSubmissionSubmissionTypeBadge
+							submissionType={submission.submissionType}
+							t={t}
+						/>
+					</div>
+				</div>
+				<Button asChild variant="ghost" className="shrink-0 gap-1.5">
+					<Link href={`/${lang}/admin/text-submissions/${submission.id}/preview`}>
+						<BookOpen className="size-3.5" />
+						{t("adminTextSubmissions.preview.read")}
+					</Link>
+				</Button>
 			</div>
 
 			{/* License info — only relevant for EXTERNAL */}
@@ -117,27 +99,7 @@ export const TextSubmissionReviewPanel = ({
 				</InfoCard>
 			)}
 
-			{/* Content — C2 fallback: contentRich first, plain content as fallback (m4 ErrorBoundary) */}
-			<InfoCard label={t("adminTextSubmissions.fields.content")} className="mb-4">
-				{hasRichContent ? (
-					<ErrorBoundary fallback={<RichContentFallback content={submission.content} />}>
-						<Suspense fallback={<RichContentFallback content={submission.content} />}>
-							<div className="pointer-events-none select-text max-h-80 overflow-y-auto">
-								<NotionEditor
-									content={submission.contentRich!}
-									onUpdate={() => undefined}
-									slashMenuItems={[]}
-									minHeight="auto"
-								/>
-							</div>
-						</Suspense>
-					</ErrorBoundary>
-				) : (
-					<RichContentFallback content={submission.content} />
-				)}
-			</InfoCard>
-
-			{submission.comment && (
+{submission.comment && (
 				<InfoCard label={t("adminTextSubmissions.fields.comment")} className="mb-4">
 					<Typography tag="p" className="text-[13px] italic text-t-2">{submission.comment}</Typography>
 				</InfoCard>
@@ -146,6 +108,18 @@ export const TextSubmissionReviewPanel = ({
 			{submission.reviewComment && submission.status !== "PENDING" && (
 				<InfoCard label={t("adminTextSubmissions.fields.reviewComment")} className="mb-4">
 					<Typography tag="p" className="text-[13px] text-t-2">{submission.reviewComment}</Typography>
+				</InfoCard>
+			)}
+
+			{submission.status === "APPROVED" && submission.textId && (
+				<InfoCard label={t("adminTextSubmissions.fields.createdText")} className="mb-4">
+					<Link
+						href={`/admin/texts/${submission.textId}/edit`}
+						className="flex items-center gap-1.5 text-[13px] text-acc hover:underline"
+					>
+						<FileEdit className="size-3.5 shrink-0" />
+						{t("adminTextSubmissions.openDraft")}
+					</Link>
 				</InfoCard>
 			)}
 

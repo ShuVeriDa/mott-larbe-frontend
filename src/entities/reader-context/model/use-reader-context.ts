@@ -6,13 +6,19 @@ import { highlightKeys } from "@/entities/highlight";
 import { noteKeys } from "@/entities/note";
 import { readerContextApi, readerContextKeys } from "../api";
 
-export const useReaderContext = (textId: string, pageNumber: number) => {
+type ReaderContextApiFn = (textId: string, pageNumber: number) => Promise<import("../api/types").ReaderContextResponse>;
+
+export const useReaderContext = (
+	textId: string,
+	pageNumber: number,
+	apiFn: ReaderContextApiFn = readerContextApi.getContext,
+) => {
 	const qc = useQueryClient();
 
 	return useQuery({
 		queryKey: readerContextKeys.context(textId, pageNumber),
 		queryFn: async () => {
-			const ctx = await readerContextApi.getContext(textId, pageNumber);
+			const ctx = await apiFn(textId, pageNumber);
 
 			qc.setQueryData(textKeys.page(textId, pageNumber), ctx.page);
 			qc.setQueryData(textKeys.phrases(textId, pageNumber), ctx.phrases);

@@ -1,5 +1,5 @@
 "use client";
-import { readerContextQueryOptions, useReaderContext } from "@/entities/reader-context";
+import { readerContextQueryOptions, readerContextKeys, useReaderContext, type ReaderContextResponse } from "@/entities/reader-context";
 import { useWordLookupStore } from "@/features/word-lookup";
 import { useReaderFocusMode } from "@/features/reader-focus-mode";
 import { useReaderSessionTracker } from "@/features/reader-session-tracker";
@@ -12,12 +12,19 @@ import { useShallow } from "zustand/react/shallow";
 
 type RailPanel = "word" | "settings" | "notes" | "toc" | "bookmarks" | "aiHistory" | null;
 
-export const useReaderPage = (textId: string, pageNumber: number) => {
+export const useReaderPage = (
+	textId: string,
+	pageNumber: number,
+	// Optional: override navigation route base (default "reader", pass "my-texts" for UserText)
+	routeBase = "reader",
+	// Optional: override API function — used by UserTextReaderPage to hit /user-text-reader-context
+	apiFn?: (id: string, page: number) => Promise<ReaderContextResponse>,
+) => {
 	useReaderSettingsSync();
 	const { lang } = useI18n();
 	const router = useRouter();
 	const queryClient = useQueryClient();
-	const { data: ctx, isPending: isLoading, isError } = useReaderContext(textId, pageNumber);
+	const { data: ctx, isPending: isLoading, isError } = useReaderContext(textId, pageNumber, apiFn);
 	const data = ctx?.page;
 
 	useReaderSessionTracker(textId, pageNumber, data?.wordCount ?? 0);
@@ -28,8 +35,17 @@ export const useReaderPage = (textId: string, pageNumber: number) => {
 		if (!totalPages) return;
 		const prefetchPage = (page: number) => {
 			if (page < 1 || page > totalPages) return;
-			queryClient.prefetchQuery(readerContextQueryOptions(textId, page));
-			router.prefetch(`/${lang}/reader/${textId}/p/${page}`);
+			// Use the same apiFn as the current page so UserText stays on /user-text-reader-context
+			if (apiFn) {
+				queryClient.prefetchQuery({
+					queryKey: readerContextKeys.context(textId, page),
+					queryFn: () => apiFn(textId, page),
+					staleTime: 60_000,
+				});
+			} else {
+				queryClient.prefetchQuery(readerContextQueryOptions(textId, page));
+			}
+			router.prefetch(`/${lang}/${routeBase}/${textId}/p/${page}`);
 		};
 		prefetchPage(pageNumber - 1);
 		prefetchPage(pageNumber + 1);
@@ -67,7 +83,7 @@ export const useReaderPage = (textId: string, pageNumber: number) => {
 	}, []);
 
 	const handleNavigate = (page: number) => {
-		router.push(`/${lang}/reader/${textId}/p/${page}`);
+		router.push(`/${lang}/${routeBase}/${textId}/p/${page}`);
 	};
 
 	const handleTogglePanel = (panel: "settings" | "notes" | "toc" | "bookmarks" | "aiHistory") => {

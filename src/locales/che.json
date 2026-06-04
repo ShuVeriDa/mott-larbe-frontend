@@ -1829,7 +1829,8 @@
       "batchTranslate": "Йерриг девзаш йоцу дешнаш гочдан",
       "markComplete": "Дешна аьлла билгалде",
       "completed": "Дешна чекхдаьккхина",
-      "more": "Кхин а"
+      "more": "Кхин а",
+      "submittedBy": "Хьажийна: {name}"
     },
     "body": {
       "progress": "Текстаца прогресс",
@@ -3428,7 +3429,8 @@
         "tokens": "{count} токен",
         "notProcessed": "кечданза",
         "readsMobile": "дӀадешарш",
-        "errorMeta": "ГӀалат: ца довза леммаш"
+        "errorMeta": "ГӀалат: ца довза леммаш",
+        "submittedBy": "Хьажийна: {name}"
       },
       "status": {
         "published": "Арахецна",
@@ -6592,7 +6594,8 @@
       "content": "Контент",
       "comment": "Билгалдахар",
       "reviewComment": "Редакторан билгалдахар",
-      "license": "Лицензи"
+      "license": "Лицензи",
+      "createdText": "Черновик кхоллийна"
     },
     "submissionType": {
       "ORIGINAL": "Шен произведени",
@@ -6610,7 +6613,16 @@
     "successReject": "Заявка дӀаяьккхина",
     "errorReview": "Статус керлаян ца елира",
     "sortNewest": "Керланиш хьалха",
-    "sortOldest": "Тиланиш хьалха"
+    "sortOldest": "Тиланиш хьалха",
+    "openDraft": "Редакторехь схьааьхна",
+    "preview": {
+      "read": "ДӀадеша",
+      "prev": "ТӀаьхьа",
+      "next": "Хьалха",
+      "pagination": "АгӀонаш лело",
+      "noContent": "ДӀадешар дац",
+      "error": "Заявка схьаэца ца делира"
+    }
   },
   "suggestTextPage": {
     "meta": {
@@ -6663,6 +6675,8 @@
     "createOriginal": "Хьайн произведени тӀеэца",
     "createExternal": "Кхечун текст тӀеэца",
     "create": "Тӏеэца",
+    "save": "Сохрани йан",
+    "read": "Деша",
     "edit": "Нисдан",
     "delete": "ДӀаяккха",
     "deleteAriaLabel": "Текст дӀаяккха",
