@@ -588,7 +588,8 @@
     "contribute": "Contribute",
     "myTexts": "My Texts",
     "suggestions": "My suggestions",
-    "suggestText": "Suggest a text"
+    "suggestText": "Suggest a text",
+    "mainNav": "Main navigation"
   },
   "vocabulary": {
     "title": "Vocabulary",
@@ -6772,6 +6773,22 @@
     "rejection": {
       "label": "Rejection reason",
       "resubmit": "Fix and resubmit"
+    }
+  },
+  "notifications": {
+    "bell": { "label": "Notifications" },
+    "title": "Notifications",
+    "empty": "No new notifications",
+    "markAllRead": "Mark all as read",
+    "types": {
+      "FEEDBACK_REPLY": "An administrator replied to your request",
+      "SUGGESTION_APPROVED": "Your dictionary suggestion was accepted",
+      "SUGGESTION_REJECTED": "Your dictionary suggestion was declined",
+      "TEXT_SUBMISSION_APPROVED": "Your text has been published to the library",
+      "TEXT_SUBMISSION_REJECTED": "Your text did not pass moderation",
+      "NEW_FEEDBACK_THREAD": "New request from a user",
+      "NEW_TEXT_SUBMISSION": "New text awaiting moderation",
+      "NEW_SUGGESTION": "New dictionary suggestion"
     }
   }
 }

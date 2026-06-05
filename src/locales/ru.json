@@ -588,7 +588,8 @@
     "contribute": "Участие",
     "myTexts": "Мои тексты",
     "suggestions": "Мои правки",
-    "suggestText": "Предложить текст"
+    "suggestText": "Предложить текст",
+    "mainNav": "Основная навигация"
   },
   "vocabulary": {
     "title": "Словарь",
@@ -6769,6 +6770,22 @@
     "rejection": {
       "label": "Причина отклонения",
       "resubmit": "Исправить и отправить снова"
+    }
+  },
+  "notifications": {
+    "bell": { "label": "Уведомления" },
+    "title": "Уведомления",
+    "empty": "Нет новых уведомлений",
+    "markAllRead": "Прочитать все",
+    "types": {
+      "FEEDBACK_REPLY": "Администратор ответил на ваш запрос",
+      "SUGGESTION_APPROVED": "Ваше предложение по словарю принято",
+      "SUGGESTION_REJECTED": "Ваше предложение по словарю отклонено",
+      "TEXT_SUBMISSION_APPROVED": "Ваш текст опубликован в библиотеке",
+      "TEXT_SUBMISSION_REJECTED": "Ваш текст не прошёл модерацию",
+      "NEW_FEEDBACK_THREAD": "Новый запрос от пользователя",
+      "NEW_TEXT_SUBMISSION": "Новый текст ожидает модерации",
+      "NEW_SUGGESTION": "Новое предложение по словарю"
     }
   }
 }

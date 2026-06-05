@@ -588,7 +588,8 @@
     "contribute": "Дакъалацар",
     "myTexts": "Сан тексташ",
     "suggestions": "Сан нисдарш",
-    "suggestText": "Текст кховдо"
+    "suggestText": "Текст кховдо",
+    "mainNav": "Лардаран навигаци"
   },
   "vocabulary": {
     "title": "Дошам",
@@ -6769,6 +6770,22 @@
     "rejection": {
       "label": "ДӀаяккхаран бахьана",
       "resubmit": "Нисдан, юха дӀаяхьа"
+    }
+  },
+  "notifications": {
+    "bell": { "label": "ХӀоттамаш" },
+    "title": "ХӀоттамаш",
+    "empty": "Керла хӀоттамаш яц",
+    "markAllRead": "Массо а йеша",
+    "types": {
+      "FEEDBACK_REPLY": "Администраторо хьан тӀалам жоп делла",
+      "SUGGESTION_APPROVED": "Хьан словарна предложени кабалийна",
+      "SUGGESTION_REJECTED": "Хьан словарна предложени кабийзина",
+      "TEXT_SUBMISSION_APPROVED": "Хьан текст библиотекехь арахецна",
+      "TEXT_SUBMISSION_REJECTED": "Хьан текст модерацица ца эккхийтина",
+      "NEW_FEEDBACK_THREAD": "Пайдехошера керла тӀалам",
+      "NEW_TEXT_SUBMISSION": "Модерацина хьажа дезаш керла текст ду",
+      "NEW_SUGGESTION": "Словарна керла предложени"
     }
   }
 }

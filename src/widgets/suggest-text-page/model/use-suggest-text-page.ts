@@ -62,6 +62,7 @@ export const useSuggestTextPage = () => {
 				sourceUrl: sourceUrl.trim() || undefined,
 				content: content.trim() || undefined,
 				comment: comment.trim() || undefined,
+				status: "PENDING",
 			},
 			{
 				onSuccess: () => {

@@ -14,6 +14,9 @@ const apiOrigin = (() => {
 	}
 })();
 
+// Derive the WebSocket origin: http(s):// → ws(s)://
+const wsOrigin = apiOrigin.replace(/^http(s?):\/\//, "ws$1://");
+
 const securityHeaders = [
 	// Prevent browsers from MIME-sniffing the content type.
 	{ key: "X-Content-Type-Options", value: "nosniff" },
@@ -38,7 +41,7 @@ const securityHeaders = [
 			"style-src 'self' 'unsafe-inline'",
 			"img-src 'self' data: blob: https:",
 			"font-src 'self'",
-			`connect-src 'self' ${apiOrigin}`,
+			`connect-src 'self' ${apiOrigin} ${wsOrigin}`,
 			"frame-ancestors 'none'",
 			"base-uri 'self'",
 			"form-action 'self'",

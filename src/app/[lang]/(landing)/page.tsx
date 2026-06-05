@@ -10,7 +10,7 @@ import {
 import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
 import { LandingPage } from "@/widgets/landing-page";
 
-export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
+export const generateStaticParams = async () => LOCALES.map((lang) => ({ lang }));
 
 interface PageProps {
 	params: Promise<{ lang: string }>;

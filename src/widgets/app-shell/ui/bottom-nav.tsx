@@ -3,6 +3,7 @@
 import { UserMenu } from "@/features/user-menu";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { BottomNavBell } from "@/widgets/notification-bell";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
@@ -49,7 +50,7 @@ export const BottomNav = () => {
 
 	return (
 		<nav
-			aria-label={t("nav.vocabulary")}
+			aria-label={t("nav.mainNav")}
 			className="fixed inset-x-0 bottom-0 z-90 hidden h-[56px] border-[0.5px] border-t border-bd-1 bg-surf pb-[env(safe-area-inset-bottom)] max-md:block"
 		>
 			<div className="mx-auto flex gap-1 h-full max-w-[1120px] items-stretch">
@@ -70,6 +71,7 @@ export const BottomNav = () => {
 						</Link>
 					);
 				})}
+				<BottomNavBell />
 				<UserMenu bottomNav />
 			</div>
 		</nav>

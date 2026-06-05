@@ -4,6 +4,7 @@ import { BrandMark } from "@/shared/ui/brand-mark";
 import { Typography } from "@/shared/ui/typography";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { NotificationBell } from "@/widgets/notification-bell";
 import Link from "next/link";
 
 interface SideNavHeaderProps {
@@ -16,17 +17,19 @@ export const SideNavHeader = ({ isCompactMode }: SideNavHeaderProps) => {
 	return (
 		<div
 			className={cn(
-				"flex items-center border-b border-bd-1 py-4 transition-[padding] duration-200 min-[900px]:px-3.5",
+				"flex border-b border-bd-1 transition-[padding] duration-200 min-[900px]:px-3.5",
 				isCompactMode
-					? "max-[899px]:justify-center max-[899px]:px-2"
+					? "max-[899px]:flex-col max-[899px]:items-center max-[899px]:gap-1 max-[899px]:px-2 max-[899px]:py-3"
 					: "max-[899px]:px-2.5",
+				!isCompactMode && "items-center gap-1 py-4",
+				isCompactMode && "min-[900px]:items-center min-[900px]:gap-1 min-[900px]:py-4",
 			)}
 		>
 			<Link
 				href={`/${lang}/dashboard`}
 				className={cn(
-					"flex min-w-0 items-center gap-2.5 rounded-sm outline-offset-2 focus-visible:outline-2 focus-visible:outline-acc",
-					isCompactMode && "max-[899px]:justify-center max-[899px]:gap-0",
+					"flex min-w-0 flex-1 items-center gap-2.5 rounded-sm outline-offset-2 focus-visible:outline-2 focus-visible:outline-acc",
+					isCompactMode && "max-[899px]:flex-none max-[899px]:justify-center max-[899px]:gap-0 max-[899px]:w-[30px] max-[899px]:h-[36px]",
 				)}
 			>
 				<BrandMark width="30" height="36" className="shrink-0" />
@@ -51,6 +54,7 @@ export const SideNavHeader = ({ isCompactMode }: SideNavHeaderProps) => {
 					</Typography>
 				</div>
 			</Link>
+			<NotificationBell isCompactMode={isCompactMode} />
 		</div>
 	);
 };
