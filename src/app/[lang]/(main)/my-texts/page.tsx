@@ -1,51 +1,33 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { DEFAULT_LOCALE, LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
-import { OG_LOCALES, SITE_URL } from "@/shared/lib/seo";
+import { LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
+import { buildAlternates, buildOpenGraph } from "@/shared/lib/seo";
 import { MyTextsPage } from "@/widgets/my-texts-page";
 
 export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
-export const generateMetadata = async (props: {
-	params: Promise<{ lang: string }>;
-}): Promise<Metadata> => {
-	const { lang } = await props.params;
-	if (!hasLocale(lang)) return {};
-
-	const dict = await getDictionary(lang);
-	const meta = dict.myTexts.meta;
-	const path = "/my-texts";
-
-	const languages: Record<string, string> = {};
-	for (const locale of LOCALES) {
-		languages[locale] = `${SITE_URL}/${locale}${path}`;
-	}
-	languages["x-default"] = `${SITE_URL}/${DEFAULT_LOCALE}${path}`;
-
-	return {
-		title: meta.title,
-		description: meta.description,
-		alternates: {
-			canonical: `${SITE_URL}/${lang}${path}`,
-			languages,
-		},
-		openGraph: {
-			type: "website",
-			url: `${SITE_URL}/${lang}${path}`,
-			title: meta.title,
-			description: meta.description,
-			locale: OG_LOCALES[lang] ?? lang,
-			siteName: "Mott Larbe",
-		},
-		twitter: { card: "summary", title: meta.title, description: meta.description },
-		// Private pages must not appear in search results
-		robots: { index: false, follow: false },
-	};
-};
-
 interface PageProps {
 	params: Promise<{ lang: string }>;
 }
+
+export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
+	const { lang } = await params;
+	if (!hasLocale(lang)) notFound();
+
+	const dict = await getDictionary(lang);
+	const { title, description } = dict.myTexts.meta;
+	const path = "/my-texts";
+	const { canonical, languages } = buildAlternates(lang, path);
+
+	return {
+		title,
+		description,
+		alternates: { canonical, languages },
+		openGraph: buildOpenGraph(lang, path, title, description),
+		twitter: { card: "summary_large_image", title, description },
+		robots: { index: false, follow: false },
+	};
+};
 
 const MyTextsRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;

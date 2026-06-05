@@ -31,11 +31,9 @@ export const MyTextsTabsContent = ({ activeTab, lang, t }: MyTextsTabsContentPro
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   const typeFilter = TAB_TO_TYPE[activeTab];
-  // enabled: false during SSR — this endpoint requires auth cookie unavailable on server
-  const { data, isPending } = useQuery({
-    ...userTextListQueryOptions({ type: typeFilter, limit: 20 }),
-    enabled: typeof window !== "undefined",
-  });
+  const { data, isPending } = useQuery(
+    userTextListQueryOptions({ type: typeFilter, limit: 20 }),
+  );
 
   if (isPending) return <UserTextListSkeleton />;
 

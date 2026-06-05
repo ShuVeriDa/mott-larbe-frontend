@@ -1,10 +1,11 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { Plus, Send } from "lucide-react";
 import { Button } from "@/shared/ui/button";
-import { Typography } from "@/shared/ui/typography";
 import { useI18n } from "@/shared/lib/i18n";
+import { UserTextListSkeleton } from "./user-text-list";
 import { MyTextsTabs } from "./my-texts-tabs";
 
 interface MyTextsPageProps {
@@ -16,7 +17,6 @@ export const MyTextsPage = ({ lang }: MyTextsPageProps) => {
 
   return (
     <div className="flex h-full flex-col overflow-hidden">
-      {/* Top bar */}
       <header className="flex shrink-0 items-center justify-between gap-3 border-b border-bd-1 bg-surf px-[22px] py-3 max-sm:px-4">
         <h1 className="text-[13.5px] font-semibold text-t-1">
           {t("myTexts.title")}
@@ -38,9 +38,10 @@ export const MyTextsPage = ({ lang }: MyTextsPageProps) => {
         </div>
       </header>
 
-      {/* Content */}
       <main className="flex-1 overflow-y-auto">
-        <MyTextsTabs lang={lang} />
+        <Suspense fallback={<UserTextListSkeleton />}>
+          <MyTextsTabs lang={lang} />
+        </Suspense>
       </main>
     </div>
   );

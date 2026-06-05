@@ -44,11 +44,7 @@ export const MyTextsTabs = ({ lang }: MyTextsTabsProps) => {
       <div className="flex items-center gap-3 border-b border-bd-1 px-4 py-2">
         <TabBar>
           {TABS.map((tab) => (
-            <TabItem
-              key={tab.value}
-              value={tab.value}
-              aria-label={t(tab.labelKey)}
-            >
+            <TabItem key={tab.value} value={tab.value}>
               {t(tab.labelKey)}
             </TabItem>
           ))}
