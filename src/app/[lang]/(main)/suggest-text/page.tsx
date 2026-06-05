@@ -6,9 +6,10 @@ import {
 	getDictionary,
 	hasLocale,
 } from "@/i18n/locales";
+import { OG_LOCALES, SITE_URL } from "@/shared/lib/seo";
 import { SuggestTextPage } from "@/widgets/suggest-text-page";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
+export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
 export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
@@ -38,7 +39,7 @@ export const generateMetadata = async (props: {
 			url: `${SITE_URL}/${lang}${path}`,
 			title: meta.title,
 			description: meta.description,
-			locale: lang,
+			locale: OG_LOCALES[lang] ?? lang,
 			siteName: "Mott Larbe",
 		},
 		twitter: {
@@ -61,7 +62,42 @@ const SuggestTextRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
-	return <SuggestTextPage />;
+	const dict = await getDictionary(lang);
+	const { title, description } = dict.suggestTextPage.meta;
+	const pageUrl = `${SITE_URL}/${lang}/suggest-text`;
+	const homeUrl = `${SITE_URL}/${lang}`;
+
+	const jsonLd = {
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "WebPage",
+				"@id": pageUrl,
+				url: pageUrl,
+				name: title,
+				description,
+				inLanguage: lang,
+				isPartOf: { "@id": `${SITE_URL}/#website` },
+			},
+			{
+				"@type": "BreadcrumbList",
+				itemListElement: [
+					{ "@type": "ListItem", position: 1, name: "Mott Larbe", item: homeUrl },
+					{ "@type": "ListItem", position: 2, name: title, item: pageUrl },
+				],
+			},
+		],
+	};
+
+	return (
+		<>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+			/>
+			<SuggestTextPage />
+		</>
+	);
 };
 
 export default SuggestTextRoutePage;

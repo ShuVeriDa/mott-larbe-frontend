@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { DEFAULT_LOCALE } from "@/i18n/locale-list";
 
 export const metadata: Metadata = {
 	title: "404 — Страница не найдена",
@@ -8,14 +9,14 @@ export const metadata: Metadata = {
 };
 
 const NotFound = () => (
-	<main style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "100vh", gap: "16px", fontFamily: "sans-serif", textAlign: "center", padding: "24px" }}>
-		<h1 style={{ fontSize: "48px", fontWeight: "700", margin: 0 }}>404</h1>
-		<p style={{ fontSize: "18px", color: "#666", margin: 0 }}>Страница не найдена</p>
-		<nav style={{ display: "flex", gap: "16px", marginTop: "8px" }}>
-			<Link href="/ru" style={{ color: "#2254d3", textDecoration: "underline" }}>
+	<main className="flex min-h-screen flex-col items-center justify-center gap-4 p-6 text-center font-sans">
+		<h1 className="text-6xl font-bold">404</h1>
+		<p className="text-lg text-muted-foreground">Страница не найдена</p>
+		<nav className="flex gap-4 mt-2">
+			<Link href={`/${DEFAULT_LOCALE}`} className="text-primary underline underline-offset-4 hover:opacity-80">
 				Главная
 			</Link>
-			<Link href="/ru/texts" style={{ color: "#2254d3", textDecoration: "underline" }}>
+			<Link href={`/${DEFAULT_LOCALE}/texts`} className="text-primary underline underline-offset-4 hover:opacity-80">
 				Библиотека
 			</Link>
 		</nav>

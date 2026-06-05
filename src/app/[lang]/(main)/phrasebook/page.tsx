@@ -37,7 +37,6 @@ export const generateMetadata = async (props: {
 			card: "summary_large_image",
 			title,
 			description,
-			images: [`${SITE_URL}/opengraph-image.png`],
 		},
 		robots: {
 			index: true,

@@ -12,9 +12,9 @@ const STATIC_ROUTES: Array<{ path: string; priority: number; changeFrequency: Me
 	{ path: "/texts",        priority: 0.9, changeFrequency: "daily" },
 	{ path: "/phrasebook",   priority: 0.8, changeFrequency: "weekly" },
 	{ path: "/vocabulary",   priority: 0.8, changeFrequency: "daily" },
-	{ path: "/suggestions",  priority: 0.7, changeFrequency: "weekly" },
 	{ path: "/suggest-text", priority: 0.6, changeFrequency: "monthly" },
-	{ path: "/feedback",     priority: 0.5, changeFrequency: "monthly" },
+	// /suggestions — robots: noindex, excluded from sitemap
+	// /feedback    — robots: noindex, excluded from sitemap
 ];
 
 interface SitemapText {

@@ -6,9 +6,10 @@ import {
 	getDictionary,
 	hasLocale,
 } from "@/i18n/locales";
+import { OG_LOCALES, SITE_URL } from "@/shared/lib/seo";
 import { SubscriptionPage } from "@/widgets/subscription-page";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
+export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
 export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
@@ -38,7 +39,7 @@ export const generateMetadata = async (props: {
 			url: `${SITE_URL}/${lang}${path}`,
 			title: meta.title,
 			description: meta.description,
-			locale: lang,
+			locale: OG_LOCALES[lang] ?? lang,
 			siteName: "Mott Larbe",
 		},
 		twitter: {

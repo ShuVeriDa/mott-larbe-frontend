@@ -39,7 +39,6 @@ export const generateMetadata = async ({
 			card: "summary_large_image",
 			title,
 			description,
-			images: [`${SITE_URL}/opengraph-image.png`],
 		},
 		robots: { index: true, follow: true },
 	};
@@ -92,7 +91,7 @@ const TextsJsonLd = ({
 	return (
 		<script
 			type="application/ld+json"
-			dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+			dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }}
 		/>
 	);
 };

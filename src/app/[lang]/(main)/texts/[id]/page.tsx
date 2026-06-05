@@ -139,12 +139,18 @@ const TextDetailsRoutePage = async ({ params }: PageProps) => {
 				{
 					"@type": "ListItem",
 					position: 1,
+					name: "Mott Larbe",
+					item: `${SITE_URL}/${lang}`,
+				},
+				{
+					"@type": "ListItem",
+					position: 2,
 					name: "Библиотека",
 					item: textsUrl,
 				},
 				{
 					"@type": "ListItem",
-					position: 2,
+					position: 3,
 					name: text.title,
 					item: pageUrl,
 				},

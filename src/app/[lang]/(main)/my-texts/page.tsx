@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DEFAULT_LOCALE, LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
-import { SITE_URL } from "@/shared/lib/seo";
+import { OG_LOCALES, SITE_URL } from "@/shared/lib/seo";
 import { MyTextsPage } from "@/widgets/my-texts-page";
+
+export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
 export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
@@ -32,7 +34,7 @@ export const generateMetadata = async (props: {
 			url: `${SITE_URL}/${lang}${path}`,
 			title: meta.title,
 			description: meta.description,
-			locale: lang,
+			locale: OG_LOCALES[lang] ?? lang,
 			siteName: "Mott Larbe",
 		},
 		twitter: { card: "summary", title: meta.title, description: meta.description },
