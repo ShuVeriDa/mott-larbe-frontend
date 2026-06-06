@@ -1380,7 +1380,14 @@
       "marketingDesc": "Promotions, discounts and platform news",
       "reminderSchedule": "Reminder schedule",
       "reminderTime": "Reminder time",
-      "timezone": "Timezone"
+      "timezone": "Timezone",
+      "inApp": "Push notifications",
+      "inAppFeedbackReply": "Support replies",
+      "inAppFeedbackReplyDesc": "Notification when an admin replies to your support request",
+      "inAppSuggestion": "Suggestion result",
+      "inAppSuggestionDesc": "Notification when your suggested edit is approved or rejected",
+      "inAppTextSubmission": "Text moderation result",
+      "inAppTextSubmissionDesc": "Notification when your submitted text is published or rejected"
     },
     "shortcuts": {
       "title": "Keyboard shortcuts",

@@ -33,9 +33,9 @@ export const ReaderProgressBar = ({ progress }: ReaderProgressBarProps) => {
 				{/* Marker dot + label */}
 				<div
 					className="absolute left-1/2 -translate-x-1/2 transition-[bottom] duration-500 ease-out motion-reduce:transition-none"
-					style={{ bottom: `${value}%` }}
+					style={{ bottom: `calc(min(${value}%, 100% - 5px))` }}
 				>
-					<div className="size-[5px] -translate-x-[1.5px] rounded-full bg-acc" />
+					<div className="size-[5px] translate-x-[-1.5px] rounded-full bg-acc" />
 					<span
 						className="absolute left-3 top-1/2 -translate-y-1/2 whitespace-nowrap font-mono text-[9px] tabular-nums text-acc/70"
 						aria-hidden="true"

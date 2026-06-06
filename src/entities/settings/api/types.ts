@@ -55,6 +55,9 @@ export interface UserNotifications {
 	marketing: boolean;
 	reminderTime: string;
 	timezone: string;
+	inAppFeedbackReply: boolean;
+	inAppSuggestion: boolean;
+	inAppTextSubmission: boolean;
 }
 
 export interface AllSettings {
@@ -94,6 +97,9 @@ export interface UpdateNotificationsDto {
 	marketing?: boolean;
 	reminderTime?: string;
 	timezone?: string;
+	inAppFeedbackReply?: boolean;
+	inAppSuggestion?: boolean;
+	inAppTextSubmission?: boolean;
 }
 
 export type ExportFormat = "json" | "csv";

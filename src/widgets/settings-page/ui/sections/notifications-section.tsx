@@ -48,13 +48,16 @@ export const NotificationsSection = ({
 		} catch {}
 	};
 
-		const handleChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ repeatReminder: v });
-	const handleChange2: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ weeklyReport: v });
-	const handleChange3: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ newTexts: v });
-	const handleChange4: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ supportReplies: v });
-	const handleChange5: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ marketing: v });
-	const handleChange6: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setReminderTime(e.currentTarget.value);
-	const handleChange7: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => setTimezone(e.currentTarget.value);
+		const handleRepeatReminderChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ repeatReminder: v });
+	const handleWeeklyReportChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ weeklyReport: v });
+	const handleNewTextsChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ newTexts: v });
+	const handleSupportRepliesChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ supportReplies: v });
+	const handleMarketingChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ marketing: v });
+	const handleReminderTimeChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) => setReminderTime(e.currentTarget.value);
+	const handleTimezoneChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = (e) => setTimezone(e.currentTarget.value);
+	const handleInAppFeedbackReplyChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ inAppFeedbackReply: v });
+	const handleInAppSuggestionChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ inAppSuggestion: v });
+	const handleInAppTextSubmissionChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ inAppTextSubmission: v });
 return (
 		<div className="flex flex-col gap-3.5">
 			<SectionHeader
@@ -67,31 +70,52 @@ return (
 					label={t("settings.notifications.repeatReminder")}
 					description={t("settings.notifications.repeatReminderDesc")}
 					checked={notifications.repeatReminder}
-					onChange={handleChange}
+					onChange={handleRepeatReminderChange}
 				/>
 				<ToggleRow
 					label={t("settings.notifications.weeklyReport")}
 					description={t("settings.notifications.weeklyReportDesc")}
 					checked={notifications.weeklyReport}
-					onChange={handleChange2}
+					onChange={handleWeeklyReportChange}
 				/>
 				<ToggleRow
 					label={t("settings.notifications.newTexts")}
 					description={t("settings.notifications.newTextsDesc")}
 					checked={notifications.newTexts}
-					onChange={handleChange3}
+					onChange={handleNewTextsChange}
 				/>
 				<ToggleRow
 					label={t("settings.notifications.supportReplies")}
 					description={t("settings.notifications.supportRepliesDesc")}
 					checked={notifications.supportReplies}
-					onChange={handleChange4}
+					onChange={handleSupportRepliesChange}
 				/>
 				<ToggleRow
 					label={t("settings.notifications.marketing")}
 					description={t("settings.notifications.marketingDesc")}
 					checked={notifications.marketing}
-					onChange={handleChange5}
+					onChange={handleMarketingChange}
+				/>
+			</SettingCard>
+
+			<SettingCard title={t("settings.notifications.inApp")} noBody>
+				<ToggleRow
+					label={t("settings.notifications.inAppFeedbackReply")}
+					description={t("settings.notifications.inAppFeedbackReplyDesc")}
+					checked={notifications.inAppFeedbackReply}
+					onChange={handleInAppFeedbackReplyChange}
+				/>
+				<ToggleRow
+					label={t("settings.notifications.inAppSuggestion")}
+					description={t("settings.notifications.inAppSuggestionDesc")}
+					checked={notifications.inAppSuggestion}
+					onChange={handleInAppSuggestionChange}
+				/>
+				<ToggleRow
+					label={t("settings.notifications.inAppTextSubmission")}
+					description={t("settings.notifications.inAppTextSubmissionDesc")}
+					checked={notifications.inAppTextSubmission}
+					onChange={handleInAppTextSubmissionChange}
 				/>
 			</SettingCard>
 
@@ -106,7 +130,7 @@ return (
 								id="reminder-time"
 								type="time"
 								value={reminderTime}
-								onChange={handleChange6}
+								onChange={handleReminderTimeChange}
 								className="max-w-[140px]"
 							/>
 						</div>
@@ -117,7 +141,7 @@ return (
 							<Select
 								id="timezone"
 								value={timezone}
-								onChange={handleChange7}
+								onChange={handleTimezoneChange}
 							>
 								{TIMEZONE_OPTIONS.map((opt) => (
 									<option key={opt.value} value={opt.value}>

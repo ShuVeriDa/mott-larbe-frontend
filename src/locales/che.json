@@ -1380,7 +1380,14 @@
       "marketingDesc": "Акцеш, скидкаш а, платформин керланаш а",
       "reminderSchedule": "Хаийтаран хан",
       "reminderTime": "Хаийтаран хан",
-      "timezone": "Сахьтан пояс"
+      "timezone": "Сахьтан пояс",
+      "inApp": "Push-хаамбаш",
+      "inAppFeedbackReply": "Администраторан жоп",
+      "inAppFeedbackReplyDesc": "Администраторо хьоьга жоп дийцарх хаам",
+      "inAppSuggestion": "Хийцамийн жоп",
+      "inAppSuggestionDesc": "Хьоьга хийцам тIеэцначух я ца тIеэцначух хаам",
+      "inAppTextSubmission": "Текстан модерацин жоп",
+      "inAppTextSubmissionDesc": "Хьоьга хьажийна текст арахецначух я ца арахецначух хаам"
     },
     "shortcuts": {
       "title": "Клавиатурин комбинацеш",

@@ -1379,7 +1379,14 @@
       "marketingDesc": "Акции, скидки и новости платформы",
       "reminderSchedule": "Время напоминаний",
       "reminderTime": "Время напоминания",
-      "timezone": "Часовой пояс"
+      "timezone": "Часовой пояс",
+      "inApp": "Push-уведомления",
+      "inAppFeedbackReply": "Ответы поддержки",
+      "inAppFeedbackReplyDesc": "Уведомление когда администратор ответил на ваш запрос",
+      "inAppSuggestion": "Результат правки",
+      "inAppSuggestionDesc": "Уведомление об одобрении или отклонении предложенной правки",
+      "inAppTextSubmission": "Результат модерации текста",
+      "inAppTextSubmissionDesc": "Уведомление о публикации или отклонении отправленного текста"
     },
     "shortcuts": {
       "title": "Клавиатурные сокращения",
