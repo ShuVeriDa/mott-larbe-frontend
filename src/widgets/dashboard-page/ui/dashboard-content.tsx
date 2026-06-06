@@ -15,9 +15,11 @@ interface DashboardContentProps {
 	data: DashboardResponse;
 	user: UserProfile | undefined;
 	lang: string;
+	showReviewReminder: boolean;
+	dailyWordsGoal: number | null;
 }
 
-export const DashboardContent = ({ data, user, lang }: DashboardContentProps) => {
+export const DashboardContent = ({ data, user, lang, showReviewReminder, dailyWordsGoal }: DashboardContentProps) => {
 	const { t } = useI18n();
 	const { sections } = data;
 
@@ -32,7 +34,7 @@ export const DashboardContent = ({ data, user, lang }: DashboardContentProps) =>
 				<GreetingSection user={user} lang={lang} />
 
 				{/* 4 stat cards */}
-				<StatsGrid stats={data.stats} lang={lang} />
+				<StatsGrid stats={data.stats} lang={lang} showReviewReminder={showReviewReminder} dailyWordsGoal={dailyWordsGoal} />
 
 				{/* Continue reading */}
 				<ContinueReading items={data.continueReading} lang={lang} />

@@ -119,6 +119,12 @@ export const useLearningSection = ({
 	const handleEnableDecksChange = (value: boolean) =>
 		updatePreference({ enableDecks: value });
 
+	const handleEnableSm2Change = (value: boolean) =>
+		updatePreference({ enableSm2: value });
+
+	const handleEnablePhrasesChange = (value: boolean) =>
+		updatePreference({ enablePhrases: value });
+
 	return {
 		learningLang,
 		level,
@@ -139,5 +145,7 @@ export const useLearningSection = ({
 		handleShowExamplesChange,
 		handleShowReviewReminderChange,
 		handleEnableDecksChange,
+		handleEnableSm2Change,
+		handleEnablePhrasesChange,
 	};
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
+import { useSettings } from "@/entities/settings";
 import type { TextToken } from "@/entities/text";
 import { useWordLookup, type WordLookupResponse } from "@/entities/word";
 import { EntrySuggestModal } from "@/features/entry-suggest";
@@ -37,11 +38,15 @@ const computePosition = (anchor: PopupAnchor, popupHeight: number) => {
 const WordPopupBody = ({
 	token,
 	lookup,
+	showGrammar,
+	showExamples,
 	onOpenInPanel,
 	onSuggestOpen,
 }: {
 	token: TextToken;
 	lookup: WordLookupResponse;
+	showGrammar: boolean;
+	showExamples: boolean;
 	onOpenInPanel: () => void;
 	onSuggestOpen: () => void;
 }) => {
@@ -86,7 +91,7 @@ const WordPopupBody = ({
 						<span className="font-medium text-t-2">{lookup.baseForm}</span>
 					</div>
 				) : null}
-				{lookup.grammar
+				{showGrammar && lookup.grammar
 					? (() => {
 							const key = lookup.grammar.replace(/\.$/, "");
 							const nah = t(`posNah.${key}`);
@@ -103,7 +108,7 @@ const WordPopupBody = ({
 							);
 						})()
 					: null}
-				{(lookup.nounClass ?? lookup.nounClassPlural) ? (
+				{showGrammar && (lookup.nounClass ?? lookup.nounClassPlural) ? (
 					<div className="mt-0.5 text-[11.5px] text-t-3">
 						{t("reader.popup.nounClass")}:{" "}
 						<span className="text-t-2">
@@ -111,7 +116,7 @@ const WordPopupBody = ({
 						</span>
 					</div>
 				) : null}
-				{lookup.meanings[0]?.examples[0] ? (
+				{showExamples && lookup.meanings[0]?.examples[0] ? (
 					<div className="mt-1.5 text-[11.5px] italic text-t-3">
 						{lookup.meanings[0].examples[0].text}{" "}
 						{lookup.meanings[0].examples[0].translation ? (
@@ -205,6 +210,10 @@ export const WordPopup = () => {
 	const anchor = useWordLookupStore(s => s.anchor);
 	const closePopup = useWordLookupStore(s => s.closePopup);
 	const openInPanel = useWordLookupStore(s => s.openInPanel);
+	const { data: settings } = useSettings();
+	const showGrammar = settings?.preferences.showGrammar ?? true;
+	const showExamples = settings?.preferences.showExamples ?? true;
+	const autoAddOnClick = settings?.preferences.autoAddOnClick ?? false;
 	const [suggestOpen, setSuggestOpen] = useState(false);
 	const [suggestWord, setSuggestWord] = useState<{
 		normalized: string;
@@ -222,6 +231,7 @@ export const WordPopup = () => {
 	const { data, isLoading } = useWordLookup(
 		isVisible && token ? token.id : null,
 	);
+
 
 	const position = anchor
 		? computePosition(anchor, popupHeight)
@@ -303,6 +313,8 @@ export const WordPopup = () => {
 									<WordPopupBody
 										token={token}
 										lookup={data}
+										showGrammar={showGrammar}
+										showExamples={showExamples}
 										onOpenInPanel={() => openInPanel(token)}
 										onSuggestOpen={() =>
 											handleSuggestOpen(

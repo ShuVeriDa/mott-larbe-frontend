@@ -1289,6 +1289,10 @@
       "languageHint": "Language of menus, buttons and system messages",
       "langRu": "Русский",
       "langEn": "English",
+      "langAr": "العربية",
+      "langDe": "Deutsch",
+      "langFr": "Français",
+      "langTr": "Türkçe",
       "langChe": "Нохчийн"
     },
     "learning": {
@@ -1320,7 +1324,11 @@
       "reviewReminder": "Review reminders",
       "reviewReminderDesc": "Show review word count on the home page",
       "enableDecks": "Enable Esalar",
-      "enableDecksDesc": "Custom structured word repetition system (Esalar)"
+      "enableDecksDesc": "Custom structured word repetition system (Esalar)",
+      "enableSm2": "Enable SuperMemo 2",
+      "enableSm2Desc": "Scientific spaced repetition algorithm SuperMemo 2",
+      "enablePhrases": "Enable Phrases",
+      "enablePhrasesDesc": "Review ready-made phrases and expressions"
     },
     "reader": {
       "title": "Reader",
@@ -1479,6 +1487,12 @@
       "deck": "Esalar",
       "phrases": "Phrases",
       "aria": "Review system"
+    },
+    "disabled": {
+      "title": "Section disabled",
+      "subtitle": "This section is disabled in settings. To use it, enable \"{setting}\" in learning settings.",
+      "enableButton": "Enable \"{setting}\"",
+      "goToSettings": "Go to settings"
     },
     "sm2": {
       "intro": {
@@ -2457,7 +2471,8 @@
       "textsRead": "texts read",
       "words": "words in dictionary",
       "streak": "day streak",
-      "dueToday": "due for review"
+      "dueToday": "due for review",
+      "dailyWords": "words today"
     },
     "reviewBanner": {
       "title": "Words waiting for review today",

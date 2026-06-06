@@ -143,7 +143,6 @@ export const WordBottomSheet = ({ textId }: { textId: string }) => {
 	const { data, isLoading } = useWordLookup(
 		sheetOpen && token ? token.id : null,
 	);
-
 	const dialogRef = useRef<HTMLDivElement>(null);
 	useScrollLock(sheetOpen);
 	useFocusTrap(dialogRef, sheetOpen);

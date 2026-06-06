@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 
+import { useSettings } from "@/entities/settings";
 import type { TextToken } from "@/entities/text";
 import {
 	useWordLookup,
@@ -205,10 +206,14 @@ const PanelBody = ({
 	token,
 	lookup,
 	textId,
+	showGrammar,
+	showExamples,
 }: {
 	token: TextToken;
 	lookup: WordLookupResponse;
 	textId: string;
+	showGrammar: boolean;
+	showExamples: boolean;
 }) => {
 	const { t } = useI18n();
 	const [suggestOpen, setSuggestOpen] = useState(false);
@@ -221,9 +226,9 @@ const PanelBody = ({
 				word={token.original}
 				baseForm={lookup.baseForm ?? token.original}
 				wordLevel={lookup.wordLevel}
-				grammar={lookup.grammar}
-				nounClass={lookup.nounClass}
-				nounClassPlural={lookup.nounClassPlural}
+				grammar={showGrammar ? lookup.grammar : null}
+				nounClass={showGrammar ? lookup.nounClass : null}
+				nounClassPlural={showGrammar ? lookup.nounClassPlural : null}
 				baseLabel={t("reader.panel.baseForm")}
 				posLabel={t("aiTranslation.popup.partOfSpeech")}
 				nounClassLabel={t("reader.popup.nounClass")}
@@ -245,11 +250,11 @@ const PanelBody = ({
 				)}
 			</Section>
 
-			{lookup.grammarForms ? (
+			{showGrammar && lookup.grammarForms ? (
 				<Section title={t("reader.panel.sections.grammar")}>
 					<GrammarFormsList forms={lookup.grammarForms} />
 				</Section>
-			) : lookup.grammar ? (
+			) : showGrammar && lookup.grammar ? (
 				<Section title={t("reader.panel.sections.grammar")}>
 					<div className="text-[12.5px] leading-[1.55] text-t-2">
 						{lookup.grammar}
@@ -263,7 +268,7 @@ const PanelBody = ({
 				</Section>
 			) : null}
 
-			{lookup.lemmaId ? (
+			{showExamples && lookup.lemmaId ? (
 				<Section title={t("reader.panel.sections.examples")}>
 					<WordExamplesList
 						fallback={lookup.meanings.flatMap(m => m.examples)}
@@ -317,7 +322,9 @@ export const WordPanelContent = ({ token, textId }: WordPanelContentProps) => {
 	const { data, isLoading, isError } = useWordLookup(token.id);
 	const { t, lang } = useI18n();
 	const contextSentence = useWordLookupStore(s => s.contextSentence);
-
+	const { data: settings } = useSettings();
+	const showGrammar = settings?.preferences.showGrammar ?? true;
+	const showExamples = settings?.preferences.showExamples ?? true;
 	if (isLoading) return <WordPanelLoader />;
 	if (isError || !data) {
 		return (
@@ -338,5 +345,5 @@ export const WordPanelContent = ({ token, textId }: WordPanelContentProps) => {
 		);
 	}
 
-	return <PanelBody token={token} lookup={data} textId={textId} />;
+	return <PanelBody token={token} lookup={data} textId={textId} showGrammar={showGrammar} showExamples={showExamples} />;
 };

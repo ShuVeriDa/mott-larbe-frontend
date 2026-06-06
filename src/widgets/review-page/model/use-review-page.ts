@@ -7,6 +7,7 @@ import { useDeckDue, useDeckStats } from "@/entities/deck";
 import type { DeckCard } from "@/entities/deck";
 import { useSuspenseReviewStats, useSuspenseReviewDue } from "@/entities/review";
 import { usePhraseReviewStats } from "@/entities/phrasebook";
+import { useSettings } from "@/entities/settings";
 import { useSessionMode } from "@/features/session-mode";
 import { useReviewFlow } from "./use-review-flow";
 
@@ -30,6 +31,10 @@ export const useReviewPage = () => {
 	const { system, screen, switchSystem, goToCard, goToDone, goToIntro, goToRetry } =
 		useReviewFlow();
 	const { mode: sessionMode, setMode: setSessionMode } = useSessionMode();
+	const { data: settings } = useSettings();
+	const enableDecks = settings?.preferences.enableDecks ?? false;
+	const enableSm2 = settings?.preferences.enableSm2 ?? true;
+	const enablePhrases = settings?.preferences.enablePhrases ?? true;
 
 	const { data: stats } = useSuspenseReviewStats();
 
@@ -136,6 +141,9 @@ export const useReviewPage = () => {
 		deckDue,
 		deckAgainCards,
 		premiumLocked,
+		enableDecks,
+		enableSm2,
+		enablePhrases,
 		sm2DueBadge,
 		deckTotalBadge,
 		phraseDueBadge,

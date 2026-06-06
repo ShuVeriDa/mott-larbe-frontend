@@ -1,6 +1,7 @@
 "use client";
 
 import { useDueWords } from "@/entities/dictionary";
+import { useSettings } from "@/entities/settings";
 import { formatReviewIn } from "@/shared/lib/format-relative-time";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
@@ -13,8 +14,11 @@ export interface ReviewBannerProps {
 export const ReviewBanner = ({ lang }: ReviewBannerProps) => {
 	const { t } = useI18n();
 	const { data, isLoading } = useDueWords();
+	const { data: settings } = useSettings();
 
-	if (isLoading || !data || data.count === 0) return null;
+	const showReminder = settings?.preferences.showReviewReminder ?? true;
+
+	if (isLoading || !data || data.count === 0 || !showReminder) return null;
 
 	const subtitle = data.nextScheduledAt
 		? t("vocabulary.review.nextIn", {

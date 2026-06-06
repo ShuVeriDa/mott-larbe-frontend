@@ -10,6 +10,8 @@ import { PhrasebookReviewPageInline } from "./phrasebook-review-inline";
 import type { DeckDueResponse } from "@/entities/deck";
 import { ReviewTopbar } from "./review-topbar";
 import { ReviewSidePanel } from "./review-side-panel";
+import { ReviewDisabledScreen } from "./review-disabled-screen";
+import { useI18n } from "@/shared/lib/i18n";
 
 const Sm2Session = dynamic(
 	() => import("@/widgets/review-session").then((m) => ({ default: m.Sm2Session })),
@@ -22,6 +24,7 @@ const DeckSession = dynamic(
 );
 
 export const ReviewPage = () => {
+	const { t } = useI18n();
 	const {
 		system,
 		screen,
@@ -35,6 +38,9 @@ export const ReviewPage = () => {
 		deckDue,
 		deckAgainCards,
 		premiumLocked,
+		enableDecks,
+		enableSm2,
+		enablePhrases,
 		sm2DueBadge,
 		deckTotalBadge,
 		phraseDueBadge,
@@ -79,11 +85,25 @@ export const ReviewPage = () => {
 			/>
 
 			{system === "phrases" ? (
-				<PhrasebookReviewPageInline />
+				enablePhrases ? (
+					<PhrasebookReviewPageInline />
+				) : (
+					<ReviewDisabledScreen
+						settingLabel={t("settings.learning.enablePhrases")}
+						enableKey="enablePhrases"
+					/>
+				)
 			) : (
 				<div className="flex flex-1 overflow-hidden">
 					<div className="flex flex-1 flex-col overflow-x-hidden bg-panel md:overflow-y-auto">
-						{system === "sm2" && screen === "intro" ? (
+						{system === "sm2" && !enableSm2 ? (
+							<ReviewDisabledScreen
+								settingLabel={t("settings.learning.enableSm2")}
+								enableKey="enableSm2"
+							/>
+						) : null}
+
+						{system === "sm2" && enableSm2 && screen === "intro" ? (
 							<ReviewIntro
 								stats={stats}
 								queue={words}
@@ -95,7 +115,7 @@ export const ReviewPage = () => {
 							/>
 						) : null}
 
-						{system === "sm2" && screen === "card" && words.length > 0 ? (
+						{system === "sm2" && enableSm2 && screen === "card" && words.length > 0 ? (
 							<Sm2Session
 								words={words}
 								sessionMode={sessionMode}
@@ -105,7 +125,7 @@ export const ReviewPage = () => {
 							/>
 						) : null}
 
-						{system === "sm2" && screen === "done" ? (
+						{system === "sm2" && enableSm2 && screen === "done" ? (
 							<ReviewDone
 								easy={sm2Counts.easy}
 								good={sm2Counts.good}
@@ -115,7 +135,14 @@ export const ReviewPage = () => {
 							/>
 						) : null}
 
-						{system === "deck" && screen === "intro" ? (
+						{system === "deck" && !enableDecks ? (
+							<ReviewDisabledScreen
+								settingLabel={t("settings.learning.enableDecks")}
+								enableKey="enableDecks"
+							/>
+						) : null}
+
+						{system === "deck" && enableDecks && screen === "intro" ? (
 							<ReviewDeckIntro
 								stats={deckStats}
 								loading={deckLoading}
@@ -129,7 +156,7 @@ export const ReviewPage = () => {
 							/>
 						) : null}
 
-						{system === "deck" && screen === "card" && deckDue ? (
+						{system === "deck" && enableDecks && screen === "card" && deckDue ? (
 							<DeckSession
 								due={deckDue}
 								sessionMode={sessionMode}
@@ -139,7 +166,7 @@ export const ReviewPage = () => {
 							/>
 						) : null}
 
-						{system === "deck" && screen === "retry" && deckAgainCards.length > 0 ? (
+						{system === "deck" && enableDecks && screen === "retry" && deckAgainCards.length > 0 ? (
 							<DeckSession
 								due={retryDue}
 								sessionMode={sessionMode}
@@ -148,7 +175,7 @@ export const ReviewPage = () => {
 							/>
 						) : null}
 
-						{system === "deck" && screen === "done" ? (
+						{system === "deck" && enableDecks && screen === "done" ? (
 							<ReviewDeckDone
 								know={deckCounts.know}
 								again={deckCounts.again}
@@ -159,7 +186,7 @@ export const ReviewPage = () => {
 						) : null}
 					</div>
 
-					{system === "sm2" ? (
+					{system === "sm2" && enableSm2 ? (
 						<ReviewSidePanel
 							system={system}
 							screen={screen}

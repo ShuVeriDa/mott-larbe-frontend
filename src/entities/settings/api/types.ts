@@ -1,6 +1,6 @@
 export type ThemePreference = "LIGHT" | "DARK" | "SYSTEM";
 export type UiLanguage = "RU" | "EN";
-export type TranslationLanguage = "RU" | "EN" | "AR";
+export type TranslationLanguage = "RU" | "EN" | "AR" | "DE" | "FR" | "TR";
 export type PopupMode = "POPUP" | "SIDEBAR" | "BOTH";
 
 export interface UserPreferences {
@@ -18,6 +18,8 @@ export interface UserPreferences {
 	translationLanguage: TranslationLanguage;
 	showReviewReminder: boolean;
 	enableDecks: boolean;
+	enableSm2: boolean;
+	enablePhrases: boolean;
 }
 
 export interface UserGoals {
@@ -58,6 +60,8 @@ export interface UpdatePreferencesDto {
 	translationLanguage?: TranslationLanguage;
 	showReviewReminder?: boolean;
 	enableDecks?: boolean;
+	enableSm2?: boolean;
+	enablePhrases?: boolean;
 }
 
 export interface UpdateGoalsDto {

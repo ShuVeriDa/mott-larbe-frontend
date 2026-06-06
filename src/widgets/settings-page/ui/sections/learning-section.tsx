@@ -41,6 +41,8 @@ export const LearningSection = ({
 		handleShowExamplesChange,
 		handleShowReviewReminderChange,
 		handleEnableDecksChange,
+		handleEnableSm2Change,
+		handleEnablePhrasesChange,
 	} = useLearningSection({ preferences, goals });
 
 	return (
@@ -96,7 +98,11 @@ export const LearningSection = ({
 							wrapperClassName="max-w-[280px]"
 						>
 							<option value="RU">{t("settings.appearance.langRu")}</option>
-							{/* <option value="EN">{t("settings.appearance.langEn")}</option> */}
+							<option value="EN">{t("settings.appearance.langEn")}</option>
+							<option value="AR">{t("settings.appearance.langAr")}</option>
+							<option value="DE">{t("settings.appearance.langDe")}</option>
+							<option value="FR">{t("settings.appearance.langFr")}</option>
+							<option value="TR">{t("settings.appearance.langTr")}</option>
 						</Select>
 						<Typography
 							tag="span"
@@ -205,6 +211,18 @@ export const LearningSection = ({
 					description={t("settings.learning.enableDecksDesc")}
 					checked={preferences.enableDecks}
 					onChange={handleEnableDecksChange}
+				/>
+				<ToggleRow
+					label={t("settings.learning.enableSm2")}
+					description={t("settings.learning.enableSm2Desc")}
+					checked={preferences.enableSm2}
+					onChange={handleEnableSm2Change}
+				/>
+				<ToggleRow
+					label={t("settings.learning.enablePhrases")}
+					description={t("settings.learning.enablePhrasesDesc")}
+					checked={preferences.enablePhrases}
+					onChange={handleEnablePhrasesChange}
 				/>
 			</SettingCard>
 		</div>

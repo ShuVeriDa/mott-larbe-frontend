@@ -6,10 +6,10 @@ import { DashboardError } from "./dashboard-error";
 import { DashboardSkeleton } from "./dashboard-skeleton";
 
 export const DashboardPage = () => {
-	const { lang, data, isPending, isError, user, handleRetry } = useDashboardPage();
+	const { lang, data, isPending, isError, user, showReviewReminder, dailyWordsGoal, handleRetry } = useDashboardPage();
 
 	if (isPending) return <DashboardSkeleton />;
 	if (isError || !data) return <DashboardError onRetry={handleRetry} />;
 
-	return <DashboardContent data={data} user={user} lang={lang} />;
+	return <DashboardContent data={data} user={user} lang={lang} showReviewReminder={showReviewReminder} dailyWordsGoal={dailyWordsGoal} />;
 };

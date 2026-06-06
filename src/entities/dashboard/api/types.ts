@@ -26,6 +26,7 @@ export interface DashboardStats {
 	streakDays: DashboardStreakDay[];
 	dueToday: DashboardDueToday;
 	words: DashboardWords;
+	wordsAddedToday: number;
 }
 
 export interface DashboardContinueItem {

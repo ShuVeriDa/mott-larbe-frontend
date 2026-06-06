@@ -4,6 +4,7 @@ import { useSettings } from "@/entities/settings";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import type { SettingsSectionId } from "../model/section-list";
+import { AiSection } from "./sections/ai-section";
 import { AppearanceSection } from "./sections/appearance-section";
 import { DataSection } from "./sections/data-section";
 import { LearningSection } from "./sections/learning-section";
@@ -55,6 +56,7 @@ export const SettingsPage = () => {
 							{active === "shortcuts" ? <ShortcutsSection /> : null}
 							{active === "sessions" ? <SessionsSection /> : null}
 							{active === "data" ? <DataSection /> : null}
+							{active === "ai" ? <AiSection /> : null}
 						</>
 					)}
 				</div>
