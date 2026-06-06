@@ -5,12 +5,35 @@ import type { TextPageResponse } from "@/entities/text";
 import { useI18n } from "@/shared/lib/i18n";
 import { LANG_TAG } from "@/shared/lib/lang-tag";
 
+export interface ArticleProgressBarProps {
+	progress: number;
+}
+
+export const ArticleProgressBar = ({ progress }: ArticleProgressBarProps) => {
+	const value = Math.max(0, Math.min(100, Math.round(progress)));
+	return (
+		<div
+			role="progressbar"
+			aria-valuenow={value}
+			aria-valuemin={0}
+			aria-valuemax={100}
+			className="mb-3 h-[3px] w-full overflow-hidden rounded-full bg-bd-1"
+		>
+			<div
+				className="h-full rounded-full bg-acc/50 transition-[width] duration-500 ease-out motion-reduce:transition-none"
+				style={{ width: `${value}%` }}
+			/>
+		</div>
+	);
+};
+
 export interface ArticleHeaderProps {
 	data: TextPageResponse;
 	currentPage: number;
+	showProgress?: boolean;
 }
 
-export const ArticleHeader = ({ data, currentPage }: ArticleHeaderProps) => {
+export const ArticleHeader = ({ data, currentPage, showProgress = false }: ArticleHeaderProps) => {
 	const { t } = useI18n();
 
 	const level = data.level ?? null;
@@ -26,6 +49,7 @@ export const ArticleHeader = ({ data, currentPage }: ArticleHeaderProps) => {
 
 	return (
 		<header className="mb-8">
+			{showProgress && <ArticleProgressBar progress={data.progress} />}
 			{/* Meta line — editorial caption style */}
 			{metaTokens.length > 0 && (
 				<div className="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1">

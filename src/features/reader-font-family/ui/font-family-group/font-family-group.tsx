@@ -5,7 +5,8 @@ import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { ChevronDown } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useReaderFontFamily, FONT_FAMILY_CLASS, type ReaderFontFamily } from "../../model";
 
 interface FontOption {
@@ -26,14 +27,16 @@ const FAMILIES: FontOption[] = [
 
 export interface FontFamilyGroupProps {
 	className?: string;
+	fullWidth?: boolean;
 }
 
-export const FontFamilyGroup = ({ className }: FontFamilyGroupProps) => {
+export const FontFamilyGroup = ({ className, fullWidth = false }: FontFamilyGroupProps) => {
 	const { t } = useI18n();
 	const family = useReaderFontFamily((s) => s.family);
 	const setFamily = useReaderFontFamily((s) => s.setFamily);
 	const [open, setOpen] = useState(false);
-	const containerRef = useRef<HTMLDivElement>(null);
+	const [coords, setCoords] = useState<{ top: number; left: number; width: number } | null>(null);
+	const triggerRef = useRef<HTMLButtonElement>(null);
 
 	const current = FAMILIES.find((f) => f.value === family) ?? FAMILIES[0];
 
@@ -44,10 +47,20 @@ export const FontFamilyGroup = ({ className }: FontFamilyGroupProps) => {
 		setOpen(false);
 	};
 
+	useLayoutEffect(() => {
+		if (!open || !triggerRef.current) return;
+		const rect = triggerRef.current.getBoundingClientRect();
+		setCoords({
+			top: rect.bottom + window.scrollY + 4,
+			left: rect.left + window.scrollX,
+			width: rect.width,
+		});
+	}, [open]);
+
 	useEffect(() => {
 		if (!open) return;
 		const handlePointerDown = (e: PointerEvent) => {
-			if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+			if (triggerRef.current && !triggerRef.current.contains(e.target as Node)) {
 				setOpen(false);
 			}
 		};
@@ -56,42 +69,64 @@ export const FontFamilyGroup = ({ className }: FontFamilyGroupProps) => {
 	}, [open]);
 
 	return (
-		<div ref={containerRef} className={cn("relative w-full", className)}>
+		<div className={cn(fullWidth ? "relative w-full" : "relative inline-block", className)}>
 			<Button
+				ref={triggerRef}
 				onClick={handleToggle}
 				title={t("reader.settings.font")}
 				aria-expanded={open}
 				aria-haspopup="listbox"
 				aria-label={t("reader.settings.font")}
 				className={cn(
-					"flex w-full items-center gap-2.5 rounded-[8px] border border-bd-2 bg-surf-2 px-3 h-[38px]",
+					"flex items-center gap-2.5 rounded-[8px] border border-bd-2 bg-surf-2 px-3",
 					"text-t-1 transition-colors duration-150 outline-none",
 					"hover:border-bd-3 focus-visible:border-acc",
 					open && "border-acc",
+					fullWidth ? "w-full h-8" : "inline-flex gap-2 rounded-[5px] border-[0.5px] h-7 px-2.5",
 				)}
 			>
 				<Typography
 					tag="span"
-					className={cn("text-[20px] leading-none shrink-0", FONT_FAMILY_CLASS[family])}
+					className={cn(
+						"leading-none shrink-0",
+						fullWidth ? "text-[20px]" : "text-[15px]",
+						FONT_FAMILY_CLASS[family],
+					)}
 					aria-hidden="true"
 				>
 					Аа
 				</Typography>
-				<Typography tag="span" className="flex-1 text-left text-[13px] font-sans">
+				<Typography
+					tag="span"
+					className={cn(
+						"flex-1 text-left font-sans leading-none",
+						fullWidth ? "text-[13px]" : "text-[11px] font-medium text-t-1",
+					)}
+				>
 					{current.label}
 				</Typography>
 				<ChevronDown
-					className={cn("size-[14px] text-t-3 shrink-0 transition-transform duration-150", open && "rotate-180")}
+					className={cn(
+						"shrink-0 text-t-3 transition-transform duration-150",
+						fullWidth ? "size-[14px]" : "size-3",
+						open && "rotate-180",
+					)}
 					strokeWidth={2}
 				/>
 			</Button>
 
-			{open && (
+			{open && coords && typeof document !== "undefined" && createPortal(
 				<ul
 					role="listbox"
 					aria-label={t("reader.settings.font")}
+					style={{
+						position: "absolute",
+						top: coords.top,
+						left: coords.left,
+						minWidth: Math.max(coords.width, 180),
+					}}
 					className={cn(
-						"absolute left-0 right-0 z-10 mt-1 overflow-hidden rounded-[8px]",
+						"z-9999 overflow-hidden rounded-[8px]",
 						"border border-bd-2 bg-popover shadow-md ring-1 ring-foreground/10",
 						"max-h-[260px] overflow-y-auto",
 					)}
@@ -123,7 +158,8 @@ export const FontFamilyGroup = ({ className }: FontFamilyGroupProps) => {
 							</Typography>
 						</li>
 					))}
-				</ul>
+				</ul>,
+				document.body,
 			)}
 		</div>
 	);

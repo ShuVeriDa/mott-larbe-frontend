@@ -3,7 +3,7 @@ import { readerContextQueryOptions, readerContextKeys, useReaderContext, type Re
 import { useWordLookupStore } from "@/features/word-lookup";
 import { useReaderFocusMode } from "@/features/reader-focus-mode";
 import { useReaderSessionTracker } from "@/features/reader-session-tracker";
-import { useReaderSettingsSync } from "@/features/reader-settings-sync";
+import { useReaderSettingsInit, useReaderSettingsSync } from "@/features/reader-settings-sync";
 import { useI18n } from "@/shared/lib/i18n";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -20,6 +20,7 @@ export const useReaderPage = (
 	// Optional: override API function — used by UserTextReaderPage to hit /user-text-reader-context
 	apiFn?: (id: string, page: number) => Promise<ReaderContextResponse>,
 ) => {
+	useReaderSettingsInit();
 	useReaderSettingsSync();
 	const { lang } = useI18n();
 	const router = useRouter();

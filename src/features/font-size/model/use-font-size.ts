@@ -1,42 +1,20 @@
 "use client";
-import { useState } from 'react';
-import { useUpdatePreferences } from "@/entities/settings";
-import { useI18n } from "@/shared/lib/i18n";
-import { useToast } from "@/shared/lib/toast";
-import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 
-export const FONT_SIZE_MIN = 12;
-export const FONT_SIZE_MAX = 24;
-export const FONT_SIZE_DEFAULT = 16;
+import { FONT_SIZE_STEPS, useReaderFontSize, type ReaderFontSize } from "@/features/reader-font-size";
 
-export const useFontSize = (initial: number) => {
-	const { t } = useI18n();
-	const { mutateAsync, isPending } = useUpdatePreferences();
-	const { success } = useToast();
-	const { toastApiError } = useApiErrorToast();
-	const [value, setValue] = useState<number>(initial);
+export const useFontSize = () => {
+	const size = useReaderFontSize(s => s.size);
+	const setSize = useReaderFontSize(s => s.setSize);
+
+	const stepIndex = FONT_SIZE_STEPS.indexOf(size as ReaderFontSize);
+	const fillPercent = (stepIndex / (FONT_SIZE_STEPS.length - 1)) * 100;
 
 	const change = (delta: number) => {
-		setValue((v) =>
-			Math.max(FONT_SIZE_MIN, Math.min(FONT_SIZE_MAX, v + delta)),
-		);
+		const next = stepIndex + delta;
+		if (next >= 0 && next < FONT_SIZE_STEPS.length) setSize(FONT_SIZE_STEPS[next]);
 	};
 
-	const reset = () => {
-		setValue(FONT_SIZE_DEFAULT);
-	};
+	const reset = () => setSize(17);
 
-	const save = async () => {
-		try {
-			await mutateAsync({ fontSize: value });
-			success(t("settings.toasts.fontSaved"));
-		} catch (err) {
-			toastApiError(err);
-		}
-	};
-
-	const fillPercent =
-		((value - FONT_SIZE_MIN) / (FONT_SIZE_MAX - FONT_SIZE_MIN)) * 100;
-
-	return { value, isSaving: isPending, change, reset, save, fillPercent };
+	return { value: size, fillPercent, change, reset };
 };

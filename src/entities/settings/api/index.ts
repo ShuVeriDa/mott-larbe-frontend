@@ -13,4 +13,12 @@ export type {
 	UserGoals,
 	UserNotifications,
 	UserPreferences,
+	ReaderFontFamilyPref,
+	ReaderFontSizePref,
+	ReaderColumnWidthPref,
+	ReaderPagePaddingPref,
+	ReaderLineHeightPref,
+	ReaderLetterSpacingPref,
+	ReaderParagraphSpacingPref,
+	ReaderThemePref,
 } from "./types";

@@ -6,78 +6,85 @@ import { useReaderFontSize } from "@/features/reader-font-size";
 import { useReaderTextLayout } from "@/features/reader-text-width";
 import { useReaderTheme } from "@/features/reader-theme";
 import { useEffect, useRef } from "react";
+import { useReaderInitStore } from "./reader-init-store";
+
+const DEBOUNCE_MS = 800;
 
 const patchPreferences = (body: Record<string, unknown>) =>
 	http.patch("/settings/preferences", body).catch(() => {});
 
 export const useReaderSettingsSync = () => {
+	const isInitializingRef = useRef(false);
+	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const pendingRef = useRef<Record<string, unknown>>({});
+	const mountedRef = useRef(false);
+
+	// Keep isInitializing in a ref so schedule() always reads the latest value
+	const isInitializing = useReaderInitStore((s) => s.isInitializing);
+	useEffect(() => { isInitializingRef.current = isInitializing; }, [isInitializing]);
+
+	const scheduleRef = useRef((patch: Record<string, unknown>) => {
+		if (isInitializingRef.current) return;
+		pendingRef.current = { ...pendingRef.current, ...patch };
+		if (timerRef.current) clearTimeout(timerRef.current);
+		timerRef.current = setTimeout(() => {
+			patchPreferences(pendingRef.current);
+			pendingRef.current = {};
+		}, DEBOUNCE_MS);
+	});
+
 	const fontFamily = useReaderFontFamily((s) => s.family);
 	const fontSize = useReaderFontSize((s) => s.size);
 	const { columnWidth, pagePadding, lineHeight, letterSpacing, paragraphSpacing } = useReaderTextLayout();
 	const theme = useReaderTheme((s) => s.theme);
 	const bgColor = useReaderTheme((s) => s.bgColor);
 
-	const mounted = useRef(false);
-	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-	// Keep latest values in a ref so the debounced flush always sends current state
-	const pendingRef = useRef<Record<string, unknown>>({});
-
-	const schedule = (patch: Record<string, unknown>) => {
-		pendingRef.current = { ...pendingRef.current, ...patch };
-		if (timerRef.current) clearTimeout(timerRef.current);
-		timerRef.current = setTimeout(() => {
-			patchPreferences(pendingRef.current);
-			pendingRef.current = {};
-		}, 600);
-	};
-
 	useEffect(() => {
-		if (!mounted.current) { mounted.current = true; return; }
-		schedule({ readerFontFamily: fontFamily });
+		if (!mountedRef.current) { mountedRef.current = true; return; }
+		scheduleRef.current({ readerFontFamily: fontFamily });
 	}, [fontFamily]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		if (!mounted.current) return;
-		schedule({ readerFontSize: fontSize });
+		if (!mountedRef.current) return;
+		scheduleRef.current({ readerFontSize: fontSize });
 	}, [fontSize]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		if (!mounted.current) return;
-		schedule({ readerColumnWidth: columnWidth });
+		if (!mountedRef.current) return;
+		scheduleRef.current({ readerColumnWidth: columnWidth });
 	}, [columnWidth]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		if (!mounted.current) return;
-		schedule({ readerPagePadding: pagePadding });
+		if (!mountedRef.current) return;
+		scheduleRef.current({ readerPagePadding: pagePadding });
 	}, [pagePadding]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		if (!mounted.current) return;
-		schedule({ readerLineHeight: lineHeight });
+		if (!mountedRef.current) return;
+		scheduleRef.current({ readerLineHeight: lineHeight });
 	}, [lineHeight]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		if (!mounted.current) return;
-		schedule({ readerLetterSpacing: letterSpacing });
+		if (!mountedRef.current) return;
+		scheduleRef.current({ readerLetterSpacing: letterSpacing });
 	}, [letterSpacing]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		if (!mounted.current) return;
-		schedule({ readerParagraphSpacing: paragraphSpacing });
+		if (!mountedRef.current) return;
+		scheduleRef.current({ readerParagraphSpacing: paragraphSpacing });
 	}, [paragraphSpacing]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		if (!mounted.current) return;
-		schedule({ readerTheme: theme });
+		if (!mountedRef.current) return;
+		scheduleRef.current({ readerTheme: theme });
 	}, [theme]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		if (!mounted.current) return;
-		schedule({ readerBgColor: bgColor });
+		if (!mountedRef.current) return;
+		scheduleRef.current({ readerBgColor: bgColor });
 	}, [bgColor]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	// Flush on unmount if there are pending changes
+	// Flush pending changes on unmount
 	useEffect(() => {
 		return () => {
 			if (timerRef.current) clearTimeout(timerRef.current);

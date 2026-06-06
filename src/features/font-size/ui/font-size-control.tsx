@@ -1,31 +1,24 @@
 "use client";
 
-import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { useI18n } from "@/shared/lib/i18n";
 import { ComponentProps } from "react";
 import { useFontSize } from "../model";
 
-export interface FontSizeControlProps {
-	initialValue: number;
-}
-
-export const FontSizeControl = ({ initialValue }: FontSizeControlProps) => {
+export const FontSizeControl = () => {
 	const { t } = useI18n();
-	const { value, change, reset, save, fillPercent, isSaving } =
-		useFontSize(initialValue);
+	const { value, fillPercent, change, reset } = useFontSize();
 
-	const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-		change(-1);
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-		change(1);
+	const handleDecrease: NonNullable<ComponentProps<"button">["onClick"]> =
+		() => change(-1);
+	const handleIncrease: NonNullable<ComponentProps<"button">["onClick"]> =
+		() => change(1);
+
 	return (
 		<>
 			<div className="border-b-[0.5px] border-bd-1 px-4 py-3.5">
-				<Typography
-					tag="span"
-					className="block text-[11.5px] font-medium text-t-2"
-				>
+				<Typography tag="span" className="block text-[11.5px] font-medium text-t-2">
 					{t("settings.reader.preview")}
 				</Typography>
 				<Typography
@@ -39,7 +32,7 @@ export const FontSizeControl = ({ initialValue }: FontSizeControlProps) => {
 					<Button
 						variant="bare"
 						size={null}
-						onClick={handleClick}
+						onClick={handleDecrease}
 						aria-label="-"
 						className="flex size-7 cursor-pointer items-center justify-center rounded-md border-[0.5px] border-bd-2 bg-surf-2 text-sm font-semibold text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
 					>
@@ -60,7 +53,7 @@ export const FontSizeControl = ({ initialValue }: FontSizeControlProps) => {
 					<Button
 						variant="bare"
 						size={null}
-						onClick={handleClick2}
+						onClick={handleIncrease}
 						aria-label="+"
 						className="flex size-7 cursor-pointer items-center justify-center rounded-md border-[0.5px] border-bd-2 bg-surf-2 text-sm font-semibold text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
 					>
@@ -68,23 +61,9 @@ export const FontSizeControl = ({ initialValue }: FontSizeControlProps) => {
 					</Button>
 				</div>
 			</div>
-			<div className="flex justify-end gap-2 px-4 py-3.5">
-				<Button
-					variant="outline"
-					onClick={reset}
-					title={t("settings.common.reset")}
-				>
+			<div className="flex justify-end px-4 py-3.5">
+				<Button variant="outline" onClick={reset}>
 					{t("settings.common.reset")}
-				</Button>
-				<Button
-					variant="action"
-					onClick={save}
-					disabled={isSaving}
-					title={
-						isSaving ? t("settings.common.saving") : t("settings.common.save")
-					}
-				>
-					{isSaving ? t("settings.common.saving") : t("settings.common.save")}
 				</Button>
 			</div>
 		</>

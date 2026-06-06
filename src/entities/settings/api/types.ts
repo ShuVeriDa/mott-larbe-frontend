@@ -3,6 +3,15 @@ export type UiLanguage = "RU" | "EN";
 export type TranslationLanguage = "RU" | "EN" | "AR" | "DE" | "FR" | "TR";
 export type PopupMode = "POPUP" | "SIDEBAR" | "BOTH";
 
+export type ReaderFontFamilyPref = "sans" | "golos" | "serif" | "lora" | "merriweather" | "pt-serif" | "source-serif" | "mono";
+export type ReaderFontSizePref = number;
+export type ReaderColumnWidthPref = "xs" | "sm" | "md" | "lg" | "full";
+export type ReaderPagePaddingPref = "compact" | "normal" | "wide";
+export type ReaderLineHeightPref = "compact" | "normal" | "relaxed";
+export type ReaderLetterSpacingPref = "tight" | "normal" | "wide";
+export type ReaderParagraphSpacingPref = "none" | "compact" | "normal" | "relaxed";
+export type ReaderThemePref = "default" | "paper" | "sepia" | "warm" | "night" | "green" | "slate" | "custom";
+
 export interface UserPreferences {
 	userId: string;
 	theme: ThemePreference;
@@ -11,7 +20,6 @@ export interface UserPreferences {
 	popupMode: PopupMode;
 	highlightKnown: boolean;
 	showProgress: boolean;
-	autoNextPage: boolean;
 	autoAddOnClick: boolean;
 	showGrammar: boolean;
 	showExamples: boolean;
@@ -20,6 +28,15 @@ export interface UserPreferences {
 	enableDecks: boolean;
 	enableSm2: boolean;
 	enablePhrases: boolean;
+	readerFontFamily: ReaderFontFamilyPref;
+	readerFontSize: ReaderFontSizePref;
+	readerColumnWidth: ReaderColumnWidthPref;
+	readerPagePadding: ReaderPagePaddingPref;
+	readerLineHeight: ReaderLineHeightPref;
+	readerLetterSpacing: ReaderLetterSpacingPref;
+	readerParagraphSpacing: ReaderParagraphSpacingPref;
+	readerTheme: ReaderThemePref;
+	readerBgColor: string;
 }
 
 export interface UserGoals {
@@ -53,7 +70,6 @@ export interface UpdatePreferencesDto {
 	popupMode?: PopupMode;
 	highlightKnown?: boolean;
 	showProgress?: boolean;
-	autoNextPage?: boolean;
 	autoAddOnClick?: boolean;
 	showGrammar?: boolean;
 	showExamples?: boolean;

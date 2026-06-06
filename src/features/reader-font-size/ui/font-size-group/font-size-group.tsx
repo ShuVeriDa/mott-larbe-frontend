@@ -1,22 +1,10 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
-
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { ComponentProps } from "react";
-import {
-	useReaderFontSize,
-	type ReaderFontSize,
-} from "../../model/font-size-store";
-
-const SIZES: Array<{ value: ReaderFontSize; label: string }> = [
-	{ value: "xs", label: "13px" },
-	{ value: "sm", label: "15px" },
-	{ value: "md", label: "17px" },
-	{ value: "lg", label: "19px" },
-	{ value: "xl", label: "22px" },
-];
+import { FONT_SIZE_STEPS, useReaderFontSize } from "../../model/font-size-store";
 
 export interface FontSizeGroupProps {
 	className?: string;
@@ -37,29 +25,28 @@ export const FontSizeGroup = ({
 			role="group"
 			aria-label={t("reader.footer.size")}
 		>
-			{SIZES.map(item => {
-				const active = item.value === size;
-				const handleClick: NonNullable<
-					ComponentProps<"button">["onClick"]
-				> = () => setSize(item.value);
+			{FONT_SIZE_STEPS.map(step => {
+				const active = step === size;
+				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> =
+					() => setSize(step);
 				return (
 					<Button
-						key={item.value}
+						key={step}
 						variant="bare"
 						size={null}
 						onClick={handleClick}
 						aria-pressed={active}
-						title={item.label}
+						title={`${step}px`}
 						className={cn(
-							"h-[26px] rounded-[5px] border-[0.5px] border-bd-1 px-[9px]",
-							"text-[11px] font-medium leading-none transition-colors duration-100",
+							"h-[26px] rounded-[5px] border-[0.5px] border-bd-1 px-[7px]",
+							"text-[10px] font-medium leading-none transition-colors duration-100",
 							active
 								? "border-acc/20 bg-acc-bg text-acc-t"
 								: "bg-surf-2 text-t-2 hover:border-bd-2 hover:text-t-1",
 							buttonClassName,
 						)}
 					>
-						{item.label}
+						{step}
 					</Button>
 				);
 			})}

@@ -1,6 +1,7 @@
 "use client";
 import { type MouseEvent } from 'react';
 import type { TextToken } from "@/entities/text";
+import type { PopupMode } from "@/entities/settings";
 import { extractSentence } from "@/shared/lib/extract-sentence";
 import { useWordLookupStore } from "./word-lookup-store";
 
@@ -10,7 +11,7 @@ import { useWordLookupStore } from "./word-lookup-store";
  */
 export const SHEET_LAYOUT_MAX_WIDTH_PX = 767;
 
-export const useSelectToken = (contentRaw: string) => {
+export const useSelectToken = (contentRaw: string, popupMode: PopupMode = "POPUP") => {
 	const openInPopup = useWordLookupStore((s) => s.openInPopup);
 	const openInPanel = useWordLookupStore((s) => s.openInPanel);
 	const openInSheet = useWordLookupStore((s) => s.openInSheet);
@@ -28,6 +29,12 @@ export const useSelectToken = (contentRaw: string) => {
 			return;
 		}
 
+		// SIDEBAR mode — always open directly in panel, skip popup
+		if (popupMode === "SIDEBAR") {
+			openInPanel(token, contextSentence);
+			return;
+		}
+
 		const target = event.currentTarget;
 		const rect = target.getBoundingClientRect();
 		const anchor = {
@@ -37,11 +44,13 @@ export const useSelectToken = (contentRaw: string) => {
 			height: rect.height,
 		};
 
-		if (panelPinned) {
+		// BOTH mode or panel already pinned — go directly to panel
+		if (popupMode === "BOTH" && panelPinned) {
 			openInPanel(token, contextSentence);
 			return;
 		}
 
+		// POPUP or BOTH (first click) — show popup
 		openInPopup(token, anchor, contextSentence);
 	};
 };

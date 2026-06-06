@@ -3,7 +3,7 @@
 import { useDeleteAllHighlights, useHighlights } from "@/entities/highlight";
 import { FontFamilyGroup } from "@/features/reader-font-family";
 import { Button } from "@/shared/ui/button";
-import { FontSizeGroup } from "@/features/reader-font-size";
+import { FontSizeSlider } from "@/features/reader-font-size";
 import { useHighlightVisibility, usePhraseColorVisibility } from "@/features/reader-highlight";
 import {
 	ColumnWidthGroup,
@@ -28,12 +28,14 @@ export interface ReaderSettingsBodyProps {
 	compact?: boolean;
 	textId?: string;
 	pageNumber?: number;
+	hideFontSize?: boolean;
 }
 
 export const ReaderSettingsBody = ({
 	compact = false,
 	textId,
 	pageNumber,
+	hideFontSize = false,
 }: ReaderSettingsBodyProps) => {
 	const { t } = useI18n();
 	const layout = useReaderTextLayout();
@@ -66,21 +68,23 @@ export const ReaderSettingsBody = ({
 			/>
 			<ReaderThemeSelector compact={compact} />
 
-			<ReaderSettingsSectionLabel
-				label={t("reader.settings.size")}
-				compact={compact}
-			/>
-			<FontSizeGroup
-				className={cn("grid grid-cols-5", gap, compact ? "gap-1" : "gap-1.5")}
-				buttonClassName={cn("w-full font-medium", btnH)}
-			/>
+			{!hideFontSize && (
+				<>
+					<ReaderSettingsSectionLabel
+						label={t("reader.settings.size")}
+						compact={compact}
+					/>
+					<FontSizeSlider className={gap} />
+				</>
+			)}
 
 			<ReaderSettingsSectionLabel
 				label={t("reader.settings.font")}
 				compact={compact}
 			/>
 			<FontFamilyGroup
-				className={cn("flex", gap, compact ? "gap-1" : "gap-1.5")}
+				fullWidth
+				className={gap}
 			/>
 
 			<div className="max-[767px]:hidden">

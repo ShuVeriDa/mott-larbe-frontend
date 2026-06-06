@@ -12,7 +12,7 @@ import {
 	FONT_FAMILY_CLASS,
 	useReaderFontFamily,
 } from "@/features/reader-font-family";
-import { FONT_SIZE_PX, useReaderFontSize } from "@/features/reader-font-size";
+import { useReaderFontSize } from "@/features/reader-font-size";
 import {
 	HIGHLIGHT_COLOR_HEX,
 	HighlightColorPicker,
@@ -29,6 +29,7 @@ import {
 } from "@/features/reader-text-width";
 import { useReaderTheme } from "@/features/reader-theme";
 import { useSelectToken, useWordLookupStore } from "@/features/word-lookup";
+import { useSettings } from "@/entities/settings";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import { extractSentence } from "@/shared/lib/extract-sentence";
@@ -43,7 +44,6 @@ import { ArticleHeader } from "./article-header";
 import { NoteGroupIcon } from "./note-group-icon";
 import { NoteGroupPopup } from "./note-group-popup";
 import { NoteInlinePopup } from "./note-inline-popup";
-import { ReaderProgressBar } from "./reader-progress-bar";
 
 export interface ReaderBodyProps {
 	data: TextPageResponse;
@@ -54,7 +54,10 @@ export interface ReaderBodyProps {
 export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) => {
 	const mounted = useMounted();
 	const { lang } = useI18n();
-	const onSelectToken = useSelectToken(data.page.contentRaw);
+	const { data: settings } = useSettings();
+	const popupMode = settings?.preferences.popupMode ?? "POPUP";
+	const showProgress = settings?.preferences.showProgress ?? true;
+	const onSelectToken = useSelectToken(data.page.contentRaw, popupMode);
 	const activeToken = useWordLookupStore(s => s.activeToken);
 
 	const [phraseTranslate, setPhraseTranslate] = useState<{
@@ -158,7 +161,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 		: [];
 
 	const fontVars = {
-		"--reader-font-size": `${FONT_SIZE_PX[fontSize]}px`,
+		"--reader-font-size": `${fontSize}px`,
 		"--reader-line-height": String(LINE_HEIGHT_VALUE[lineHeight]),
 		...(theme === "custom" && bgColor ? { backgroundColor: bgColor } : {}),
 	};
@@ -178,8 +181,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 			onPointerUp={swipe.onPointerUp}
 			onPointerCancel={swipe.onPointerCancel}
 		>
-			<ReaderProgressBar progress={data.progress} />
-			<ArticleHeader data={data} currentPage={currentPage} />
+			<ArticleHeader data={data} currentPage={currentPage} showProgress={showProgress} />
 			<ArticleRich
 				ref={articleRef}
 				contentRich={data.page.contentRich}
