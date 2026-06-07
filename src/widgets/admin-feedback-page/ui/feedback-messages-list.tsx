@@ -3,7 +3,8 @@
 import { Typography } from "@/shared/ui/typography";
 
 import type { AdminFeedbackMessage } from "@/entities/feedback";
-import { Fragment, useEffect, useRef } from 'react';
+import { useScrollToBottom } from "@/shared/lib/use-scroll-to-bottom";
+import { Fragment } from "react";
 import { FeedbackMessageBubble } from "./feedback-message-bubble";
 
 const formatDateDivider = (iso: string): string =>
@@ -32,14 +33,10 @@ export const FeedbackMessagesList = ({
 	messages,
 	noteLabel,
 }: FeedbackMessagesListProps) => {
-	const bottomRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		bottomRef.current?.scrollIntoView({ behavior: "instant" });
-	}, [messages.length]);
+	const bottomRef = useScrollToBottom(messages.length);
 
 	return (
-		<div className="flex flex-1 flex-col gap-3.5 overflow-y-auto px-5 py-[18px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-sm [&::-webkit-scrollbar-thumb]:bg-bd-2">
+		<div className="flex flex-1 flex-col gap-3.5 bg-panel overflow-y-auto px-5 py-[18px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-sm [&::-webkit-scrollbar-thumb]:bg-bd-2">
 			{messages.map((msg, i) => {
 				const showDivider =
 					i === 0 || !isSameDay(messages[i - 1].createdAt, msg.createdAt);
@@ -50,13 +47,13 @@ export const FeedbackMessagesList = ({
 								<Typography tag="span" className="relative z-10 bg-bg px-2">
 									{formatDateDivider(msg.createdAt)}
 								</Typography>
-								<Typography tag="span" className="absolute inset-x-0 top-1/2 -z-0 h-px bg-bd-2" />
+								<Typography
+									tag="span"
+									className="absolute inset-x-0 top-1/2 -z-0 h-px bg-bd-2"
+								/>
 							</div>
 						)}
-						<FeedbackMessageBubble
-							message={msg}
-							noteLabel={noteLabel}
-						/>
+						<FeedbackMessageBubble message={msg} noteLabel={noteLabel} />
 					</Fragment>
 				);
 			})}

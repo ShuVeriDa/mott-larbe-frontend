@@ -1,1 +1,1 @@
-export { AVATAR_COLORS } from "./avatar-colors";
+export { AVATAR_COLORS, getAvColor } from "./avatar-colors";

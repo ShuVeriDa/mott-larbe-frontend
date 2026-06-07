@@ -51,7 +51,7 @@ export const FeedbackMessageBubble = ({ message, noteLabel }: FeedbackMessageBub
 				)}
 				{!isNote && (
 					<Typography tag="p" className={cn("text-[10.5px] text-t-3", isAdmin && "text-right")}>
-						{authorName} · {formatTime(message.createdAt)}
+						{authorName}
 					</Typography>
 				)}
 

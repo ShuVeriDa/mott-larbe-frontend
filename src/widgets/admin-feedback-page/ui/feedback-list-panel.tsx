@@ -1,12 +1,14 @@
-"use client";
+﻿"use client";
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { SearchBox } from "@/shared/ui/search-box";
-import { ComponentProps, useEffect, useRef } from 'react';
+import { ComponentProps, useRef } from "react";
 import { cn } from "@/shared/lib/cn";
+import { useInfiniteScroll } from "@/shared/lib/use-infinite-scroll";
 import type { AdminFeedbackThread, AdminFeedbackTab, FeedbackType } from "@/entities/feedback";
 import { FeedbackListItem } from "./feedback-list-item";
+import { FeedbackListSkeleton } from "./feedback-list-skeleton";
 
 type Translator = (key: string) => string;
 
@@ -62,24 +64,12 @@ export const FeedbackListPanel = ({
 	onLoadMore,
 }: FeedbackListPanelProps) => {
 	const sentinelRef = useRef<HTMLDivElement>(null);
+	useInfiniteScroll(sentinelRef, onLoadMore, { hasNextPage, isFetchingNextPage });
 
-	useEffect(() => {
-		const el = sentinelRef.current;
-		if (!el) return;
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-					onLoadMore();
-				}
-			},
-			{ threshold: 0.1 },
-		);
-		observer.observe(el);
-		return () => observer.disconnect();
-	}, [hasNextPage, isFetchingNextPage, onLoadMore]);
+	const handleSearchChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+		onSearchChange(e.currentTarget.value);
 
-		const handleSearchChange: NonNullable<ComponentProps<"input">["onChange"]> = (e) => onSearchChange(e.currentTarget.value);
-return (
+	return (
 		<div
 			className={cn(
 				"flex w-[300px] shrink-0 flex-col border-r border-bd-1 bg-surf transition-colors",
@@ -92,8 +82,8 @@ return (
 				{/* Tabs */}
 				<div className="mb-2.5 flex gap-0.5 rounded-lg border border-bd-1 bg-surf-2 p-0.5">
 					{TAB_KEYS.map(({ key, label }) => {
-					  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onTabChange(key);
-					  return (
+					const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onTabChange(key);
+					return (
 						<Button
 							key={key}
 							onClick={handleClick}
@@ -107,7 +97,8 @@ return (
 						>
 							{t(label)}
 							{key === "OPEN" && openCount > 0 && (
-								<Typography tag="span"
+								<Typography
+									tag="span"
 									className={cn(
 										"rounded-[3px] px-1 py-px text-[9.5px] font-bold",
 										tab === "OPEN"
@@ -120,7 +111,7 @@ return (
 							)}
 						</Button>
 					);
-					})}
+				})}
 				</div>
 
 				{/* Search */}
@@ -137,29 +128,29 @@ return (
 			{/* Type filters */}
 			<div className="scrollbar-none flex shrink-0 gap-1.5 overflow-x-auto border-b border-bd-1 px-3.5 py-2">
 				{TYPE_FILTERS.map(({ key, label }) => {
-				  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onTypeChange(key);
-				  return (
-					<Button
-						key={key}
-						onClick={handleClick}
-						title={t(label)}
-						className={cn(
-							"h-6 shrink-0 rounded-[5px] border px-2 text-[11px] font-medium transition-all",
-							typeFilter === key
-								? "border-acc bg-acc-bg font-semibold text-acc-t"
-								: "border-bd-2 text-t-2 hover:bg-surf-2 hover:text-t-1",
-						)}
-					>
-						{t(label)}
-					</Button>
-				);
+					const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onTypeChange(key);
+					return (
+						<Button
+							key={key}
+							onClick={handleClick}
+							title={t(label)}
+							className={cn(
+								"h-6 shrink-0 rounded-[5px] border px-2 text-[11px] font-medium transition-all",
+								typeFilter === key
+									? "border-acc bg-acc-bg font-semibold text-acc-t"
+									: "border-bd-2 text-t-2 hover:bg-surf-2 hover:text-t-1",
+							)}
+						>
+							{t(label)}
+						</Button>
+					);
 				})}
 			</div>
 
 			{/* List */}
 			<div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:w-0">
 				{isLoading ? (
-					<ListSkeleton />
+					<FeedbackListSkeleton />
 				) : threads.length === 0 ? (
 					<div className="px-4 py-6 text-center text-[12px] text-t-3">
 						{t("admin.feedback.noTickets")}
@@ -167,16 +158,16 @@ return (
 				) : (
 					<>
 						{threads.map((thread) => {
-						  const handleClick: NonNullable<ComponentProps<typeof FeedbackListItem>["onClick"]> = () => onSelect(thread);
-						  return (
-							<FeedbackListItem
-								key={thread.id}
-								thread={thread}
-								isActive={thread.id === activeId}
-								t={t}
-								onClick={handleClick}
-							/>
-						);
+							const handleClick: NonNullable<ComponentProps<typeof FeedbackListItem>["onClick"]> = () => onSelect(thread);
+							return (
+								<FeedbackListItem
+									key={thread.id}
+									thread={thread}
+									isActive={thread.id === activeId}
+									t={t}
+									onClick={handleClick}
+								/>
+							);
 						})}
 						{/* Infinite scroll sentinel */}
 						<div ref={sentinelRef} className="h-px" />
@@ -192,19 +183,3 @@ return (
 	);
 };
 
-const ListSkeleton = () => (
-	<>
-		{Array.from({ length: 5 }).map((_, i) => (
-			<div key={i} className="border-b border-bd-1 px-3.5 py-[11px]">
-				<div className="mb-[5px] flex items-center gap-1.5">
-					<div className="size-[22px] animate-pulse rounded-full bg-surf-3" />
-					<div className="h-3 flex-1 animate-pulse rounded bg-surf-3" />
-					<div className="h-2.5 w-8 animate-pulse rounded bg-surf-3" />
-				</div>
-				<div className="mb-1 h-3 w-3/4 animate-pulse rounded bg-surf-3" />
-				<div className="mb-1.5 h-2.5 animate-pulse rounded bg-surf-3" />
-				<div className="h-4 w-16 animate-pulse rounded bg-surf-3" />
-			</div>
-		))}
-	</>
-);

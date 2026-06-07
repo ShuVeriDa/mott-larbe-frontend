@@ -27,14 +27,25 @@ export const FeedbackChatSkeleton = () => (
 
 export const FeedbackListSkeleton = () => (
 	<div className="flex flex-col">
-		{[1, 2, 3].map((i) => (
-			<div key={i} className="border-b border-bd-1 px-4 py-[11px]">
-				<div className="mb-1.5 flex items-center justify-between">
-					<div className="h-4 w-14 animate-pulse rounded-sm bg-surf-3" />
-					<div className="h-3 w-10 animate-pulse rounded-sm bg-surf-3" />
+		{[1, 2, 3, 4, 5].map((i) => (
+			<div key={i} className="flex flex-col gap-1.5 border-b border-bd-1 px-2 py-1.5">
+				{/* Row 1: type badge | title + status badge */}
+				<div className="flex items-center gap-2">
+					<div className="h-[18px] w-12 animate-pulse rounded-[5px] bg-surf-3" />
+					<div className="h-3 flex-1 animate-pulse rounded bg-surf-3" />
+					<div className="h-[18px] w-14 animate-pulse rounded-[5px] bg-surf-3" />
 				</div>
-				<div className="mb-1.5 h-3 w-full animate-pulse rounded-sm bg-surf-3" />
-				<div className="h-3 w-3/4 animate-pulse rounded-sm bg-surf-3" />
+				{/* Rows 2–3: avatar + right side */}
+				<div className="flex items-center gap-2">
+					<div className="size-8 animate-pulse rounded-full bg-surf-3 shrink-0" />
+					<div className="flex flex-1 flex-col gap-1">
+						<div className="flex items-center justify-between gap-2">
+							<div className="h-3 w-24 animate-pulse rounded bg-surf-3" />
+							<div className="h-2.5 w-8 animate-pulse rounded bg-surf-3" />
+						</div>
+						<div className="h-2.5 w-3/4 animate-pulse rounded bg-surf-3" />
+					</div>
+				</div>
 			</div>
 		))}
 	</div>

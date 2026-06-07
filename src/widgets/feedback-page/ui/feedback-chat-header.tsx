@@ -47,7 +47,7 @@ export const FeedbackChatHeader = ({
 		</Button>
 
 		<div className="min-w-0 flex-1">
-			<Typography tag="p" className="truncate text-[13px] font-semibold text-t-1">
+			<Typography tag="h2" className="truncate text-[13px] font-semibold text-t-1">
 				{thread.title ?? thread.body.slice(0, 60)}
 			</Typography>
 			<div className="mt-0.5 flex items-center gap-1.5">

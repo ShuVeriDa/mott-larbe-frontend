@@ -1,22 +1,14 @@
-"use client";
+﻿"use client";
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
-import { ComponentProps, MouseEvent, useState } from 'react';
+import { ComponentProps, useState } from "react";
 import { cn } from "@/shared/lib/cn";
+import { getAvColor } from "@/shared/lib/avatar-colors";
 import type { AdminFeedbackAssignee } from "@/entities/feedback";
 import { Modal, ModalActions } from "@/shared/ui/modal";
 
 type Translator = (key: string) => string;
-
-const AV_COLORS = [
-	"bg-acc-bg text-acc-t",
-	"bg-grn-bg text-grn-t",
-	"bg-pur-bg text-pur-t",
-	"bg-amb-bg text-amb-t",
-	"bg-surf-3 text-t-2",
-];
-const getAvColor = (id: string) => AV_COLORS[id.charCodeAt(0) % AV_COLORS.length];
 
 interface FeedbackTransferModalProps {
 	isOpen: boolean;
@@ -106,6 +98,7 @@ export const FeedbackTransferModal = ({
 				value={note}
 				onChange={handleChange}
 				placeholder={t("admin.feedback.transfer.notePlaceholder")}
+				aria-label={t("admin.feedback.transfer.notePlaceholder")}
 				rows={2}
 				className="mb-3 w-full resize-none rounded-base border border-bd-2 bg-surf-2 px-3 py-2 text-[12px] text-t-1 outline-none placeholder:text-t-3 focus:border-acc"
 			/>

@@ -1,7 +1,8 @@
-import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackThread } from "@/entities/feedback";
+import { cn } from "@/shared/lib/cn";
+import { getAvColor } from "@/shared/lib/avatar-colors";
+import { FeedbackStatusBadge } from "./feedback-status-badge";
 import { FeedbackTypeBadge } from "./feedback-type-badge";
-import { FeedbackStatusDot } from "./feedback-status-badge";
 
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
@@ -23,18 +24,13 @@ const formatDate = (iso: string): string => {
 const getUserInitials = (thread: AdminFeedbackThread): string => {
 	const first = thread.user.name?.[0] ?? "";
 	const last = thread.user.surname?.[0] ?? "";
-	return (first + last).toUpperCase() || thread.user.username?.[0]?.toUpperCase() || "U";
+	return (
+		(first + last).toUpperCase() ||
+		thread.user.username?.[0]?.toUpperCase() ||
+		"U"
+	);
 };
 
-const AV_COLORS = [
-	"bg-pur-bg text-pur-t",
-	"bg-grn-bg text-grn-t",
-	"bg-amb-bg text-amb-t",
-	"bg-acc-bg text-acc-t",
-	"bg-surf-3 text-t-2",
-];
-
-const getAvColor = (id: string) => AV_COLORS[id.charCodeAt(0) % AV_COLORS.length];
 
 interface FeedbackListItemProps {
 	thread: AdminFeedbackThread;
@@ -43,7 +39,12 @@ interface FeedbackListItemProps {
 	onClick: () => void;
 }
 
-export const FeedbackListItem = ({ thread, isActive, t, onClick }: FeedbackListItemProps) => {
+export const FeedbackListItem = ({
+	thread,
+	isActive,
+	t,
+	onClick,
+}: FeedbackListItemProps) => {
 	const initials = getUserInitials(thread);
 	const avColor = getAvColor(thread.user.id);
 	const dateLabel = formatDate(thread.updatedAt);
@@ -52,54 +53,73 @@ export const FeedbackListItem = ({ thread, isActive, t, onClick }: FeedbackListI
 
 	return (
 		<Button
+			variant="bare"
+			size="bare"
 			onClick={onClick}
 			title={thread.title ?? `#${thread.ticketNumber}`}
 			className={cn(
-				"relative w-full cursor-pointer border-b border-bd-1 px-3.5 py-[11px] text-left transition-colors",
+				"relative flex w-full flex-col gap-1 cursor-pointer rounded-none border-b border-bd-1 px-3 py-2.5 text-left transition-colors",
 				isActive
-					? "bg-acc-bg before:absolute before:bottom-0 before:left-0 before:top-0 before:w-0.5 before:rounded-r-sm before:bg-acc"
+					? "bg-acc-bg before:absolute before:bottom-0 before:left-0 before:top-0 before:w-[3px] before:rounded-r-sm before:bg-acc"
 					: "hover:bg-surf-2",
 				isResolved && "opacity-60",
 			)}
 		>
-			{/* Row 1: avatar + name + date */}
-			<div className="mb-[5px] flex items-center gap-1.5">
+			{/* Row 1: type badge | title + status badge */}
+			<div className="flex items-center gap-2 w-full">
+				<FeedbackTypeBadge type={thread.type} t={t} tKeyPrefix="admin.feedback.type" className="shrink-0" />
+				<Typography
+					tag="p"
+					className="flex-1 truncate text-[11px] font-semibold text-t-1"
+				>
+					{thread.title ?? `#${thread.ticketNumber}`}
+				</Typography>
+				<FeedbackStatusBadge
+					status={thread.status}
+					t={t}
+					className="shrink-0"
+				/>
+			</div>
+
+			{/* Rows 2–3: big avatar (spans both rows) + name/date + preview/unread */}
+			<div className="flex items-stretch gap-2.5 w-full">
+				{/* Avatar — spans rows 2 and 3 */}
 				<div
 					className={cn(
-						"flex size-[22px] shrink-0 items-center justify-center rounded-full text-[8.5px] font-bold",
+						"flex size-9 shrink-0 self-center items-center justify-center rounded-full text-[13px] font-bold",
 						avColor,
 					)}
 				>
 					{initials}
 				</div>
-				<Typography tag="span" className="flex-1 truncate text-[12px] font-semibold text-t-1">
-					{thread.user.name} {thread.user.surname}
-				</Typography>
-				<Typography tag="span" className="shrink-0 text-[10.5px] text-t-3">{dateLabel}</Typography>
-			</div>
 
-			{/* Row 2: subject */}
-			<Typography tag="p" className="mb-1 truncate text-[12px] font-medium text-t-1">
-				{thread.title ?? `#${thread.ticketNumber}`}
-			</Typography>
+				{/* Right side: name+date / preview+unread */}
+				<div className="flex flex-1 min-w-0 flex-col gap-0.5">
+					{/* Row 2: name | date */}
+					<div className="flex items-center justify-between gap-2">
+						<Typography
+							tag="span"
+							className="truncate text-[11px] font-semibold text-t-1"
+						>
+							{thread.user.name} {thread.user.surname}
+						</Typography>
+						<Typography tag="span" className="shrink-0 text-[10px] text-t-3">
+							{dateLabel}
+						</Typography>
+					</div>
 
-			{/* Row 3: preview */}
-			<Typography tag="p" className="mb-[5px] line-clamp-2 text-[11px] leading-[1.4] text-t-2">
-				{preview}
-			</Typography>
-
-			{/* Row 4: badges + status + unread */}
-			<div className="flex items-center gap-1.5">
-				<FeedbackTypeBadge type={thread.type} t={t} />
-				<FeedbackStatusDot status={thread.status} className="ml-0.5" />
-				<Typography tag="span" className="text-[10.5px] text-t-2">
-					{t(`admin.feedback.status.${thread.status}`)}
-				</Typography>
-				{thread.unreadCountAdmin > 0 && (
-					<Typography tag="span" className="ml-auto flex size-4 items-center justify-center rounded-full bg-acc text-[9px] font-bold text-white">
-						{thread.unreadCountAdmin > 9 ? "9+" : thread.unreadCountAdmin}
-					</Typography>
-				)}
+					{/* Row 3: preview | unread */}
+					<div className="flex items-center justify-between gap-2">
+						<Typography tag="p" className="truncate text-[11px] text-t-3">
+							{preview}
+						</Typography>
+						{thread.unreadCountAdmin > 0 && (
+							<div className="flex shrink-0 size-[16px] items-center justify-center rounded-full bg-acc text-[8px] font-bold text-white">
+								{thread.unreadCountAdmin > 9 ? "9+" : thread.unreadCountAdmin}
+							</div>
+						)}
+					</div>
+				</div>
 			</div>
 		</Button>
 	);

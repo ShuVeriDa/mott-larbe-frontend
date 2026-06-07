@@ -23,37 +23,50 @@ export const useAdminFeedbackMutations = (threadId: string | null) => {
 	};
 
 	const reply = useMutation({
-		mutationFn: (dto: AdminReplyDto) =>
-			adminFeedbackApi.reply(threadId!, dto),
+		mutationFn: (dto: AdminReplyDto) => {
+			if (!threadId) return Promise.reject(new Error("No thread selected"));
+			return adminFeedbackApi.reply(threadId, dto);
+		},
 		onSuccess: invalidate,
 	});
 
 	const updateStatus = useMutation({
-		mutationFn: (status: FeedbackStatus) =>
-			adminFeedbackApi.updateStatus(threadId!, { status } satisfies UpdateFeedbackStatusDto),
+		mutationFn: (status: FeedbackStatus) => {
+			if (!threadId) return Promise.reject(new Error("No thread selected"));
+			return adminFeedbackApi.updateStatus(threadId, { status } satisfies UpdateFeedbackStatusDto);
+		},
 		onSuccess: invalidate,
 	});
 
 	const updatePriority = useMutation({
-		mutationFn: (priority: FeedbackPriority) =>
-			adminFeedbackApi.updatePriority(threadId!, { priority }),
+		mutationFn: (priority: FeedbackPriority) => {
+			if (!threadId) return Promise.reject(new Error("No thread selected"));
+			return adminFeedbackApi.updatePriority(threadId, { priority });
+		},
 		onSuccess: invalidate,
 	});
 
 	const assign = useMutation({
-		mutationFn: (dto: AssignFeedbackDto) =>
-			adminFeedbackApi.assign(threadId!, dto),
+		mutationFn: (dto: AssignFeedbackDto) => {
+			if (!threadId) return Promise.reject(new Error("No thread selected"));
+			return adminFeedbackApi.assign(threadId, dto);
+		},
 		onSuccess: invalidate,
 	});
 
 	const transferThread = useMutation({
-		mutationFn: (dto: TransferFeedbackDto) =>
-			adminFeedbackApi.transfer(threadId!, dto),
+		mutationFn: (dto: TransferFeedbackDto) => {
+			if (!threadId) return Promise.reject(new Error("No thread selected"));
+			return adminFeedbackApi.transfer(threadId, dto);
+		},
 		onSuccess: invalidate,
 	});
 
 	const deleteThread = useMutation({
-		mutationFn: () => adminFeedbackApi.deleteThread(threadId!),
+		mutationFn: () => {
+			if (!threadId) return Promise.reject(new Error("No thread selected"));
+			return adminFeedbackApi.deleteThread(threadId);
+		},
 		onSuccess: () => {
 			qc.invalidateQueries({ queryKey: adminFeedbackKeys.root });
 			qc.invalidateQueries({ queryKey: adminFeedbackKeys.stats() });

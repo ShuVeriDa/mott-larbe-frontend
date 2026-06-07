@@ -3,7 +3,7 @@
 import { useFeedbackThread } from "@/entities/feedback";
 import { useSendFeedbackMessage } from "@/features/send-feedback-message";
 import { useMarkFeedbackRead } from "@/features/mark-feedback-read";
-import { ComponentProps, useEffect } from 'react';
+import { ComponentProps, useEffect } from "react";
 import { FeedbackChatHeader } from "./feedback-chat-header";
 import { FeedbackMessages } from "./feedback-messages";
 import { FeedbackChatInput } from "./feedback-chat-input";
@@ -39,11 +39,12 @@ export const FeedbackChat = ({
 
 	const isClosed = thread?.status === "RESOLVED";
 
-		const handleSend: NonNullable<ComponentProps<typeof FeedbackChatInput>["onSend"]> = (text) => sendMessage.mutate(text);
-return (
+	const handleSend: NonNullable<ComponentProps<typeof FeedbackChatInput>["onSend"]> = (text) => sendMessage.mutate(text);
+
+	return (
 		<div
 			className={[
-				"flex flex-1 min-w-0 flex-col bg-bg transition-transform duration-280",
+				"flex flex-1 min-w-0 flex-col bg-bg transition-transform duration-300",
 				// Mobile: absolute, slides in from right
 				"max-sm:absolute max-sm:inset-0 max-sm:z-10",
 				isMobileVisible ? "max-sm:translate-x-0" : "max-sm:translate-x-full",

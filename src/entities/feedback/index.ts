@@ -1,3 +1,4 @@
+export { FeedbackTypeBadge } from "./ui";
 export { feedbackApi, feedbackKeys } from "./api";
 export type {
 	AddMessageDto,

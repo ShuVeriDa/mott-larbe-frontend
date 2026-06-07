@@ -2,11 +2,12 @@
 
 import { Typography } from "@/shared/ui/typography";
 
-import { Button } from "@/shared/ui/button";
-import { ComponentProps, useEffect, useRef } from 'react';
 import type { FeedbackThread } from "@/entities/feedback";
-import { FeedbackThreadItem } from "./feedback-thread-item";
+import { Button } from "@/shared/ui/button";
+import { useInfiniteScroll } from "@/shared/lib/use-infinite-scroll";
+import { ComponentProps, useRef } from "react";
 import { FeedbackEmpty } from "./feedback-empty";
+import { FeedbackThreadItem } from "./feedback-thread-item";
 
 type Translator = (key: string) => string;
 
@@ -34,41 +35,24 @@ export const FeedbackThreadList = ({
 	onLoadMore,
 }: FeedbackThreadListProps) => {
 	const sentinelRef = useRef<HTMLDivElement>(null);
-	const onLoadMoreRef = useRef(onLoadMore);
-
-	useEffect(() => {
-		onLoadMoreRef.current = onLoadMore;
-	}, [onLoadMore]);
-
-	useEffect(() => {
-		const el = sentinelRef.current;
-		if (!el) return;
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				if (entry.isIntersecting) onLoadMoreRef.current();
-			},
-			{ threshold: 0.1 },
-		);
-		observer.observe(el);
-		return () => observer.disconnect();
-	}, []);
+	useInfiniteScroll(sentinelRef, onLoadMore, { hasNextPage, isFetchingNextPage });
 
 	return (
 		<div
 			className={[
-				"flex w-[280px] shrink-0 flex-col border-r border-bd-1 bg-surf transition-transform duration-280",
+				"flex w-[300px] shrink-0 flex-col border-r border-bd-1 bg-surf transition-transform duration-300",
 				"max-sm:absolute max-sm:inset-0 max-sm:w-full max-sm:border-r-0",
 				isMobileVisible ? "max-sm:-translate-x-full" : "max-sm:translate-x-0",
 			].join(" ")}
 		>
-			<div className="shrink-0 border-b border-bd-1 px-4 pb-2.5 pt-3.5">
-				<Typography tag="p" className="mb-2.5 text-xs font-semibold text-t-1">
+			<div className="shrink-0 border-b border-bd-1 px-4 pb-3 pt-4">
+				<Typography tag="h2" className="mb-3 text-[13px] font-semibold text-t-1">
 					{t("feedback.myThreads")}
 				</Typography>
 				<Button
 					onClick={onNewThread}
 					title={t("feedback.newThread")}
-					className="flex h-[30px] w-full cursor-pointer items-center justify-center gap-1.5 rounded-base bg-acc text-[12px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88]"
+					className="flex h-9 w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg bg-acc text-[13px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88]"
 				>
 					<svg
 						viewBox="0 0 14 14"
@@ -89,17 +73,19 @@ export const FeedbackThreadList = ({
 					<FeedbackEmpty t={t} onNewThread={onNewThread} />
 				) : (
 					<>
-						{threads.map((thread) => {
-						  const handleClick: NonNullable<ComponentProps<typeof FeedbackThreadItem>["onClick"]> = () => onSelect(thread);
-						  return (
-							<FeedbackThreadItem
-								key={thread.id}
-								thread={thread}
-								isActive={thread.id === activeId}
-								t={t}
-								onClick={handleClick}
-							/>
-						);
+						{threads.map(thread => {
+							const handleClick: NonNullable<
+								ComponentProps<typeof FeedbackThreadItem>["onClick"]
+							> = () => onSelect(thread);
+							return (
+								<FeedbackThreadItem
+									key={thread.id}
+									thread={thread}
+									isActive={thread.id === activeId}
+									t={t}
+									onClick={handleClick}
+								/>
+							);
 						})}
 						{hasNextPage && (
 							<div ref={sentinelRef} className="flex justify-center py-3">

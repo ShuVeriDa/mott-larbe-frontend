@@ -1,11 +1,13 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
-import { MessageSquare, StickyNote, Send } from "lucide-react";
+import { Typography } from "@/shared/ui/typography";
+import { MessageSquare, Send, StickyNote } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
-import { ComponentProps, KeyboardEvent, useRef, useState } from 'react';
+import { useAutoResize } from "@/shared/lib/use-auto-resize";
+import { ComponentProps, KeyboardEvent, useRef, useState } from "react";
+
 type Translator = (key: string) => string;
 
 interface FeedbackAdminInputProps {
@@ -29,20 +31,14 @@ export const FeedbackAdminInput = ({
 }: FeedbackAdminInputProps) => {
 	const [value, setValue] = useState("");
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-	const autoResize = () => {
-		const el = textareaRef.current;
-		if (!el) return;
-		el.style.height = "auto";
-		el.style.height = `${Math.min(el.scrollHeight, 100)}px`;
-	};
+	const { autoResize, resetHeight } = useAutoResize(textareaRef, 100);
 
 	const handleSend = () => {
 		const trimmed = value.trim();
 		if (!trimmed || isPending) return;
 		onSend(trimmed, inputMode === "note");
 		setValue("");
-		if (textareaRef.current) textareaRef.current.style.height = "auto";
+		resetHeight();
 	};
 
 	const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -50,6 +46,15 @@ export const FeedbackAdminInput = ({
 			e.preventDefault();
 			handleSend();
 		}
+	};
+
+	const handleReplyMode: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		onModeChange("reply");
+	const handleNoteMode: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+		onModeChange("note");
+	const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = e => {
+		setValue(e.currentTarget.value);
+		autoResize();
 	};
 
 	if (isClosed) {
@@ -70,18 +75,12 @@ export const FeedbackAdminInput = ({
 
 	const isNote = inputMode === "note";
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onModeChange("reply");
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => onModeChange("note");
-	const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = e => {
-						setValue(e.currentTarget.value);
-						autoResize();
-					};
-return (
+	return (
 		<div className="shrink-0 border-t border-bd-1 bg-surf px-5 pb-[14px] pt-2.5">
-			{/* Mode toggle */}
 			<div className="mb-2 flex gap-0.5">
 				<Button
-					onClick={handleClick}
+					size={"bare"}
+					onClick={handleReplyMode}
 					title={t("admin.feedback.input.replyMode")}
 					className={cn(
 						"flex h-6 items-center gap-1 rounded-[5px] border px-2.5 text-[11px] font-medium transition-all",
@@ -94,7 +93,8 @@ return (
 					{t("admin.feedback.input.replyMode")}
 				</Button>
 				<Button
-					onClick={handleClick2}
+					size={"bare"}
+					onClick={handleNoteMode}
 					title={t("admin.feedback.input.noteMode")}
 					className={cn(
 						"flex h-6 items-center gap-1 rounded-[5px] border px-2.5 text-[11px] font-medium transition-all",
@@ -108,13 +108,12 @@ return (
 				</Button>
 			</div>
 
-			{/* Input box */}
 			<div
 				className={cn(
-					"flex items-end gap-2 rounded-[10px] border px-2.5 py-2 transition-colors focus-within:border-acc",
+					"flex items-center gap-2 rounded-[10px] border px-2.5 py-2 transition-colors focus-within:border-acc",
 					isNote
 						? "border-[rgba(217,119,6,0.35)] bg-amb-bg focus-within:border-amb"
-						: "border-bd-2 bg-surf-2",
+						: "border-bd-2 bg-panel",
 				)}
 			>
 				<textarea
@@ -127,6 +126,11 @@ return (
 							? t("admin.feedback.input.notePlaceholder")
 							: t("admin.feedback.input.replyPlaceholder")
 					}
+					aria-label={
+						isNote
+							? t("admin.feedback.input.notePlaceholder")
+							: t("admin.feedback.input.replyPlaceholder")
+					}
 					rows={1}
 					className={cn(
 						"min-h-[20px] flex-1 resize-none bg-transparent font-[inherit] text-[12.5px] outline-none placeholder:text-t-3",
@@ -135,9 +139,19 @@ return (
 					style={{ maxHeight: 100 }}
 				/>
 				<Button
+					size={"bare"}
 					disabled={!value.trim() || isPending}
 					onClick={handleSend}
-					title={isNote ? t("admin.feedback.input.noteMode") : t("admin.feedback.input.replyMode")}
+					title={
+						isNote
+							? t("admin.feedback.input.noteMode")
+							: t("admin.feedback.input.replyMode")
+					}
+					aria-label={
+						isNote
+							? t("admin.feedback.input.noteMode")
+							: t("admin.feedback.input.replyMode")
+					}
 					className={cn(
 						"flex size-7 shrink-0 items-center justify-center rounded-base text-white transition-opacity hover:opacity-[0.88] disabled:opacity-40",
 						isNote

@@ -49,6 +49,7 @@ export const Modal = ({
 				<motion.div
 					role="dialog"
 					aria-modal="true"
+					aria-labelledby={title ? "modal-title" : undefined}
 					className="fixed inset-0 z-200 flex items-end justify-center bg-black/25 backdrop-blur-[2px] sm:items-center"
 					onClick={handleClick}
 					variants={variants.fadeIn}
@@ -69,6 +70,7 @@ export const Modal = ({
 						{title ? (
 							<Typography
 								tag="h2"
+								id="modal-title"
 								className="font-display text-[18px] text-t-1 mb-4"
 							>
 								{title}

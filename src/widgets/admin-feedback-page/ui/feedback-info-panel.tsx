@@ -1,21 +1,37 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
-import { User, RotateCcw, Check, ArrowRight, Trash2 } from "lucide-react";
+import { Typography } from "@/shared/ui/typography";
+import { ArrowRight, Check, RotateCcw, Trash2, User } from "lucide-react";
 
-import { ComponentProps, ReactNode } from 'react';
+import type {
+	AdminFeedbackThread,
+	FeedbackPriority,
+	FeedbackStatus,
+} from "@/entities/feedback";
 import { cn } from "@/shared/lib/cn";
-import type { AdminFeedbackThread, FeedbackStatus, FeedbackPriority } from "@/entities/feedback";
 import { Select } from "@/shared/ui/select";
+import { ComponentProps } from "react";
+import { ActionBtn } from "./action-btn";
+import { InfoRow } from "./info-row";
+import { InfoSection } from "./info-section";
 
 type Translator = (key: string) => string;
 
-const STATUSES: FeedbackStatus[] = ["NEW", "IN_PROGRESS", "ANSWERED", "RESOLVED"];
+const STATUSES: FeedbackStatus[] = [
+	"NEW",
+	"IN_PROGRESS",
+	"ANSWERED",
+	"RESOLVED",
+];
 const PRIORITIES: FeedbackPriority[] = ["LOW", "MEDIUM", "HIGH", "CRITICAL"];
 
 const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" });
+	new Date(iso).toLocaleDateString("ru-RU", {
+		day: "numeric",
+		month: "short",
+		year: "numeric",
+	});
 
 interface FeedbackInfoPanelProps {
 	thread: AdminFeedbackThread;
@@ -27,22 +43,8 @@ interface FeedbackInfoPanelProps {
 	onClose: () => void;
 	onReopen: () => void;
 	onDelete: () => void;
+	className?: string;
 }
-
-const InfoSection = ({ title, children }: { title: string; children: ReactNode }) => (
-	<div className="border-b border-bd-1 px-4 py-3.5">
-		<Typography tag="p" className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">{title}</Typography>
-		{children}
-	</div>
-);
-
-const InfoRow = ({ label, children }: { label: string; children: ReactNode }) => (
-	<div className="mb-2.5 flex flex-col gap-[3px] last:mb-0">
-		<Typography tag="span" className="text-[10.5px] text-t-3">{label}</Typography>
-		<div className="text-[12px] font-medium text-t-1">{children}</div>
-	</div>
-);
-
 
 export const FeedbackInfoPanel = ({
 	thread,
@@ -55,13 +57,23 @@ export const FeedbackInfoPanel = ({
 	onReopen,
 	onDelete,
 	className,
-}: FeedbackInfoPanelProps & { className?: string }) => {
+}: FeedbackInfoPanelProps) => {
 	const isResolved = thread.status === "RESOLVED";
 
-		const handleStatusChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onStatusChange(e.currentTarget.value as FeedbackStatus);
-	const handlePriorityChange: NonNullable<ComponentProps<"select">["onChange"]> = (e) => onPriorityChange(e.currentTarget.value as FeedbackPriority);
-return (
-		<div className={cn("flex w-[220px] shrink-0 flex-col overflow-y-auto border-l border-bd-1 bg-surf [&::-webkit-scrollbar]:w-0", className)}>
+	const handleStatusChange: NonNullable<
+		ComponentProps<"select">["onChange"]
+	> = e => onStatusChange(e.currentTarget.value as FeedbackStatus);
+	const handlePriorityChange: NonNullable<
+		ComponentProps<"select">["onChange"]
+	> = e => onPriorityChange(e.currentTarget.value as FeedbackPriority);
+
+	return (
+		<div
+			className={cn(
+				"flex w-[220px] shrink-0 flex-col overflow-y-auto border-l border-bd-1 bg-surf [&::-webkit-scrollbar]:w-0",
+				className,
+			)}
+		>
 			{/* User */}
 			<InfoSection title={t("admin.feedback.user.title")}>
 				<div className="mb-2.5 flex items-center gap-2">
@@ -69,10 +81,15 @@ return (
 						{(thread.user.name?.[0] ?? "U").toUpperCase()}
 					</div>
 					<div>
-						<Typography tag="p" className="text-[12.5px] font-semibold text-t-1">
+						<Typography
+							tag="p"
+							className="text-[12.5px] font-semibold text-t-1"
+						>
 							{thread.user.name} {thread.user.surname}
 						</Typography>
-						<Typography tag="p" className="text-[11px] text-t-3">{thread.user.email}</Typography>
+						<Typography tag="p" className="text-[11px] text-t-3">
+							{thread.user.email}
+						</Typography>
 					</div>
 				</div>
 				<InfoRow label={t("admin.feedback.user.plan")}>
@@ -89,9 +106,9 @@ return (
 					<Select
 						value={thread.status}
 						onChange={handleStatusChange}
-						className="h-7 text-[11.5px] rounded-[6px]"
+						className="h-7 rounded-[6px] text-[11.5px]"
 					>
-						{STATUSES.map((s) => (
+						{STATUSES.map(s => (
 							<option key={s} value={s}>
 								{t(`admin.feedback.status.${s}`)}
 							</option>
@@ -102,9 +119,9 @@ return (
 					<Select
 						value={thread.priority}
 						onChange={handlePriorityChange}
-						className="h-7 text-[11.5px] rounded-[6px]"
+						className="h-7 rounded-[6px] text-[11.5px]"
 					>
-						{PRIORITIES.map((p) => (
+						{PRIORITIES.map(p => (
 							<option key={p} value={p}>
 								{t(`admin.feedback.priority.${p}`)}
 							</option>
@@ -141,7 +158,10 @@ return (
 
 			{/* Actions */}
 			<div className="px-4 py-3.5">
-				<Typography tag="p" className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+				<Typography
+					tag="h3"
+					className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3"
+				>
 					{t("admin.feedback.actions.title")}
 				</Typography>
 				<div className="flex flex-col gap-1.5">
@@ -185,26 +205,3 @@ return (
 		</div>
 	);
 };
-
-const ActionBtn = ({
-	children,
-	icon,
-	onClick,
-	className,
-	title,
-}: {
-	children: ReactNode;
-	icon: ReactNode;
-	onClick: () => void;
-	className: string;
-	title?: string;
-}) => (
-	<Button
-		onClick={onClick}
-		title={title}
-		className={cn("flex h-[30px] w-full items-center justify-center gap-1.5 rounded-base border text-[12px] font-semibold transition-opacity", className)}
-	>
-		{icon}
-		{children}
-	</Button>
-);

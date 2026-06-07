@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { Download } from "lucide-react";
 
-import { ComponentProps } from 'react';
+import { ComponentProps } from "react";
 import { useAdminFeedbackPage } from "../model/use-admin-feedback-page";
 import { FeedbackAssignModal } from "./feedback-assign-modal";
 import { FeedbackChatPanel } from "./feedback-chat-panel";
@@ -12,6 +12,7 @@ import { FeedbackEmptyState } from "./feedback-empty-state";
 import { FeedbackInfoDrawer } from "./feedback-info-drawer";
 import { FeedbackListPanel } from "./feedback-list-panel";
 import { FeedbackTransferModal } from "./feedback-transfer-modal";
+import { StatChip } from "./stat-chip";
 
 export const AdminFeedbackPage = () => {
 	const {
@@ -78,12 +79,13 @@ export const AdminFeedbackPage = () => {
 		setIsAssignModalOpen(false);
 	const handleTransferModalClose: NonNullable<ComponentProps<typeof FeedbackTransferModal>["onClose"]> = () =>
 		setIsTransferModalOpen(false);
-return (
+
+	return (
 		<>
 			{/* Topbar */}
 			<header className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-[14px] max-sm:px-3.5">
 				<div>
-					<Typography tag="p" className="font-display text-[16px] text-t-1">
+					<Typography tag="h1" className="font-display text-[16px] text-t-1">
 						{t("admin.feedback.title")}
 					</Typography>
 					<Typography tag="p" className="text-[12px] text-t-3">{t("admin.feedback.subtitle")}</Typography>
@@ -200,22 +202,3 @@ return (
 		</>
 	);
 };
-
-const StatChip = ({
-	label,
-	value,
-	highlight,
-}: {
-	label: string;
-	value: number;
-	highlight?: boolean;
-}) => (
-	<div className="flex items-center gap-1 rounded-[6px] border border-bd-1 bg-surf px-2 py-[3px]">
-		<Typography tag="span" className="text-[10.5px] text-t-3">{label}</Typography>
-		<Typography tag="span"
-			className={`text-[12px] font-semibold ${highlight ? "text-acc-t" : "text-t-1"}`}
-		>
-			{value}
-		</Typography>
-	</div>
-);

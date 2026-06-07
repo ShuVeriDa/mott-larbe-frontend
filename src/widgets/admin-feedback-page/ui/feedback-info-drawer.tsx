@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import { Button } from "@/shared/ui/button";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import { X } from "lucide-react";
 import type { AdminFeedbackThread, FeedbackStatus, FeedbackPriority } from "@/entities/feedback";
 import { FeedbackInfoPanel } from "./feedback-info-panel";

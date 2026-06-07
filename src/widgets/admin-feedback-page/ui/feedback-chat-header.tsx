@@ -1,11 +1,11 @@
-import { MouseEvent } from 'react';
 import type { AdminFeedbackThread } from "@/entities/feedback";
 import { cn } from "@/shared/lib/cn";
-import { FeedbackStatusBadge } from "./feedback-status-badge";
-import { FeedbackTypeBadge } from "./feedback-type-badge";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { ChevronLeft, User, Link, MoreVertical } from "lucide-react";
+import { ChevronLeft, Link, MoreVertical, User } from "lucide-react";
+import { MouseEvent } from "react";
+import { FeedbackStatusBadge } from "./feedback-status-badge";
+import { FeedbackTypeBadge } from "./feedback-type-badge";
 type Translator = (key: string) => string;
 
 const formatDate = (iso: string) =>
@@ -46,20 +46,28 @@ export const FeedbackChatHeader = ({
 		{/* Info */}
 		<div className="min-w-0 flex-1">
 			<div className="mb-[3px] flex flex-wrap items-center gap-1.5">
-				<Typography tag="span" className="text-[10px] font-semibold tracking-[0.4px] text-t-3">
+				<Typography
+					tag="span"
+					className="text-[10px] font-semibold tracking-[0.4px] text-t-3"
+				>
 					#{thread.ticketNumber}
 				</Typography>
-				<FeedbackTypeBadge type={thread.type} t={t} />
+				<FeedbackTypeBadge type={thread.type} t={t} tKeyPrefix="admin.feedback.type" />
 				<FeedbackStatusBadge status={thread.status} t={t} />
 			</div>
-			<Typography tag="p" className="truncate text-[13px] font-semibold text-t-1">
+			<Typography
+				tag="h2"
+				className="truncate text-[13px] font-semibold text-t-1"
+			>
 				{thread.title ?? `#${thread.ticketNumber}`}
 			</Typography>
 			<div className={cn("mt-[3px] flex items-center gap-1.5 max-sm:hidden")}>
 				<Typography tag="span" className="text-[11px] text-t-2">
 					{thread.user.name} {thread.user.surname}
 				</Typography>
-				<Typography tag="span" className="text-[10px] text-t-4">·</Typography>
+				<Typography tag="span" className="text-[10px] text-t-4">
+					·
+				</Typography>
 				<Typography tag="span" className="text-[11px] text-t-3">
 					{formatDate(thread.createdAt)}
 				</Typography>
@@ -70,6 +78,7 @@ export const FeedbackChatHeader = ({
 		<div className="flex shrink-0 items-center gap-1.5">
 			{/* Info toggle — shown on tablet/mobile */}
 			<Button
+				size={"bare"}
 				onClick={onInfoOpen}
 				title={t("admin.feedback.ticket.title")}
 				className="hidden h-[30px] items-center gap-1.5 rounded-base border border-acc bg-acc-bg px-2.5 text-[11.5px] font-semibold text-acc-t max-[960px]:flex"
@@ -80,6 +89,7 @@ export const FeedbackChatHeader = ({
 
 			{/* Copy link */}
 			<Button
+				size={"bare"}
 				onClick={onCopyLink}
 				title={t("admin.feedback.actions.copyLink")}
 				className="flex size-[30px] items-center justify-center rounded-base border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
@@ -89,6 +99,7 @@ export const FeedbackChatHeader = ({
 
 			{/* More */}
 			<Button
+				size={"bare"}
 				onClick={onMoreMenu}
 				title={t("admin.feedback.actions.title")}
 				className="flex size-[30px] items-center justify-center rounded-base border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"

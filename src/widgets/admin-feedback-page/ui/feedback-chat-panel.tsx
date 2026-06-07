@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+﻿import { MouseEvent } from "react";
 import { cn } from "@/shared/lib/cn";
 import type { AdminFeedbackThread, FeedbackStatus, FeedbackPriority } from "@/entities/feedback";
 import { FeedbackChatHeader } from "./feedback-chat-header";

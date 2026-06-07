@@ -1,11 +1,12 @@
-"use client";
+﻿"use client";
 
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { X } from "lucide-react";
 
-import { ComponentProps } from 'react';
+import { ComponentProps } from "react";
 import { cn } from "@/shared/lib/cn";
+import { getAvColor } from "@/shared/lib/avatar-colors";
 import type { AdminFeedbackAssignee, AdminFeedbackThread } from "@/entities/feedback";
 import { Modal } from "@/shared/ui/modal";
 
@@ -20,15 +21,6 @@ interface FeedbackAssignModalProps {
 	onAssign: (adminId: string | null) => void;
 	onClose: () => void;
 }
-
-const AV_COLORS = [
-	"bg-acc-bg text-acc-t",
-	"bg-grn-bg text-grn-t",
-	"bg-pur-bg text-pur-t",
-	"bg-amb-bg text-amb-t",
-	"bg-surf-3 text-t-2",
-];
-const getAvColor = (id: string) => AV_COLORS[id.charCodeAt(0) % AV_COLORS.length];
 
 export const FeedbackAssignModal = ({
 	isOpen,

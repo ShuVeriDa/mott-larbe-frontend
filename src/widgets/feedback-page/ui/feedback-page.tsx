@@ -6,12 +6,21 @@ import { Button } from "@/shared/ui/button";
 
 import type { FeedbackThread } from "@/entities/feedback";
 import { useFeedbackThreads } from "@/entities/feedback";
+import { useCurrentUser } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
-import { ComponentProps, useState } from 'react';
-import { FeedbackChat } from "./feedback-chat";
-import { FeedbackNewThreadModal } from "./feedback-new-thread-modal";
-import { FeedbackListSkeleton } from "./feedback-skeleton";
+import dynamic from "next/dynamic";
+import { ComponentProps, useState } from "react";
+import { FeedbackChatSkeleton, FeedbackListSkeleton } from "./feedback-skeleton";
 import { FeedbackThreadList } from "./feedback-thread-list";
+
+const FeedbackChat = dynamic(() =>
+	import("./feedback-chat").then(m => m.FeedbackChat),
+	{ loading: () => <FeedbackChatSkeleton /> },
+);
+
+const FeedbackNewThreadModal = dynamic(() =>
+	import("./feedback-new-thread-modal").then(m => m.FeedbackNewThreadModal),
+);
 
 export const FeedbackPage = () => {
 	const { t } = useI18n();
@@ -19,6 +28,7 @@ export const FeedbackPage = () => {
 	const [isChatVisible, setIsChatVisible] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
+	const { data: userData } = useCurrentUser();
 	const { data, isPending, fetchNextPage, hasNextPage, isFetchingNextPage } =
 		useFeedbackThreads();
 	const threads = data?.pages.flatMap(p => p.items) ?? [];
@@ -46,14 +56,17 @@ export const FeedbackPage = () => {
 		if (hasNextPage && !isFetchingNextPage) fetchNextPage();
 	};
 
-	const userInitials = "У";
+	const userInitials = userData
+		? ([userData.name, userData.surname].filter(Boolean).map(s => s![0]).join("") || userData.username.slice(0, 2)).toUpperCase()
+		: "??";
 
-		const handleClose: NonNullable<ComponentProps<typeof FeedbackNewThreadModal>["onClose"]> = () => setIsModalOpen(false);
-return (
+	const handleClose: NonNullable<ComponentProps<typeof FeedbackNewThreadModal>["onClose"]> = () => setIsModalOpen(false);
+
+	return (
 		<>
 			{/* Topbar — mobile "New" button */}
 			<div className="flex shrink-0 items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-sm:px-4">
-				<Typography tag="span" className="flex-1 text-[13.5px] font-semibold text-t-1">
+				<Typography tag="h1" className="flex-1 text-[13.5px] font-semibold text-t-1">
 					{t("feedback.pageTitle")}
 				</Typography>
 				{/* Mobile-only new button in topbar */}
@@ -80,10 +93,10 @@ return (
 			<div className="relative flex min-h-0 flex-1 overflow-hidden">
 				{/* Thread list */}
 				{isPending ? (
-					<div className="w-[280px] shrink-0 border-r border-bd-1 bg-surf max-sm:absolute max-sm:inset-0 max-sm:w-full">
-						<div className="shrink-0 border-b border-bd-1 px-4 pb-2.5 pt-3.5">
-							<div className="mb-2.5 h-3 w-28 animate-pulse rounded-sm bg-surf-3" />
-							<div className="h-[30px] animate-pulse rounded-base bg-surf-3" />
+					<div className="w-[300px] shrink-0 border-r border-bd-1 bg-surf max-sm:absolute max-sm:inset-0 max-sm:w-full">
+						<div className="shrink-0 border-b border-bd-1 px-4 pb-3 pt-4">
+							<div className="mb-3 h-3 w-28 animate-pulse rounded bg-surf-3" />
+							<div className="h-9 animate-pulse rounded-lg bg-surf-3" />
 						</div>
 						<FeedbackListSkeleton />
 					</div>

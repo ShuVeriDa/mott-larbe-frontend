@@ -41,9 +41,10 @@ export const generateMetadata = async (props: {
 			description: meta.description,
 			locale: OG_LOCALES[lang] ?? lang,
 			siteName: "Mott Larbe",
+			images: [{ url: `${SITE_URL}/opengraph-image.png`, width: 1200, height: 630 }],
 		},
 		twitter: {
-			card: "summary",
+			card: "summary_large_image",
 			title: meta.title,
 			description: meta.description,
 		},
