@@ -3,6 +3,10 @@
 import { useFeedbackThread } from "@/entities/feedback";
 import { useSendFeedbackMessage } from "@/features/send-feedback-message";
 import { useMarkFeedbackRead } from "@/features/mark-feedback-read";
+import { useMarkNotificationRead } from "@/features/mark-notification-read";
+import { notificationKeys, type Notification } from "@/entities/notification";
+import { useToastStore } from "@/shared/lib/toast";
+import { useQueryClient } from "@tanstack/react-query";
 import { ComponentProps, useEffect } from "react";
 import { FeedbackChatHeader } from "./feedback-chat-header";
 import { FeedbackMessages } from "./feedback-messages";
@@ -29,6 +33,9 @@ export const FeedbackChat = ({
 	const { data: thread, isPending } = useFeedbackThread(threadId);
 	const sendMessage = useSendFeedbackMessage(threadId);
 	const { mutate: markReadThread } = useMarkFeedbackRead();
+	const { mutate: markNotificationRead } = useMarkNotificationRead();
+	const showToast = useToastStore(s => s.push);
+	const qc = useQueryClient();
 	const unreadCount = thread?.unreadCountUser ?? 0;
 
 	useEffect(() => {
@@ -37,9 +44,18 @@ export const FeedbackChat = ({
 		}
 	}, [threadId, unreadCount, markReadThread]);
 
+	useEffect(() => {
+		const notifications = qc.getQueryData<Notification[]>(notificationKeys.list());
+		const match = notifications?.find(
+			(n) => !n.isRead && n.type === "FEEDBACK_REPLY" && n.entityId === threadId,
+		);
+		if (match) markNotificationRead(match.id);
+	}, [threadId, qc, markNotificationRead]);
+
 	const isClosed = thread?.status === "RESOLVED";
 
-	const handleSend: NonNullable<ComponentProps<typeof FeedbackChatInput>["onSend"]> = (text) => sendMessage.mutate(text);
+	const handleSend: NonNullable<ComponentProps<typeof FeedbackChatInput>["onSend"]> = (text) =>
+		sendMessage.mutate(text, { onSuccess: () => showToast(t("feedback.chat.toast.sent")) });
 
 	return (
 		<div

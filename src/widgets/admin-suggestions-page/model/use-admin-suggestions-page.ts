@@ -1,24 +1,28 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { useSuggestions, useSuggestionStats, useReviewSuggestion } from "@/features/suggestions";
+import { useSuggestions, useSuggestionStats, useReviewSuggestion, useSuggestion } from "@/features/suggestions";
 import { useDebounce } from "@/shared/lib/debounce";
 import { useToast } from "@/shared/lib/toast";
 import { useI18n } from "@/shared/lib/i18n";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { SuggestionStatus, SuggestionType } from "@/features/suggestions";
 
 export const useAdminSuggestionsPage = () => {
 	const { t } = useI18n();
 	const { success, error } = useToast();
+	const router = useRouter();
+	const searchParams = useSearchParams();
 
 	const [statusFilter, setStatusFilter] = useState<SuggestionStatus | undefined>(undefined);
 	const [typeFilter, setTypeFilter] = useState<SuggestionType | undefined>(undefined);
 	const [query, setQuery] = useState("");
-	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const [reviewComment, setReviewComment] = useState("");
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(25);
 	const [order, setOrder] = useState<"asc" | "desc">("desc");
+
+	const selectedId = searchParams.get("suggestion");
 
 	const debouncedQuery = useDebounce(query, 350);
 
@@ -36,7 +40,9 @@ export const useAdminSuggestionsPage = () => {
 
 	const suggestions = data?.data ?? [];
 	const total = data?.meta.total ?? 0;
-	const selectedSuggestion = suggestions.find((s) => s.id === selectedId) ?? null;
+	const fromList = suggestions.find((s) => s.id === selectedId) ?? null;
+	const detailQuery = useSuggestion(selectedId ?? "");
+	const selectedSuggestion = fromList ?? detailQuery.data ?? null;
 
 	const resetPage = () => setPage(1);
 
@@ -60,19 +66,27 @@ export const useAdminSuggestionsPage = () => {
 		resetPage();
 	};
 
+	const setSelected = (id: string | null) => {
+		const params = new URLSearchParams(searchParams.toString());
+		if (id) {
+			params.set("suggestion", id);
+		} else {
+			params.delete("suggestion");
+		}
+		router.replace(`?${params.toString()}`, { scroll: false });
+	};
+
 	const handlePageChange = (p: number) => {
 		setPage(p);
-		setSelectedId(null);
 	};
 
 	const handlePageSizeChange = (size: number) => {
 		setPageSize(size);
 		setPage(1);
-		setSelectedId(null);
 	};
 
 	const handleSelect = (id: string) => {
-		setSelectedId(id);
+		setSelected(id);
 		setReviewComment("");
 	};
 
@@ -85,7 +99,7 @@ export const useAdminSuggestionsPage = () => {
 		reviewMutate(
 			{ id: selectedId, dto: { decision: "approve", comment: reviewComment || undefined } },
 			{
-				onSuccess: () => { success(t("adminSuggestions.successApprove")); setReviewComment(""); },
+				onSuccess: () => { success(t("adminSuggestions.successApprove")); setReviewComment(""); setSelected(null); },
 				onError: () => error(t("adminSuggestions.errorReview")),
 			},
 		);
@@ -96,7 +110,7 @@ export const useAdminSuggestionsPage = () => {
 		reviewMutate(
 			{ id: selectedId, dto: { decision: "reject", comment: reviewComment || undefined } },
 			{
-				onSuccess: () => { success(t("adminSuggestions.successReject")); setReviewComment(""); },
+				onSuccess: () => { success(t("adminSuggestions.successReject")); setReviewComment(""); setSelected(null); },
 				onError: () => error(t("adminSuggestions.errorReview")),
 			},
 		);
@@ -107,6 +121,7 @@ export const useAdminSuggestionsPage = () => {
 		statusFilter, typeFilter, query, order,
 		page, pageSize,
 		selectedId, selectedSuggestion,
+		isDetailLoading: !fromList && detailQuery.isLoading,
 		reviewComment, isReviewing,
 		handleStatusFilterChange, handleTypeFilterChange,
 		handleQueryChange, handleOrderChange,

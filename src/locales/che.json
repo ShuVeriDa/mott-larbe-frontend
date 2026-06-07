@@ -2473,7 +2473,10 @@
       "hint": "Enter — дӀаяхьийта · Shift+Enter — керла аса",
       "closed": "Дехар дӀакъовлина ду",
       "reopen": "Юха схьаялла",
-      "supportInitials": "МЛ"
+      "supportInitials": "МЛ",
+      "toast": {
+        "sent": "Хаам дӀаяхьийтина"
+      }
     },
     "empty": {
       "title": "Дехарш хӀинццалц дац",
@@ -4181,6 +4184,7 @@
         "unread": "Дешанзаш"
       },
       "toast": {
+        "sent": "Жоп дӀаяхьийтина",
         "statusUpdated": "Статус керлайина",
         "priorityUpdated": "Приоритет керлайина",
         "assigned": "ТӀедиллина: {name}",

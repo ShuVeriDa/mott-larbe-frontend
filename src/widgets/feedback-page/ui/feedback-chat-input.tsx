@@ -1,9 +1,9 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { Button } from "@/shared/ui/button";
-import { Send } from "lucide-react";
 import { useAutoResize } from "@/shared/lib/use-auto-resize";
+import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
+import { Send } from "lucide-react";
 import { ComponentProps, KeyboardEvent, useRef, useState } from "react";
 
 type Translator = (key: string) => string;
@@ -44,7 +44,9 @@ export const FeedbackChatInput = ({
 	const handleReopen: NonNullable<ComponentProps<"button">["onClick"]> = () =>
 		setIsReopening(true);
 
-	const handleChange: NonNullable<ComponentProps<"textarea">["onChange"]> = e => {
+	const handleChange: NonNullable<
+		ComponentProps<"textarea">["onChange"]
+	> = e => {
 		setValue(e.currentTarget.value);
 		autoResize();
 	};
@@ -67,7 +69,7 @@ export const FeedbackChatInput = ({
 
 	return (
 		<div className="shrink-0 border-t border-bd-1 bg-surf px-4 pb-[13px] pt-2.5 transition-colors max-sm:pb-[calc(12px+env(safe-area-inset-bottom,0))]">
-			<div className="flex items-center gap-2 rounded-xl border border-bd-2 bg-surf-2 px-2.5 py-2 focus-within:border-acc">
+			<div className="flex items-center gap-2 rounded-xl border border-bd-2 bg-panel px-2.5 py-2 focus-within:border-acc">
 				<textarea
 					ref={textareaRef}
 					value={value}

@@ -14,36 +14,31 @@ import {
 	useAdminFeedbackThread,
 	useAdminFeedbackThreads,
 } from "@/entities/feedback";
+import { useMarkNotificationRead } from "@/features/mark-notification-read";
+import { notificationKeys, type Notification } from "@/entities/notification";
 import { useI18n } from "@/shared/lib/i18n";
-import { type MouseEvent as ReactMouseEvent, useState } from "react";
-const showToast = (msg: string) => {
-	const existing = document.querySelectorAll("[data-feedback-toast]");
-	existing.forEach(el => el.remove());
-	const el = document.createElement("div");
-	el.dataset.feedbackToast = "1";
-	el.style.cssText =
-		"position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--t-1,#18180f);color:var(--bg,#F9F8F7);padding:8px 16px;border-radius:8px;font-size:12.5px;font-weight:500;z-index:500;box-shadow:0 4px 12px rgba(0,0,0,.12);white-space:nowrap;pointer-events:none;animation:fadeUp .2s ease";
-	el.textContent = msg;
-	document.body.appendChild(el);
-	setTimeout(() => {
-		el.style.opacity = "0";
-		el.style.transition = "opacity .3s";
-	}, 2000);
-	setTimeout(() => el.remove(), 2400);
-};
+import { useToastStore } from "@/shared/lib/toast";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter, useSearchParams } from "next/navigation";
+import { type MouseEvent as ReactMouseEvent, useEffect, useState } from "react";
 
 export const useAdminFeedbackPage = () => {
 	const { t } = useI18n();
+	const showToast = useToastStore(s => s.push);
+	const router = useRouter();
+	const searchParams = useSearchParams();
+	const qc = useQueryClient();
+	const { mutate: markNotificationRead } = useMarkNotificationRead();
 
 	const [tab, setTab] = useState<AdminFeedbackTab>("OPEN");
 	const [typeFilter, setTypeFilter] = useState<FeedbackType | "all">("all");
 	const [search, setSearch] = useState("");
-	const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
+	const activeThreadId = searchParams.get("thread");
 	const [inputMode, setInputMode] = useState<"reply" | "note">("reply");
 	const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
 	const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
 	const [isInfoDrawerOpen, setIsInfoDrawerOpen] = useState(false);
-	const [isMobileChat, setIsMobileChat] = useState(false);
+	const [isMobileChat, setIsMobileChat] = useState(() => !!searchParams.get("thread"));
 	const [isExporting, setIsExporting] = useState(false);
 
 	const listQuery = useAdminFeedbackThreads({
@@ -64,6 +59,25 @@ export const useAdminFeedbackPage = () => {
 	const thread = detailQuery.data ?? null;
 	const stats = statsQuery.data ?? null;
 
+	useEffect(() => {
+		if (!activeThreadId) return;
+		const notifications = qc.getQueryData<Notification[]>(notificationKeys.list());
+		const match = notifications?.find(
+			(n) => !n.isRead && n.type === "NEW_FEEDBACK_THREAD" && n.entityId === activeThreadId,
+		);
+		if (match) markNotificationRead(match.id);
+	}, [activeThreadId, qc, markNotificationRead]);
+
+	const setThread = (id: string | null) => {
+		const params = new URLSearchParams(searchParams.toString());
+		if (id) {
+			params.set("thread", id);
+		} else {
+			params.delete("thread");
+		}
+		router.replace(`?${params.toString()}`, { scroll: false });
+	};
+
 	const handleTabChange = (next: AdminFeedbackTab) => {
 		setTab(next);
 	};
@@ -77,7 +91,7 @@ export const useAdminFeedbackPage = () => {
 	};
 
 	const handleSelect = (item: AdminFeedbackThread) => {
-		setActiveThreadId(item.id);
+		setThread(item.id);
 		setIsMobileChat(true);
 		setInputMode("reply");
 	};
@@ -146,7 +160,7 @@ export const useAdminFeedbackPage = () => {
 		if (!window.confirm(t("admin.feedback.deleteConfirm"))) return;
 		mutations.deleteThread.mutate(undefined, {
 			onSuccess: () => {
-				setActiveThreadId(null);
+				setThread(null);
 				setIsMobileChat(false);
 				showToast(t("admin.feedback.toast.deleted"));
 			},

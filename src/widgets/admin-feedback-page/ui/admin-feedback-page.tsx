@@ -32,6 +32,7 @@ export const AdminFeedbackPage = () => {
 		assignees,
 		isAssigneesLoading,
 		isListLoading,
+		isDetailLoading,
 		isFetchingNextPage,
 		hasNextPage,
 		isReplying,
@@ -158,6 +159,8 @@ export const AdminFeedbackPage = () => {
 						onClose={handleClose}
 						onDelete={handleDelete}
 					/>
+				) : isDetailLoading ? (
+					<div className="flex flex-1 animate-pulse flex-col gap-3 p-5" />
 				) : (
 					<FeedbackEmptyState t={t} />
 				)}

@@ -2472,7 +2472,10 @@
       "hint": "Enter — отправить · Shift+Enter — перенос строки",
       "closed": "Обращение закрыто",
       "reopen": "Открыть снова",
-      "supportInitials": "МЛ"
+      "supportInitials": "МЛ",
+      "toast": {
+        "sent": "Сообщение отправлено"
+      }
     },
     "empty": {
       "title": "Обращений пока нет",
@@ -4180,6 +4183,7 @@
         "unread": "Непрочитанных"
       },
       "toast": {
+        "sent": "Ответ отправлен",
         "statusUpdated": "Статус обновлён",
         "priorityUpdated": "Приоритет обновлён",
         "assigned": "Назначено: {name}",

@@ -3,18 +3,18 @@ import type { Notification } from "@/entities/notification";
 export const getNotificationHref = (lang: string, n: Notification): string => {
 	switch (n.type) {
 		case "FEEDBACK_REPLY":
-			return `/${lang}/feedback/${n.entityId}`;
+			return `/${lang}/feedback?thread=${n.entityId}`;
 		case "SUGGESTION_APPROVED":
 		case "SUGGESTION_REJECTED":
-			return `/${lang}/suggestions`;
+			return `/${lang}/suggestions?suggestion=${n.entityId}`;
 		case "TEXT_SUBMISSION_APPROVED":
 		case "TEXT_SUBMISSION_REJECTED":
-			return `/${lang}/my-texts`;
+			return `/${lang}/suggestions?submission=${n.entityId}`;
 		case "NEW_FEEDBACK_THREAD":
-			return `/${lang}/admin/feedback/${n.entityId}`;
+			return `/${lang}/admin/feedback?thread=${n.entityId}`;
 		case "NEW_TEXT_SUBMISSION":
-			return `/${lang}/admin/text-submissions`;
+			return `/${lang}/admin/text-submissions?submission=${n.entityId}`;
 		case "NEW_SUGGESTION":
-			return `/${lang}/admin/suggestions`;
+			return `/${lang}/admin/suggestions?suggestion=${n.entityId}`;
 	}
 };

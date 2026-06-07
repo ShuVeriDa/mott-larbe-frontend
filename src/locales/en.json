@@ -2476,7 +2476,10 @@
       "hint": "Enter — send · Shift+Enter — new line",
       "closed": "Request closed",
       "reopen": "Reopen",
-      "supportInitials": "ML"
+      "supportInitials": "ML",
+      "toast": {
+        "sent": "Message sent"
+      }
     },
     "empty": {
       "title": "No requests yet",
@@ -4183,6 +4186,7 @@
         "unread": "Unread"
       },
       "toast": {
+        "sent": "Reply sent",
         "statusUpdated": "Status updated",
         "priorityUpdated": "Priority updated",
         "assigned": "Assigned: {name}",

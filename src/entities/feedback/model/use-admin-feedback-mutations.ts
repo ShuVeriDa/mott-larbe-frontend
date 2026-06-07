@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { adminFeedbackApi, adminFeedbackKeys } from "../api";
+import { adminFeedbackApi, adminFeedbackKeys, feedbackKeys } from "../api";
 import type {
 	AdminReplyDto,
 	AssignFeedbackDto,
@@ -17,9 +17,11 @@ export const useAdminFeedbackMutations = (threadId: string | null) => {
 	const invalidate = () => {
 		if (threadId) {
 			qc.invalidateQueries({ queryKey: adminFeedbackKeys.detail(threadId) });
+			qc.invalidateQueries({ queryKey: feedbackKeys.thread(threadId) });
 		}
 		qc.invalidateQueries({ queryKey: adminFeedbackKeys.root });
 		qc.invalidateQueries({ queryKey: adminFeedbackKeys.stats() });
+		qc.invalidateQueries({ queryKey: feedbackKeys.root });
 	};
 
 	const reply = useMutation({
@@ -68,6 +70,10 @@ export const useAdminFeedbackMutations = (threadId: string | null) => {
 			return adminFeedbackApi.deleteThread(threadId);
 		},
 		onSuccess: () => {
+			if (threadId) {
+				qc.removeQueries({ queryKey: adminFeedbackKeys.detail(threadId) });
+				qc.removeQueries({ queryKey: feedbackKeys.thread(threadId) });
+			}
 			qc.invalidateQueries({ queryKey: adminFeedbackKeys.root });
 			qc.invalidateQueries({ queryKey: adminFeedbackKeys.stats() });
 		},

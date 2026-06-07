@@ -1,19 +1,24 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { useMySuggestions } from "@/features/suggestions";
-import { useMyTextSubmissions } from "@/features/text-submission";
+import { useMySuggestions, useSuggestion } from "@/features/suggestions";
+import { useMyTextSubmissions, useOwnedTextSubmission } from "@/features/text-submission";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { SuggestionStatus } from "@/features/suggestions";
 import type { TextSubmissionStatus } from "@/features/text-submission";
 
 export type SuggestionsTab = "word-edits" | "text-submissions";
 
 export const useSuggestionsPage = () => {
-	const [tab, setTab] = useState<SuggestionsTab>("word-edits");
+	const router = useRouter();
+	const searchParams = useSearchParams();
+
+	const [tab, setTab] = useState<SuggestionsTab>(() =>
+		searchParams.get("submission") ? "text-submissions" : "word-edits",
+	);
 
 	// --- word-edits ---
 	const [statusFilter, setStatusFilter] = useState<SuggestionStatus | undefined>(undefined);
-	const [wordSelectedId, setWordSelectedId] = useState<string | null>(null);
 	const [wordPage, setWordPage] = useState(1);
 	const [wordPageSize, setWordPageSize] = useState(25);
 	const [wordOrder, setWordOrder] = useState<"asc" | "desc">("desc");
@@ -25,13 +30,16 @@ export const useSuggestionsPage = () => {
 		offset: (wordPage - 1) * wordPageSize,
 	});
 
+	const wordSelectedId = searchParams.get("suggestion");
 	const suggestions = wordData?.data ?? [];
 	const wordTotal = wordData?.meta.total ?? 0;
-	const selectedSuggestion = suggestions.find((s) => s.id === wordSelectedId) ?? null;
+	const wordFromList = suggestions.find((s) => s.id === wordSelectedId) ?? null;
+	const wordDetailQuery = useSuggestion(wordSelectedId ?? "");
+	const selectedSuggestion = wordFromList ?? wordDetailQuery.data ?? null;
 
 	// --- text-submissions ---
 	const [tsStatusFilter, setTsStatusFilter] = useState<TextSubmissionStatus | undefined>(undefined);
-	const [tsSelectedId, setTsSelectedId] = useState<string | null>(null);
+	const tsSelectedId = searchParams.get("submission");
 	const [tsPage, setTsPage] = useState(1);
 	const [tsPageSize, setTsPageSize] = useState(25);
 	const [tsOrder, setTsOrder] = useState<"asc" | "desc">("desc");
@@ -46,15 +54,28 @@ export const useSuggestionsPage = () => {
 		? allTextSubmissions.filter((s) => s.status === tsStatusFilter)
 		: allTextSubmissions;
 	const tsTotal = tsData?.meta.total ?? 0;
-	const selectedTextSubmission = textSubmissions.find((s) => s.id === tsSelectedId) ?? null;
+	const tsFromList = textSubmissions.find((s) => s.id === tsSelectedId) ?? null;
+	const tsDetailQuery = useOwnedTextSubmission(tsSelectedId ?? "");
+	const selectedTextSubmission = tsFromList ?? tsDetailQuery.data ?? null;
 
-	const [showDetail, setShowDetail] = useState(false);
+	const [showDetail, setShowDetail] = useState(() => !!(searchParams.get("suggestion") || searchParams.get("submission")));
+
+	const setWordSelected = (id: string | null) => {
+		const params = new URLSearchParams(searchParams.toString());
+		if (id) { params.set("suggestion", id); } else { params.delete("suggestion"); }
+		router.replace(`?${params.toString()}`, { scroll: false });
+	};
+
+	const setTsSelected = (id: string | null) => {
+		const params = new URLSearchParams(searchParams.toString());
+		if (id) { params.set("submission", id); } else { params.delete("submission"); }
+		router.replace(`?${params.toString()}`, { scroll: false });
+	};
 
 	// --- word-edits handlers ---
 	const handleStatusFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		setStatusFilter(e.currentTarget.value ? (e.currentTarget.value as SuggestionStatus) : undefined);
 		setWordPage(1);
-		setWordSelectedId(null);
 	};
 
 	const handleWordOrderChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -64,18 +85,15 @@ export const useSuggestionsPage = () => {
 
 	const handleWordPageChange = (p: number) => {
 		setWordPage(p);
-		setWordSelectedId(null);
-		setShowDetail(false);
 	};
 
 	const handleWordPageSizeChange = (size: number) => {
 		setWordPageSize(size);
 		setWordPage(1);
-		setWordSelectedId(null);
 	};
 
 	const handleSelectSuggestion = (id: string) => {
-		setWordSelectedId(id);
+		setWordSelected(id);
 		setShowDetail(true);
 	};
 
@@ -83,7 +101,6 @@ export const useSuggestionsPage = () => {
 	const handleTsStatusFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		setTsStatusFilter(e.currentTarget.value ? (e.currentTarget.value as TextSubmissionStatus) : undefined);
 		setTsPage(1);
-		setTsSelectedId(null);
 	};
 
 	const handleTsOrderChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -93,22 +110,23 @@ export const useSuggestionsPage = () => {
 
 	const handleTsPageChange = (p: number) => {
 		setTsPage(p);
-		setTsSelectedId(null);
-		setShowDetail(false);
 	};
 
 	const handleTsPageSizeChange = (size: number) => {
 		setTsPageSize(size);
 		setTsPage(1);
-		setTsSelectedId(null);
 	};
 
 	const handleSelectTextSubmission = (id: string) => {
-		setTsSelectedId(id);
+		setTsSelected(id);
 		setShowDetail(true);
 	};
 
-	const handleBack = () => setShowDetail(false);
+	const handleBack = () => {
+		if (tab === "word-edits") setWordSelected(null);
+		else setTsSelected(null);
+		setShowDetail(false);
+	};
 
 	const handleTabChange = (t: SuggestionsTab) => {
 		setTab(t);

@@ -40,6 +40,7 @@ export const useSendFeedbackMessage = (threadId: string) => {
 		onSettled: () => {
 			qc.invalidateQueries({ queryKey: feedbackKeys.thread(threadId) });
 			qc.invalidateQueries({ queryKey: feedbackKeys.root });
+			qc.invalidateQueries({ queryKey: feedbackKeys.unreadCount() });
 		},
 	});
 };

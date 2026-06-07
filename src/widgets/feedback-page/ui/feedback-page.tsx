@@ -9,6 +9,7 @@ import { useFeedbackThreads } from "@/entities/feedback";
 import { useCurrentUser } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import dynamic from "next/dynamic";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ComponentProps, useState } from "react";
 import { FeedbackChatSkeleton, FeedbackListSkeleton } from "./feedback-skeleton";
 import { FeedbackThreadList } from "./feedback-thread-list";
@@ -24,8 +25,10 @@ const FeedbackNewThreadModal = dynamic(() =>
 
 export const FeedbackPage = () => {
 	const { t } = useI18n();
-	const [activeId, setActiveId] = useState<string | null>(null);
-	const [isChatVisible, setIsChatVisible] = useState(false);
+	const router = useRouter();
+	const searchParams = useSearchParams();
+	const activeId = searchParams.get("thread");
+	const [isChatVisible, setIsChatVisible] = useState(() => !!searchParams.get("thread"));
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const { data: userData } = useCurrentUser();
@@ -33,8 +36,18 @@ export const FeedbackPage = () => {
 		useFeedbackThreads();
 	const threads = data?.pages.flatMap(p => p.items) ?? [];
 
+	const setThread = (id: string | null) => {
+		const params = new URLSearchParams(searchParams.toString());
+		if (id) {
+			params.set("thread", id);
+		} else {
+			params.delete("thread");
+		}
+		router.replace(`?${params.toString()}`, { scroll: false });
+	};
+
 	const handleSelectThread = (thread: FeedbackThread) => {
-		setActiveId(thread.id);
+		setThread(thread.id);
 		setIsChatVisible(true);
 	};
 
@@ -48,7 +61,7 @@ export const FeedbackPage = () => {
 
 	const handleModalSuccess = (threadId: string) => {
 		setIsModalOpen(false);
-		setActiveId(threadId);
+		setThread(threadId);
 		setIsChatVisible(true);
 	};
 

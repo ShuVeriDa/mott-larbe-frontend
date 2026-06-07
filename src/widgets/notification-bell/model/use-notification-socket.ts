@@ -5,6 +5,10 @@ import {
 	type Notification,
 	type UnreadCountResponse,
 } from "@/entities/notification";
+import {
+	adminFeedbackKeys,
+	feedbackKeys,
+} from "@/entities/feedback";
 import { WS_URL } from "@/shared/config";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
@@ -53,6 +57,30 @@ export const useNotificationSocket = (isAuthenticated: boolean) => {
 				void queryClient.invalidateQueries({
 					queryKey: notificationKeys.unreadCount(),
 				});
+
+				if (notification.type === "FEEDBACK_REPLY" && notification.entityId) {
+					void queryClient.invalidateQueries({
+						queryKey: feedbackKeys.thread(notification.entityId),
+					});
+					void queryClient.invalidateQueries({
+						queryKey: feedbackKeys.root,
+					});
+					void queryClient.invalidateQueries({
+						queryKey: adminFeedbackKeys.detail(notification.entityId),
+					});
+					void queryClient.invalidateQueries({
+						queryKey: adminFeedbackKeys.list(),
+					});
+				}
+
+				if (notification.type === "NEW_FEEDBACK_THREAD") {
+					void queryClient.invalidateQueries({
+						queryKey: adminFeedbackKeys.list(),
+					});
+					void queryClient.invalidateQueries({
+						queryKey: adminFeedbackKeys.stats(),
+					});
+				}
 			};
 
 			ws.onopen = () => {
