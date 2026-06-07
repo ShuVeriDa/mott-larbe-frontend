@@ -10,6 +10,12 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import {
+	KbdShortcut,
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/shared/ui/tooltip";
 import { Typography } from "@/shared/ui/typography";
 import { ChevronLeft, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
@@ -160,35 +166,47 @@ export const ReaderTopbar = ({
 
 			<div className="flex shrink-0 items-center gap-1">
 				{actions.map(action => (
-					<MotionButton
-						key={action.key}
-						onClick={action.onClick}
-						size="bare"
-						aria-pressed={action.ariaPressed}
-						aria-label={action.ariaLabel}
-						title={action.ariaLabel}
-						disabled={action.disabled}
-						whileTap={action.disabled ? {} : { scale: 0.92 }}
-						className={cn(iconBtnClass, "hidden md:flex")}
-					>
-						{action.renderIcon()}
-					</MotionButton>
+					<Tooltip key={action.key}>
+						<TooltipTrigger asChild>
+							<MotionButton
+								onClick={action.onClick}
+								size="bare"
+								aria-pressed={action.ariaPressed}
+								aria-label={action.ariaLabel}
+								disabled={action.disabled}
+								whileTap={action.disabled ? {} : { scale: 0.92 }}
+								className={cn(iconBtnClass, "hidden md:flex")}
+							>
+								{action.renderIcon()}
+							</MotionButton>
+						</TooltipTrigger>
+						<TooltipContent side="bottom" sideOffset={6}>
+							{action.ariaLabel}
+							{action.shortcut && <KbdShortcut keys={action.shortcut} />}
+						</TooltipContent>
+					</Tooltip>
 				))}
 
 				{primaryActions.map(action => (
-					<MotionButton
-						key={action.key}
-						onClick={action.onClick}
-						size="bare"
-						aria-pressed={action.ariaPressed}
-						aria-label={action.ariaLabel}
-						title={action.ariaLabel}
-						disabled={action.disabled}
-						whileTap={action.disabled ? {} : { scale: 0.92 }}
-						className={cn(iconBtnClass, "md:hidden")}
-					>
-						{action.renderIcon()}
-					</MotionButton>
+					<Tooltip key={action.key}>
+						<TooltipTrigger asChild>
+							<MotionButton
+								onClick={action.onClick}
+								size="bare"
+								aria-pressed={action.ariaPressed}
+								aria-label={action.ariaLabel}
+								disabled={action.disabled}
+								whileTap={action.disabled ? {} : { scale: 0.92 }}
+								className={cn(iconBtnClass, "md:hidden")}
+							>
+								{action.renderIcon()}
+							</MotionButton>
+						</TooltipTrigger>
+						<TooltipContent side="bottom" sideOffset={6}>
+							{action.ariaLabel}
+							{action.shortcut && <KbdShortcut keys={action.shortcut} />}
+						</TooltipContent>
+					</Tooltip>
 				))}
 
 				{secondaryActions.length > 0 && (

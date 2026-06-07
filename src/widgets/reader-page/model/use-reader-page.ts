@@ -8,6 +8,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useReaderKeyboard } from "./use-reader-keyboard";
 import { useShallow } from "zustand/react/shallow";
 
 type RailPanel = "word" | "settings" | "notes" | "toc" | "bookmarks" | "aiHistory" | null;
@@ -86,6 +87,15 @@ export const useReaderPage = (
 	const handleNavigate = (page: number) => {
 		router.push(`/${lang}/${routeBase}/${textId}/p/${page}`);
 	};
+
+	useReaderKeyboard(pageNumber, totalPages, {
+		onNavigate: handleNavigate,
+		onToggleNotes: handleToggleNotes,
+		onToggleToc: handleToggleToc,
+		onToggleBookmarks: handleToggleBookmarks,
+		onToggleFocusMode: focusMode.toggle,
+		onToggleAiHistory: handleToggleAiHistory,
+	});
 
 	const handleTogglePanel = (panel: "settings" | "notes" | "toc" | "bookmarks" | "aiHistory") => {
 		setRailPanel(prev => {

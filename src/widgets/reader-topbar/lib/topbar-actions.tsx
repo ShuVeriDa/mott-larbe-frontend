@@ -23,6 +23,8 @@ export type TopbarAction = {
 	disabled?: boolean;
 	onClick: () => void;
 	priority?: "primary" | "secondary";
+	/** Keyboard shortcut hint shown in tooltip, e.g. ["N"] or ["⌘", "K"] */
+	shortcut?: string[];
 };
 
 export interface GetTopbarActionsParams {
@@ -90,6 +92,7 @@ export const getTopbarActions = ({
 			ariaPressed: wordPanelTogglePressed,
 			onClick: handleToggleWordPanel,
 			priority: "primary",
+			shortcut: ["Space"],
 		},
 		onToggleToc
 			? {
@@ -99,6 +102,7 @@ export const getTopbarActions = ({
 					ariaPressed: tocOpen,
 					onClick: onToggleToc,
 					priority: "primary",
+					shortcut: ["T"],
 				}
 			: null,
 		{
@@ -123,6 +127,7 @@ export const getTopbarActions = ({
 					ariaPressed: bookmarksOpen,
 					onClick: onToggleBookmarks,
 					priority: "secondary",
+					shortcut: ["B"],
 				}
 			: null,
 		{
@@ -134,6 +139,7 @@ export const getTopbarActions = ({
 			ariaPressed: notesOpen,
 			onClick: onToggleNotes,
 			priority: "secondary",
+			shortcut: ["N"],
 		},
 		{
 			key: "settings",
@@ -151,6 +157,7 @@ export const getTopbarActions = ({
 					ariaPressed: aiHistoryOpen,
 					onClick: onToggleAiHistory,
 					priority: "secondary",
+					shortcut: ["H"],
 				}
 			: null,
 		onBatchTranslate
@@ -180,6 +187,7 @@ export const getTopbarActions = ({
 					ariaPressed: focusModeActive,
 					onClick: onToggleFocusMode,
 					priority: "primary",
+					shortcut: ["F"],
 				}
 			: null,
 		{

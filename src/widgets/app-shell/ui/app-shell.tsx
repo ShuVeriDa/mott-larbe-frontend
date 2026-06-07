@@ -1,6 +1,7 @@
 import { ToastViewport } from "@/shared/ui/toast";
 import { type ReactNode, Suspense } from "react";
 import { BottomNav } from "./bottom-nav";
+import { GlobalKeyboardHandler } from "./global-keyboard-handler";
 import { SideNav } from "./side-nav";
 
 export interface AppShellProps {
@@ -9,6 +10,7 @@ export interface AppShellProps {
 
 export const AppShell = ({ children }: AppShellProps) => (
 	<>
+		<GlobalKeyboardHandler />
 		<div className="mx-auto flex h-screen min-h-[600px] w-full border-[0.5px] border-x border-bd-2 bg-panel max-md:h-auto max-md:min-h-dvh max-md:border-x-0">
 			<Suspense>
 				<SideNav />

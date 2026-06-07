@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { DEFAULT_LOCALE } from "@/i18n/locale-list";
-import { useDeckDue, useDeckStats } from "@/entities/deck";
+import { useDeckDue, useDeckStats, deckKeys } from "@/entities/deck";
 import type { DeckCard } from "@/entities/deck";
-import { useSuspenseReviewStats, useSuspenseReviewDue } from "@/entities/review";
+import { useSuspenseReviewStats, useSuspenseReviewDue, reviewKeys } from "@/entities/review";
+import { dictionaryKeys } from "@/entities/dictionary";
 import { usePhraseReviewStats } from "@/entities/phrasebook";
 import { useSettings } from "@/entities/settings";
 import { useSessionMode } from "@/features/session-mode";
@@ -28,6 +30,7 @@ const ZERO_DECK: DeckCounts = { know: 0, again: 0 };
 export const useReviewPage = () => {
 	const params = useParams<{ lang: string }>();
 	const lang = params.lang ?? DEFAULT_LOCALE;
+	const qc = useQueryClient();
 	const { system, screen, switchSystem, goToCard, goToDone, goToIntro, goToRetry } =
 		useReviewFlow();
 	const { mode: sessionMode, setMode: setSessionMode } = useSessionMode();
@@ -90,6 +93,8 @@ export const useReviewPage = () => {
 
 	const handleSm2Finish = (counts: Sm2Counts) => {
 		setSm2Counts(counts);
+		qc.invalidateQueries({ queryKey: reviewKeys.root });
+		qc.invalidateQueries({ queryKey: dictionaryKeys.root });
 		goToDone();
 	};
 
@@ -107,6 +112,7 @@ export const useReviewPage = () => {
 	const handleDeckFinish = (counts: DeckCounts, againCards: DeckCard[]) => {
 		setDeckCounts(counts);
 		setDeckAgainCards(againCards);
+		qc.invalidateQueries({ queryKey: deckKeys.root });
 		goToDone();
 	};
 
@@ -119,7 +125,15 @@ export const useReviewPage = () => {
 	const handleRetryFinish = (counts: DeckCounts, _againCards: DeckCard[]) => {
 		setDeckCounts(counts);
 		setDeckAgainCards([]);
+		qc.invalidateQueries({ queryKey: deckKeys.root });
 		goToDone();
+	};
+
+	const handleGoToIntro = () => {
+		qc.invalidateQueries({ queryKey: reviewKeys.root });
+		qc.invalidateQueries({ queryKey: dictionaryKeys.root });
+		qc.invalidateQueries({ queryKey: deckKeys.root });
+		goToIntro();
 	};
 
 	const handleTryDeck = () => switchSystem("deck");
@@ -132,7 +146,7 @@ export const useReviewPage = () => {
 		system,
 		screen,
 		switchSystem,
-		goToIntro,
+		goToIntro: handleGoToIntro,
 		stats,
 		words,
 		deckStats,

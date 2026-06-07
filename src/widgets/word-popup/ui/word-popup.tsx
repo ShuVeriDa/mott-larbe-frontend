@@ -9,6 +9,7 @@ import { useWordLookupStore, type PopupAnchor } from "@/features/word-lookup";
 import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { KbdShortcut, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { AddToDictionaryButton } from "@/widgets/word-panel/ui/add-to-dictionary-button";
 import { AnimatePresence, motion } from "framer-motion";
 import { BookOpen, ExternalLink, Pencil } from "lucide-react";
@@ -141,15 +142,21 @@ const WordPopupBody = ({
 					className="h-7 text-[11.5px]"
 				/>
 				<div className="flex gap-1.5">
-					<Button
-						size="bare"
-						onClick={onSuggestOpen}
-						aria-label={t("suggest.button")}
-						title={t("suggest.button")}
-						className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-base border-[0.5px] border-bd-1 bg-surf-2 text-t-3 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
-					>
-						<Pencil className="size-3" strokeWidth={1.5} />
-					</Button>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<Button
+								size="bare"
+								onClick={onSuggestOpen}
+								aria-label={t("suggest.button")}
+								className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-base border-[0.5px] border-bd-1 bg-surf-2 text-t-3 transition-colors hover:border-bd-2 hover:bg-surf-3 hover:text-t-1"
+							>
+								<Pencil className="size-3" strokeWidth={1.5} />
+							</Button>
+						</TooltipTrigger>
+						<TooltipContent side="top" sideOffset={6}>
+							{t("suggest.button")} <KbdShortcut keys={["E"]} />
+						</TooltipContent>
+					</Tooltip>
 					<Button
 						size="bare"
 						onClick={onOpenInPanel}
@@ -271,7 +278,11 @@ export const WordPopup = () => {
 			}
 		};
 		const onKey = (event: KeyboardEvent) => {
-			if (event.key === "Escape" && !suggestOpen) closePopup();
+			if (event.key === "Escape" && !suggestOpen) { closePopup(); return; }
+			if ((event.key === "e" || event.key === "E") && !suggestOpen && token && data?.translation) {
+				event.preventDefault();
+				handleSuggestOpen(token.normalized, token.original, data.translation);
+			}
 		};
 		document.addEventListener("mousedown", onMouseDown);
 		document.addEventListener("keydown", onKey);
@@ -279,7 +290,7 @@ export const WordPopup = () => {
 			document.removeEventListener("mousedown", onMouseDown);
 			document.removeEventListener("keydown", onKey);
 		};
-	}, [isVisible, closePopup, suggestOpen]);
+	}, [isVisible, closePopup, suggestOpen, token, data, handleSuggestOpen]);
 
 	if (typeof window === "undefined") return null;
 

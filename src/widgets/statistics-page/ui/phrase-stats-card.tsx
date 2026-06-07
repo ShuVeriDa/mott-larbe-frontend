@@ -22,7 +22,7 @@ export const PhraseStatsCard = ({ phraseStats }: PhraseStatsCardProps) => {
 					{t("statistics.phrases.title")}
 				</Typography>
 				<Link
-					href={`/${lang}/phrasebook/review`}
+					href={`/${lang}/review`}
 					className="text-[11px] text-acc hover:underline"
 				>
 					{t("statistics.phrases.reviewLink")} →

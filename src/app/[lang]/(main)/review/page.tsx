@@ -1,11 +1,8 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, LOCALES } from "@/i18n/locales";
 import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo/metadata";
-import { ReviewPage } from "@/widgets/review-page";
-import { ReviewPageSkeleton } from "@/widgets/review-page";
-import { ErrorBoundary } from "@/shared/ui/error-boundary";
+import { ReviewPageClient } from "@/widgets/review-page";
 
 export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
@@ -44,13 +41,7 @@ const ReviewRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	if (!hasLocale(lang)) notFound();
 
-	return (
-		<ErrorBoundary fallback={<ReviewPageSkeleton />}>
-			<Suspense fallback={<ReviewPageSkeleton />}>
-				<ReviewPage />
-			</Suspense>
-		</ErrorBoundary>
-	);
+	return <ReviewPageClient />;
 };
 
 export default ReviewRoutePage;
