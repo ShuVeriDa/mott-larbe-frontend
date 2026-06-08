@@ -21,7 +21,7 @@ export const PhrasebookCategorySidebar = () => {
 	);
 
 	return (
-		<nav aria-label={t("phrasebook.categories.title")} className="w-[200px] shrink-0 bg-surf border-[0.5px] border-bd-1 rounded-card overflow-hidden flex flex-col">
+		<nav aria-label={t("phrasebook.categories.title")} className="w-[200px] shrink-0 bg-surf border-[0.5px] border-bd-1 rounded-card overflow-hidden flex flex-col h-full">
 			<h2 className="px-3 py-2.5 border-b border-bd-1 text-[10px] font-semibold text-t-3 uppercase tracking-[0.6px]">
 				{t("phrasebook.categories.title")}
 			</h2>

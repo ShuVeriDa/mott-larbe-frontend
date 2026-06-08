@@ -66,7 +66,7 @@ export const PhrasebookPage = () => {
 					{/* Desktop + mobile: body layout */}
 					<div className="flex gap-3.5 flex-1 min-h-0 max-md:flex-col max-md:gap-0 max-md:flex-1">
 						{/* Desktop: category sidebar */}
-						<div className="max-md:hidden">
+						<div className="max-md:hidden self-stretch flex flex-col">
 							<PhrasebookCategorySidebar />
 						</div>
 
