@@ -217,6 +217,18 @@ export const WordPopup = () => {
 	const anchor = useWordLookupStore(s => s.anchor);
 	const closePopup = useWordLookupStore(s => s.closePopup);
 	const openInPanel = useWordLookupStore(s => s.openInPanel);
+	const openInSheetExpanded = useWordLookupStore(s => s.openInSheetExpanded);
+
+	const handleOpenInPanel = (t: typeof token) => {
+		if (!t) return;
+		const isMobile = typeof window !== "undefined" && window.innerWidth <= 767;
+		if (isMobile) {
+			closePopup();
+			openInSheetExpanded(t, contextSentence);
+		} else {
+			openInPanel(t, contextSentence);
+		}
+	};
 	const { data: settings } = useSettings();
 	const showGrammar = settings?.preferences.showGrammar ?? true;
 	const showExamples = settings?.preferences.showExamples ?? true;
@@ -326,7 +338,7 @@ export const WordPopup = () => {
 										lookup={data}
 										showGrammar={showGrammar}
 										showExamples={showExamples}
-										onOpenInPanel={() => openInPanel(token)}
+										onOpenInPanel={() => handleOpenInPanel(token)}
 										onSuggestOpen={() =>
 											handleSuggestOpen(
 												token.normalized,

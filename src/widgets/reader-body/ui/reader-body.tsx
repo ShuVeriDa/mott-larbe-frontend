@@ -6,7 +6,7 @@ import {
 	usePagePhrases,
 	type TextPageResponse,
 } from "@/entities/text";
-import { PhraseTranslatePopup } from "@/features/ai-phrase-translate";
+import { PhraseTranslatePopup, PhraseTranslateSheet } from "@/features/ai-phrase-translate";
 import { usePhraseMap } from "@/features/phrase-lookup";
 import {
 	FONT_FAMILY_CLASS,
@@ -56,8 +56,9 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 	const { lang } = useI18n();
 	const { data: settings } = useSettings();
 	const popupMode = settings?.preferences.popupMode ?? "POPUP";
+	const mobileDisplayMode = settings?.preferences.mobileDisplayMode ?? "SHEET";
 	const showProgress = settings?.preferences.showProgress ?? true;
-	const onSelectToken = useSelectToken(data.page.contentRaw, popupMode);
+	const onSelectToken = useSelectToken(data.page.contentRaw, popupMode, mobileDisplayMode);
 	const activeToken = useWordLookupStore(s => s.activeToken);
 
 	const [phraseTranslate, setPhraseTranslate] = useState<{
@@ -65,6 +66,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 		x: number;
 		y: number;
 		contextSentence?: string;
+		useSheet: boolean;
 	} | null>(null);
 
 	// Phrase lookup
@@ -132,7 +134,9 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 		const contextSentence = idx !== -1
 			? extractSentence(raw, idx, idx + phrase.length)
 			: undefined;
-		setPhraseTranslate({ phrase, x: selection.x, y: selection.y, contextSentence });
+		const isMobile = typeof window !== "undefined" && window.innerWidth <= 767;
+		const useSheet = isMobile && mobileDisplayMode === "SHEET";
+		setPhraseTranslate({ phrase, x: selection.x, y: selection.y, contextSentence, useSheet });
 		handleDismiss();
 	};
 
@@ -230,7 +234,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 				)}
 			{mounted && (
 				<AnimatePresence>
-					{phraseTranslate && (
+					{phraseTranslate && !phraseTranslate.useSheet && (
 						<PhraseTranslatePopup
 							phrase={phraseTranslate.phrase}
 							x={phraseTranslate.x}
@@ -241,6 +245,15 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 						/>
 					)}
 				</AnimatePresence>
+			)}
+			{mounted && (
+				<PhraseTranslateSheet
+					open={!!phraseTranslate?.useSheet}
+					phrase={phraseTranslate?.phrase ?? ""}
+					contextSentence={phraseTranslate?.contextSentence}
+					lang={lang}
+					onClose={handleClosePhraseTranslate}
+				/>
 			)}
 			{mounted && (
 				<AnimatePresence>

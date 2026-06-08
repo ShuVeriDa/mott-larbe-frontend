@@ -88,15 +88,6 @@ export const useReaderPage = (
 		router.push(`/${lang}/${routeBase}/${textId}/p/${page}`);
 	};
 
-	useReaderKeyboard(pageNumber, totalPages, {
-		onNavigate: handleNavigate,
-		onToggleNotes: handleToggleNotes,
-		onToggleToc: handleToggleToc,
-		onToggleBookmarks: handleToggleBookmarks,
-		onToggleFocusMode: focusMode.toggle,
-		onToggleAiHistory: handleToggleAiHistory,
-	});
-
 	const handleTogglePanel = (panel: "settings" | "notes" | "toc" | "bookmarks" | "aiHistory") => {
 		setRailPanel(prev => {
 			if (prev === panel) return null;
@@ -112,6 +103,15 @@ export const useReaderPage = (
 	const handleToggleBookmarks = () => handleTogglePanel("bookmarks");
 	const handleToggleAiHistory = () => handleTogglePanel("aiHistory");
 	const handleCloseRail = () => setRailPanel(null);
+
+	useReaderKeyboard(pageNumber, totalPages, {
+		onNavigate: handleNavigate,
+		onToggleNotes: handleToggleNotes,
+		onToggleToc: handleToggleToc,
+		onToggleBookmarks: handleToggleBookmarks,
+		onToggleFocusMode: focusMode.toggle,
+		onToggleAiHistory: handleToggleAiHistory,
+	});
 
 	const settingsOpen = railPanel === "settings";
 	const notesOpen = railPanel === "notes";

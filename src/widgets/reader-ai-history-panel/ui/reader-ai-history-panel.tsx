@@ -3,17 +3,15 @@
 import { useAiSessionStore } from "@/features/ai-word-lookup";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { useSwipe } from "@/shared/lib/swipe/use-swipe";
 import { Button } from "@/shared/ui/button";
 import {
-	READER_MOBILE_SHEET_OVERLAY_CLASSES,
-	ReaderMobileSheetHeader,
-} from "@/shared/ui/reader-mobile-sheet-header";
-import { SheetDragHandle } from "@/shared/ui/sheet-drag-handle";
+	Drawer,
+	DrawerContent,
+	DrawerTitle,
+} from "@/shared/ui/drawer";
 import { Typography } from "@/shared/ui/typography";
 import { MessageSquare, Sparkles, X } from "lucide-react";
-import { type MouseEvent, useEffect } from "react";
-import { createPortal } from "react-dom";
+import { useEffect } from "react";
 
 export interface ReaderAiHistoryPanelProps {
 	open: boolean;
@@ -142,50 +140,16 @@ export const ReaderAiHistorySheet = ({
 	onClose,
 }: ReaderAiHistoryPanelProps) => {
 	const { t } = useI18n();
+	const handleOpenChange = (isOpen: boolean) => { if (!isOpen) onClose(); };
 
-	useEffect(() => {
-		if (!open) return;
-		const handle = (e: KeyboardEvent) => {
-			if (e.key === "Escape") onClose();
-		};
-		document.addEventListener("keydown", handle);
-		return () => document.removeEventListener("keydown", handle);
-	}, [open, onClose]);
-
-	const handleBackdropClick = () => onClose();
-	const handleSheetClick = (e: MouseEvent<HTMLDivElement>) =>
-		e.stopPropagation();
-	const swipe = useSwipe({ onSwipeDown: onClose });
-
-	if (!open || typeof window === "undefined") return null;
-
-	return createPortal(
-		<div
-			role="presentation"
-			className={READER_MOBILE_SHEET_OVERLAY_CLASSES}
-			onClick={handleBackdropClick}
-		>
-			<div
-				role="dialog"
-				aria-modal="true"
-				aria-label={t("aiTranslation.history.title")}
-				className="flex max-h-[90dvh] min-h-0 w-full flex-col rounded-t-2xl border-t border-bd-1 bg-surf"
-				onClick={handleSheetClick}
-				onPointerDown={swipe.onPointerDown}
-				onPointerUp={swipe.onPointerUp}
-				onPointerCancel={swipe.onPointerCancel}
-			>
-				<SheetDragHandle />
-				<ReaderMobileSheetHeader
-					title={t("aiTranslation.history.title")}
-					closeAriaLabel={t("reader.panel.close")}
-					onClose={onClose}
-				/>
+	return (
+		<Drawer open={open} onOpenChange={handleOpenChange}>
+			<DrawerContent className="max-h-[90dvh]" aria-describedby={undefined}>
+				<DrawerTitle className="sr-only">{t("aiTranslation.history.title")}</DrawerTitle>
 				<div className="min-h-0 flex-1 overflow-y-auto p-4">
 					<AiHistoryPanelBody />
 				</div>
-			</div>
-		</div>,
-		document.body,
+			</DrawerContent>
+		</Drawer>
 	);
 };

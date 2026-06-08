@@ -2,6 +2,7 @@ export type ThemePreference = "LIGHT" | "DARK" | "SYSTEM";
 export type UiLanguage = "RU" | "EN";
 export type TranslationLanguage = "RU" | "EN" | "AR" | "DE" | "FR" | "TR";
 export type PopupMode = "POPUP" | "SIDEBAR" | "BOTH";
+export type MobileDisplayMode = "POPUP" | "SHEET";
 
 export type ReaderFontFamilyPref = "sans" | "golos" | "serif" | "lora" | "merriweather" | "pt-serif" | "source-serif" | "mono";
 export type ReaderFontSizePref = number;
@@ -18,6 +19,7 @@ export interface UserPreferences {
 	uiLanguage: UiLanguage;
 	fontSize: number;
 	popupMode: PopupMode;
+	mobileDisplayMode: MobileDisplayMode;
 	highlightKnown: boolean;
 	showProgress: boolean;
 	autoAddOnClick: boolean;
@@ -71,6 +73,7 @@ export interface UpdatePreferencesDto {
 	uiLanguage?: UiLanguage;
 	fontSize?: number;
 	popupMode?: PopupMode;
+	mobileDisplayMode?: MobileDisplayMode;
 	highlightKnown?: boolean;
 	showProgress?: boolean;
 	autoAddOnClick?: boolean;

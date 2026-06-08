@@ -3,6 +3,7 @@ export { settingsKeys } from "./settings-keys";
 export type {
 	AllSettings,
 	ExportFormat,
+	MobileDisplayMode,
 	PopupMode,
 	ThemePreference,
 	TranslationLanguage,

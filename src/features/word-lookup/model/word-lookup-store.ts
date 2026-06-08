@@ -21,10 +21,12 @@ export interface WordLookupState {
 	anchor: PopupAnchor | null;
 	panelOpen: boolean;
 	panelPinned: boolean;
+	sheetExpanded: boolean;
 	openInPopup: (token: TextToken, anchor: PopupAnchor, contextSentence?: string) => void;
 	openPhraseInPopup: (phrase: PagePhraseOccurrence, anchor: PopupAnchor) => void;
 	openInPanel: (token: TextToken | null, contextSentence?: string) => void;
 	openInSheet: (token: TextToken, contextSentence?: string) => void;
+	openInSheetExpanded: (token: TextToken, contextSentence?: string) => void;
 	/** Narrow layout: word tray open with no token (empty hint UI). */
 	openEmptyWordSheet: () => void;
 	togglePanel: () => void;
@@ -42,6 +44,7 @@ export const useWordLookupStore = create<WordLookupState>((set) => ({
 	anchor: null,
 	panelOpen: false,
 	panelPinned: false,
+	sheetExpanded: false,
 	openInPopup: (token, anchor, contextSentence) =>
 		set({
 			activeToken: token,
@@ -73,6 +76,15 @@ export const useWordLookupStore = create<WordLookupState>((set) => ({
 			contextSentence,
 			surface: "sheet",
 			anchor: null,
+			sheetExpanded: false,
+		}),
+	openInSheetExpanded: (token, contextSentence) =>
+		set({
+			activeToken: token,
+			contextSentence,
+			surface: "sheet",
+			anchor: null,
+			sheetExpanded: true,
 		}),
 	openEmptyWordSheet: () =>
 		set({
@@ -96,7 +108,7 @@ export const useWordLookupStore = create<WordLookupState>((set) => ({
 	closeSheet: () =>
 		set((state) =>
 			state.surface === "sheet"
-				? { surface: null, activeToken: null, contextSentence: undefined }
+				? { surface: null, activeToken: null, contextSentence: undefined, sheetExpanded: false }
 				: state,
 		),
 	clear: () =>
@@ -106,5 +118,6 @@ export const useWordLookupStore = create<WordLookupState>((set) => ({
 			contextSentence: undefined,
 			surface: null,
 			anchor: null,
+			sheetExpanded: false,
 		}),
 }));

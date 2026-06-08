@@ -37,7 +37,7 @@ export const ArticleToken = ({ token, displayText, active, onSelect, ref, childr
 			onClick={handleClick}
 			onKeyDown={handleKeyDown}
 			className={cn(
-				"cursor-pointer rounded px-px transition-colors duration-100",
+				"cursor-pointer rounded px-px transition-colors duration-100 select-text",
 				"hover:bg-acc-bg hover:text-acc-t",
 				tokenStatusClass(token.userStatus),
 				active && "bg-acc-bg text-acc-t",

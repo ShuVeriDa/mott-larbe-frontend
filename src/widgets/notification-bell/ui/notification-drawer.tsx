@@ -7,7 +7,7 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "@/shared/ui/drawer";
-import type { FocusEvent, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { NotificationList } from "./notification-list";
 
 interface NotificationDrawerProps {
@@ -21,7 +21,7 @@ interface NotificationDrawerProps {
 	onReadAll: () => void;
 }
 
-const handleOpenAutoFocus = (e: FocusEvent) => {
+const handleOpenAutoFocus = (e: Event) => {
 	// Move focus into the drawer so aria-hidden on the trigger's ancestor
 	// (BottomNav) doesn't trap focus outside the dialog.
 	e.preventDefault();

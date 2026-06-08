@@ -33,19 +33,26 @@ export const useTextSelection = (containerRef: React.RefObject<HTMLElement | nul
 			if (result) setSelection(result);
 		};
 
-		// Small delay on touchend so the browser has time to commit the selection
-		const handleTouchEnd = () => {
-			setTimeout(() => {
-				const result = readSelection(containerRef);
-				if (result) setSelection(result);
-			}, 50);
+		// selectionchange fires reliably on mobile after the browser commits the selection,
+		// unlike touchend which fires before the selection is finalised on iOS/Android.
+		let touchActive = false;
+		const handleTouchStart = () => { touchActive = true; };
+		const handleTouchEnd = () => { touchActive = false; };
+		const handleSelectionChange = () => {
+			if (!touchActive) return;
+			const result = readSelection(containerRef);
+			if (result) setSelection(result);
 		};
 
 		document.addEventListener("mouseup", handlePointerUp);
+		document.addEventListener("touchstart", handleTouchStart, { passive: true });
 		document.addEventListener("touchend", handleTouchEnd);
+		document.addEventListener("selectionchange", handleSelectionChange);
 		return () => {
 			document.removeEventListener("mouseup", handlePointerUp);
+			document.removeEventListener("touchstart", handleTouchStart);
 			document.removeEventListener("touchend", handleTouchEnd);
+			document.removeEventListener("selectionchange", handleSelectionChange);
 		};
 	}, [containerRef]);
 

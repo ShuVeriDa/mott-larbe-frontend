@@ -51,6 +51,7 @@ export const AiWordPopupBody = ({
 	const { showNudge, dismiss } = useAiKeyNudge();
 	const { targetLanguage } = useTranslationLanguageStore();
 	const openInPanel = useWordLookupStore(s => s.openInPanel);
+	const openInSheetExpanded = useWordLookupStore(s => s.openInSheetExpanded);
 	const activeToken = useWordLookupStore(s => s.activeToken);
 
 	const hasKey = keyStatus?.hasKey ?? false;
@@ -96,7 +97,13 @@ export const AiWordPopupBody = ({
 	};
 	const handleGlossToggle = () => setGlossOpen(prev => !prev);
 	const handleOpenInPanel = () => {
-		if (activeToken) openInPanel(activeToken, contextSentence);
+		if (!activeToken) return;
+		const isMobile = typeof window !== "undefined" && window.innerWidth <= 767;
+		if (isMobile) {
+			openInSheetExpanded(activeToken, contextSentence);
+		} else {
+			openInPanel(activeToken, contextSentence);
+		}
 	};
 
 	if (!hasKey) {

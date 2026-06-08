@@ -20,6 +20,7 @@ export interface LearnStatusRowProps {
 	tokenId?: string;
 	textId?: string;
 	current: LearningLevel | null;
+	compact?: boolean;
 }
 
 export const LearnStatusRow = ({
@@ -27,6 +28,7 @@ export const LearnStatusRow = ({
 	tokenId,
 	textId,
 	current,
+	compact = false,
 }: LearnStatusRowProps) => {
 	const { t } = useI18n();
 	const { mutate, isPending, variables } = useUpdateLearnStatus();
@@ -52,10 +54,11 @@ export const LearnStatusRow = ({
 						onClick={handleClick}
 						title={t(`reader.learnStatus.${level}`)}
 						className={cn(
-							"flex h-[30px] flex-1 items-center justify-center rounded-base",
-							"border-[0.5px] border-bd-1 bg-surf-2 text-[11px] font-semibold",
+							"flex flex-1 items-center justify-center rounded-base",
+							"border-[0.5px] border-bd-1 bg-surf-2 font-semibold",
 							"transition-all duration-150",
 							"hover:border-bd-2 hover:text-t-1 disabled:opacity-60",
+							compact ? "h-[26px] text-[11px]" : "h-[30px] text-[11px]",
 							isActive ? ACTIVE_CLASS[level] : "text-t-2",
 						)}
 					>

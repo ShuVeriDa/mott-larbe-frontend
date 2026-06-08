@@ -13,6 +13,7 @@ import {
 import { EntrySuggestModal } from "@/features/entry-suggest";
 import { LearnStatusRow } from "@/features/learn-status";
 import { useWordLookupStore } from "@/features/word-lookup";
+import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Pencil } from "lucide-react";
@@ -26,6 +27,7 @@ import { WordPanelLoader } from "./word-panel-loader";
 export interface WordPanelContentProps {
 	token: TextToken;
 	textId: string;
+	compact?: boolean;
 }
 
 const Section = ({
@@ -208,12 +210,14 @@ const PanelBody = ({
 	textId,
 	showGrammar,
 	showExamples,
+	compact = false,
 }: {
 	token: TextToken;
 	lookup: WordLookupResponse;
 	textId: string;
 	showGrammar: boolean;
 	showExamples: boolean;
+	compact?: boolean;
 }) => {
 	const { t } = useI18n();
 	const [suggestOpen, setSuggestOpen] = useState(false);
@@ -279,12 +283,13 @@ const PanelBody = ({
 
 			{lookup.lemmaId ? (
 				<Section title={t("reader.panel.sections.level")}>
-					<div className="space-y-2.5">
+					<div className={compact ? "space-y-2" : "space-y-2.5"}>
 						<LearnStatusRow
 							lemmaId={lookup.lemmaId}
 							tokenId={token.id}
 							textId={textId}
 							current={lookup.userStatus}
+							compact={compact}
 						/>
 						<AddToDictionaryButton
 							tokenId={token.id}
@@ -294,11 +299,15 @@ const PanelBody = ({
 							dictionaryEntryId={lookup.dictionaryEntryId}
 							currentFolderId={lookup.dictionaryFolder?.id ?? null}
 							currentFolderName={lookup.dictionaryFolder?.name ?? null}
+							className={compact ? "h-8 text-[12px]" : undefined}
 						/>
 						<Button
 							onClick={() => setSuggestOpen(true)}
 							variant="ghost"
-							className="flex w-full items-center justify-center gap-1.5 text-[12px] text-t-3"
+							className={cn(
+								"flex w-full items-center justify-center gap-1.5 text-t-3",
+								compact ? "h-7 text-[11.5px]" : "text-[12px]",
+							)}
 							title={t("suggest.button")}
 						>
 							<Pencil className="size-3" strokeWidth={1.5} />
@@ -318,7 +327,7 @@ const PanelBody = ({
 	);
 };
 
-export const WordPanelContent = ({ token, textId }: WordPanelContentProps) => {
+export const WordPanelContent = ({ token, textId, compact = false }: WordPanelContentProps) => {
 	const { data, isLoading, isError } = useWordLookup(token.id);
 	const { t, lang } = useI18n();
 	const contextSentence = useWordLookupStore(s => s.contextSentence);
@@ -345,5 +354,5 @@ export const WordPanelContent = ({ token, textId }: WordPanelContentProps) => {
 		);
 	}
 
-	return <PanelBody token={token} lookup={data} textId={textId} showGrammar={showGrammar} showExamples={showExamples} />;
+	return <PanelBody token={token} lookup={data} textId={textId} showGrammar={showGrammar} showExamples={showExamples} compact={compact} />;
 };

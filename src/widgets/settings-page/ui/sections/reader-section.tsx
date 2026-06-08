@@ -2,6 +2,7 @@
 
 import {
 	useUpdatePreferences,
+	type MobileDisplayMode,
 	type PopupMode,
 	type UserPreferences,
 } from "@/entities/settings";
@@ -58,6 +59,25 @@ const POPUP_OPTIONS: PopupOption[] = [
 	},
 ];
 
+interface MobileDisplayOption {
+	value: MobileDisplayMode;
+	labelKey: string;
+	descKey: string;
+}
+
+const MOBILE_DISPLAY_OPTIONS: MobileDisplayOption[] = [
+	{
+		value: "SHEET",
+		labelKey: "settings.reader.mobileSheet",
+		descKey: "settings.reader.mobileSheetDesc",
+	},
+	{
+		value: "POPUP",
+		labelKey: "settings.reader.mobilePopup",
+		descKey: "settings.reader.mobilePopupDesc",
+	},
+];
+
 export const ReaderSection = ({ preferences }: ReaderSectionProps) => {
 	const { t } = useI18n();
 	const { mutateAsync } = useUpdatePreferences();
@@ -70,6 +90,13 @@ export const ReaderSection = ({ preferences }: ReaderSectionProps) => {
 	const updatePopup = async (mode: PopupMode) => {
 		try {
 			await mutateAsync({ popupMode: mode });
+			success(t("settings.toasts.saved"));
+		} catch {}
+	};
+
+	const updateMobileDisplay = async (mode: MobileDisplayMode) => {
+		try {
+			await mutateAsync({ mobileDisplayMode: mode });
 			success(t("settings.toasts.saved"));
 		} catch {}
 	};
@@ -180,6 +207,57 @@ export const ReaderSection = ({ preferences }: ReaderSectionProps) => {
 						const handleClick: NonNullable<
 							ComponentProps<"button">["onClick"]
 						> = () => updatePopup(opt.value);
+						return (
+							<Button
+								key={opt.value}
+								onClick={handleClick}
+								aria-pressed={selected}
+								variant="bare"
+								className={cn(
+									"flex items-center rounded-none min-h-10 gap-2.5 border-b-[0.5px] border-bd-1 px-4 py-2.5 text-left transition-colors last:border-b-0",
+									"hover:bg-surf-2",
+								)}
+							>
+								<Typography
+									tag="span"
+									className={cn(
+										"flex size-4 shrink-0 items-center justify-center rounded-full border-[1.5px]",
+										selected ? "border-acc" : "border-bd-2",
+									)}
+								>
+									{selected ? (
+										<Typography
+											tag="span"
+											className="block size-2 rounded-full bg-acc"
+										/>
+									) : null}
+								</Typography>
+								<Typography tag="span" className="flex-1">
+									<Typography
+										tag="span"
+										className="block text-[12.5px] font-medium text-t-1"
+									>
+										{t(opt.labelKey)}
+									</Typography>
+									<Typography
+										tag="span"
+										className="block text-[11.5px] text-t-3"
+									>
+										{t(opt.descKey)}
+									</Typography>
+								</Typography>
+							</Button>
+						);
+					})}
+				</div>
+			</SettingCard>
+
+			<SettingCard title={t("settings.reader.mobileDisplay")} noBody>
+				<div className="flex flex-col">
+					{MOBILE_DISPLAY_OPTIONS.map(opt => {
+						const selected = preferences.mobileDisplayMode === opt.value;
+						const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
+							updateMobileDisplay(opt.value);
 						return (
 							<Button
 								key={opt.value}

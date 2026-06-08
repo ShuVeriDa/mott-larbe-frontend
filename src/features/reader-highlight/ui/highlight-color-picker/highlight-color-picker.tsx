@@ -46,13 +46,18 @@ export const HighlightColorPicker = ({
 	const [showPalette, setShowPalette] = useState(false);
 
 	useEffect(() => {
-		const handleMouseDown = (e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) {
+		const handleOutside = (e: MouseEvent | TouchEvent) => {
+			const target = e instanceof TouchEvent ? e.touches[0]?.target : (e as MouseEvent).target;
+			if (ref.current && !ref.current.contains(target as Node)) {
 				onDismiss();
 			}
 		};
-		document.addEventListener("mousedown", handleMouseDown);
-		return () => document.removeEventListener("mousedown", handleMouseDown);
+		document.addEventListener("mousedown", handleOutside as EventListener);
+		document.addEventListener("touchstart", handleOutside as EventListener, { passive: true });
+		return () => {
+			document.removeEventListener("mousedown", handleOutside as EventListener);
+			document.removeEventListener("touchstart", handleOutside as EventListener);
+		};
 	}, [onDismiss]);
 
 	const POPUP_HALF_W = 130;

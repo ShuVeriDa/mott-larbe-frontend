@@ -2,14 +2,11 @@
 
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { useSwipe } from "@/shared/lib/swipe/use-swipe";
 import {
-	READER_MOBILE_SHEET_OVERLAY_CLASSES,
-	ReaderMobileSheetHeader,
-} from "@/shared/ui/reader-mobile-sheet-header";
-import { SheetDragHandle } from "@/shared/ui/sheet-drag-handle";
-import type { MouseEvent } from "react";
-import { createPortal } from "react-dom";
+	Drawer,
+	DrawerContent,
+	DrawerTitle,
+} from "@/shared/ui/drawer";
 import { useReaderSettingsEscape } from "../model/use-reader-settings-escape";
 import { ReaderSettingsBody } from "./reader-settings-body";
 import { ReaderSettingsChromeHeader } from "./reader-settings-chrome-header";
@@ -47,7 +44,7 @@ export const ReaderSettingsAside = ({
 	);
 };
 
-/** Small screens — bottom sheet (+ backdrop); hidden from `md` up via CSS where aside is shown. */
+/** Small screens — bottom drawer; hidden from `md` up via CSS where aside is shown. */
 export const ReaderSettingsSheet = ({
 	open,
 	onClose,
@@ -55,43 +52,16 @@ export const ReaderSettingsSheet = ({
 	pageNumber,
 }: ReaderSettingsSheetProps) => {
 	const { t } = useI18n();
-	useReaderSettingsEscape(open, onClose);
+	const handleOpenChange = (isOpen: boolean) => { if (!isOpen) onClose(); };
 
-	const handleBackdropClick = () => onClose();
-	const handleSheetClick = (e: MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-	};
-	const swipe = useSwipe({ onSwipeDown: onClose });
-
-	if (!open || typeof window === "undefined") return null;
-
-	return createPortal(
-		<div
-			role="presentation"
-			className={READER_MOBILE_SHEET_OVERLAY_CLASSES}
-			onClick={handleBackdropClick}
-		>
-			<div
-				role="dialog"
-				aria-modal="true"
-				aria-label={t("reader.settings.title")}
-				className="flex max-h-[90dvh] min-h-0 w-full flex-col rounded-t-2xl border-t border-bd-1 bg-surf"
-				onClick={handleSheetClick}
-				onPointerDown={swipe.onPointerDown}
-				onPointerUp={swipe.onPointerUp}
-				onPointerCancel={swipe.onPointerCancel}
-			>
-				<SheetDragHandle />
-				<ReaderMobileSheetHeader
-					title={t("reader.settings.title")}
-					closeAriaLabel={t("reader.panel.close")}
-					onClose={onClose}
-				/>
+	return (
+		<Drawer open={open} onOpenChange={handleOpenChange}>
+			<DrawerContent className="max-h-[90dvh]" aria-describedby={undefined}>
+				<DrawerTitle className="sr-only">{t("reader.settings.title")}</DrawerTitle>
 				<div className="min-h-0 flex-1 overflow-y-auto p-4">
 					<ReaderSettingsBody textId={textId} pageNumber={pageNumber} />
 				</div>
-			</div>
-		</div>,
-		document.body,
+			</DrawerContent>
+		</Drawer>
 	);
 };

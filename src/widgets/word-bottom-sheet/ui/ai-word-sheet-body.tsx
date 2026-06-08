@@ -23,7 +23,6 @@ import {
 	Sparkles,
 	ThumbsDown,
 	ThumbsUp,
-	X,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -33,7 +32,6 @@ interface AiWordSheetBodyProps {
 	normalized: string;
 	contextSentence?: string;
 	lang: string;
-	onClose: () => void;
 }
 
 export const AiWordSheetBody = ({
@@ -41,7 +39,6 @@ export const AiWordSheetBody = ({
 	normalized,
 	contextSentence,
 	lang,
-	onClose,
 }: AiWordSheetBodyProps) => {
 	const { t } = useI18n();
 	const { state, voted, translate, vote } = useAiWordLookup();
@@ -84,7 +81,7 @@ export const AiWordSheetBody = ({
 	if (!hasKey) {
 		return (
 			<div className="flex min-h-0 flex-1 flex-col">
-				<div className="flex min-h-0 flex-1 flex-col gap-3 px-4 py-5">
+				<div className="flex min-h-0 flex-1 flex-col gap-3 px-4 py-5 pb-[max(20px,env(safe-area-inset-bottom))]">
 					<Typography tag="p" className="text-[14px] font-medium text-t-1">
 						{t("aiTranslation.popup.noKeyTitle")}
 					</Typography>
@@ -110,15 +107,6 @@ export const AiWordSheetBody = ({
 						<ExternalLink className="size-3.5" strokeWidth={1.5} />
 						{t("aiTranslation.popup.getKeyLink")}
 					</a>
-				</div>
-				<div className="flex shrink-0 gap-2 border-t border-bd-1 px-4 pt-3 pb-[max(16px,env(safe-area-inset-bottom))]">
-					<Button
-						onClick={onClose}
-						className="inline-flex h-11 flex-1 items-center justify-center gap-1.5 rounded-[10px] border border-bd-2 bg-surf-2 text-[14px] font-semibold text-t-2"
-					>
-						<X className="size-4" strokeWidth={1.6} />
-						{t("reader.sheet.close")}
-					</Button>
 				</div>
 			</div>
 		);
@@ -174,7 +162,7 @@ export const AiWordSheetBody = ({
 				<div className="border-b border-bd-1 px-4 pb-3.5 pt-4">
 					<div className="mb-1.5 flex flex-wrap items-center justify-between gap-2">
 						<div className="flex flex-wrap items-center gap-2">
-							<span className="font-display text-[22px] font-semibold tracking-[-0.3px] text-t-1">
+							<span className="font-display text-[20px] font-semibold tracking-[-0.3px] text-t-1">
 								{word}
 							</span>
 							<span className="flex items-center gap-1 rounded-[4px] border border-pur/30 bg-pur-bg px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.5px] text-pur-t">
@@ -279,13 +267,13 @@ export const AiWordSheetBody = ({
 						onClick={handleThumbsUp}
 						disabled={Boolean(voted)}
 						aria-label={t("aiTranslation.admin.thumbsUp")}
-						className={`flex h-9 items-center gap-1.5 rounded-base border px-3 text-[13px] transition-colors ${
+						className={`flex h-8 items-center gap-1.5 rounded-base border px-2.5 text-[12px] transition-colors ${
 							voted === "up"
 								? "border-grn/40 bg-grn/10 text-grn"
 								: "border-bd-2 bg-surf-2 text-t-3 hover:text-t-1"
 						}`}
 					>
-						<ThumbsUp className="size-3.5" strokeWidth={1.5} />
+						<ThumbsUp className="size-3" strokeWidth={1.5} />
 						{result.thumbsUp + (voted === "up" ? 1 : 0)}
 					</Button>
 					<Button
@@ -293,13 +281,13 @@ export const AiWordSheetBody = ({
 						onClick={handleThumbsDown}
 						disabled={Boolean(voted)}
 						aria-label={t("aiTranslation.admin.thumbsDown")}
-						className={`flex h-9 items-center gap-1.5 rounded-base border px-3 text-[13px] transition-colors ${
+						className={`flex h-8 items-center gap-1.5 rounded-base border px-2.5 text-[12px] transition-colors ${
 							voted === "down"
 								? "border-red/40 bg-red/10 text-red"
 								: "border-bd-2 bg-surf-2 text-t-3 hover:text-t-1"
 						}`}
 					>
-						<ThumbsDown className="size-3.5" strokeWidth={1.5} />
+						<ThumbsDown className="size-3" strokeWidth={1.5} />
 						{result.thumbsDown + (voted === "down" ? 1 : 0)}
 					</Button>
 				</div>
@@ -311,15 +299,7 @@ export const AiWordSheetBody = ({
 				/>
 			</div>
 
-			<div className="flex shrink-0 gap-2 border-t border-bd-1 px-4 pt-3 pb-[max(16px,env(safe-area-inset-bottom))]">
-				<Button
-					onClick={onClose}
-					className="inline-flex h-11 flex-1 items-center justify-center gap-1.5 rounded-[10px] border border-bd-2 bg-surf-2 text-[14px] font-semibold text-t-2"
-				>
-					<X className="size-4" strokeWidth={1.6} />
-					{t("reader.sheet.close")}
-				</Button>
-			</div>
-		</div>
+		<div className="shrink-0 pb-[max(16px,env(safe-area-inset-bottom))]" />
+	</div>
 	);
 };

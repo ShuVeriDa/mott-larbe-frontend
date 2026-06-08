@@ -1,7 +1,7 @@
 "use client";
 import { type MouseEvent } from 'react';
 import type { TextToken } from "@/entities/text";
-import type { PopupMode } from "@/entities/settings";
+import type { MobileDisplayMode, PopupMode } from "@/entities/settings";
 import { extractSentence } from "@/shared/lib/extract-sentence";
 import { useWordLookupStore } from "./word-lookup-store";
 
@@ -11,7 +11,11 @@ import { useWordLookupStore } from "./word-lookup-store";
  */
 export const SHEET_LAYOUT_MAX_WIDTH_PX = 767;
 
-export const useSelectToken = (contentRaw: string, popupMode: PopupMode = "POPUP") => {
+export const useSelectToken = (
+	contentRaw: string,
+	popupMode: PopupMode = "POPUP",
+	mobileDisplayMode: MobileDisplayMode = "SHEET",
+) => {
 	const openInPopup = useWordLookupStore((s) => s.openInPopup);
 	const openInPanel = useWordLookupStore((s) => s.openInPanel);
 	const openInSheet = useWordLookupStore((s) => s.openInSheet);
@@ -20,11 +24,11 @@ export const useSelectToken = (contentRaw: string, popupMode: PopupMode = "POPUP
 	return (token: TextToken, event: MouseEvent<HTMLSpanElement>) => {
 		const contextSentence = extractSentence(contentRaw, token.startOffset, token.endOffset);
 
-		const useSheetLayout =
+		const isMobile =
 			typeof window !== "undefined" &&
 			window.innerWidth <= SHEET_LAYOUT_MAX_WIDTH_PX;
 
-		if (useSheetLayout) {
+		if (isMobile && mobileDisplayMode === "SHEET") {
 			openInSheet(token, contextSentence);
 			return;
 		}

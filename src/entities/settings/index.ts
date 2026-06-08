@@ -2,6 +2,7 @@ export { settingsApi, settingsKeys } from "./api";
 export type {
 	AllSettings,
 	ExportFormat,
+	MobileDisplayMode,
 	PopupMode,
 	ThemePreference,
 	TranslationLanguage,
