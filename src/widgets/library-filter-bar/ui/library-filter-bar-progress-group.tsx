@@ -4,12 +4,10 @@ import type { LibraryProgressStatus } from "@/entities/library-text";
 import { Typography } from "@/shared/ui/typography";
 import { useI18n } from "@/shared/lib/i18n";
 import {
-	LIBRARY_FILTER_ACC_PILL_ACTIVE,
-	LIBRARY_FILTER_ACC_PILL_IDLE,
 	LIBRARY_FILTER_BAR_PROGRESS_STATUSES,
 	libraryFilterProgressLabelKey,
 } from "../lib/library-filter-bar-config";
-import { LibraryFilterPill } from "./library-filter-pill";
+import { FilterGroup } from "@/shared/ui/filter-group";
 
 export interface LibraryFilterBarProgressGroupProps {
 	status: LibraryProgressStatus | "all";
@@ -22,7 +20,13 @@ export const LibraryFilterBarProgressGroup = ({
 }: LibraryFilterBarProgressGroupProps) => {
 	const { t } = useI18n();
 
-	const handleAllClick = () => onStatusChange("all");
+	const options: { value: LibraryProgressStatus | "all"; label: string }[] = [
+		{ value: "all", label: t("library.all") },
+		...LIBRARY_FILTER_BAR_PROGRESS_STATUSES.map(s => ({
+			value: s as LibraryProgressStatus | "all",
+			label: t(libraryFilterProgressLabelKey(s)),
+		})),
+	];
 
 	return (
 		<>
@@ -32,38 +36,11 @@ export const LibraryFilterBarProgressGroup = ({
 			>
 				{t("library.filterProgress")}
 			</Typography>
-
-			<LibraryFilterPill
-				active={status === "all"}
-				onClick={handleAllClick}
-				title={t("library.all")}
-				className={
-					status === "all"
-						? LIBRARY_FILTER_ACC_PILL_ACTIVE
-						: LIBRARY_FILTER_ACC_PILL_IDLE
-				}
-			>
-				{t("library.all")}
-			</LibraryFilterPill>
-
-			{LIBRARY_FILTER_BAR_PROGRESS_STATUSES.map(s => {
-				const handleClick = () => onStatusChange(s);
-				return (
-					<LibraryFilterPill
-						key={s}
-						active={status === s}
-						onClick={handleClick}
-						title={t(libraryFilterProgressLabelKey(s))}
-						className={
-							status === s
-								? LIBRARY_FILTER_ACC_PILL_ACTIVE
-								: LIBRARY_FILTER_ACC_PILL_IDLE
-						}
-					>
-						{t(libraryFilterProgressLabelKey(s))}
-					</LibraryFilterPill>
-				);
-			})}
+			<FilterGroup
+				options={options}
+				value={status}
+				onValueChange={onStatusChange}
+			/>
 		</>
 	);
 };

@@ -11,7 +11,7 @@ export const Chip = ({ active = false, className, ...props }: ChipProps) => (
 		data-slot="chip"
 		aria-pressed={active}
 		className={cn(
-			"shrink-0 px-[9px] py-[3.5px] rounded-md text-[11px] font-medium font-[inherit]",
+			"shrink-0 h-[26px] px-[9px] rounded-md text-[11px] font-medium font-[inherit]",
 			"border-[0.5px] cursor-pointer transition-colors duration-100 whitespace-nowrap",
 			"focus-visible:ring-2 focus-visible:ring-acc/40 outline-none",
 			active

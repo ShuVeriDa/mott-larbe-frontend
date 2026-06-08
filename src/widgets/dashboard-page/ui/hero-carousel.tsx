@@ -3,7 +3,6 @@
 import type { LibraryTextListItem } from "@/entities/library-text";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import { LANG_TAG } from "@/shared/lib/lang-tag";
 import {
 	Carousel,
 	CarouselContent,
@@ -157,7 +156,7 @@ const HeroSlide = ({ item, lang, isActive }: HeroSlideProps) => {
 						tag="span"
 						className="rounded-[5px] bg-surf/60 px-2 py-[3px] text-[11px] font-medium text-t-2 backdrop-blur-sm"
 					>
-						{LANG_TAG[item.language] ?? item.language}
+						{t(`shared.lang.${item.language}`)}
 					</Typography>
 					{item.isNew && (
 						<Typography

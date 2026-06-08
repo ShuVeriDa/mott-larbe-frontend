@@ -1,34 +1,37 @@
 "use client";
 
 import { create } from "zustand";
-import type { PhraseLang } from "@/entities/phrasebook";
 
 export interface PhrasebookFiltersState {
-	activeCategoryId: string | null;
-	lang: PhraseLang | null;
-	savedOnly: boolean;
 	search: string;
 	openPhraseId: string | null;
-	setActiveCategoryId: (id: string | null) => void;
-	setLang: (lang: PhraseLang | null) => void;
-	setSavedOnly: (saved: boolean) => void;
+	selectionMode: boolean;
+	selectedPhraseIds: Set<string>;
 	setSearch: (search: string) => void;
 	setOpenPhraseId: (id: string | null) => void;
 	toggleOpenPhraseId: (id: string) => void;
+	enterSelectionMode: () => void;
+	toggleSelectPhrase: (id: string) => void;
+	selectAllPhrases: (ids: string[]) => void;
+	clearSelection: () => void;
 }
 
 export const usePhrasebookFilters = create<PhrasebookFiltersState>((set, get) => ({
-	activeCategoryId: null,
-	lang: null,
-	savedOnly: false,
 	search: "",
 	openPhraseId: null,
-	setActiveCategoryId: (activeCategoryId) =>
-		set({ activeCategoryId, openPhraseId: null }),
-	setLang: (lang) => set({ lang }),
-	setSavedOnly: (savedOnly) => set({ savedOnly }),
+	selectionMode: false,
+	selectedPhraseIds: new Set<string>(),
 	setSearch: (search) => set({ search }),
 	setOpenPhraseId: (openPhraseId) => set({ openPhraseId }),
 	toggleOpenPhraseId: (id) =>
 		set({ openPhraseId: get().openPhraseId === id ? null : id }),
+	enterSelectionMode: () => set({ selectionMode: true, openPhraseId: null }),
+	toggleSelectPhrase: (id) => {
+		const next = new Set(get().selectedPhraseIds);
+		if (next.has(id)) next.delete(id);
+		else next.add(id);
+		set({ selectedPhraseIds: next });
+	},
+	selectAllPhrases: (ids) => set({ selectedPhraseIds: new Set(ids) }),
+	clearSelection: () => set({ selectionMode: false, selectedPhraseIds: new Set() }),
 }));

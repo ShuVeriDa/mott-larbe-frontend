@@ -8,7 +8,6 @@ import {
 	useWordLookupStore,
 } from "@/features/word-lookup";
 import { useI18n } from "@/shared/lib/i18n";
-import { LANG_TAG } from "@/shared/lib/lang-tag";
 import { useToast } from "@/shared/lib/toast";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
@@ -94,7 +93,7 @@ export const useReaderTopbar = (
 
 	const level = data.level ? t(`shared.cefrLevel.${data.level}`) : "";
 
-	const metaParts = [data.author, level, LANG_TAG[data.language]].filter(
+	const metaParts = [data.author, level, t(`shared.lang.${data.language}`)].filter(
 		Boolean,
 	);
 

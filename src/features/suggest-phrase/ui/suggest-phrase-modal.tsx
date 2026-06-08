@@ -137,8 +137,8 @@ export const SuggestPhraseModal = ({
 					onChange={handleLangChange}
 					wrapperClassName="mb-3"
 				>
-					<option value="che">{t("phrasebook.lang.che")}</option>
-					<option value="ru">{t("phrasebook.lang.ru")}</option>
+					<option value="che">{t("shared.lang.CHE")}</option>
+					<option value="ru">{t("shared.lang.RU")}</option>
 				</Select>
 
 				<InputLabel htmlFor="sp-context">

@@ -19,9 +19,9 @@ export const usePhrasebookReviewPage = (initialParams?: {
 	const [liveCounts, setLiveCounts] = useState<PhraseCounts>(ZERO_COUNTS);
 
 	const [mode, setMode] = useState<PhraseReviewMode>(() => {
-		if (initialParams?.savedOnly) return "saved";
 		if (initialParams?.categoryId) return "category";
-		return "all";
+		if (initialParams?.savedOnly === false) return "all";
+		return "saved";
 	});
 	const [selectedCategoryId, setSelectedCategoryId] = useState<string | undefined>(
 		initialParams?.categoryId,
@@ -32,7 +32,7 @@ export const usePhrasebookReviewPage = (initialParams?: {
 		savedOnly: mode === "saved" ? true : undefined,
 	};
 
-	const { data: stats, isLoading: statsLoading } = usePhraseReviewStats();
+	const { data: globalStats, isLoading: statsLoading } = usePhraseReviewStats();
 	const {
 		data: duePhrases,
 		isLoading: dueLoading,
@@ -40,6 +40,17 @@ export const usePhrasebookReviewPage = (initialParams?: {
 	} = usePhraseReviewDue(dueParams);
 
 	const phrases = duePhrases ?? [];
+
+	const stats = mode === "all"
+		? globalStats
+		: {
+				dueCount: phrases.length,
+				savedDueCount: phrases.length,
+				learningCount: phrases.filter((p) => p.status === "LEARNING").length,
+				knownCount: globalStats?.knownCount ?? 0,
+				reviewedToday: globalStats?.reviewedToday ?? 0,
+				streak: globalStats?.streak ?? 0,
+		  };
 
 	const handleStart = () => {
 		setCounts(ZERO_COUNTS);

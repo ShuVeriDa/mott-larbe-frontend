@@ -71,7 +71,7 @@ export const UserEventsSummaryTab = ({
 					<div>
 						{summary.topFailLookups.map((item, i) => (
 							<div
-								key={item.normalized}
+								key={`${item.normalized}-${i}`}
 								className="flex items-center gap-2 border-b border-bd-1 px-3 py-1.5 text-[12.5px] last:border-b-0"
 							>
 								<Typography tag="span" className="w-4 shrink-0 text-right text-[11px] font-semibold text-t-3">

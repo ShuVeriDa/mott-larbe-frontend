@@ -3,13 +3,14 @@
 import type { DictionarySort } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
 import { CEFR_LEVELS, LEARNING_LEVELS } from "@/shared/types";
-import { Chip } from "@/shared/ui/chip";
+import type { LearningLevel, CefrLevel } from "@/shared/types";
+import { FilterGroup } from "@/shared/ui/filter-group";
 import { Select } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 import { useVocabularyFilters } from "../../model";
 
-const STATUS_LABELS: Record<string, string> = {
+const STATUS_LABELS: Record<LearningLevel, string> = {
 	NEW: "vocabulary.status.new",
 	LEARNING: "vocabulary.status.learning",
 	KNOWN: "vocabulary.status.known",
@@ -33,56 +34,35 @@ export const FilterControls = () => {
 	const setCefrLevel = useVocabularyFilters(s => s.setCefrLevel);
 	const setSort = useVocabularyFilters(s => s.setSort);
 
-	const handleAllStatus: NonNullable<ComponentProps<typeof Chip>["onClick"]> = () => setStatus(null);
-	const handleAllLevel: NonNullable<ComponentProps<typeof Chip>["onClick"]> = () => setCefrLevel(null);
+	const statusOptions: { value: LearningLevel | null; label: string }[] = [
+		{ value: null, label: t("vocabulary.all") },
+		...LEARNING_LEVELS.map(l => ({ value: l, label: t(STATUS_LABELS[l]) })),
+	];
+
+	const levelOptions: { value: CefrLevel | null; label: string }[] = [
+		{ value: null, label: t("vocabulary.all") },
+		...CEFR_LEVELS.map(l => ({ value: l, label: l })),
+	];
+
 	const handleSortChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = e =>
 		setSort(e.currentTarget.value as DictionarySort);
 
 	return (
 		<div className="flex flex-col gap-3">
-			{/* Status */}
 			<div>
 				<Typography tag="p" className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
 					{t("vocabulary.filterByStatus")}
 				</Typography>
-				<div className="flex flex-wrap gap-1.5">
-					<Chip active={status === null} onClick={handleAllStatus}>
-						{t("vocabulary.all")}
-					</Chip>
-					{LEARNING_LEVELS.map(level => {
-						const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> =
-							() => setStatus(level);
-						return (
-							<Chip key={level} active={status === level} onClick={handleClick}>
-								{t(STATUS_LABELS[level])}
-							</Chip>
-						);
-					})}
-				</div>
+				<FilterGroup options={statusOptions} value={status} onValueChange={setStatus} />
 			</div>
 
-			{/* Level */}
 			<div>
 				<Typography tag="p" className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
 					{t("vocabulary.filterByLevel")}
 				</Typography>
-				<div className="flex flex-wrap gap-1.5">
-					<Chip active={cefrLevel === null} onClick={handleAllLevel}>
-						{t("vocabulary.all")}
-					</Chip>
-					{CEFR_LEVELS.map(level => {
-						const handleClick: NonNullable<ComponentProps<typeof Chip>["onClick"]> =
-							() => setCefrLevel(level);
-						return (
-							<Chip key={level} active={cefrLevel === level} onClick={handleClick}>
-								{level}
-							</Chip>
-						);
-					})}
-				</div>
+				<FilterGroup options={levelOptions} value={cefrLevel} onValueChange={setCefrLevel} />
 			</div>
 
-			{/* Sort */}
 			<div>
 				<Typography tag="p" className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
 					{t("vocabulary.sort.label")}

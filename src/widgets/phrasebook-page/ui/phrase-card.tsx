@@ -6,6 +6,7 @@ import { usePhrasebookFilters } from "@/features/phrasebook-filters";
 import { useSavePhrase } from "@/features/save-phrase";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Checkbox } from "@/shared/ui/checkbox";
 import { toast } from "sonner";
 import { PhraseActionButton } from "./phrase-action-button";
 import { PhraseDetail } from "./phrase-detail";
@@ -19,15 +20,23 @@ const LANG_DOT_COLOR: Record<string, string> = {
 
 interface PhraseCardProps {
 	phrase: Phrase;
+	selectionMode: boolean;
+	selected: boolean;
 }
 
-export const PhraseCard = ({ phrase }: PhraseCardProps) => {
+export const PhraseCard = ({ phrase, selectionMode, selected }: PhraseCardProps) => {
 	const { t } = useI18n();
-	const { openPhraseId, toggleOpenPhraseId } = usePhrasebookFilters();
+	const { openPhraseId, toggleOpenPhraseId, toggleSelectPhrase } = usePhrasebookFilters();
 	const { mutate: toggleSave, isPending } = useSavePhrase();
 	const isOpen = openPhraseId === phrase.id;
 
-	const handleToggle = () => toggleOpenPhraseId(phrase.id);
+	const handleToggle = () => {
+		if (selectionMode) {
+			toggleSelectPhrase(phrase.id);
+		} else {
+			toggleOpenPhraseId(phrase.id);
+		}
+	};
 
 	const handleSave = (e: MouseEvent) => {
 		e.stopPropagation();
@@ -50,22 +59,35 @@ export const PhraseCard = ({ phrase }: PhraseCardProps) => {
 			className={cn(
 				"bg-surf border-[0.5px] rounded-[10px] overflow-hidden cursor-pointer",
 				"transition-[border-color,box-shadow] duration-150",
-				isOpen
-					? "border-bd-2"
-					: "border-bd-1 hover:border-bd-2 hover:shadow-sm",
+				selected
+					? "border-primary"
+					: isOpen
+						? "border-bd-2"
+						: "border-bd-1 hover:border-bd-2 hover:shadow-sm",
 			)}
 		>
 			<div
 				className="flex items-start gap-3 px-3.5 py-3"
 				onClick={handleToggle}
 				role="button"
-				aria-expanded={isOpen}
+				aria-expanded={selectionMode ? undefined : isOpen}
+				aria-pressed={selectionMode ? selected : undefined}
 			>
-				<span
-					className="w-1.5 h-1.5 rounded-full shrink-0 mt-[5px]"
-					style={{ backgroundColor: dotColor }}
-					aria-label={phrase.lang.toUpperCase()}
-				/>
+				{selectionMode ? (
+					<Checkbox
+						checked={selected}
+						onCheckedChange={() => toggleSelectPhrase(phrase.id)}
+						onClick={e => e.stopPropagation()}
+						aria-label={selected ? t("phrasebook.selection.deselect") : t("phrasebook.selection.select")}
+						className="shrink-0 mt-px"
+					/>
+				) : (
+					<span
+						className="w-1.5 h-1.5 rounded-full shrink-0 mt-[5px]"
+						style={{ backgroundColor: dotColor }}
+						aria-label={phrase.lang.toUpperCase()}
+					/>
+				)}
 				<div className="flex-1 min-w-0">
 					<div className="text-[14.5px] font-semibold text-t-1 mb-0.5 leading-[1.35]">
 						{phrase.original}
@@ -121,7 +143,7 @@ export const PhraseCard = ({ phrase }: PhraseCardProps) => {
 				</div>
 			</div>
 
-			{isOpen && <PhraseDetail phrase={phrase} />}
+			{!selectionMode && isOpen && <PhraseDetail phrase={phrase} />}
 		</article>
 	);
 };

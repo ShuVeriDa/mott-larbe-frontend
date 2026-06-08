@@ -1,12 +1,12 @@
 "use client";
 
 import { usePhrasebookCategories } from "@/entities/phrasebook";
-import { usePhrasebookFilters } from "@/features/phrasebook-filters";
+import { usePhrasebookParams } from "@/features/phrasebook-filters";
 import { PhrasebookCategoryChip } from "./phrasebook-category-chip";
 
 export const PhrasebookCategoryChips = () => {
 	const { data: categories } = usePhrasebookCategories();
-	const { activeCategoryId, setActiveCategoryId } = usePhrasebookFilters();
+	const { categoryId, setCategoryId } = usePhrasebookParams();
 
 	if (!categories?.length) return null;
 
@@ -16,8 +16,8 @@ export const PhrasebookCategoryChips = () => {
 				<PhrasebookCategoryChip
 					key={cat.id}
 					category={cat}
-					active={activeCategoryId === cat.id}
-					onSelect={setActiveCategoryId}
+					active={categoryId === cat.id}
+					onSelect={setCategoryId}
 				/>
 			))}
 		</div>

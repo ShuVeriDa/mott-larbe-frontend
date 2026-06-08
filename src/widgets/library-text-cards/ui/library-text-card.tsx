@@ -121,7 +121,7 @@ export const LibraryTextCard = ({
 							className="h-[2px] w-[2px] rounded-full bg-t-4"
 						/>
 						<Typography tag="span">
-							{t(`library.lang.${item.language}`)}
+							{t(`shared.lang.${item.language}`)}
 						</Typography>
 						<Typography
 							tag="span"

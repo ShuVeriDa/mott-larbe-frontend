@@ -4,12 +4,10 @@ import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
 import { Typography } from "@/shared/ui/typography";
 import {
-	LIBRARY_FILTER_ACC_PILL_ACTIVE,
-	LIBRARY_FILTER_ACC_PILL_IDLE,
 	LIBRARY_FILTER_BAR_CEFR_LEVELS,
 	libraryFilterLevelPillClass,
 } from "../lib/library-filter-bar-config";
-import { LibraryFilterPill } from "./library-filter-pill";
+import { FilterGroup } from "@/shared/ui/filter-group";
 
 export interface LibraryFilterBarLevelGroupProps {
 	level: CefrLevel | "all";
@@ -22,7 +20,14 @@ export const LibraryFilterBarLevelGroup = ({
 }: LibraryFilterBarLevelGroupProps) => {
 	const { t } = useI18n();
 
-	const handleAllClick = () => onLevelChange("all");
+	const options: { value: CefrLevel | "all"; label: string; activeClassName?: string }[] = [
+		{ value: "all", label: t("library.all") },
+		...LIBRARY_FILTER_BAR_CEFR_LEVELS.map(l => ({
+			value: l as CefrLevel | "all",
+			label: t(`shared.cefrLevel.${l}`),
+			activeClassName: libraryFilterLevelPillClass(l, true),
+		})),
+	];
 
 	return (
 		<>
@@ -32,34 +37,11 @@ export const LibraryFilterBarLevelGroup = ({
 			>
 				{t("library.filterLevel")}
 			</Typography>
-
-			<LibraryFilterPill
-				active={level === "all"}
-				onClick={handleAllClick}
-				title={t("library.all")}
-				className={
-					level === "all"
-						? LIBRARY_FILTER_ACC_PILL_ACTIVE
-						: LIBRARY_FILTER_ACC_PILL_IDLE
-				}
-			>
-				{t("library.all")}
-			</LibraryFilterPill>
-
-			{LIBRARY_FILTER_BAR_CEFR_LEVELS.map(l => {
-				const handleClick = () => onLevelChange(l);
-				return (
-					<LibraryFilterPill
-						key={l}
-						active={level === l}
-						onClick={handleClick}
-						title={t(`shared.cefrLevel.${l}`)}
-						className={libraryFilterLevelPillClass(l, level === l)}
-					>
-						{t(`shared.cefrLevel.${l}`)}
-					</LibraryFilterPill>
-				);
-			})}
+			<FilterGroup
+				options={options}
+				value={level}
+				onValueChange={onLevelChange}
+			/>
 		</>
 	);
 };

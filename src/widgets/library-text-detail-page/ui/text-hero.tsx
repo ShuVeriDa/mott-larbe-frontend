@@ -57,7 +57,7 @@ export const TextHero = ({
 			<div className="flex-1 min-w-0 flex flex-col gap-2.5">
 				<div className="flex items-center gap-1.5 flex-wrap">
 					<CefrBadge level={level} />
-					<Badge variant="acc">{t(`library.lang.${language}`)}</Badge>
+					<Badge variant="acc">{t(`shared.lang.${language}`)}</Badge>
 					<Badge variant="neu">
 						{t("library.textDetail.status.published")}
 					</Badge>

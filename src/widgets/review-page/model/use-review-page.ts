@@ -65,7 +65,7 @@ export const useReviewPage = () => {
 
 	const sm2DueBadge = stats.dueCount ?? null;
 	const deckTotalBadge = deckStats?.total ?? null;
-	const phraseDueBadge = phraseStats?.dueCount ?? null;
+	const phraseDueBadge = phraseStats?.savedDueCount ?? null;
 	const premiumLocked = deckStatsError === true;
 	const words = dueWords ?? [];
 

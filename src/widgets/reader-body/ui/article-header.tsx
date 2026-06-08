@@ -3,7 +3,6 @@
 import { Typography } from "@/shared/ui/typography";
 import type { TextPageResponse } from "@/entities/text";
 import { useI18n } from "@/shared/lib/i18n";
-import { LANG_TAG } from "@/shared/lib/lang-tag";
 
 export interface ArticleProgressBarProps {
 	progress: number;
@@ -37,7 +36,7 @@ export const ArticleHeader = ({ data, currentPage, showProgress = false }: Artic
 	const { t } = useI18n();
 
 	const level = data.level ?? null;
-	const lang = LANG_TAG[data.language] ?? data.language;
+	const lang = t(`shared.lang.${data.language}`);
 	const tagNames = data.tags?.map(tag => tag.name) ?? [];
 
 	// Editorial meta line: LEVEL · LANG · #tag · #tag

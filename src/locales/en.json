@@ -5098,7 +5098,13 @@
       "B": "Intermediate",
       "C": "Advanced"
     },
-    "retry": "Retry"
+    "retry": "Retry",
+    "lang": {
+      "CHE": "Chechen",
+      "RU": "Russian",
+      "EN": "English",
+      "AR": "Arabic"
+    }
   },
   "aiTranslation": {
     "settings": {
@@ -5409,6 +5415,17 @@
       "addToVocabHint": "Add all words from this phrase to your vocabulary",
       "wordAdded": "«{word}» → {trans} added to vocabulary",
       "allWordsAdded": "Words added to vocabulary"
+    },
+    "selection": {
+      "enter": "Select",
+      "cancel": "Cancel",
+      "selectAll": "Select all",
+      "deselectAll": "Deselect all",
+      "count": "Selected: {count}",
+      "saveSelected": "Save selected",
+      "saved": "{count} phrases saved",
+      "select": "Select phrase",
+      "deselect": "Deselect phrase"
     },
     "empty": {
       "title": "No phrases found",
@@ -6835,7 +6852,9 @@
     }
   },
   "notifications": {
-    "bell": { "label": "Notifications" },
+    "bell": {
+      "label": "Notifications"
+    },
     "title": "Notifications",
     "empty": "No new notifications",
     "markAllRead": "Mark all as read",

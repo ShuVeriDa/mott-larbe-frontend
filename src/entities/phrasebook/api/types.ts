@@ -37,6 +37,7 @@ export interface PhraseDue extends Phrase {
 
 export interface PhraseReviewStats {
 	dueCount: number;
+	savedDueCount: number;
 	learningCount: number;
 	knownCount: number;
 	reviewedToday: number;

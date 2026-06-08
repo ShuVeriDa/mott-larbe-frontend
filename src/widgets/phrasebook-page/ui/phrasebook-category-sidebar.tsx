@@ -5,7 +5,7 @@ import {
 	usePhraseCategoryProgress,
 	type PhraseCategoryProgress,
 } from "@/entities/phrasebook";
-import { usePhrasebookFilters } from "@/features/phrasebook-filters";
+import { usePhrasebookParams } from "@/features/phrasebook-filters";
 import { useI18n } from "@/shared/lib/i18n";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { PhrasebookCategoryItem } from "./phrasebook-category-item";
@@ -14,7 +14,7 @@ export const PhrasebookCategorySidebar = () => {
 	const { t } = useI18n();
 	const { data: categories, isLoading } = usePhrasebookCategories();
 	const { data: progressList } = usePhraseCategoryProgress();
-	const { activeCategoryId, setActiveCategoryId } = usePhrasebookFilters();
+	const { categoryId, setCategoryId } = usePhrasebookParams();
 
 	const progressMap = new Map<string, PhraseCategoryProgress>(
 		progressList?.map(p => [p.id, p]) ?? [],
@@ -38,8 +38,8 @@ export const PhrasebookCategorySidebar = () => {
 								key={cat.id}
 								category={cat}
 								progress={progressMap.get(cat.id)}
-								active={activeCategoryId === cat.id}
-								onSelect={setActiveCategoryId}
+								active={categoryId === cat.id}
+								onSelect={setCategoryId}
 							/>
 						))}
 			</div>

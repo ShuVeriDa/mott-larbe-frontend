@@ -8,10 +8,10 @@ import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
 import {
 	LIBRARY_FILTER_BAR_CEFR_LEVELS,
-	LIBRARY_FILTER_BAR_LANG_OPTIONS,
 	LIBRARY_FILTER_BAR_PROGRESS_STATUSES,
 	libraryFilterProgressLabelKey,
 } from "../lib/library-filter-bar-config";
+import { ENABLED_LANGUAGES } from "@/shared/lib/languages";
 import { FilterSelect } from "./filter-select";
 
 interface LevelSelectProps {
@@ -45,7 +45,7 @@ export const LibraryFilterBarLangSelect = ({ lang, onLangChange }: LangSelectPro
 	const { t } = useI18n();
 	const options = [
 		{ value: "all", label: t("library.filterLang") },
-		...LIBRARY_FILTER_BAR_LANG_OPTIONS.map(l => ({ value: l, label: t(`library.lang.${l}`) })),
+		...ENABLED_LANGUAGES.map(l => ({ value: l.code as LibraryTextLanguage | "all", label: t(`shared.lang.${l.code}`) })),
 	];
 	const handleLangChange = (v: string) => onLangChange(v as LibraryTextLanguage | "all");
 	return (

@@ -3,12 +3,8 @@
 import type { LibraryTextLanguage } from "@/entities/library-text";
 import { Typography } from "@/shared/ui/typography";
 import { useI18n } from "@/shared/lib/i18n";
-import {
-	LIBRARY_FILTER_ACC_PILL_ACTIVE,
-	LIBRARY_FILTER_ACC_PILL_IDLE,
-	LIBRARY_FILTER_BAR_LANG_OPTIONS,
-} from "../lib/library-filter-bar-config";
-import { LibraryFilterPill } from "./library-filter-pill";
+import { ENABLED_LANGUAGES } from "@/shared/lib/languages";
+import { FilterGroup } from "@/shared/ui/filter-group";
 
 export interface LibraryFilterBarLangGroupProps {
 	lang: LibraryTextLanguage | "all";
@@ -21,7 +17,13 @@ export const LibraryFilterBarLangGroup = ({
 }: LibraryFilterBarLangGroupProps) => {
 	const { t } = useI18n();
 
-	const handleAllClick = () => onLangChange("all");
+	const options: { value: LibraryTextLanguage | "all"; label: string }[] = [
+		{ value: "all", label: t("library.all") },
+		...ENABLED_LANGUAGES.map(l => ({
+			value: l.code as LibraryTextLanguage | "all",
+			label: t(`shared.lang.${l.code}`),
+		})),
+	];
 
 	return (
 		<>
@@ -31,36 +33,11 @@ export const LibraryFilterBarLangGroup = ({
 			>
 				{t("library.filterLang")}
 			</Typography>
-
-			<LibraryFilterPill
-				active={lang === "all"}
-				onClick={handleAllClick}
-				title={t("library.all")}
-				className={
-					lang === "all" ? LIBRARY_FILTER_ACC_PILL_ACTIVE : LIBRARY_FILTER_ACC_PILL_IDLE
-				}
-			>
-				{t("library.all")}
-			</LibraryFilterPill>
-
-			{LIBRARY_FILTER_BAR_LANG_OPTIONS.map(l => {
-				const handleClick = () => onLangChange(l);
-				return (
-					<LibraryFilterPill
-						key={l}
-						active={lang === l}
-						onClick={handleClick}
-						title={t(`library.lang.${l}`)}
-						className={
-							lang === l
-								? LIBRARY_FILTER_ACC_PILL_ACTIVE
-								: LIBRARY_FILTER_ACC_PILL_IDLE
-						}
-					>
-						{t(`library.lang.${l}`)}
-					</LibraryFilterPill>
-				);
-			})}
+			<FilterGroup
+				options={options}
+				value={lang}
+				onValueChange={onLangChange}
+			/>
 		</>
 	);
 };

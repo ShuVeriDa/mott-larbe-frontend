@@ -2,8 +2,8 @@
 
 import type { Phrase, PhraseWord } from "@/entities/phrasebook";
 import { useI18n } from "@/shared/lib/i18n";
-import { Button } from "@/shared/ui/button";
 import { PhraseWordToken } from "./phrase-word-token";
+import { useAddPhraseWords } from "../model/use-add-phrase-words";
 import { toast } from "sonner";
 import { useState } from "react";
 
@@ -14,6 +14,7 @@ interface PhraseDetailProps {
 export const PhraseDetail = ({ phrase }: PhraseDetailProps) => {
 	const { t } = useI18n();
 	const [addedToVocab, setAddedToVocab] = useState(false);
+	const { mutate: addWords, isPending } = useAddPhraseWords();
 
 	const handleWordClick = (word: PhraseWord) => {
 		toast.success(
@@ -24,10 +25,18 @@ export const PhraseDetail = ({ phrase }: PhraseDetailProps) => {
 		);
 	};
 
+	const wordsToAdd = phrase.words.length > 0
+		? phrase.words
+		: [{ id: phrase.id, original: phrase.original, translation: phrase.translation, position: 0 }];
+
 	const handleAddAllToVocab = () => {
-		if (addedToVocab) return;
-		setAddedToVocab(true);
-		toast.success(t("phrasebook.detail.allWordsAdded"));
+		if (addedToVocab || isPending) return;
+		addWords(wordsToAdd, {
+			onSuccess: () => {
+				setAddedToVocab(true);
+				toast.success(t("phrasebook.detail.allWordsAdded"));
+			},
+		});
 	};
 
 	return (
@@ -81,7 +90,7 @@ export const PhraseDetail = ({ phrase }: PhraseDetailProps) => {
 				<button
 					type="button"
 					onClick={handleAddAllToVocab}
-					disabled={addedToVocab}
+					disabled={addedToVocab || isPending}
 					className={
 						addedToVocab
 							? "inline-flex items-center gap-1 h-[26px] px-2.5 bg-surf-3 text-t-3 rounded-base text-[11.5px] font-semibold font-[inherit] cursor-default"
