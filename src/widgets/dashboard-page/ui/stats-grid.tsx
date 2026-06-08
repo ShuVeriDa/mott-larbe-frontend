@@ -2,9 +2,9 @@
 import type { DashboardStats } from "@/entities/dashboard";
 import { useI18n } from "@/shared/lib/i18n";
 import { getStatsConfig } from "../lib/stats-config";
-import { DailyWordsProgressCard } from "./daily-words-progress-card";
 import { ReviewStatCard } from "./review-stat-card";
 import { StatCard } from "./stat-card";
+import { WordsStatCard } from "./words-stat-card";
 
 interface StatsGridProps {
 	stats: DashboardStats;
@@ -13,7 +13,12 @@ interface StatsGridProps {
 	dailyWordsGoal: number | null;
 }
 
-export const StatsGrid = ({ stats, lang, showReviewReminder, dailyWordsGoal }: StatsGridProps) => {
+export const StatsGrid = ({
+	stats,
+	lang,
+	showReviewReminder,
+	dailyWordsGoal,
+}: StatsGridProps) => {
 	const { t } = useI18n();
 	const statsConfig = getStatsConfig(stats);
 
@@ -28,13 +33,14 @@ export const StatsGrid = ({ stats, lang, showReviewReminder, dailyWordsGoal }: S
 					icon={item.icon}
 				/>
 			))}
-			{dailyWordsGoal !== null && (
-				<DailyWordsProgressCard
-					wordsAddedToday={stats.wordsAddedToday}
-					dailyWordsGoal={dailyWordsGoal}
-				/>
+			<WordsStatCard
+				wordsInDictionary={stats.wordsInDictionary}
+				wordsAddedToday={stats.wordsAddedToday}
+				dailyWordsGoal={dailyWordsGoal}
+			/>
+			{showReviewReminder && (
+				<ReviewStatCard dueToday={stats.dueToday} lang={lang} />
 			)}
-			{showReviewReminder && <ReviewStatCard dueToday={stats.dueToday} lang={lang} />}
 		</div>
 	);
 };

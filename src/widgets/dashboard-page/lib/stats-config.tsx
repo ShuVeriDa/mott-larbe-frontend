@@ -29,25 +29,7 @@ export const getStatsConfig = (stats: DashboardStats): StatItemConfig[] => [
 			</svg>
 		),
 	},
-	{
-		key: "wordsInDictionary",
-		value: stats.wordsInDictionary,
-		labelKey: "dashboard.stats.words",
-		iconBgClass: "bg-grn-bg",
-		icon: (
-			<svg
-				viewBox="0 0 14 14"
-				fill="none"
-				stroke="currentColor"
-				strokeWidth="1.4"
-				className="size-[13px] text-grn-t"
-				aria-hidden="true"
-			>
-				<path d="M2 4h10M2 7h7M2 10h5" strokeLinecap="round" />
-			</svg>
-		),
-	},
-	{
+{
 		key: "streak",
 		value: stats.streak,
 		labelKey: "dashboard.stats.streak",

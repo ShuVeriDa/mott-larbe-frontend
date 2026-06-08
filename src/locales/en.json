@@ -2508,7 +2508,8 @@
       "words": "words in dictionary",
       "streak": "day streak",
       "dueToday": "due for review",
-      "dailyWords": "words today"
+      "dailyWords": "words today",
+      "dailyWordsHint": "added today / daily goal"
     },
     "reviewBanner": {
       "title": "Words waiting for review today",
