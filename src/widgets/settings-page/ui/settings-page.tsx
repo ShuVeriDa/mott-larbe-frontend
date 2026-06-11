@@ -12,6 +12,7 @@ import { NotificationsSection } from "./sections/notifications-section";
 import { ReaderSection } from "./sections/reader-section";
 import { SessionsSection } from "./sections/sessions-section";
 import { ShortcutsSection } from "./sections/shortcuts-section";
+import { DeveloperCard } from "./developer-card";
 import { SettingsNav } from "./settings-nav";
 import { SettingsTopbar } from "./settings-topbar";
 
@@ -57,6 +58,7 @@ export const SettingsPage = () => {
 							{active === "sessions" ? <SessionsSection /> : null}
 							{active === "data" ? <DataSection /> : null}
 							{active === "ai" ? <AiSection /> : null}
+							<DeveloperCard />
 						</>
 					)}
 				</div>

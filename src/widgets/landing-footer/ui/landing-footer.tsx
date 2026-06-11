@@ -23,7 +23,7 @@ const COLUMNS: FooterColumn[] = [
 	{
 		titleKey: "landing.footer.company",
 		links: [
-			{ labelKey: "landing.footer.links.about", href: "#" },
+			{ labelKey: "landing.footer.links.about", href: "about" },
 			{ labelKey: "landing.footer.links.blog", href: "#" },
 			{ labelKey: "landing.footer.links.contacts", href: "#" },
 			{ labelKey: "landing.footer.links.support", href: "#" },
@@ -42,7 +42,7 @@ const COLUMNS: FooterColumn[] = [
 const SOCIALS = [
 	{
 		label: "Telegram",
-		href: "#",
+		href: "https://t.me/shuverida",
 		path: "M21.94 4.4l-3.04 14.36c-.23 1.02-.83 1.27-1.68.79l-4.65-3.43-2.24 2.16c-.25.25-.46.46-.94.46l.34-4.74L18.4 6.2c.38-.34-.08-.53-.59-.19L7.07 12.7l-4.69-1.47c-1.02-.32-1.04-1.02.21-1.51L20.65 3.13c.85-.32 1.6.2 1.29 1.27z",
 	},
 	{
@@ -99,23 +99,48 @@ export const LandingFooter = () => {
 								{t(col.titleKey)}
 							</Typography>
 							<ul>
-								{col.links.map(link => (
-									<Typography tag="li" key={link.labelKey}>
-										<Link
-											href={link.href}
-											className="block py-1.5 text-[13.5px] text-t-2 transition-colors hover:text-t-1"
-										>
-											{t(link.labelKey)}
-										</Link>
-									</Typography>
-								))}
+								{col.links.map(link => {
+									const href = link.href.startsWith("#") || link.href.startsWith("http")
+										? link.href
+										: `/${lang}/${link.href}`;
+									return (
+										<Typography tag="li" key={link.labelKey}>
+											<Link
+												href={href}
+												className="block py-1.5 text-[13.5px] text-t-2 transition-colors hover:text-t-1"
+											>
+												{t(link.labelKey)}
+											</Link>
+										</Typography>
+									);
+								})}
 							</ul>
 						</div>
 					))}
 				</div>
 
 				<div className="flex flex-wrap items-center justify-between gap-3 border-[0.5px] border-t border-bd-1 pt-6 text-[12px] text-t-3 max-[640px]:flex-col-reverse max-[640px]:items-start max-[640px]:gap-3.5">
-					<Typography tag="span">{t("landing.footer.copy")}</Typography>
+					<div className="flex flex-col gap-1.5">
+						<Typography tag="span">{t("landing.footer.copy")}</Typography>
+						<a
+							href="https://t.me/shuverida"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="inline-flex items-center gap-1.5 text-[11.5px] text-t-3 transition-colors hover:text-acc"
+						>
+							<svg
+								viewBox="0 0 24 24"
+								width="11"
+								height="11"
+								fill="currentColor"
+								aria-hidden="true"
+							>
+								<path d="M21.94 4.4l-3.04 14.36c-.23 1.02-.83 1.27-1.68.79l-4.65-3.43-2.24 2.16c-.25.25-.46.46-.94.46l.34-4.74L18.4 6.2c.38-.34-.08-.53-.59-.19L7.07 12.7l-4.69-1.47c-1.02-.32-1.04-1.02.21-1.51L20.65 3.13c.85-.32 1.6.2 1.29 1.27z" />
+							</svg>
+							{t("landing.footer.developer")}
+							<span className="text-acc">· {t("landing.footer.developerCta")}</span>
+						</a>
+					</div>
 					<div className="flex gap-1.5">
 						{SOCIALS.map(s => (
 							<a

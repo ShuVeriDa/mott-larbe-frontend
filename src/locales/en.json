@@ -380,7 +380,7 @@
         "pricing": "Pricing",
         "faq": "FAQ",
         "changelog": "What's new",
-        "about": "About",
+        "about": "About the developer",
         "blog": "Blog",
         "contacts": "Contacts",
         "support": "Support",
@@ -388,7 +388,9 @@
         "privacy": "Privacy policy",
         "cookies": "Cookies"
       },
-      "copy": "© 2026 Mott Larbe. All rights reserved."
+      "copy": "© 2026 Mott Larbe. All rights reserved.",
+      "developer": "Your idea deserves great code · ShuVeriDa",
+      "developerCta": "Discuss a project"
     },
     "demoWords": {
       "вехаш": {
@@ -534,6 +536,36 @@
           "sg."
         ]
       }
+    },
+    "aboutPage": {
+      "meta": {
+        "title": "About the developer — Mott Larbe",
+        "description": "Sayd-Makhamed (ShuVeriDa) — fullstack developer who built Mott Larbe. Looking for projects? Reach out."
+      },
+      "eyebrow": "Developer",
+      "title": "Built this project",
+      "titleEm": "Sayd-Makhamed",
+      "sub": "Mott Larbe is a live example of what I can build. If you need a similar project — get in touch.",
+      "stack": {
+        "title": "Stack"
+      },
+      "projects": {
+        "title": "Projects",
+        "mottlarbe": {
+          "name": "Mott Larbe",
+          "desc": "Language platform for learning Chechen through reading. Tokenization, morphology, SRS, personal dictionary."
+        },
+        "dosham": {
+          "name": "Dosham",
+          "desc": "Chechen dictionary with morphological analysis and lemma search."
+        }
+      },
+      "cta": {
+        "title": "Have a project idea?",
+        "sub": "Message me on Telegram — let's discuss scope and timeline.",
+        "button": "Message on Telegram"
+      },
+      "backToHome": "Back to home"
     }
   },
   "nav": {

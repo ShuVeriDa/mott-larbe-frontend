@@ -456,6 +456,21 @@
 	border-width: 0px;
 }
 
+/* 3D card flip — preserve-3d needed for backface-visibility on children */
+@utility transform-3d {
+	transform-style: preserve-3d;
+}
+
+/* Non-standard duration used by flip-card */
+@utility duration-320 {
+	transition-duration: 320ms;
+}
+
+/* Flip card transition — override reduced-motion so animation always plays */
+.flip-card-inner {
+	transition: transform 320ms ease !important;
+}
+
 /* ═══════════════════════════════════════════
    PAGE ANIMATIONS
    ═══════════════════════════════════════════ */

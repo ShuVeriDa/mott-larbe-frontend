@@ -1,9 +1,11 @@
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Golos_Text, Geist_Mono, Inter, Lora, Merriweather, PT_Serif, Source_Serif_4 } from "next/font/google";
 import { QueryProvider } from "@/shared/ui/query-provider";
+import { TelegramFab, TelegramToast } from "@/shared/ui/telegram-fab";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
 import { TooltipProvider } from "@/shared/ui/tooltip";
+import { ErrorBoundary } from "@/shared/ui/error-boundary";
 import { PageAnalyticsProvider } from "@/shared/lib/page-analytics";
 import { SwRegister } from "@/shared/lib/sw-register";
 import "./globals.css";
@@ -155,7 +157,7 @@ const fontVars = cn(
 
 const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => (
 	<html lang="ru" className={fontVars} suppressHydrationWarning>
-		<body className="min-h-full flex flex-col md:overflow-hidden" suppressHydrationWarning>
+		<body className="min-h-full flex flex-col" suppressHydrationWarning>
 			<script
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(ROOT_JSON_LD).replace(/</g, "\\u003c") }}
@@ -164,7 +166,15 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => (
 				<QueryProvider>
 					<PageAnalyticsProvider />
 					<SwRegister />
-					<TooltipProvider>{children}</TooltipProvider>
+					<TooltipProvider>
+						{children}
+						<ErrorBoundary fallback={null}>
+							<Suspense fallback={null}><TelegramFab /></Suspense>
+						</ErrorBoundary>
+						<ErrorBoundary fallback={null}>
+							<Suspense fallback={null}><TelegramToast /></Suspense>
+						</ErrorBoundary>
+					</TooltipProvider>
 				</QueryProvider>
 			</ThemeProvider>
 		</body>
