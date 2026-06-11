@@ -11,6 +11,8 @@ import {
 	type UserLanguage,
 	type UserLevel,
 } from "@/entities/user";
+import { useTranslationLanguageStore } from "@/features/ai-word-lookup";
+import type { TranslationLanguage as AiTranslationLanguage } from "@/entities/ai-translation";
 import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
@@ -33,6 +35,7 @@ export const useLearningSection = ({
 	const { mutateAsync: updateUser, isPending: isUserSaving } = useUpdateUser();
 	const { success } = useToast();
 	const { toastApiError } = useApiErrorToast();
+	const { targetLanguage, setTargetLanguage } = useTranslationLanguageStore();
 
 	const [learningLang, setLearningLang] = useState<UserLanguage>(
 		user?.language ?? "CHE",
@@ -51,12 +54,17 @@ export const useLearningSection = ({
 		if (user?.level) setLevel(user.level);
 	}, [user?.language, user?.level]);
 
+	useEffect(() => {
+		setTransLang(targetLanguage.toUpperCase() as TranslationLanguage);
+	}, [targetLanguage]);
+
 	const handleLanguageSave = async () => {
 		try {
 			await Promise.all([
 				updatePrefs({ translationLanguage: transLang }),
 				updateUser({ language: learningLang, level }),
 			]);
+			setTargetLanguage(transLang.toLowerCase() as AiTranslationLanguage);
 			success(t("settings.toasts.languageSaved"));
 		} catch (err) {
 			toastApiError(err);

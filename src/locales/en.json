@@ -5412,7 +5412,7 @@
       "examples": "Usage examples",
       "addToVocab": "Add to vocabulary",
       "addedToVocab": "Added",
-      "addToVocabHint": "Add all words from this phrase to your vocabulary",
+      "addToVocabHint": "Add phrase to your vocabulary",
       "wordAdded": "«{word}» → {trans} added to vocabulary",
       "allWordsAdded": "Words added to vocabulary"
     },

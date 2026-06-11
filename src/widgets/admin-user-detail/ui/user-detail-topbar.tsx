@@ -28,14 +28,14 @@ export const UserDetailTopbar = ({
 	const isFrozen = user?.status === "FROZEN";
 	const isBlocked = user?.status === "BLOCKED";
 
-		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-							isFrozen
-								? mutations.unfreeze.mutate(user!.id)
-								: mutations.freeze.mutate(user!.id);
-	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-							isBlocked
-								? mutations.unblock.mutate(user!.id)
-								: mutations.block.mutate(user!.id);
+		const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		if (!user) return;
+		isFrozen ? mutations.unfreeze.mutate(user.id) : mutations.freeze.mutate(user.id);
+	};
+	const handleClick2: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		if (!user) return;
+		isBlocked ? mutations.unblock.mutate(user.id) : mutations.block.mutate(user.id);
+	};
 return (
 		<header className=" flex items-center gap-2.5 border-b border-bd-1 bg-surf px-[22px] py-3 transition-colors max-sm:px-3.5 max-sm:py-2.5">
 			<nav className="flex items-center gap-1.5 text-[13px] text-t-3 max-sm:text-[12px]">
