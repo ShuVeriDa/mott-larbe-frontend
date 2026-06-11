@@ -12,6 +12,7 @@ import {
 import { Typography } from "@/shared/ui/typography";
 import { List, X } from "lucide-react";
 import { useEffect } from "react";
+import { useMediaQuery } from "@/shared/lib/media-query";
 
 export interface ReaderTocPanelProps {
 	textId: string;
@@ -169,10 +170,11 @@ export const ReaderTocSheet = ({
 	onClose,
 }: ReaderTocPanelProps) => {
 	const { t } = useI18n();
+	const isMobile = !useMediaQuery("(min-width: 768px)");
 	const handleOpenChange = (isOpen: boolean) => { if (!isOpen) onClose(); };
 
 	return (
-		<Drawer open={open} onOpenChange={handleOpenChange}>
+		<Drawer open={open && isMobile} onOpenChange={handleOpenChange}>
 			<DrawerContent className="max-h-[90dvh]" aria-describedby={undefined}>
 				<DrawerTitle className="sr-only">{t("reader.toc.title")}</DrawerTitle>
 				<div className="min-h-0 flex-1 overflow-y-auto p-4">

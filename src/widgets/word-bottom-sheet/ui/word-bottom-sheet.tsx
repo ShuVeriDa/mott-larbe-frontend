@@ -19,6 +19,7 @@ import { AiWordSheetBody } from "./ai-word-sheet-body";
 import { ExternalLink, Pencil } from "lucide-react";
 import type { MouseEvent } from "react";
 import { useState } from "react";
+import { useMediaQuery } from "@/shared/lib/media-query";
 import { EntrySuggestModal } from "@/features/entry-suggest";
 import { WordPanelContent } from "@/widgets/word-panel/ui/word-panel-content";
 
@@ -141,7 +142,8 @@ export const WordBottomSheet = ({ textId }: { textId: string }) => {
 	const sheetExpanded = useWordLookupStore(s => s.sheetExpanded);
 	const openInSheetExpanded = useWordLookupStore(s => s.openInSheetExpanded);
 
-	const sheetOpen = surface === "sheet";
+	const isMobile = !useMediaQuery("(min-width: 768px)");
+	const sheetOpen = surface === "sheet" && isMobile;
 
 	const handleExpand = () => { if (token) openInSheetExpanded(token); };
 	const handleClose = () => closeSheet();

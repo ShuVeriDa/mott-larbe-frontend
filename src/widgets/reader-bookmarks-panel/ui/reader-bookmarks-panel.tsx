@@ -16,6 +16,7 @@ import {
 import { Typography } from "@/shared/ui/typography";
 import { Bookmark, Trash2, X } from "lucide-react";
 import { useEffect, type MouseEvent } from "react";
+import { useMediaQuery } from "@/shared/lib/media-query";
 
 export interface ReaderBookmarksPanelProps {
 	textId: string;
@@ -165,10 +166,11 @@ export const ReaderBookmarksSheet = ({
 	onClose,
 }: ReaderBookmarksPanelProps) => {
 	const { t } = useI18n();
+	const isMobile = !useMediaQuery("(min-width: 768px)");
 	const handleOpenChange = (isOpen: boolean) => { if (!isOpen) onClose(); };
 
 	return (
-		<Drawer open={open} onOpenChange={handleOpenChange}>
+		<Drawer open={open && isMobile} onOpenChange={handleOpenChange}>
 			<DrawerContent className="max-h-[90dvh]" aria-describedby={undefined}>
 				<DrawerTitle className="sr-only">{t("reader.bookmarks.title")}</DrawerTitle>
 				<div className="min-h-0 flex-1 overflow-y-auto p-4">

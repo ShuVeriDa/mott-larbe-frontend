@@ -19,6 +19,7 @@ import {
 import { Typography } from "@/shared/ui/typography";
 import { NotebookPen, X } from "lucide-react";
 import { useEffect } from "react";
+import { useMediaQuery } from "@/shared/lib/media-query";
 
 export interface ReaderNotesPanelProps {
 	textId: string;
@@ -151,10 +152,11 @@ export const ReaderNotesSheet = ({
 	onClose,
 }: ReaderNotesPanelProps) => {
 	const { t } = useI18n();
+	const isMobile = !useMediaQuery("(min-width: 768px)");
 	const handleOpenChange = (isOpen: boolean) => { if (!isOpen) onClose(); };
 
 	return (
-		<Drawer open={open} onOpenChange={handleOpenChange}>
+		<Drawer open={open && isMobile} onOpenChange={handleOpenChange}>
 			<DrawerContent className="max-h-[90dvh]" aria-describedby={undefined}>
 				<DrawerTitle className="sr-only">{t("reader.notes.title")}</DrawerTitle>
 				<div className="min-h-0 flex-1 overflow-y-auto p-4">
