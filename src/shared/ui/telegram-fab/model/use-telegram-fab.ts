@@ -11,6 +11,11 @@ export const useTelegramFab = () => {
 		/^\/reader\/[^/]+\/p\/[^/]+/.test(strippedPath) ||
 		/^\/my-texts\/[^/]+\/p\/[^/]+/.test(strippedPath);
 
+	// hide FAB on desktop for all app-shell routes including reader
+	const isAppShell =
+		isReader ||
+		/^\/(dashboard|vocabulary|phrasebook|review|settings|profile|texts|progress|subscription|suggestions|feedback|suggest-text|my-texts)/.test(strippedPath);
+
 	const lang = /^\/(en)/.test(pathname) ? "en" : /^\/(che)/.test(pathname) ? "che" : "ru";
 
 	const [expanded, setExpanded] = useState(false);
@@ -61,6 +66,7 @@ export const useTelegramFab = () => {
 
 	return {
 		isReader,
+		isAppShell,
 		lang,
 		expanded,
 		idle,

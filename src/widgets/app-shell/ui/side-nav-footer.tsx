@@ -70,12 +70,7 @@ export const SideNavFooter = ({ isCompactMode, plan }: SideNavFooterProps) => {
 				)}
 			</div>
 
-			<div
-				className={cn(
-					"border-t border-[0.5px] border-bd-1 ",
-					isCompactMode && "max-[899px]:hidden",
-				)}
-			>
+			<div className={cn("border-t", isCompactMode && "max-[899px]:hidden")}>
 				<a
 					href={TG_HREF}
 					target="_blank"
