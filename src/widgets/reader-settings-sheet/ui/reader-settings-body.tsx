@@ -1,6 +1,7 @@
 "use client";
 
 import { useDeleteAllHighlights, useHighlights } from "@/entities/highlight";
+import { scriptVersionsQueryOptions } from "@/entities/text-script-version";
 import { FontFamilyGroup } from "@/features/reader-font-family";
 import { Button } from "@/shared/ui/button";
 import { FontSizeSlider } from "@/features/reader-font-size";
@@ -10,11 +11,18 @@ import {
 	SegmentedGroup,
 	useReaderTextLayout,
 } from "@/features/reader-text-width";
+import {
+	SCRIPT_OPTIONS,
+	useReaderScript,
+	useReaderScriptAvailability,
+} from "@/features/reader-script";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { Eye, EyeOff, Languages, Trash2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import {
+	WORD_SPACING_OPTIONS,
 	LETTER_SPACING_OPTIONS,
 	LINE_HEIGHT_OPTIONS,
 	PAGE_PADDING_OPTIONS,
@@ -39,6 +47,15 @@ export const ReaderSettingsBody = ({
 }: ReaderSettingsBodyProps) => {
 	const { t } = useI18n();
 	const layout = useReaderTextLayout();
+	const { script, showDiacritics, setScript, setShowDiacritics } = useReaderScript();
+	const { data: scriptVersions = [] } = useQuery({
+		...scriptVersionsQueryOptions(textId ?? ""),
+		enabled: !!textId,
+	});
+	const available = useReaderScriptAvailability(scriptVersions);
+	const visibleScripts = SCRIPT_OPTIONS.filter(o => available.includes(o.value));
+	const hasMultipleScripts = visibleScripts.length > 1;
+	const isArabic = script === "ARABIC";
 	const gap = compact ? "mb-3" : "mb-5";
 	const btnH = compact ? "h-8" : "h-10";
 	const { highlightsVisible, setHighlightsVisible } = useHighlightVisibility();
@@ -60,8 +77,65 @@ export const ReaderSettingsBody = ({
 		deleteAll(highlights.map(h => h.id));
 	};
 
+	const handleToggleDiacritics = () => setShowDiacritics(!showDiacritics);
+
 	return (
 		<>
+			{hasMultipleScripts && (
+				<div className="md:hidden">
+					<ReaderSettingsSectionLabel
+						label={t("reader.settings.script.switchScript")}
+						compact={compact}
+					/>
+					<div className={cn("flex flex-wrap", gap, compact ? "gap-1" : "gap-1.5")}>
+						{visibleScripts.map(option => {
+							const active = script === option.value;
+							const handleClick = () => setScript(option.value);
+							return (
+								<Button
+									key={option.value}
+									variant="bare"
+									size={null}
+									onClick={handleClick}
+									aria-pressed={active}
+									className={cn(
+										"flex-1 rounded-base border border-bd-1 leading-none transition-colors duration-100",
+										btnH,
+										compact ? "text-[11px]" : "text-[13px]",
+										active
+											? "border-acc/20 bg-acc-bg text-acc-t"
+											: "bg-surf-2 text-t-2 hover:border-bd-2 hover:text-t-1",
+									)}
+								>
+									{t(option.fullKey)}
+								</Button>
+							);
+						})}
+					</div>
+					{isArabic && (
+						<Button
+							variant="bare"
+							size={null}
+							onClick={handleToggleDiacritics}
+							aria-pressed={showDiacritics}
+							className={cn(
+								"w-full rounded-base border border-bd-1 leading-none transition-colors duration-100",
+								gap,
+								btnH,
+								compact ? "text-[11px]" : "text-[13px]",
+								showDiacritics
+									? "border-acc/20 bg-acc-bg text-acc-t"
+									: "bg-surf-2 text-t-2 hover:border-bd-2 hover:text-t-1",
+							)}
+						>
+							{showDiacritics
+								? t("reader.settings.script.diacriticsHide")
+								: t("reader.settings.script.diacriticsShow")}
+						</Button>
+					)}
+				</div>
+			)}
+
 			<ReaderSettingsSectionLabel
 				label={t("reader.settings.theme")}
 				compact={compact}
@@ -161,6 +235,23 @@ export const ReaderSettingsBody = ({
 				className={cn("flex", gap, compact ? "gap-1" : "gap-1.5")}
 				buttonClassName={btnH}
 			/>
+
+			<ReaderSettingsSectionLabel
+				label={t("reader.settings.wordSpacing")}
+				compact={compact}
+			/>
+			<SegmentedGroup
+				options={WORD_SPACING_OPTIONS.map(o => ({
+					value: o.value,
+					label: t(o.labelKey),
+				}))}
+				value={layout.wordSpacing}
+				onChange={layout.setWordSpacing}
+				ariaLabel={t("reader.settings.wordSpacing")}
+				className={cn("flex", gap, compact ? "gap-1" : "gap-1.5")}
+				buttonClassName={btnH}
+			/>
+
 			<ReaderSettingsSectionLabel
 				label={t("reader.settings.highlights")}
 				compact={compact}

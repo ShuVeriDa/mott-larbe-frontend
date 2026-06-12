@@ -67,6 +67,7 @@ const UserTextEditPageInner = ({
       }
       metaPanel={
         <UserTextEditMetaPanel
+          textId={id}
           language={language}
           type={type}
           author={author}

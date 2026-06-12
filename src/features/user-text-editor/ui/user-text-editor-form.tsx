@@ -121,6 +121,7 @@ export const UserTextEditorForm = (props: UserTextEditorFormProps) => {
               slashMenuItems={[]}
               placeholder={t("myTexts.editor.placeholder")}
               minHeight="100%"
+              showStressMark
             />
           </div>
         </div>

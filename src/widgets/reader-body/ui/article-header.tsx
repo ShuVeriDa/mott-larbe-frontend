@@ -47,7 +47,7 @@ export const ArticleHeader = ({ data, currentPage, showProgress = false }: Artic
 	].filter(Boolean);
 
 	return (
-		<header className="mb-8">
+		<header className="mb-8" dir="ltr">
 			{showProgress && <ArticleProgressBar progress={data.progress} />}
 			{/* Meta line — editorial caption style */}
 			{metaTokens.length > 0 && (

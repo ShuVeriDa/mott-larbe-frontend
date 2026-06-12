@@ -243,6 +243,7 @@ export const SubmissionEditorForm = (props: SubmissionEditorFormProps) => {
                 slashMenuItems={[]}
                 placeholder={t("myTexts.editor.placeholder")}
                 minHeight="100%"
+                showStressMark
               />
             </div>
           </div>

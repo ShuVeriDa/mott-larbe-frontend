@@ -2,28 +2,13 @@
 
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { useReaderScript } from "@/features/reader-script";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { ChevronDown } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { useReaderFontFamily, FONT_FAMILY_CLASS, type ReaderFontFamily } from "../../model";
-
-interface FontOption {
-	value: ReaderFontFamily;
-	label: string;
-}
-
-const FAMILIES: FontOption[] = [
-	{ value: "sans",         label: "Inter"          },
-	{ value: "golos",        label: "Golos Text"     },
-	{ value: "lora",         label: "Lora"           },
-	{ value: "serif",        label: "Serif"          },
-	{ value: "merriweather", label: "Merriweather"   },
-	{ value: "pt-serif",     label: "PT Serif"       },
-	{ value: "source-serif", label: "Source Serif 4" },
-	{ value: "mono",         label: "Mono"           },
-];
+import { useReaderFontFamily, FONT_FAMILY_META, type ReaderFontFamily } from "../../model";
 
 export interface FontFamilyGroupProps {
 	className?: string;
@@ -32,20 +17,30 @@ export interface FontFamilyGroupProps {
 
 export const FontFamilyGroup = ({ className, fullWidth = false }: FontFamilyGroupProps) => {
 	const { t } = useI18n();
+	const { script } = useReaderScript();
+	const isArabic = script === "ARABIC";
+
 	const family = useReaderFontFamily((s) => s.family);
+	const arabicFamily = useReaderFontFamily((s) => s.arabicFamily);
 	const setFamily = useReaderFontFamily((s) => s.setFamily);
+	const setArabicFamily = useReaderFontFamily((s) => s.setArabicFamily);
+
+	const activeFamily = isArabic ? arabicFamily : family;
+	const handleSelect = (value: ReaderFontFamily) => {
+		if (isArabic) setArabicFamily(value);
+		else setFamily(value);
+		setOpen(false);
+	};
+
+	const visibleFamilies = (Object.keys(FONT_FAMILY_META) as ReaderFontFamily[]).filter(
+		(k) => isArabic ? FONT_FAMILY_META[k].arabicOnly : !FONT_FAMILY_META[k].arabicOnly,
+	);
+
 	const [open, setOpen] = useState(false);
 	const [coords, setCoords] = useState<{ top: number; left: number; width: number } | null>(null);
 	const triggerRef = useRef<HTMLButtonElement>(null);
 
-	const current = FAMILIES.find((f) => f.value === family) ?? FAMILIES[0];
-
-	const handleToggle = () => setOpen(prev => !prev);
-
-	const handleSelect = (value: ReaderFontFamily) => {
-		setFamily(value);
-		setOpen(false);
-	};
+	const handleToggle = () => setOpen((prev) => !prev);
 
 	useLayoutEffect(() => {
 		if (!open || !triggerRef.current) return;
@@ -68,6 +63,10 @@ export const FontFamilyGroup = ({ className, fullWidth = false }: FontFamilyGrou
 		return () => document.removeEventListener("pointerdown", handlePointerDown);
 	}, [open]);
 
+	const activeMeta = FONT_FAMILY_META[activeFamily];
+	const sampleStyle = activeMeta.cssValue ? { fontFamily: activeMeta.cssValue } : undefined;
+	const sampleClass = activeMeta.cssClass || "";
+
 	return (
 		<div className={cn(fullWidth ? "relative w-full" : "relative inline-block", className)}>
 			<Button
@@ -87,30 +86,21 @@ export const FontFamilyGroup = ({ className, fullWidth = false }: FontFamilyGrou
 			>
 				<Typography
 					tag="span"
-					className={cn(
-						"leading-none shrink-0",
-						fullWidth ? "text-[20px]" : "text-[15px]",
-						FONT_FAMILY_CLASS[family],
-					)}
+					className={cn("leading-none shrink-0", fullWidth ? "text-[20px]" : "text-[15px]", sampleClass)}
+					style={sampleStyle}
+					dir={isArabic ? "rtl" : undefined}
 					aria-hidden="true"
 				>
-					Аа
+					{activeMeta.sample}
 				</Typography>
 				<Typography
 					tag="span"
-					className={cn(
-						"flex-1 text-left font-sans leading-none",
-						fullWidth ? "text-[13px]" : "text-[11px] font-medium text-t-1",
-					)}
+					className={cn("flex-1 text-left font-sans leading-none", fullWidth ? "text-[13px]" : "text-[11px] font-medium text-t-1")}
 				>
-					{current.label}
+					{activeMeta.label}
 				</Typography>
 				<ChevronDown
-					className={cn(
-						"shrink-0 text-t-3 transition-transform duration-150",
-						fullWidth ? "size-[14px]" : "size-3",
-						open && "rotate-180",
-					)}
+					className={cn("shrink-0 text-t-3 transition-transform duration-150", fullWidth ? "size-[14px]" : "size-3", open && "rotate-180")}
 					strokeWidth={2}
 				/>
 			</Button>
@@ -119,45 +109,47 @@ export const FontFamilyGroup = ({ className, fullWidth = false }: FontFamilyGrou
 				<ul
 					role="listbox"
 					aria-label={t("reader.settings.font")}
-					style={{
-						position: "absolute",
-						top: coords.top,
-						left: coords.left,
-						minWidth: Math.max(coords.width, 180),
-					}}
+					style={{ position: "absolute", top: coords.top, left: coords.left, minWidth: Math.max(coords.width, 200) }}
 					className={cn(
 						"z-9999 overflow-hidden rounded-[8px]",
 						"border border-bd-2 bg-popover shadow-md ring-1 ring-foreground/10",
-						"max-h-[260px] overflow-y-auto",
+						"max-h-[300px] overflow-y-auto",
 					)}
 				>
-					{FAMILIES.map((item) => (
-						<li
-							key={item.value}
-							role="option"
-							aria-selected={item.value === family}
-							onPointerDown={(e) => {
-								e.preventDefault();
-								handleSelect(item.value);
-							}}
-							className={cn(
-								"flex cursor-pointer items-center gap-3 px-2.5 py-2 text-[13px]",
-								"transition-colors duration-100 hover:bg-surf-2",
-								item.value === family && "bg-acc-bg text-acc-t",
-							)}
-						>
-							<Typography
-								tag="span"
-								className={cn("w-10 shrink-0 text-[18px] leading-none text-center", FONT_FAMILY_CLASS[item.value])}
-								aria-hidden="true"
+					{visibleFamilies.map((value) => {
+						const meta = FONT_FAMILY_META[value];
+						const itemStyle = meta.cssValue ? { fontFamily: meta.cssValue } : undefined;
+						const handlePointerDown = (e: React.PointerEvent) => {
+							e.preventDefault();
+							handleSelect(value);
+						};
+						return (
+							<li
+								key={value}
+								role="option"
+								aria-selected={value === activeFamily}
+								onPointerDown={handlePointerDown}
+								className={cn(
+									"flex cursor-pointer items-center gap-3 px-2.5 py-2 text-[13px]",
+									"transition-colors duration-100 hover:bg-surf-2",
+									value === activeFamily && "bg-acc-bg text-acc-t",
+								)}
 							>
-								Аа
-							</Typography>
-							<Typography tag="span" className="font-sans leading-none">
-								{item.label}
-							</Typography>
-						</li>
-					))}
+								<Typography
+									tag="span"
+									className={cn("w-12 shrink-0 text-[18px] leading-none text-center", meta.cssClass)}
+									style={itemStyle}
+									dir={meta.arabicOnly ? "rtl" : undefined}
+									aria-hidden="true"
+								>
+									{meta.sample}
+								</Typography>
+								<Typography tag="span" className="font-sans leading-none">
+									{meta.label}
+								</Typography>
+							</li>
+						);
+					})}
 				</ul>,
 				document.body,
 			)}

@@ -11,3 +11,4 @@ export { useGeminiModelStore } from "./model/gemini-model-store";
 export { useGeminiFallbackStore } from "./model/gemini-fallback-store";
 export { LanguageSelector } from "./ui/language-selector";
 export { ModelSelector } from "./ui/model-selector";
+export { AiDisclaimer } from "./ui/ai-disclaimer";

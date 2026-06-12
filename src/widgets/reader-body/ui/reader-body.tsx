@@ -2,8 +2,10 @@
 import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 import {
 	ArticleRich,
+	resolveCyrillicText,
 	useNoteLineGroups,
 	usePagePhrases,
+	useScriptPage,
 	type TextPageResponse,
 } from "@/entities/text";
 import { PhraseTranslatePopup, PhraseTranslateSheet } from "@/features/ai-phrase-translate";
@@ -13,6 +15,8 @@ import {
 	useReaderFontFamily,
 } from "@/features/reader-font-family";
 import { useReaderFontSize } from "@/features/reader-font-size";
+import { useReaderArabicSettings } from "@/features/reader-arabic-settings";
+import { FONT_FAMILY_META } from "@/features/reader-font-family";
 import {
 	HIGHLIGHT_COLOR_HEX,
 	HighlightColorPicker,
@@ -20,11 +24,16 @@ import {
 	usePhraseColorVisibility,
 } from "@/features/reader-highlight";
 import {
+	stripDiacriticsFromDoc,
+	useReaderScript,
+} from "@/features/reader-script";
+import {
 	COLUMN_WIDTH_PX,
 	LETTER_SPACING_VALUE,
 	LINE_HEIGHT_VALUE,
 	PAGE_PADDING_CLASS,
 	PARAGRAPH_SPACING_VALUE,
+	WORD_SPACING_VALUE,
 	useReaderTextLayout,
 } from "@/features/reader-text-width";
 import { useReaderTheme } from "@/features/reader-theme";
@@ -61,8 +70,23 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 	const onSelectToken = useSelectToken(data.page.contentRaw, popupMode, mobileDisplayMode);
 	const activeToken = useWordLookupStore(s => s.activeToken);
 
+	// Script selection
+	const { script, showDiacritics } = useReaderScript();
+	const scriptQuery = useScriptPage(
+		data.id,
+		data.page.pageNumber,
+		script !== "CYRILLIC" ? script : null,
+	);
+	const isNonCyrillic = script !== "CYRILLIC";
+	const scriptData = isNonCyrillic ? scriptQuery.data : null;
+	const displayContentRich = scriptData?.contentRich ?? data.page.contentRich;
+	const displayTokens = scriptData?.tokens ?? data.tokens;
+	const applyDiacriticsStrip = script === "ARABIC" && !showDiacritics;
+	const articleLang = script === "ARABIC" ? "ar" : script === "LATIN" ? "che-Latn" : lang;
+
 	const [phraseTranslate, setPhraseTranslate] = useState<{
 		phrase: string;
+		displayPhrase?: string;
 		x: number;
 		y: number;
 		contextSentence?: string;
@@ -87,13 +111,17 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 	const bgColor = useReaderTheme(s => s.bgColor);
 	const fontSize = useReaderFontSize(s => s.size);
 	const fontFamily = useReaderFontFamily(s => s.family);
+	const arabicFamily = useReaderFontFamily(s => s.arabicFamily);
 	const {
 		columnWidth,
 		pagePadding,
 		lineHeight,
 		letterSpacing,
 		paragraphSpacing,
+		wordSpacing,
 	} = useReaderTextLayout();
+	const { arabicFontSize } = useReaderArabicSettings();
+	const arabicFontCssValue = FONT_FAMILY_META[arabicFamily]?.cssValue ?? "var(--font-scheherazade), serif";
 
 	const {
 		articleRef,
@@ -103,7 +131,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 		handlePickColor,
 		handleRemoveHighlight,
 		handleDismiss,
-	} = useReaderHighlights(data.id, data.page.pageNumber, data.page.contentRaw);
+	} = useReaderHighlights(data.id, data.page.pageNumber, data.page.contentRaw, displayTokens, isNonCyrillic);
 
 	const {
 		noteMarks,
@@ -123,20 +151,32 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 
 	const handleAddNoteFromSelection = (body: string) => {
 		if (!selection) return;
-		handleAddNote(selection.text, body);
+		const cyrillicText = isNonCyrillic
+			? resolveCyrillicText(selection.text, displayTokens, data.page.contentRaw)
+			: selection.text;
+		handleAddNote(cyrillicText, body);
 	};
 
 	const handleTranslatePhrase = () => {
 		if (!selection) return;
-		const phrase = selection.text;
+		const cyrillicPhrase = isNonCyrillic
+			? resolveCyrillicText(selection.text, displayTokens, data.page.contentRaw)
+			: selection.text;
 		const raw = data.page.contentRaw;
-		const idx = raw.indexOf(phrase);
+		const idx = raw.indexOf(cyrillicPhrase);
 		const contextSentence = idx !== -1
-			? extractSentence(raw, idx, idx + phrase.length)
+			? extractSentence(raw, idx, idx + cyrillicPhrase.length)
 			: undefined;
 		const isMobile = typeof window !== "undefined" && window.innerWidth <= 767;
 		const useSheet = isMobile && mobileDisplayMode === "SHEET";
-		setPhraseTranslate({ phrase, x: selection.x, y: selection.y, contextSentence, useSheet });
+		setPhraseTranslate({
+			phrase: cyrillicPhrase,
+			displayPhrase: isNonCyrillic ? selection.text : undefined,
+			x: selection.x,
+			y: selection.y,
+			contextSentence,
+			useSheet,
+		});
 		handleDismiss();
 	};
 
@@ -164,9 +204,15 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 			}))
 		: [];
 
+	const isArabicScript = script === "ARABIC";
+	const contentRichForDisplay = applyDiacriticsStrip
+		? stripDiacriticsFromDoc(displayContentRich)
+		: displayContentRich;
 	const fontVars = {
-		"--reader-font-size": `${fontSize}px`,
+		"--reader-font-size": isArabicScript ? `${arabicFontSize}px` : `${fontSize}px`,
 		"--reader-line-height": String(LINE_HEIGHT_VALUE[lineHeight]),
+		"--reader-word-spacing": WORD_SPACING_VALUE[wordSpacing],
+		...(isArabicScript ? { "--reader-arabic-font": arabicFontCssValue } : {}),
 		...(theme === "custom" && bgColor ? { backgroundColor: bgColor } : {}),
 	};
 
@@ -177,9 +223,11 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 				"bg-bg text-t-1 transition-colors duration-250",
 				"[&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded [&::-webkit-scrollbar-thumb]:bg-surf-4",
 				PAGE_PADDING_CLASS[pagePadding],
-				FONT_FAMILY_CLASS[fontFamily],
+				isArabicScript ? "arabic-script" : FONT_FAMILY_CLASS[fontFamily],
 			)}
 			data-reader-theme={theme}
+			dir={isArabicScript ? "rtl" : undefined}
+			lang={articleLang}
 			style={fontVars}
 			onPointerDown={swipe.onPointerDown}
 			onPointerUp={swipe.onPointerUp}
@@ -188,8 +236,8 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 			<ArticleHeader data={data} currentPage={currentPage} showProgress={showProgress} />
 			<ArticleRich
 				ref={articleRef}
-				contentRich={data.page.contentRich}
-				tokens={data.tokens}
+				contentRich={contentRichForDisplay}
+				tokens={displayTokens}
 				activeTokenId={activeToken?.id ?? null}
 				onSelectToken={onSelectToken}
 				maxWidth={COLUMN_WIDTH_PX[columnWidth]}
@@ -202,6 +250,9 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 				onSelectPhrase={handleSelectPhrase}
 				phraseColorVisible={phraseColorVisible}
 				pageNumber={currentPage}
+				isRtl={script === "ARABIC"}
+				cyrillicRaw={isNonCyrillic ? data.page.contentRaw : undefined}
+				cyrillicContentRich={isNonCyrillic ? data.page.contentRich : undefined}
 			/>
 			{/* Note line group icons — rendered via portal at measured positions */}
 			{mounted && noteGroups.length > 0 &&
@@ -236,7 +287,9 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 				<AnimatePresence>
 					{phraseTranslate && !phraseTranslate.useSheet && (
 						<PhraseTranslatePopup
+							key={phraseTranslate.phrase}
 							phrase={phraseTranslate.phrase}
+							displayPhrase={phraseTranslate.displayPhrase}
 							x={phraseTranslate.x}
 							y={phraseTranslate.y}
 							contextSentence={phraseTranslate.contextSentence}
@@ -250,6 +303,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 				<PhraseTranslateSheet
 					open={!!phraseTranslate?.useSheet}
 					phrase={phraseTranslate?.phrase ?? ""}
+					displayPhrase={phraseTranslate?.displayPhrase}
 					contextSentence={phraseTranslate?.contextSentence}
 					lang={lang}
 					onClose={handleClosePhraseTranslate}

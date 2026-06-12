@@ -7,6 +7,7 @@ import {
 	type Highlight,
 	type HighlightColor,
 } from "@/entities/highlight";
+import { resolveCyrillicText, type TextToken } from "@/entities/text";
 import { useTextSelection } from "@/features/reader-highlight";
 import { useRef } from "react";
 
@@ -21,7 +22,13 @@ const findOffset = (haystack: string, needle: string): { start: number; end: num
 const overlaps = (a: { start: number; end: number }, b: { start: number; end: number }) =>
 	a.start < b.end && b.start < a.end;
 
-export const useReaderHighlights = (textId: string, pageNumber: number, contentRaw: string) => {
+export const useReaderHighlights = (
+	textId: string,
+	pageNumber: number,
+	contentRaw: string,
+	displayTokens?: readonly TextToken[],
+	isNonCyrillic?: boolean,
+) => {
 	const articleRef = useRef<HTMLDivElement>(null);
 	const { selection, clearSelection } = useTextSelection(articleRef);
 
@@ -29,20 +36,29 @@ export const useReaderHighlights = (textId: string, pageNumber: number, contentR
 	const { mutate: createHighlight } = useCreateHighlight(textId, pageNumber);
 	const { mutate: deleteHighlight } = useDeleteHighlight(textId, pageNumber);
 
+	const resolveText = (displayText: string): string => {
+		if (!isNonCyrillic || !displayTokens) return displayText;
+		return resolveCyrillicText(displayText, displayTokens, contentRaw);
+	};
+
 	const matchedHighlight: Highlight | null = !selection ? null :
-		highlights.find(h =>
-			h.selectedText === selection.text ||
-			h.selectedText.includes(selection.text) ||
-			selection.text.includes(h.selectedText),
-		) ?? null;
+		highlights.find(h => {
+			const cyrText = resolveText(selection.text);
+			return (
+				h.selectedText === cyrText ||
+				h.selectedText.includes(cyrText) ||
+				cyrText.includes(h.selectedText)
+			);
+		}) ?? null;
 
 	const handlePickColor = (color: HighlightColor | string) => {
 		if (!selection) return;
 		if (selection.text.length > 2_000) return;
 
-		const newOffset = findOffset(contentRaw, selection.text);
+		const cyrillicText = resolveText(selection.text);
+		const newOffset = findOffset(contentRaw, cyrillicText);
 		if (!newOffset) {
-			createHighlight({ textId, pageNumber, color, startOffset: 0, endOffset: 0, selectedText: selection.text });
+			createHighlight({ textId, pageNumber, color, startOffset: 0, endOffset: 0, selectedText: cyrillicText });
 			clearSelection();
 			return;
 		}
@@ -57,7 +73,7 @@ export const useReaderHighlights = (textId: string, pageNumber: number, contentR
 				textId, pageNumber, color,
 				startOffset: newOffset.start,
 				endOffset: newOffset.end,
-				selectedText: selection.text,
+				selectedText: cyrillicText,
 			});
 			clearSelection();
 			return;
@@ -103,7 +119,7 @@ export const useReaderHighlights = (textId: string, pageNumber: number, contentR
 			textId, pageNumber, color,
 			startOffset: newOffset.start,
 			endOffset: newOffset.end,
-			selectedText: selection.text,
+			selectedText: cyrillicText,
 		});
 
 		clearSelection();

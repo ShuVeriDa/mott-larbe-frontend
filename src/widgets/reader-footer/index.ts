@@ -1,1 +1,1 @@
-export { ReaderFooter } from "./ui/reader-footer";
+export { ReaderFooter, type ReaderFooterProps } from "./ui/reader-footer";

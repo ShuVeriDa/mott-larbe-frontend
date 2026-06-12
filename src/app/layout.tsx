@@ -1,6 +1,6 @@
 import { ReactNode, Suspense } from 'react';
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Golos_Text, Geist_Mono, Inter, Lora, Merriweather, PT_Serif, Source_Serif_4 } from "next/font/google";
+import { Playfair_Display, Golos_Text, Geist_Mono, Inter, Lora, Merriweather, PT_Serif, Source_Serif_4, Scheherazade_New, Amiri, Noto_Naskh_Arabic, Lateef, Reem_Kufi } from "next/font/google";
 import { QueryProvider } from "@/shared/ui/query-provider";
 import { TelegramFab, TelegramToast } from "@/shared/ui/telegram-fab";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
@@ -54,6 +54,41 @@ const sourceSerif4 = Source_Serif_4({
 	variable: "--font-source-serif",
 	subsets: ["latin"],
 	weight: ["300", "400", "600"],
+});
+
+const scheherazadeNew = Scheherazade_New({
+	variable: "--font-scheherazade",
+	subsets: ["arabic"],
+	weight: ["400", "700"],
+	display: "swap",
+});
+
+const amiri = Amiri({
+	variable: "--font-amiri",
+	subsets: ["arabic"],
+	weight: ["400", "700"],
+	display: "swap",
+});
+
+const notoNaskhArabic = Noto_Naskh_Arabic({
+	variable: "--font-noto-naskh",
+	subsets: ["arabic"],
+	weight: ["400", "500", "600", "700"],
+	display: "swap",
+});
+
+const lateef = Lateef({
+	variable: "--font-lateef",
+	subsets: ["arabic"],
+	weight: ["400"],
+	display: "swap",
+});
+
+const reemKufi = Reem_Kufi({
+	variable: "--font-reem-kufi",
+	subsets: ["arabic"],
+	weight: ["400", "500", "600"],
+	display: "swap",
 });
 
 export const viewport: Viewport = {
@@ -150,6 +185,11 @@ const fontVars = cn(
 	merriweather.variable,
 	ptSerif.variable,
 	sourceSerif4.variable,
+	scheherazadeNew.variable,
+	amiri.variable,
+	notoNaskhArabic.variable,
+	lateef.variable,
+	reemKufi.variable,
 	"font-sans",
 	inter.variable,
 	playfairDisplayHeading.variable,

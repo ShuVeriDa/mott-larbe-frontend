@@ -213,6 +213,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					processingProgress={textData.processingProgress}
 					tokenCount={textData.tokenCount}
 					showRetokenizeBar={showRetokenizeBar}
+					showStressMark={language === "CHE"}
 					textId={textId}
 					onTitleChange={handleTitleChange}
 					onPageContentChange={handlePageContentChange}

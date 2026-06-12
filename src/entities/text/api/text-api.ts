@@ -1,6 +1,7 @@
 import { http } from "@/shared/api";
 import type {
 	BookmarkResponse,
+	ScriptPageResponse,
 	TextPageResponse,
 	TextProgressResponse,
 } from "./types";
@@ -15,6 +16,18 @@ export const textApi = {
 			`/texts/${textId}/pages/${pageNumber}`,
 		);
 		return data;
+	},
+
+	getScriptPage: async (
+		textId: string,
+		pageNumber: number,
+		script: string,
+	): Promise<ScriptPageResponse> => {
+		const { data } = await http.get<TextPageResponse>(
+			`/texts/${textId}/pages/${pageNumber}`,
+			{ params: { script } },
+		);
+		return { contentRich: data.page.contentRich, tokens: data.tokens };
 	},
 
 	getProgress: async (textId: string): Promise<TextProgressResponse> => {

@@ -8,6 +8,7 @@ import {
   AdminTextMetaDescriptionSection,
 } from "@/shared/ui/admin-text-editor";
 import { MetaSection, FieldLabel, FieldInput, FieldSelect } from "@/shared/ui/admin-text-meta-fields";
+import { ScriptVersionsPanel } from "@/features/reader-script";
 import type { UserTextLanguage, UserTextType } from "@/entities/user-text";
 import type { SubmissionLicenseType, SubmissionType } from "@/features/text-submission";
 import { useGenres } from "@/entities/genre";
@@ -29,6 +30,7 @@ const LICENSE_OPTIONS: { value: SubmissionLicenseType; label: string }[] = [
 ];
 
 export interface UserTextEditMetaPanelProps {
+  textId?: string;
   language: UserTextLanguage;
   type: UserTextType | SubmissionType;
   author: string;
@@ -61,6 +63,7 @@ export interface UserTextEditMetaPanelProps {
 }
 
 export const UserTextEditMetaPanel = ({
+  textId,
   language, type, author, sourceUrl, isSaving,
   onLanguageChange, onTypeChange, onAuthorChange, onSourceChange,
   onSaveDraft, onPrimaryAction,
@@ -230,6 +233,8 @@ export const UserTextEditMetaPanel = ({
             onCoverRemove={onCoverRemove}
           />
         )}
+
+        {textId && <ScriptVersionsPanel textId={textId} isUserText />}
 
         <AdminTextMetaPrimaryActionsSection
           isSaving={isSaving}

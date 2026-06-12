@@ -1,6 +1,7 @@
 export { textApi, textKeys } from "./api";
 export type {
 	BookmarkResponse,
+	ScriptPageResponse,
 	TextLanguage,
 	TextPageData,
 	TextPageResponse,
@@ -8,8 +9,9 @@ export type {
 	TextProgressResponse,
 	TextSubmittedBy,
 	TextToken,
+	TipTapDoc,
 } from "./api";
-export { useTextPage, useTextProgress, usePagePhrases } from "./model";
+export { useTextPage, useTextProgress, usePagePhrases, useScriptPage } from "./model";
 export {
 	tokenizeContent,
 	type ParagraphSegment,
@@ -20,3 +22,4 @@ export { ArticleToken } from "./ui/article-token";
 export { ArticleTokenized } from "./ui/article-tokenized";
 export { ArticleRich, type ArticleRichProps, type HighlightMark, type NoteMark } from "./ui/article-rich";
 export { useNoteLineGroups, type NoteLineGroup } from "./lib/note-line-groups";
+export { resolveCyrillicText } from "./lib/resolve-cyrillic-text";

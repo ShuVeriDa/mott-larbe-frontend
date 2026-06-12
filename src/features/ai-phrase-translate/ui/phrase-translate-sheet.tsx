@@ -2,6 +2,7 @@
 
 import { useGeminiKeyStatus } from "@/entities/ai-translation";
 import { useTranslationLanguageStore } from "@/features/ai-word-lookup";
+import { useReaderScript } from "@/features/reader-script";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
@@ -27,6 +28,7 @@ import { PhraseRefineBlock } from "./phrase-refine-block";
 interface PhraseTranslateSheetProps {
 	open: boolean;
 	phrase: string;
+	displayPhrase?: string;
 	lang: string;
 	contextSentence?: string;
 	onClose: () => void;
@@ -35,11 +37,14 @@ interface PhraseTranslateSheetProps {
 export const PhraseTranslateSheet = ({
 	open,
 	phrase,
+	displayPhrase,
 	lang,
 	contextSentence,
 	onClose,
 }: PhraseTranslateSheetProps) => {
 	const { t } = useI18n();
+	const { script } = useReaderScript();
+	const isRtl = script === "ARABIC";
 	const { state, refineState, translate, reset, openRefine, refine } = useAiPhraseTranslate();
 	const { data: keyStatus } = useGeminiKeyStatus();
 	const { targetLanguage } = useTranslationLanguageStore();
@@ -49,6 +54,7 @@ export const PhraseTranslateSheet = ({
 	useEffect(() => {
 		if (!open) return;
 		reset();
+		setShowCyrillic(false);
 		if (hasKey) {
 			translate(phrase, contextSentence, targetLanguage);
 		}
@@ -56,6 +62,9 @@ export const PhraseTranslateSheet = ({
 
 	const [copied, setCopied] = useState(false);
 	const [glossOpen, setGlossOpen] = useState(false);
+	const [showCyrillic, setShowCyrillic] = useState(false);
+
+	const handleToggleCyrillic = () => setShowCyrillic(prev => !prev);
 
 	const handleCopy = () => {
 		if (state.phase !== "done") return;
@@ -79,14 +88,42 @@ export const PhraseTranslateSheet = ({
 
 				<div className="min-h-0 flex-1 overflow-y-auto">
 					{/* Badge + phrase */}
-					<div className="border-b border-bd-1 px-4 py-3">
+					<div className="relative border-b border-bd-1 px-4 py-3">
 						<div className="mb-2 flex items-center gap-1.5">
 							<span className="flex items-center gap-1 rounded-[4px] border-[0.5px] border-pur/30 bg-pur-bg px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-pur-t">
 								<Sparkles className="size-2.5" strokeWidth={1.8} />
 								{t("aiTranslation.phrase.title")}
 							</span>
 						</div>
-						<div className="text-[15px] font-medium text-t-1">{phrase}</div>
+						<div
+							className={cn("text-[15px] font-medium text-t-1", displayPhrase && "pr-7")}
+							dir={isRtl ? "rtl" : undefined}
+						>
+							{displayPhrase ?? phrase}
+						</div>
+						{displayPhrase && (
+							<>
+								<button
+									type="button"
+									onClick={handleToggleCyrillic}
+									title={showCyrillic ? t("aiTranslation.phrase.hideCyrillic") : t("aiTranslation.phrase.showCyrillic")}
+									className={cn(
+										"absolute right-3 top-3 flex size-6 items-center justify-center rounded-full border-[0.5px] transition-colors",
+										showCyrillic
+											? "border-acc/40 bg-acc/10 text-acc"
+											: "border-bd-2 bg-surf-2 text-t-4 hover:border-acc/40 hover:text-acc",
+									)}
+								>
+									<ChevronDown
+										className={cn("size-3.5 transition-transform", showCyrillic && "rotate-180")}
+										strokeWidth={1.8}
+									/>
+								</button>
+								{showCyrillic && (
+									<div className="mt-2 text-[13px] text-t-3">{phrase}</div>
+								)}
+							</>
+						)}
 					</div>
 
 					{/* Body */}

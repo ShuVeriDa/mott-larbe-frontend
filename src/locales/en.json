@@ -2008,9 +2008,26 @@
       "highlightsShow": "Show marks",
       "highlightsHide": "Hide marks",
       "highlightsClearAll": "Remove marks",
+      "wordSpacing": "Word spacing",
+      "wordSpacingTight": "Tight",
+      "wordSpacingNormal": "Normal",
+      "wordSpacingWide": "Wide",
+      "wordSpacingWider": "Wider",
       "phraseColor": "Phrase color",
       "phraseColorShow": "Show phrase color",
-      "phraseColorHide": "Hide phrase color"
+      "phraseColorHide": "Hide phrase color",
+      "script": {
+        "cyrillic": "Cyrillic",
+        "cyrillicShort": "Кр",
+        "latin": "Latin",
+        "latinShort": "Lat",
+        "arabic": "عربي",
+        "arabicShort": "عر",
+        "switchScript": "Writing system",
+        "diacritics": "Diacritics",
+        "diacriticsShow": "Show diacritics",
+        "diacriticsHide": "Hide diacritics"
+      }
     },
     "notes": {
       "title": "Notes",
@@ -3823,7 +3840,21 @@
         "sections": {
           "tokenization": "Tokenization",
           "wordAnnotation": "Word Annotation",
-          "versions": "Recent changes"
+          "versions": "Recent changes",
+          "scriptVersions": "Script versions"
+        },
+        "scriptVersions": {
+          "latin": "Latin",
+          "arabic": "Arabic",
+          "statusNone": "None",
+          "statusRunning": "Generating…",
+          "statusDone": "Ready",
+          "statusError": "Error",
+          "generate": "Generate",
+          "delete": "Delete",
+          "deleteConfirm": "Delete version?",
+          "generating": "Generating…",
+          "generateError": "Generation error"
         },
         "wordAnnotation": {
           "dialogTitle": "Link word form to lemma",
@@ -3876,6 +3907,7 @@
         "palochkaColumnUnicode": "Unicode",
         "palochkaUppercase": "Uppercase palochka",
         "palochkaLowercase": "Lowercase palochka",
+        "stressMark": "Long vowel (stress mark)",
         "dangerZone": "Danger zone",
         "deleteText": "Delete text",
         "versionCurrent": "Current version",
@@ -5217,8 +5249,11 @@
       "refineError": "Failed to refine translation",
       "error": "Phrase translation failed. Please try again later",
       "errorLocationNotSupported": "Gemini is not available in your region. Try using a VPN.",
-      "batchError": "Failed to translate words. Please try again later"
+      "batchError": "Failed to translate words. Please try again later",
+      "showCyrillic": "Show Cyrillic",
+      "hideCyrillic": "Hide Cyrillic"
     },
+    "disclaimer": "AI translation — may be inaccurate.",
     "history": {
       "title": "AI translations this session",
       "empty": "No AI translations in this session",

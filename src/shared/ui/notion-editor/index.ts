@@ -1,5 +1,6 @@
 export { NotionEditor } from "./notion-editor";
-export type { NotionEditorProps, TipTapDoc, TipTapNode } from "./notion-editor";
+export type { NotionEditorProps, TipTapDoc, TipTapNode, TipTapMark } from "./notion-editor";
+export { StressMarkExtension } from "./stress-mark-extension";
 export { PhraseHighlightExtension, PHRASE_CLICK_EVENT } from "./phrase-highlight-extension";
 export type { PhraseClickDetail } from "./phrase-highlight-extension";
 export { WordAnnotationHighlightExtension, WORD_ANNOTATION_CLICK_EVENT } from "./word-annotation-highlight-extension";

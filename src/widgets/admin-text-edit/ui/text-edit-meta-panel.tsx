@@ -20,6 +20,7 @@ import { Check, Save, Trash2 } from "lucide-react";
 import type { ComponentProps, KeyboardEvent } from "react";
 import { useState } from "react";
 import type { PageContent } from "../model/use-admin-text-edit-page";
+import { ScriptVersionsPanel } from "@/features/reader-script";
 import { TextEditMetaVersionsSection } from "./text-edit-meta-versions-section";
 import { TokenizationSection } from "./tokenization-section";
 import { WordAnnotationSection } from "./word-annotation-section";
@@ -192,6 +193,8 @@ export const TextEditMetaPanel = ({
 				currentLabel={t("admin.texts.editPage.versionCurrent")}
 				allVersionsLabel={t("admin.texts.editPage.allVersions")}
 			/>
+
+			<ScriptVersionsPanel textId={textId} />
 
 			<AdminTextMetaPrimaryActionsSection
 				isSaving={isSaving}

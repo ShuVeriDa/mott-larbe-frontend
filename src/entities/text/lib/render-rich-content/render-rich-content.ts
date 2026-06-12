@@ -19,6 +19,9 @@ export interface RichParagraph {
 	textAlign: "left" | "center" | "right" | "justify";
 	segments: RichSegment[];
 	blockType?: "blockquote";
+	// Cyrillic plain text of this paragraph — used for highlight/note matching
+	// when segments contain transliterated display text (non-Cyrillic scripts).
+	cyrillicText?: string;
 }
 
 const resolveMarks = (marks: TipTapNode["marks"]): MarkAttrs => {
@@ -67,12 +70,49 @@ export const contentRawFromRich = (contentRich: TipTapDoc): string => {
 export const renderRichContent = (
 	contentRich: TipTapDoc,
 	tokens: readonly TextToken[],
+	displayOnly?: boolean,
+	cyrillicRaw?: string,
+	cyrillicContentRich?: TipTapDoc,
 ): RichParagraph[] => {
-	const doc = contentRich;
-	if (!doc?.content) return [];
+	if (!contentRich?.content) return [];
 
-	// Reconstruct the same string the backend used to compute token offsets.
-	const contentRaw = contentRawFromRich(contentRich);
+	// In displayOnly mode the content is transliterated — char offsets from the
+	// Cyrillic contentRaw don't apply. Emit every text node as a plain text segment.
+	if (displayOnly) {
+		const paragraphs: RichParagraph[] = [];
+		const emitDisplayOnly = (paraNode: TipTapNode, blockType?: "blockquote") => {
+			const textAlign = (paraNode.attrs?.textAlign as RichParagraph["textAlign"]) ?? "left";
+			const segments: RichSegment[] = [];
+			for (const node of paraNode.content ?? []) {
+				if (node.type === "hardBreak") {
+					segments.push({ kind: "text", value: "\n", marks: {} });
+				} else if (node.type === "text" && node.text) {
+					segments.push({ kind: "text", value: node.text, marks: resolveMarks(node.marks) });
+				}
+			}
+			if (segments.length > 0) paragraphs.push({ textAlign, segments, blockType });
+		};
+		const walkDisplayOnly = (node: TipTapNode) => {
+			if (node.type === "paragraph") {
+				emitDisplayOnly(node);
+			} else if (node.type === "blockquote") {
+				for (const child of node.content ?? []) {
+					if (child.type === "paragraph") emitDisplayOnly(child, "blockquote");
+					else walkDisplayOnly(child);
+				}
+			}
+		};
+		for (const block of contentRich.content) walkDisplayOnly(block);
+		return paragraphs;
+	}
+
+	// When contentRich is transliterated (non-Cyrillic script), use the original
+	// Cyrillic contentRich for offset-mapping (token positions refer to Cyrillic text).
+	// The transliterated contentRich is only used to extract display text for plain segments.
+	const mappingDoc = cyrillicContentRich ?? contentRich;
+
+	// Use the provided Cyrillic raw string, or reconstruct it from the mapping doc.
+	const contentRaw = cyrillicRaw ?? contentRawFromRich(mappingDoc);
 
 	const sorted = [...tokens].sort((a, b) => a.startOffset - b.startOffset);
 	let tokenIdx = 0;
@@ -83,16 +123,19 @@ export const renderRichContent = (
 	// exactly like tokenize-content slices by offset — no arithmetic over TipTap node lengths.
 	let rawCursor = 0;
 
-	const processParagraphNode = (paraNode: TipTapNode, blockType?: "blockquote") => {
-		const textAlign = (paraNode.attrs?.textAlign as RichParagraph["textAlign"]) ?? "left";
+	const processParagraphNode = (
+		cyrParaNode: TipTapNode,
+		blockType?: "blockquote",
+	) => {
+		const textAlign = (cyrParaNode.attrs?.textAlign as RichParagraph["textAlign"]) ?? "left";
 		const segments: RichSegment[] = [];
 
-		const emitText = (text: string, marks: MarkAttrs) => {
-			// Find this text node's actual position in contentRaw
-			const found = contentRaw.indexOf(text, rawCursor);
+		const emitText = (cyrText: string, marks: MarkAttrs) => {
+			// Find this text node's actual position in the Cyrillic contentRaw
+			const found = contentRaw.indexOf(cyrText, rawCursor);
 			if (found === -1) return;
 			const segStart = found;
-			const segEnd = segStart + text.length;
+			const segEnd = segStart + cyrText.length;
 			rawCursor = segEnd;
 			let cursor = 0;
 
@@ -102,17 +145,17 @@ export const renderRichContent = (
 			}
 
 			// Cross-node token: started in a previous text node, overlaps into this one.
-			// Emit the overlapping portion as a text segment preserving current marks (e.g. superscript).
 			const leadingTok = sorted[tokenIdx];
 			if (leadingTok && leadingTok.startOffset < segStart && leadingTok.endOffset > segStart) {
-				const overlapEnd = Math.min(leadingTok.endOffset - segStart, text.length);
-				segments.push({ kind: "text", value: text.slice(0, overlapEnd), marks });
+				const overlapEnd = Math.min(leadingTok.endOffset - segStart, cyrText.length);
+				// Plain overlap (cross-node) — show Cyrillic slice (punctuation context)
+				segments.push({ kind: "text", value: cyrText.slice(0, overlapEnd), marks });
 				cursor = overlapEnd;
 				if (leadingTok.endOffset <= segEnd) tokenIdx++;
-				if (cursor >= text.length) return;
+				if (cursor >= cyrText.length) return;
 			}
 
-			while (cursor < text.length) {
+			while (cursor < cyrText.length) {
 				const absPos = segStart + cursor;
 
 				while (tokenIdx < sorted.length && sorted[tokenIdx].endOffset <= absPos) {
@@ -122,41 +165,49 @@ export const renderRichContent = (
 				const tok = sorted[tokenIdx];
 				if (tok && tok.startOffset >= absPos && tok.startOffset < segEnd) {
 					const relStart = tok.startOffset - segStart;
-					const relEnd = Math.min(tok.endOffset - segStart, text.length);
+					const relEnd = Math.min(tok.endOffset - segStart, cyrText.length);
 					if (cursor < relStart) {
-						segments.push({ kind: "text", value: text.slice(cursor, relStart), marks });
+						// Text between tokens — punctuation/spaces, same in all scripts
+						segments.push({ kind: "text", value: cyrText.slice(cursor, relStart), marks });
 					}
-					segments.push({ kind: "token", value: text.slice(relStart, relEnd), token: tok, marks });
+					segments.push({ kind: "token", value: tok.displayText ?? cyrText.slice(relStart, relEnd), token: tok, marks });
 					cursor = relEnd;
 					if (tok.endOffset <= segEnd) tokenIdx++;
 				} else {
-					segments.push({ kind: "text", value: text.slice(cursor), marks });
-					cursor = text.length;
+					// Remainder — punctuation/spaces after last token in segment
+					segments.push({ kind: "text", value: cyrText.slice(cursor), marks });
+					cursor = cyrText.length;
 				}
 			}
 		};
 
-		for (const node of paraNode.content ?? []) {
-			if (node.type === "hardBreak") {
+		// Collect Cyrillic plain text for highlight/note matching when non-Cyrillic
+		const cyrillicParts: string[] = [];
+
+		for (const cyrNode of cyrParaNode.content ?? []) {
+			if (cyrNode.type === "hardBreak") {
 				segments.push({ kind: "text", value: "\n", marks: {} });
+				cyrillicParts.push("\n");
 				// hardBreak is a \n in contentRaw; advance past it
 				const nlPos = contentRaw.indexOf("\n", rawCursor);
 				if (nlPos !== -1) rawCursor = nlPos + 1;
-			} else if (node.type === "text" && node.text) {
-				emitText(node.text, resolveMarks(node.marks));
+			} else if (cyrNode.type === "text" && cyrNode.text) {
+				cyrillicParts.push(cyrNode.text);
+				emitText(cyrNode.text, resolveMarks(cyrNode.marks));
 			}
 		}
 
 		if (segments.length > 0) {
-			paragraphs.push({ textAlign, segments, blockType });
+			const cyrillicText = cyrillicContentRich ? cyrillicParts.join("") : undefined;
+			paragraphs.push({ textAlign, segments, blockType, cyrillicText });
 		}
 	};
 
-	const walkNode = (node: TipTapNode) => {
-		if (node.type === "paragraph") {
-			processParagraphNode(node);
-		} else if (node.type === "blockquote") {
-			for (const child of node.content ?? []) {
+	const walkNode = (cyrNode: TipTapNode) => {
+		if (cyrNode.type === "paragraph") {
+			processParagraphNode(cyrNode);
+		} else if (cyrNode.type === "blockquote") {
+			for (const child of cyrNode.content ?? []) {
 				if (child.type === "paragraph") {
 					processParagraphNode(child, "blockquote");
 				} else {
@@ -166,7 +217,7 @@ export const renderRichContent = (
 		}
 	};
 
-	for (const block of doc.content) {
+	for (const block of mappingDoc.content) {
 		walkNode(block);
 	}
 

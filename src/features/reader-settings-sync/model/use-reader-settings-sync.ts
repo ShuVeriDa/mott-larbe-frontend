@@ -5,6 +5,7 @@ import { useReaderFontFamily } from "@/features/reader-font-family";
 import { useReaderFontSize } from "@/features/reader-font-size";
 import { useReaderTextLayout } from "@/features/reader-text-width";
 import { useReaderTheme } from "@/features/reader-theme";
+import { useReaderArabicSettings } from "@/features/reader-arabic-settings";
 import { useEffect, useRef } from "react";
 import { useReaderInitStore } from "./reader-init-store";
 
@@ -34,10 +35,12 @@ export const useReaderSettingsSync = () => {
 	});
 
 	const fontFamily = useReaderFontFamily((s) => s.family);
+	const arabicFontFamily = useReaderFontFamily((s) => s.arabicFamily);
 	const fontSize = useReaderFontSize((s) => s.size);
-	const { columnWidth, pagePadding, lineHeight, letterSpacing, paragraphSpacing } = useReaderTextLayout();
+	const { columnWidth, pagePadding, lineHeight, letterSpacing, paragraphSpacing, wordSpacing } = useReaderTextLayout();
 	const theme = useReaderTheme((s) => s.theme);
 	const bgColor = useReaderTheme((s) => s.bgColor);
+	const { arabicFontSize } = useReaderArabicSettings();
 
 	useEffect(() => {
 		if (!mountedRef.current) { mountedRef.current = true; return; }
@@ -76,6 +79,11 @@ export const useReaderSettingsSync = () => {
 
 	useEffect(() => {
 		if (!mountedRef.current) return;
+		scheduleRef.current({ readerWordSpacing: wordSpacing });
+	}, [wordSpacing]); // eslint-disable-line react-hooks/exhaustive-deps
+
+	useEffect(() => {
+		if (!mountedRef.current) return;
 		scheduleRef.current({ readerTheme: theme });
 	}, [theme]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -83,6 +91,17 @@ export const useReaderSettingsSync = () => {
 		if (!mountedRef.current) return;
 		scheduleRef.current({ readerBgColor: bgColor });
 	}, [bgColor]); // eslint-disable-line react-hooks/exhaustive-deps
+
+	useEffect(() => {
+		if (!mountedRef.current) return;
+		scheduleRef.current({ readerArabicFontFamily: arabicFontFamily });
+	}, [arabicFontFamily]); // eslint-disable-line react-hooks/exhaustive-deps
+
+
+	useEffect(() => {
+		if (!mountedRef.current) return;
+		scheduleRef.current({ readerArabicFontSize: arabicFontSize });
+	}, [arabicFontSize]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	// Flush pending changes on unmount
 	useEffect(() => {

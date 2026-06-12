@@ -6,6 +6,12 @@ import { FONT_SIZE_STEPS, useReaderFontSize } from "@/features/reader-font-size"
 import { useHighlightVisibility } from "@/features/reader-highlight";
 import { useReaderTextLayout } from "@/features/reader-text-width";
 import { useReaderTheme } from "@/features/reader-theme";
+import {
+	ARABIC_FONT_SIZE_STEPS,
+	useReaderArabicSettings,
+} from "@/features/reader-arabic-settings";
+import type { ReaderFontFamily } from "@/features/reader-font-family";
+import type { ReaderWordSpacing } from "@/features/reader-text-width";
 import { useEffect, useRef } from "react";
 import { useReaderInitStore } from "./reader-init-store";
 
@@ -19,11 +25,13 @@ export const useReaderSettingsInit = () => {
 	const setInitializing = useReaderInitStore((s) => s.setInitializing);
 
 	const setFamily = useReaderFontFamily((s) => s.setFamily);
+	const setArabicFamily = useReaderFontFamily((s) => s.setArabicFamily);
 	const setSize = useReaderFontSize((s) => s.setSize);
-	const { setColumnWidth, setPagePadding, setLineHeight, setLetterSpacing, setParagraphSpacing } = useReaderTextLayout();
+	const { setColumnWidth, setPagePadding, setLineHeight, setLetterSpacing, setParagraphSpacing, setWordSpacing } = useReaderTextLayout();
 	const setTheme = useReaderTheme((s) => s.setTheme);
 	const setBgColor = useReaderTheme((s) => s.setBgColor);
 	const setHighlightsVisible = useHighlightVisibility((s) => s.setHighlightsVisible);
+	const { setArabicFontSize } = useReaderArabicSettings();
 
 	useEffect(() => {
 		if (initialized.current) return;
@@ -45,6 +53,12 @@ export const useReaderSettingsInit = () => {
 			setTheme(p.readerTheme);
 			if (p.readerBgColor) setBgColor(p.readerBgColor);
 			setHighlightsVisible(p.highlightKnown);
+			const pAny = p as Record<string, unknown>;
+			if (pAny.readerWordSpacing) setWordSpacing(pAny.readerWordSpacing as ReaderWordSpacing);
+			if (pAny.readerArabicFontFamily) setArabicFamily(pAny.readerArabicFontFamily as ReaderFontFamily);
+			if (pAny.readerArabicFontSize && ARABIC_FONT_SIZE_STEPS.includes(pAny.readerArabicFontSize as typeof ARABIC_FONT_SIZE_STEPS[number])) {
+				setArabicFontSize(pAny.readerArabicFontSize as typeof ARABIC_FONT_SIZE_STEPS[number]);
+			}
 		}).catch(() => {
 			// API unavailable — keep localStorage values as fallback
 		}).finally(() => {

@@ -2,21 +2,31 @@
 
 import { useGeminiKeyStatus } from "@/entities/ai-translation";
 import { useTranslationLanguageStore } from "@/features/ai-word-lookup";
+import { useReaderScript } from "@/features/reader-script";
+import { variants } from "@/shared/lib/animation";
+import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { Check, ChevronDown, Copy, ExternalLink, Settings, Sparkles, X } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+	Check,
+	ChevronDown,
+	Copy,
+	ExternalLink,
+	Settings,
+	Sparkles,
+	X,
+} from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { motion } from "framer-motion";
-import { variants } from "@/shared/lib/animation";
 import { useAiPhraseTranslate } from "../model/use-ai-phrase-translate";
 import { PhraseRefineBlock } from "./phrase-refine-block";
-import { cn } from "@/shared/lib/cn";
 
 interface PhraseTranslatePopupProps {
 	phrase: string;
+	displayPhrase?: string;
 	x: number;
 	y: number;
 	lang: string;
@@ -26,6 +36,7 @@ interface PhraseTranslatePopupProps {
 
 export const PhraseTranslatePopup = ({
 	phrase,
+	displayPhrase,
 	x,
 	y,
 	lang,
@@ -33,11 +44,14 @@ export const PhraseTranslatePopup = ({
 	onClose,
 }: PhraseTranslatePopupProps) => {
 	const { t } = useI18n();
+	const { script } = useReaderScript();
+	const isRtl = script === "ARABIC";
 	const { state, refineState, translate, reset, openRefine, refine } =
 		useAiPhraseTranslate();
 	const { data: keyStatus } = useGeminiKeyStatus();
 	const { targetLanguage } = useTranslationLanguageStore();
 	const ref = useRef<HTMLDivElement>(null);
+	const [showCyrillic, setShowCyrillic] = useState(false);
 
 	const hasKey = keyStatus?.hasKey ?? false;
 
@@ -67,6 +81,8 @@ export const PhraseTranslatePopup = ({
 
 	const [copied, setCopied] = useState(false);
 	const [glossOpen, setGlossOpen] = useState(false);
+
+	const handleToggleCyrillic = () => setShowCyrillic(prev => !prev);
 
 	const handleRefineSubmit = (hint: string) => {
 		if (state.phase !== "done") return;
@@ -114,7 +130,7 @@ export const PhraseTranslatePopup = ({
 					</span>
 				</div>
 				<div className="flex items-center gap-2">
-						<Button
+					<Button
 						size="bare"
 						onClick={onClose}
 						aria-label={t("reader.sheet.close")}
@@ -126,10 +142,46 @@ export const PhraseTranslatePopup = ({
 			</div>
 
 			{/* Phrase */}
-			<div className="border-b-[0.5px] border-bd-1 px-3.5 py-2.5">
-				<div className="text-[13px] font-medium text-t-1 line-clamp-2">
-					{phrase}
+			<div className="relative border-b-[0.5px] border-bd-1 px-3.5 py-2.5">
+				<div
+					className={cn(
+						"text-[13px] font-medium text-t-1 line-clamp-2",
+						displayPhrase && "pr-6",
+					)}
+					dir={isRtl ? "rtl" : undefined}
+				>
+					{displayPhrase ?? phrase}
 				</div>
+				{displayPhrase && (
+					<>
+						<button
+							type="button"
+							onClick={handleToggleCyrillic}
+							title={
+								showCyrillic
+									? t("aiTranslation.phrase.hideCyrillic")
+									: t("aiTranslation.phrase.showCyrillic")
+							}
+							className={cn(
+								"absolute right-2.5 top-2.5 flex size-5 items-center justify-center rounded-full border-[0.5px] transition-colors",
+								showCyrillic
+									? "border-acc/40 bg-acc/10 text-acc"
+									: "border-bd-2 bg-surf-2 text-t-4 hover:border-acc/40 hover:text-acc",
+							)}
+						>
+							<ChevronDown
+								className={cn(
+									"size-3 transition-transform",
+									showCyrillic && "rotate-180",
+								)}
+								strokeWidth={1.8}
+							/>
+						</button>
+						{showCyrillic && (
+							<div className="mt-1.5 text-[11px] text-t-3">{phrase}</div>
+						)}
+					</>
+				)}
 			</div>
 
 			{/* Body */}
@@ -211,7 +263,10 @@ export const PhraseTranslatePopup = ({
 									className="flex items-center gap-1 text-[10.5px] text-t-4 hover:text-t-2 transition-colors"
 								>
 									<ChevronDown
-										className={cn("size-3 transition-transform", glossOpen && "rotate-180")}
+										className={cn(
+											"size-3 transition-transform",
+											glossOpen && "rotate-180",
+										)}
 										strokeWidth={1.6}
 									/>
 									{t("aiTranslation.popup.russianGloss")}
@@ -235,4 +290,3 @@ export const PhraseTranslatePopup = ({
 		document.body,
 	);
 };
-

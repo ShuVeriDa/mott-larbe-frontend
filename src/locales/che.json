@@ -2005,9 +2005,26 @@
       "highlightsShow": "Хьаьркаш гайта",
       "highlightsHide": "Хьаьркаш къайлаяха",
       "highlightsClearAll": "Хьаьркаш дӀаяха",
+      "wordSpacing": "Дешнийн интервал",
+      "wordSpacingTight": "Гена",
+      "wordSpacingNormal": "Юкъаметтиг",
+      "wordSpacingWide": "Шуьйра",
+      "wordSpacingWider": "Вуьзна",
       "phraseColor": "Фразийн бос",
       "phraseColorShow": "Фразийн бос гайта",
-      "phraseColorHide": "Фразийн бос къайлабаккха"
+      "phraseColorHide": "Фразийн бос къайлабаккха",
+      "script": {
+        "cyrillic": "Кириллица",
+        "cyrillicShort": "Кр",
+        "latin": "Latin",
+        "latinShort": "Lat",
+        "arabic": "عربي",
+        "arabicShort": "عر",
+        "switchScript": "Йозанан система",
+        "diacritics": "Огласовкаш",
+        "diacriticsShow": "Огласовкаш гайта",
+        "diacriticsHide": "Огласовкаш къайлабаккха"
+      }
     },
     "notes": {
       "title": "Билгалдахарш",
@@ -3821,7 +3838,21 @@
         "sections": {
           "tokenization": "Токенизаци",
           "wordAnnotation": "Дешнийн аннотаци",
-          "versions": "ТӀаьххьара хийцамаш"
+          "versions": "ТӀаьххьара хийцамаш",
+          "scriptVersions": "Скрипташан версеш"
+        },
+        "scriptVersions": {
+          "latin": "Латинице",
+          "arabic": "Ӏарабица",
+          "statusNone": "Яц",
+          "statusRunning": "Кхоллало…",
+          "statusDone": "Кечйина",
+          "statusError": "ГӀалат",
+          "generate": "Кхоллa",
+          "delete": "ДӀаяккха",
+          "deleteConfirm": "Версия дӀаяккха?",
+          "generating": "Кхоллало…",
+          "generateError": "Кхоллар ца дара"
         },
         "wordAnnotation": {
           "dialogTitle": "Словоформа леммица хоттаян",
@@ -3874,6 +3905,7 @@
         "palochkaColumnUnicode": "Unicode",
         "palochkaUppercase": "Заглавни палочка (Ӏ)",
         "palochkaLowercase": "Строчни палочка (Ӏ)",
+        "stressMark": "Еха аьзне (ударени)",
         "dangerZone": "Кхераме майда",
         "deleteText": "Текст дӀаяккха",
         "versionCurrent": "Текущая версия",
@@ -5215,8 +5247,11 @@
       "refineError": "Гочдар нисдан ца елира",
       "error": "Фраза гочъяран гӀалат. Юха хьажа",
       "errorLocationNotSupported": "Gemini шун регионехь болх беш яц. VPN лело хьажа.",
-      "batchError": "Дешнаш гочдан ца елира. Юха хьажа"
+      "batchError": "Дешнаш гочдан ца елира. Юха хьажа",
+      "showCyrillic": "Кириллица гайта",
+      "hideCyrillic": "Кириллица дIабIаьхьа"
     },
+    "disclaimer": "AI гочдар — нийса хила тарлуш яц.",
     "history": {
       "title": "Сессин AI-гочдарш",
       "empty": "Оцу сессехь AI-гочдарш ца хилла",

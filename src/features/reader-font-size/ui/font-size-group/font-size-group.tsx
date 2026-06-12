@@ -1,5 +1,7 @@
 "use client";
 
+import { useReaderArabicSettings, ARABIC_FONT_SIZE_STEPS } from "@/features/reader-arabic-settings";
+import { useReaderScript } from "@/features/reader-script";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
@@ -16,8 +18,15 @@ export const FontSizeGroup = ({
 	buttonClassName,
 }: FontSizeGroupProps) => {
 	const { t } = useI18n();
+	const { script } = useReaderScript();
+	const isArabic = script === "ARABIC";
+
 	const size = useReaderFontSize(s => s.size);
 	const setSize = useReaderFontSize(s => s.setSize);
+	const { arabicFontSize, setArabicFontSize } = useReaderArabicSettings();
+
+	const steps = isArabic ? ARABIC_FONT_SIZE_STEPS : FONT_SIZE_STEPS;
+	const activeSize = isArabic ? arabicFontSize : size;
 
 	return (
 		<div
@@ -25,10 +34,12 @@ export const FontSizeGroup = ({
 			role="group"
 			aria-label={t("reader.footer.size")}
 		>
-			{FONT_SIZE_STEPS.map(step => {
-				const active = step === size;
-				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> =
-					() => setSize(step);
+			{(steps as readonly number[]).map(step => {
+				const active = step === activeSize;
+				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+					if (isArabic) setArabicFontSize(step as typeof ARABIC_FONT_SIZE_STEPS[number]);
+					else setSize(step as typeof FONT_SIZE_STEPS[number]);
+				};
 				return (
 					<Button
 						key={step}

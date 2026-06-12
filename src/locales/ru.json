@@ -2004,9 +2004,26 @@
       "highlightsShow": "Показать метки",
       "highlightsHide": "Скрыть метки",
       "highlightsClearAll": "Удалить метки",
+      "wordSpacing": "Межсловный интервал",
+      "wordSpacingTight": "Узкий",
+      "wordSpacingNormal": "Обычный",
+      "wordSpacingWide": "Широкий",
+      "wordSpacingWider": "Просторный",
       "phraseColor": "Цвет фраз",
       "phraseColorShow": "Показать цвет фраз",
-      "phraseColorHide": "Скрыть цвет фраз"
+      "phraseColorHide": "Скрыть цвет фраз",
+      "script": {
+        "cyrillic": "Кириллица",
+        "cyrillicShort": "Кр",
+        "latin": "Latin",
+        "latinShort": "Lat",
+        "arabic": "عربي",
+        "arabicShort": "عر",
+        "switchScript": "Система письма",
+        "diacritics": "Огласовки",
+        "diacriticsShow": "Показать огласовки",
+        "diacriticsHide": "Скрыть огласовки"
+      }
     },
     "notes": {
       "title": "Заметки",
@@ -3820,7 +3837,21 @@
         "sections": {
           "tokenization": "Токенизация",
           "wordAnnotation": "Аннотация слов",
-          "versions": "Последние изменения"
+          "versions": "Последние изменения",
+          "scriptVersions": "Версии скриптов"
+        },
+        "scriptVersions": {
+          "latin": "Латиница",
+          "arabic": "Арабица",
+          "statusNone": "Нет",
+          "statusRunning": "Генерируется…",
+          "statusDone": "Готово",
+          "statusError": "Ошибка",
+          "generate": "Создать",
+          "delete": "Удалить",
+          "deleteConfirm": "Удалить версию?",
+          "generating": "Генерируется…",
+          "generateError": "Ошибка генерации"
         },
         "wordAnnotation": {
           "dialogTitle": "Привязать словоформу к лемме",
@@ -3873,6 +3904,7 @@
         "palochkaColumnUnicode": "Unicode",
         "palochkaUppercase": "Заглавная палочка",
         "palochkaLowercase": "Строчная палочка",
+        "stressMark": "Долгий гласный (ударение)",
         "dangerZone": "Опасная зона",
         "deleteText": "Удалить текст",
         "versionCurrent": "Текущая версия",
@@ -5214,8 +5246,11 @@
       "refineError": "Не удалось уточнить перевод",
       "error": "Ошибка перевода фразы. Попробуйте позже",
       "errorLocationNotSupported": "Gemini недоступен в вашем регионе. Попробуйте использовать VPN.",
-      "batchError": "Не удалось перевести слова. Попробуйте позже"
+      "batchError": "Не удалось перевести слова. Попробуйте позже",
+      "showCyrillic": "Показать кириллицу",
+      "hideCyrillic": "Скрыть кириллицу"
     },
+    "disclaimer": "Перевод ИИ — может быть неточным.",
     "history": {
       "title": "AI-переводы сессии",
       "empty": "В этой сессии AI-переводов нет",

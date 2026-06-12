@@ -1,4 +1,7 @@
+import type { TipTapDoc, TipTapMark, TipTapNode } from "@/shared/ui/notion-editor";
 import type { CefrLevel, LearningLevel } from "@/shared/types";
+
+export type { TipTapDoc, TipTapMark, TipTapNode };
 
 export type TextLanguage = "CHE" | "RU" | "EN" | string;
 
@@ -13,24 +16,12 @@ export interface TextToken {
 	userStatus: LearningLevel | null;
 	startOffset: number;
 	endOffset: number;
+	displayText?: string;
 }
 
-export interface TipTapMark {
-	type: string;
-	attrs?: Record<string, unknown>;
-}
-
-export interface TipTapNode {
-	type: string;
-	text?: string;
-	marks?: TipTapMark[];
-	attrs?: Record<string, unknown>;
-	content?: TipTapNode[];
-}
-
-export interface TipTapDoc {
-	type: "doc";
-	content?: TipTapNode[];
+export interface ScriptPageResponse {
+	contentRich: TipTapDoc;
+	tokens: TextToken[];
 }
 
 export interface TextPageData {

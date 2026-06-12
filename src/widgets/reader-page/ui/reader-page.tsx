@@ -123,7 +123,7 @@ const ReaderPageInner = ({
 				onCloseRail={handleCloseRail}
 				onNavigate={handleNavigate}
 			/>
-			{!focusMode.active && <ReaderFooter />}
+			{!focusMode.active && <ReaderFooter textId={textId} />}
 			<WordPopup />
 			<WordBottomSheet textId={textId} />
 			<ReaderSettingsSheet open={settingsOpen} onClose={handleCloseRail} textId={textId} pageNumber={pageNumber} />

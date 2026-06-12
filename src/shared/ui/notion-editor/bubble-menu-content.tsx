@@ -64,6 +64,7 @@ const Btn = ({
 
 export const BubbleMenuContent = ({
 	editor,
+	showStressMark = false,
 	extraToolbarItems,
 	onEditPhrase,
 	onDeletePhrase,
@@ -71,6 +72,7 @@ export const BubbleMenuContent = ({
 	onDeleteAnnotation,
 }: {
 	editor: Editor;
+	showStressMark?: boolean;
 	extraToolbarItems?: ReactNode;
 	onEditPhrase?: () => void;
 	onDeletePhrase?: () => void;
@@ -102,6 +104,7 @@ export const BubbleMenuContent = ({
 	const handleSuperscript = () =>
 		editor.chain().focus().toggleSuperscript().run();
 	const handleSubscript = () => editor.chain().focus().toggleSubscript().run();
+	const handleStress = () => editor.chain().focus().toggleStress().run();
 	const handleCode = () => editor.chain().focus().toggleCode().run();
 	const handleColorMouseDown: NonNullable<
 		ComponentProps<"button">["onMouseDown"]
@@ -157,6 +160,17 @@ export const BubbleMenuContent = ({
 				>
 					<Subscript className="size-[13px]" />
 				</Btn>
+				{showStressMark && (
+					<Btn
+						title={t("admin.texts.editPage.stressMark")}
+						active={editor.isActive("stress")}
+						onExec={handleStress}
+					>
+						<Typography tag="span" className="text-[13px] font-bold leading-none">
+							а́
+						</Typography>
+					</Btn>
+				)}
 				<Btn title="Code" active={editor.isActive("code")} onExec={handleCode}>
 					<Code className="size-[13px]" />
 				</Btn>
@@ -248,11 +262,11 @@ export const BubbleMenuContent = ({
 				createPortal(
 					<>
 						<div
-							className="fixed inset-0 z-[9998]"
+							className="fixed inset-0 z-9998"
 							onMouseDown={handleBackdropMouseDown}
 						/>
 						<div
-							className="fixed z-[9999]"
+							className="fixed z-9999"
 							style={{ top: colorAnchor.bottom + 6, left: colorAnchor.left }}
 						>
 							<ColorPanel editor={editor} onClose={handleColorClose} />

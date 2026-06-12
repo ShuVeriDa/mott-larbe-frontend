@@ -39,6 +39,7 @@ interface AdminTextEditorShellProps {
 	findReplaceCharHandlerRef?: RefObject<((char: string) => boolean) | null>;
 	findReplaceCharsPicker?: ReactNode;
 	extraExtensions?: Extension[];
+	showStressMark?: boolean;
 	isSelectedPhrase?: (text: string) => boolean;
 	onBubbleEditPhrase?: (selectedText: string) => void;
 	onBubbleDeletePhrase?: (selectedText: string) => void;
@@ -70,6 +71,7 @@ export const AdminTextEditorShell = ({
 	findReplaceCharHandlerRef,
 	findReplaceCharsPicker,
 	extraExtensions = [],
+	showStressMark = false,
 	isSelectedPhrase,
 	onBubbleEditPhrase,
 	onBubbleDeletePhrase,
@@ -217,6 +219,7 @@ export const AdminTextEditorShell = ({
 					onUpdate={handleUpdate}
 					onKeyDown={handleKeyDown}
 					onEditorReady={handleEditorReady}
+					showStressMark={showStressMark}
 					isSelectedPhrase={isSelectedPhrase}
 					onBubbleEditPhrase={onBubbleEditPhrase}
 					onBubbleDeletePhrase={onBubbleDeletePhrase}

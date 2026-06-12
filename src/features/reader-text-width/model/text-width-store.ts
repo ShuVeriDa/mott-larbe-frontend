@@ -8,6 +8,7 @@ export type ReaderPagePadding = "compact" | "normal" | "wide";
 export type ReaderLineHeight = "compact" | "normal" | "relaxed";
 export type ReaderLetterSpacing = "tight" | "normal" | "wide";
 export type ReaderParagraphSpacing = "none" | "compact" | "normal" | "relaxed";
+export type ReaderWordSpacing = "tight" | "normal" | "wide" | "wider";
 
 // Column width in ch units — scales proportionally with font size and screen
 export const COLUMN_WIDTH_PX: Record<ReaderColumnWidth, string> = {
@@ -43,17 +44,26 @@ export const PARAGRAPH_SPACING_VALUE: Record<ReaderParagraphSpacing, string> = {
 	relaxed: "2.5rem",
 };
 
+export const WORD_SPACING_VALUE: Record<ReaderWordSpacing, string> = {
+	tight: "0px",
+	normal: "2px",
+	wide: "4px",
+	wider: "8px",
+};
+
 interface TextLayoutState {
 	columnWidth: ReaderColumnWidth;
 	pagePadding: ReaderPagePadding;
 	lineHeight: ReaderLineHeight;
 	letterSpacing: ReaderLetterSpacing;
 	paragraphSpacing: ReaderParagraphSpacing;
+	wordSpacing: ReaderWordSpacing;
 	setColumnWidth: (v: ReaderColumnWidth) => void;
 	setPagePadding: (v: ReaderPagePadding) => void;
 	setLineHeight: (v: ReaderLineHeight) => void;
 	setLetterSpacing: (v: ReaderLetterSpacing) => void;
 	setParagraphSpacing: (v: ReaderParagraphSpacing) => void;
+	setWordSpacing: (v: ReaderWordSpacing) => void;
 }
 
 export const useReaderTextLayout = create<TextLayoutState>()(
@@ -64,11 +74,13 @@ export const useReaderTextLayout = create<TextLayoutState>()(
 			lineHeight: "normal",
 			letterSpacing: "normal",
 			paragraphSpacing: "normal",
+			wordSpacing: "normal",
 			setColumnWidth: (columnWidth) => set({ columnWidth }),
 			setPagePadding: (pagePadding) => set({ pagePadding }),
 			setLineHeight: (lineHeight) => set({ lineHeight }),
 			setLetterSpacing: (letterSpacing) => set({ letterSpacing }),
 			setParagraphSpacing: (paragraphSpacing) => set({ paragraphSpacing }),
+			setWordSpacing: (wordSpacing) => set({ wordSpacing }),
 		}),
 		{ name: "reader-text-layout" },
 	),

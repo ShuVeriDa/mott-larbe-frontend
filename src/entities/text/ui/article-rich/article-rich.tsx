@@ -47,6 +47,10 @@ export interface ArticleRichProps {
 	onSelectPhrase?: (phrase: PagePhraseOccurrence, anchor: { left: number; top: number; width: number; height: number }) => void;
 	phraseColorVisible?: boolean;
 	pageNumber?: number;
+	displayOnly?: boolean;
+	isRtl?: boolean;
+	cyrillicRaw?: string;
+	cyrillicContentRich?: TipTapDoc;
 }
 
 // ── Highlight ranges ──────────────────────────────────────────────────────────
@@ -136,6 +140,9 @@ interface ParagraphProps {
 	tag: "p" | "blockquote";
 	className?: string;
 	style?: CSSProperties;
+	displayOnly?: boolean;
+	isRtl?: boolean;
+	cyrillicParaText?: string;
 }
 
 const PHRASE_HIGHLIGHT_COLOR = "rgba(167, 139, 250, 0.18)"; // violet-400/18
@@ -151,9 +158,15 @@ const Paragraph = ({
 	tag: Tag,
 	className,
 	style,
+	displayOnly,
+	isRtl,
+	cyrillicParaText,
 }: ParagraphProps) => {
 	const nodes: ReactNode[] = [];
+	// When displaying non-Cyrillic script, allRanges positions are relative to
+	// cyrillicParaText. We track a parallel cyrillicOffset alongside paraOffset.
 	let paraOffset = 0;
+	let cyrillicOffset = 0;
 	let keyCounter = 0;
 	let lastTokenPosition: number | null = null;
 	let lastToken: TextToken | null = null;
@@ -210,11 +223,24 @@ const Paragraph = ({
 		const segStart = paraOffset;
 		const segEnd = paraOffset + segLen;
 
+		// When non-Cyrillic script, ranges are keyed to cyrillicParaText positions.
+		// cyrillicSegLen is the Cyrillic length of this segment for offset tracking.
+		const cyrillicSegLen = cyrillicParaText
+			? (seg.kind === "token" ? seg.token!.original.length : segLen)
+			: segLen;
+		const cyrillicSegStart = cyrillicOffset;
+		const cyrillicSegEnd = cyrillicOffset + cyrillicSegLen;
+
+		// Use Cyrillic positions for range matching when available
+		const rangeStart = cyrillicParaText ? cyrillicSegStart : segStart;
+		const rangeEnd = cyrillicParaText ? cyrillicSegEnd : segEnd;
+
 		// Newline
 		if (seg.kind === "text" && segText === "\n") {
 			flushPhrase();
 			nodes.push(<br key={keyCounter++} />);
 			paraOffset += segLen;
+			cyrillicOffset += cyrillicSegLen;
 			continue;
 		}
 
@@ -237,7 +263,7 @@ const Paragraph = ({
 				lookahead++;
 			}
 
-			const hlForToken = allRanges.find(r => r.start <= segStart && segEnd <= r.end);
+			const hlForToken = allRanges.find(r => r.start <= rangeStart && rangeEnd <= r.end);
 			const tokenEl = (
 				<ArticleToken
 					key={tok.id}
@@ -261,6 +287,7 @@ const Paragraph = ({
 			lastTokenPosition = tok.position;
 			lastToken = tok;
 			paraOffset += segLen;
+			cyrillicOffset += cyrillicSegLen;
 			// Skip the superscript segments we already consumed
 			for (const s of supParts) paraOffset += s.value.length;
 			segIdx += supParts.length;
@@ -270,6 +297,7 @@ const Paragraph = ({
 		// Superscript text segment not preceded by token (shouldn't normally occur, skip)
 		if (seg.kind === "text" && seg.marks.superscript) {
 			paraOffset += segLen;
+			cyrillicOffset += cyrillicSegLen;
 			continue;
 		}
 
@@ -283,25 +311,35 @@ const Paragraph = ({
 			if (!currentPhrase) currentPhrase = gapPhrase!;
 			phraseBuffer.push({ node: segText, kind: "gap" });
 			paraOffset += segLen;
+			cyrillicOffset += cyrillicSegLen;
 			continue;
 		}
 
 		// Not inside phrase — flush any open buffer first
 		if (currentPhrase) flushPhrase();
 
-		// Normal text with possible highlights
-		const overlapping = allRanges.filter(r => r.start < segEnd && r.end > segStart);
+		// Normal text with possible highlights (use Cyrillic positions for range lookup)
+		const overlapping = allRanges.filter(r => r.start < rangeEnd && r.end > rangeStart);
 
 		if (!overlapping.length) {
-			nodes.push(<Fragment key={keyCounter++}>{wrapMarks(segText, seg.marks, keyCounter++)}</Fragment>);
+			const inner = wrapMarks(segText, seg.marks, keyCounter++);
+			nodes.push(
+				displayOnly
+					? <bdi key={keyCounter++}>{inner}</bdi>
+					: <Fragment key={keyCounter++}>{inner}</Fragment>
+			);
 			paraOffset += segLen;
+			cyrillicOffset += cyrillicSegLen;
 			continue;
 		}
 
+		// For text segments, slicing uses display text positions (segStart/segEnd).
+		// When cyrillicParaText is set, map Cyrillic range positions back to display offsets.
+		// Since punctuation is identical across scripts, the lengths match for text segments.
 		let cursor = 0;
 		for (const r of overlapping) {
-			const relStart = Math.max(0, r.start - segStart);
-			const relEnd = Math.min(segLen, r.end - segStart);
+			const relStart = Math.max(0, r.start - rangeStart);
+			const relEnd = Math.min(cyrillicSegLen, r.end - rangeStart);
 			if (cursor < relStart) {
 				nodes.push(<Fragment key={keyCounter++}>{wrapMarks(segText.slice(cursor, relStart), seg.marks, keyCounter++)}</Fragment>);
 			}
@@ -316,6 +354,7 @@ const Paragraph = ({
 			nodes.push(<Fragment key={keyCounter++}>{wrapMarks(segText.slice(cursor), seg.marks, keyCounter++)}</Fragment>);
 		}
 		paraOffset += segLen;
+		cyrillicOffset += cyrillicSegLen;
 	}
 
 	flushPhrase();
@@ -342,8 +381,12 @@ export const ArticleRich = ({
 	onSelectPhrase,
 	phraseColorVisible = false,
 	pageNumber,
+	displayOnly,
+	isRtl = false,
+	cyrillicRaw,
+	cyrillicContentRich,
 }: ArticleRichProps) => {
-	const paragraphs = renderRichContent(contentRich, tokens);
+	const paragraphs = renderRichContent(contentRich, tokens, displayOnly, cyrillicRaw, cyrillicContentRich);
 
 	return (
 		<div
@@ -365,8 +408,15 @@ export const ArticleRich = ({
 			>
 				{paragraphs.map((para, idx) => {
 					const paraText = para.segments.map(s => s.value).join("");
-					const hlRanges = highlights.length ? computeHighlightRanges(paraText, highlights) : [];
-					const nRanges = noteMarks.length ? computeNoteRanges(paraText, noteMarks) : [];
+					// For non-Cyrillic scripts, highlights/notes are stored as Cyrillic text.
+					// cyrillicText comes from Cyrillic TipTap nodes — same character positions
+					// as what was used when storing the highlight's selectedText.
+					const hlSearchText = para.cyrillicText ?? paraText;
+					const hlRanges = highlights.length ? computeHighlightRanges(hlSearchText, highlights) : [];
+					const nRanges = noteMarks.length ? computeNoteRanges(hlSearchText, noteMarks) : [];
+					// When cyrillicText differs from paraText (non-Cyrillic display), ranges are
+					// relative to cyrillicText. Pass cyrillicText so Paragraph can do offset mapping.
+					const cyrillicParaText = para.cyrillicText !== undefined ? hlSearchText : undefined;
 					const allRanges = mergeRanges(hlRanges, nRanges);
 					const isLast = idx === paragraphs.length - 1;
 					const isBlockquote = para.blockType === "blockquote";
@@ -382,11 +432,17 @@ export const ArticleRich = ({
 								onSelectPhrase={onSelectPhrase}
 								phraseColorVisible={phraseColorVisible}
 								tag={isBlockquote ? "blockquote" : "p"}
-								className={cn(isBlockquote && "border-l-[3px] border-acc/40 pl-4 text-t-1")}
+								className={cn(
+									isBlockquote && "border-acc/40 text-t-1",
+									isBlockquote && (isRtl ? "border-r-[3px] pr-4" : "border-l-[3px] pl-4"),
+								)}
 								style={{
-									textAlign: para.textAlign,
+									textAlign: isRtl && para.textAlign === "left" ? "right" : para.textAlign,
 									marginBottom: isLast ? 0 : (paragraphSpacing ?? "1.25rem"),
 								}}
+								displayOnly={displayOnly}
+								isRtl={isRtl}
+								cyrillicParaText={cyrillicParaText}
 							/>
 						</motion.div>
 					);
