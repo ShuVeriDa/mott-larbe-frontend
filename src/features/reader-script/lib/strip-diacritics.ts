@@ -1,5 +1,13 @@
-// Arabic combining diacritics (harakat) Unicode range
-const ARABIC_DIACRITIC_RE = /[ؐ-ًؚ-ٰٟۖ-ۜ۟-۪ۤۧۨ-ۭ]/g;
+// Arabic combining diacritics only — Arabic letters (U+0621-U+064A) are intentionally excluded.
+// Ranges:
+//   U+0610-U+061A  extended Arabic annotation marks
+//   U+064B-U+065F  harakat: tanwin-fath/kasr/damm, fatha, kasra, damma, sukun, shadda,
+//                  inv-damma (U+0657), softness mark (U+06EC is below, but U+065F covers ٟ)
+//   U+0670         superscript alef
+//   U+06D6-U+06DC  Quranic annotation signs
+//   U+06DF-U+06ED  Quranic signs incl. nūn-miniature U+06E8 and softness mark U+06EC
+const ARABIC_DIACRITIC_RE =
+	/[ؐ-ًؚ-ٰٟۖ-ۜ۟-ۭ]/g;
 
 export const stripArabicDiacritics = (text: string): string =>
 	text.replace(ARABIC_DIACRITIC_RE, "");

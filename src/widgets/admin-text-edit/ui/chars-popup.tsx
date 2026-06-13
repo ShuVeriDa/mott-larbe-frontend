@@ -10,6 +10,7 @@ import { createPortal } from "react-dom";
 const PALOCHKA_ROWS = [
 	{ char: "\u04C0", unicodeLabel: "U+04C0", tone: "uppercase" },
 	{ char: "\u04CF", unicodeLabel: "U+04CF", tone: "lowercase" },
+	{ char: "\u0301", unicodeLabel: "U+0301", tone: "stress" },
 ] as const;
 
 const PALOCHKA_ROW_CLASS: Record<
@@ -29,6 +30,13 @@ const PALOCHKA_ROW_CLASS: Record<
 		code: "text-pur-t font-mono opacity-90",
 		button:
 			"border-pur/35 bg-surf text-pur-t shadow-[0_1px_0_0] shadow-pur/25 hover:border-pur hover:bg-pur-bg hover:text-pur-t active:scale-[0.98]",
+	},
+	stress: {
+		row: "border-l-grn bg-grn-bg",
+		label: "text-grn-t",
+		code: "text-grn-t font-mono opacity-90",
+		button:
+			"border-grn/35 bg-surf text-grn-t shadow-[0_1px_0_0] shadow-grn/25 hover:border-grn hover:bg-grn-bg hover:text-grn-t active:scale-[0.98]",
 	},
 };
 
@@ -102,7 +110,9 @@ export const CharsPopup = ({
 						const purposeLabel =
 							row.tone === "uppercase"
 								? t("admin.texts.editPage.palochkaUppercase")
-								: t("admin.texts.editPage.palochkaLowercase");
+								: row.tone === "lowercase"
+									? t("admin.texts.editPage.palochkaLowercase")
+									: t("admin.texts.editPage.stressMark");
 						const handleCharMouseDown: NonNullable<
 							ComponentProps<"button">["onMouseDown"]
 						> = e => {
@@ -135,7 +145,7 @@ export const CharsPopup = ({
 									title={insertTitle}
 									className={`inline-flex h-8 min-w-9 shrink-0 items-center justify-center justify-self-end rounded-[4px] border px-2 py-1 font-[inherit] text-[12px] font-medium leading-none transition-colors ${tone.button}`}
 								>
-									{row.char}
+									{row.tone === "stress" ? "а́" : row.char}
 								</Button>
 							</div>
 						);

@@ -27,6 +27,7 @@ export type {
 	TextSortBy,
 	TextSortOrder,
 	TextStatus,
+	TextSubmittedBy,
 	TextTag,
 	TextVersionDetail,
 	TextVersionListItem,

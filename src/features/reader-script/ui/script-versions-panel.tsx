@@ -12,10 +12,10 @@ import {
 	type TextScriptVersionInfo,
 } from "@/entities/text-script-version";
 import { useI18n } from "@/shared/lib/i18n";
-import { cn } from "@/shared/lib/cn";
 import { MetaSection } from "@/shared/ui/admin-text-meta-fields";
 import { Button } from "@/shared/ui/button";
 import { useQuery } from "@tanstack/react-query";
+import { CheckCircle2, Loader2, AlertCircle, Trash2 } from "lucide-react";
 
 interface ScriptVersionsPanelProps {
 	textId: string;
@@ -27,32 +27,13 @@ const SCRIPTS: { value: ChScript; labelKey: string }[] = [
 	{ value: "ARABIC", labelKey: "admin.texts.editPage.scriptVersions.arabic" },
 ];
 
-const STATUS_BADGE_CLASS: Record<ScriptVersionStatus, string> = {
-	IDLE: "bg-surf-3 text-t-3",
-	RUNNING: "bg-amb-bg text-amb-t",
-	COMPLETED: "bg-grn-bg text-grn-t",
-	ERROR: "bg-red-bg text-red-t",
-};
-
-const StatusBadge = ({ status }: { status: ScriptVersionStatus | null }) => {
-	const { t } = useI18n();
-	const resolved = status ?? "IDLE";
-	const labelKey =
-		resolved === "IDLE" ? "admin.texts.editPage.scriptVersions.statusNone" :
-		resolved === "RUNNING" ? "admin.texts.editPage.scriptVersions.statusRunning" :
-		resolved === "COMPLETED" ? "admin.texts.editPage.scriptVersions.statusDone" :
-		"admin.texts.editPage.scriptVersions.statusError";
-
-	return (
-		<span
-			className={cn(
-				"inline-flex items-center rounded-[4px] px-1.5 py-0.5 text-[10.5px] font-medium",
-				STATUS_BADGE_CLASS[resolved],
-			)}
-		>
-			{t(labelKey)}
-		</span>
-	);
+const StatusIcon = ({ status }: { status: ScriptVersionStatus | null }) => {
+	if (!status || status === "IDLE") return null;
+	if (status === "COMPLETED")
+		return <CheckCircle2 className="size-4 text-grn-t shrink-0" />;
+	if (status === "RUNNING")
+		return <Loader2 className="size-4 text-amb-t shrink-0 animate-spin" />;
+	return <AlertCircle className="size-4 text-red shrink-0" />;
 };
 
 const ScriptRow = ({
@@ -85,36 +66,34 @@ const ScriptRow = ({
 	};
 
 	return (
-		<div className="flex items-center justify-between gap-2 py-1.5">
+		<div className="flex items-center justify-between gap-3 py-2">
 			<div className="flex items-center gap-2 min-w-0">
-				<span className="text-[12px] font-medium text-t-1 shrink-0">
+				<span className="text-[12px] font-medium text-t-1 w-16 shrink-0">
 					{t(labelKey)}
 				</span>
-				<StatusBadge status={status} />
+				<StatusIcon status={isGenerating ? "RUNNING" : status} />
 			</div>
-			<div className="flex items-center gap-1 shrink-0">
+			<div className="flex items-center gap-1.5 shrink-0">
+				<Button
+					variant="outline"
+					size={null}
+					onClick={handleGenerate}
+					disabled={isRunning}
+					className="h-[26px] px-2.5 text-[11px]"
+				>
+					{t("admin.texts.editPage.scriptVersions.generate")}
+				</Button>
 				{hasVersion && (
 					<Button
 						variant="ghost"
 						size={null}
 						onClick={handleDelete}
 						disabled={isRunning || isDeleting}
-						className="h-[26px] px-2 text-[11px] text-red hover:bg-red-muted"
+						className="h-[26px] w-[26px] p-0 text-t-3 hover:text-red hover:bg-red/5"
 					>
-						{t("admin.texts.editPage.scriptVersions.delete")}
+						<Trash2 className="size-3.5" />
 					</Button>
 				)}
-				<Button
-					variant="ghost"
-					size={null}
-					onClick={handleGenerate}
-					disabled={isRunning}
-					className="h-[26px] px-2 text-[11px]"
-				>
-					{isRunning
-						? t("admin.texts.editPage.scriptVersions.generating")
-						: t("admin.texts.editPage.scriptVersions.generate")}
-				</Button>
 			</div>
 		</div>
 	);

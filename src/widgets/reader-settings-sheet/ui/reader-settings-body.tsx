@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useDeleteAllHighlights, useHighlights } from "@/entities/highlight";
 import { scriptVersionsQueryOptions } from "@/entities/text-script-version";
 import { FontFamilyGroup } from "@/features/reader-font-family";
@@ -45,7 +46,7 @@ export const ReaderSettingsBody = ({
 	pageNumber,
 	hideFontSize = false,
 }: ReaderSettingsBodyProps) => {
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
 	const layout = useReaderTextLayout();
 	const { script, showDiacritics, setScript, setShowDiacritics } = useReaderScript();
 	const { data: scriptVersions = [] } = useQuery({
@@ -133,6 +134,26 @@ export const ReaderSettingsBody = ({
 								: t("reader.settings.script.diacriticsShow")}
 						</Button>
 					)}
+				</div>
+			)}
+
+			{(script === "ARABIC" || script === "LATIN") && (
+				<div className={cn("rounded-base border border-bd-1 bg-surf-2 p-3 md:hidden", gap)}>
+					<ReaderSettingsSectionLabel
+						label={t("reader.settings.script.guideTitle")}
+						compact={compact}
+					/>
+					<Typography tag="p" className="mb-2 text-[11px] leading-relaxed text-t-2">
+						{script === "ARABIC"
+							? t("reader.settings.script.arabicGuideHint")
+							: t("reader.settings.script.latinGuideHint")}
+					</Typography>
+					<Link
+						href={`/${lang}/script-guide?tab=${script === "ARABIC" ? "arabic" : "latin"}`}
+						className="text-[11px] font-medium text-acc hover:underline"
+					>
+						{t("reader.settings.script.guideLink")} →
+					</Link>
 				</div>
 			)}
 

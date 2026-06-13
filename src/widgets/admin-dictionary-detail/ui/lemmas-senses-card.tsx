@@ -33,7 +33,7 @@ const ExampleItem = ({ example, onEdit, onDelete }: ExampleItemProps) => (
 				onClick={onEdit}
 				title="Edit"
 			>
-				<IconEdit />
+				<Pencil className="size-[13px]" />
 			</Button>
 			<Button
 				className="flex size-[26px] items-center justify-center rounded-md border-none bg-transparent text-t-3 transition-colors hover:bg-red-bg hover:text-red-t"
@@ -119,7 +119,7 @@ return (
 			<div className="ml-[30px]">
 				<Button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-dashed border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-3 transition-colors hover:border-solid hover:border-acc hover:bg-acc-bg hover:text-acc-t"
-					onClick={handleAddSenseClick}
+					onClick={handleClick}
 					title={t("admin.dictionaryDetail.addExample")}
 				>
 					<Plus className="size-[11px]" />
@@ -258,7 +258,7 @@ export const LemmasSensesCard = ({
 			<div className="flex items-center border-t border-bd-1 px-4 py-2.5">
 				<Button
 					className="flex h-[26px] items-center gap-1.5 rounded-md border border-dashed border-bd-2 bg-transparent px-2.5 text-[11.5px] text-t-3 transition-colors hover:border-solid hover:border-acc hover:bg-acc-bg hover:text-acc-t"
-					onClick={handleClick2}
+					onClick={handleAddSenseClick}
 					title={t("admin.dictionaryDetail.addSense")}
 				>
 					<Plus className="size-[11px]" />

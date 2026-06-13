@@ -3,6 +3,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { textScriptVersionApi } from "../api/text-script-version-api";
 import { textScriptVersionKeys } from "../api/text-script-version-keys";
+import { textKeys } from "../../text/api";
 import type { ChScript } from "../api/types";
 
 export const useGenerateScriptVersion = (textId: string) => {
@@ -10,8 +11,11 @@ export const useGenerateScriptVersion = (textId: string) => {
 	return useMutation({
 		mutationFn: (script: ChScript) =>
 			textScriptVersionApi.generate(textId, script),
-		onSuccess: () =>
-			qc.invalidateQueries({ queryKey: textScriptVersionKeys.versions(textId) }),
+		onSuccess: (_data, script) => {
+			qc.invalidateQueries({ queryKey: textScriptVersionKeys.versions(textId) });
+			// Invalidate all cached script pages so the reader fetches fresh transliterated content
+			qc.invalidateQueries({ queryKey: ["text", "scriptPage", textId] });
+		},
 	});
 };
 
@@ -49,10 +53,12 @@ export const useGenerateUserScriptVersion = (userTextId: string) => {
 	return useMutation({
 		mutationFn: (script: ChScript) =>
 			textScriptVersionApi.generateForUser(userTextId, script),
-		onSuccess: () =>
+		onSuccess: () => {
 			qc.invalidateQueries({
 				queryKey: textScriptVersionKeys.userVersions(userTextId),
-			}),
+			});
+			qc.invalidateQueries({ queryKey: ["text", "scriptPage", userTextId] });
+		},
 	});
 };
 

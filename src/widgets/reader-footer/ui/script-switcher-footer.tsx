@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { scriptVersionsQueryOptions } from "@/entities/text-script-version";
 import {
 	SCRIPT_OPTIONS,
@@ -16,7 +17,7 @@ interface ScriptSwitcherFooterProps {
 }
 
 export const ScriptSwitcherFooter = ({ textId }: ScriptSwitcherFooterProps) => {
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
 	const { script, showDiacritics, setScript, setShowDiacritics } = useReaderScript();
 	const { data: scriptVersions = [] } = useQuery(scriptVersionsQueryOptions(textId));
 	const available = useReaderScriptAvailability(scriptVersions);
@@ -82,6 +83,16 @@ export const ScriptSwitcherFooter = ({ textId }: ScriptSwitcherFooterProps) => {
 					</span>
 					<span className="inline sm:hidden" dir="rtl">ً</span>
 				</Button>
+			)}
+
+			{(script === "ARABIC" || script === "LATIN") && (
+				<Link
+					href={`/${lang}/script-guide?tab=${script === "ARABIC" ? "arabic" : "latin"}`}
+					className="flex h-[26px] items-center rounded-[5px] border-[0.5px] border-bd-1 bg-surf-2 px-2 text-[11px] font-medium text-t-3 transition-colors duration-100 hover:border-bd-2 hover:text-t-1"
+					title={t("reader.settings.script.guideLink")}
+				>
+					?
+				</Link>
 			)}
 		</div>
 	);

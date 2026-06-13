@@ -24,6 +24,7 @@ import {
 	usePhraseColorVisibility,
 } from "@/features/reader-highlight";
 import {
+	stripArabicDiacritics,
 	stripDiacriticsFromDoc,
 	useReaderScript,
 } from "@/features/reader-script";
@@ -83,6 +84,11 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 	const displayTokens = scriptData?.tokens ?? data.tokens;
 	const applyDiacriticsStrip = script === "ARABIC" && !showDiacritics;
 	const articleLang = script === "ARABIC" ? "ar" : script === "LATIN" ? "che-Latn" : lang;
+	const tokensForDisplay = applyDiacriticsStrip
+		? displayTokens.map(t =>
+			t.displayText ? { ...t, displayText: stripArabicDiacritics(t.displayText) } : t,
+		  )
+		: displayTokens;
 
 	const [phraseTranslate, setPhraseTranslate] = useState<{
 		phrase: string;
@@ -131,7 +137,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 		handlePickColor,
 		handleRemoveHighlight,
 		handleDismiss,
-	} = useReaderHighlights(data.id, data.page.pageNumber, data.page.contentRaw, displayTokens, isNonCyrillic);
+	} = useReaderHighlights(data.id, data.page.pageNumber, data.page.contentRaw, tokensForDisplay, isNonCyrillic);
 
 	const {
 		noteMarks,
@@ -237,7 +243,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 			<ArticleRich
 				ref={articleRef}
 				contentRich={contentRichForDisplay}
-				tokens={displayTokens}
+				tokens={tokensForDisplay}
 				activeTokenId={activeToken?.id ?? null}
 				onSelectToken={onSelectToken}
 				maxWidth={COLUMN_WIDTH_PX[columnWidth]}

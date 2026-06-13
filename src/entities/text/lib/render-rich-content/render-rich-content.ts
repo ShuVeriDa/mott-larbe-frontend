@@ -145,11 +145,12 @@ export const renderRichContent = (
 			}
 
 			// Cross-node token: started in a previous text node, overlaps into this one.
+			// This happens e.g. when a nazalization marker splits "жан" | superscript-н | "-жӏаьла"
+			// into separate TipTap nodes but the tokenizer kept "жан-жӏаьла" as one token.
+			// The token's displayText was already emitted in the previous node — skip this overlap.
 			const leadingTok = sorted[tokenIdx];
 			if (leadingTok && leadingTok.startOffset < segStart && leadingTok.endOffset > segStart) {
 				const overlapEnd = Math.min(leadingTok.endOffset - segStart, cyrText.length);
-				// Plain overlap (cross-node) — show Cyrillic slice (punctuation context)
-				segments.push({ kind: "text", value: cyrText.slice(0, overlapEnd), marks });
 				cursor = overlapEnd;
 				if (leadingTok.endOffset <= segEnd) tokenIdx++;
 				if (cursor >= cyrText.length) return;
@@ -192,6 +193,18 @@ export const renderRichContent = (
 				const nlPos = contentRaw.indexOf("\n", rawCursor);
 				if (nlPos !== -1) rawCursor = nlPos + 1;
 			} else if (cyrNode.type === "text" && cyrNode.text) {
+				// In script mode (cyrillicContentRich present), superscript-н is a
+				// nazalization marker — backend already merged it into the preceding
+				// transliterated node as ŋ/tanwin. Advance rawCursor but emit nothing.
+				const isNazalizationMarker =
+					cyrillicContentRich != null &&
+					cyrNode.text.trim() === "н" &&
+					cyrNode.marks?.some((m) => m.type === "superscript");
+				if (isNazalizationMarker) {
+					const found = contentRaw.indexOf(cyrNode.text, rawCursor);
+					if (found !== -1) rawCursor = found + cyrNode.text.length;
+					continue;
+				}
 				cyrillicParts.push(cyrNode.text);
 				emitText(cyrNode.text, resolveMarks(cyrNode.marks));
 			}

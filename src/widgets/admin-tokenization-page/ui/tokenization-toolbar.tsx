@@ -5,7 +5,7 @@ import type { TokenSort, TokenStatus } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
 import { SearchBox } from "@/shared/ui/search-box";
 import { Select } from "@/shared/ui/select";
-import { CEFR_LEVELS } from "@/shared/types";
+import { CEFR_LEVELS, type CefrLevel } from "@/shared/types";
 
 interface TokenizationToolbarProps {
 	search: string;

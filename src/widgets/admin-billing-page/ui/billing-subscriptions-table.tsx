@@ -15,8 +15,9 @@ const STATUS_CLASS: Record<BillingSubscriptionStatus, string> = {
 	EXPIRED: "bg-red-bg text-red-t",
 };
 
-const fmtAmount = (cents: number, currency: string) => {
+const fmtAmount = (cents: number, currency: string | null | undefined) => {
 	const amount = cents / 100;
+	if (!currency) return `${Math.round(amount).toLocaleString("ru-RU")}`;
 	if (currency === "RUB") return `₽${Math.round(amount).toLocaleString("ru-RU")}`;
 	return new Intl.NumberFormat("en", {
 		style: "currency",
