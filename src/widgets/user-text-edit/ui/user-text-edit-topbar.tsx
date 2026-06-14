@@ -10,6 +10,7 @@ interface UserTextEditTopbarProps {
   title: string;
   isUnsaved: boolean;
   isSaving: boolean;
+  isBackgroundRunning?: boolean;
   isMetaPanelVisible: boolean;
   mode: "create" | "edit";
   onSaveDraft: () => void;
@@ -28,6 +29,7 @@ export const UserTextEditTopbar = ({
   title,
   isUnsaved,
   isSaving,
+  isBackgroundRunning = false,
   isMetaPanelVisible,
   mode,
   onSaveDraft,
@@ -79,6 +81,7 @@ export const UserTextEditTopbar = ({
       primaryActionLabel={resolvedPrimaryLabel}
       primaryActionIcon={primaryIcon ?? <Save className="size-3" />}
       isSaving={isSaving}
+      isBackgroundRunning={isBackgroundRunning}
       isMetaPanelVisible={isMetaPanelVisible}
       statusLabel={statusLabel}
       showUnsavedPulse={isUnsaved}

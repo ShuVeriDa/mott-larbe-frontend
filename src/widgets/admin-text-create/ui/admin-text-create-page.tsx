@@ -30,6 +30,7 @@ export const AdminTextCreatePage = () => {
 		useMorphAnalysis,
 		saveState,
 		isSaving,
+		isBackgroundRunning,
 		handleTitleChange,
 		handlePageContentChange,
 		handleAddPage,
@@ -61,6 +62,7 @@ export const AdminTextCreatePage = () => {
 				<TextCreateTopbar
 					saveState={saveState}
 					isSaving={isSaving}
+					isBackgroundRunning={isBackgroundRunning}
 					isMetaPanelVisible={isMetaPanelVisible}
 					onSaveDraft={handleSaveDraft}
 					onPublish={handlePublish}
@@ -98,6 +100,7 @@ export const AdminTextCreatePage = () => {
 					useMorphAnalysis={useMorphAnalysis}
 					pages={pages}
 					isSaving={isSaving}
+					isBackgroundRunning={isBackgroundRunning}
 					onStatusChange={setStatus}
 					onLanguageChange={setLanguage}
 					onLevelChange={setLevel}

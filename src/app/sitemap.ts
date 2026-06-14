@@ -12,8 +12,7 @@ const STATIC_ROUTES: Array<{ path: string; priority: number; changeFrequency: Me
 	{ path: "/texts",        priority: 0.9, changeFrequency: "daily" },
 	{ path: "/phrasebook",   priority: 0.8, changeFrequency: "weekly" },
 	{ path: "/vocabulary",   priority: 0.8, changeFrequency: "daily" },
-	{ path: "/suggest-text", priority: 0.6, changeFrequency: "monthly" },
-	// /suggestions — robots: noindex, excluded from sitemap
+// /suggestions — robots: noindex, excluded from sitemap
 	// /feedback    — robots: noindex, excluded from sitemap
 ];
 

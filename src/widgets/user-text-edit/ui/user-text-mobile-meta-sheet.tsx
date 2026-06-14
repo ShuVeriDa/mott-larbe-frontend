@@ -50,6 +50,7 @@ export interface UserTextMobileMetaSheetProps {
   primaryLabel?: string;
   secondaryLabel?: string;
   primaryIcon?: React.ReactNode;
+  isBackgroundRunning?: boolean;
   // Extended fields (optional)
   genreId?: string | null;
   genres?: { id: string; name: string }[];
@@ -64,7 +65,7 @@ export const UserTextMobileMetaSheet = ({
   onSaveDraft, onPrimaryAction, t,
   licenseType, publicationYear, licenseTypeError,
   onLicenseTypeChange, onPublicationYearChange,
-  primaryLabel, secondaryLabel, primaryIcon,
+  primaryLabel, secondaryLabel, primaryIcon, isBackgroundRunning = false,
   genreId, genres = [], onGenreChange,
   description, onDescriptionChange,
 }: UserTextMobileMetaSheetProps) => {
@@ -220,6 +221,7 @@ export const UserTextMobileMetaSheet = ({
 
               <AdminTextMetaPrimaryActionsSection
                 isSaving={isSaving}
+                isBackgroundRunning={isBackgroundRunning}
                 primaryLabel={resolvedPrimaryLabel}
                 secondaryLabel={resolvedSecondaryLabel}
                 primaryIcon={resolvedPrimaryIcon}

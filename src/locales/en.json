@@ -620,7 +620,6 @@
     "contribute": "Contribute",
     "myTexts": "My Texts",
     "suggestions": "My suggestions",
-    "suggestText": "Suggest a text",
     "mainNav": "Main navigation"
   },
   "vocabulary": {
@@ -1971,6 +1970,12 @@
     },
     "sheet": {
       "close": "Close"
+    },
+    "disclaimer": {
+      "ariaLabel": "Content notice",
+      "title": "Note.",
+      "body": "Texts are collected solely for the study and preservation of the Chechen language. Some literature was written during the Soviet era and may contain ideas contrary to Islamic values. We do not share these views and bear no responsibility for their content. Read critically.",
+      "close": "Dismiss notice"
     },
     "settings": {
       "title": "Reading settings",
@@ -3823,6 +3828,8 @@
         "titleRequired": "Please enter a title",
         "updateSuccess": "Text updated",
         "updateFailed": "Failed to save. Please try again.",
+        "backgroundSaveWarning": "Saved. A background task is still running — don't close the page.",
+        "backgroundProcessTooltip": "A background process is running — result may be incomplete",
         "deleteConfirmTitle": "Delete text?",
         "deleteConfirmBody": "Text «{title}» and all its tokenization versions will be permanently deleted. This action cannot be undone.",
         "deleteCancel": "Cancel",
@@ -6775,38 +6782,6 @@
       "error": "Failed to load submission"
     }
   },
-  "suggestTextPage": {
-    "meta": {
-      "title": "Suggest a text | Mott Larbe",
-      "description": "Propose a new text or book for the library"
-    },
-    "title": "Suggest a text",
-    "description": "Know a great Chechen text, book, or article? Let us know — our editors will review it and add it to the library.",
-    "form": {
-      "title": "Title",
-      "titlePlaceholder": "Title of the text or book",
-      "language": "Language",
-      "author": "Author",
-      "authorPlaceholder": "Optional",
-      "sourceUrl": "Link",
-      "sourceUrlPlaceholder": "https://…",
-      "content": "Text (paste)",
-      "contentPlaceholder": "Paste the text here…",
-      "comment": "Comment",
-      "commentPlaceholder": "Anything else we should know?",
-      "sourceRequired": "Please provide a link or paste the text",
-      "submit": "Submit",
-      "submitting": "Submitting…"
-    },
-    "success": "Thank you! Your suggestion has been submitted.",
-    "error": "Failed to submit. Please try again.",
-    "languages": {
-      "che": "Chechen",
-      "ru": "Russian",
-      "en": "English",
-      "other": "Other"
-    }
-  },
   "myTexts": {
     "meta": {
       "title": "My Texts | Mott Larbe",
@@ -6900,6 +6875,7 @@
     "deleteError": "Failed to delete text",
     "editSuccess": "Text updated",
     "editError": "Failed to save",
+    "backgroundSaveWarning": "Saved. A background task is still running — don't close the page.",
     "createSuccess": "Text added",
     "createError": "Failed to add text",
     "submit": {

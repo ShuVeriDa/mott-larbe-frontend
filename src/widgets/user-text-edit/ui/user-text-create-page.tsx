@@ -18,7 +18,7 @@ export const UserTextCreatePage = ({ lang }: UserTextCreatePageProps) => {
   const {
     t, title, language, type, author, sourceUrl,
     description, coverPreviewUrl, genreId,
-    pages, pageTitles, activePage, isUnsaved, isSaving,
+    pages, pageTitles, activePage, isUnsaved, isSaving, isBackgroundRunning,
     handleTitleChange, handleLanguageChange, handleTypeChange,
     handleAuthorChange, handleSourceChange,
     handleDescriptionChange, handleGenreChange, handleCoverSelect, handleCoverRemove,
@@ -35,6 +35,7 @@ export const UserTextCreatePage = ({ lang }: UserTextCreatePageProps) => {
           title={title}
           isUnsaved={isUnsaved}
           isSaving={isSaving}
+          isBackgroundRunning={isBackgroundRunning}
           isMetaPanelVisible={isMetaPanelVisible}
           mode="create"
           onSaveDraft={handleSaveDraft}
@@ -69,6 +70,7 @@ export const UserTextCreatePage = ({ lang }: UserTextCreatePageProps) => {
           coverPreviewUrl={coverPreviewUrl}
           genreId={genreId}
           isSaving={isSaving}
+          isBackgroundRunning={isBackgroundRunning}
           onLanguageChange={handleLanguageChange}
           onTypeChange={handleTypeChange}
           onAuthorChange={handleAuthorChange}

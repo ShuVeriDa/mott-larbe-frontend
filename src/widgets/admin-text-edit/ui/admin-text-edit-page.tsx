@@ -77,6 +77,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 		isUnsaved,
 		isSaving,
 		isDeleting,
+		isBackgroundRunning,
 		showRetokenizeBar,
 		showDeleteModal,
 		handleTitleChange,
@@ -197,6 +198,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					textStatus={status}
 					isUnsaved={isUnsaved}
 					isSaving={isSaving}
+					isBackgroundRunning={isBackgroundRunning}
 					isMetaPanelVisible={isMetaPanelVisible}
 					onSaveDraft={handleSaveDraft}
 					onSaveAndUpdate={handleSaveAndUpdate}
@@ -243,6 +245,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					pages={pages}
 					pageTokenCounts={pageTokenCounts}
 					isSaving={isSaving}
+					isBackgroundRunning={isBackgroundRunning}
 					processingStatus={textData.processingStatus}
 					tokenCount={textData.tokenCount}
 					recentVersions={recentVersions}

@@ -13,7 +13,8 @@ import {
   type UserTextLanguage,
   type UserTextType,
 } from "@/entities/user-text";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery, useQuery } from "@tanstack/react-query";
+import { userScriptVersionsQueryOptions } from "@/entities/text-script-version";
 import type { TipTapDoc } from "@/shared/ui/notion-editor";
 
 const EMPTY_DOC: TipTapDoc = { type: "doc", content: [{ type: "paragraph" }] };
@@ -148,6 +149,7 @@ export const useUserTextCreatePage = (lang: string) => {
     description, coverPreviewUrl, genreId,
     pages, pageTitles, activePage, isUnsaved,
     isSaving: createMutation.isPending,
+    isBackgroundRunning: false,
     handleTitleChange, handleLanguageChange, handleTypeChange,
     handleAuthorChange, handleSourceChange,
     handleDescriptionChange, handleGenreChange, handleCoverSelect, handleCoverRemove,
@@ -164,10 +166,11 @@ export const useUserTextCreatePage = (lang: string) => {
 export const useUserTextEditPage = (id: string, lang: string) => {
   const { t } = useI18n();
   const router = useRouter();
-  const { success, error: toastError } = useToast();
+  const { toast, success, error: toastError } = useToast();
   const updateMutation = useUpdateUserText();
 
   const { data: userText } = useSuspenseQuery(userTextDetailQueryOptions(id));
+  const { data: scriptVersions = [] } = useQuery(userScriptVersionsQueryOptions(id));
 
   const [title, setTitle] = useState(userText.title);
   const [language, setLanguage] = useState<UserTextLanguage>(userText.language);
@@ -240,7 +243,10 @@ export const useUserTextEditPage = (id: string, lang: string) => {
       {
         onSuccess: () => {
           setIsUnsaved(false);
-          if (onSuccess) { onSuccess(); } else { success(t("myTexts.editSuccess")); }
+          if (onSuccess) { onSuccess(); } else {
+            success(t("myTexts.editSuccess"));
+            if (isBackgroundRunning) toast(t("myTexts.backgroundSaveWarning"));
+          }
         },
         onError: () => toastError(t("myTexts.editError")),
       }
@@ -260,6 +266,7 @@ export const useUserTextEditPage = (id: string, lang: string) => {
     handleDescriptionChange, handleGenreChange, handleCoverSelect, handleCoverRemove,
     handlePageTitleChange,
     isSaving: updateMutation.isPending,
+    isBackgroundRunning: scriptVersions.some((v) => v.status === "RUNNING"),
     handleTitleChange, handleLanguageChange, handleTypeChange,
     handleAuthorChange, handleSourceChange,
     handlePageContentChange, handleAddPage, handleSelectPage, handleDeletePage,

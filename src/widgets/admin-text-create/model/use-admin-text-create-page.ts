@@ -263,6 +263,7 @@ export const useAdminTextCreatePage = () => {
 		useMorphAnalysis,
 		saveState,
 		isSaving,
+		isBackgroundRunning: false,
 		handleTitleChange,
 		handlePageContentChange,
 		handleAddPage,

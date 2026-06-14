@@ -14,7 +14,7 @@ export const useTelegramFab = () => {
 	// hide FAB on desktop for all app-shell routes including reader
 	const isAppShell =
 		isReader ||
-		/^\/(dashboard|vocabulary|phrasebook|review|settings|profile|texts|progress|subscription|suggestions|feedback|suggest-text|my-texts)/.test(strippedPath);
+		/^\/(dashboard|vocabulary|phrasebook|review|settings|profile|texts|progress|subscription|suggestions|feedback|my-texts)/.test(strippedPath);
 
 	const lang = /^\/(en)/.test(pathname) ? "en" : /^\/(che)/.test(pathname) ? "che" : "ru";
 

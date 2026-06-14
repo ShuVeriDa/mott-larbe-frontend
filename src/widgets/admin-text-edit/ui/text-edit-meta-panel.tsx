@@ -42,6 +42,7 @@ interface TextEditMetaPanelProps {
 	pages: PageContent[];
 	pageTokenCounts: number[];
 	isSaving: boolean;
+	isBackgroundRunning?: boolean;
 	processingStatus: ProcessingStatus;
 	tokenCount: number;
 	recentVersions: TextVersionListItem[];
@@ -81,6 +82,7 @@ export const TextEditMetaPanel = ({
 	pages,
 	pageTokenCounts,
 	isSaving,
+	isBackgroundRunning = false,
 	processingStatus,
 	tokenCount,
 	recentVersions,
@@ -198,6 +200,8 @@ export const TextEditMetaPanel = ({
 
 			<AdminTextMetaPrimaryActionsSection
 				isSaving={isSaving}
+				isBackgroundRunning={isBackgroundRunning}
+				backgroundTooltip={isBackgroundRunning ? t("admin.texts.editPage.backgroundProcessTooltip") : undefined}
 				primaryLabel={
 					isSaving
 						? t("admin.texts.editPage.saving")

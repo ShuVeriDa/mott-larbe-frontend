@@ -3,7 +3,8 @@
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { AlignLeft, Check, ChevronLeft, ChevronRight, Save } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/shared/ui/tooltip";
+import { AlignLeft, Check, ChevronLeft, ChevronRight, Loader2, Save } from "lucide-react";
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
@@ -18,6 +19,8 @@ interface AdminTextTopbarShellProps {
 	primaryActionLabel: string;
 	primaryActionIcon: ReactNode;
 	isSaving: boolean;
+	isBackgroundRunning?: boolean;
+	backgroundTooltip?: string;
 	isMetaPanelVisible: boolean;
 	statusLabel?: string | null;
 	showUnsavedPulse?: boolean;
@@ -44,6 +47,8 @@ export const AdminTextTopbarShell = ({
 	primaryActionLabel,
 	primaryActionIcon,
 	isSaving,
+	isBackgroundRunning = false,
+	backgroundTooltip,
 	isMetaPanelVisible,
 	statusLabel,
 	showUnsavedPulse = false,
@@ -133,31 +138,57 @@ export const AdminTextTopbarShell = ({
 					)}
 				</Button>
 
-				<Button
-					onClick={onSaveDraft}
-					disabled={isSaving}
-					aria-label={saveDraftAriaLabel}
-					title={saveDraftAriaLabel}
-					className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-xs text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50 max-[767px]:h-8 max-[767px]:w-8 max-[767px]:justify-center max-[767px]:gap-0 max-[767px]:px-0"
-				>
-					<Save className="size-3" />
-					<Typography tag="span" className="max-[767px]:hidden">
-						{saveDraftLabel}
-					</Typography>
-				</Button>
+				<TooltipProvider>
+					<Tooltip open={isBackgroundRunning && !!backgroundTooltip ? undefined : false}>
+						<TooltipTrigger asChild>
+							<Button
+								onClick={onSaveDraft}
+								disabled={isSaving}
+								aria-label={saveDraftAriaLabel}
+								title={saveDraftAriaLabel}
+								className="flex h-[30px] items-center gap-1.5 rounded-base border border-bd-2 bg-transparent px-3 text-xs text-t-2 transition-colors hover:border-bd-3 hover:bg-surf-2 hover:text-t-1 disabled:cursor-not-allowed disabled:opacity-50 max-[767px]:h-8 max-[767px]:w-8 max-[767px]:justify-center max-[767px]:gap-0 max-[767px]:px-0"
+							>
+								{isBackgroundRunning ? (
+									<Loader2 className="size-3 animate-spin shrink-0" />
+								) : (
+									<Save className="size-3" />
+								)}
+								<Typography tag="span" className="max-[767px]:hidden">
+									{saveDraftLabel}
+								</Typography>
+							</Button>
+						</TooltipTrigger>
+						{backgroundTooltip && (
+							<TooltipContent side="bottom">{backgroundTooltip}</TooltipContent>
+						)}
+					</Tooltip>
+				</TooltipProvider>
 
-				<Button
-					onClick={onPrimaryAction}
-					disabled={isSaving}
-					aria-label={primaryActionAriaLabel}
-					title={primaryActionAriaLabel}
-					className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-xs font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50 max-[767px]:h-8 max-[767px]:w-8 max-[767px]:justify-center max-[767px]:gap-0 max-[767px]:px-0"
-				>
-					{primaryActionIcon}
-					<Typography tag="span" className="max-[767px]:hidden">
-						{primaryActionLabel}
-					</Typography>
-				</Button>
+				<TooltipProvider>
+					<Tooltip open={isBackgroundRunning && !!backgroundTooltip ? undefined : false}>
+						<TooltipTrigger asChild>
+							<Button
+								onClick={onPrimaryAction}
+								disabled={isSaving}
+								aria-label={primaryActionAriaLabel}
+								title={primaryActionAriaLabel}
+								className="flex h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-xs font-semibold text-white transition-opacity hover:opacity-88 disabled:cursor-not-allowed disabled:opacity-50 max-[767px]:h-8 max-[767px]:w-8 max-[767px]:justify-center max-[767px]:gap-0 max-[767px]:px-0"
+							>
+								{isBackgroundRunning ? (
+									<Loader2 className="size-3 animate-spin shrink-0" />
+								) : (
+									primaryActionIcon
+								)}
+								<Typography tag="span" className="max-[767px]:hidden">
+									{primaryActionLabel}
+								</Typography>
+							</Button>
+						</TooltipTrigger>
+						{backgroundTooltip && (
+							<TooltipContent side="bottom">{backgroundTooltip}</TooltipContent>
+						)}
+					</Tooltip>
+				</TooltipProvider>
 			</div>
 		</header>
 	);

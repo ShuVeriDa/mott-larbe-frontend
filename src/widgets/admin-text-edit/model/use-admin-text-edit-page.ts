@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import {
 	useAdminTextCreate,
 	useAdminTextDetail,
@@ -8,6 +9,7 @@ import {
 	useAdminTextVersionMutations,
 	useAdminTextVersions,
 } from "@/entities/admin-text";
+import { scriptVersionsQueryOptions } from "@/entities/text-script-version";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import { countWordsInRaw } from "../lib/tiptap-utils";
@@ -38,7 +40,7 @@ const EMPTY_PAGE: PageContent = { doc: EMPTY_DOC, wordCount: 0, title: "" };
 export const useAdminTextEditPage = (id: string) => {
 	const { t, lang } = useI18n();
 	const router = useRouter();
-	const { success, error: toastError } = useToast();
+	const { toast, success, error: toastError } = useToast();
 
 	const { update, uploadCover } = useAdminTextCreate();
 	const { remove } = useAdminTextMutations();
@@ -46,6 +48,7 @@ export const useAdminTextEditPage = (id: string) => {
 
 	const { data: textData, isLoading, isError } = useAdminTextDetail(id);
 	const { data: versionsData } = useAdminTextVersions(id);
+	const { data: scriptVersions = [] } = useQuery(scriptVersionsQueryOptions(id));
 
 	const [title, setTitle] = useState("");
 	const [pages, setPages] = useState<PageContent[]>([EMPTY_PAGE]);
@@ -195,6 +198,9 @@ export const useAdminTextEditPage = (id: string) => {
 			setIsUnsaved(false);
 			setShowRetokenizeBar(false);
 			success(t("admin.texts.editPage.updateSuccess"));
+			if (isBackgroundRunning) {
+				toast(t("admin.texts.editPage.backgroundSaveWarning"));
+			}
 		} catch {
 			toastError(t("admin.texts.editPage.updateFailed"));
 		}
@@ -224,6 +230,9 @@ export const useAdminTextEditPage = (id: string) => {
 
 	const isSaving = update.isPending || uploadCover.isPending;
 	const isDeleting = remove.isPending;
+	const isBackgroundRunning =
+		textData?.processingStatus === "RUNNING" ||
+		scriptVersions.some((v) => v.status === "RUNNING");
 
 	const pageTokenCounts: number[] = textData?.pages
 		? [...textData.pages]
@@ -255,6 +264,7 @@ export const useAdminTextEditPage = (id: string) => {
 		isUnsaved,
 		isSaving,
 		isDeleting,
+		isBackgroundRunning,
 		showRetokenizeBar,
 		showDeleteModal,
 		handleTitleChange,

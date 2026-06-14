@@ -9,6 +9,7 @@ import { ReaderLoading } from "./reader-loading";
 import { ReaderError } from "./reader-error";
 import { ReaderLayout } from "./reader-layout";
 import { ReaderFocusExitButton } from "./reader-focus-exit-button";
+import { ContentDisclaimerBanner } from "./content-disclaimer-banner";
 
 const WordBottomSheet = dynamic(() =>
 	import("@/widgets/word-bottom-sheet").then(m => ({ default: m.WordBottomSheet })),
@@ -110,6 +111,7 @@ const ReaderPageInner = ({
 				backLabel={backLabel}
 			/>
 		)}
+		{!focusMode.active && <ContentDisclaimerBanner />}
 			<ReaderLayout
 				textId={textId}
 				pageNumber={pageNumber}

@@ -36,6 +36,7 @@ export interface UserTextEditMetaPanelProps {
   author: string;
   sourceUrl: string;
   isSaving: boolean;
+  isBackgroundRunning?: boolean;
   onLanguageChange: (v: UserTextLanguage) => void;
   onTypeChange: (v: UserTextType | SubmissionType) => void;
   onAuthorChange: (v: string) => void;
@@ -64,7 +65,7 @@ export interface UserTextEditMetaPanelProps {
 
 export const UserTextEditMetaPanel = ({
   textId,
-  language, type, author, sourceUrl, isSaving,
+  language, type, author, sourceUrl, isSaving, isBackgroundRunning = false,
   onLanguageChange, onTypeChange, onAuthorChange, onSourceChange,
   onSaveDraft, onPrimaryAction,
   description, coverPreviewUrl, genreId,
@@ -238,6 +239,7 @@ export const UserTextEditMetaPanel = ({
 
         <AdminTextMetaPrimaryActionsSection
           isSaving={isSaving}
+          isBackgroundRunning={isBackgroundRunning}
           primaryLabel={resolvedPrimaryLabel}
           secondaryLabel={resolvedSecondaryLabel}
           primaryIcon={resolvedPrimaryIcon}
@@ -257,7 +259,7 @@ export const UserTextEditMetaPanel = ({
         licenseTypeError={licenseTypeError}
         onLicenseTypeChange={onLicenseTypeChange} onPublicationYearChange={onPublicationYearChange}
         primaryLabel={resolvedPrimaryLabel} secondaryLabel={resolvedSecondaryLabel}
-        primaryIcon={resolvedPrimaryIcon}
+        primaryIcon={resolvedPrimaryIcon} isBackgroundRunning={isBackgroundRunning}
         genreId={genreId} genres={genres} onGenreChange={onGenreChange}
         description={description} onDescriptionChange={onDescriptionChange}
       />

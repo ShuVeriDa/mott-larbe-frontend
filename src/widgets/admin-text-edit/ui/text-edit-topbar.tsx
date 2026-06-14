@@ -12,6 +12,7 @@ interface TextEditTopbarProps {
 	textStatus: string;
 	isUnsaved: boolean;
 	isSaving: boolean;
+	isBackgroundRunning?: boolean;
 	isMetaPanelVisible: boolean;
 	onSaveDraft: () => void;
 	onSaveAndUpdate: () => void;
@@ -25,6 +26,7 @@ export const TextEditTopbar = ({
 	textStatus,
 	isUnsaved,
 	isSaving,
+	isBackgroundRunning = false,
 	isMetaPanelVisible,
 	onSaveDraft,
 	onSaveAndUpdate,
@@ -89,6 +91,8 @@ export const TextEditTopbar = ({
 			}
 			primaryActionIcon={<Check className="size-3" />}
 			isSaving={isSaving}
+			isBackgroundRunning={isBackgroundRunning}
+			backgroundTooltip={isBackgroundRunning ? t("admin.texts.editPage.backgroundProcessTooltip") : undefined}
 			isMetaPanelVisible={isMetaPanelVisible}
 			statusLabel={statusLabel}
 			showUnsavedPulse={isUnsaved}

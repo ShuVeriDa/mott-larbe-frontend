@@ -8,6 +8,7 @@ import type { SaveState } from "../model/use-admin-text-create-page";
 interface TextCreateTopbarProps {
 	saveState: SaveState;
 	isSaving: boolean;
+	isBackgroundRunning?: boolean;
 	isMetaPanelVisible: boolean;
 	onSaveDraft: () => void;
 	onPublish: () => void;
@@ -17,6 +18,7 @@ interface TextCreateTopbarProps {
 export const TextCreateTopbar = ({
 	saveState,
 	isSaving,
+	isBackgroundRunning = false,
 	isMetaPanelVisible,
 	onSaveDraft,
 	onPublish,
@@ -44,6 +46,7 @@ export const TextCreateTopbar = ({
 			primaryActionLabel={t("admin.texts.createPage.publish")}
 			primaryActionIcon={<Upload className="size-3" />}
 			isSaving={isSaving}
+			isBackgroundRunning={isBackgroundRunning}
 			isMetaPanelVisible={isMetaPanelVisible}
 			statusLabel={statusLabel}
 			showUnsavedPulse={saveState === "unsaved"}

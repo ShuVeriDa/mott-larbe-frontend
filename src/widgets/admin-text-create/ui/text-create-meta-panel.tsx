@@ -39,6 +39,7 @@ interface TextCreateMetaPanelProps {
 	useMorphAnalysis: boolean;
 	pages: PageContent[];
 	isSaving: boolean;
+	isBackgroundRunning?: boolean;
 	onStatusChange: (v: TextStatus) => void;
 	onLanguageChange: (v: TextLanguage) => void;
 	onLevelChange: (v: TextLevel | null) => void;
@@ -73,6 +74,7 @@ export const TextCreateMetaPanel = ({
 	useMorphAnalysis,
 	pages,
 	isSaving,
+	isBackgroundRunning = false,
 	onStatusChange,
 	onLanguageChange,
 	onLevelChange,
@@ -167,6 +169,7 @@ export const TextCreateMetaPanel = ({
 
 			<AdminTextMetaPrimaryActionsSection
 				isSaving={isSaving}
+				isBackgroundRunning={isBackgroundRunning}
 				primaryLabel={
 					isSaving
 						? t("admin.texts.createPage.publishing")

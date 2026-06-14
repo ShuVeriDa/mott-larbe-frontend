@@ -1,6 +1,5 @@
 import {
 	BookOpen,
-	BookPlus,
 	ChartNoAxesCombined,
 	House,
 	Library,
@@ -63,11 +62,6 @@ export const buildNavSections = (lang: string): NavSection[] => [
 				href: () => `/${lang}/suggestions`,
 				icon: Pencil,
 				labelKey: "nav.suggestions",
-			},
-			{
-				href: () => `/${lang}/suggest-text`,
-				icon: BookPlus,
-				labelKey: "nav.suggestText",
 			},
 		],
 	},

@@ -24,7 +24,7 @@ const UserTextEditPageInner = ({
   const {
     title, language, type, author, sourceUrl,
     description, coverPreviewUrl, genreId,
-    pages, pageTitles, activePage, isUnsaved, isSaving,
+    pages, pageTitles, activePage, isUnsaved, isSaving, isBackgroundRunning,
     handleTitleChange, handleLanguageChange, handleTypeChange,
     handleAuthorChange, handleSourceChange,
     handleDescriptionChange, handleGenreChange, handleCoverSelect, handleCoverRemove,
@@ -41,6 +41,7 @@ const UserTextEditPageInner = ({
           title={title}
           isUnsaved={isUnsaved}
           isSaving={isSaving}
+          isBackgroundRunning={isBackgroundRunning}
           isMetaPanelVisible={isMetaPanelVisible}
           mode="edit"
           onSaveDraft={handleSaveDraft}
@@ -76,6 +77,7 @@ const UserTextEditPageInner = ({
           coverPreviewUrl={coverPreviewUrl}
           genreId={genreId}
           isSaving={isSaving}
+          isBackgroundRunning={isBackgroundRunning}
           onLanguageChange={handleLanguageChange}
           onTypeChange={handleTypeChange}
           onAuthorChange={handleAuthorChange}
