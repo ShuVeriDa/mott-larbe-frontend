@@ -137,7 +137,7 @@ interface ParagraphProps {
 	phraseMap?: PhraseMap;
 	onSelectPhrase?: (phrase: PagePhraseOccurrence, anchor: { left: number; top: number; width: number; height: number }) => void;
 	phraseColorVisible?: boolean;
-	tag: "p" | "blockquote";
+	tag: "p" | "blockquote" | "h1" | "h2" | "h3" | "h4";
 	className?: string;
 	style?: CSSProperties;
 	displayOnly?: boolean;
@@ -362,6 +362,13 @@ const Paragraph = ({
 	return <Tag className={className} style={style}>{nodes}</Tag>;
 };
 
+const HEADING_STYLES: Record<number, CSSProperties> = {
+	1: { fontSize: "1.75em", fontWeight: 700, lineHeight: 1.25 },
+	2: { fontSize: "1.4em", fontWeight: 700, lineHeight: 1.3 },
+	3: { fontSize: "1.15em", fontWeight: 600, lineHeight: 1.35 },
+	4: { fontSize: "1em", fontWeight: 600, lineHeight: 1.4 },
+};
+
 // ── ArticleRich ───────────────────────────────────────────────────────────────
 
 export const ArticleRich = ({
@@ -420,6 +427,8 @@ export const ArticleRich = ({
 					const allRanges = mergeRanges(hlRanges, nRanges);
 					const isLast = idx === paragraphs.length - 1;
 					const isBlockquote = para.blockType === "blockquote";
+					const headingTag = para.headingLevel ? (`h${para.headingLevel}` as "h1" | "h2" | "h3" | "h4") : null;
+					const tag = headingTag ?? (isBlockquote ? "blockquote" : "p");
 
 					return (
 						<motion.div key={idx} variants={variants.staggerItem}>
@@ -431,7 +440,7 @@ export const ArticleRich = ({
 								phraseMap={phraseMap}
 								onSelectPhrase={onSelectPhrase}
 								phraseColorVisible={phraseColorVisible}
-								tag={isBlockquote ? "blockquote" : "p"}
+								tag={tag}
 								className={cn(
 									isBlockquote && "border-acc/40 text-t-1",
 									isBlockquote && (isRtl ? "border-r-[3px] pr-4" : "border-l-[3px] pl-4"),
@@ -439,6 +448,8 @@ export const ArticleRich = ({
 								style={{
 									textAlign: isRtl && para.textAlign === "left" ? "right" : para.textAlign,
 									marginBottom: isLast ? 0 : (paragraphSpacing ?? "1.25rem"),
+									...(para.headingLevel ? HEADING_STYLES[para.headingLevel] : {}),
+									...(para.headingFontWeight ? { fontWeight: para.headingFontWeight } : {}),
 								}}
 								displayOnly={displayOnly}
 								isRtl={isRtl}

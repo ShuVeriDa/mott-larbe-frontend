@@ -1,7 +1,8 @@
 "use client";
 
 import { MouseEvent } from "react";
-import type { Phrase } from "@/entities/phrasebook";
+import { getPhraseTranslation, type Phrase } from "@/entities/phrasebook";
+import { useTranslationLanguageStore } from "@/features/ai-word-lookup";
 import { usePhrasebookFilters } from "@/features/phrasebook-filters";
 import { useSavePhrase } from "@/features/save-phrase";
 import { cn } from "@/shared/lib/cn";
@@ -12,10 +13,10 @@ import { PhraseActionButton } from "./phrase-action-button";
 import { PhraseDetail } from "./phrase-detail";
 
 const LANG_DOT_COLOR: Record<string, string> = {
-	che: "#e53935",
-	ru: "#3b82f6",
-	ar: "#f59e0b",
-	en: "#22c55e",
+	CHE: "#e53935",
+	RU: "#3b82f6",
+	AR: "#f59e0b",
+	EN: "#22c55e",
 };
 
 interface PhraseCardProps {
@@ -26,6 +27,8 @@ interface PhraseCardProps {
 
 export const PhraseCard = ({ phrase, selectionMode, selected }: PhraseCardProps) => {
 	const { t } = useI18n();
+	const targetLanguage = useTranslationLanguageStore(s => s.targetLanguage);
+	const translation = getPhraseTranslation(phrase, targetLanguage);
 	const { openPhraseId, toggleOpenPhraseId, toggleSelectPhrase } = usePhrasebookFilters();
 	const { mutate: toggleSave, isPending } = useSavePhrase();
 	const isOpen = openPhraseId === phrase.id;
@@ -85,7 +88,7 @@ export const PhraseCard = ({ phrase, selectionMode, selected }: PhraseCardProps)
 					<span
 						className="w-1.5 h-1.5 rounded-full shrink-0 mt-[5px]"
 						style={{ backgroundColor: dotColor }}
-						aria-label={phrase.lang.toUpperCase()}
+						aria-label={phrase.lang}
 					/>
 				)}
 				<div className="flex-1 min-w-0">
@@ -98,7 +101,7 @@ export const PhraseCard = ({ phrase, selectionMode, selected }: PhraseCardProps)
 						</div>
 					)}
 					<div className="text-[12.5px] text-t-2 leading-[1.4]">
-						{phrase.translation}
+						{translation}
 					</div>
 				</div>
 				<div

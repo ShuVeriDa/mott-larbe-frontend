@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import type { PhraseLang } from "@/entities/phrasebook";
+import { PhraseLang } from "@/entities/phrasebook";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
@@ -21,7 +21,7 @@ interface SuggestPhraseModalProps {
 const INITIAL = {
 	original: "",
 	translation: "",
-	lang: "che" as PhraseLang,
+	lang: PhraseLang.CHE,
 	context: "",
 };
 
@@ -137,8 +137,8 @@ export const SuggestPhraseModal = ({
 					onChange={handleLangChange}
 					wrapperClassName="mb-3"
 				>
-					<option value="che">{t("shared.lang.CHE")}</option>
-					<option value="ru">{t("shared.lang.RU")}</option>
+					<option value={PhraseLang.CHE}>{t("shared.lang.CHE")}</option>
+					<option value={PhraseLang.RU}>{t("shared.lang.RU")}</option>
 				</Select>
 
 				<InputLabel htmlFor="sp-context">

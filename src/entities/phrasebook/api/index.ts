@@ -1,12 +1,12 @@
 export { phrasebookApi } from "./phrasebook-api";
 export { phrasebookKeys } from "./phrasebook-keys";
+export { PhraseLang } from "./types";
 export type {
 	Phrase,
 	PhraseDue,
 	PhrasebookCategory,
 	PhrasebookStats,
 	PhrasesQuery,
-	PhraseLang,
 	PhraseWord,
 	PhraseExample,
 	PhraseStatus,

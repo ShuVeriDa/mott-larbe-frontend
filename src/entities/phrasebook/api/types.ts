@@ -1,4 +1,9 @@
-export type PhraseLang = "che" | "ru" | "ar" | "en";
+export enum PhraseLang {
+	CHE = "CHE",
+	RU = "RU",
+	AR = "AR",
+	EN = "EN",
+}
 export type PhraseStatus = "NEW" | "LEARNING" | "KNOWN";
 export type PhraseReviewQuality = 0 | 1 | 2 | 3 | 4 | 5;
 
@@ -21,6 +26,11 @@ export interface Phrase {
 	original: string;
 	transliteration: string | null;
 	translation: string;
+	translationEn: string | null;
+	translationAr: string | null;
+	translationDe: string | null;
+	translationFr: string | null;
+	translationTr: string | null;
 	lang: PhraseLang;
 	audioUrl: string | null;
 	saved: boolean;

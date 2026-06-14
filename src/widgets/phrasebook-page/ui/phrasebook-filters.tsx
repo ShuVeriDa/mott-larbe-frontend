@@ -1,10 +1,10 @@
 "use client";
 
-import { usePhrasebookParams } from "@/features/phrasebook-filters";
+import { usePhrasebookParams } from "../model/use-phrasebook-params";
 import { useI18n } from "@/shared/lib/i18n";
 import { ENABLED_LANGUAGES } from "@/shared/lib/languages";
 import { FilterGroup } from "@/shared/ui/filter-group";
-import type { PhraseLang } from "@/entities/phrasebook";
+import { PhraseLang } from "@/entities/phrasebook";
 
 export const PhrasebookFilters = () => {
 	const { t } = useI18n();
@@ -13,7 +13,7 @@ export const PhrasebookFilters = () => {
 	const langOptions: { value: PhraseLang | null; label: string }[] = [
 		{ value: null, label: t("phrasebook.filters.all") },
 		...ENABLED_LANGUAGES.map(l => ({
-			value: l.code.toLowerCase() as PhraseLang,
+			value: l.code as PhraseLang,
 			label: t(`shared.lang.${l.code}`),
 		})),
 	];

@@ -1,10 +1,10 @@
 "use client";
 
-import type { PhraseLang } from "@/entities/phrasebook";
+import { PhraseLang } from "@/entities/phrasebook";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
-const VALID_LANGS: PhraseLang[] = ["che", "ru", "ar", "en"];
+const VALID_LANGS = Object.values(PhraseLang);
 
 export interface PhrasebookParams {
 	categoryId: string | null;
@@ -18,13 +18,14 @@ export interface PhrasebookParamsActions {
 	setSavedOnly: (saved: boolean) => void;
 }
 
-export const usePhrasebookParams = (): PhrasebookParams & PhrasebookParamsActions => {
+export const usePhrasebookParams = (defaultLang?: PhraseLang | null): PhrasebookParams & PhrasebookParamsActions => {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 
 	const categoryId = searchParams.get("category");
 	const langRaw = searchParams.get("lang");
-	const lang = VALID_LANGS.includes(langRaw as PhraseLang) ? (langRaw as PhraseLang) : null;
+	const langFromUrl = VALID_LANGS.includes(langRaw as PhraseLang) ? (langRaw as PhraseLang) : null;
+	const lang = langRaw !== null ? langFromUrl : (defaultLang ?? null);
 	const savedOnly = searchParams.get("saved") === "1";
 
 	const patch = useCallback(

@@ -5,7 +5,8 @@ import {
 	usePhrases,
 	type PhrasesQuery,
 } from "@/entities/phrasebook";
-import { usePhrasebookFilters, usePhrasebookParams } from "@/features/phrasebook-filters";
+import { usePhrasebookFilters } from "@/features/phrasebook-filters";
+import { usePhrasebookParams } from "../model/use-phrasebook-params";
 import { useDebounce } from "@/shared/lib/debounce";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";

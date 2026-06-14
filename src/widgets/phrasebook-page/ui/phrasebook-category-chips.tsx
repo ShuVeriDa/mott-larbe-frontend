@@ -1,7 +1,7 @@
 "use client";
 
 import { usePhrasebookCategories } from "@/entities/phrasebook";
-import { usePhrasebookParams } from "@/features/phrasebook-filters";
+import { usePhrasebookParams } from "../model/use-phrasebook-params";
 import { PhrasebookCategoryChip } from "./phrasebook-category-chip";
 
 export const PhrasebookCategoryChips = () => {

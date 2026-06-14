@@ -79,9 +79,9 @@ export const DashboardAiCacheCard = ({
 						{t("aiTranslation.admin.widget.topWords")}
 					</div>
 					<div className="flex flex-col gap-1.5">
-						{aiCache.topWords.slice(0, 5).map(w => (
+						{aiCache.topWords.slice(0, 5).map((w, i) => (
 							<div
-								key={w.lemma}
+								key={`${w.lemma}-${i}`}
 								className="flex items-center justify-between gap-2"
 							>
 								<div className="min-w-0">

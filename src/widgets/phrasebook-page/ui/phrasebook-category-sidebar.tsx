@@ -5,7 +5,7 @@ import {
 	usePhraseCategoryProgress,
 	type PhraseCategoryProgress,
 } from "@/entities/phrasebook";
-import { usePhrasebookParams } from "@/features/phrasebook-filters";
+import { usePhrasebookParams } from "../model/use-phrasebook-params";
 import { useI18n } from "@/shared/lib/i18n";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { PhrasebookCategoryItem } from "./phrasebook-category-item";

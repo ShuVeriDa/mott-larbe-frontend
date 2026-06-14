@@ -1,4 +1,4 @@
-import type { PhraseLang, PhraseWord, PhraseExample } from "./types";
+import { PhraseLang, type PhraseWord, type PhraseExample } from "./types";
 
 export interface AdminPhrasebookCategory {
 	id: string;

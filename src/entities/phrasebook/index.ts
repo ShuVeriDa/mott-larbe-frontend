@@ -6,7 +6,7 @@ export {
 	type PhrasebookCategory,
 	type PhrasebookStats,
 	type PhrasesQuery,
-	type PhraseLang,
+	PhraseLang,
 	type PhraseWord,
 	type PhraseExample,
 	type PhraseStatus,
@@ -30,6 +30,8 @@ export {
 	type CreateAdminPhraseExampleDto,
 	type AdminPhrasesQuery,
 } from "./api";
+
+export { getPhraseTranslation } from "./lib/get-phrase-translation";
 
 export {
 	usePhrasebookStats,

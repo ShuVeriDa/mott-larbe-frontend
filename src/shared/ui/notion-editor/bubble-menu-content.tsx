@@ -23,6 +23,15 @@ import { createPortal } from "react-dom";
 import { BlockTypeDropdown } from "./block-type-dropdown";
 import { BG_COLORS, ColorPanel, TEXT_COLORS } from "./color-panel";
 
+const HEADING_FONT_WEIGHTS: { label: string; value: string | null; cssValue: number }[] = [
+	{ label: "300", value: "300", cssValue: 300 },
+	{ label: "400", value: "400", cssValue: 400 },
+	{ label: "500", value: "500", cssValue: 500 },
+	{ label: "600", value: "600", cssValue: 600 },
+	{ label: "700", value: "700", cssValue: 700 },
+	{ label: "800", value: "800", cssValue: 800 },
+];
+
 const Sep = () => <div className="mx-1 h-[18px] w-px shrink-0 bg-bd-2" />;
 
 const Btn = ({
@@ -96,6 +105,14 @@ export const BubbleMenuContent = ({
 		setColorAnchor(rect);
 		setColorOpen(v => !v);
 	};
+
+	const isHeading =
+		editor.isActive("heading", { level: 1 }) ||
+		editor.isActive("heading", { level: 2 }) ||
+		editor.isActive("heading", { level: 3 }) ||
+		editor.isActive("heading", { level: 4 });
+	const activeHeadingFontWeight =
+		(editor.getAttributes("heading").fontWeight as string | null | undefined) ?? null;
 
 	const handleBold = () => editor.chain().focus().toggleBold().run();
 	const handleItalic = () => editor.chain().focus().toggleItalic().run();
@@ -197,6 +214,35 @@ export const BubbleMenuContent = ({
 						}}
 					/>
 				</Button>
+				{isHeading && (
+					<>
+						<Sep />
+						{HEADING_FONT_WEIGHTS.map(w => {
+							const isActive = activeHeadingFontWeight === w.value ||
+								(activeHeadingFontWeight === null && w.value === null);
+							const handleWeightMouseDown: NonNullable<ComponentProps<"button">["onMouseDown"]> = e => {
+								e.preventDefault();
+								editor.chain().focus().setHeadingFontWeight(w.value).run();
+							};
+							return (
+								<Button
+									key={w.label}
+									size="bare"
+									title={`Font weight: ${w.label}`}
+									onMouseDown={handleWeightMouseDown}
+									className={`flex h-7 shrink-0 items-center justify-center rounded-[6px] px-1.5 text-[11px] transition-all duration-100 select-none
+										${isActive
+											? "bg-[#2783de]/10 text-[#2783de]"
+											: "text-t-2 hover:bg-surf-3 hover:text-t-1 active:scale-95"
+										}`}
+									style={{ fontWeight: w.cssValue }}
+								>
+									{w.label}
+								</Button>
+							);
+						})}
+					</>
+				)}
 				{(onEditPhrase || onDeletePhrase) && (
 					<>
 						<Sep />

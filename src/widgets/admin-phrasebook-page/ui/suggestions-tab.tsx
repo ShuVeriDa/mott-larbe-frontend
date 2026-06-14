@@ -1,6 +1,6 @@
 "use client";
 
-import type { AdminPhrasebookSuggestion } from "@/entities/phrasebook";
+import { PhraseLang, type AdminPhrasebookSuggestion } from "@/entities/phrasebook";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import {
@@ -162,7 +162,7 @@ const SuggestionRow = ({
 					tag="span"
 					className={cn(
 						"inline-flex items-center rounded-[5px] px-[7px] py-[2px] text-[10.5px] font-semibold uppercase",
-						suggestion.lang === "che"
+						suggestion.lang === PhraseLang.CHE
 							? "bg-acc-bg text-acc-t"
 							: "bg-surf-3 text-t-3",
 					)}

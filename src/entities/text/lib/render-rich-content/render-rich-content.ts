@@ -19,6 +19,8 @@ export interface RichParagraph {
 	textAlign: "left" | "center" | "right" | "justify";
 	segments: RichSegment[];
 	blockType?: "blockquote";
+	headingLevel?: 1 | 2 | 3 | 4;
+	headingFontWeight?: string;
 	// Cyrillic plain text of this paragraph — used for highlight/note matching
 	// when segments contain transliterated display text (non-Cyrillic scripts).
 	cyrillicText?: string;
@@ -80,8 +82,11 @@ export const renderRichContent = (
 	// Cyrillic contentRaw don't apply. Emit every text node as a plain text segment.
 	if (displayOnly) {
 		const paragraphs: RichParagraph[] = [];
-		const emitDisplayOnly = (paraNode: TipTapNode, blockType?: "blockquote") => {
+		const emitDisplayOnly = (paraNode: TipTapNode, blockType?: "blockquote", headingLevel?: 1 | 2 | 3 | 4) => {
 			const textAlign = (paraNode.attrs?.textAlign as RichParagraph["textAlign"]) ?? "left";
+			const headingFontWeight = headingLevel
+				? ((paraNode.attrs?.fontWeight as string | undefined) ?? undefined)
+				: undefined;
 			const segments: RichSegment[] = [];
 			for (const node of paraNode.content ?? []) {
 				if (node.type === "hardBreak") {
@@ -90,11 +95,14 @@ export const renderRichContent = (
 					segments.push({ kind: "text", value: node.text, marks: resolveMarks(node.marks) });
 				}
 			}
-			if (segments.length > 0) paragraphs.push({ textAlign, segments, blockType });
+			if (segments.length > 0) paragraphs.push({ textAlign, segments, blockType, headingLevel, headingFontWeight });
 		};
 		const walkDisplayOnly = (node: TipTapNode) => {
 			if (node.type === "paragraph") {
 				emitDisplayOnly(node);
+			} else if (node.type === "heading") {
+				const level = ((node.attrs?.level as number | undefined) ?? 2) as 1 | 2 | 3 | 4;
+				emitDisplayOnly(node, undefined, level);
 			} else if (node.type === "blockquote") {
 				for (const child of node.content ?? []) {
 					if (child.type === "paragraph") emitDisplayOnly(child, "blockquote");
@@ -126,8 +134,12 @@ export const renderRichContent = (
 	const processParagraphNode = (
 		cyrParaNode: TipTapNode,
 		blockType?: "blockquote",
+		headingLevel?: 1 | 2 | 3 | 4,
 	) => {
 		const textAlign = (cyrParaNode.attrs?.textAlign as RichParagraph["textAlign"]) ?? "left";
+		const headingFontWeight = headingLevel
+			? ((cyrParaNode.attrs?.fontWeight as string | undefined) ?? undefined)
+			: undefined;
 		const segments: RichSegment[] = [];
 
 		const emitText = (cyrText: string, marks: MarkAttrs) => {
@@ -212,13 +224,16 @@ export const renderRichContent = (
 
 		if (segments.length > 0) {
 			const cyrillicText = cyrillicContentRich ? cyrillicParts.join("") : undefined;
-			paragraphs.push({ textAlign, segments, blockType, cyrillicText });
+			paragraphs.push({ textAlign, segments, blockType, headingLevel, headingFontWeight, cyrillicText });
 		}
 	};
 
 	const walkNode = (cyrNode: TipTapNode) => {
 		if (cyrNode.type === "paragraph") {
 			processParagraphNode(cyrNode);
+		} else if (cyrNode.type === "heading") {
+			const level = ((cyrNode.attrs?.level as number | undefined) ?? 2) as 1 | 2 | 3 | 4;
+			processParagraphNode(cyrNode, undefined, level);
 		} else if (cyrNode.type === "blockquote") {
 			for (const child of cyrNode.content ?? []) {
 				if (child.type === "paragraph") {

@@ -1,8 +1,9 @@
 "use client";
 
-import type {
-	AdminPhrasebookCategory,
-	AdminPhrasebookPhrase,
+import {
+	PhraseLang,
+	type AdminPhrasebookCategory,
+	type AdminPhrasebookPhrase,
 } from "@/entities/phrasebook";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
@@ -270,7 +271,7 @@ const PhraseRow = ({
 					tag="span"
 					className={cn(
 						"inline-flex items-center rounded-[5px] px-[7px] py-[2px] text-[10.5px] font-semibold uppercase",
-						phrase.lang === "che"
+						phrase.lang === PhraseLang.CHE
 							? "bg-acc-bg text-acc-t"
 							: "bg-surf-3 text-t-3",
 					)}

@@ -8,14 +8,14 @@ import { Select } from "@/shared/ui/select";
 import { Modal, ModalActions } from "@/shared/ui/modal";
 import { Typography } from "@/shared/ui/typography";
 import { cn } from "@/shared/lib/cn";
-import type {
-	AdminPhrasebookCategory,
-	AdminPhrasebookPhrase,
-	CreateAdminPhraseDto,
-	UpdateAdminPhraseDto,
-	CreateAdminPhraseWordDto,
-	CreateAdminPhraseExampleDto,
+import {
 	PhraseLang,
+	type AdminPhrasebookCategory,
+	type AdminPhrasebookPhrase,
+	type CreateAdminPhraseDto,
+	type UpdateAdminPhraseDto,
+	type CreateAdminPhraseWordDto,
+	type CreateAdminPhraseExampleDto,
 } from "@/entities/phrasebook";
 import { PHRASE_LANGS } from "../lib/constants";
 
@@ -48,7 +48,7 @@ export const PhraseModal = ({
 	const [original, setOriginal] = useState("");
 	const [transliteration, setTransliteration] = useState("");
 	const [translation, setTranslation] = useState("");
-	const [lang, setLang] = useState<PhraseLang>("che");
+	const [lang, setLang] = useState(PhraseLang.CHE);
 	const [sortOrder, setSortOrder] = useState("0");
 	const [words, setWords] = useState<CreateAdminPhraseWordDto[]>([]);
 	const [examples, setExamples] = useState<CreateAdminPhraseExampleDto[]>([]);
@@ -60,7 +60,7 @@ export const PhraseModal = ({
 		setOriginal(phrase?.original ?? "");
 		setTransliteration(phrase?.transliteration ?? "");
 		setTranslation(phrase?.translation ?? "");
-		setLang((phrase?.lang as PhraseLang) ?? "che");
+		setLang(phrase?.lang ?? PhraseLang.CHE);
 		setSortOrder(String(phrase?.sortOrder ?? 0));
 		setWords(phrase?.words.map((w) => ({ original: w.original, translation: w.translation, position: w.position })) ?? []);
 		setExamples(phrase?.examples.map((e) => ({ phrase: e.phrase, translation: e.translation, context: e.context || undefined })) ?? []);
