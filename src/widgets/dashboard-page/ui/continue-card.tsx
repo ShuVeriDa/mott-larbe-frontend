@@ -24,7 +24,7 @@ export const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 
 	return (
 		<Link
-			href={`/${lang}/reader/${item.id}/p/${item.lastPageNumber}`}
+			href={`/${lang}/reader/${item.id}/p/${item.currentPage}`}
 			className="group flex flex-col overflow-hidden rounded-card border-[0.5px] border border-bd-1 bg-surf outline-none transition-[transform,border-color,box-shadow] duration-150 hover:-translate-y-px hover:border-bd-2 hover:shadow-md focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 		>
 			<div className="relative h-[5px] w-full bg-surf-3">
@@ -57,7 +57,7 @@ export const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 				</div>
 				<div className="mb-3 text-[11px] text-t-2">
 					{t("dashboard.continueReading.pageOf", {
-						current: item.lastPageNumber,
+						current: item.currentPage,
 						total: item.totalPages,
 					})}
 					{item.level ? ` · ${t(`shared.cefrLevel.${item.level}`)}` : ""}

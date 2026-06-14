@@ -29,6 +29,11 @@ export const buildNavSections = (lang: string): NavSection[] => [
 				labelKey: "nav.home",
 			},
 			{
+				href: () => `/${lang}/texts`,
+				icon: Library,
+				labelKey: "nav.texts",
+			},
+			{
 				href: () => `/${lang}/vocabulary`,
 				icon: WholeWord,
 				labelKey: "nav.vocabulary",

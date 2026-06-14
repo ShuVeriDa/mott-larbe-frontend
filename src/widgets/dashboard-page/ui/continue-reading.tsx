@@ -59,7 +59,7 @@ export const ContinueReading = ({ items, lang }: ContinueReadingProps) => {
 						<LibraryPreviewCard
 							item={toListItem(item)}
 							lang={lang}
-							href={`/${lang}/reader/${item.id}/p/${item.lastPageNumber}`}
+							href={`/${lang}/reader/${item.id}/p/${item.currentPage}`}
 						/>
 					</div>
 				))}

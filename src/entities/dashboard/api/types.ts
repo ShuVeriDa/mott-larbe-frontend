@@ -38,7 +38,7 @@ export interface DashboardContinueItem {
 	imageUrl: string | null;
 	progressPercent: number;
 	lastOpened: string;
-	lastPageNumber: number;
+	currentPage: number;
 	totalPages: number;
 	tags: Array<{ id: string; name: string }>;
 }

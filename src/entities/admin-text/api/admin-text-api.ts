@@ -157,6 +157,24 @@ export const adminTextApi = {
 		URL.revokeObjectURL(url);
 	},
 
+	exportTextsIndividually: async (texts: { id: string; title: string }[], format: "json" | "csv"): Promise<void> => {
+		for (const text of texts) {
+			const response = await http.get<Blob>(`/admin/texts/${text.id}/export`, {
+				params: { format },
+				responseType: "blob",
+			});
+			const slug = text.title.replace(/[^\p{L}\p{N}]+/gu, "-").replace(/^-|-$/g, "").slice(0, 80) || text.id;
+			const url = URL.createObjectURL(response.data);
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = `${slug}.${format}`;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+		}
+	},
+
 	exportTexts: async (query: FetchAdminTextsQuery, format: "json" | "csv", selectedIds?: string[]): Promise<void> => {
 		const params: Record<string, unknown> = { format };
 		if (query.search) params.search = query.search;

@@ -5,7 +5,7 @@ import { adminTextApi, useAdminTexts } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { CheckSquare, Download, Search, Square } from "lucide-react";
+import { CheckSquare, Download, Files, FileText, Search, Square } from "lucide-react";
 import {
 	ChangeEvent,
 	ComponentProps,
@@ -16,6 +16,7 @@ import { Modal, ModalActions } from "@/shared/ui/modal";
 const EMPTY: AdminTextListItem[] = [];
 
 type ExportFormat = "json" | "csv";
+type OutputMode = "combined" | "separate";
 
 interface ExportTextsModalProps {
 	preselectedIds: string[];
@@ -28,6 +29,7 @@ export const ExportTextsModal = ({
 }: ExportTextsModalProps) => {
 	const { t } = useI18n();
 	const [format, setFormat] = useState<ExportFormat>("json");
+	const [outputMode, setOutputMode] = useState<OutputMode>("combined");
 	const [search, setSearch] = useState("");
 	const [manualCheckedIds, setCheckedIds] = useState<Set<string> | null>(
 		preselectedIds.length > 0 ? new Set(preselectedIds) : null,
@@ -85,11 +87,17 @@ export const ExportTextsModal = ({
 		setError("");
 		try {
 			const ids = Array.from(checkedIds);
-			await adminTextApi.exportTexts(
-				{},
-				format,
-				ids.length > 0 ? ids : undefined,
-			);
+			const selectedTexts = allTexts.filter(t => checkedIds.has(t.id));
+
+			if (outputMode === "separate") {
+				await adminTextApi.exportTextsIndividually(selectedTexts, format);
+			} else {
+				await adminTextApi.exportTexts(
+					{},
+					format,
+					ids.length > 0 ? ids : undefined,
+				);
+			}
 			onClose();
 		} catch {
 			setError(t("admin.texts.export.error"));
@@ -105,10 +113,10 @@ export const ExportTextsModal = ({
 			open
 			onClose={onClose}
 			title={t("admin.texts.export.title")}
-			className="max-w-[480px]"
+			className="max-w-[500px]"
 		>
 			{/* Format */}
-			<div className="mb-4 flex flex-col gap-2">
+			<div className="mb-5 flex flex-col gap-2">
 				<Typography tag="p" className="text-[12px] font-medium text-t-2">
 					{t("admin.texts.export.formatLabel")}
 				</Typography>
@@ -121,10 +129,10 @@ export const ExportTextsModal = ({
 								type="button"
 								onClick={handleClick}
 								title={f.toUpperCase()}
-								className={`flex h-[34px] flex-1 cursor-pointer items-center justify-center rounded-lg border text-[12.5px] font-medium transition-colors ${
+								className={`flex h-[34px] flex-1 cursor-pointer items-center justify-center rounded-lg border text-[12.5px] font-semibold tracking-wide transition-all ${
 									format === f
-										? "border-acc bg-acc/10 text-acc"
-										: "border-bd-2 bg-transparent text-t-2 hover:border-bd-3 hover:bg-surf-2"
+										? "border-acc bg-acc/10 text-acc shadow-[0_0_0_1px_var(--color-acc)_inset]"
+										: "border-bd-2 bg-transparent text-t-3 hover:border-bd-3 hover:bg-surf-2 hover:text-t-2"
 								}`}
 							>
 								{f.toUpperCase()}
@@ -134,8 +142,31 @@ export const ExportTextsModal = ({
 				</div>
 			</div>
 
+			{/* Output mode */}
+			<div className="mb-5 flex flex-col gap-2">
+				<Typography tag="p" className="text-[12px] font-medium text-t-2">
+					{t("admin.texts.export.outputModeLabel")}
+				</Typography>
+				<div className="flex gap-2">
+					<OutputModeCard
+						active={outputMode === "combined"}
+						icon={<Files className="size-4 text-inherit" />}
+						label={t("admin.texts.export.outputCombined")}
+						description={t("admin.texts.export.outputCombinedDesc")}
+						onClick={() => setOutputMode("combined")}
+					/>
+					<OutputModeCard
+						active={outputMode === "separate"}
+						icon={<FileText className="size-4 text-inherit" />}
+						label={t("admin.texts.export.outputSeparate")}
+						description={t("admin.texts.export.outputSeparateDesc")}
+						onClick={() => setOutputMode("separate")}
+					/>
+				</div>
+			</div>
+
 			{/* Texts list */}
-			<div className="mb-4 flex flex-col gap-2">
+			<div className="mb-5 flex flex-col gap-2">
 				<div className="flex items-center justify-between">
 					<Typography tag="p" className="text-[12px] font-medium text-t-2">
 						{t("admin.texts.export.textsLabel")}
@@ -150,7 +181,7 @@ export const ExportTextsModal = ({
 					)}
 				</div>
 
-				<div className="overflow-hidden rounded-[8px] border border-bd-1 bg-surf-2">
+				<div className="overflow-hidden rounded-[10px] border border-bd-1 bg-surf-2">
 					{/* Search */}
 					<div className="flex items-center gap-2 border-b border-bd-1 px-3 py-2">
 						<Search className="size-3.5 shrink-0 text-t-4" />
@@ -190,7 +221,7 @@ export const ExportTextsModal = ({
 					)}
 
 					{/* Items */}
-					<div className="max-h-[220px] overflow-y-auto [&::-webkit-scrollbar]:w-0">
+					<div className="max-h-[200px] overflow-y-auto [&::-webkit-scrollbar]:w-0">
 						{isLoading ? (
 							<div className="flex flex-col gap-0">
 								{Array.from({ length: 5 }).map((_, i) => (
@@ -227,7 +258,7 @@ export const ExportTextsModal = ({
 			{error && (
 				<Typography
 					tag="p"
-					className="mb-3 rounded-[6px] bg-red-bg px-3 py-2 text-[12px] text-red-t"
+					className="mb-4 rounded-[8px] bg-red-bg px-3 py-2.5 text-[12px] text-red-t"
 				>
 					{error}
 				</Typography>
@@ -239,7 +270,7 @@ export const ExportTextsModal = ({
 					disabled={isExporting}
 					title={t("admin.texts.export.cancel")}
 					variant="ghost"
-					className="h-[34px] px-4 rounded-lg text-[13px]"
+					className="h-[36px] px-4 rounded-lg text-[13px]"
 				>
 					{t("admin.texts.export.cancel")}
 				</Button>
@@ -248,9 +279,9 @@ export const ExportTextsModal = ({
 					disabled={isExporting || checkedCount === 0}
 					title={isExporting ? t("admin.texts.export.exporting") : t("admin.texts.export.submit")}
 					variant="action"
-					className="h-[34px] px-4 rounded-lg text-[13px] flex-1"
+					className="h-[36px] px-5 rounded-lg text-[13px] flex-1 gap-1.5"
 				>
-					<Download className="size-3" />
+					<Download className="size-3.5 shrink-0" />
 					{isExporting
 						? t("admin.texts.export.exporting")
 						: t("admin.texts.export.submit")}
@@ -259,6 +290,36 @@ export const ExportTextsModal = ({
 		</Modal>
 	);
 };
+
+interface OutputModeCardProps {
+	active: boolean;
+	icon: React.ReactNode;
+	label: string;
+	description: string;
+	onClick: () => void;
+}
+
+const OutputModeCard = ({ active, icon, label, description, onClick }: OutputModeCardProps) => (
+	<button
+		type="button"
+		onClick={onClick}
+		className={`flex flex-1 cursor-pointer flex-col gap-1.5 rounded-[10px] border p-3 text-left transition-all ${
+			active
+				? "border-acc bg-acc/8 shadow-[0_0_0_1px_var(--color-acc)_inset]"
+				: "border-bd-2 bg-surf-1 hover:border-bd-3 hover:bg-surf-2"
+		}`}
+	>
+		<div className={`flex items-center gap-2 ${active ? "text-acc" : "text-t-3"}`}>
+			{icon}
+			<Typography tag="span" className="text-[12.5px] font-semibold text-inherit">
+				{label}
+			</Typography>
+		</div>
+		<Typography tag="p" className="text-[11px] leading-normal text-t-4">
+			{description}
+		</Typography>
+	</button>
+);
 
 interface TextCheckRowProps {
 	text: AdminTextListItem;
