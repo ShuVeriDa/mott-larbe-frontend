@@ -13,6 +13,8 @@ import { AdminTextEditorTitleField } from "./admin-text-editor-title-field";
 import { EditorToolbar } from "./admin-text-editor-toolbar";
 import { getSlashItems } from "./lib/get-slash-items";
 import { AdminTextFindReplaceBar } from "./admin-text-find-replace-bar";
+import { SpellingCorrectionExtension } from "@/shared/ui/notion-editor";
+import { SpellingCorrectionOverlay } from "@/features/spelling-correction";
 import { CharLimitMarkerExtension } from "./model/char-limit-marker-extension";
 import { getAdminTextEditorShortcuts } from "./model/get-admin-text-editor-shortcuts";
 import { useFindReplace } from "./model/use-find-replace";
@@ -41,6 +43,7 @@ interface AdminTextEditorShellProps {
 	findReplaceCharsPicker?: ReactNode;
 	extraExtensions?: Extension[];
 	showStressMark?: boolean;
+	showSpellingAdd?: boolean;
 	isSelectedPhrase?: (text: string) => boolean;
 	onBubbleEditPhrase?: (selectedText: string) => void;
 	onBubbleDeletePhrase?: (selectedText: string) => void;
@@ -73,6 +76,7 @@ export const AdminTextEditorShell = ({
 	findReplaceCharsPicker,
 	extraExtensions = [],
 	showStressMark = false,
+	showSpellingAdd = false,
 	isSelectedPhrase,
 	onBubbleEditPhrase,
 	onBubbleDeletePhrase,
@@ -204,35 +208,72 @@ export const AdminTextEditorShell = ({
 			/>
 
 			<div className="group relative flex-1 overflow-y-auto bg-surf px-[42px] py-[22px] pb-10 max-sm:px-4">
-				<NotionEditor
-					key={activePage}
-					content={
-						pages[activePage]?.doc ?? {
-							type: "doc",
-							content: [{ type: "paragraph" }],
+				{showSpellingAdd ? (
+					<SpellingCorrectionOverlay editor={editor}>
+						<NotionEditor
+							key={activePage}
+							content={
+								pages[activePage]?.doc ?? {
+									type: "doc",
+									content: [{ type: "paragraph" }],
+								}
+							}
+							placeholder={t("admin.texts.createPage.startTyping")}
+							slashMenuItems={slashItems}
+							extraToolbarItems={notionExtraToolbarItems}
+							extraExtensions={[
+								CharLimitMarkerExtension.configure({
+									limit: PAGE_CHAR_LIMIT,
+									markerTitle: t("admin.texts.createPage.charLimitMarker"),
+								}),
+								SpellingCorrectionExtension,
+								...extraExtensions,
+							]}
+							onUpdate={handleUpdate}
+							onKeyDown={handleKeyDown}
+							onEditorReady={handleEditorReady}
+							showStressMark={showStressMark}
+							showSpellingAdd={showSpellingAdd}
+							isSelectedPhrase={isSelectedPhrase}
+							onBubbleEditPhrase={onBubbleEditPhrase}
+							onBubbleDeletePhrase={onBubbleDeletePhrase}
+							isSelectedAnnotation={isSelectedAnnotation}
+							onBubbleEditAnnotation={onBubbleEditAnnotation}
+							onBubbleDeleteAnnotation={onBubbleDeleteAnnotation}
+						/>
+					</SpellingCorrectionOverlay>
+				) : (
+					<NotionEditor
+						key={activePage}
+						content={
+							pages[activePage]?.doc ?? {
+								type: "doc",
+								content: [{ type: "paragraph" }],
+							}
 						}
-					}
-					placeholder={t("admin.texts.createPage.startTyping")}
-					slashMenuItems={slashItems}
-					extraToolbarItems={notionExtraToolbarItems}
-					extraExtensions={[
-						CharLimitMarkerExtension.configure({
-							limit: PAGE_CHAR_LIMIT,
-							markerTitle: t("admin.texts.createPage.charLimitMarker"),
-						}),
-						...extraExtensions,
-					]}
-					onUpdate={handleUpdate}
-					onKeyDown={handleKeyDown}
-					onEditorReady={handleEditorReady}
-					showStressMark={showStressMark}
-					isSelectedPhrase={isSelectedPhrase}
-					onBubbleEditPhrase={onBubbleEditPhrase}
-					onBubbleDeletePhrase={onBubbleDeletePhrase}
-					isSelectedAnnotation={isSelectedAnnotation}
-					onBubbleEditAnnotation={onBubbleEditAnnotation}
-					onBubbleDeleteAnnotation={onBubbleDeleteAnnotation}
-				/>
+						placeholder={t("admin.texts.createPage.startTyping")}
+						slashMenuItems={slashItems}
+						extraToolbarItems={notionExtraToolbarItems}
+						extraExtensions={[
+							CharLimitMarkerExtension.configure({
+								limit: PAGE_CHAR_LIMIT,
+								markerTitle: t("admin.texts.createPage.charLimitMarker"),
+							}),
+							...extraExtensions,
+						]}
+						onUpdate={handleUpdate}
+						onKeyDown={handleKeyDown}
+						onEditorReady={handleEditorReady}
+						showStressMark={showStressMark}
+						showSpellingAdd={showSpellingAdd}
+						isSelectedPhrase={isSelectedPhrase}
+						onBubbleEditPhrase={onBubbleEditPhrase}
+						onBubbleDeletePhrase={onBubbleDeletePhrase}
+						isSelectedAnnotation={isSelectedAnnotation}
+						onBubbleEditAnnotation={onBubbleEditAnnotation}
+						onBubbleDeleteAnnotation={onBubbleDeleteAnnotation}
+					/>
+				)}
 			</div>
 
 			<AdminTextEditorFooter

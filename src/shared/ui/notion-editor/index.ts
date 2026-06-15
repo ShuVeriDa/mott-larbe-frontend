@@ -16,3 +16,7 @@ export type {
   RuleConfidence,
   RuleCategory,
 } from "./chechen-spelling-rules";
+export {
+  SpellingCorrectionExtension,
+  SPELLING_CORRECTION_CLASS,
+} from "./spelling-correction-extension";

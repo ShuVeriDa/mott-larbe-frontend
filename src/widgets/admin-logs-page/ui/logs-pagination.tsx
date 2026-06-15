@@ -100,7 +100,7 @@ const PgBtn = ({
 		className={cn(
 			"flex h-7 min-w-[28px] items-center justify-center gap-1 rounded-[6px] border border-bd-2 bg-surf px-2 text-[12px] text-t-2 transition-colors",
 			active && "border-acc/20 bg-acc-bg font-semibold text-acc-t",
-			!active && !disabled && "hover:bg-surf-2 hover:text-t-1",
+			!active && !disabled && "hover:border-acc/20 hover:bg-acc-bg hover:text-acc-t",
 			disabled && "cursor-default opacity-40",
 		)}
 	>

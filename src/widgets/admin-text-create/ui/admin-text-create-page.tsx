@@ -109,6 +109,7 @@ export const AdminTextCreatePage = () => {
 						activePage={activePage}
 						savedId={savedId}
 						showStressMark={language === "CHE"}
+						showSpellingAdd
 						onTitleChange={handleTitleChange}
 						onPageContentChange={handlePageContentChange}
 						onPageTitleChange={handlePageTitleChange}

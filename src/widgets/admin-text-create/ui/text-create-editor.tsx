@@ -45,6 +45,7 @@ interface TextCreateEditorProps {
 	pages: { doc: TipTapDoc; wordCount: number }[];
 	activePage: number;
 	showStressMark?: boolean;
+	showSpellingAdd?: boolean;
 	savedId: string | null;
 	onTitleChange: (value: string) => void;
 	onPageContentChange: (doc: TipTapDoc, wordCount: number) => void;
@@ -61,6 +62,7 @@ export const TextCreateEditor = ({
 	pages,
 	activePage,
 	showStressMark = false,
+	showSpellingAdd = false,
 	savedId,
 	onTitleChange,
 	onPageContentChange,
@@ -279,6 +281,7 @@ export const TextCreateEditor = ({
 				pagesSummary={t("admin.texts.createPage.pages", { n: pages.length })}
 				primaryShortcutLabel={t("admin.texts.createPage.publish")}
 				showStressMark={showStressMark}
+			showSpellingAdd={showSpellingAdd}
 				extraExtensions={savedId ? editorExtensions : []}
 				isSelectedPhrase={savedId ? isSelectedPhrase : undefined}
 				onBubbleEditPhrase={savedId ? handleBubbleEditPhrase : undefined}

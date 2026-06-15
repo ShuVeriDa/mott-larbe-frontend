@@ -47,6 +47,7 @@ interface TextEditEditorProps {
 	tokenCount: number;
 	showRetokenizeBar: boolean;
 	showStressMark?: boolean;
+	showSpellingAdd?: boolean;
 	textId: string;
 	onTitleChange: (value: string) => void;
 	onPageContentChange: (doc: TipTapDoc, wordCount: number) => void;
@@ -67,6 +68,7 @@ export const TextEditEditor = ({
 	tokenCount,
 	showRetokenizeBar,
 	showStressMark = false,
+	showSpellingAdd = false,
 	textId,
 	onTitleChange,
 	onPageContentChange,
@@ -347,6 +349,7 @@ export const TextEditEditor = ({
 			onEditorReady={handleEditorReady}
 			extraExtensions={editorExtensions}
 			showStressMark={showStressMark}
+		showSpellingAdd={showSpellingAdd}
 			isSelectedPhrase={isSelectedPhrase}
 			onBubbleEditPhrase={handleBubbleEditPhrase}
 			onBubbleDeletePhrase={handleBubbleDeletePhrase}

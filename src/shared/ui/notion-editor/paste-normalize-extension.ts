@@ -1,4 +1,5 @@
 import { Extension } from "@tiptap/core";
+import type { CommandProps } from "@tiptap/core";
 import type { Editor } from "@tiptap/react";
 
 declare module "@tiptap/core" {
@@ -87,11 +88,10 @@ const plainTextToNodes = (rawText: string) => {
  * extracts all paragraphs as plain text lines and merges soft-wrapped ones.
  * Headings are preserved as-is (not merged).
  */
-const extractAndNormalize = (editor: Editor): boolean => {
+const extractAndNormalize = (editor: Editor, commands: CommandProps["commands"]): boolean => {
 	const doc = editor.getJSON();
 	if (!doc.content) return false;
 
-	// Collect nodes preserving heading vs paragraph distinction
 	interface RawNode {
 		type: "heading" | "paragraph";
 		level?: number;
@@ -121,7 +121,6 @@ const extractAndNormalize = (editor: Editor): boolean => {
 	};
 	walk(doc.content);
 
-	// Separate into runs of consecutive paragraphs; merge soft wraps within each run
 	const resultNodes: Array<{ type: string; attrs?: Record<string, unknown>; content?: Array<{ type: string; text: string }> }> = [];
 
 	let paragraphBuffer: string[] = [];
@@ -154,7 +153,7 @@ const extractAndNormalize = (editor: Editor): boolean => {
 
 	if (resultNodes.length === 0) return false;
 
-	editor.chain().setContent({ type: "doc", content: resultNodes }, true).run();
+	commands.setContent({ type: "doc", content: resultNodes });
 	return true;
 };
 
@@ -173,8 +172,8 @@ export const PasteNormalizeExtension = Extension.create({
 
 			normalizeText:
 				() =>
-				({ editor }) => {
-					return extractAndNormalize(editor as unknown as Editor);
+				({ editor, commands }) => {
+					return extractAndNormalize(editor as unknown as Editor, commands);
 				},
 		};
 	},

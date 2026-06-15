@@ -216,6 +216,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					tokenCount={textData.tokenCount}
 					showRetokenizeBar={showRetokenizeBar}
 					showStressMark={language === "CHE"}
+					showSpellingAdd
 					textId={textId}
 					onTitleChange={handleTitleChange}
 					onPageContentChange={handlePageContentChange}

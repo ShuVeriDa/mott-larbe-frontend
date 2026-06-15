@@ -21,6 +21,7 @@ import {
 	BookMarked,
 	BookPlus,
 	Tag,
+	SpellCheck,
 } from "lucide-react";
 
 export interface AdminNavItem {
@@ -105,6 +106,11 @@ export const buildAdminNavSections = (t: (key: string) => string, lang: string):
 				label: () => t("admin.nav.unknownWords"),
 				icon: UserX,
 				badge: 142,
+			},
+			{
+				href: () => `/${lang}/admin/spelling-dictionary`,
+				label: () => t("admin.nav.spellingDictionary"),
+				icon: SpellCheck,
 			},
 		],
 	},

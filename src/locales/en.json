@@ -3142,6 +3142,7 @@
       "dictionary": "Dictionary",
       "morphology": "Morphology",
       "unknownWords": "Unknown words",
+      "spellingDictionary": "Spelling dictionary",
       "usersList": "Users",
       "feedback": "Feedback",
       "suggestions": "Edit suggestions",
@@ -4451,6 +4452,70 @@
         "cancel": "Cancel",
         "confirm": "Delete",
         "deleting": "Deleting…"
+      },
+      "pagination": {
+        "showing": "Showing {from}–{to} of {total}"
+      }
+    },
+    "spellingDictionary": {
+      "title": "Spelling Dictionary",
+      "subtitle": "Words with correct spelling and stress marks",
+      "entriesCount": "{count} entries",
+      "add": "Add",
+      "entries": "Entries",
+      "searchPlaceholder": "Search…",
+      "loadError": "Failed to load",
+      "addToSpellingTitle": "Add to spelling dictionary",
+      "table": {
+        "wrongForm": "Wrong form",
+        "correctForm": "Correct form",
+        "comment": "Comment",
+        "author": "Author",
+        "empty": "No entries yet. Add the first one."
+      },
+      "form": {
+        "placeholder": "correct form…",
+        "submitTitle": "Add to dictionary (Enter)",
+        "cancelTitle": "Cancel (Esc)",
+        "errorRequired": "Enter the correct form",
+        "errorDuplicate": "This form is already in the dictionary"
+      },
+      "occurrences": {
+        "title": "Occurrences in text",
+        "count": "{count} occurrences",
+        "noOccurrences": "No occurrences on this page",
+        "notFound": "Word not found on current page.",
+        "selectAll": "Select all",
+        "deselectAll": "Deselect all",
+        "cancel": "Cancel",
+        "apply": "Fix",
+        "applyCount": "Fix {count}"
+      },
+      "modal": {
+        "createTitle": "New entry",
+        "editTitle": "Edit entry",
+        "wrongFormLabel": "Wrong form",
+        "wrongFormPlaceholder": "vakhnera",
+        "wrongFormHint": "Stored in lowercase. Search is case-insensitive.",
+        "correctFormLabel": "Correct form",
+        "correctFormPlaceholder": "vakhné·ra",
+        "correctFormHint": "With correct spelling and/or stress mark (acute accent over vowel).",
+        "commentLabel": "Comment (optional)",
+        "commentPlaceholder": "Stress on second syllable",
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving…"
+      },
+      "deleteModal": {
+        "title": "Delete entry?",
+        "subtitle": "This action cannot be undone.",
+        "cancel": "Cancel",
+        "confirm": "Delete",
+        "deleting": "Deleting…"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
       },
       "pagination": {
         "showing": "Showing {from}–{to} of {total}"

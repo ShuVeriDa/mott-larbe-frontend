@@ -41,7 +41,7 @@ export const UsersPagination = ({
 
 	const btnClass = (active?: boolean) =>
 		cn(
-			"flex h-7 min-w-[28px] cursor-pointer items-center justify-center gap-1 rounded-md border border-bd-2 bg-surf px-2 font-sans text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:cursor-default disabled:opacity-40",
+			"flex h-7 min-w-[28px] cursor-pointer items-center justify-center gap-1 rounded-md border border-bd-2 bg-surf px-2 font-sans text-[12px] text-t-2 transition-colors hover:border-acc/20 hover:bg-acc-bg hover:text-acc-t disabled:cursor-default disabled:opacity-40 disabled:hover:border-bd-2 disabled:hover:bg-surf disabled:hover:text-t-2",
 			active && "border-acc/20 bg-acc-bg font-semibold text-acc-t",
 		);
 

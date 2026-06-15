@@ -3141,6 +3141,7 @@
       "genres": "Жанраш",
       "morphology": "Морфологи",
       "unknownWords": "Ца девза дешнаш",
+      "spellingDictionary": "Йозаллин словарь",
       "usersList": "Пользователаш",
       "feedback": "Юханехьа хаам",
       "suggestions": "Правкийн дехарш",
@@ -4449,6 +4450,70 @@
         "cancel": "Юхадаккха",
         "confirm": "ДӀадаккха",
         "deleting": "ДӀайохуш ю…"
+      },
+      "pagination": {
+        "showing": "Гайтина {from}–{to} оцу {total} тӀера"
+      }
+    },
+    "spellingDictionary": {
+      "title": "Йозаллин словарь",
+      "subtitle": "Нийса йозанца а, хьаьркашца а дешнаш",
+      "entriesCount": "{count} запись",
+      "add": "ТӀетоха",
+      "entries": "Записаш",
+      "searchPlaceholder": "Лахар…",
+      "loadError": "Хаа ца хилира",
+      "addToSpellingTitle": "Йозаллин словарь чу тӀетоха",
+      "table": {
+        "wrongForm": "Нийса йоцу форма",
+        "correctForm": "Нийса форма",
+        "comment": "Хаам",
+        "author": "Автор",
+        "empty": "Записаш дац. Хьалхара тӀетоха."
+      },
+      "form": {
+        "placeholder": "нийса форма…",
+        "submitTitle": "Словарь чу тӀетоха (Enter)",
+        "cancelTitle": "Юхадаккха (Esc)",
+        "errorRequired": "Нийса форма язде",
+        "errorDuplicate": "ХӀара форма словарехь уже ю"
+      },
+      "occurrences": {
+        "title": "Текста чохь хуьлуш",
+        "count": "{count} гана хуьлу",
+        "noOccurrences": "ХӀокху агӀонехь хуьлуш дац",
+        "notFound": "Дош хӀокху агӀонехь карийна дац.",
+        "selectAll": "Массо а харжа",
+        "deselectAll": "Массо а дӀадаккха",
+        "cancel": "Юхадаккха",
+        "apply": "Нийсаде",
+        "applyCount": "Нийсаде: {count}"
+      },
+      "modal": {
+        "createTitle": "Керла запись",
+        "editTitle": "Запись нийсаде",
+        "wrongFormLabel": "Нийса йоцу форма",
+        "wrongFormPlaceholder": "вахнера",
+        "wrongFormHint": "Лахарчу регистрехь йовсу. Лахар регистр ца хоуьйтуш.",
+        "correctFormLabel": "Нийса форма",
+        "correctFormPlaceholder": "вахне́ра",
+        "correctFormHint": "Нийса йозанца а, хьаьрк тӀегӀерта ярца а.",
+        "commentLabel": "Хаам (ца деза)",
+        "commentPlaceholder": "Хьаьрк шолгӀачу слоге тӀегӀерта ю",
+        "cancel": "Юхадаккха",
+        "save": "Йовсу",
+        "saving": "Йовсуш…"
+      },
+      "deleteModal": {
+        "title": "Запись дӀадаккха?",
+        "subtitle": "ХӀара юхадаккха йиш йац.",
+        "cancel": "Юхадаккха",
+        "confirm": "ДӀадаккха",
+        "deleting": "ДӀайохуш…"
+      },
+      "actions": {
+        "edit": "Нийсаде",
+        "delete": "ДӀадаккха"
       },
       "pagination": {
         "showing": "Гайтина {from}–{to} оцу {total} тӀера"

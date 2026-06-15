@@ -3140,6 +3140,7 @@
       "genres": "Жанры",
       "morphology": "Морфология",
       "unknownWords": "Неизвестные слова",
+      "spellingDictionary": "Словарь правописания",
       "usersList": "Пользователи",
       "feedback": "Обратная связь",
       "suggestions": "Предложения правок",
@@ -4448,6 +4449,70 @@
         "cancel": "Отмена",
         "confirm": "Удалить",
         "deleting": "Удаляем…"
+      },
+      "pagination": {
+        "showing": "Показано {from}–{to} из {total}"
+      }
+    },
+    "spellingDictionary": {
+      "title": "Словарь правописания",
+      "subtitle": "Слова с правильным написанием и ударением",
+      "entriesCount": "{count} записей",
+      "add": "Добавить",
+      "entries": "Записи",
+      "searchPlaceholder": "Поиск…",
+      "loadError": "Ошибка загрузки",
+      "addToSpellingTitle": "Добавить в словарь правописания",
+      "table": {
+        "wrongForm": "Неправильная форма",
+        "correctForm": "Правильная форма",
+        "comment": "Комментарий",
+        "author": "Автор",
+        "empty": "Записей нет. Добавьте первую."
+      },
+      "form": {
+        "placeholder": "правильная форма…",
+        "submitTitle": "Добавить в словарь (Enter)",
+        "cancelTitle": "Отмена (Esc)",
+        "errorRequired": "Введите правильную форму",
+        "errorDuplicate": "Такая форма уже есть в словаре"
+      },
+      "occurrences": {
+        "title": "Вхождения в тексте",
+        "count": "{count} вхождений",
+        "noOccurrences": "Нет вхождений на этой странице",
+        "notFound": "Слово не найдено на текущей странице.",
+        "selectAll": "Выбрать все",
+        "deselectAll": "Снять все",
+        "cancel": "Отмена",
+        "apply": "Исправить",
+        "applyCount": "Исправить: {count}"
+      },
+      "modal": {
+        "createTitle": "Новая запись",
+        "editTitle": "Редактировать запись",
+        "wrongFormLabel": "Неправильная форма",
+        "wrongFormPlaceholder": "вахнера",
+        "wrongFormHint": "Сохраняется в нижнем регистре. Поиск без учёта регистра.",
+        "correctFormLabel": "Правильная форма",
+        "correctFormPlaceholder": "вахне́ра",
+        "correctFormHint": "С правильным написанием и/или ударением (акут над гласной).",
+        "commentLabel": "Комментарий (необязательно)",
+        "commentPlaceholder": "Ударение на второй слог",
+        "cancel": "Отмена",
+        "save": "Сохранить",
+        "saving": "Сохранение…"
+      },
+      "deleteModal": {
+        "title": "Удалить запись?",
+        "subtitle": "Это действие нельзя отменить.",
+        "cancel": "Отмена",
+        "confirm": "Удалить",
+        "deleting": "Удаление…"
+      },
+      "actions": {
+        "edit": "Редактировать",
+        "delete": "Удалить"
       },
       "pagination": {
         "showing": "Показано {from}–{to} из {total}"
