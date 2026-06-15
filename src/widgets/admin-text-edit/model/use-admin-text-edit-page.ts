@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from "next/navigation";
+import { useAutoSave } from "@/shared/lib/auto-save";
 import { useQuery } from "@tanstack/react-query";
 import {
 	useAdminTextCreate,
@@ -107,6 +108,16 @@ export const useAdminTextEditPage = (id: string) => {
 		}
 	};
 
+	useEffect(() => {
+		if (!isUnsaved) return;
+		const handler = (e: BeforeUnloadEvent) => {
+			e.preventDefault();
+			e.returnValue = "";
+		};
+		window.addEventListener("beforeunload", handler);
+		return () => window.removeEventListener("beforeunload", handler);
+	}, [isUnsaved]);
+
 	const handleTitleChange = (value: string) => {
 		setTitle(value);
 		markUnsaved();
@@ -158,9 +169,9 @@ export const useAdminTextEditPage = (id: string) => {
 		markUnsaved();
 	};
 
-	const handleSave = async (targetStatus: TextStatus) => {
+	const handleSave = async (targetStatus: TextStatus, silent = false) => {
 		if (!title.trim()) {
-			toastError(t("admin.texts.editPage.titleRequired"));
+			if (!silent) toastError(t("admin.texts.editPage.titleRequired"));
 			return;
 		}
 
@@ -197,17 +208,26 @@ export const useAdminTextEditPage = (id: string) => {
 
 			setIsUnsaved(false);
 			setShowRetokenizeBar(false);
-			success(t("admin.texts.editPage.updateSuccess"));
-			if (isBackgroundRunning) {
-				toast(t("admin.texts.editPage.backgroundSaveWarning"));
+			if (!silent) {
+				success(t("admin.texts.editPage.updateSuccess"));
+				if (isBackgroundRunning) {
+					toast(t("admin.texts.editPage.backgroundSaveWarning"));
+				}
 			}
 		} catch {
-			toastError(t("admin.texts.editPage.updateFailed"));
+			if (!silent) toastError(t("admin.texts.editPage.updateFailed"));
 		}
 	};
 
 	const handleSaveDraft = () => handleSave("draft");
 	const handleSaveAndUpdate = () => handleSave(status);
+
+	useAutoSave({
+		onSave: () => handleSave("draft", true),
+		isDirty: isUnsaved,
+		isReady: !!id,
+		isSaving: update.isPending || uploadCover.isPending,
+	});
 
 	const handleDelete = async () => {
 		try {

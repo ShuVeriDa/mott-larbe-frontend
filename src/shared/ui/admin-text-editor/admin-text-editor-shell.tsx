@@ -111,6 +111,10 @@ export const AdminTextEditorShell = ({
 		setStats({ words, chars, paragraphs });
 	};
 
+	const handleNormalize = () => {
+		editor?.commands.normalizeText();
+	};
+
 	const handleKeyDown = (event: KeyboardEvent) => {
 		if ((event.ctrlKey || event.metaKey) && event.key === "s") {
 			event.preventDefault();
@@ -151,6 +155,7 @@ export const AdminTextEditorShell = ({
 				editor={editor}
 				t={t}
 				extraItems={toolbarExtraItems}
+				onNormalize={handleNormalize}
 				onFindReplace={
 					findReplace.isOpen ? findReplace.close : findReplace.open
 				}

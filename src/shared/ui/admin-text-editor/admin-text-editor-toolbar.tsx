@@ -4,7 +4,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import type { Editor } from "@/shared/ui/notion-editor";
 import { Typography } from "@/shared/ui/typography";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, Search, WrapText } from "lucide-react";
 import { Fragment, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { useAdminTextEditorToolbar } from "./model/use-admin-text-editor-toolbar";
@@ -17,6 +17,7 @@ interface EditorToolbarProps {
 	extraItems?: ReactNode;
 	onFindReplace?: () => void;
 	findReplaceOpen?: boolean;
+	onNormalize?: () => void;
 }
 
 export const EditorToolbar = ({
@@ -25,6 +26,7 @@ export const EditorToolbar = ({
 	extraItems,
 	onFindReplace,
 	findReplaceOpen,
+	onNormalize,
 }: EditorToolbarProps) => {
 	const {
 		blockTypeAnchor,
@@ -119,6 +121,18 @@ export const EditorToolbar = ({
 						{sectionIndex < toolbarActionSections.length - 1 && <TbDivider />}
 					</Fragment>
 				))}
+
+				{onNormalize && (
+					<>
+						<TbDivider />
+						<TbBtn
+							title={t("admin.texts.createPage.normalizeText")}
+							onExec={onNormalize}
+						>
+							<WrapText className="size-[13px]" />
+						</TbBtn>
+					</>
+				)}
 
 				{onFindReplace && (
 					<>

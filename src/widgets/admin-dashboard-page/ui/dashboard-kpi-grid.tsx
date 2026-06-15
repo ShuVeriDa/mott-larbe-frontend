@@ -1,8 +1,10 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { AdminCard } from "@/shared/ui/admin-card";
 import type { AdminDashboardKpi } from "@/entities/admin-dashboard";
 import { useI18n } from "@/shared/lib/i18n";
+import { variants } from "@/shared/lib/animation";
 import { AbsoluteTrend, TrendChip } from "@/shared/ui/trend-chip";
 
 const formatRevenue = (cents: number, currency: string) => {
@@ -69,22 +71,26 @@ export const DashboardKpiGrid = ({ kpi }: DashboardKpiGridProps) => {
 	];
 
 	return (
-		<div className="mb-4 grid grid-cols-2 gap-2.5 lg:grid-cols-4 max-sm:gap-2">
+		<motion.div
+			className="mb-4 grid grid-cols-2 gap-2.5 lg:grid-cols-4 max-sm:gap-2"
+			variants={variants.staggerContainer}
+			initial="hidden"
+			animate="visible"
+		>
 			{cards.map(card => (
-				<AdminCard
-					key={card.label}
-					className="px-3.5 py-3.5 max-sm:px-3 max-sm:py-3"
-				>
-					<div className="mb-1.5 truncate text-[11px] font-medium tracking-wide text-t-3">
-						{card.label}
-					</div>
-					<div className="mb-1.5 text-[24px] font-semibold leading-none text-t-1 max-sm:text-[19px]">
-						{card.value}
-					</div>
-					{card.trend}
-				</AdminCard>
+				<motion.div key={card.label} variants={variants.staggerItem}>
+					<AdminCard className="px-3.5 py-3.5 max-sm:px-3 max-sm:py-3">
+						<div className="mb-1.5 truncate text-[11px] font-medium tracking-wide text-t-3">
+							{card.label}
+						</div>
+						<div className="mb-1.5 text-[24px] font-semibold leading-none text-t-1 max-sm:text-[19px]">
+							{card.value}
+						</div>
+						{card.trend}
+					</AdminCard>
+				</motion.div>
 			))}
-		</div>
+		</motion.div>
 	);
 };
 

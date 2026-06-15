@@ -3,8 +3,10 @@
 import { NoteForm } from "@/entities/note";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { variants, spring } from "@/shared/lib/animation";
 import { Button } from "@/shared/ui/button";
 import { Highlighter, MessageSquare, Palette, Sparkles, Trash2 } from "lucide-react";
+import { AnimatePresence, motion, type HTMLMotionProps } from "framer-motion";
 import { type ComponentProps, useEffect, useRef, useState } from "react";
 import { HIGHLIGHT_COLOR_HEX, type HighlightColor } from "../../model";
 
@@ -70,11 +72,11 @@ export const HighlightColorPicker = ({
 		? Math.min(Math.max(rawTop, 8), window.innerHeight - POPUP_H - 8)
 		: rawTop;
 
-	const baseStyle = {
-		position: "fixed" as const,
+	const baseStyle: HTMLMotionProps<"div">["style"] = {
+		position: "fixed",
 		left: clampedX,
 		top: clampedTop,
-		transform: "translateX(-50%)",
+		translateX: "-50%",
 		zIndex: 9999,
 	};
 
@@ -105,138 +107,159 @@ export const HighlightColorPicker = ({
 		onPick(e.currentTarget.value);
 	};
 
-	if (showNoteForm) {
-		return (
-			<div
-				ref={ref}
-				style={{ ...baseStyle, width: 240, transform: "translateX(-50%)" }}
-				className="rounded-lg border border-bd-1 bg-surf p-2.5 shadow-md"
-			>
-				<NoteForm onSubmit={handleNoteSubmit} onCancel={handleNoteCancel} />
-			</div>
-		);
-	}
-
 	return (
-		<div
-			ref={ref}
-			style={baseStyle}
-			className="rounded-lg border border-bd-1 bg-surf shadow-md"
-			role="toolbar"
-			aria-label={t("reader.highlight.toolbar")}
-		>
-			{/* Main row */}
-			<div className="flex items-center gap-1 px-2 py-1.5">
-				<Highlighter className="mr-0.5 size-3.5 text-t-3 shrink-0" strokeWidth={1.6} />
-
-				{/* First 4 preset colors always visible */}
-				{PRESET_COLORS.slice(0, 4).map(color => {
-					const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = e => {
-						e.preventDefault();
-						e.stopPropagation();
-						handleColorPick(color);
-					};
-					return (
-						<Button
-							key={color}
-							onClick={handleClick}
-							title={t(`reader.highlight.color.${color}`)}
-							aria-label={t(`reader.highlight.color.${color}`)}
-							className="size-5 rounded-full border border-black/10 transition-transform hover:scale-110 focus-visible:outline-2 shrink-0"
-							style={{ backgroundColor: HIGHLIGHT_COLOR_HEX[color] }}
-						/>
-					);
-				})}
-
-				{/* Palette toggle — shows/hides second row */}
-				<Button
-					onClick={handleTogglePalette}
-					title={t("reader.highlight.morePalette")}
-					aria-label={t("reader.highlight.morePalette")}
-					aria-pressed={showPalette}
-					className={cn(
-						"rounded p-0.5 transition-colors",
-						showPalette
-							? "bg-acc-bg text-acc-t"
-							: "text-t-3 hover:bg-surf-2 hover:text-t-1",
-					)}
+		<AnimatePresence mode="wait">
+			{showNoteForm ? (
+				<motion.div
+					key="note-form"
+					ref={ref}
+					style={{ ...baseStyle, width: 240 }}
+					className="rounded-lg border border-bd-1 bg-surf p-2.5 shadow-md"
+					variants={variants.scaleIn}
+					initial="hidden"
+					animate="visible"
+					exit="exit"
+					transition={spring.snappy}
 				>
-					<Palette className="size-3.5" strokeWidth={1.6} />
-				</Button>
+					<NoteForm onSubmit={handleNoteSubmit} onCancel={handleNoteCancel} />
+				</motion.div>
+			) : (
+				<motion.div
+					key="toolbar"
+					ref={ref}
+					style={baseStyle}
+					className="rounded-lg border border-bd-1 bg-surf shadow-md"
+					role="toolbar"
+					aria-label={t("reader.highlight.toolbar")}
+					variants={variants.scaleIn}
+					initial="hidden"
+					animate="visible"
+					exit="exit"
+					transition={spring.snappy}
+				>
+					{/* Main row */}
+					<div className="flex items-center gap-1 px-2 py-1.5">
+						<Highlighter className="mr-0.5 size-3.5 text-t-3 shrink-0" strokeWidth={1.6} />
 
-				{onAddNote && (
-					<Button
-						onClick={handleShowNoteForm}
-						title={t("reader.highlight.addNote")}
-						aria-label={t("reader.highlight.addNote")}
-						className="rounded p-0.5 text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
-					>
-						<MessageSquare className="size-3.5" strokeWidth={1.6} />
-					</Button>
-				)}
-				{onTranslatePhrase && (
-					<Button
-						onClick={onTranslatePhrase}
-						title={t("aiTranslation.phrase.button")}
-						aria-label={t("aiTranslation.phrase.button")}
-						className="rounded p-0.5 text-pur-t transition-colors hover:bg-pur-bg"
-					>
-						<Sparkles className="size-3.5" strokeWidth={1.6} />
-					</Button>
-				)}
-				{hasExisting && onRemove && (
-					<Button
-						onClick={e => {
-							e.preventDefault();
-							e.stopPropagation();
-							onRemove();
-						}}
-						title={t("reader.highlight.remove")}
-						aria-label={t("reader.highlight.remove")}
-						className="rounded p-0.5 text-t-3 hover:bg-surf-2 hover:text-t-1"
-					>
-						<Trash2 className="size-3.5" strokeWidth={1.6} />
-					</Button>
-				)}
-			</div>
+						{/* First 4 preset colors always visible */}
+						{PRESET_COLORS.slice(0, 4).map(color => {
+							const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = e => {
+								e.preventDefault();
+								e.stopPropagation();
+								handleColorPick(color);
+							};
+							return (
+								<Button
+									key={color}
+									onClick={handleClick}
+									title={t(`reader.highlight.color.${color}`)}
+									aria-label={t(`reader.highlight.color.${color}`)}
+									className="size-5 rounded-full border border-black/10 transition-transform duration-150 ease-out hover:scale-110 focus-visible:outline-2 shrink-0"
+									style={{ backgroundColor: HIGHLIGHT_COLOR_HEX[color] }}
+								/>
+							);
+						})}
 
-			{/* Extended palette — 4 more presets + custom picker */}
-			{showPalette && (
-				<div className="flex items-center gap-1 border-t border-bd-1 px-2 py-1.5">
-					{PRESET_COLORS.slice(4).map(color => {
-						const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = e => {
-							e.preventDefault();
-							e.stopPropagation();
-							handleColorPick(color);
-						};
-						return (
+						{/* Palette toggle — shows/hides second row */}
+						<Button
+							onClick={handleTogglePalette}
+							title={t("reader.highlight.morePalette")}
+							aria-label={t("reader.highlight.morePalette")}
+							aria-pressed={showPalette}
+							className={cn(
+								"rounded p-0.5 transition-colors duration-150 ease-out",
+								showPalette
+									? "bg-acc-bg text-acc-t"
+									: "text-t-3 hover:bg-surf-2 hover:text-t-1",
+							)}
+						>
+							<Palette className="size-3.5" strokeWidth={1.6} />
+						</Button>
+
+						{onAddNote && (
 							<Button
-								key={color}
-								onClick={handleClick}
-								title={t(`reader.highlight.color.${color}`)}
-								aria-label={t(`reader.highlight.color.${color}`)}
-								className="size-5 rounded-full border border-black/10 transition-transform hover:scale-110 focus-visible:outline-2 shrink-0"
-								style={{ backgroundColor: HIGHLIGHT_COLOR_HEX[color] }}
-							/>
-						);
-					})}
-					<div className="mx-1 h-3.5 w-px bg-bd-1" />
-					<label
-						aria-label={t("reader.highlight.customColor")}
-						className="relative flex size-5 cursor-pointer items-center justify-center rounded-full border border-dashed border-bd-2 overflow-hidden transition-transform hover:scale-110"
-						style={{
-							background: "conic-gradient(from 0deg, #f87171, #fb923c, #facc15, #4ade80, #60a5fa, #c084fc, #f87171)",
-						}}
-					>
-						<input
-							type="color"
-							className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-							onChange={handleCustomColor}
-							onClick={e => e.stopPropagation()}
-						/>
-					</label>
-				</div>
+								onClick={handleShowNoteForm}
+								title={t("reader.highlight.addNote")}
+								aria-label={t("reader.highlight.addNote")}
+								className="rounded p-0.5 text-t-3 transition-colors duration-150 ease-out hover:bg-surf-2 hover:text-t-1"
+							>
+								<MessageSquare className="size-3.5" strokeWidth={1.6} />
+							</Button>
+						)}
+						{onTranslatePhrase && (
+							<Button
+								onClick={onTranslatePhrase}
+								title={t("aiTranslation.phrase.button")}
+								aria-label={t("aiTranslation.phrase.button")}
+								className="rounded p-0.5 text-pur-t transition-colors duration-150 ease-out hover:bg-pur-bg"
+							>
+								<Sparkles className="size-3.5" strokeWidth={1.6} />
+							</Button>
+						)}
+						{hasExisting && onRemove && (
+							<Button
+								onClick={e => {
+									e.preventDefault();
+									e.stopPropagation();
+									onRemove();
+								}}
+								title={t("reader.highlight.remove")}
+								aria-label={t("reader.highlight.remove")}
+								className="rounded p-0.5 text-t-3 transition-colors duration-150 ease-out hover:bg-surf-2 hover:text-t-1"
+							>
+								<Trash2 className="size-3.5" strokeWidth={1.6} />
+							</Button>
+						)}
+					</div>
+
+					{/* Extended palette — 4 more presets + custom picker */}
+					<AnimatePresence>
+						{showPalette && (
+							<motion.div
+								variants={variants.fadeUp}
+								initial="hidden"
+								animate="visible"
+								exit="exit"
+								transition={spring.snappy}
+								className="flex items-center gap-1 border-t border-bd-1 px-2 py-1.5"
+							>
+								{PRESET_COLORS.slice(4).map(color => {
+									const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = e => {
+										e.preventDefault();
+										e.stopPropagation();
+										handleColorPick(color);
+									};
+									return (
+										<Button
+											key={color}
+											onClick={handleClick}
+											title={t(`reader.highlight.color.${color}`)}
+											aria-label={t(`reader.highlight.color.${color}`)}
+											className="size-5 rounded-full border border-black/10 transition-transform duration-150 ease-out hover:scale-110 focus-visible:outline-2 shrink-0"
+											style={{ backgroundColor: HIGHLIGHT_COLOR_HEX[color] }}
+										/>
+									);
+								})}
+								<div className="mx-1 h-3.5 w-px bg-bd-1" />
+								<label
+									aria-label={t("reader.highlight.customColor")}
+									className="relative flex size-5 cursor-pointer items-center justify-center rounded-full border border-dashed border-bd-2 overflow-hidden transition-transform duration-150 ease-out hover:scale-110"
+									style={{
+										background: "conic-gradient(from 0deg, #f87171, #fb923c, #facc15, #4ade80, #60a5fa, #c084fc, #f87171)",
+									}}
+								>
+									<input
+										type="color"
+										className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+										onChange={handleCustomColor}
+										onClick={e => e.stopPropagation()}
+									/>
+								</label>
+							</motion.div>
+						)}
+					</AnimatePresence>
+				</motion.div>
 			)}
-		</div>
+		</AnimatePresence>
 	);
 };

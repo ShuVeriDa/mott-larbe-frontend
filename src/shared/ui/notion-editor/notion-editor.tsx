@@ -30,6 +30,7 @@ import { SlashExtension } from "./slash-extension";
 import type { SlashMenuHandle, SlashMenuItem } from "./slash-menu";
 import { SlashMenu } from "./slash-menu";
 import { HeadingFontWeightExtension } from "./heading-font-weight-extension";
+import { PasteNormalizeExtension } from "./paste-normalize-extension";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -127,6 +128,7 @@ export const NotionEditor = ({
 			ChechenSpellingDecorationExtension,
 			StressMarkExtension,
 			HeadingFontWeightExtension,
+			PasteNormalizeExtension,
 			...extraExtensions,
 			SlashExtension.configure({
 				suggestion: {

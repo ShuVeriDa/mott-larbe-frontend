@@ -6,7 +6,7 @@ import { Typography } from "@/shared/ui/typography";
 
 export const inputVariants = cva(
 	[
-		"w-full rounded-base border outline-none transition-colors font-[inherit]",
+		"w-full rounded-base border outline-none transition-[colors,box-shadow] duration-150 ease-out font-[inherit]",
 		"text-t-1 placeholder:text-t-3",
 	],
 	{

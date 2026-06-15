@@ -15,6 +15,7 @@ export const spring = {
   default: { type: 'spring' as const, stiffness: 300, damping: 30 },
   gentle:  { type: 'spring' as const, stiffness: 200, damping: 25 },
   bouncy:  { type: 'spring' as const, stiffness: 400, damping: 20 },
+  snappy:  { type: 'spring' as const, stiffness: 500, damping: 35 },
 } as const
 
 export const variants = {
@@ -50,5 +51,10 @@ export const variants = {
   staggerItem: {
     hidden:  { opacity: 0, y: 12 },
     visible: { opacity: 1, y: 0, transition: { duration: duration.slow, ease: ease.enter } },
+  },
+  errorMessage: {
+    hidden:  { opacity: 0, y: -4, height: 0 },
+    visible: { opacity: 1, y: 0,  height: 'auto', transition: { duration: duration.base, ease: ease.enter } },
+    exit:    { opacity: 0, y: -4, height: 0,      transition: { duration: duration.fast, ease: ease.exit  } },
   },
 } as const

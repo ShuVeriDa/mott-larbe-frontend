@@ -3746,6 +3746,8 @@
         "paragraphs": "Абзацы",
         "charsOverLimit": "— превышен лимит страницы",
         "charLimitMarker": "Лимит страницы: текст после этой отметки (без пробелов) длиннее допустимого",
+        "normalizeText": "Нормализовать текст — убрать лишние переносы строк",
+        "pasteAsPlainText": "Вставить без форматирования (Ctrl+Shift+V)",
         "wordsSuffix": "сл.",
         "statusOptions": {
           "draft": "Черновик",

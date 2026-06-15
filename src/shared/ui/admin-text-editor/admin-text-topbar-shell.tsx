@@ -139,7 +139,7 @@ export const AdminTextTopbarShell = ({
 				</Button>
 
 				<TooltipProvider>
-					<Tooltip open={isBackgroundRunning && !!backgroundTooltip ? undefined : false}>
+					<Tooltip open={isBackgroundRunning && !!backgroundTooltip}>
 						<TooltipTrigger asChild>
 							<Button
 								onClick={onSaveDraft}
@@ -165,7 +165,7 @@ export const AdminTextTopbarShell = ({
 				</TooltipProvider>
 
 				<TooltipProvider>
-					<Tooltip open={isBackgroundRunning && !!backgroundTooltip ? undefined : false}>
+					<Tooltip open={isBackgroundRunning && !!backgroundTooltip}>
 						<TooltipTrigger asChild>
 							<Button
 								onClick={onPrimaryAction}

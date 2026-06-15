@@ -3747,6 +3747,8 @@
         "paragraphs": "Абзацаш",
         "charsOverLimit": "— агӀонан дозанал тӀехтилла",
         "charLimitMarker": "АгӀонан доза: оцу хьаьркал тӀаьхьа йолу текст магаран дозанал сов ю",
+        "normalizeText": "Текст нормализе яр — маьрша хьажаран мукъанаш дӀаяккхар",
+        "pasteAsPlainText": "Форматаш доцуш чӀогӀа яккхар (Ctrl+Shift+V)",
         "wordsSuffix": "дош",
         "statusOptions": {
           "draft": "Черновик",

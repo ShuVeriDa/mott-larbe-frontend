@@ -2,7 +2,9 @@
 
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { spring } from "@/shared/lib/animation";
 import { Button } from "@/shared/ui/button";
+import { motion } from "framer-motion";
 import { type ComponentProps } from "react";
 
 export const PROFILE_TAB_IDS = ["main", "security", "subscription", "ai"] as const;
@@ -26,22 +28,30 @@ export const ProfileTabs = ({ active, onChange }: ProfileTabsProps) => {
 	return (
 		<div className="flex gap-px rounded-[9px] bg-surf-3 p-[3px] w-fit max-sm:w-full">
 			{tabs.map(({ id, label }) => {
-			  const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(id);
-			  return (
-				<Button
-					key={id}
-					onClick={handleClick}
-					className={cn(
-						"h-7 px-3.5 rounded-base text-[12.5px] font-medium font-[inherit] cursor-pointer transition-all duration-100 whitespace-nowrap",
-						"max-sm:flex-1 max-sm:h-[34px] max-sm:text-[12px] max-sm:px-1.5",
-						active === id
-							? "bg-surf text-t-1 shadow-sm"
-							: "bg-transparent text-t-2 hover:text-t-1",
-					)}
-				>
-					{label}
-				</Button>
-			);
+				const handleClick: NonNullable<ComponentProps<"button">["onClick"]> = () => onChange(id);
+				const isActive = active === id;
+				return (
+					<Button
+						key={id}
+						onClick={handleClick}
+						className={cn(
+							"relative h-7 px-3.5 rounded-base text-[12.5px] font-medium font-[inherit] cursor-pointer whitespace-nowrap",
+							"max-sm:flex-1 max-sm:h-[34px] max-sm:text-[12px] max-sm:px-1.5",
+							isActive
+								? "text-t-1"
+								: "bg-transparent text-t-2 hover:text-t-1",
+						)}
+					>
+						{isActive && (
+							<motion.span
+								layoutId="profile-tab-bg"
+								className="absolute inset-0 rounded-base bg-surf shadow-sm"
+								transition={spring.snappy}
+							/>
+						)}
+						<span className="relative z-10">{label}</span>
+					</Button>
+				);
 			})}
 		</div>
 	);

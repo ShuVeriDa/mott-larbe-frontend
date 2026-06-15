@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { useAdminTextCreate } from "@/entities/admin-text";
+import { useAutoSave } from "@/shared/lib/auto-save";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
 import type { TextLanguage, TextLevel, TextStatus } from "@/entities/admin-text";
@@ -22,6 +23,7 @@ export interface TipTapDoc {
 export interface PageContent {
 	doc: TipTapDoc;
 	wordCount: number;
+	title: string;
 }
 
 export interface TagEntry {
@@ -40,7 +42,7 @@ export const useAdminTextCreatePage = () => {
 	const { create, update, uploadCover } = useAdminTextCreate();
 
 	const [title, setTitle] = useState("");
-	const [pages, setPages] = useState<PageContent[]>([{ doc: EMPTY_DOC, wordCount: 0 }]);
+	const [pages, setPages] = useState<PageContent[]>([{ doc: EMPTY_DOC, wordCount: 0, title: "" }]);
 	const [activePage, setActivePage] = useState(0);
 	const [status, setStatus] = useState<TextStatus>("draft");
 	const [language, setLanguage] = useState<TextLanguage>("CHE");
@@ -58,7 +60,8 @@ export const useAdminTextCreatePage = () => {
 	const [saveState, setSaveState] = useState<SaveState>("initial");
 
 	const savedIdRef = useRef<string | null>(null);
-	const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const [savedId, setSavedId] = useState<string | null>(null);
+
 	const revokeObjectUrl = (url: string | null) => {
 		if (!url?.startsWith("blob:")) return;
 		URL.revokeObjectURL(url);
@@ -82,6 +85,7 @@ export const useAdminTextCreatePage = () => {
 
 		const pagesDto = pages.map((page, i) => ({
 			pageNumber: i + 1,
+			title: page.title.trim() || undefined,
 			contentRich: page.doc,
 		}));
 
@@ -111,6 +115,7 @@ export const useAdminTextCreatePage = () => {
 					autoTokenize: true,
 				});
 				savedIdRef.current = result.id;
+				setSavedId(result.id);
 				resultId = result.id;
 			} else {
 				const result = await update.mutateAsync({
@@ -141,18 +146,7 @@ export const useAdminTextCreatePage = () => {
 		}
 	};
 
-	const scheduleAutoSave = () => {
-		if (!savedIdRef.current) return;
-		if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
-		autoSaveTimerRef.current = setTimeout(() => {
-			void doSave("draft", true);
-		}, 2000);
-	};
-
-	const markUnsaved = () => {
-		setSaveState("unsaved");
-		scheduleAutoSave();
-	};
+	const markUnsaved = () => setSaveState("unsaved");
 
 	useEffect(() => {
 		if (saveState !== "unsaved") return;
@@ -165,11 +159,15 @@ export const useAdminTextCreatePage = () => {
 	}, [saveState]);
 
 	useEffect(() => {
-		return () => {
-			if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
-			revokeObjectUrl(coverPreviewUrl);
-		};
+		return () => { revokeObjectUrl(coverPreviewUrl); };
 	}, [coverPreviewUrl]);
+
+	useAutoSave({
+		onSave: () => doSave("draft", true),
+		isDirty: saveState === "unsaved",
+		isReady: !!savedIdRef.current,
+		isSaving: create.isPending || update.isPending || uploadCover.isPending,
+	});
 
 	const handleTitleChange = (value: string) => {
 		setTitle(value);
@@ -179,14 +177,23 @@ export const useAdminTextCreatePage = () => {
 	const handlePageContentChange = (doc: TipTapDoc, wordCount: number) => {
 		setPages((prev) => {
 			const next = [...prev];
-			next[activePage] = { doc, wordCount };
+			next[activePage] = { ...next[activePage], doc, wordCount };
+			return next;
+		});
+		markUnsaved();
+	};
+
+	const handlePageTitleChange = (value: string) => {
+		setPages((prev) => {
+			const next = [...prev];
+			next[activePage] = { ...next[activePage], title: value };
 			return next;
 		});
 		markUnsaved();
 	};
 
 	const handleAddPage = () => {
-		setPages((prev) => [...prev, { doc: EMPTY_DOC, wordCount: 0 }]);
+		setPages((prev) => [...prev, { doc: EMPTY_DOC, wordCount: 0, title: "" }]);
 		setActivePage((prev) => prev + 1);
 		markUnsaved();
 	};
@@ -249,6 +256,7 @@ export const useAdminTextCreatePage = () => {
 		title,
 		pages,
 		activePage,
+		savedId,
 		status,
 		language,
 		level,
@@ -266,6 +274,7 @@ export const useAdminTextCreatePage = () => {
 		isBackgroundRunning: false,
 		handleTitleChange,
 		handlePageContentChange,
+		handlePageTitleChange,
 		handleAddPage,
 		handleSelectPage,
 		handleCoverSelect,

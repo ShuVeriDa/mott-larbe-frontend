@@ -1,4 +1,5 @@
 export { NotionEditor } from "./notion-editor";
+export { PasteNormalizeExtension } from "./paste-normalize-extension";
 export type { NotionEditorProps, TipTapDoc, TipTapNode, TipTapMark } from "./notion-editor";
 export { StressMarkExtension } from "./stress-mark-extension";
 export { HeadingFontWeightExtension } from "./heading-font-weight-extension";

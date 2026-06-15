@@ -32,7 +32,7 @@ export const AdminTextMetaPrimaryActionsSection = ({
 	return (
 		<div className="flex flex-col gap-1.5 border-t border-bd-1 bg-surf-2 px-4 py-[14px] transition-colors max-[767px]:bg-surf">
 			<TooltipProvider>
-				<Tooltip open={showTooltip ? undefined : false}>
+				<Tooltip open={showTooltip}>
 					<TooltipTrigger asChild>
 						<Button
 							onClick={onPrimaryAction}
@@ -54,7 +54,7 @@ export const AdminTextMetaPrimaryActionsSection = ({
 				</Tooltip>
 			</TooltipProvider>
 			<TooltipProvider>
-				<Tooltip open={showTooltip ? undefined : false}>
+				<Tooltip open={showTooltip}>
 					<TooltipTrigger asChild>
 						<Button
 							onClick={onSecondaryAction}

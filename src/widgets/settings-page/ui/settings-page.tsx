@@ -1,7 +1,9 @@
 "use client";
 import { useState } from 'react';
+import { AnimatePresence, motion } from "framer-motion";
 import { useSettings } from "@/entities/settings";
 import { useI18n } from "@/shared/lib/i18n";
+import { variants, spring } from "@/shared/lib/animation";
 import { Typography } from "@/shared/ui/typography";
 import type { SettingsSectionId } from "../model/section-list";
 import { AiSection } from "./sections/ai-section";
@@ -21,6 +23,8 @@ export const SettingsPage = () => {
 	const { data, isLoading, isError } = useSettings();
 	const [active, setActive] = useState<SettingsSectionId>("appearance");
 
+	const contentKey = isLoading ? "__loading" : isError || !data ? "__error" : active;
+
 	return (
 		<>
 			<SettingsTopbar />
@@ -29,38 +33,49 @@ export const SettingsPage = () => {
 				<div
 					className="flex flex-1 flex-col gap-0 overflow-y-auto px-6 pb-10 pt-5 max-md:px-4 max-sm:px-3 max-sm:pb-10 max-sm:pt-3.5"
 				>
-					{isLoading ? (
-						<Typography tag="p" className="text-[13px] text-t-3">
-							{t("settings.loading")}
-						</Typography>
-					) : isError || !data ? (
-						<Typography tag="p" className="text-[13px] text-red-t">
-							{t("settings.loadError")}
-						</Typography>
-					) : (
-						<>
-							{active === "appearance" ? (
-								<AppearanceSection preferences={data.preferences} />
-							) : null}
-							{active === "learning" ? (
-								<LearningSection
-									preferences={data.preferences}
-									goals={data.goals}
-								/>
-							) : null}
-							{active === "reader" ? (
-								<ReaderSection preferences={data.preferences} />
-							) : null}
-							{active === "notifications" ? (
-								<NotificationsSection notifications={data.notifications} />
-							) : null}
-							{active === "shortcuts" ? <ShortcutsSection /> : null}
-							{active === "sessions" ? <SessionsSection /> : null}
-							{active === "data" ? <DataSection /> : null}
-							{active === "ai" ? <AiSection /> : null}
-							<DeveloperCard />
-						</>
-					)}
+					<AnimatePresence mode="wait" initial={false}>
+						<motion.div
+							key={contentKey}
+							variants={variants.fadeUp}
+							initial="hidden"
+							animate="visible"
+							exit="exit"
+							transition={spring.default}
+						>
+							{isLoading ? (
+								<Typography tag="p" className="text-[13px] text-t-3">
+									{t("settings.loading")}
+								</Typography>
+							) : isError || !data ? (
+								<Typography tag="p" className="text-[13px] text-red-t">
+									{t("settings.loadError")}
+								</Typography>
+							) : (
+								<>
+									{active === "appearance" ? (
+										<AppearanceSection preferences={data.preferences} />
+									) : null}
+									{active === "learning" ? (
+										<LearningSection
+											preferences={data.preferences}
+											goals={data.goals}
+										/>
+									) : null}
+									{active === "reader" ? (
+										<ReaderSection preferences={data.preferences} />
+									) : null}
+									{active === "notifications" ? (
+										<NotificationsSection notifications={data.notifications} />
+									) : null}
+									{active === "shortcuts" ? <ShortcutsSection /> : null}
+									{active === "sessions" ? <SessionsSection /> : null}
+									{active === "data" ? <DataSection /> : null}
+									{active === "ai" ? <AiSection /> : null}
+									<DeveloperCard />
+								</>
+							)}
+						</motion.div>
+					</AnimatePresence>
 				</div>
 			</div>
 		</>

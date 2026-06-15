@@ -1,6 +1,8 @@
 "use client";
+import { AnimatePresence, motion } from "framer-motion";
 import { useCurrentUser } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
+import { variants, spring } from "@/shared/lib/animation";
 import { Typography } from "@/shared/ui/typography";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -72,10 +74,21 @@ export const ProfilePage = ({ lang }: ProfilePageProps) => {
 				<ProfileHeader profile={profile} lang={lang} />
 				<ProfileTabs active={activeTab} onChange={handleTabChange} />
 
-				{activeTab === "main" && <TabMain profile={profile} lang={lang} />}
-				{activeTab === "security" && <TabSecurity profile={profile} />}
-				{activeTab === "subscription" && <TabSubscription lang={lang} />}
-				{activeTab === "ai" && <AiSection />}
+				<AnimatePresence mode="wait" initial={false}>
+					<motion.div
+						key={activeTab}
+						variants={variants.fadeUp}
+						initial="hidden"
+						animate="visible"
+						exit="exit"
+						transition={spring.default}
+					>
+						{activeTab === "main" && <TabMain profile={profile} lang={lang} />}
+						{activeTab === "security" && <TabSecurity profile={profile} />}
+						{activeTab === "subscription" && <TabSubscription lang={lang} />}
+						{activeTab === "ai" && <AiSection />}
+					</motion.div>
+				</AnimatePresence>
 			</main>
 		</>
 	);

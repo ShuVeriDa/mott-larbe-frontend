@@ -7,8 +7,9 @@ export const buttonVariants = cva(
 	[
 		"inline-flex items-center justify-center gap-[5px] whitespace-nowrap",
 		"rounded-base font-[inherit] cursor-pointer outline-none",
-		"transition-[background-color,border-color,color,opacity] duration-150",
-		"disabled:opacity-40 disabled:cursor-default disabled:pointer-events-none",
+		"transition-[background-color,border-color,color,opacity,transform] duration-150 ease-out",
+		"active:scale-[0.97]",
+		"disabled:opacity-40 disabled:cursor-default disabled:pointer-events-none disabled:active:scale-100",
 		"focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1",
 	],
 	{

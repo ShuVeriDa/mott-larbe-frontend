@@ -3749,6 +3749,8 @@
         "paragraphs": "Paragraphs",
         "charsOverLimit": "— page limit exceeded",
         "charLimitMarker": "Page limit: non-whitespace characters after this mark exceed the allowed length",
+        "normalizeText": "Normalize text — remove extra line breaks",
+        "pasteAsPlainText": "Paste as plain text (Ctrl+Shift+V)",
         "wordsSuffix": "w.",
         "statusOptions": {
           "draft": "Draft",
