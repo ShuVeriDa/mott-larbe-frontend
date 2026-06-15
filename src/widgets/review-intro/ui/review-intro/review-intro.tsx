@@ -7,6 +7,7 @@ import {
 } from "@/entities/review";
 import { ModeSelector, type SessionMode } from "@/features/session-mode";
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { Sm2Guide } from "../sm2-guide";
@@ -114,9 +115,9 @@ export const ReviewIntro = ({
 			{queue.length > 0 ? (
 				<div className="mt-5 w-full max-w-[420px] border-t border-bd-1 pt-4">
 					<div className="mb-2 flex items-center justify-between">
-						<Typography className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
+						<SectionLabel className="mb-0">
 							{t("review.sm2.intro.queue.title")}
-						</Typography>
+						</SectionLabel>
 						<Sm2Guide />
 					</div>
 

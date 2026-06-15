@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { DEFAULT_LOCALE, LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
+import { DEFAULT_LOCALE, LOCALES, getDictionary } from "@/i18n/locales";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 import { SITE_URL } from "@/shared/lib/seo";
 import { UserTextReaderPageClient } from "@/widgets/reader-page/ui/user-text-reader-page-client";
 
@@ -14,7 +15,7 @@ export const generateMetadata = async (props: {
 	params: Promise<{ lang: string; id: string; pageNumber: string }>;
 }): Promise<Metadata> => {
 	const { lang, id, pageNumber: rawPage } = await props.params;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const page = parsePage(rawPage);
 	if (!page) return {};
@@ -53,7 +54,7 @@ interface PageProps {
 
 const MyTextReaderRoutePage = async ({ params }: PageProps) => {
 	const { lang, id, pageNumber: rawPage } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const page = parsePage(rawPage);
 	if (!page) notFound();

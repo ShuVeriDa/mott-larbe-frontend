@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { AdminLogsStats, TrendValue } from "@/entities/admin-log";
@@ -24,7 +25,7 @@ const StatCard = ({ label, value, trend, valueClassName, isLoading, badTrend }: 
 	const isGood = trend && badTrend && trend.direction !== "neutral" && trend.direction !== badTrend;
 
 	return (
-		<div className="rounded-card border border-bd-1 bg-surf p-3.5 transition-colors">
+		<AdminCard className="p-3.5">
 			<div className="mb-1 text-[11px] font-medium tracking-[0.2px] text-t-3">{label}</div>
 			<div
 				className={cn(
@@ -46,7 +47,7 @@ const StatCard = ({ label, value, trend, valueClassName, isLoading, badTrend }: 
 					{trendText}
 				</div>
 			)}
-		</div>
+		</AdminCard>
 	);
 };
 

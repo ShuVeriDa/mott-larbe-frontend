@@ -1,8 +1,9 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { useState } from "react";
 import { useAdminAnalyticsUaBreakdown, useAnalyticsRange, useInvalidateAdminAnalytics } from "@/features/admin-analytics";
-import type { Dictionary, Locale } from "@/i18n/locales";
+import type { Dictionary, Locale } from "@/i18n/types";
 import type { AnalyticsUaKind as UaKind } from "@/features/admin-analytics";
 import { AnalyticsTabs } from "@/widgets/admin-tracking-overview-page";
 import { AnalyticsToolbar } from "@/widgets/admin-tracking-overview-page";
@@ -69,7 +70,7 @@ export const AdminTrackingDevicesPage = ({ lang, dict }: AdminTrackingDevicesPag
 					})}
 				</div>
 
-				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+				<AdminCard>
 					<Table aria-label={dict.devices.title}>
 						<TableHeader>
 							<TableRow className="border-b border-bd-1">
@@ -124,7 +125,7 @@ export const AdminTrackingDevicesPage = ({ lang, dict }: AdminTrackingDevicesPag
 							)}
 						</TableBody>
 					</Table>
-				</div>
+				</AdminCard>
 			</div>
 		</div>
 	);

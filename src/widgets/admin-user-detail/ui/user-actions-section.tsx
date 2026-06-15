@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
@@ -9,8 +10,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { adminUserApi } from "@/entities/admin-user";
 import { CreditCard, Monitor, Clock, Snowflake, Ban, Trash2 } from "lucide-react";
 import type { AdminUserDetail } from "@/entities/admin-user";
-import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
-import type { useAdminUserSessions } from "@/entities/admin-user/model/use-admin-user-sessions";
+import type { useAdminUserMutations, useAdminUserSessions } from "@/entities/admin-user";
 
 interface UserActionsSectionProps {
 	user: AdminUserDetail;
@@ -53,9 +53,9 @@ export const UserActionsSection = ({ user, mutations, sessions, onManageSubscrip
 	const handleDeleteClick: NonNullable<ComponentProps<typeof ActionButton>["onClick"]> = () => mutations.remove.mutate(user.id);
 return (
 		<div className="flex flex-col gap-1.5 px-4 py-3">
-			<div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+			<SectionLabel className="mb-1">
 				{t("admin.userDetail.actions.title")}
-			</div>
+			</SectionLabel>
 
 			<ActionButton icon={<CreditCard className="size-full" />} label={t("admin.userDetail.actions.manageSubscription")} onClick={onManageSubscription} />
 

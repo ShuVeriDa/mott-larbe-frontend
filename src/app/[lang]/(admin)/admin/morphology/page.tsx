@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { DEFAULT_LOCALE, LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
+import { DEFAULT_LOCALE, LOCALES, getDictionary } from "@/i18n/locales";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 import { AdminMorphologyPage } from "@/widgets/admin-morphology-page";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
@@ -9,7 +9,7 @@ export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
 }): Promise<Metadata> => {
 	const { lang } = await props.params;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const dict = await getDictionary(lang);
 	const meta = (
@@ -57,7 +57,7 @@ interface PageProps {
 
 const AdminMorphologyRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	return <AdminMorphologyPage />;
 };

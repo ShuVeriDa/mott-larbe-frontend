@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 import { cn } from "@/shared/lib/cn";
 import { ArrowUp, ArrowDown } from "lucide-react";
@@ -11,7 +12,7 @@ interface KpiCardProps {
 }
 
 const KpiCard = ({ item, isLoading }: KpiCardProps) => (
-	<div className="rounded-card border border-bd-1 bg-surf p-3.5 transition-colors">
+	<AdminCard className="p-3.5">
 		<div className="mb-1.5 text-[11px] font-medium tracking-[0.3px] text-t-3">
 			{isLoading ? (
 				<Typography tag="span" className="inline-block h-3 w-20 animate-pulse rounded bg-surf-3" />
@@ -41,7 +42,7 @@ const KpiCard = ({ item, isLoading }: KpiCardProps) => (
 				{item.changeText}
 			</div>
 		)}
-	</div>
+	</AdminCard>
 );
 
 interface AnalyticsKpiGridProps {

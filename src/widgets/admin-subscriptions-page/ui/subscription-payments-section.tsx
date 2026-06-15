@@ -1,7 +1,9 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import type { AdminSubscriptionDetail, PaymentProvider } from "@/entities/admin-subscription";
+import { formatDateCompact } from "@/shared/lib/format-date";
 
 const PROVIDER_COLORS: Record<PaymentProvider, string> = {
 	STRIPE: "#635bff",
@@ -11,16 +13,11 @@ const PROVIDER_COLORS: Record<PaymentProvider, string> = {
 	MANUAL: "#a5a39a",
 };
 
-const formatDateShort = (date: string) =>
-	new Date(date).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
-
 const formatAmount = (cents: number, currency: string) =>
 	`${(cents / 100).toLocaleString("ru-RU")} ${currency}`;
 
 const SectionTitle = ({ label }: { label: string }) => (
-	<div className="mb-[7px] text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
-		{label}
-	</div>
+	<SectionLabel className="mb-[7px]">{label}</SectionLabel>
 );
 
 interface Props {
@@ -53,7 +50,7 @@ export const SubscriptionPaymentsSection = ({ sub, sectionTitle }: Props) => {
 							</Typography>
 						)}
 						<Typography tag="span" className="text-[10.5px] text-t-3">
-							{formatDateShort(p.createdAt)}
+							{formatDateCompact(p.createdAt)}
 						</Typography>
 					</div>
 				))}

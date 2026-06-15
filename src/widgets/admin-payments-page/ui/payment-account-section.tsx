@@ -1,16 +1,9 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import type { AdminPaymentDetail } from "@/entities/admin-payment";
-
-const fmtDate = (iso: string | null, fallback = "—") => {
-	if (!iso) return fallback;
-	return new Date(iso).toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "long",
-		year: "numeric",
-	});
-};
+import { formatDateLong } from "@/shared/lib/format-date";
 
 interface Props {
 	payment: AdminPaymentDetail;
@@ -19,9 +12,9 @@ interface Props {
 
 export const PaymentAccountSection = ({ payment, t }: Props) => (
 	<div className="border-b border-bd-1 px-[15px] py-2.5">
-		<div className="mb-[7px] text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+		<SectionLabel className="mb-[7px]">
 			{t("admin.payments.detail.account")}
-		</div>
+		</SectionLabel>
 		<div className="space-y-1.5">
 			<div className="flex items-baseline justify-between gap-2">
 				<Typography tag="span" className="text-[11.5px] text-t-3">
@@ -36,7 +29,7 @@ export const PaymentAccountSection = ({ payment, t }: Props) => (
 					{t("admin.payments.detail.registered")}
 				</Typography>
 				<Typography tag="span" className="text-[12px] font-medium text-t-1">
-					{fmtDate(payment.user.signupAt)}
+					{formatDateLong(payment.user.signupAt)}
 				</Typography>
 			</div>
 			<div className="flex items-baseline justify-between gap-2">
@@ -44,7 +37,7 @@ export const PaymentAccountSection = ({ payment, t }: Props) => (
 					{t("admin.payments.detail.lastSeen")}
 				</Typography>
 				<Typography tag="span" className="text-[12px] font-medium text-t-1">
-					{fmtDate(payment.user.lastActiveAt)}
+					{formatDateLong(payment.user.lastActiveAt)}
 				</Typography>
 			</div>
 		</div>

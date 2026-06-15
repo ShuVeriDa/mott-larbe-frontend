@@ -2,12 +2,11 @@ import {
 	DEFAULT_LOCALE,
 	LOCALES,
 	getDictionary,
-	hasLocale,
 } from "@/i18n/locales";
 import { OG_LOCALES, SITE_URL } from "@/shared/lib/seo";
 import { DashboardPageDynamic } from "@/widgets/dashboard-page";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 
 export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
@@ -15,7 +14,7 @@ export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
 }): Promise<Metadata> => {
 	const { lang } = await props.params;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const dict = await getDictionary(lang);
 	const meta = dict.dashboard.meta;
@@ -60,7 +59,7 @@ interface PageProps {
 
 const DashboardRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	return <DashboardPageDynamic />;
 };

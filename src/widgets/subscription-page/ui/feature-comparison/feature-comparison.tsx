@@ -10,6 +10,7 @@ import {
 } from "@/entities/subscription";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 interface ComparisonRow {
@@ -74,12 +75,9 @@ export const FeatureComparison = () => {
 
 	return (
 		<div className="hidden border-[0.5px] border-t border-bd-1 px-4 pb-3.5 pt-3.5 md:block">
-			<Typography
-				tag="span"
-				className="block pb-1.5 text-[10.5px] font-semibold uppercase tracking-[0.6px] text-t-3"
-			>
+			<SectionLabel className="block pb-1.5 mb-0">
 				{t("subscription.comparison.title")}
-			</Typography>
+			</SectionLabel>
 
 			<div
 				className="grid items-center gap-1 border-b-[0.5px] border-bd-1 py-2"

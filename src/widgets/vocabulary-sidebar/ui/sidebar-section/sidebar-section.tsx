@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
-import { Typography } from "@/shared/ui/typography";
+import { SectionLabel } from "@/shared/ui/section-label";
 
 export interface SidebarSectionProps {
 	title: string;
@@ -17,12 +17,9 @@ export const SidebarSection = ({
 }: SidebarSectionProps) => (
 	<div className={className}>
 		<div className="mb-2 flex items-center justify-between">
-			<Typography
-				tag="h3"
-				className="text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3"
-			>
+			<SectionLabel className="mb-0">
 				{title}
-			</Typography>
+			</SectionLabel>
 			{action}
 		</div>
 		{children}
@@ -38,13 +35,7 @@ export const SidebarSectionTitle = ({
 	className,
 	children,
 }: SidebarSectionTitleProps) => (
-	<Typography
-		tag="h3"
-		className={cn(
-			"mb-2 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3",
-			className,
-		)}
-	>
+	<SectionLabel className={cn("mb-2", className)}>
 		{children}
-	</Typography>
+	</SectionLabel>
 );

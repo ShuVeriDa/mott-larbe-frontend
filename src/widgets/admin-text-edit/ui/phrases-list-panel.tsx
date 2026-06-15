@@ -172,6 +172,13 @@ const PhraseItem = ({
 	const { t } = useI18n();
 	const [confirmDelete, setConfirmDelete] = useState(false);
 
+	const handleEdit = () => onEdit(occurrence);
+	const handleConfirmDelete = () => setConfirmDelete(true);
+	const handleDelete = () => {
+		onDelete(occurrence.id);
+		setConfirmDelete(false);
+	};
+
 	return (
 		<div className="group relative rounded-lg border-[0.5px] border-bd-1 bg-surf-2 p-3 transition-colors hover:border-bd-2">
 			<div className="mb-1 flex items-start justify-between gap-2">
@@ -180,7 +187,7 @@ const PhraseItem = ({
 				</div>
 				<div className="flex shrink-0 items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
 					<Button
-						onClick={() => onEdit(occurrence)}
+						onClick={handleEdit}
 						title={t("admin.texts.editPage.phraseEditTitle")}
 						className="rounded p-1 text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
 					>
@@ -188,7 +195,7 @@ const PhraseItem = ({
 					</Button>
 					{!confirmDelete ? (
 						<Button
-							onClick={() => setConfirmDelete(true)}
+							onClick={handleConfirmDelete}
 							title={t("admin.texts.editPage.phraseDeleteConfirm")}
 							className="rounded p-1 text-t-3 transition-colors hover:bg-red/10 hover:text-red"
 						>
@@ -196,10 +203,7 @@ const PhraseItem = ({
 						</Button>
 					) : (
 						<Button
-							onClick={() => {
-								onDelete(occurrence.id);
-								setConfirmDelete(false);
-							}}
+							onClick={handleDelete}
 							title={t("admin.texts.editPage.phraseDeleteConfirm")}
 							disabled={isDeleting}
 							className="rounded px-1.5 py-0.5 text-[10px] font-semibold text-red transition-colors hover:bg-red/10 disabled:opacity-60"
@@ -318,6 +322,9 @@ export const PhrasesListPanel = ({
 		handleDelete(popup.occurrence.id);
 	};
 
+	const handleClosePanel = () => setIsOpen(false);
+	const handleDismissPopup = () => setPopup(null);
+
 	if (typeof window === "undefined") return null;
 
 	return createPortal(
@@ -326,7 +333,7 @@ export const PhrasesListPanel = ({
 			{isOpen && (
 				<div
 					className="fixed inset-0 z-199 bg-black/20"
-					onClick={() => setIsOpen(false)}
+					onClick={handleClosePanel}
 					aria-hidden="true"
 				/>
 			)}
@@ -356,7 +363,7 @@ export const PhrasesListPanel = ({
 						)}
 					</div>
 					<Button
-						onClick={() => setIsOpen(false)}
+						onClick={handleClosePanel}
 						title={t("reader.panel.close")}
 						className="rounded-md p-1 text-t-3 transition-colors hover:bg-surf-2 hover:text-t-1"
 					>
@@ -397,7 +404,7 @@ export const PhrasesListPanel = ({
 					phraseText={popup.occurrence.phrase.original}
 					onEdit={handlePopupEdit}
 					onDelete={handlePopupDelete}
-					onDismiss={() => setPopup(null)}
+					onDismiss={handleDismissPopup}
 				/>
 			)}
 

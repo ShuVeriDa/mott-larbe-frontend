@@ -9,6 +9,7 @@ import {
 } from "@/entities/subscription";
 import { useI18n } from "@/shared/lib/i18n";
 import { Badge } from "@/shared/ui/badge";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { Clock, Sparkles } from "lucide-react";
 import { SectionCard } from "../section-card";
@@ -97,12 +98,9 @@ export const CurrentPlanCard = ({ subscription }: CurrentPlanCardProps) => {
 			</div>
 
 			<div className="flex flex-col gap-3 px-4 py-4 max-md:px-3 max-md:py-3">
-				<Typography
-					tag="span"
-					className="pb-1 text-[10.5px] font-semibold uppercase tracking-[0.6px] text-t-3"
-				>
+				<SectionLabel className="pb-1 mb-0">
 					{t("subscription.currentPlan.usageToday")}
-				</Typography>
+				</SectionLabel>
 
 				{usageLoading ? (
 					<Typography tag="span" className="text-[12px] text-t-3">

@@ -2,6 +2,7 @@
 
 import type { PhraseDue } from "@/entities/phrasebook";
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 interface PhraseBackProps {
@@ -29,9 +30,9 @@ export const PhraseBack = ({ phrase }: PhraseBackProps) => {
 
 			{phrase.words.length > 0 ? (
 				<div className="w-full">
-					<Typography className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.5px] text-t-3">
+					<SectionLabel className="mb-1.5">
 						{t("phrasebook.review.card.wordBreakdown")}
-					</Typography>
+					</SectionLabel>
 					<div className="flex flex-wrap gap-1">
 						{phrase.words.map((w) => (
 							<div

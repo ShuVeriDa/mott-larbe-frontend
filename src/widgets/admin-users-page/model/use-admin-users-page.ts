@@ -1,8 +1,6 @@
 "use client";
 import { useState } from 'react';
-import { useAdminUserMutations, useAdminUsers } from "@/entities/admin-user";
-import { useAdminUserStats } from "@/entities/admin-user/model/use-admin-user-stats";
-import { adminUserApi } from "@/entities/admin-user/api/admin-user-api";
+import { useAdminUserMutations, useAdminUsers, useAdminUserStats, adminUserApi } from "@/entities/admin-user";
 import type { FetchAdminUsersQuery, UsersSort, UsersTab } from "@/entities/admin-user";
 
 export const useAdminUsersPage = () => {

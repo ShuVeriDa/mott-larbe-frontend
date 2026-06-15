@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { Modal } from "@/shared/ui/modal";
@@ -7,7 +8,7 @@ import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@
 import { ComponentProps, ReactNode, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
-import { useAdminTextVersionDetail } from "@/entities/admin-text/model/use-admin-text-versions";
+import { useAdminTextVersionDetail } from "@/entities/admin-text";
 import { X, Download } from "lucide-react";
 import type { VersionLogLevel, VersionPageStatus } from "@/entities/admin-text";
 
@@ -57,9 +58,9 @@ const OverviewTab = ({
 	t: ReturnType<typeof useI18n>["t"];
 }) => (
 	<div className="p-4">
-		<div className="mb-3 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+		<SectionLabel className="mb-3">
 			{t("admin.texts.versions.modal.overview")}
-		</div>
+		</SectionLabel>
 		<div className="grid grid-cols-2 gap-2 max-sm:grid-cols-1">
 			<MetaCell label={t("admin.texts.versions.modal.totalTokens")} value={version.totalTokenCount.toLocaleString()} />
 			<MetaCell label={t("admin.texts.versions.modal.totalWords")} value={version.totalWordCount.toLocaleString()} />

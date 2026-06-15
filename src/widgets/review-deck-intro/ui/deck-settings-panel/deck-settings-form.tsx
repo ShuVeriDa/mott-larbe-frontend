@@ -4,6 +4,7 @@ import type { DeckDailyWordCount } from "@/entities/deck";
 import { useDeckSettings, useUpdateDeckSettings } from "@/entities/deck";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { useState } from "react";
 
 const DAILY_OPTIONS: DeckDailyWordCount[] = [3, 5, 10];
@@ -105,7 +106,7 @@ export const DeckSettingsForm = ({ onSaved }: DeckSettingsFormProps) => {
 				<div className="mb-1.5 text-[12px] text-t-2">
 					{t("review.deck.intro.settings.deckMaxSize")}
 				</div>
-				<input
+				<Input
 					type="number"
 					min={DECK_MAX_SIZE_MIN}
 					max={DECK_MAX_SIZE_MAX}

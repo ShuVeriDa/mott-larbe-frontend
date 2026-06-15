@@ -103,8 +103,7 @@ export const PhraseTranslateSheet = ({
 						</div>
 						{displayPhrase && (
 							<>
-								<button
-									type="button"
+								<Button
 									onClick={handleToggleCyrillic}
 									title={showCyrillic ? t("aiTranslation.phrase.hideCyrillic") : t("aiTranslation.phrase.showCyrillic")}
 									className={cn(
@@ -118,7 +117,7 @@ export const PhraseTranslateSheet = ({
 										className={cn("size-3.5 transition-transform", showCyrillic && "rotate-180")}
 										strokeWidth={1.8}
 									/>
-								</button>
+								</Button>
 								{showCyrillic && (
 									<div className="mt-2 text-[13px] text-t-3">{phrase}</div>
 								)}

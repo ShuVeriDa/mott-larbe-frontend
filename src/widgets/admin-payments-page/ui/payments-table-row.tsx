@@ -6,6 +6,7 @@ import type {
 	PaymentProvider,
 } from "@/entities/admin-payment";
 import { cn } from "@/shared/lib/cn";
+import { formatDate } from "@/shared/lib/format-date";
 import { Button } from "@/shared/ui/button";
 import { TableCell, TableRow } from "@/shared/ui/table";
 import { Typography } from "@/shared/ui/typography";
@@ -78,13 +79,6 @@ const fmtAmount = (item: AdminPaymentListItem): string => {
 		return `${Math.round(item.amountCents / 100).toLocaleString("ru-RU")} ₽`;
 	}
 };
-
-const fmtDate = (iso: string): string =>
-	new Date(iso).toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "short",
-		year: "numeric",
-	});
 
 const initials = (name: string, surname: string) =>
 	`${name[0] ?? ""}${surname[0] ?? ""}`.toUpperCase();
@@ -191,7 +185,7 @@ export const PaymentsTableRow = ({
 			</TableCell>
 
 			<TableCell className="px-3 py-2.5 text-[11px] text-t-3 max-sm:hidden">
-				{fmtDate(item.createdAt)}
+				{formatDate(item.createdAt)}
 			</TableCell>
 
 			<TableCell className="px-3 py-2.5">

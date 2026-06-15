@@ -1,6 +1,7 @@
 "use client";
 
 import { ComponentProps } from 'react';
+import { AdminCard } from "@/shared/ui/admin-card";
 import { useAdminUsersPage } from "../model/use-admin-users-page";
 import { AdminUsersTopbar } from "./admin-users-topbar";
 import { UsersStatsRow } from "./users-stats-row";
@@ -74,7 +75,7 @@ return (
 				/>
 
 				{/* Table card */}
-				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+				<AdminCard>
 					<UsersBulkBar
 						selectedCount={selectedIds.size}
 						onFreeze={handleFreeze}
@@ -107,7 +108,7 @@ return (
 							onPageChange={setPage}
 						/>
 					)}
-				</div>
+				</AdminCard>
 			</div>
 		</div>
 	);

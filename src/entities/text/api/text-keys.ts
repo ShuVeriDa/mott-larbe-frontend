@@ -2,6 +2,7 @@ export const textKeys = {
 	root: ["text"] as const,
 	page: (textId: string, pageNumber: number) =>
 		["text", "page", textId, pageNumber] as const,
+	scriptPages: (textId: string) => ["text", "scriptPage", textId] as const,
 	scriptPage: (textId: string, pageNumber: number, script: string) =>
 		["text", "scriptPage", textId, pageNumber, script] as const,
 	phrases: (textId: string, pageNumber: number) =>

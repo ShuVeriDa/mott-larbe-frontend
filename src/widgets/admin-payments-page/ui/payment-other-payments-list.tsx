@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { cn } from "@/shared/lib/cn";
 import type { AdminPaymentListItem, PaymentBackendStatus } from "@/entities/admin-payment";
@@ -52,9 +53,9 @@ export const PaymentOtherPaymentsList = ({ payments, t }: Props) => {
 	if (payments.length === 0) return null;
 	return (
 		<div>
-			<div className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+			<SectionLabel className="mb-1.5">
 				{t("admin.payments.detail.otherPayments")}
-			</div>
+			</SectionLabel>
 			<div className="space-y-0">
 				{payments.map(p => {
 					const pSc = STATUS_CFG[p.status] ?? STATUS_CFG.PENDING;

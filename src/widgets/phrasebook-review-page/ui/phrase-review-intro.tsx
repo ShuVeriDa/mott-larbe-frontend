@@ -2,6 +2,7 @@
 
 import type { PhraseDue, PhraseReviewStats } from "@/entities/phrasebook";
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import type { PhraseReviewMode } from "../model";
@@ -102,9 +103,9 @@ export const PhraseReviewIntro = ({
 
 			{queue.length > 0 ? (
 				<div className="mt-5 w-full max-w-[420px] border-t border-bd-1 pt-4 max-md:max-w-full">
-					<Typography className="mb-2 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
+					<SectionLabel>
 						{t("phrasebook.review.intro.queue.title")}
-					</Typography>
+					</SectionLabel>
 					<ul className="flex flex-col gap-1">
 						{queue.slice(0, QUEUE_PREVIEW).map((phrase) => (
 							<li

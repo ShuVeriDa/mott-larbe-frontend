@@ -5,6 +5,7 @@ export type {
   TextPhraseOccurrence,
   TextPhraseWithOccurrences,
   PagePhraseOccurrence,
+  PhraseMap,
   CreatePhraseAutoOccurrenceDto,
   CreatePhraseWithOccurrenceDto,
   CreateTextPhraseDto,

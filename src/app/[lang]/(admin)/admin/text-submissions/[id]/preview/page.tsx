@@ -2,11 +2,10 @@ import {
 	DEFAULT_LOCALE,
 	LOCALES,
 	getDictionary,
-	hasLocale,
 } from "@/i18n/locales";
 import { SubmissionPreviewPage } from "@/widgets/submission-preview-page";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
 
@@ -14,7 +13,7 @@ export const generateMetadata = async (props: {
 	params: Promise<{ lang: string; id: string }>;
 }): Promise<Metadata> => {
 	const { lang } = await props.params;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const path = `/admin/text-submissions`;
 	const title = "Preview submission — Admin | Mott Larbe";
@@ -55,7 +54,7 @@ const SubmissionPreviewRoutePage = async ({
 	searchParams,
 }: SubmissionPreviewRoutePageProps) => {
 	const { lang, id } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const { page } = await searchParams;
 	const pageNumber = Math.max(1, parseInt(page ?? "1", 10) || 1);

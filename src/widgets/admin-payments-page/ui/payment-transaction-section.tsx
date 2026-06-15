@@ -1,9 +1,11 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { cn } from "@/shared/lib/cn";
 import { Check, XCircle, TrendingDown } from "lucide-react";
 import type { AdminPaymentDetail, AdminPaymentListItem, PaymentProvider, PaymentBackendStatus } from "@/entities/admin-payment";
+import { formatDateLong } from "@/shared/lib/format-date";
 import { PaymentOtherPaymentsList } from "./payment-other-payments-list";
 
 const PROVIDER_COLORS: Record<PaymentProvider, string> = {
@@ -53,15 +55,6 @@ const fmtAmount = (item: AdminPaymentDetail | AdminPaymentListItem): string => {
 	}
 };
 
-const fmtDate = (iso: string | null, fallback = "—") => {
-	if (!iso) return fallback;
-	return new Date(iso).toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "long",
-		year: "numeric",
-	});
-};
-
 interface Props {
 	payment: AdminPaymentDetail;
 	otherPayments: AdminPaymentListItem[];
@@ -98,9 +91,9 @@ export const PaymentTransactionSection = ({
 
 	return (
 		<div className="border-b border-bd-1 px-[15px] py-2.5">
-			<div className="mb-[7px] text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+			<SectionLabel className="mb-[7px]">
 				{t("admin.payments.detail.transaction")}
-			</div>
+			</SectionLabel>
 
 			<div className="mb-2.5 rounded-lg border border-bd-1 bg-surf-2 p-3">
 				<div className="mb-2 flex items-center gap-2">
@@ -151,7 +144,7 @@ export const PaymentTransactionSection = ({
 							{t("admin.payments.detail.date")}
 						</Typography>
 						<Typography tag="span" className="font-medium text-t-2">
-							{fmtDate(payment.createdAt)}
+							{formatDateLong(payment.createdAt)}
 						</Typography>
 					</div>
 					<div className="flex items-center justify-between text-[11.5px]">

@@ -4,8 +4,8 @@ import {
 	DEFAULT_LOCALE,
 	LOCALES,
 	getDictionary,
-	hasLocale,
 } from "@/i18n/locales";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 import { readerContextQueryOptions } from "@/entities/reader-context";
 import type { ReaderContextResponse } from "@/entities/reader-context";
 import { textKeys } from "@/entities/text";
@@ -35,7 +35,7 @@ export const generateMetadata = async ({
 	params: Promise<PageRouteParams>;
 }): Promise<Metadata> => {
 	const { lang, textId, pageNumber } = await params;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const page = parsePage(pageNumber);
 	if (!page) return {};
@@ -94,7 +94,7 @@ const ReaderTextPageRoutePage = async ({
 	params: Promise<PageRouteParams>;
 }) => {
 	const { lang, textId, pageNumber } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const page = parsePage(pageNumber);
 	if (!page) notFound();

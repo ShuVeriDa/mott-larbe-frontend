@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 
 import Link from "next/link";
@@ -36,7 +37,7 @@ export const DashboardActivityCard = ({ events }: DashboardActivityCardProps) =>
 	const params = useParams<{ lang: string }>();
 
 	return (
-		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.activity.title")}
@@ -67,12 +68,12 @@ export const DashboardActivityCard = ({ events }: DashboardActivityCardProps) =>
 					</div>
 				))}
 			</div>
-		</div>
+		</AdminCard>
 	);
 };
 
 export const DashboardActivityCardSkeleton = () => (
-	<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf">
+	<AdminCard>
 		<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
 			<div className="h-3.5 w-32 animate-pulse rounded bg-surf-3" />
 			<div className="h-3 w-10 animate-pulse rounded bg-surf-3" />
@@ -88,5 +89,5 @@ export const DashboardActivityCardSkeleton = () => (
 				</div>
 			))}
 		</div>
-	</div>
+	</AdminCard>
 );

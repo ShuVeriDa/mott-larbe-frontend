@@ -5,6 +5,7 @@ import {
 	type AdminPhrasebookCategory,
 	type AdminPhrasebookPhrase,
 } from "@/entities/phrasebook";
+import { AdminCard } from "@/shared/ui/admin-card";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { SearchBox } from "@/shared/ui/search-box";
@@ -62,6 +63,9 @@ export const PhrasesTab = ({
 		ComponentProps<"select">["onChange"]
 	> = e => onCategoryFilter(e.currentTarget.value || null);
 
+	const handlePrevPageClick = () => onPageChange(page - 1);
+	const handleNextPageClick = () => onPageChange(page + 1);
+
 	return (
 		<>
 			<div className="mb-3.5 flex flex-wrap items-center gap-2">
@@ -102,7 +106,7 @@ export const PhrasesTab = ({
 				)}
 			</div>
 
-			<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+			<AdminCard>
 				<div className="overflow-x-auto [&::-webkit-scrollbar]:h-[3px]">
 					<Table className="w-full border-collapse text-[12.5px]">
 						<TableHeader>
@@ -194,14 +198,14 @@ export const PhrasesTab = ({
 						</Typography>
 						<div className="flex items-center gap-1">
 							<Button
-								onClick={() => onPageChange(page - 1)}
+								onClick={handlePrevPageClick}
 								disabled={page <= 1}
 								className="flex h-7 min-w-[28px] cursor-pointer items-center justify-center rounded-md border border-bd-2 bg-surf px-2 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:cursor-default disabled:opacity-40"
 							>
 								←
 							</Button>
 							<Button
-								onClick={() => onPageChange(page + 1)}
+								onClick={handleNextPageClick}
 								disabled={page >= totalPages}
 								className="flex h-7 min-w-[28px] cursor-pointer items-center justify-center rounded-md border border-bd-2 bg-surf px-2 text-[12px] text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 disabled:cursor-default disabled:opacity-40"
 							>
@@ -210,7 +214,7 @@ export const PhrasesTab = ({
 						</div>
 					</div>
 				)}
-			</div>
+			</AdminCard>
 		</>
 	);
 };

@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { ComponentProps } from 'react';
@@ -131,7 +132,7 @@ return (
 };
 
 export const BillingPlanCardSkeleton = () => (
-	<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf">
+	<AdminCard>
 		<div className="border-b border-bd-1 p-3.5">
 			<div className="mb-2.5 h-8 w-8 animate-pulse rounded-[9px] bg-surf-3" />
 			<div className="h-3.5 w-20 animate-pulse rounded bg-surf-3" />
@@ -142,5 +143,5 @@ export const BillingPlanCardSkeleton = () => (
 			<div className="h-3 w-12 animate-pulse rounded bg-surf-3" />
 			<div className="mt-2 h-1 w-full animate-pulse rounded-full bg-surf-3" />
 		</div>
-	</div>
+	</AdminCard>
 );

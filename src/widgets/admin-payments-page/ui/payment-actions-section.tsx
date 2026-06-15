@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Button } from "@/shared/ui/button";
 import { ComponentProps } from 'react';
 import type { AdminPaymentDetail } from "@/entities/admin-payment";
@@ -29,9 +30,9 @@ export const PaymentActionsSection = ({
 
 	return (
 		<div className="flex flex-col gap-1.5 px-[15px] py-2.5">
-			<div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+			<SectionLabel className="mb-1">
 				{t("admin.payments.detail.actions")}
-			</div>
+			</SectionLabel>
 			<Button
 				onClick={handleReceiptClick}
 				title={t("admin.payments.detail.viewReceipt")}

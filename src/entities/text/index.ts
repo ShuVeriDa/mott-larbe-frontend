@@ -10,6 +10,8 @@ export type {
 	TextSubmittedBy,
 	TextToken,
 	TipTapDoc,
+	TipTapMark,
+	TipTapNode,
 } from "./api";
 export { useTextPage, useTextProgress, usePagePhrases, useScriptPage } from "./model";
 export {

@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 import type {
@@ -23,13 +24,9 @@ export const Sm2Card = ({ sm2, reviewHistory }: Sm2CardProps) => {
 				aria-labelledby="sm2-card-title"
 				className="mb-3.5 rounded-card border-[0.5px] border-bd-1 bg-surf p-4"
 			>
-				<Typography
-					tag="h3"
-					id="sm2-card-title"
-					className="mb-3 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
-				>
+				<SectionLabel className="mb-3">
 					{t("vocabulary.wordDetail.sections.sm2")}
-				</Typography>
+				</SectionLabel>
 				<Typography tag="p" className="text-[12.5px] text-t-3">
 					{t("vocabulary.wordDetail.sm2.empty")}
 				</Typography>
@@ -52,13 +49,9 @@ export const Sm2Card = ({ sm2, reviewHistory }: Sm2CardProps) => {
 			aria-labelledby="sm2-card-title"
 			className="mb-3.5 rounded-card border-[0.5px] border-bd-1 bg-surf p-4"
 		>
-			<Typography
-				tag="h3"
-				id="sm2-card-title"
-				className="mb-3 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
-			>
+			<SectionLabel className="mb-3">
 				{t("vocabulary.wordDetail.sections.sm2")}
-			</Typography>
+			</SectionLabel>
 
 			<div className="mb-1.5 flex items-center justify-between">
 				<Typography tag="span" className="text-[12px] text-t-2">

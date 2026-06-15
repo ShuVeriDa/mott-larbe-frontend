@@ -1,8 +1,9 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { useState } from "react";
 import { useAdminAnalyticsPages, useAnalyticsRange, useInvalidateAdminAnalytics } from "@/features/admin-analytics";
-import type { Dictionary, Locale } from "@/i18n/locales";
+import type { Dictionary, Locale } from "@/i18n/types";
 import { AnalyticsTabs } from "@/widgets/admin-tracking-overview-page";
 import { AnalyticsToolbar } from "@/widgets/admin-tracking-overview-page";
 import { Button } from "@/shared/ui/button";
@@ -55,7 +56,7 @@ export const AdminTrackingPagesPage = ({ lang, dict }: AdminTrackingPagesPagePro
 					/>
 				</div>
 
-				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+				<AdminCard>
 					<Table aria-label={dict.pages.title}>
 						<TableHeader>
 							<TableRow className="border-b border-bd-1">
@@ -101,7 +102,7 @@ export const AdminTrackingPagesPage = ({ lang, dict }: AdminTrackingPagesPagePro
 							)}
 						</TableBody>
 					</Table>
-				</div>
+				</AdminCard>
 
 				{query.hasNextPage && items.length < total && (
 					<div className="mt-3.5 flex justify-center">

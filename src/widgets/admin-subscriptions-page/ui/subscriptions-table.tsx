@@ -1,6 +1,7 @@
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
+import { formatDate } from "@/shared/lib/format-date";
 import type {
 	AdminSubscriptionListItem,
 	PlanType,
@@ -21,15 +22,6 @@ interface Props {
 	onExtend: (id: string) => void;
 	onCancel: (id: string) => void;
 }
-
-const formatDate = (date: string | null, fallback = "∞") => {
-	if (!date) return fallback;
-	return new Date(date).toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "short",
-		year: "numeric",
-	});
-};
 
 const formatAmount = (
 	payments: AdminSubscriptionListItem["payments"],
@@ -212,8 +204,8 @@ export const SubscriptionsTable = ({
 											{sub.isLifetime
 												? "∞"
 												: isExpired || isCanceled
-												? formatDate(sub.endDate)
-												: formatDate(sub.endDate)}
+												? formatDate(sub.endDate, "∞")
+												: formatDate(sub.endDate, "∞")}
 										</Typography>
 									</TableCell>
 

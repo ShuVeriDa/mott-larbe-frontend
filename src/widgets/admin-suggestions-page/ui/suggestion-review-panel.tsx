@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent } from "react";
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 import { displayValue } from "@/shared/lib/display-value";
 import {
@@ -48,7 +49,7 @@ export const SuggestionReviewPanel = ({
 			/>
 
 			{/* Diff */}
-			<div className="mb-5 overflow-hidden rounded-card border border-bd-1 bg-surf">
+			<AdminCard className="mb-5">
 				{suggestion.oldValue !== null && (
 					<div className="border-b border-bd-1 px-4 py-3">
 						<Typography tag="p" className="mb-1 text-[11px] font-medium uppercase tracking-wide text-t-3">
@@ -67,7 +68,7 @@ export const SuggestionReviewPanel = ({
 						{displayValue(suggestion.newValue)}
 					</Typography>
 				</div>
-			</div>
+			</AdminCard>
 
 			{suggestion.comment && (
 				<InfoCard label={t("adminSuggestions.comment")} className="mb-5">

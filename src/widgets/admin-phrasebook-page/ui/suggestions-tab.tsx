@@ -1,6 +1,7 @@
 "use client";
 
 import { PhraseLang, type AdminPhrasebookSuggestion } from "@/entities/phrasebook";
+import { AdminCard } from "@/shared/ui/admin-card";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import {
@@ -30,7 +31,7 @@ export const SuggestionsTab = ({
 	onDelete,
 	t,
 }: SuggestionsTabProps) => (
-	<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+	<AdminCard>
 		<div className="overflow-x-auto [&::-webkit-scrollbar]:h-[3px]">
 			<Table className="w-full border-collapse text-[12.5px]">
 				<TableHeader>
@@ -107,7 +108,7 @@ export const SuggestionsTab = ({
 				</TableBody>
 			</Table>
 		</div>
-	</div>
+	</AdminCard>
 );
 
 interface SuggestionRowProps {

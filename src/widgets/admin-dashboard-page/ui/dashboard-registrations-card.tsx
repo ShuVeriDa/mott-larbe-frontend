@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import type { AdminDashboardChart } from "@/entities/admin-dashboard";
 import {
 	CHART_AXIS_TICK_STYLE,
@@ -46,7 +47,7 @@ export const DashboardRegistrationsCard = ({ chart }: DashboardRegistrationsCard
 	}));
 
 	return (
-		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.registrations.title")}
@@ -120,12 +121,12 @@ export const DashboardRegistrationsCard = ({ chart }: DashboardRegistrationsCard
 					</ComposedChart>
 				</ResponsiveContainer>
 			</div>
-		</div>
+		</AdminCard>
 	);
 };
 
 export const DashboardRegistrationsCardSkeleton = () => (
-	<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf">
+	<AdminCard>
 		<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
 			<div className="h-3.5 w-36 animate-pulse rounded bg-surf-3" />
 			<div className="h-3 w-16 animate-pulse rounded bg-surf-3" />
@@ -133,5 +134,5 @@ export const DashboardRegistrationsCardSkeleton = () => (
 		<div className="px-4 pb-4 pt-3">
 			<div className="h-[180px] w-full animate-pulse rounded-lg bg-surf-3" />
 		</div>
-	</div>
+	</AdminCard>
 );

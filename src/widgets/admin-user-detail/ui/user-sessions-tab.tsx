@@ -5,7 +5,7 @@ import { Button } from "@/shared/ui/button";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
-import type { useAdminUserSessions } from "@/entities/admin-user/model/use-admin-user-sessions";
+import type { useAdminUserSessions } from "@/entities/admin-user";
 import { cn } from "@/shared/lib/cn";
 import { Monitor } from "lucide-react";
 

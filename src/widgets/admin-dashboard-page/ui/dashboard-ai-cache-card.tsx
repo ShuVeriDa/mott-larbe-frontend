@@ -1,7 +1,9 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import type { AdminDashboardAiCache } from "@/entities/admin-dashboard";
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { Sparkles } from "lucide-react";
 import Link from "next/link";
@@ -18,7 +20,7 @@ export const DashboardAiCacheCard = ({
 	const params = useParams<{ lang: string }>();
 
 	return (
-		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="flex items-center justify-between gap-2 px-4 pt-3.5 pb-2.5">
 				<div className="flex items-center gap-1.5">
 					<Sparkles className="size-3.5 text-pur-t" strokeWidth={1.6} />
@@ -75,9 +77,9 @@ export const DashboardAiCacheCard = ({
 
 			{aiCache.topWords.length > 0 && (
 				<div className="border-t-[0.5px] border-bd-1 px-4 py-3">
-					<div className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+					<SectionLabel>
 						{t("aiTranslation.admin.widget.topWords")}
-					</div>
+					</SectionLabel>
 					<div className="flex flex-col gap-1.5">
 						{aiCache.topWords.slice(0, 5).map((w, i) => (
 							<div
@@ -102,12 +104,12 @@ export const DashboardAiCacheCard = ({
 					</div>
 				</div>
 			)}
-		</div>
+		</AdminCard>
 	);
 };
 
 export const DashboardAiCacheCardSkeleton = () => (
-	<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf">
+	<AdminCard>
 		<div className="flex items-center justify-between px-4 py-3">
 			<div className="h-4 w-24 animate-pulse rounded bg-surf-3" />
 			<div className="h-3 w-16 animate-pulse rounded bg-surf-3" />
@@ -126,5 +128,5 @@ export const DashboardAiCacheCardSkeleton = () => (
 				<div className="h-6 w-10 animate-pulse rounded bg-surf-3" />
 			</div>
 		</div>
-	</div>
+	</AdminCard>
 );

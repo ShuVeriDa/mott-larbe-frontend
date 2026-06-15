@@ -2,6 +2,7 @@
 
 import type { HeatmapMonth, HeatmapWeekDay, StatsPeriod } from "@/entities/statistics";
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { HeatmapLegend } from "./heatmap-legend";
 import { HeatmapMonthGrid } from "./heatmap-month-grid";
 import { HeatmapWeek } from "./heatmap-week";
@@ -29,7 +30,7 @@ export const Heatmap = ({ months, weekDays, period }: HeatmapProps) => {
 
 	return (
 		<div className="min-w-0 flex-1">
-			<div className="mb-2.5 text-[11px] font-semibold uppercase tracking-[0.5px] text-t-3">{label}</div>
+			<SectionLabel className="mb-2.5">{label}</SectionLabel>
 
 			{period === "week" && <HeatmapWeek days={weekDays} t={t} />}
 			{period === "month" && <HeatmapMonthGrid days={flatMonthDays} t={t} />}

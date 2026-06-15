@@ -55,19 +55,20 @@ export const Pagination = ({
 						<ChevronLeft className="size-3.5" />
 					</PageBtn>
 
-					{pages.map((p, i) =>
-						p === "…" ? (
+					{pages.map((p, i) => {
+						const handlePageClick = () => onPageChange(p as number);
+						return p === "…" ? (
 							<span key={`e${i}`} className="select-none px-0.5 text-[12px] text-t-4">…</span>
 						) : (
 							<PageBtn
 								key={p}
-								onClick={() => onPageChange(p as number)}
+								onClick={handlePageClick}
 								active={p === page}
 							>
 								{p}
 							</PageBtn>
-						),
-					)}
+						);
+					})}
 
 					<PageBtn onClick={handleNext} disabled={page >= totalPages} aria-label="Следующая">
 						<ChevronRight className="size-3.5" />

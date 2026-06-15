@@ -7,7 +7,7 @@ import {
   AdminTextConfirmModal,
 } from "@/shared/ui/admin-text-editor";
 import { ErrorBoundary } from "@/shared/ui/error-boundary";
-import { useSubmissionEditor } from "@/features/my-texts/model/use-submission-editor";
+import { useSubmissionEditor } from "@/features/my-texts";
 import { UserTextEditTopbar } from "./user-text-edit-topbar";
 import { UserTextEditEditor } from "./user-text-edit-editor";
 import { UserTextEditMetaPanel } from "./user-text-edit-meta-panel";

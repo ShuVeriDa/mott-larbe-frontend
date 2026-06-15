@@ -2,7 +2,8 @@
 
 import type { PaymentProvider } from "@/entities/admin-subscription";
 import { adminSubscriptionApi } from "@/entities/admin-subscription";
-import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription/model/use-admin-subscription-mutations";
+import type { useAdminSubscriptionMutations } from "@/entities/admin-subscription";
+import { adminBillingKeys } from "@/entities/admin-billing";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -30,7 +31,7 @@ export const AddSubscriptionModal = ({
 	const [reason, setReason] = useState("");
 
 	const plansQuery = useQuery({
-		queryKey: ["admin", "plans"],
+		queryKey: adminBillingKeys.plans(),
 		queryFn: adminSubscriptionApi.listPlans,
 	});
 

@@ -1,10 +1,12 @@
 "use client";
 
-import type { TextLanguage, TextStatus } from "@/entities/admin-text";
 import {
 	FieldSelect,
 	MetaSection,
 } from "@/shared/ui/admin-text-meta-fields";
+
+type TextStatus = "draft" | "published" | "archived";
+type TextLanguage = "CHE" | "RU";
 import type { ComponentProps } from "react";
 
 interface AdminTextMetaStatusSectionLabels {

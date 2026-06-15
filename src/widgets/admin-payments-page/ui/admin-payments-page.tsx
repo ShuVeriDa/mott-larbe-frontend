@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Button } from "@/shared/ui/button";
 import { X } from "lucide-react";
 import { ComponentProps, useEffect } from 'react';
@@ -129,7 +130,7 @@ return (
 				{/* Split layout: table + detail panel */}
 				<div className="grid grid-cols-[1fr_306px] items-start gap-3 max-md:grid-cols-1">
 					{/* Table card */}
-					<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+					<AdminCard>
 						<PaymentsTabs
 							active={tab}
 							counts={tabCounts}
@@ -168,7 +169,7 @@ return (
 									onPageChange={setPage}
 								/>
 							)}
-					</div>
+					</AdminCard>
 
 					{/* Detail panel (desktop) */}
 					<div className="sticky top-3.5 max-md:hidden">
@@ -182,7 +183,7 @@ return (
 								onRefund={handleDetailRefund}
 							/>
 						) : selectedId && detailLoading ? (
-							<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+							<AdminCard>
 								<div className="space-y-3 p-4">
 									{Array.from({ length: 8 }).map((_, i) => (
 										<div
@@ -191,7 +192,7 @@ return (
 										/>
 									))}
 								</div>
-							</div>
+							</AdminCard>
 						) : (
 							<PaymentEmptyPanel />
 						)}

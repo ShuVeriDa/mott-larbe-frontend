@@ -7,4 +7,5 @@ export const aiTranslationKeys = {
   adminCacheList: (status?: string, q?: string, page?: number) =>
     ["ai-translation", "admin-cache", "list", status ?? "", q ?? "", page ?? 1] as const,
   adminCacheStats: () => ["ai-translation", "admin-cache", "stats"] as const,
+  adminExportRuns: () => ["ai-translation", "admin-cache", "export-runs"] as const,
 };

@@ -1,13 +1,12 @@
 "use cache";
 
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import {
 	LOCALES,
 	getDictionary,
-	hasLocale,
 } from "@/i18n/locales";
 import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 import { LandingPage } from "@/widgets/landing-page";
 
 export const generateStaticParams = async () => LOCALES.map((lang) => ({ lang }));
@@ -18,7 +17,7 @@ interface PageProps {
 
 export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
 	const { lang } = await props.params;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const dict = await getDictionary(lang);
 	const { title, description } = dict.landing.meta;
@@ -46,7 +45,7 @@ interface FaqDictItem {
 
 const LandingRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const dict = await getDictionary(lang);
 	const { title, description } = dict.landing.meta;

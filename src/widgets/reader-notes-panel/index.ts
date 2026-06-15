@@ -1,5 +1,3 @@
-export {
-	ReaderNotesAside,
-	ReaderNotesSheet,
-	type ReaderNotesPanelProps,
-} from "./ui/reader-notes-panel";
+export { ReaderNotesAside } from "./ui/reader-notes-aside";
+export { ReaderNotesSheet } from "./ui/reader-notes-sheet";
+export type { ReaderNotesPanelProps } from "./model/types";

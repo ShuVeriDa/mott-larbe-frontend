@@ -5,6 +5,7 @@ import {
 	usePhraseCategoryProgress,
 	type PhraseCategoryProgress,
 } from "@/entities/phrasebook";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { usePhrasebookParams } from "../model/use-phrasebook-params";
 import { useI18n } from "@/shared/lib/i18n";
 import { Skeleton } from "@/shared/ui/skeleton";
@@ -22,9 +23,9 @@ export const PhrasebookCategorySidebar = () => {
 
 	return (
 		<nav aria-label={t("phrasebook.categories.title")} className="w-[200px] shrink-0 bg-surf border-[0.5px] border-bd-1 rounded-card overflow-hidden flex flex-col h-full">
-			<h2 className="px-3 py-2.5 border-b border-bd-1 text-[10px] font-semibold text-t-3 uppercase tracking-[0.6px]">
+			<SectionLabel className="px-3 py-2.5 border-b border-bd-1 mb-0">
 				{t("phrasebook.categories.title")}
-			</h2>
+			</SectionLabel>
 			<div className="overflow-y-auto flex-1 [&::-webkit-scrollbar]:hidden">
 				{isLoading
 					? Array.from({ length: 6 }, (_, i) => (

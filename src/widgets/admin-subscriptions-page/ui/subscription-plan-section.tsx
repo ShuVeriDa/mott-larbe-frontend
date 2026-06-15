@@ -1,19 +1,12 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { ComponentProps } from "react";
 import { CreditCard } from "lucide-react";
 import type { AdminSubscriptionDetail, PlanType } from "@/entities/admin-subscription";
-
-const formatDate = (date: string | null, fallback = "—") => {
-	if (!date) return fallback;
-	return new Date(date).toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "long",
-		year: "numeric",
-	});
-};
+import { formatDateLong } from "@/shared/lib/format-date";
 
 const formatAmount = (cents: number, currency: string) =>
 	`${(cents / 100).toLocaleString("ru-RU")} ${currency}`;
@@ -27,9 +20,7 @@ const PLAN_ICON_STYLES: Record<NonNullable<PlanType>, { bg: string; text: string
 };
 
 const SectionTitle = ({ label }: { label: string }) => (
-	<div className="mb-[7px] text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
-		{label}
-	</div>
+	<SectionLabel className="mb-[7px]">{label}</SectionLabel>
 );
 
 interface Props {
@@ -84,7 +75,7 @@ export const SubscriptionPlanSection = ({ sub, labels, isApplyCouponPending, onE
 				<div className="flex items-baseline justify-between gap-2">
 					<Typography tag="span" className="text-[11.5px] text-t-3">{labels.nextBilling}</Typography>
 					<Typography tag="span" className="text-[12px] font-medium text-t-1">
-						{sub.isLifetime ? "∞" : formatDate(sub.endDate)}
+						{sub.isLifetime ? "∞" : formatDateLong(sub.endDate)}
 					</Typography>
 				</div>
 				<div className="flex items-baseline justify-between gap-2">
@@ -95,18 +86,18 @@ export const SubscriptionPlanSection = ({ sub, labels, isApplyCouponPending, onE
 				</div>
 				<div className="flex items-baseline justify-between gap-2">
 					<Typography tag="span" className="text-[11.5px] text-t-3">{labels.startDate}</Typography>
-					<Typography tag="span" className="text-[12px] font-medium text-t-1">{formatDate(sub.startDate)}</Typography>
+					<Typography tag="span" className="text-[12px] font-medium text-t-1">{formatDateLong(sub.startDate)}</Typography>
 				</div>
 				<div className="flex items-baseline justify-between gap-2">
 					<Typography tag="span" className="text-[11.5px] text-t-3">{labels.endDate}</Typography>
 					<Typography tag="span" className="text-[12px] font-medium text-t-1">
-						{sub.isLifetime ? "∞" : formatDate(sub.endDate)}
+						{sub.isLifetime ? "∞" : formatDateLong(sub.endDate)}
 					</Typography>
 				</div>
 				{sub.canceledAt && (
 					<div className="flex items-baseline justify-between gap-2">
 						<Typography tag="span" className="text-[11.5px] text-t-3">{labels.canceledAt}</Typography>
-						<Typography tag="span" className="text-[12px] font-medium text-red-t">{formatDate(sub.canceledAt)}</Typography>
+						<Typography tag="span" className="text-[12px] font-medium text-red-t">{formatDateLong(sub.canceledAt)}</Typography>
 					</div>
 				)}
 			</div>

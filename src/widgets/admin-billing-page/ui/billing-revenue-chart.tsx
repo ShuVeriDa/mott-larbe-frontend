@@ -1,9 +1,11 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 
 import type { PlanCode, PlanRevenueItem } from "@/entities/admin-billing";
 import { useI18n } from "@/shared/lib/i18n";
+import { formatCentsRub } from "@/shared/lib/format-currency";
 
 const BAR_COLORS: Record<string, string> = {
 	FREE: "bg-surf-4",
@@ -13,12 +15,6 @@ const BAR_COLORS: Record<string, string> = {
 	LIFETIME: "bg-amb",
 };
 
-const fmtMoney = (cents: number) => {
-	const rub = cents / 100;
-	if (rub >= 1_000_000) return `${(rub / 1_000_000).toFixed(1)} млн ₽`;
-	if (rub >= 1_000) return `${Math.round(rub / 1_000)} тыс. ₽`;
-	return `${Math.round(rub)} ₽`;
-};
 
 interface BillingRevenueChartProps {
 	items: PlanRevenueItem[];
@@ -33,7 +29,7 @@ export const BillingRevenueChart = ({
 	const maxTotal = Math.max(...items.map(i => i.totalCents), 1);
 
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="border-b border-bd-1 px-4 py-3">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("admin.plans.revenue.title")}
@@ -67,7 +63,7 @@ export const BillingRevenueChart = ({
 											tag="span"
 											className="shrink-0 text-[12.5px] font-semibold text-t-1"
 										>
-											{fmtMoney(item.totalCents)}
+											{formatCentsRub(item.totalCents)}
 										</Typography>
 									</div>
 									<div className="h-1.5 overflow-hidden rounded-full bg-surf-3">
@@ -82,6 +78,6 @@ export const BillingRevenueChart = ({
 					</div>
 				)}
 			</div>
-		</div>
+		</AdminCard>
 	);
 };

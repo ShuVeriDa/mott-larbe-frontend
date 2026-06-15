@@ -4,7 +4,7 @@ import { TabBar, TabItem } from "@/shared/ui/tabs";
 import { Tabs, TabContent } from "@/shared/ui/tabs/tabs";
 import { ErrorBoundary } from "@/shared/ui/error-boundary";
 import { useSearchParams, useRouter } from "next/navigation";
-import { UserTextListSkeleton } from "./user-text-list";
+import { UserTextListSkeleton } from "./user-text-list-skeleton";
 import { MyTextsTabsContent } from "./my-texts-tabs-content";
 import { useI18n } from "@/shared/lib/i18n";
 

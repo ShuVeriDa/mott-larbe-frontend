@@ -10,6 +10,7 @@ import {
 	ScrollTextIcon,
 } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
+import { EyebrowLabel } from "@/shared/ui/eyebrow-label";
 import { Typography } from "@/shared/ui/typography";
 import { FeatureCard, type FeatureIconColor } from "./feature-card";
 
@@ -63,12 +64,7 @@ export const LandingFeatures = () => {
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
 				<header className="mb-12 max-[640px]:mb-9">
-					<Typography
-						tag="span"
-						className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-acc-bg px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[1.2px] text-acc-t"
-					>
-						{t("landing.features.eyebrow")}
-					</Typography>
+					<EyebrowLabel>{t("landing.features.eyebrow")}</EyebrowLabel>
 					<Typography
 						tag="h2"
 						id="features-title"

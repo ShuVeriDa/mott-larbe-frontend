@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 import { useSettings } from "@/entities/settings";
@@ -38,9 +39,9 @@ const Section = ({
 	children: ReactNode;
 }) => (
 	<div className="border-b-[0.5px] border-bd-1 px-4 py-3 last:border-b-0">
-		<div className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.6px] text-t-3">
+		<SectionLabel>
 			{title}
-		</div>
+		</SectionLabel>
 		{children}
 	</div>
 );
@@ -223,6 +224,7 @@ const PanelBody = ({
 	const [suggestOpen, setSuggestOpen] = useState(false);
 
 	const handleSuggestChange = (open: boolean) => setSuggestOpen(open);
+	const handleSuggestOpen = () => setSuggestOpen(true);
 
 	return (
 		<div className="flex-1 overflow-y-auto [scrollbar-width:thin]">
@@ -302,7 +304,7 @@ const PanelBody = ({
 							className={compact ? "h-8 text-[12px]" : undefined}
 						/>
 						<Button
-							onClick={() => setSuggestOpen(true)}
+							onClick={handleSuggestOpen}
 							variant="ghost"
 							className={cn(
 								"flex w-full items-center justify-center gap-1.5 text-t-3",

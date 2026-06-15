@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 import { useDictionaryList } from "@/entities/dictionary";
@@ -23,12 +24,9 @@ export const NavVocab = () => {
 	return (
 		<div className="flex flex-col w-full px-3.5 pb-2.5 pt-1.5 border-t-[0.5px] border-t-[bd]">
 			<div className="mb-1.5 flex items-center justify-between ">
-				<Typography
-					tag="span"
-					className="text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3"
-				>
+				<SectionLabel className="mb-0">
 					{t("nav.recentWords")}
-				</Typography>
+				</SectionLabel>
 				<Link
 					href={`/${lang}/vocabulary`}
 					className="text-[10.5px] text-acc transition-colors hover:underline"

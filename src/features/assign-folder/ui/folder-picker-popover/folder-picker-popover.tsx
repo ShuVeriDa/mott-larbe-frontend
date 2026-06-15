@@ -1,7 +1,6 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-
+import { SectionLabel } from "@/shared/ui/section-label";
 import { FolderIcon, type Folder } from "@/entities/folder";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
@@ -42,9 +41,9 @@ export const FolderPickerPopover = ({
 				className,
 			)}
 		>
-			<div className="border-b-[0.5px] border-bd-1 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
+			<SectionLabel className="border-b-[0.5px] border-bd-1 px-3 py-2 mb-0">
 				{t("vocabulary.foldersPage.uncategorized.chooseFolder")}
-			</div>
+			</SectionLabel>
 			{folders.length === 0 ? (
 				<div className="px-3 py-3 text-[12px] text-t-3">
 					{t("vocabulary.foldersPage.uncategorized.noFolders")}

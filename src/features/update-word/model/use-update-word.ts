@@ -30,7 +30,7 @@ export const useUpdateWord = () => {
 			await qc.cancelQueries({ queryKey: dictionaryKeys.root });
 
 			const previousLists = qc.getQueriesData<DictionaryListResponse>({
-				queryKey: ["dictionary", "list"],
+				queryKey: dictionaryKeys.listPrefix,
 			});
 			const previousStats = qc.getQueryData<DictionaryStats>(
 				dictionaryKeys.stats(),
@@ -93,7 +93,7 @@ export const useUpdateWord = () => {
 				}
 			} else {
 				qc.setQueriesData<DictionaryListResponse>(
-					{ queryKey: ["dictionary", "list"] },
+					{ queryKey: dictionaryKeys.listPrefix },
 					(old) => {
 						if (!old) return old;
 						return {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { DEFAULT_LOCALE, LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
+import { DEFAULT_LOCALE, LOCALES, getDictionary } from "@/i18n/locales";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 import { AdminTextVersionsPage } from "@/widgets/admin-text-versions-page";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
@@ -9,7 +9,7 @@ export const generateMetadata = async (props: {
 	params: Promise<{ lang: string; id: string }>;
 }): Promise<Metadata> => {
 	const { lang, id } = await props.params;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const dict = await getDictionary(lang);
 	const meta = (dict as Record<string, unknown> & {
@@ -54,7 +54,7 @@ interface PageProps {
 
 const AdminTextVersionsRoutePage = async ({ params }: PageProps) => {
 	const { lang, id } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	return <AdminTextVersionsPage textId={id} />;
 };

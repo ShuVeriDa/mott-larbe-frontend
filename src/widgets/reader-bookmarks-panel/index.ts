@@ -1,5 +1,3 @@
-export {
-	ReaderBookmarksAside,
-	ReaderBookmarksSheet,
-	type ReaderBookmarksPanelProps,
-} from "./ui/reader-bookmarks-panel";
+export { ReaderBookmarksAside } from "./ui/reader-bookmarks-aside";
+export { ReaderBookmarksSheet } from "./ui/reader-bookmarks-sheet";
+export type { ReaderBookmarksPanelProps } from "./model/types";

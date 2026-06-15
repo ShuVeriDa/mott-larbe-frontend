@@ -1,8 +1,8 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
@@ -71,7 +71,7 @@ export const TokenizationSettingsCard = ({
 	const { t } = useI18n();
 
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+		<AdminCard>
 			<div className="flex items-center border-b border-bd-1 px-3.5 py-[11px]">
 				<Typography tag="span" className="text-[11px] font-semibold uppercase tracking-[0.4px] text-t-2">
 					{t("admin.tokenization.sidePanel.settings")}
@@ -96,6 +96,6 @@ export const TokenizationSettingsCard = ({
 				);
 				})}
 			</div>
-		</div>
+		</AdminCard>
 	);
 };

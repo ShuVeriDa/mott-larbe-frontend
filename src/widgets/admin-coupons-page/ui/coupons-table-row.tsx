@@ -7,6 +7,7 @@ import { ComponentProps, MouseEvent, useState } from 'react';
 import type { AdminCouponListItem } from "@/entities/admin-coupon";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { formatDate } from "@/shared/lib/format-date";
 import { Copy } from "lucide-react";
 
 const PLAN_STYLES: Record<string, string> = {
@@ -20,15 +21,6 @@ const STATUS_STYLES: Record<string, string> = {
 	active: "bg-grn-bg text-grn-t",
 	inactive: "bg-surf-3 text-t-2",
 	expired: "bg-surf-3 text-t-3",
-};
-
-const formatDate = (iso: string | null) => {
-	if (!iso) return "—";
-	return new Date(iso).toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "short",
-		year: "numeric",
-	});
 };
 
 const usageColor = (redeemed: number, max: number) => {

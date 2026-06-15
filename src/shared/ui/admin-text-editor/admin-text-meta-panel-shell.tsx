@@ -1,13 +1,21 @@
 "use client";
 
-import type { AdminTag } from "@/entities/admin-tag";
-import type {
-	TextLanguage,
-	TextLevel,
-	TextStatus,
-} from "@/entities/admin-text";
-import { useGenres } from "@/entities/genre";
 import { useI18n } from "@/shared/lib/i18n";
+
+type TextStatus = "draft" | "published" | "archived";
+type TextLanguage = "CHE" | "RU";
+type TextLevel = "A" | "B" | "C";
+
+interface AdminTag {
+	id: string;
+	name: string;
+	_count: { texts: number };
+}
+
+interface Genre {
+	id: string;
+	name: string;
+}
 import {
 	FieldInput,
 	FieldLabel,
@@ -35,6 +43,7 @@ interface AdminTextMetaPanelShellProps {
 	author: string;
 	source: string;
 	genreId?: string | null;
+	genres?: Genre[];
 	tags: { id?: string; name: string }[];
 	allTags?: AdminTag[];
 	tagInputValue: string;
@@ -59,6 +68,7 @@ export const AdminTextMetaPanelShell = ({
 	author,
 	source,
 	genreId,
+	genres = [],
 	tags,
 	allTags,
 	tagInputValue,
@@ -76,7 +86,6 @@ export const AdminTextMetaPanelShell = ({
 	children,
 }: AdminTextMetaPanelShellProps) => {
 	const { t } = useI18n();
-	const { data: genres = [] } = useGenres();
 	const [metaOpen, setMetaOpen] = useState(false);
 
 	const handleToggleMeta: NonNullable<

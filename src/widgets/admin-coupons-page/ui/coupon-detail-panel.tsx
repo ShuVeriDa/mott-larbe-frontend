@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import type { AdminCouponDetail } from "@/entities/admin-coupon";
 import { useI18n } from "@/shared/lib/i18n";
 import { ComponentProps, useState } from 'react';
@@ -38,13 +39,13 @@ export const CouponDetailPanel = ({
 
 	if (isLoading) {
 		return (
-			<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+			<AdminCard>
 				<div className="space-y-3 p-4">
 					{Array.from({ length: 5 }).map((_, i) => (
 						<Skeleton key={i} className="h-4" />
 					))}
 				</div>
-			</div>
+			</AdminCard>
 		);
 	}
 
@@ -72,7 +73,7 @@ export const CouponDetailPanel = ({
 	const handleDelete = () => onDelete(coupon.id);
 
 	return (
-		<div className="flex flex-col gap-0 overflow-hidden rounded-card border border-bd-1 bg-surf">
+		<AdminCard className="flex flex-col gap-0">
 			<CouponHeroSection
 				coupon={coupon}
 				copied={copied}
@@ -125,6 +126,6 @@ export const CouponDetailPanel = ({
 				onToggle={handleToggle}
 				onDelete={handleDelete}
 			/>
-		</div>
+		</AdminCard>
 	);
 };

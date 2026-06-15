@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import Link from "next/link";
@@ -7,6 +8,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
 import type { AdminSubscriptionListItem, BillingSubscriptionStatus } from "@/entities/admin-billing";
 import { cn } from "@/shared/lib/cn";
+import { formatDate } from "@/shared/lib/format-date";
 
 const STATUS_CLASS: Record<BillingSubscriptionStatus, string> = {
 	ACTIVE: "bg-grn-bg text-grn-t",
@@ -26,15 +28,6 @@ const fmtAmount = (cents: number, currency: string | null | undefined) => {
 	}).format(amount);
 };
 
-const fmtDate = (iso: string) => {
-	const d = new Date(iso);
-	return d.toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "short",
-		year: "numeric",
-	});
-};
-
 interface BillingSubscriptionsTableProps {
 	items: AdminSubscriptionListItem[];
 	total: number;
@@ -52,7 +45,7 @@ export const BillingSubscriptionsTable = ({
 	const params = useParams<{ lang: string }>();
 
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
 				<div className="flex items-center gap-2">
 					<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
@@ -159,7 +152,7 @@ export const BillingSubscriptionsTable = ({
 										</Typography>
 									</TableCell>
 									<TableCell className="hidden px-4 py-2.5 text-right text-[11.5px] text-t-3 lg:table-cell">
-										{fmtDate(item.createdAt)}
+										{formatDate(item.createdAt)}
 									</TableCell>
 								</TableRow>
 							))
@@ -167,6 +160,6 @@ export const BillingSubscriptionsTable = ({
 					</TableBody>
 				</Table>
 			</div>
-		</div>
+		</AdminCard>
 	);
 };

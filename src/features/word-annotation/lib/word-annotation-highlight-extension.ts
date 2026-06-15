@@ -1,6 +1,6 @@
 "use client";
 
-import type { AnnotatedFormOnPage } from "@/features/word-annotation/api/types";
+import type { AnnotatedFormOnPage } from "../api/types";
 import { Extension } from "@tiptap/core";
 import type { Node as PmNode } from "@tiptap/pm/model";
 import type { EditorState, Transaction } from "@tiptap/pm/state";
@@ -39,9 +39,6 @@ const isWordChar = (c: string) => WORD_CHAR_RE.test(c);
 const buildDecorations = (doc: EditorState["doc"], forms: AnnotatedFormOnPage[]): DecorationSet => {
 	if (!forms.length) return DecorationSet.empty;
 
-	// Merge forms with the same normalized value — multiple lemmas can annotate the same word form.
-	// occurrences order is the same across all entries for the same normalized form;
-	// a token is annotated if ANY of the form entries marks it as annotated.
 	const mergedByNormalized = new Map<string, { tokenIds: string[]; annotatedSet: Set<string> }>();
 	for (const f of forms) {
 		const existing = mergedByNormalized.get(f.normalized);
@@ -57,7 +54,6 @@ const buildDecorations = (doc: EditorState["doc"], forms: AnnotatedFormOnPage[])
 		}
 	}
 
-	// Build lookup: normalized → ordered tokenIds (by position = occurrenceIndex)
 	const occurrenceTokenIds = new Map<string, string[]>(
 		[...mergedByNormalized.entries()].map(([n, v]) => [n, v.tokenIds]),
 	);
@@ -65,7 +61,6 @@ const buildDecorations = (doc: EditorState["doc"], forms: AnnotatedFormOnPage[])
 		[...mergedByNormalized.values()].flatMap(v => [...v.annotatedSet]),
 	);
 
-	// Deduplicated list of unique normalized forms for the doc walk
 	const uniqueForms = [...mergedByNormalized.keys()].map(n => ({ normalized: n }));
 
 	const decos: Decoration[] = [];

@@ -1,8 +1,8 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Button } from "@/shared/ui/button";
-import { Typography } from "@/shared/ui/typography";
 import { X } from "lucide-react";
 
 export interface ReaderSettingsChromeHeaderProps {
@@ -17,12 +17,9 @@ export const ReaderSettingsChromeHeader = ({
 
 	return (
 		<div className="flex shrink-0 items-center justify-between border-b-[0.5px] border-bd-1 px-3.5 py-2.5">
-			<Typography
-				tag="span"
-				className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
-			>
+			<SectionLabel className="mb-0">
 				{t("reader.settings.title")}
-			</Typography>
+			</SectionLabel>
 			<Button
 				onClick={handleCloseClick}
 				aria-label={t("reader.panel.close")}

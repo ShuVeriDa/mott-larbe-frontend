@@ -6,10 +6,8 @@ import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { Typography } from "@/shared/ui/typography";
+import { formatDateLong } from "@/shared/lib/format-date";
 import type { TextPhraseDetail, TextPhraseListItem } from "@/entities/text-phrase";
-
-const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
 
 interface PhraseCardHeaderViewProps {
 	phrase: TextPhraseDetail;
@@ -75,7 +73,7 @@ export const PhraseCardHeaderView = ({
 				</Typography>
 			)}
 			<Typography tag="p" className="mt-2 text-[11px] text-t-4">
-				{t("admin.textPhrases.addedAt").replace("{date}", formatDate(phrase.createdAt))}
+				{t("admin.textPhrases.addedAt").replace("{date}", formatDateLong(phrase.createdAt))}
 			</Typography>
 		</div>
 	);

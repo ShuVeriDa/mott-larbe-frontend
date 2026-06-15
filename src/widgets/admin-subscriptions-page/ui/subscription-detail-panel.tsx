@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { ComponentProps } from "react";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
@@ -72,7 +73,7 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 
 	if (isLoading || !sub) {
 		return (
-			<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+			<AdminCard>
 				<div className="border-b border-bd-1 px-[15px] py-4">
 					<Skeleton className="mb-2.5 size-11 rounded-full" />
 					<Skeleton className="mb-1.5 h-3.5 w-32" />
@@ -83,7 +84,7 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 						<Skeleton key={i} className="h-3 w-full" />
 					))}
 				</div>
-			</div>
+			</AdminCard>
 		);
 	}
 
@@ -94,7 +95,7 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 
 	return (
 		<div className="flex flex-col gap-2.5">
-			<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+			<AdminCard>
 				<SubscriptionHeroSection
 					sub={sub}
 					statusLabels={statusLabels}
@@ -157,7 +158,7 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 					onLogoutAll={() => logoutAll.mutate()}
 					onFreeze={() => freeze.mutate()}
 				/>
-			</div>
+			</AdminCard>
 		</div>
 	);
 };

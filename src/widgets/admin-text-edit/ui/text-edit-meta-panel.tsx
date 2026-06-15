@@ -7,6 +7,7 @@ import type {
 	TextStatus,
 	TextVersionListItem,
 } from "@/entities/admin-text";
+import { useGenres } from "@/entities/genre";
 import { useI18n } from "@/shared/lib/i18n";
 import {
 	AdminTextMetaCoverSection,
@@ -105,6 +106,7 @@ export const TextEditMetaPanel = ({
 	onTokenize,
 }: TextEditMetaPanelProps) => {
 	const { t, lang } = useI18n();
+	const { data: genres = [] } = useGenres();
 	const [tagInputValue, setTagInputValue] = useState("");
 	const tagItems = tags.map(tag => ({ name: tag }));
 	const handleDeleteRequest: NonNullable<
@@ -129,6 +131,7 @@ export const TextEditMetaPanel = ({
 			author={author}
 			source={source}
 			genreId={genreId}
+			genres={genres}
 			tags={tagItems}
 			tagInputValue={tagInputValue}
 			onStatusChange={onStatusChange}

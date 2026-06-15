@@ -1,4 +1,4 @@
-import type { PermissionCode, UserProfile } from "@/entities/user";
+import type { PermissionCode, UserProfile } from "../api";
 
 export const hasPermission = (
 	user: UserProfile | null | undefined,

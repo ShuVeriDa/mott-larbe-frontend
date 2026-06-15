@@ -1,6 +1,7 @@
 "use client";
 
 import { ComponentProps } from 'react';
+import { AdminCard } from "@/shared/ui/admin-card";
 import { useAdminSubscriptionsPage } from "../model/use-admin-subscriptions-page";
 import { AdminSubscriptionsTopbar } from "./admin-subscriptions-topbar";
 import { SubscriptionsKpiRow } from "./subscriptions-kpi-row";
@@ -74,7 +75,7 @@ return (
 				<div className="grid grid-cols-[1fr_320px] items-start gap-3.5 max-md:grid-cols-1">
 
 					{/* Left: Table card */}
-					<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+					<AdminCard>
 						<SubscriptionsTabs
 							active={tab}
 							counts={tabCounts}
@@ -108,7 +109,7 @@ return (
 								onPageChange={setPage}
 							/>
 						)}
-					</div>
+					</AdminCard>
 
 					{/* Right: Detail panel (desktop only) */}
 					<div className="sticky top-3.5 max-md:hidden">

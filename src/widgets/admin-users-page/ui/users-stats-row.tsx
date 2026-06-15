@@ -2,25 +2,7 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminUsersStats } from "@/entities/admin-user";
-
-interface StatCardProps {
-	label: string;
-	value: number | string;
-	sub: string;
-	valueColor?: string;
-}
-
-const StatCard = ({ label, value, sub, valueColor }: StatCardProps) => (
-	<div className="rounded-[10px] border border-bd-1 bg-surf px-3 py-[11px]">
-		<div className="mb-1 text-[10.5px] font-medium text-t-3">{label}</div>
-		<div
-			className={`text-[20px] font-semibold leading-none ${valueColor ?? "text-t-1"}`}
-		>
-			{typeof value === "number" ? value.toLocaleString("ru-RU") : value}
-		</div>
-		<div className="mt-0.5 text-[10.5px] text-t-3">{sub}</div>
-	</div>
-);
+import { AdminStatCard, AdminStatCardSkeleton } from "@/shared/ui/admin-stat-card";
 
 interface UsersStatsRowProps {
 	stats: AdminUsersStats | undefined;
@@ -34,10 +16,7 @@ export const UsersStatsRow = ({ stats, isLoading }: UsersStatsRowProps) => {
 		return (
 			<div className="mb-3.5 grid grid-cols-5 gap-2 max-md:grid-cols-3 max-sm:grid-cols-2">
 				{Array.from({ length: 5 }).map((_, i) => (
-					<div
-						key={i}
-						className="h-[68px] animate-pulse rounded-[10px] bg-surf"
-					/>
+					<AdminStatCardSkeleton key={i} />
 				))}
 			</div>
 		);
@@ -45,36 +24,36 @@ export const UsersStatsRow = ({ stats, isLoading }: UsersStatsRowProps) => {
 
 	return (
 		<div className="mb-3.5 grid grid-cols-5 gap-2 max-md:grid-cols-3 max-sm:grid-cols-2">
-			<StatCard
+			<AdminStatCard
 				label={t("admin.users.stats.total")}
-				value={stats.total}
+				value={stats.total.toLocaleString("ru-RU")}
 				sub={t("admin.users.stats.newThisMonth", {
 					count: stats.newThisMonth,
 				})}
 			/>
-			<StatCard
+			<AdminStatCard
 				label={t("admin.users.stats.active")}
-				value={stats.active}
+				value={stats.active.toLocaleString("ru-RU")}
 				sub={`${stats.activePercent.toFixed(1)}%`}
-				valueColor="text-grn"
+				valueClassName="text-grn"
 			/>
-			<StatCard
+			<AdminStatCard
 				label={t("admin.users.stats.blocked")}
-				value={stats.blocked}
+				value={stats.blocked.toLocaleString("ru-RU")}
 				sub={t("admin.users.stats.blockedSub")}
-				valueColor="text-red"
+				valueClassName="text-red"
 			/>
-			<StatCard
+			<AdminStatCard
 				label={t("admin.users.stats.frozen")}
-				value={stats.frozen}
+				value={stats.frozen.toLocaleString("ru-RU")}
 				sub={t("admin.users.stats.frozenSub")}
-				valueColor="text-amb"
+				valueClassName="text-amb"
 			/>
-			<StatCard
+			<AdminStatCard
 				label={t("admin.users.stats.subscribed")}
-				value={stats.withPaidSubscription}
+				value={stats.withPaidSubscription.toLocaleString("ru-RU")}
 				sub={t("admin.users.stats.subscribedSub")}
-				valueColor="text-pur"
+				valueClassName="text-pur"
 			/>
 		</div>
 	);

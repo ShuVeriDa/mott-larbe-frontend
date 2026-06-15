@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Plus, Send } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import { useI18n } from "@/shared/lib/i18n";
-import { UserTextListSkeleton } from "./user-text-list";
+import { UserTextListSkeleton } from "./user-text-list-skeleton";
 import { MyTextsTabs } from "./my-texts-tabs";
 
 interface MyTextsPageProps {

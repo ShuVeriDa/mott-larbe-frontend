@@ -6,6 +6,7 @@ import type {
 	TextLevel,
 	TextStatus,
 } from "@/entities/admin-text";
+import { useGenres } from "@/entities/genre";
 import { useI18n } from "@/shared/lib/i18n";
 import {
 	AdminTextMetaCoverSection,
@@ -93,6 +94,7 @@ export const TextCreateMetaPanel = ({
 	onPublish,
 }: TextCreateMetaPanelProps) => {
 	const { t } = useI18n();
+	const { data: genres = [] } = useGenres();
 	const [tagInputValue, setTagInputValue] = useState("");
 
 	const handleTagKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -118,6 +120,7 @@ export const TextCreateMetaPanel = ({
 			author={author}
 			source={source}
 			genreId={genreId}
+			genres={genres}
 			tags={tags}
 			allTags={allTags}
 			tagInputValue={tagInputValue}

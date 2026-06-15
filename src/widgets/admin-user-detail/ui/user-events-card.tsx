@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
@@ -8,8 +9,7 @@ import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/cn";
 import type { EventsTab } from "../model/use-admin-user-detail-page";
-import type { useAdminUserEvents, useAdminUserEventsSummary } from "@/entities/admin-user/model/use-admin-user-events";
-import type { useAdminUserSessions } from "@/entities/admin-user/model/use-admin-user-sessions";
+import type { useAdminUserEvents, useAdminUserEventsSummary, useAdminUserSessions } from "@/entities/admin-user";
 import type { FetchUserEventsQuery, UserEventType } from "@/entities/admin-user";
 import { UserEventsFeed } from "./user-events-feed";
 import { UserEventsSummaryTab } from "./user-events-summary";
@@ -46,7 +46,7 @@ export const UserEventsCard = ({
 	];
 
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+		<AdminCard>
 			<div className="flex flex-wrap items-center gap-1.5 border-b border-bd-1 px-3.5 py-3">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.userDetail.events.title")}
@@ -92,6 +92,6 @@ export const UserEventsCard = ({
 			)}
 
 			{eventsTab === "sessions" && <UserSessionsTab sessions={sessions} />}
-		</div>
+		</AdminCard>
 	);
 };

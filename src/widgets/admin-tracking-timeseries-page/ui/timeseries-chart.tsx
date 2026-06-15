@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import type { AnalyticsMetric } from "@/features/admin-analytics";
 import { formatNumber, formatDuration, formatPercent } from "./format";
+import { formatDateCompact } from "@/shared/lib/format-date";
 
 interface Point {
 	date: string;
@@ -32,14 +33,9 @@ const formatMetric = (metric: AnalyticsMetric, v: number): string => {
 	return formatNumber(v);
 };
 
-const formatDate = (d: string) => {
-	const date = new Date(d);
-	return `${date.getDate()} ${["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"][date.getMonth()]}`;
-};
-
 export const TimeseriesChart = ({ current, previous, metric, labelCurrent, labelPrevious }: TimeseriesChartProps) => {
 	const data = current.map((p, i) => ({
-		label: formatDate(p.date),
+		label: formatDateCompact(p.date),
 		current: p.value,
 		...(previous?.[i] ? { previous: previous[i].value } : {}),
 	}));

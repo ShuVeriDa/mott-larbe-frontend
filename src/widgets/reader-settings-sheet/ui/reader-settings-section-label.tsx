@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/shared/lib/cn";
+import { SectionLabel } from "@/shared/ui/section-label";
 
 export interface ReaderSettingsSectionLabelProps {
 	label: string;
@@ -11,12 +12,7 @@ export const ReaderSettingsSectionLabel = ({
 	label,
 	compact,
 }: ReaderSettingsSectionLabelProps) => (
-	<div
-		className={cn(
-			"text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3",
-			compact ? "mb-1" : "mb-2",
-		)}
-	>
+	<SectionLabel className={compact ? "mb-1" : "mb-2"}>
 		{label}
-	</div>
+	</SectionLabel>
 );

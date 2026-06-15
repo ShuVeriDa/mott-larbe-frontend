@@ -85,3 +85,6 @@ export interface PagePhraseOccurrence {
     notes: string | null;
   };
 }
+
+// token position → phrase occurrence; used by reader/article components
+export type PhraseMap = Map<number, PagePhraseOccurrence>;

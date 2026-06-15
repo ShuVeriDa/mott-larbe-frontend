@@ -1,9 +1,10 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 import type { RoleName, UserRoleItem } from "@/entities/admin-user";
-import type { useAdminUserRoles } from "@/entities/admin-user/model/use-admin-user-roles";
+import type { useAdminUserRoles } from "@/entities/admin-user";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
@@ -56,12 +57,9 @@ export const UserRolesSection = ({
 	return (
 		<div className="border-b border-bd-1 px-4 py-3">
 			<div className="mb-2 flex items-center justify-between">
-				<Typography
-					tag="span"
-					className="text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3"
-				>
+				<SectionLabel className="mb-0">
 					{t("admin.userDetail.roles")}
-				</Typography>
+				</SectionLabel>
 				{availableRoles.length > 0 && (
 					<div className="relative">
 						<Button

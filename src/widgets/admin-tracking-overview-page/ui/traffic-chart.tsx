@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import type { AnalyticsTimeseriesPoint } from "@/features/admin-analytics";
 import { formatNumber } from "../lib/format";
+import { formatDateCompact } from "@/shared/lib/format-date";
 
 interface TrafficChartProps {
 	pageviews: AnalyticsTimeseriesPoint[] | undefined;
@@ -20,11 +21,6 @@ interface TrafficChartProps {
 	labelPageviews: string;
 	labelVisitors: string;
 }
-
-const formatDate = (d: string) => {
-	const date = new Date(d);
-	return `${date.getDate()} ${["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"][date.getMonth()]}`;
-};
 
 export const TrafficChart = ({
 	pageviews,
@@ -38,7 +34,7 @@ export const TrafficChart = ({
 	}
 
 	const data = (pageviews ?? []).map((p, i) => ({
-		label: formatDate(p.date),
+		label: formatDateCompact(p.date),
 		pageviews: p.value,
 		visitors: visitors?.[i]?.value ?? 0,
 	}));

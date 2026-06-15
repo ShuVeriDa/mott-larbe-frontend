@@ -5,13 +5,11 @@ import { Typography } from "@/shared/ui/typography";
 import { ComponentProps } from 'react';
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagItem } from "@/entities/feature-flag";
+import { formatDateCompact } from "@/shared/lib/format-date";
 import { FlagToggle } from "./flag-toggle";
 import { FlagEnvChip } from "./flag-env-chip";
 import { FlagCategoryBadge } from "./flag-category-badge";
 import { FlagRowActions } from "./flag-row-actions";
-
-const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
 
 interface FlagsMobileListProps {
 	items: FeatureFlagItem[];
@@ -76,7 +74,7 @@ export const FlagsMobileList = ({
 								{flag.environments.map((env) => (
 									<FlagEnvChip key={env} env={env} />
 								))}
-								<Typography tag="span" className="text-[11px] text-t-3">{formatDate(flag.updatedAt)}</Typography>
+								<Typography tag="span" className="text-[11px] text-t-3">{formatDateCompact(flag.updatedAt)}</Typography>
 							</div>
 						</div>
 						<div className="flex shrink-0 flex-col items-end gap-2">

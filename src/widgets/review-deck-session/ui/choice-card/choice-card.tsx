@@ -74,12 +74,13 @@ export const ChoiceCardDeck = ({
 					const isSelected = selection?.index === idx;
 					const isCorrect = idx === correctIndex;
 					const revealed = selection !== null;
+					const handleClick = () => handleSelect(idx);
 
 					return (
 						<button
 							key={idx}
 							type="button"
-							onClick={() => handleSelect(idx)}
+							onClick={handleClick}
 							disabled={selection !== null}
 							className={cn(
 								"rounded-card border px-3.5 py-3 text-left text-[13px] font-medium transition-colors",

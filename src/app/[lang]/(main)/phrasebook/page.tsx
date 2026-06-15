@@ -1,4 +1,4 @@
-import { getDictionary, hasLocale, LOCALES } from "@/i18n/locales";
+import { getDictionary, LOCALES } from "@/i18n/locales";
 import { phrasebookApi, phrasebookKeys } from "@/entities/phrasebook";
 import { getQueryClient } from "@/shared/lib/query-client";
 import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
@@ -7,7 +7,7 @@ import { ErrorBoundary } from "@/shared/ui/error-boundary";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { notFound } from "next/navigation";
+import { requireLocale } from "@/shared/lib/i18n";
 import PhrasebookJsonLd from "./phrasebook-json-ld";
 
 const PhrasebookPage = dynamic(
@@ -21,7 +21,7 @@ export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
 }): Promise<Metadata> => {
 	const { lang } = await props.params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const dict = await getDictionary(lang);
 	const path = "/phrasebook";
@@ -51,7 +51,7 @@ interface PageProps {
 
 const PhrasebookRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const dict = await getDictionary(lang);
 	const { title, description } = dict.phrasebook.meta;

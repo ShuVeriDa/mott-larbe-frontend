@@ -1,12 +1,11 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminUserDetail } from "@/entities/admin-user";
-import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
-import type { useAdminUserRoles } from "@/entities/admin-user/model/use-admin-user-roles";
-import type { useAdminUserSessions } from "@/entities/admin-user/model/use-admin-user-sessions";
+import type { useAdminUserMutations, useAdminUserRoles, useAdminUserSessions } from "@/entities/admin-user";
 import { UserInfoSection } from "./user-info-section";
 import { UserRolesSection } from "./user-roles-section";
 import { UserActionsSection } from "./user-actions-section";
@@ -64,7 +63,7 @@ export const UserHeroCard = ({
 
 	if (isLoading || !user) {
 		return (
-			<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+			<AdminCard>
 				<div className="border-b border-bd-1 p-4">
 					<div className="mb-2.5 size-[52px] animate-pulse rounded-full bg-surf-3" />
 					<div className="mb-1.5 h-4 w-36 animate-pulse rounded bg-surf-3" />
@@ -77,7 +76,7 @@ export const UserHeroCard = ({
 				{Array.from({ length: 3 }).map((_, i) => (
 					<div key={i} className="h-[72px] animate-pulse border-b border-bd-1 bg-surf-2 last:border-b-0" />
 				))}
-			</div>
+			</AdminCard>
 		);
 	}
 
@@ -89,7 +88,7 @@ export const UserHeroCard = ({
 	const planStyle = planChipStyles[planKey] ?? planChipStyles.FREE;
 
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+		<AdminCard>
 			<div className="border-b border-bd-1 px-4 py-[18px]">
 				<div
 					className={`mb-2.5 flex size-[52px] items-center justify-center rounded-full text-[17px] font-bold ${colorMap[color]}`}
@@ -118,6 +117,6 @@ export const UserHeroCard = ({
 			<UserInfoSection user={user} />
 			<UserRolesSection roles={user.roles} roleMutations={roleMutations} />
 			<UserActionsSection user={user} mutations={mutations} sessions={sessions} onManageSubscription={onManageSubscription} />
-		</div>
+		</AdminCard>
 	);
 };

@@ -16,6 +16,7 @@ import {
 	formatReviewIn,
 } from "@/shared/lib/format-relative-time";
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
@@ -145,9 +146,9 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 								<div className="flex min-w-0 flex-1 flex-col gap-3">
 									{example ? (
 										<div>
-											<div className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+											<SectionLabel className="mb-1.5">
 												{t("vocabulary.card.example")}
-											</div>
+											</SectionLabel>
 											<blockquote className="border-l-2 border-acc/30 pl-2.5">
 												<Typography className="text-[12.5px] italic leading-[1.6] text-t-1">
 													{example.text}
@@ -162,9 +163,9 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 									) : null}
 									{forms.length > 0 ? (
 										<div>
-											<div className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+											<SectionLabel className="mb-1.5">
 												{t("vocabulary.card.forms")}
-											</div>
+											</SectionLabel>
 											<div className="flex flex-wrap gap-1">
 												{forms.map((f, idx) => (
 													<Typography
@@ -188,9 +189,9 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 							)}>
 								{/* Статус */}
 								<div>
-									<div className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+									<SectionLabel className="mb-1.5">
 										{t("vocabulary.card.status")}
-									</div>
+									</SectionLabel>
 									<StatusButtons wordId={entry.id} current={entry.learningLevel} />
 									{entry.learningLevel !== "NEW" ? (
 										<div className="mt-1.5 flex items-center gap-2">
@@ -222,9 +223,9 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 
 								{/* Папка */}
 								<div>
-									<div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+									<SectionLabel className="mb-1">
 										{t("vocabulary.card.folder")}
-									</div>
+									</SectionLabel>
 									<FolderSelect wordId={entry.id} currentFolderId={entry.folderId} />
 								</div>
 

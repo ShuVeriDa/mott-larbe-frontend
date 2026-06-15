@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 import type { TextToken } from "@/entities/text";
@@ -79,9 +80,9 @@ const SheetBody = ({
 					</div>
 				) : null}
 				<div className="border-b border-bd-1 px-4 py-3">
-					<div className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.6px] text-t-3">
+					<SectionLabel>
 						{t("reader.panel.sections.level")}
-					</div>
+					</SectionLabel>
 					{lookup.lemmaId && (
 						<LearnStatusRow
 							lemmaId={lookup.lemmaId}

@@ -18,7 +18,7 @@ import { useMarkNotificationRead } from "@/features/mark-notification-read";
 import { notificationKeys, type Notification } from "@/entities/notification";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToastStore } from "@/shared/lib/toast";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { type MouseEvent as ReactMouseEvent, useEffect, useState } from "react";
 
@@ -39,7 +39,6 @@ export const useAdminFeedbackPage = () => {
 	const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
 	const [isInfoDrawerOpen, setIsInfoDrawerOpen] = useState(false);
 	const [isMobileChat, setIsMobileChat] = useState(() => !!searchParams.get("thread"));
-	const [isExporting, setIsExporting] = useState(false);
 
 	const listQuery = useAdminFeedbackThreads({
 		tab,
@@ -174,10 +173,8 @@ export const useAdminFeedbackPage = () => {
 		showToast(t("admin.feedback.toast.linkCopied"));
 	};
 
-	const handleExport = async () => {
-		if (isExporting) return;
-		setIsExporting(true);
-		try {
+	const exportMutation = useMutation({
+		mutationFn: async () => {
 			const { adminFeedbackApi } = await import("@/entities/feedback");
 			const blob = await adminFeedbackApi.export({
 				tab,
@@ -191,11 +188,14 @@ export const useAdminFeedbackPage = () => {
 			a.download = "feedback.csv";
 			a.click();
 			URL.revokeObjectURL(url);
-		} catch {
+		},
+		onError: () => {
 			showToast(t("admin.feedback.toast.exportError"));
-		} finally {
-			setIsExporting(false);
-		}
+		},
+	});
+
+	const handleExport = () => {
+		exportMutation.mutate();
 	};
 
 	const handleMoreMenu = (e: ReactMouseEvent<HTMLButtonElement>) => {
@@ -277,7 +277,7 @@ export const useAdminFeedbackPage = () => {
 		isTransferModalOpen,
 		isInfoDrawerOpen,
 		isMobileChat,
-		isExporting,
+		isExporting: exportMutation.isPending,
 		threads,
 		thread,
 		stats,

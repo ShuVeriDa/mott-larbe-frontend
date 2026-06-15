@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { useI18n } from "@/shared/lib/i18n";
@@ -68,7 +69,7 @@ export const BillingLimitsMatrix = ({ plans, isLoading }: BillingLimitsMatrixPro
 	const { t } = useI18n();
 
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("admin.plans.limitsMatrix.title")}
@@ -126,6 +127,6 @@ export const BillingLimitsMatrix = ({ plans, isLoading }: BillingLimitsMatrixPro
 					</Table>
 				)}
 			</div>
-		</div>
+		</AdminCard>
 	);
 };

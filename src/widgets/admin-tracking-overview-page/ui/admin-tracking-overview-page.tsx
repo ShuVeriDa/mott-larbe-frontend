@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import {
 	useAdminAnalyticsOverview,
 	useAdminAnalyticsMultiTimeseries,
@@ -9,7 +10,7 @@ import {
 	useExportAnalyticsOverviewCsv,
 	useInvalidateAdminAnalytics,
 } from "@/features/admin-analytics";
-import type { Dictionary, Locale } from "@/i18n/locales";
+import type { Dictionary, Locale } from "@/i18n/types";
 import { MetricCard } from "./metric-card";
 import { TrafficChart } from "./traffic-chart";
 import { TopList } from "./top-list";
@@ -139,7 +140,7 @@ export const AdminTrackingOverviewPage = ({ lang, dict }: AdminTrackingOverviewP
 					/>
 				</div>
 
-				<div className="mb-3.5 rounded-card border border-bd-1 bg-surf p-4 transition-colors">
+				<AdminCard className="mb-3.5 p-4">
 					<p className="mb-3 text-[13px] font-semibold text-t-1">{dict.overview.chart}</p>
 					<TrafficChart
 						pageviews={multi.data?.pageviews}
@@ -148,10 +149,10 @@ export const AdminTrackingOverviewPage = ({ lang, dict }: AdminTrackingOverviewP
 						labelPageviews={dict.metrics.pageviews}
 						labelVisitors={dict.metrics.uniqueVisitors}
 					/>
-				</div>
+				</AdminCard>
 
 				<div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
-					<div className="rounded-card border border-bd-1 bg-surf p-4 transition-colors">
+					<AdminCard className="p-4">
 						<p className="mb-3 text-[13px] font-semibold text-t-1">{dict.overview.topPages}</p>
 						<TopList
 							items={topPages.data}
@@ -159,8 +160,8 @@ export const AdminTrackingOverviewPage = ({ lang, dict }: AdminTrackingOverviewP
 							noData={dict.common.noData}
 							direct={dict.common.direct}
 						/>
-					</div>
-					<div className="rounded-card border border-bd-1 bg-surf p-4 transition-colors">
+					</AdminCard>
+					<AdminCard className="p-4">
 						<p className="mb-3 text-[13px] font-semibold text-t-1">{dict.overview.topReferrers}</p>
 						<TopList
 							items={referrers}
@@ -168,7 +169,7 @@ export const AdminTrackingOverviewPage = ({ lang, dict }: AdminTrackingOverviewP
 							noData={dict.common.noData}
 							direct={dict.common.direct}
 						/>
-					</div>
+					</AdminCard>
 				</div>
 			</div>
 		</div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { aiTranslationApi, type AiCacheStatus } from "@/entities/ai-translation";
+import { aiTranslationApi, aiTranslationKeys, type AiCacheStatus } from "@/entities/ai-translation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/shared/lib/toast";
 import { useI18n } from "@/shared/lib/i18n";
@@ -39,27 +39,24 @@ export const useAdminAiCacheTab = () => {
   };
 
   const { data, isLoading } = useQuery({
-    queryKey: ["admin-ai-cache", { status: urlStatus, q: urlQ, page: urlPage }],
+    queryKey: aiTranslationKeys.adminCacheList(urlStatus, urlQ, urlPage),
     queryFn: () =>
       aiTranslationApi.adminList({ status: urlStatus, q: urlQ || undefined, page: urlPage, limit: 20 }),
   });
 
   const { data: stats, isLoading: statsLoading } = useQuery({
-    queryKey: ["admin-ai-cache-stats"],
+    queryKey: aiTranslationKeys.adminCacheStats(),
     queryFn: aiTranslationApi.adminGetStats,
   });
 
   const { data: exportRuns, isLoading: exportRunsLoading } = useQuery({
-    queryKey: ["admin-ai-cache-export-runs"],
+    queryKey: aiTranslationKeys.adminExportRuns(),
     queryFn: () => aiTranslationApi.adminGetExportRuns(EXPORT_RUNS_LIMIT),
-    // Runs change rarely — 30 s is enough freshness for this view
     staleTime: 30_000,
   });
 
   const invalidate = () => {
-    queryClient.invalidateQueries({ queryKey: ["admin-ai-cache"] });
-    queryClient.invalidateQueries({ queryKey: ["admin-ai-cache-stats"] });
-    queryClient.invalidateQueries({ queryKey: ["admin-ai-cache-export-runs"] });
+    queryClient.invalidateQueries({ queryKey: aiTranslationKeys.adminCache() });
   };
 
   const approve = useMutation({
@@ -97,8 +94,7 @@ export const useAdminAiCacheTab = () => {
   });
 
   const handleOpenConfirmDialog = async () => {
-    // Refetch stats so the dialog always shows the current approvedNotExported count
-    await queryClient.invalidateQueries({ queryKey: ["admin-ai-cache-stats"] });
+    await queryClient.invalidateQueries({ queryKey: aiTranslationKeys.adminCacheStats() });
     setConfirmDialogOpen(true);
   };
   const handleCloseConfirmDialog = () => setConfirmDialogOpen(false);

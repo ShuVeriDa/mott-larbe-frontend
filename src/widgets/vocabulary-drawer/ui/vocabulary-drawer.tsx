@@ -4,6 +4,7 @@ import { FilterControls } from "@/features/vocabulary-filters";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { useMounted } from "@/shared/lib/mounted";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { FoldersList, StatsList } from "@/widgets/vocabulary-sidebar";
 import { useEffect } from "react";
@@ -72,22 +73,16 @@ export const VocabularyDrawer = ({
 					<FilterControls />
 					{stats ? (
 						<div>
-							<Typography
-								tag="h3"
-								className="mb-2 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3"
-							>
+							<SectionLabel>
 								{t("vocabulary.stats")}
-							</Typography>
+							</SectionLabel>
 							<StatsList stats={stats} />
 						</div>
 					) : null}
 					<div>
-						<Typography
-							tag="h3"
-							className="mb-2 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3"
-						>
+						<SectionLabel>
 							{t("vocabulary.folders")}
-						</Typography>
+						</SectionLabel>
 						<FoldersList
 							totalAllWords={stats?.total ?? 0}
 							onCreateFolder={onCreateFolder}

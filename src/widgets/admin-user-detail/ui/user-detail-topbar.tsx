@@ -6,7 +6,7 @@ import { Button } from "@/shared/ui/button";
 
 import { ComponentProps } from 'react';
 import type { AdminUserDetail } from "@/entities/admin-user";
-import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
+import type { useAdminUserMutations } from "@/entities/admin-user";
 import { useI18n } from "@/shared/lib/i18n";
 import Link from "next/link";
 import { useParams } from "next/navigation";

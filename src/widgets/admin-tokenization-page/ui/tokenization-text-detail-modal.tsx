@@ -8,6 +8,7 @@ import type {
 } from "@/entities/token";
 import { tokenizationApi, tokenizationKeys } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Button } from "@/shared/ui/button";
 import { Modal } from "@/shared/ui/modal";
 import { Typography } from "@/shared/ui/typography";
@@ -301,9 +302,9 @@ export const TokenizationTextDetailModal = ({
 							t={t}
 						/>
 
-						<div className="mb-1 text-[10.5px] font-semibold uppercase tracking-[0.5px] text-t-3">
+						<SectionLabel className="mb-1">
 							{t("admin.tokenization.detail.tokensTitle")}
-						</div>
+						</SectionLabel>
 						<TokensTable tokens={tokens} t={t} />
 					</>
 				)}

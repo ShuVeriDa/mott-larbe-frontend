@@ -1,12 +1,11 @@
 import { Suspense } from 'react';
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import {
 	DEFAULT_LOCALE,
 	LOCALES,
 	getDictionary,
-	hasLocale,
 } from "@/i18n/locales";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 import { AdminUnknownWordsPage } from "@/widgets/admin-unknown-words-page";
 
 const SITE_URL =
@@ -16,7 +15,7 @@ export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
 }): Promise<Metadata> => {
 	const { lang } = await props.params;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const dict = await getDictionary(lang);
 	const meta = (
@@ -67,7 +66,7 @@ interface PageProps {
 
 const AdminUnknownWordsRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	return (
 		<Suspense fallback={null}>

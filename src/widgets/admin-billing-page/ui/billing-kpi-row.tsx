@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 
 import type { BillingStats } from "@/entities/admin-billing";
@@ -21,7 +22,7 @@ interface KpiCardProps {
 }
 
 const KpiCard = ({ label, value, sub }: KpiCardProps) => (
-	<div className="rounded-card border border-bd-1 bg-surf px-3.5 py-3 transition-colors">
+	<AdminCard className="px-3.5 py-3">
 		<div className="mb-1.5 text-[11px] font-medium tracking-[0.2px] text-t-3">
 			{label}
 		</div>
@@ -31,15 +32,15 @@ const KpiCard = ({ label, value, sub }: KpiCardProps) => (
 		{sub && (
 			<div className="flex items-center gap-1 text-[11px] text-t-3">{sub}</div>
 		)}
-	</div>
+	</AdminCard>
 );
 
 const KpiCardSkeleton = () => (
-	<div className="rounded-card border border-bd-1 bg-surf px-3.5 py-3">
+	<AdminCard className="px-3.5 py-3">
 		<div className="mb-1.5 h-2.5 w-20 animate-pulse rounded bg-surf-3" />
 		<div className="mb-1 h-5 w-16 animate-pulse rounded bg-surf-3" />
 		<div className="h-2.5 w-24 animate-pulse rounded bg-surf-3" />
-	</div>
+	</AdminCard>
 );
 
 interface BillingKpiRowProps {

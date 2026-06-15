@@ -6,7 +6,7 @@ import type { TranslationLanguage } from "@/entities/ai-translation";
 import { useApiErrorToast } from "@/shared/lib/api-error-toast";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { aiTranslationKeys } from "@/entities/ai-translation";
 import { type ChangeEvent, useState } from "react";
 
@@ -27,9 +27,6 @@ export const useAiSection = () => {
 
   const [keyInput, setKeyInput] = useState("");
   const [showKey, setShowKey] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isVerifying, setIsVerifying] = useState(false);
 
   const hasKey = keyStatus?.hasKey ?? false;
 
@@ -41,48 +38,60 @@ export const useAiSection = () => {
     setShowKey(prev => !prev);
   };
 
-  const handleSave = async () => {
-    if (!keyInput.trim()) return;
-    setIsSaving(true);
-    try {
+  const saveMutation = useMutation({
+    mutationFn: async () => {
       await aiTranslationApi.saveKey(keyInput.trim());
+    },
+    onSuccess: () => {
       setKeyInput("");
       queryClient.invalidateQueries({ queryKey: aiTranslationKeys.keyStatus() });
       success(t("aiTranslation.settings.savedSuccess"));
-    } catch (err) {
+    },
+    onError: (err) => {
       toastApiError(err);
-    } finally {
-      setIsSaving(false);
-    }
-  };
+    },
+  });
 
-  const handleDelete = async () => {
-    setIsDeleting(true);
-    try {
+  const deleteMutation = useMutation({
+    mutationFn: async () => {
       await aiTranslationApi.deleteKey();
+    },
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: aiTranslationKeys.keyStatus() });
       success(t("aiTranslation.settings.deletedSuccess"));
-    } catch (err) {
+    },
+    onError: (err) => {
       toastApiError(err);
-    } finally {
-      setIsDeleting(false);
-    }
-  };
+    },
+  });
 
-  const handleVerify = async () => {
-    setIsVerifying(true);
-    try {
-      const result = await aiTranslationApi.verifyKey();
+  const verifyMutation = useMutation({
+    mutationFn: async () => {
+      return await aiTranslationApi.verifyKey();
+    },
+    onSuccess: (result) => {
       if (result.valid) {
         success(t("aiTranslation.settings.verifySuccess"));
       } else {
         error(t("aiTranslation.settings.verifyError"));
       }
-    } catch {
+    },
+    onError: () => {
       error(t("aiTranslation.settings.verifyError"));
-    } finally {
-      setIsVerifying(false);
-    }
+    },
+  });
+
+  const handleSave = () => {
+    if (!keyInput.trim()) return;
+    saveMutation.mutate();
+  };
+
+  const handleDelete = () => {
+    deleteMutation.mutate();
+  };
+
+  const handleVerify = () => {
+    verifyMutation.mutate();
   };
 
   const handleLanguageChange = (lang: TranslationLanguage) => {
@@ -104,9 +113,9 @@ export const useAiSection = () => {
     hasKey,
     keyInput,
     showKey,
-    isSaving,
-    isDeleting,
-    isVerifying,
+    isSaving: saveMutation.isPending,
+    isDeleting: deleteMutation.isPending,
+    isVerifying: verifyMutation.isPending,
     targetLanguage,
     handleKeyChange,
     handleToggleShow,

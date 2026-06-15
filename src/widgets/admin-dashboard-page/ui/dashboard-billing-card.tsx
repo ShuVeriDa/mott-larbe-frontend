@@ -1,5 +1,7 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import Link from "next/link";
@@ -41,7 +43,7 @@ export const DashboardBillingCard = ({ billing }: DashboardBillingCardProps) => 
 	const totalSubs = billing.plans.reduce((s, p) => s + p.activeSubscriptions, 0) || 1;
 
 	return (
-		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.billing.title")}
@@ -83,9 +85,9 @@ export const DashboardBillingCard = ({ billing }: DashboardBillingCardProps) => 
 
 			{billing.recentPayments.length > 0 && (
 				<div className="border-t border-bd-1 px-4 pb-4 pt-3">
-					<div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
+					<SectionLabel>
 						{t("admin.dashboard.billing.recentPayments")}
-					</div>
+					</SectionLabel>
 					<Table className="border-collapse text-[12.5px]" aria-label={t("admin.dashboard.billing.recentPayments")}>
 						<TableHeader>
 							<TableRow>
@@ -116,12 +118,12 @@ export const DashboardBillingCard = ({ billing }: DashboardBillingCardProps) => 
 					</Table>
 				</div>
 			)}
-		</div>
+		</AdminCard>
 	);
 };
 
 export const DashboardBillingCardSkeleton = () => (
-	<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf">
+	<AdminCard>
 		<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
 			<div className="h-3.5 w-40 animate-pulse rounded bg-surf-3" />
 			<div className="h-3 w-16 animate-pulse rounded bg-surf-3" />
@@ -137,5 +139,5 @@ export const DashboardBillingCardSkeleton = () => (
 				</div>
 			))}
 		</div>
-	</div>
+	</AdminCard>
 );

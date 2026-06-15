@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/shared/lib/cn";
-import type { Locale } from "@/i18n/locales";
+import type { Locale } from "@/i18n/types";
 
 interface TabsDict {
 	overview: string;

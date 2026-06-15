@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 import { FolderSelect, StatusButtons } from "@/features/update-word";
@@ -24,13 +25,9 @@ export const StatusCard = ({
 			aria-labelledby={`status-card-${wordId}`}
 			className="mb-3.5 rounded-card border-[0.5px] border-bd-1 bg-surf p-4"
 		>
-			<Typography
-				tag="h3"
-				id={`status-card-${wordId}`}
-				className="mb-3 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
-			>
+			<SectionLabel className="mb-3">
 				{t("vocabulary.wordDetail.sections.status")}
-			</Typography>
+			</SectionLabel>
 			<StatusButtons wordId={wordId} current={learningLevel} />
 
 			<div className="my-3 h-px bg-bd-1" />

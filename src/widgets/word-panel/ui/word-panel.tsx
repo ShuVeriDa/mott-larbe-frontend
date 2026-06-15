@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
@@ -34,12 +35,9 @@ export const WordPanel = ({ textId }: WordPanelProps) => {
 			)}
 		>
 			<div className="flex shrink-0 items-center justify-between border-b-[0.5px] border-bd-1 px-3.5 py-2.5">
-				<Typography
-					tag="span"
-					className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
-				>
+				<SectionLabel className="mb-0">
 					{t("reader.panel.label")}
-				</Typography>
+				</SectionLabel>
 				<Button
 					onClick={closePanel}
 					aria-label={t("reader.panel.close")}

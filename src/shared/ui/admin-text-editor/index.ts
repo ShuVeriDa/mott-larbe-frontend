@@ -1,4 +1,7 @@
-export { TbBtn, TbDivider, EditorToolbar, getSlashItems } from "./admin-text-editor-toolbar";
+export { TbBtn } from "./tb-btn";
+export { TbDivider } from "./tb-divider";
+export { EditorToolbar } from "./admin-text-editor-toolbar";
+export { getSlashItems } from "./lib/get-slash-items";
 export { AdminTextMetaStatusSection } from "./admin-text-meta-status-section";
 export { AdminTextMobileActionBar } from "./admin-text-mobile-action-bar";
 export {

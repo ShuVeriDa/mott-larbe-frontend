@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/shared/ui/typography";
-import { UserTextCard, UserTextCardSkeleton } from "./user-text-card";
+import { UserTextCard } from "./user-text-card";
 import { MyTextsEmptyState } from "./my-texts-empty-state";
 import type { UserTextListItem } from "@/entities/user-text";
 import type { MyTextsTab } from "./my-texts-tabs";
@@ -57,10 +57,3 @@ export const UserTextList = ({
   );
 };
 
-export const UserTextListSkeleton = () => (
-  <div className="flex flex-col gap-3 p-4">
-    {Array.from({ length: 4 }).map((_, i) => (
-      <UserTextCardSkeleton key={i} />
-    ))}
-  </div>
-);

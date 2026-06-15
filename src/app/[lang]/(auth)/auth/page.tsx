@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { notFound } from "next/navigation";
 import {
 	DEFAULT_LOCALE,
 	LOCALES,
 	getDictionary,
-	hasLocale,
 } from "@/i18n/locales";
 import { AuthPage, type AuthMode } from "@/widgets/auth-page";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
 
@@ -19,7 +18,7 @@ export const generateMetadata = async (props: {
 }): Promise<Metadata> => {
 	const { lang } = await props.params;
 	const { mode } = await props.searchParams;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const dict = await getDictionary(lang);
 	const meta =
@@ -66,7 +65,7 @@ interface PageProps {
 const AuthPageContent = async ({ params, searchParams }: PageProps) => {
 	const { lang } = await params;
 	const { mode } = await searchParams;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const dict = await getDictionary(lang);
 	const initialMode: AuthMode = mode === "register" ? "register" : "login";

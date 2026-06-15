@@ -11,6 +11,7 @@ import {
 } from "@/features/ai-word-lookup";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import {
@@ -197,9 +198,9 @@ export const AiWordPanelBody = ({
 
 			{/* Перевод */}
 			<div className="border-b-[0.5px] border-bd-1 px-4 py-3">
-				<div className="mb-1 text-[10.5px] font-semibold uppercase tracking-[0.6px] text-t-3">
+				<SectionLabel className="mb-1">
 					{t("reader.panel.sections.translation")}
-				</div>
+				</SectionLabel>
 				<div className="flex items-start justify-between gap-2">
 					<div className="text-[15px] font-medium text-t-1">
 						{result.translation}

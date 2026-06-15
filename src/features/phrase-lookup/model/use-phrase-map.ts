@@ -1,13 +1,8 @@
 "use client";
 
-import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
+import type { PagePhraseOccurrence, PhraseMap } from "@/entities/admin-text-phrase";
 
-/**
- * Builds a map: tokenPosition → phrase occurrence that contains it.
- * When hovering between token[i] and token[i+1], we check if any phrase
- * spans across that gap (startTokenPosition <= i && endTokenPosition >= i+1).
- */
-export type PhraseMap = Map<number, PagePhraseOccurrence>;
+export type { PhraseMap };
 
 export const usePhraseMap = (
   phrases: PagePhraseOccurrence[] | undefined,

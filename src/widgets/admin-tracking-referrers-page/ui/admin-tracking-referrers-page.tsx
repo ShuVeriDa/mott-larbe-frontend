@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import {
 	useAdminAnalyticsReferrersBreakdown,
 	useAdminAnalyticsTopReferrersInfinite,
@@ -7,7 +8,7 @@ import {
 	useInvalidateAdminAnalytics,
 	DIRECT_REFERRER_KEY,
 } from "@/features/admin-analytics";
-import type { Dictionary, Locale } from "@/i18n/locales";
+import type { Dictionary, Locale } from "@/i18n/types";
 import { AnalyticsTabs } from "@/widgets/admin-tracking-overview-page";
 import { AnalyticsToolbar } from "@/widgets/admin-tracking-overview-page";
 import { Button } from "@/shared/ui/button";
@@ -55,7 +56,7 @@ export const AdminTrackingReferrersPage = ({ lang, dict }: AdminTrackingReferrer
 						{CATEGORIES.map((cat) => {
 							const stats = bd.byCategory[cat];
 							return (
-								<div key={cat} className="rounded-card border border-bd-1 bg-surf p-3.5 transition-colors">
+								<AdminCard key={cat} className="p-3.5">
 									<p className="mb-1.5 text-[11px] font-medium tracking-[0.3px] text-t-3">
 										{dict.referrers.categories[cat]}
 									</p>
@@ -65,13 +66,13 @@ export const AdminTrackingReferrersPage = ({ lang, dict }: AdminTrackingReferrer
 									<p className="text-[11px] text-t-3">
 										{(stats.share * 100).toFixed(1)}%
 									</p>
-								</div>
+								</AdminCard>
 							);
 						})}
 					</div>
 				)}
 
-				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+				<AdminCard>
 					<Table aria-label={dict.referrers.title}>
 						<TableHeader>
 							<TableRow className="border-b border-bd-1">
@@ -117,7 +118,7 @@ export const AdminTrackingReferrersPage = ({ lang, dict }: AdminTrackingReferrer
 							)}
 						</TableBody>
 					</Table>
-				</div>
+				</AdminCard>
 
 				{referrers.hasNextPage && (
 					<div className="mt-3.5 flex justify-center">

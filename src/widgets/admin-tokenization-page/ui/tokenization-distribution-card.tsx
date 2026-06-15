@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 
 import { useI18n } from "@/shared/lib/i18n";
@@ -86,7 +87,7 @@ export const TokenizationDistributionCard = ({
 	}, []);
 
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+		<AdminCard>
 			<div className="flex items-center border-b border-bd-1 px-3.5 py-[11px]">
 				<Typography tag="span" className="text-[11px] font-semibold uppercase tracking-[0.4px] text-t-2">
 					{t("admin.tokenization.sidePanel.distribution")}
@@ -178,6 +179,6 @@ export const TokenizationDistributionCard = ({
 					</div>
 				</>
 			)}
-		</div>
+		</AdminCard>
 	);
 };

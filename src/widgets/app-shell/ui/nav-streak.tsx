@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 import type { DashboardStats } from "@/entities/dashboard";
@@ -16,12 +17,9 @@ export const NavStreak = ({ stats }: NavStreakProps) => {
 	return (
 		<div className="px-3.5 pb-2.5 pt-1.5">
 			<div className="mb-2 flex items-center justify-between">
-				<Typography
-					tag="span"
-					className="text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3"
-				>
+				<SectionLabel className="mb-0">
 					{t("nav.streak")}
-				</Typography>
+				</SectionLabel>
 				<Typography
 					tag="span"
 					className="font-display text-[17px] font-normal leading-none text-amb"

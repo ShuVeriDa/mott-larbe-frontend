@@ -2,13 +2,14 @@
 
 import { Typography } from "@/shared/ui/typography";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Button } from "@/shared/ui/button";
 
 import type {
 	AdminTextDetail,
 	TextVersionListItem,
 } from "@/entities/admin-text";
-import { useAdminTextVersionDetail } from "@/entities/admin-text/model/use-admin-text-versions";
+import { useAdminTextVersionDetail } from "@/entities/admin-text";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { CefrBadge } from "@/shared/ui/cefr-badge";
@@ -47,12 +48,12 @@ interface SectionCardProps {
 }
 
 const SectionCard = ({ title, children }: SectionCardProps) => (
-	<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+	<AdminCard>
 		<div className="border-b border-bd-1 px-3.5 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.4px] text-t-2">
 			{title}
 		</div>
 		{children}
-	</div>
+	</AdminCard>
 );
 
 interface InfoRowProps {

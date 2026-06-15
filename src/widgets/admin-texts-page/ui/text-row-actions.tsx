@@ -1,7 +1,7 @@
 "use client";
 
 import type { AdminTextListItem } from "@/entities/admin-text";
-import type { useAdminTextMutations } from "@/entities/admin-text/model/use-admin-text-mutations";
+import type { useAdminTextMutations } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Clock, MoreVertical, Pencil, Play, RotateCcw } from "lucide-react";

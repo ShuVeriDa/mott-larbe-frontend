@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { ComponentProps } from "react";
@@ -8,9 +9,7 @@ import type { AdminSubscriptionDetail } from "@/entities/admin-subscription";
 const LEARNER_ROLE = "learner";
 
 const SectionTitle = ({ label }: { label: string }) => (
-	<div className="mb-[7px] text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
-		{label}
-	</div>
+	<SectionLabel className="mb-[7px]">{label}</SectionLabel>
 );
 
 interface Props {

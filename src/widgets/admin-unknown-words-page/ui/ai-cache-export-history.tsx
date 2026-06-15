@@ -6,6 +6,7 @@ import type {
 } from "@/entities/ai-translation";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 import { CheckCircle, CircleDashed, XCircle } from "lucide-react";
 
@@ -41,7 +42,7 @@ export const AiCacheExportHistory = ({ runs }: AiCacheExportHistoryProps) => {
 	const { t } = useI18n();
 
 	return (
-		<div className="mt-4 overflow-hidden rounded-card border border-bd-1 bg-surf">
+		<AdminCard className="mt-4">
 			<div className="border-b-[0.5px] border-bd-1 px-4 py-2.5">
 				<Typography
 					tag="span"
@@ -61,7 +62,7 @@ export const AiCacheExportHistory = ({ runs }: AiCacheExportHistoryProps) => {
 					))}
 				</div>
 			)}
-		</div>
+		</AdminCard>
 	);
 };
 

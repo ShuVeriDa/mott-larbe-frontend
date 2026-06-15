@@ -20,7 +20,7 @@ export const useDeleteWord = () => {
 			await qc.cancelQueries({ queryKey: dictionaryKeys.root });
 
 			const previousLists = qc.getQueriesData<DictionaryListResponse>({
-				queryKey: ["dictionary", "list"],
+				queryKey: dictionaryKeys.listPrefix,
 			});
 			const previousStats = qc.getQueryData<DictionaryStats>(
 				dictionaryKeys.stats(),
@@ -36,7 +36,7 @@ export const useDeleteWord = () => {
 			}
 
 			qc.setQueriesData<DictionaryListResponse>(
-				{ queryKey: ["dictionary", "list"] },
+				{ queryKey: dictionaryKeys.listPrefix },
 				(old) => {
 					if (!old) return old;
 					const filtered = old.items.filter((item) => item.id !== id);

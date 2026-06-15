@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
@@ -31,7 +32,7 @@ export const BillingCouponsList = ({
 	const { t } = useI18n();
 
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-3">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("admin.plans.coupons.title")}
@@ -106,6 +107,6 @@ return (
 					})}
 				</div>
 			)}
-		</div>
+		</AdminCard>
 	);
 };

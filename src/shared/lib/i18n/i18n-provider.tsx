@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from 'react';
-import type { Dictionary, Locale } from "@/i18n/locales";
+import type { Dictionary, Locale } from "@/i18n/types";
 import { I18nContext } from "./i18n-context";
 
 interface I18nProviderProps {

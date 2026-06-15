@@ -1,5 +1,6 @@
 import type { AdminFeedbackThread } from "@/entities/feedback";
 import { cn } from "@/shared/lib/cn";
+import { formatDateLong } from "@/shared/lib/format-date";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { ChevronLeft, Link, MoreVertical, User } from "lucide-react";
@@ -7,13 +8,6 @@ import { MouseEvent } from "react";
 import { FeedbackStatusBadge } from "./feedback-status-badge";
 import { FeedbackTypeBadge } from "./feedback-type-badge";
 type Translator = (key: string) => string;
-
-const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "long",
-		year: "numeric",
-	});
 
 interface FeedbackChatHeaderProps {
 	thread: AdminFeedbackThread;
@@ -69,7 +63,7 @@ export const FeedbackChatHeader = ({
 					·
 				</Typography>
 				<Typography tag="span" className="text-[11px] text-t-3">
-					{formatDate(thread.createdAt)}
+					{formatDateLong(thread.createdAt)}
 				</Typography>
 			</div>
 		</div>

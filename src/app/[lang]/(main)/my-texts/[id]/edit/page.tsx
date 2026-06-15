@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { DEFAULT_LOCALE, LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
+import { DEFAULT_LOCALE, LOCALES, getDictionary } from "@/i18n/locales";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 import { SITE_URL } from "@/shared/lib/seo";
 import { UserTextEditPageClient } from "@/widgets/user-text-edit/ui/user-text-edit-page-client";
 
@@ -8,7 +8,7 @@ export const generateMetadata = async (props: {
 	params: Promise<{ lang: string; id: string }>;
 }): Promise<Metadata> => {
 	const { lang, id } = await props.params;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const dict = await getDictionary(lang);
 	const meta = dict.myTexts.meta;
@@ -43,7 +43,7 @@ interface PageProps {
 
 const MyTextEditPage = async ({ params }: PageProps) => {
 	const { lang, id } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	// No server-side prefetch — editor loads via dynamic({ ssr: false }),
 	// so prefetched data would never reach the client before hydration anyway.

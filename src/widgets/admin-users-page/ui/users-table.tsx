@@ -4,7 +4,7 @@ import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import type { AdminUserListItem, RoleName } from "@/entities/admin-user";
-import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
+import type { useAdminUserMutations } from "@/entities/admin-user";
 import { UserAvatar } from "./user-avatar";
 import { UserStatusBadge } from "./user-status-badge";
 import { UserRoleChip } from "./user-role-chip";

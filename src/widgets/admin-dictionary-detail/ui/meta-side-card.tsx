@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/button";
 
 import { ComponentProps, ReactNode } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { formatDate } from "@/shared/lib/format-date";
 import { CefrBadge } from "@/entities/dictionary";
 import type { AdminDictEntryCard } from "@/entities/dictionary";
 import type { DictModal } from "../model/use-admin-dictionary-detail-page";
@@ -20,13 +21,6 @@ interface MetaSideCardProps {
 
 export const MetaSideCard = ({ data, isLoading, onOpenModal }: MetaSideCardProps) => {
 	const { t } = useI18n();
-
-	const formatDate = (iso: string) =>
-		new Date(iso).toLocaleDateString("ru-RU", {
-			day: "numeric",
-			month: "short",
-			year: "numeric",
-		});
 
 	if (isLoading) {
 		return (

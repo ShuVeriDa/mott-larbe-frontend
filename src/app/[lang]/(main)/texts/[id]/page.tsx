@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getDictionary, hasLocale, LOCALES } from "@/i18n/locales";
+import { getDictionary, LOCALES } from "@/i18n/locales";
+import { requireLocale } from "@/shared/lib/i18n";
 import { LibraryTextDetailPage } from "@/widgets/library-text-detail-page";
 import type { LibraryTextDetail } from "@/entities/library-text";
 import { API_URL } from "@/shared/config";
@@ -48,7 +49,7 @@ export const generateMetadata = async (props: {
 	params: Promise<{ lang: string; id: string }>;
 }): Promise<Metadata> => {
 	const { lang, id } = await props.params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const [dict, text] = await Promise.all([
 		getDictionary(lang),
@@ -101,7 +102,7 @@ const LANG_CODE: Record<string, string> = { CHE: "ce", RU: "ru", EN: "en" };
 
 const TextDetailsRoutePage = async ({ params }: PageProps) => {
 	const { lang, id } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const text = await fetchTextForSeo(id);
 	if (!text) notFound();

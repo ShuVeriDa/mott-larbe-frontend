@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import type { SessionMode } from "../../model/types";
 
 interface ModeSelectorProps {
@@ -41,17 +42,18 @@ export const ModeSelector = ({ value, onChange }: ModeSelectorProps) => {
 
 	return (
 		<div className="w-full max-w-[420px]">
-			<p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
+			<SectionLabel>
 				{t("review.mode.label")}
-			</p>
+			</SectionLabel>
 			<div className="flex gap-2">
 				{OPTIONS.map(opt => {
 					const active = value === opt.value;
+					const handleClick = () => onChange(opt.value);
 					return (
 						<button
 							key={opt.value}
 							type="button"
-							onClick={() => onChange(opt.value)}
+							onClick={handleClick}
 							className={cn(
 								"flex flex-1 flex-col items-center gap-1 rounded-card border-[0.5px] px-2 py-2 text-center transition-colors md:py-2.5",
 								active

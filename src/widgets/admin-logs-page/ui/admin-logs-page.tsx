@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { useI18n } from "@/shared/lib/i18n";
 import { useAdminLogsPage } from "../model/use-admin-logs-page";
 import { LogsDetailPanel } from "./logs-detail-panel";
@@ -70,7 +71,7 @@ export const AdminLogsPage = () => {
 					onRangeChange={handleRangeChange}
 				/>
 
-				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
+				<AdminCard>
 					{items.length === 0 && !isLoading ? (
 						<div className="py-16 text-center text-[13px] text-t-3">
 							{t("admin.logs.empty")}
@@ -100,7 +101,7 @@ export const AdminLogsPage = () => {
 						/>
 					)}
 				</div>
-			</div>
+			</AdminCard>
 
 			<LogsDetailPanel
 				open={!!selectedId}

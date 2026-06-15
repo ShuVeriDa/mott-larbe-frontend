@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { ComponentProps } from 'react';
 import { useAdminTextsPage } from "../model/use-admin-texts-page";
 import { ExportTextsModal } from "./export-texts-modal";
@@ -87,7 +88,7 @@ return (
 				/>
 
 				{/* Table card */}
-				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+				<AdminCard>
 					<TextsBulkBar
 						selectedCount={selectedIds.size}
 						onPublish={handlePublish
@@ -123,7 +124,7 @@ return (
 							onPageChange={setPage}
 						/>
 					)}
-				</div>
+				</AdminCard>
 			</div>
 
 			{importOpen && <ImportTextsModal onClose={handleClose} />}

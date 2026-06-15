@@ -202,7 +202,10 @@ As soon as a piece of JSX or logic gets a name — it gets its own file.
 // ❌ wrong — two components in one file
 const Avatar = ({ src }: { src: string }) => <img src={src} />;
 const UserCard = ({ user }: { user: User }) => (
-  <div><Avatar src={user.avatar} /><span>{user.name}</span></div>
+	<div>
+		<Avatar src={user.avatar} />
+		<span>{user.name}</span>
+	</div>
 );
 
 // ✅ correct — each component in its own file
@@ -210,9 +213,12 @@ const UserCard = ({ user }: { user: User }) => (
 export const Avatar = ({ src }: { src: string }) => <img src={src} />;
 
 // ui/user-card.tsx
-import { Avatar } from './avatar';
+import { Avatar } from "./avatar";
 export const UserCard = ({ user }: { user: User }) => (
-  <div><Avatar src={user.avatar} /><span>{user.name}</span></div>
+	<div>
+		<Avatar src={user.avatar} />
+		<span>{user.name}</span>
+	</div>
 );
 ```
 
@@ -499,12 +505,12 @@ const Input = ({ ref, ...props }: Props & { ref?: Ref<HTMLInputElement> }) => (
 
 ### New hooks — use instead of old patterns
 
-| Old pattern | React 19 |
-|---|---|
-| `useContext(ctx)` | `use(ctx)` — works in conditionals and loops |
-| multiple `useState` for form | `useActionState()` |
-| manual optimistic state | `useOptimistic()` |
-| prop-drilled form pending | `useFormStatus()` |
+| Old pattern                  | React 19                                     |
+| ---------------------------- | -------------------------------------------- |
+| `useContext(ctx)`            | `use(ctx)` — works in conditionals and loops |
+| multiple `useState` for form | `useActionState()`                           |
+| manual optimistic state      | `useOptimistic()`                            |
+| prop-drilled form pending    | `useFormStatus()`                            |
 
 ### useActionState — replaces manual form state
 
@@ -512,34 +518,39 @@ const Input = ({ ref, ...props }: Props & { ref?: Ref<HTMLInputElement> }) => (
 // ❌ wrong — three useState for one form
 const [isPending, setIsPending] = useState(false);
 const [error, setError] = useState<string | null>(null);
-const handleSubmit = async (e) => {
-  setIsPending(true);
-  try { await submit(e) } catch (err) { setError(err.message) }
-  finally { setIsPending(false) }
+const handleSubmit = async e => {
+	setIsPending(true);
+	try {
+		await submit(e);
+	} catch (err) {
+		setError(err.message);
+	} finally {
+		setIsPending(false);
+	}
 };
 
 // ✅ correct
-import { useActionState } from 'react';
+import { useActionState } from "react";
 
 type State = { success: boolean; error: string | null };
 
 const [state, formAction, isPending] = useActionState<State, FormData>(
-  async (prev, formData) => {
-    try {
-      await submitForm(formData);
-      return { success: true, error: null };
-    } catch (e) {
-      return { success: false, error: (e as Error).message };
-    }
-  },
-  { success: false, error: null }
+	async (prev, formData) => {
+		try {
+			await submitForm(formData);
+			return { success: true, error: null };
+		} catch (e) {
+			return { success: false, error: (e as Error).message };
+		}
+	},
+	{ success: false, error: null },
 );
 
 return (
-  <form action={formAction}>
-    <SubmitButton />
-    {state.error && <p>{state.error}</p>}
-  </form>
+	<form action={formAction}>
+		<SubmitButton />
+		{state.error && <p>{state.error}</p>}
+	</form>
 );
 ```
 
@@ -548,21 +559,29 @@ return (
 ```tsx
 // ❌ wrong — same level as <form>, doesn't work
 const BadForm = () => {
-  const { pending } = useFormStatus(); // ← not connected to the form below!
-  return <form action={action}><button disabled={pending}>Submit</button></form>;
+	const { pending } = useFormStatus(); // ← not connected to the form below!
+	return (
+		<form action={action}>
+			<button disabled={pending}>Submit</button>
+		</form>
+	);
 };
 
 // ✅ correct — SubmitButton is a child rendered inside <form>
 const SubmitButton = () => {
-  const { pending } = useFormStatus();
-  return <button type="submit" disabled={pending}>{pending ? 'Sending…' : 'Submit'}</button>;
+	const { pending } = useFormStatus();
+	return (
+		<button type="submit" disabled={pending}>
+			{pending ? "Sending…" : "Submit"}
+		</button>
+	);
 };
 
 const GoodForm = () => (
-  <form action={formAction}>
-    <input name="title" />
-    <SubmitButton />
-  </form>
+	<form action={formAction}>
+		<input name="title" />
+		<SubmitButton />
+	</form>
 );
 ```
 
@@ -571,19 +590,22 @@ const GoodForm = () => (
 ```tsx
 // ❌ wrong — user waits for server
 const handleLike = async () => {
-  const newCount = await likePost(postId);
-  setLikeCount(newCount);
+	const newCount = await likePost(postId);
+	setLikeCount(newCount);
 };
 
 // ✅ correct
 const [optimisticLikes, addOptimisticLike] = useOptimistic(
-  likes,
-  (current, increment: number) => current + increment
+	likes,
+	(current, increment: number) => current + increment,
 );
 const handleLike = async () => {
-  addOptimisticLike(1);             // instant UI update
-  try { await likePost(postId); }
-  catch { /* React auto-reverts */ }
+	addOptimisticLike(1); // instant UI update
+	try {
+		await likePost(postId);
+	} catch {
+		/* React auto-reverts */
+	}
 };
 
 // ⚠️ never use useOptimistic for critical operations (payments, destructive deletes)
@@ -593,25 +615,25 @@ const handleLike = async () => {
 
 ```tsx
 // features/post-form/api/actions.ts
-'use server';
-import { revalidatePath } from 'next/cache';
+"use server";
+import { revalidatePath } from "next/cache";
 
 export const createPost = async (prev: unknown, formData: FormData) => {
-  await db.posts.create({ data: { title: formData.get('title') as string } });
-  revalidatePath('/posts');
-  return { success: true };
+	await db.posts.create({ data: { title: formData.get("title") as string } });
+	revalidatePath("/posts");
+	return { success: true };
 };
 
 // features/post-form/ui/post-form.tsx
-'use client';
+("use client");
 export const PostForm = () => {
-  const [state, formAction, isPending] = useActionState(createPost, null);
-  return (
-    <form action={formAction}>
-      <input name="title" />
-      <SubmitButton />
-    </form>
-  );
+	const [state, formAction, isPending] = useActionState(createPost, null);
+	return (
+		<form action={formAction}>
+			<input name="title" />
+			<SubmitButton />
+		</form>
+	);
 };
 ```
 
@@ -624,21 +646,28 @@ export const PostForm = () => {
 
 ```tsx
 // ❌ wrong — 'use client' on layout poisons the whole tree
-'use client';
-export default function Layout({ children }) { return <div>{children}</div>; }
+"use client";
+export default function Layout({ children }) {
+	return <div>{children}</div>;
+}
 
 // ✅ correct — 'use client' only on the leaf that needs interactivity
 // features/counter/ui/counter.tsx
-'use client';
+("use client");
 export const Counter = () => {
-  const [count, setCount] = useState(0);
-  return <button onClick={() => setCount(c => c + 1)}>{count}</button>;
+	const [count, setCount] = useState(0);
+	return <button onClick={() => setCount(c => c + 1)}>{count}</button>;
 };
 
 // app/page.tsx — stays a Server Component
 export default async function Page() {
-  const data = await fetchData();
-  return <div><h1>{data.title}</h1><Counter /></div>;
+	const data = await fetchData();
+	return (
+		<div>
+			<h1>{data.title}</h1>
+			<Counter />
+		</div>
+	);
 }
 ```
 
@@ -684,16 +713,23 @@ Never inline `queryKey` + `queryFn` directly in `useQuery`. Always define them o
 
 ```tsx
 // ❌ wrong — key and fn duplicated across call sites
-useQuery({ queryKey: ['users', id], queryFn: () => fetchUser(id) })
-queryClient.prefetchQuery({ queryKey: ['users', id], queryFn: () => fetchUser(id) })
+useQuery({ queryKey: ["users", id], queryFn: () => fetchUser(id) });
+queryClient.prefetchQuery({
+	queryKey: ["users", id],
+	queryFn: () => fetchUser(id),
+});
 
 // ✅ correct — defined once in entities/user/model/queries.ts
 export const userQueryOptions = (id: string) =>
-  queryOptions({ queryKey: ['entities', 'user', id], queryFn: () => fetchUser(id), staleTime: 1000 * 60 * 5 })
+	queryOptions({
+		queryKey: ["entities", "user", id],
+		queryFn: () => fetchUser(id),
+		staleTime: 1000 * 60 * 5,
+	});
 
 // Used everywhere:
-useQuery(userQueryOptions(id))
-queryClient.prefetchQuery(userQueryOptions(id))
+useQuery(userQueryOptions(id));
+queryClient.prefetchQuery(userQueryOptions(id));
 ```
 
 ### queryKey must include all parameters
@@ -702,10 +738,10 @@ Every value the `queryFn` depends on must be in `queryKey`:
 
 ```tsx
 // ❌ wrong — filters ignored in cache key
-useQuery({ queryKey: ['items'], queryFn: () => fetchItems(filters) })
+useQuery({ queryKey: ["items"], queryFn: () => fetchItems(filters) });
 
 // ✅ correct
-useQuery({ queryKey: ['items', filters], queryFn: () => fetchItems(filters) })
+useQuery({ queryKey: ["items", filters], queryFn: () => fetchItems(filters) });
 ```
 
 ### staleTime must always be set explicitly
@@ -716,12 +752,12 @@ Default `staleTime: 0` causes refetch on every mount. Always configure intention
 
 ```tsx
 // ❌ wrong — enabled not supported in useSuspenseQuery
-const { data } = useSuspenseQuery({ ...opts, enabled: !!userId })
+const { data } = useSuspenseQuery({ ...opts, enabled: !!userId });
 
 // ✅ correct — guard in the parent, pass guaranteed value down
-if (!userId) return <NoUserSelected />
+if (!userId) return <NoUserSelected />;
 // ↓ child receives guaranteed userId: string
-const { data } = useSuspenseQuery(userQueryOptions(userId))
+const { data } = useSuspenseQuery(userQueryOptions(userId));
 ```
 
 Always wrap `useSuspenseQuery` consumers in both `<Suspense>` and `<ErrorBoundary>`.
@@ -739,34 +775,50 @@ Always wrap `useSuspenseQuery` consumers in both `<Suspense>` and `<ErrorBoundar
 Three cases where `useEffect` is wrong:
 
 **1. Derived state — compute during render instead:**
+
 ```tsx
 // ❌ wrong
-useEffect(() => { setFiltered(items.filter(i => i.active)) }, [items])
+useEffect(() => {
+	setFiltered(items.filter(i => i.active));
+}, [items]);
 
 // ✅ correct
-const filtered = items.filter(i => i.active)
+const filtered = items.filter(i => i.active);
 ```
 
 **2. Event side-effects — put in the handler instead:**
+
 ```tsx
 // ❌ wrong
-useEffect(() => { if (query) analytics.track('search', { query }) }, [query])
+useEffect(() => {
+	if (query) analytics.track("search", { query });
+}, [query]);
 
 // ✅ correct
-const handleSearch = (q: string) => { setQuery(q); analytics.track('search', { query: q }) }
+const handleSearch = (q: string) => {
+	setQuery(q);
+	analytics.track("search", { query: q });
+};
 ```
 
 **3. Async fetch — always include cleanup and full deps:**
+
 ```tsx
 // ❌ wrong — missing userId dep, no cancel
-useEffect(() => { fetchUser(userId).then(setUser) }, [])
+useEffect(() => {
+	fetchUser(userId).then(setUser);
+}, []);
 
 // ✅ correct
 useEffect(() => {
-  let cancelled = false
-  fetchUser(userId).then(data => { if (!cancelled) setUser(data) })
-  return () => { cancelled = true }
-}, [userId])
+	let cancelled = false;
+	fetchUser(userId).then(data => {
+		if (!cancelled) setUser(data);
+	});
+	return () => {
+		cancelled = true;
+	};
+}, [userId]);
 ```
 
 ---
@@ -833,3 +885,384 @@ Prefer `useSuspenseQuery` from TanStack Query over raw `use()` for data fetching
 - Keep files small and focused: one component or one hook per file.
 - No unused imports, no commented-out code.
 - Do not add features, refactors, or improvements beyond what is explicitly asked.
+
+## Animations & Transitions
+
+Every interactive or dynamic UI element must have appropriate motion.
+Before writing any component, check whether it falls into one of the three tiers below
+and apply the corresponding solution. No exceptions for "it's just a small component".
+
+> **Package:** this project uses `framer-motion`.
+> Always import from `framer-motion` — not from `motion/react`.
+>
+> ```ts
+> // ✅ correct
+> import { motion, AnimatePresence, MotionConfig } from "framer-motion";
+>
+> // ❌ wrong
+> import { motion } from "motion/react";
+> ```
+>
+> Note: `framer-motion` and `motion` are the same library.
+> `motion` is just the new package name since 2025. APIs are identical.
+
+---
+
+### Decision rule — apply before writing any component
+
+Element changes visibility or state?
+
+├── No → no animation needed
+└── Yes → does it unmount from DOM?
+├── No → Tier 1: Tailwind CSS (className toggle)
+└── Yes → is it page navigation?
+├── Yes → Tier 2: View Transitions API
+└── No → Tier 3: framer-motion + AnimatePresence
+└── does it enter viewport on scroll?
+└── Yes → whileInView + viewport={{ once: true }}
+
+---
+
+### Tier 1 — Tailwind CSS (default, zero bundle cost)
+
+Use for elements that are **always in the DOM** and only change appearance.
+
+- Buttons, links, icon buttons — always add hover + active feedback
+- Cards, list items, nav items — hover lift or highlight
+- Inputs — focus ring transition
+- Icons inside interactive elements — translate or rotate on parent hover
+- Sidebar/Drawer that **hides via CSS** (not unmounted) — translate-x transition
+- Skeleton loaders — `animate-pulse`
+- Spinners — `animate-spin`
+- Color, shadow, border, opacity changes on state
+
+**Required on every `<Button>` in `shared/ui/`:**
+
+```tsx
+className="transition-transform duration-150 ease-out
+  hover:scale-[1.02] active:scale-95
+  disabled:opacity-50 disabled:pointer-events-none"
+```
+
+**Required on every interactive card:**
+
+```tsx
+className =
+	"transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg";
+```
+
+**Required on every `<Input>` focus:**
+
+```tsx
+className =
+	"transition-shadow duration-150 ease-out focus:ring-2 focus:ring-primary";
+```
+
+**Icons inside buttons — use `group` + `group-hover`:**
+
+```tsx
+// ❌ wrong — no feedback on icon
+<button>
+  <ArrowIcon />
+</button>
+
+// ✅ correct
+<button className="group">
+  <ArrowIcon className="transition-transform duration-150 group-hover:translate-x-1" />
+</button>
+```
+
+**Sidebar that hides via CSS (not unmounted):**
+
+```tsx
+// ❌ wrong — instant, no transition
+<aside className={isOpen ? 'translate-x-0' : '-translate-x-full'}>
+
+// ✅ correct
+<aside className={cn(
+  'transition-transform duration-300 ease-in-out',
+  isOpen ? 'translate-x-0' : '-translate-x-full'
+)}>
+```
+
+**Always specify `ease-*` — never leave it implicit:**
+
+```tsx
+// ❌ wrong — defaults to linear, looks mechanical
+className = "transition-all duration-300";
+
+// ✅ correct
+className = "transition-all duration-300 ease-out";
+```
+
+---
+
+### Tier 2 — View Transitions API (page navigation, zero JS cost)
+
+Use for **navigation between routes** and **shared elements across pages**.
+Never use framer-motion for page transitions — View Transitions handles this natively
+in Next.js 16 + React 19.2.
+
+**Enable once in `next.config.ts`:**
+
+```ts
+experimental: {
+	viewTransition: true;
+}
+```
+
+**Page transition CSS in `globals.css`:**
+
+```css
+::view-transition-old(root) {
+	animation: fade-out 200ms ease-out;
+}
+::view-transition-new(root) {
+	animation: fade-in 200ms ease-in;
+}
+```
+
+**Shared elements across pages:**
+
+```tsx
+import { ViewTransition } from 'react'
+
+// On list page — card thumbnail
+<ViewTransition>
+  <img style={{ viewTransitionName: `card-${id}` }} src={thumbnail} />
+</ViewTransition>
+
+// On detail page — same name, browser morphs between them
+<ViewTransition>
+  <img style={{ viewTransitionName: `card-${id}` }} src={hero} />
+</ViewTransition>
+```
+
+---
+
+### Tier 3 — framer-motion (only when element unmounts from DOM)
+
+Use **only** when an element is conditionally mounted/unmounted.
+Always wrap with `<AnimatePresence>` — without it there is no exit animation.
+
+**Elements that always require `AnimatePresence`:**
+
+- Modal, Dialog, Drawer, BottomSheet
+- Tooltip, Popover, Dropdown, Combobox
+- Toast, Notification, Alert, Banner
+- Form error messages
+- Any `{condition && <Component />}` that has visual weight
+
+```tsx
+// ❌ wrong — no AnimatePresence, element vanishes instantly
+{
+	isOpen && (
+		<motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} />
+	);
+}
+
+// ✅ correct
+<AnimatePresence>
+	{isOpen && (
+		<motion.div
+			initial={{ opacity: 0, scale: 0.95, y: 8 }}
+			animate={{ opacity: 1, scale: 1, y: 0 }}
+			exit={{ opacity: 0, scale: 0.95, y: 8 }}
+			transition={springs.default} // ← always from shared/lib/animations/springs.ts
+		/>
+	)}
+</AnimatePresence>;
+```
+
+**Modal with backdrop:**
+
+```tsx
+<AnimatePresence>
+	{isOpen && (
+		<>
+			<motion.div
+				className="fixed inset-0 bg-black/50"
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				exit={{ opacity: 0 }}
+				transition={{ duration: 0.2 }}
+				onClick={onClose}
+			/>
+			<motion.div
+				className="fixed inset-0 m-auto ..."
+				initial={{ opacity: 0, scale: 0.95, y: 16 }}
+				animate={{ opacity: 1, scale: 1, y: 0 }}
+				exit={{ opacity: 0, scale: 0.95, y: 16 }}
+				transition={springs.default}
+			/>
+		</>
+	)}
+</AnimatePresence>
+```
+
+**Stagger for lists — when list first renders on screen:**
+
+```tsx
+// ❌ wrong — all items appear instantly at once
+{
+	items.map(item => <Card key={item.id} item={item} />);
+}
+
+// ✅ correct — import variants from shared/lib/animations/variants.ts
+<motion.ul variants={listVariants} initial="hidden" animate="visible">
+	{items.map(item => (
+		<motion.li key={item.id} variants={itemVariants}>
+			<Card item={item} />
+		</motion.li>
+	))}
+</motion.ul>;
+```
+
+**Scroll-triggered animations — use `whileInView`, never `useEffect` + `IntersectionObserver`:**
+
+```tsx
+// ❌ wrong — manual IntersectionObserver, unnecessary complexity
+useEffect(() => {
+  const observer = new IntersectionObserver(...)
+}, [])
+
+// ✅ correct
+<motion.section
+  initial={{ opacity: 0, y: 24 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: '-80px' }}
+  transition={springs.gentle}
+/>
+```
+
+**Counter / badge number change — key trick:**
+
+```tsx
+// ❌ wrong — number changes instantly, user misses it
+<span>{count}</span>
+
+// ✅ correct
+<AnimatePresence mode="wait">
+  <motion.span
+    key={count}
+    initial={{ opacity: 0, y: -8 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: 8 }}
+    transition={springs.snappy}
+  >
+    {count}
+  </motion.span>
+</AnimatePresence>
+```
+
+**Tab / nav active indicator — `layoutId` for sliding effect:**
+
+```tsx
+// ❌ wrong — indicator jumps between tabs instantly
+{
+	isActive && <div className="absolute bottom-0 h-0.5 bg-primary" />;
+}
+
+// ✅ correct — browser morphs the indicator smoothly
+{
+	isActive && (
+		<motion.div
+			layoutId="tab-indicator"
+			className="absolute bottom-0 h-0.5 bg-primary"
+		/>
+	);
+}
+```
+
+**Static styles go in `style` prop, not `animate`:**
+
+```tsx
+// ❌ wrong — framer-motion processes these on every frame unnecessarily
+<motion.div animate={{ position: 'absolute', zIndex: 50, opacity: 1 }} />
+
+// ✅ correct — static values bypass motion overhead
+<motion.div style={{ position: 'absolute', zIndex: 50 }} animate={{ opacity: 1 }} />
+```
+
+---
+
+### Centralized animation config — required
+
+All spring configs and variants live in `shared/lib/animations/`.
+**Never inline transition values** — always import from here.
+shared/lib/animations/
+
+springs.ts ← transition / spring configs
+
+variants.ts ← reusable motion variants
+
+index.ts ← barrel export
+
+```ts
+// shared/lib/animations/springs.ts
+import type { Transition } from "framer-motion";
+
+export const springs = {
+	gentle: { type: "spring", stiffness: 120, damping: 14 }, // layout, page sections
+	default: { type: "spring", stiffness: 280, damping: 24 }, // modal, drawer
+	snappy: { type: "spring", stiffness: 400, damping: 30 }, // tooltip, dropdown
+	bouncy: { type: "spring", stiffness: 600, damping: 20 }, // toast, badge counter
+} as const satisfies Record<string, Transition>;
+```
+
+```ts
+// shared/lib/animations/variants.ts
+import type { Variants } from "framer-motion";
+
+export const fadeIn: Variants = {
+	hidden: { opacity: 0 },
+	visible: { opacity: 1 },
+	exit: { opacity: 0 },
+};
+
+export const slideUp: Variants = {
+	hidden: { opacity: 0, y: 16 },
+	visible: { opacity: 1, y: 0 },
+	exit: { opacity: 0, y: 16 },
+};
+
+export const scaleIn: Variants = {
+	hidden: { opacity: 0, scale: 0.95 },
+	visible: { opacity: 1, scale: 1 },
+	exit: { opacity: 0, scale: 0.95 },
+};
+
+export const listVariants: Variants = {
+	hidden: {},
+	visible: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
+};
+
+export const itemVariants: Variants = {
+	hidden: { opacity: 0, y: 16 },
+	visible: { opacity: 1, y: 0 },
+};
+```
+
+---
+
+### Accessibility — mandatory, configured once globally
+
+**`MotionConfig` in `app/providers.tsx` — covers the entire app automatically:**
+
+```tsx
+// app/providers.tsx
+import { MotionConfig } from "framer-motion";
+
+export const Providers = ({ children }: { children: ReactNode }) => (
+	<MotionConfig reducedMotion="user">{children}</MotionConfig>
+);
+```
+
+This automatically disables transform animations for users with "Reduce Motion" enabled
+in their OS. No `useReducedMotion()` needed in individual components.
+
+\*\*Also add to `globals.css`
+
+```
+
+```

@@ -1,7 +1,7 @@
 "use client";
 
 import type { UnknownWordItem } from "@/entities/admin-unknown-word";
-import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word/model/use-admin-unknown-word-mutations";
+import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Clock, FileText, MoreVertical, Plus, Trash2 } from "lucide-react";

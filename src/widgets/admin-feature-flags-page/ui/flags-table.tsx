@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
@@ -8,13 +9,11 @@ import { ChevronRight, User } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import type { FeatureFlagItem, FeatureFlagCategory } from "@/entities/feature-flag";
 import { useAdminFeatureFlagItemHistory } from "@/entities/feature-flag";
+import { formatDateCompact } from "@/shared/lib/format-date";
 import { FlagToggle } from "./flag-toggle";
 import { FlagEnvChip } from "./flag-env-chip";
 import { FlagCategoryBadge } from "./flag-category-badge";
 import { FlagRowActions } from "./flag-row-actions";
-
-const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
 
 const groupByCategory = (items: FeatureFlagItem[]): [FeatureFlagCategory, FeatureFlagItem[]][] => {
 	const map = new Map<FeatureFlagCategory, FeatureFlagItem[]>();
@@ -81,9 +80,9 @@ const ExpandedRow = ({
 					)}
 				</div>
 
-				<Typography tag="p" className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.5px] text-t-3">
+				<SectionLabel className="mb-1.5">
 					{t("admin.featureFlags.expandDetails")}
-				</Typography>
+				</SectionLabel>
 				{historyQuery.isLoading ? (
 					<div className="space-y-1.5">
 						{Array.from({ length: 3 }).map((_, i) => (
@@ -202,7 +201,7 @@ const FlagRow = ({
 					)}
 				</TableCell>
 				<TableCell className="py-3 pl-3.5 text-[11.5px] text-t-3">
-					{formatDate(flag.updatedAt)}
+					{formatDateCompact(flag.updatedAt)}
 				</TableCell>
 				<TableCell className="py-3 pr-3.5">
 					<FlagRowActions

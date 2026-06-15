@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/shared/lib/cn";
-import { Typography } from "@/shared/ui/typography";
+import { SectionLabel } from "@/shared/ui/section-label";
 import type { AchievementGroup } from "../lib/achievement-groups";
 import { ACHIEVEMENT_LABELS } from "../lib/achievement-groups";
 
@@ -15,9 +15,9 @@ export const AchievementGroupSection = ({ group, byId, t }: AchievementGroupSect
 	if (items.length === 0) return null;
 	return (
 		<div>
-			<Typography tag="p" className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+			<SectionLabel className="mb-1.5">
 				{t(group.labelKey)}
-			</Typography>
+			</SectionLabel>
 			<div className="flex flex-wrap gap-1.5">
 				{items.map(a => {
 					const lbl = ACHIEVEMENT_LABELS[a.id];

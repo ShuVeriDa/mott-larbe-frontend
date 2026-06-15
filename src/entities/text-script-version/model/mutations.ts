@@ -13,8 +13,7 @@ export const useGenerateScriptVersion = (textId: string) => {
 			textScriptVersionApi.generate(textId, script),
 		onSuccess: (_data, script) => {
 			qc.invalidateQueries({ queryKey: textScriptVersionKeys.versions(textId) });
-			// Invalidate all cached script pages so the reader fetches fresh transliterated content
-			qc.invalidateQueries({ queryKey: ["text", "scriptPage", textId] });
+			qc.invalidateQueries({ queryKey: textKeys.scriptPages(textId) });
 		},
 	});
 };
@@ -57,7 +56,7 @@ export const useGenerateUserScriptVersion = (userTextId: string) => {
 			qc.invalidateQueries({
 				queryKey: textScriptVersionKeys.userVersions(userTextId),
 			});
-			qc.invalidateQueries({ queryKey: ["text", "scriptPage", userTextId] });
+			qc.invalidateQueries({ queryKey: textKeys.scriptPages(userTextId) });
 		},
 	});
 };

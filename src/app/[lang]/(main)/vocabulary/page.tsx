@@ -1,8 +1,8 @@
-import { getDictionary, hasLocale, LOCALES } from "@/i18n/locales";
+import { getDictionary, LOCALES } from "@/i18n/locales";
 import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
 import { VocabularyPage } from "@/widgets/vocabulary-page";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { requireLocale } from "@/shared/lib/i18n";
 import VocabularyJsonLd from "./vocabulary-json-ld";
 
 export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
@@ -11,7 +11,7 @@ export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
 }): Promise<Metadata> => {
 	const { lang } = await props.params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const dict = await getDictionary(lang);
 	const path = "/vocabulary";
@@ -42,7 +42,7 @@ interface PageProps {
 
 const VocabularyRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const dict = await getDictionary(lang);
 	const { title, description } = dict.vocabulary.meta;

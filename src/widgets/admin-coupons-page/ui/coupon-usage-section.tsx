@@ -1,8 +1,10 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { cn } from "@/shared/lib/cn";
 import type { AdminCouponDetail } from "@/entities/admin-coupon";
+import { formatDateLong } from "@/shared/lib/format-date";
 
 const PLAN_STYLES: Record<string, string> = {
 	BASIC: "bg-acc-bg text-acc-t",
@@ -15,15 +17,6 @@ const usageBarColor = (pct: number) => {
 	if (pct >= 1) return "bg-red-t";
 	if (pct >= 0.8) return "bg-amb";
 	return "bg-acc";
-};
-
-const formatDate = (date: string | null | undefined) => {
-	if (!date) return "—";
-	return new Date(date).toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "long",
-		year: "numeric",
-	});
 };
 
 interface Props {
@@ -46,9 +39,9 @@ export const CouponUsageSection = ({ coupon, labels }: Props) => {
 
 	return (
 		<div className="border-b border-bd-1 px-[15px] py-3">
-			<div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+			<SectionLabel>
 				{labels.sectionTitle}
-			</div>
+			</SectionLabel>
 
 			<div className="mb-2.5">
 				<div className="mb-1.5 flex items-baseline justify-between">
@@ -113,7 +106,7 @@ export const CouponUsageSection = ({ coupon, labels }: Props) => {
 							{labels.validFrom}
 						</Typography>
 						<Typography tag="span" className="text-[12px] font-medium text-t-1">
-							{formatDate(coupon.validFrom)}
+							{formatDateLong(coupon.validFrom)}
 						</Typography>
 					</div>
 				)}
@@ -122,7 +115,7 @@ export const CouponUsageSection = ({ coupon, labels }: Props) => {
 						{labels.validUntil}
 					</Typography>
 					<Typography tag="span" className="text-[12px] font-medium text-t-1">
-						{formatDate(coupon.validUntil)}
+						{formatDateLong(coupon.validUntil)}
 					</Typography>
 				</div>
 			</div>

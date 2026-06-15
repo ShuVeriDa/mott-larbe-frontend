@@ -39,7 +39,7 @@ export const useToggleFeatureFlag = () => {
 		onMutate: async ({ id, isEnabled }) => {
 			await qc.cancelQueries({ queryKey: featureFlagKeys.root });
 			const snapshots = qc.getQueriesData<PaginatedFeatureFlags>({
-				queryKey: ["feature-flags", "list"],
+				queryKey: featureFlagKeys.root,
 			});
 			for (const [key, data] of snapshots) {
 				if (!data) continue;

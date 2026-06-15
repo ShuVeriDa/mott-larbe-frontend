@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import {
 	useAdminAnalyticsTopCountries,
 	useAdminAnalyticsTopCities,
@@ -7,7 +8,7 @@ import {
 	useAnalyticsRange,
 	useInvalidateAdminAnalytics,
 } from "@/features/admin-analytics";
-import type { Dictionary, Locale } from "@/i18n/locales";
+import type { Dictionary, Locale } from "@/i18n/types";
 import { AnalyticsTabs } from "@/widgets/admin-tracking-overview-page";
 import { AnalyticsToolbar } from "@/widgets/admin-tracking-overview-page";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
@@ -102,7 +103,7 @@ export const AdminTrackingGeographyPage = ({ lang, dict }: AdminTrackingGeograph
 				)}
 
 				<div className="grid grid-cols-1 gap-3.5 lg:grid-cols-2">
-					<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+					<AdminCard>
 						<div className="border-b border-bd-1 px-4 py-3">
 							<p className="text-[13px] font-semibold text-t-1">{dict.geography.countries}</p>
 						</div>
@@ -151,9 +152,9 @@ export const AdminTrackingGeographyPage = ({ lang, dict }: AdminTrackingGeograph
 								)}
 							</TableBody>
 						</Table>
-					</div>
+					</AdminCard>
 
-					<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+					<AdminCard>
 						<div className="border-b border-bd-1 px-4 py-3">
 							<p className="text-[13px] font-semibold text-t-1">{dict.geography.cities}</p>
 						</div>
@@ -207,7 +208,7 @@ export const AdminTrackingGeographyPage = ({ lang, dict }: AdminTrackingGeograph
 								)}
 							</TableBody>
 						</Table>
-					</div>
+					</AdminCard>
 				</div>
 			</div>
 		</div>

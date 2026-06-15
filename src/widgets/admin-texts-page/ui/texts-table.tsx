@@ -5,12 +5,13 @@ import type {
 	ProcessingStatus,
 } from "@/entities/admin-text";
 import { useAdminTextSSE } from "@/entities/admin-text";
-import type { useAdminTextMutations } from "@/entities/admin-text/model/use-admin-text-mutations";
+import type { useAdminTextMutations } from "@/entities/admin-text";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { AlertCircle, TrendingUp } from "lucide-react";
 import { ComponentProps } from "react";
+import { formatDate } from "@/shared/lib/format-date";
 import { TextLevelBadge } from "./text-level-badge";
 import { TextProcessingBar } from "./text-processing-bar";
 import { TextRowActions } from "./text-row-actions";
@@ -25,13 +26,6 @@ interface TextsTableProps {
 	mutations: ReturnType<typeof useAdminTextMutations>;
 	isLoading: boolean;
 }
-
-const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "short",
-		year: "numeric",
-	});
 
 interface TextTableRowProps {
 	text: AdminTextListItem;

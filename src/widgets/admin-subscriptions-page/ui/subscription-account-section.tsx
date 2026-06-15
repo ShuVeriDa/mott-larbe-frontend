@@ -1,22 +1,13 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import type { AdminSubscriptionDetail } from "@/entities/admin-subscription";
+import { formatDateLong } from "@/shared/lib/format-date";
 import { SubscriptionProviderBadge } from "./subscription-provider-badge";
 
-const formatDate = (date: string | null, fallback = "—") => {
-	if (!date) return fallback;
-	return new Date(date).toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "long",
-		year: "numeric",
-	});
-};
-
 const SectionTitle = ({ label }: { label: string }) => (
-	<div className="mb-[7px] text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
-		{label}
-	</div>
+	<SectionLabel className="mb-[7px]">{label}</SectionLabel>
 );
 
 interface Props {
@@ -40,11 +31,11 @@ export const SubscriptionAccountSection = ({ sub, labels }: Props) => (
 			</div>
 			<div className="flex items-baseline justify-between gap-2">
 				<Typography tag="span" className="text-[11.5px] text-t-3">{labels.registered}</Typography>
-				<Typography tag="span" className="text-[12px] font-medium text-t-1">{formatDate(sub.user.signupAt)}</Typography>
+				<Typography tag="span" className="text-[12px] font-medium text-t-1">{formatDateLong(sub.user.signupAt)}</Typography>
 			</div>
 			<div className="flex items-baseline justify-between gap-2">
 				<Typography tag="span" className="text-[11.5px] text-t-3">{labels.lastSeen}</Typography>
-				<Typography tag="span" className="text-[12px] font-medium text-t-1">{formatDate(sub.user.lastActiveAt)}</Typography>
+				<Typography tag="span" className="text-[12px] font-medium text-t-1">{formatDateLong(sub.user.lastActiveAt)}</Typography>
 			</div>
 			<div className="flex items-baseline justify-between gap-2">
 				<Typography tag="span" className="text-[11.5px] text-t-3">{labels.provider}</Typography>

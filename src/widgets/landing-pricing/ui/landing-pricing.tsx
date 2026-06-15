@@ -5,6 +5,7 @@ import {
 	useBillingPeriod,
 } from "@/features/landing-pricing-toggle";
 import { useI18n } from "@/shared/lib/i18n";
+import { EyebrowLabel } from "@/shared/ui/eyebrow-label";
 import { Typography } from "@/shared/ui/typography";
 import { PlanCard, type PlanKey } from "./plan-card";
 
@@ -67,12 +68,7 @@ export const LandingPricing = ({ startHref }: LandingPricingProps) => {
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
 				<header className="mb-12 text-center max-[640px]:mb-9">
-					<Typography
-						tag="span"
-						className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-acc-bg px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[1.2px] text-acc-t"
-					>
-						{t("landing.pricing.eyebrow")}
-					</Typography>
+					<EyebrowLabel>{t("landing.pricing.eyebrow")}</EyebrowLabel>
 					<Typography
 						tag="h2"
 						id="pricing-title"

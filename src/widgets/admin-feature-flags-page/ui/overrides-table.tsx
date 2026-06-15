@@ -1,12 +1,11 @@
 import { ComponentProps } from 'react';
 import type { FeatureFlagOverrideItem } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
+import { formatDate } from "@/shared/lib/format-date";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { Trash2 } from "lucide-react";
-const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" });
 
 const AV_COLORS = [
 	"bg-pur-bg text-pur-t",

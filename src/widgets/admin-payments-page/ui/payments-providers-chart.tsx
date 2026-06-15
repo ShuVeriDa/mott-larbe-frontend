@@ -1,10 +1,12 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminPaymentProviderItem } from "@/entities/admin-payment";
+import { formatCentsRub } from "@/shared/lib/format-currency";
 
 const PROVIDER_COLORS: Record<string, string> = {
 	STRIPE: "#635bff",
@@ -22,11 +24,6 @@ const PROVIDER_LABELS: Record<string, string> = {
 	MANUAL: "Manual",
 };
 
-const fmtMoney = (cents: number) => {
-	const rub = Math.round(cents / 100);
-	if (rub >= 1000) return `${Math.round(rub / 1000)} тыс. ₽`;
-	return `${rub} ₽`;
-};
 
 interface Props {
 	items?: AdminPaymentProviderItem[];
@@ -44,7 +41,7 @@ export const PaymentsProvidersChart = ({ items, isLoading }: Props) => {
 	}));
 
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="border-b border-bd-1 px-4 py-3">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
 					{t("admin.payments.providers.title")}
@@ -107,7 +104,7 @@ export const PaymentsProvidersChart = ({ items, isLoading }: Props) => {
 										{item.name}
 									</Typography>
 									<Typography tag="span" className="text-[12px] font-medium text-t-1">
-										{fmtMoney(item.totalCents)}
+										{formatCentsRub(item.totalCents)}
 									</Typography>
 									<Typography tag="span" className="w-[34px] text-right text-[11px] text-t-3">
 										{item.value}%
@@ -118,6 +115,6 @@ export const PaymentsProvidersChart = ({ items, isLoading }: Props) => {
 					</>
 				)}
 			</div>
-		</div>
+		</AdminCard>
 	);
 };

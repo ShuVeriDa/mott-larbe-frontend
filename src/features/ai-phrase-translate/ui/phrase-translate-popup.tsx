@@ -154,8 +154,7 @@ export const PhraseTranslatePopup = ({
 				</div>
 				{displayPhrase && (
 					<>
-						<button
-							type="button"
+						<Button
 							onClick={handleToggleCyrillic}
 							title={
 								showCyrillic
@@ -176,7 +175,7 @@ export const PhraseTranslatePopup = ({
 								)}
 								strokeWidth={1.8}
 							/>
-						</button>
+						</Button>
 						{showCyrillic && (
 							<div className="mt-1.5 text-[11px] text-t-3">{phrase}</div>
 						)}

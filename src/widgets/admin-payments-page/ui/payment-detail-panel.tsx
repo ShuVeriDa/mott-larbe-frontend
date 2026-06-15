@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import type { AdminPaymentDetail } from "@/entities/admin-payment";
 import { useI18n } from "@/shared/lib/i18n";
 import { PaymentUserHeroSection } from "./payment-user-hero-section";
@@ -31,20 +32,20 @@ export const PaymentDetailPanel = ({
 
 	if (isLoading) {
 		return (
-			<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+			<AdminCard>
 				<div className="space-y-3 p-4">
 					{Array.from({ length: 6 }).map((_, i) => (
 						<div key={i} className="h-5 animate-pulse rounded bg-surf-3" />
 					))}
 				</div>
-			</div>
+			</AdminCard>
 		);
 	}
 
 	const otherPayments = (payment.user.payments ?? []).slice(0, 3);
 
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+		<AdminCard>
 			<PaymentUserHeroSection payment={payment} t={t} />
 			<PaymentAccountSection payment={payment} t={t} />
 			<PaymentRolesSection payment={payment} t={t} />
@@ -57,6 +58,6 @@ export const PaymentDetailPanel = ({
 				onRefund={onRefund}
 				t={t}
 			/>
-		</div>
+		</AdminCard>
 	);
 };

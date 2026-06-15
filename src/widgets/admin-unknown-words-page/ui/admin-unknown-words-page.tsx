@@ -2,6 +2,7 @@
 
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Button } from "@/shared/ui/button";
 import { ComponentProps } from 'react';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -163,7 +164,7 @@ return (
 							/>
 
 							{/* Table card */}
-							<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+							<AdminCard>
 								<UnknownWordsBulkBar
 									selectedCount={selectedIds.size}
 									onAddToDictionary={handleBulkAddToDictionary}
@@ -201,7 +202,7 @@ return (
 										onPageChange={handlePageChange}
 									/>
 								)}
-							</div>
+							</AdminCard>
 						</>
 					)}
 				</div>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { DEFAULT_LOCALE, LOCALES, hasLocale } from "@/i18n/locales";
+import { DEFAULT_LOCALE, LOCALES } from "@/i18n/locales";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 import { AdminTextPhrasesPage } from "@/widgets/admin-text-phrases-page";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
@@ -9,7 +9,7 @@ export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;
 }): Promise<Metadata> => {
 	const { lang } = await props.params;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const title = "Переводы фраз — Admin | Мотт Ларбе";
 	const description = "Менеджер глобального справочника фраз с переводами";
@@ -49,7 +49,7 @@ interface PageProps {
 
 const AdminTextPhrasesRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	return <AdminTextPhrasesPage />;
 };

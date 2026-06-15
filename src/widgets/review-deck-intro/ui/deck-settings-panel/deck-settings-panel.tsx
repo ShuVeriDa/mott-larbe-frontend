@@ -25,6 +25,7 @@ export const DeckSettingsPanel = () => {
 	const handlePopoverSaved = () => setPopoverOpen(false);
 	const handleDrawerSaved = () => setDrawerOpen(false);
 	const handleDrawerOpenChange = (open: boolean) => setDrawerOpen(open);
+	const handleDrawerOpen = () => setDrawerOpen(true);
 
 	const trigger = (
 		<Button variant="outline" className="h-7 gap-1.5 border-bd-3 bg-surf-2 px-2.5 text-[12px] text-t-1 hover:bg-surf-3 hover:text-t-1">
@@ -54,7 +55,7 @@ export const DeckSettingsPanel = () => {
 				<Button
 					variant="outline"
 					className="h-7 gap-1.5 border-bd-3 bg-surf-2 px-2.5 text-[12px] text-t-1 hover:bg-surf-3 hover:text-t-1"
-					onClick={() => setDrawerOpen(true)}
+					onClick={handleDrawerOpen}
 				>
 					<Settings2Icon className="size-3.5 text-t-2" />
 					{t("review.deck.intro.settings.title")}

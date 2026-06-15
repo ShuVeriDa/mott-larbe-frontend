@@ -3,3 +3,5 @@ export { useAnnotateToken, useBatchAnnotate, useCreateMorphForm, useLemmaSearch,
 export type { LemmaSearchResult, AnnotateScope, CreateMorphFormDto, TokenOccurrence, BatchAnnotateDto, BatchAnnotateResponse, AnnotatedFormOnPage, MorphFormLemma, MorphFormListItem, MorphFormDetail, MorphFormListResponse, PatchMorphFormDto, UnannotateTokensDto, UnannotateTokensResponse } from "./api";
 export { annotationApi } from "./api/annotation-api";
 export { annotationKeys } from "./api/annotation-keys";
+export { WordAnnotationHighlightExtension, WORD_ANNOTATION_CLICK_EVENT } from "./lib";
+export type { WordAnnotationClickDetail } from "./lib";

@@ -256,25 +256,23 @@ export const DeckSession = ({
 			) : null}
 
 			{isFlashcard && flipped && current.deckType !== "REPEAT" ? (
-				<button
-					type="button"
+				<Button
 					onClick={handleMoveToRepeat}
 					disabled={isAddingToRepeat}
 					className="mt-1 flex h-7 items-center gap-1.5 rounded-base border-[0.5px] border-red/30 bg-red-bg px-3 text-[11.5px] font-medium text-red-t transition-opacity disabled:opacity-50"
 				>
 					{t("review.deck.card.moveToRepeat")}
-				</button>
+				</Button>
 			) : null}
 
 			{isFlashcard && flipped && current.deckType === "REPEAT" ? (
-				<button
-					type="button"
+				<Button
 					onClick={handleReturnFromRepeat}
 					disabled={isReturning}
 					className="mt-1 flex h-7 items-center gap-1.5 rounded-base border-[0.5px] border-grn/30 bg-grn-bg px-3 text-[11.5px] font-medium text-grn-t transition-opacity disabled:opacity-50"
 				>
 					{t("review.deck.card.returnFromRepeat")}
-				</button>
+				</Button>
 			) : null}
 
 			<div className="mt-2.5 flex w-full max-w-[520px] items-center gap-2">

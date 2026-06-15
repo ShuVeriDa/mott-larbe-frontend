@@ -1,42 +1,13 @@
 import type { AdminCouponStats } from "@/entities/admin-coupon";
 import { useI18n } from "@/shared/lib/i18n";
-import { ReactNode } from "react";
-
+import { AdminStatCard, AdminStatCardSkeleton } from "@/shared/ui/admin-stat-card";
 import { Typography } from "@/shared/ui/typography";
+import type { ReactNode } from "react";
+
 interface Props {
 	stats: AdminCouponStats | undefined;
 	isLoading: boolean;
 }
-
-const KpiCard = ({
-	label,
-	value,
-	sub,
-	isLoading,
-}: {
-	label: string;
-	value: ReactNode;
-	sub: ReactNode;
-	isLoading: boolean;
-}) => (
-	<div className="rounded-card border border-bd-1 bg-surf p-3 transition-colors">
-		<div className="mb-1.5 text-[11px] font-medium tracking-[0.2px] text-t-3">
-			{label}
-		</div>
-		{isLoading ? (
-			<div className="mb-1 h-5 w-16 animate-pulse rounded bg-surf-3" />
-		) : (
-			<div className="mb-0.5 text-[20px] font-semibold leading-none text-t-1">
-				{value}
-			</div>
-		)}
-		{isLoading ? (
-			<div className="h-3.5 w-24 animate-pulse rounded bg-surf-3" />
-		) : (
-			<div className="text-[11px] text-t-3">{sub}</div>
-		)}
-	</div>
-);
 
 const formatDiscountK = (cents: number) => {
 	const rub = cents / 100;
@@ -50,58 +21,60 @@ export const CouponsKpiRow = ({ stats, isLoading }: Props) => {
 	const growth = stats?.usageGrowth ?? 0;
 	const convDelta = stats ? Math.round(stats.conversionDelta * 1000) / 10 : 0;
 
+	const usageSub: ReactNode = (
+		<>
+			<Typography tag="span" className={growth >= 0 ? "text-grn-t" : "text-red-t"}>
+				{growth >= 0 ? "+" : ""}
+				{growth}
+			</Typography>{" "}
+			{t("admin.coupons.kpi.usageGrowthSuffix")}
+		</>
+	);
+
+	const convSub: ReactNode = (
+		<>
+			<Typography tag="span" className={convDelta >= 0 ? "text-grn-t" : "text-red-t"}>
+				{convDelta >= 0 ? "+" : ""}
+				{convDelta} пп
+			</Typography>{" "}
+			{t("admin.coupons.kpi.conversionSuffix")}
+		</>
+	);
+
+	if (isLoading) {
+		return (
+			<div className="mb-4 grid grid-cols-4 gap-2.5 max-md:grid-cols-2">
+				{Array.from({ length: 4 }).map((_, i) => (
+					<AdminStatCardSkeleton key={i} />
+				))}
+			</div>
+		);
+	}
+
 	return (
 		<div className="mb-4 grid grid-cols-4 gap-2.5 max-md:grid-cols-2">
-			<KpiCard
+			<AdminStatCard
 				label={t("admin.coupons.kpi.activeCodes")}
 				value={stats?.activeCount ?? 0}
 				sub={t("admin.coupons.kpi.activeOf").replace(
 					"{total}",
 					String(stats?.totalCreated ?? 0),
 				)}
-				isLoading={isLoading}
 			/>
-			<KpiCard
+			<AdminStatCard
 				label={t("admin.coupons.kpi.usagesMonth")}
 				value={stats?.usagesThisMonth ?? 0}
-				sub={
-					<>
-						<Typography
-							tag="span"
-							className={growth >= 0 ? "text-grn-t" : "text-red-t"}
-						>
-							{growth >= 0 ? "+" : ""}
-							{growth}
-						</Typography>{" "}
-						{t("admin.coupons.kpi.usageGrowthSuffix")}
-					</>
-				}
-				isLoading={isLoading}
+				sub={usageSub}
 			/>
-			<KpiCard
+			<AdminStatCard
 				label={t("admin.coupons.kpi.discountTotal")}
 				value={stats ? formatDiscountK(stats.totalDiscountCents) : "0 ₽"}
 				sub={t("admin.coupons.kpi.discountSub")}
-				isLoading={isLoading}
 			/>
-			<KpiCard
+			<AdminStatCard
 				label={t("admin.coupons.kpi.conversion")}
-				value={
-					stats ? `${Math.round(stats.conversionRate * 1000) / 10}%` : "0%"
-				}
-				sub={
-					<>
-						<Typography
-							tag="span"
-							className={convDelta >= 0 ? "text-grn-t" : "text-red-t"}
-						>
-							{convDelta >= 0 ? "+" : ""}
-							{convDelta} пп
-						</Typography>{" "}
-						{t("admin.coupons.kpi.conversionSuffix")}
-					</>
-				}
-				isLoading={isLoading}
+				value={stats ? `${Math.round(stats.conversionRate * 1000) / 10}%` : "0%"}
+				sub={convSub}
 			/>
 		</div>
 	);

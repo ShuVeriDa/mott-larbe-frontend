@@ -1,12 +1,13 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import {
 	useAdminAnalyticsTimeseries,
 	useAdminAnalyticsTimeseriesSummary,
 	useAnalyticsRange,
 	useInvalidateAdminAnalytics,
 } from "@/features/admin-analytics";
-import type { Dictionary, Locale } from "@/i18n/locales";
+import type { Dictionary, Locale } from "@/i18n/types";
 import { AnalyticsTabs } from "@/widgets/admin-tracking-overview-page";
 import { AnalyticsToolbar } from "@/widgets/admin-tracking-overview-page";
 import { Button } from "@/shared/ui/button";
@@ -132,7 +133,7 @@ export const AdminTrackingTimeseriesPage = ({ lang, dict }: AdminTrackingTimeser
 								key === "peak" ? s.peak?.value :
 								s.min?.value;
 							return (
-								<div key={key} className="rounded-card border border-bd-1 bg-surf p-3.5 transition-colors">
+								<AdminCard key={key} className="p-3.5">
 									<p className="mb-1.5 text-[11px] font-medium tracking-[0.3px] text-t-3">
 										{dict.timeseries.summary[key]}
 									</p>
@@ -143,13 +144,13 @@ export const AdminTrackingTimeseriesPage = ({ lang, dict }: AdminTrackingTimeser
 											{raw != null ? formatValue(metric, raw) : "—"}
 										</p>
 									)}
-								</div>
+								</AdminCard>
 							);
 						})}
 					</div>
 				)}
 
-				<div className="rounded-card border border-bd-1 bg-surf p-4 transition-colors">
+				<AdminCard className="p-4">
 					{timeseries.isLoading ? (
 						<div className="h-[300px] animate-pulse rounded-[9px] bg-surf-2" />
 					) : !currentPoints?.length ? (
@@ -163,7 +164,7 @@ export const AdminTrackingTimeseriesPage = ({ lang, dict }: AdminTrackingTimeser
 							labelPrevious={dict.timeseries.compare}
 						/>
 					)}
-				</div>
+				</AdminCard>
 			</div>
 		</div>
 	);

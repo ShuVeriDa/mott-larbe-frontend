@@ -10,13 +10,11 @@ export const useBatchAnnotate = (textId?: string) => {
 	return useMutation({
 		mutationFn: (dto: BatchAnnotateDto) => annotationApi.batchAnnotate(dto),
 		onSuccess: (_data, dto) => {
+			void qc.invalidateQueries({ queryKey: annotationKeys.annotatedForms(textId) });
 			if (textId) {
-				void qc.invalidateQueries({ queryKey: ["annotation", "annotated-forms", textId] });
 				void qc.invalidateQueries({
 					queryKey: annotationKeys.tokenOccurrences(dto.normalized, textId),
 				});
-			} else {
-				void qc.invalidateQueries({ queryKey: ["annotation", "annotated-forms"] });
 			}
 		},
 	});

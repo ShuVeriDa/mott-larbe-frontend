@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { X } from "lucide-react";
@@ -183,9 +184,9 @@ const Section = ({
 	children: ReactNode;
 }) => (
 	<div className="mb-[18px]">
-		<div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+		<SectionLabel>
 			{label}
-		</div>
+		</SectionLabel>
 		{children}
 	</div>
 );

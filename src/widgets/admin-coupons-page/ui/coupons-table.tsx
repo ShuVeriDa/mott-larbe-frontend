@@ -37,11 +37,6 @@ const STATUS_STYLES: Record<CouponStatus, string> = {
 	disabled: "bg-surf-3 text-t-2",
 };
 
-const formatDate = (date: string | null | undefined) => {
-	if (!date) return "—";
-	return new Date(date).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "2-digit" });
-};
-
 const usageColor = (redeemed: number, max: number | null | undefined) => {
 	if (!max) return "bg-acc";
 	const pct = redeemed / max;

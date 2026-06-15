@@ -42,6 +42,9 @@ export const SuggestionsPage = () => {
 		{ value: "asc", label: t("adminSuggestions.sortOldest") },
 	];
 
+	const handleWordEditsTabClick = () => handleTabChange("word-edits");
+	const handleTextSubmissionsTabClick = () => handleTabChange("text-submissions");
+
 	return (
 		<div className="flex h-full flex-col overflow-hidden">
 			{/* Header */}
@@ -52,7 +55,7 @@ export const SuggestionsPage = () => {
 
 				<div className="flex w-fit gap-[2px] rounded-[8px] border border-bd-1 bg-surf-2 p-[3px]">
 					<Button
-						onClick={() => handleTabChange("word-edits")}
+						onClick={handleWordEditsTabClick}
 						className={cn(
 							"flex h-[26px] items-center whitespace-nowrap rounded-[5px] px-3 text-[12px] font-medium transition-colors",
 							tab === "word-edits" ? "bg-surf text-t-1 shadow-sm" : "text-t-3 hover:text-t-2",
@@ -61,7 +64,7 @@ export const SuggestionsPage = () => {
 						{t("adminSuggestions.typeFilter.entry")}
 					</Button>
 					<Button
-						onClick={() => handleTabChange("text-submissions")}
+						onClick={handleTextSubmissionsTabClick}
 						className={cn(
 							"flex h-[26px] items-center whitespace-nowrap rounded-[5px] px-3 text-[12px] font-medium transition-colors",
 							tab === "text-submissions" ? "bg-surf text-t-1 shadow-sm" : "text-t-3 hover:text-t-2",

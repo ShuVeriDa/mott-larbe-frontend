@@ -57,6 +57,9 @@ export const HeroCarousel = ({ items, lang }: HeroCarouselProps) => {
 		return () => clearInterval(id);
 	}, [api]);
 
+	const handlePrevClick = () => api?.scrollPrev();
+	const handleNextClick = () => api?.scrollNext();
+
 	if (items.length === 0) return null;
 
 	return (
@@ -75,19 +78,21 @@ export const HeroCarousel = ({ items, lang }: HeroCarouselProps) => {
 				</CarouselContent>
 
 				{/* Arrow buttons — inside the slide, overlaid */}
-				<HeroArrow direction="prev" onClick={() => api?.scrollPrev()} />
-				<HeroArrow direction="next" onClick={() => api?.scrollNext()} />
+				<HeroArrow direction="prev" onClick={handlePrevClick} />
+				<HeroArrow direction="next" onClick={handleNextClick} />
 			</Carousel>
 
 			{/* Dot indicators */}
 			{count > 1 && (
 				<div className="mt-3 flex items-center justify-center gap-1.5">
-					{Array.from({ length: count }).map((_, i) => (
+					{Array.from({ length: count }).map((_, i) => {
+						const handleDotButtonClick = () => handleDotClick(i);
+						return (
 						<button
 							key={i}
 							type="button"
 							aria-label={`Slide ${i + 1}`}
-							onClick={() => handleDotClick(i)}
+							onClick={handleDotButtonClick}
 							className={cn(
 								"rounded-full transition-all duration-300",
 								i === current
@@ -95,7 +100,7 @@ export const HeroCarousel = ({ items, lang }: HeroCarouselProps) => {
 									: "size-[6px] bg-bd-2 hover:bg-bd-3",
 							)}
 						/>
-					))}
+					); })}
 				</div>
 			)}
 		</section>

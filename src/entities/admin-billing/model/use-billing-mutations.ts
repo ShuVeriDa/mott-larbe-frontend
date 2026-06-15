@@ -10,10 +10,10 @@ export const useBillingMutations = () => {
 	const qc = useQueryClient();
 
 	const invalidatePlans = () =>
-		qc.invalidateQueries({ queryKey: ["admin", "plans"] });
+		qc.invalidateQueries({ queryKey: adminBillingKeys.plans() });
 
 	const invalidateCoupons = () =>
-		qc.invalidateQueries({ queryKey: ["admin", "coupons"] });
+		qc.invalidateQueries({ queryKey: adminBillingKeys.coupons() });
 
 	const invalidateAll = () =>
 		qc.invalidateQueries({ queryKey: adminBillingKeys.root });

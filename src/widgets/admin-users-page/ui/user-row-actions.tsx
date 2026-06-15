@@ -1,7 +1,7 @@
 "use client";
 
 import type { AdminUserListItem } from "@/entities/admin-user";
-import type { useAdminUserMutations } from "@/entities/admin-user/model/use-admin-user-mutations";
+import type { useAdminUserMutations } from "@/entities/admin-user";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import {

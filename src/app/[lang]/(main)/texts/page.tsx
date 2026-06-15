@@ -1,4 +1,4 @@
-import { getDictionary, hasLocale, LOCALES } from "@/i18n/locales";
+import { getDictionary, LOCALES } from "@/i18n/locales";
 import { libraryTextApi, libraryTextKeys } from "@/entities/library-text";
 import { getQueryClient } from "@/shared/lib/query-client";
 import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
@@ -6,7 +6,7 @@ import { TextsCatalogSkeleton } from "@/widgets/texts-catalog-page/ui/texts-cata
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { notFound } from "next/navigation";
+import { requireLocale } from "@/shared/lib/i18n";
 
 const TextsCatalogPage = dynamic(
 	() => import("@/widgets/texts-catalog-page").then((m) => m.TextsCatalogPage),
@@ -23,7 +23,7 @@ export const generateMetadata = async ({
 	params,
 }: PageProps): Promise<Metadata> => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const dict = await getDictionary(lang);
 	const path = "/texts";
@@ -98,7 +98,7 @@ const TextsJsonLd = ({
 
 const TextsCatalogRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const dict = await getDictionary(lang);
 	const { title, description } = dict.library.meta;

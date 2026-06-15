@@ -1,8 +1,8 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 
 import type { TokenizationQueue } from "@/entities/token";
 import { useI18n } from "@/shared/lib/i18n";
@@ -20,7 +20,7 @@ export const TokenizationQueueCard = ({
 	const { t } = useI18n();
 
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+		<AdminCard>
 			<div className="flex items-center border-b border-bd-1 px-3.5 py-[11px]">
 				<Typography tag="span" className="text-[11px] font-semibold uppercase tracking-[0.4px] text-t-2">
 					{t("admin.tokenization.sidePanel.queue")}
@@ -84,6 +84,6 @@ export const TokenizationQueueCard = ({
 					{t("admin.tokenization.sidePanel.runBtn")}
 				</Button>
 			</div>
-		</div>
+		</AdminCard>
 	);
 };

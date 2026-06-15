@@ -1,3 +1,4 @@
+import { AdminCard } from "@/shared/ui/admin-card";
 import { cn } from "@/shared/lib/cn";
 import { ArrowUp, ArrowDown } from "lucide-react";
 import type { computeDelta } from "../lib/format";
@@ -24,7 +25,7 @@ export const MetricCard = ({
 	const isNegative = sign !== 0 && (inverse ? sign === 1 : sign === -1);
 
 	return (
-		<div className="rounded-card border border-bd-1 bg-surf p-3.5 transition-colors">
+		<AdminCard className="p-3.5">
 			<div className="mb-1.5 truncate text-[11px] font-medium tracking-[0.3px] text-t-3">
 				{loading ? (
 					<span className="inline-block h-2.5 w-20 animate-pulse rounded bg-surf-3" />
@@ -47,6 +48,6 @@ export const MetricCard = ({
 					{sign === 1 ? "+" : ""}{delta.pct.toFixed(1)}% {vsLabel}
 				</div>
 			)}
-		</div>
+		</AdminCard>
 	);
 };

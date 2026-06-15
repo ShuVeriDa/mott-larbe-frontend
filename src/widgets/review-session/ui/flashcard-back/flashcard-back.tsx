@@ -2,6 +2,7 @@
 
 import type { ReviewLatestContext, ReviewMorphForm } from "@/entities/review";
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 export interface FlashcardBackProps {
@@ -43,9 +44,9 @@ export const FlashcardBack = ({
 
 			{context ? (
 				<div className="w-full rounded-base border-[0.5px] border-bd-1 bg-surf-2 px-3 py-2 mb-2">
-					<Typography className="mb-1 text-[10px] font-semibold uppercase tracking-[0.5px] text-t-3">
+					<SectionLabel className="mb-1">
 						{label}
-					</Typography>
+					</SectionLabel>
 					<Typography className="text-[13px] italic leading-[1.55] text-t-1 mb-0.5">
 						«{context.snippet}»
 					</Typography>

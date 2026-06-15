@@ -1,6 +1,7 @@
 "use client";
 
 import type { AdminPhrasebookCategory } from "@/entities/phrasebook";
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Button } from "@/shared/ui/button";
 import {
 	Table,
@@ -29,7 +30,7 @@ export const CategoriesTab = ({
 	onDelete,
 	t,
 }: CategoriesTabProps) => (
-	<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+	<AdminCard>
 		<div className="overflow-x-auto [&::-webkit-scrollbar]:h-[3px]">
 			<Table className="w-full border-collapse text-[12.5px]">
 				<TableHeader>
@@ -103,7 +104,7 @@ export const CategoriesTab = ({
 				</TableBody>
 			</Table>
 		</div>
-	</div>
+	</AdminCard>
 );
 
 interface CategoryRowProps {

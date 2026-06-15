@@ -27,11 +27,12 @@ export const LanguageSelector = ({ size = "sm", className }: LanguageSelectorPro
     <div className={cn("flex items-center gap-0.5", className)}>
       {SUPPORTED_TRANSLATION_LANGUAGES.map((lang: TranslationLanguage) => {
         const isActive = lang === targetLanguage;
+        const handleClick = () => setTargetLanguage(lang);
         return (
           <Button
             key={lang}
             size="bare"
-            onClick={() => setTargetLanguage(lang)}
+            onClick={handleClick}
             aria-pressed={isActive}
             className={cn(
               "rounded px-1.5 font-mono font-semibold tracking-wide transition-colors",

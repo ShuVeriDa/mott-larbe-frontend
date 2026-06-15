@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import type { AdminDashboardKpi } from "@/entities/admin-dashboard";
 import { useI18n } from "@/shared/lib/i18n";
 import { AbsoluteTrend, TrendChip } from "@/shared/ui/trend-chip";
@@ -70,9 +71,9 @@ export const DashboardKpiGrid = ({ kpi }: DashboardKpiGridProps) => {
 	return (
 		<div className="mb-4 grid grid-cols-2 gap-2.5 lg:grid-cols-4 max-sm:gap-2">
 			{cards.map(card => (
-				<div
+				<AdminCard
 					key={card.label}
-					className="overflow-hidden rounded-card border border-bd-1 bg-surf px-3.5 py-3.5 transition-colors max-sm:px-3 max-sm:py-3"
+					className="px-3.5 py-3.5 max-sm:px-3 max-sm:py-3"
 				>
 					<div className="mb-1.5 truncate text-[11px] font-medium tracking-wide text-t-3">
 						{card.label}
@@ -81,7 +82,7 @@ export const DashboardKpiGrid = ({ kpi }: DashboardKpiGridProps) => {
 						{card.value}
 					</div>
 					{card.trend}
-				</div>
+				</AdminCard>
 			))}
 		</div>
 	);
@@ -90,14 +91,14 @@ export const DashboardKpiGrid = ({ kpi }: DashboardKpiGridProps) => {
 export const DashboardKpiGridSkeleton = () => (
 	<div className="mb-4 grid grid-cols-2 gap-2.5 lg:grid-cols-4 max-sm:gap-2">
 		{Array.from({ length: 4 }).map((_, i) => (
-			<div
+			<AdminCard
 				key={i}
-				className="overflow-hidden rounded-card border border-bd-1 bg-surf px-3.5 py-3.5"
+				className="px-3.5 py-3.5"
 			>
 				<div className="mb-2 h-2.5 w-24 animate-pulse rounded bg-surf-3" />
 				<div className="mb-2 h-7 w-20 animate-pulse rounded bg-surf-3" />
 				<div className="h-2.5 w-16 animate-pulse rounded bg-surf-3" />
-			</div>
+			</AdminCard>
 		))}
 	</div>
 );

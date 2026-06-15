@@ -1,5 +1,6 @@
 "use client";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { cn } from "@/shared/lib/cn";
 import type { AdminPaymentDetail } from "@/entities/admin-payment";
@@ -20,9 +21,9 @@ export const PaymentRolesSection = ({ payment, t }: Props) => {
 	if (payment.user.roles.length === 0) return null;
 	return (
 		<div className="border-b border-bd-1 px-[15px] py-2.5">
-			<div className="mb-[7px] text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+			<SectionLabel className="mb-[7px]">
 				{t("admin.payments.detail.roles")}
-			</div>
+			</SectionLabel>
 			<div className="flex flex-wrap gap-1">
 				{payment.user.roles.map(r => (
 					<Typography tag="span"

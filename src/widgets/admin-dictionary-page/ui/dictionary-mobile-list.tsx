@@ -5,11 +5,10 @@ import { CefrBadge } from "@/entities/dictionary";
 import type { AdminDictListItem } from "@/entities/dictionary";
 import { PosBadge } from "./pos-badge";
 
+import { formatDateCompact } from "@/shared/lib/format-date";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { Trash2 } from "lucide-react";
-const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
 
 const SkeletonCard = () => (
 	<div className="border-b border-bd-1 px-3.5 py-3">
@@ -72,7 +71,7 @@ export const DictionaryMobileList = ({
 							<Typography tag="span">
 								{t("admin.dictionary.table.forms")}: <Typography tag="span" className="font-medium text-t-2">{item.formsCount}</Typography>
 							</Typography>
-							<Typography tag="span">{formatDate(item.createdAt ?? "")}</Typography>
+							<Typography tag="span">{formatDateCompact(item.createdAt ?? "")}</Typography>
 						</div>
 					</div>
 					<Button

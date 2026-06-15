@@ -11,7 +11,9 @@ import {
 	ComponentProps,
 	useState,
 } from "react";
+import { Input } from "@/shared/ui/input";
 import { Modal, ModalActions } from "@/shared/ui/modal";
+import { useMutation } from "@tanstack/react-query";
 
 const EMPTY: AdminTextListItem[] = [];
 
@@ -34,7 +36,6 @@ export const ExportTextsModal = ({
 	const [manualCheckedIds, setCheckedIds] = useState<Set<string> | null>(
 		preselectedIds.length > 0 ? new Set(preselectedIds) : null,
 	);
-	const [isExporting, setIsExporting] = useState(false);
 	const [error, setError] = useState("");
 
 	const { data, isLoading } = useAdminTexts({
@@ -82,10 +83,8 @@ export const ExportTextsModal = ({
 		setSearch(e.currentTarget.value);
 	};
 
-	const handleExport = async () => {
-		setIsExporting(true);
-		setError("");
-		try {
+	const exportMutation = useMutation({
+		mutationFn: async () => {
 			const ids = Array.from(checkedIds);
 			const selectedTexts = allTexts.filter(t => checkedIds.has(t.id));
 
@@ -98,15 +97,24 @@ export const ExportTextsModal = ({
 					ids.length > 0 ? ids : undefined,
 				);
 			}
+		},
+		onSuccess: () => {
 			onClose();
-		} catch {
+		},
+		onError: () => {
 			setError(t("admin.texts.export.error"));
-		} finally {
-			setIsExporting(false);
-		}
+		},
+	});
+
+	const handleExport = () => {
+		setError("");
+		exportMutation.mutate();
 	};
 
 	const checkedCount = checkedIds.size;
+
+	const handleOutputModeCombined = () => setOutputMode("combined");
+	const handleOutputModeSeparate = () => setOutputMode("separate");
 
 	return (
 		<Modal
@@ -153,14 +161,14 @@ export const ExportTextsModal = ({
 						icon={<Files className="size-4 text-inherit" />}
 						label={t("admin.texts.export.outputCombined")}
 						description={t("admin.texts.export.outputCombinedDesc")}
-						onClick={() => setOutputMode("combined")}
+						onClick={handleOutputModeCombined}
 					/>
 					<OutputModeCard
 						active={outputMode === "separate"}
 						icon={<FileText className="size-4 text-inherit" />}
 						label={t("admin.texts.export.outputSeparate")}
 						description={t("admin.texts.export.outputSeparateDesc")}
-						onClick={() => setOutputMode("separate")}
+						onClick={handleOutputModeSeparate}
 					/>
 				</div>
 			</div>
@@ -185,7 +193,7 @@ export const ExportTextsModal = ({
 					{/* Search */}
 					<div className="flex items-center gap-2 border-b border-bd-1 px-3 py-2">
 						<Search className="size-3.5 shrink-0 text-t-4" />
-						<input
+						<Input
 							type="text"
 							value={search}
 							onChange={handleSearchChange}
@@ -267,7 +275,7 @@ export const ExportTextsModal = ({
 			<ModalActions>
 				<Button
 					onClick={onClose}
-					disabled={isExporting}
+					disabled={exportMutation.isPending}
 					title={t("admin.texts.export.cancel")}
 					variant="ghost"
 					className="h-[36px] px-4 rounded-lg text-[13px]"
@@ -276,13 +284,13 @@ export const ExportTextsModal = ({
 				</Button>
 				<Button
 					onClick={handleExport}
-					disabled={isExporting || checkedCount === 0}
-					title={isExporting ? t("admin.texts.export.exporting") : t("admin.texts.export.submit")}
+					disabled={exportMutation.isPending || checkedCount === 0}
+					title={exportMutation.isPending ? t("admin.texts.export.exporting") : t("admin.texts.export.submit")}
 					variant="action"
 					className="h-[36px] px-5 rounded-lg text-[13px] flex-1 gap-1.5"
 				>
 					<Download className="size-3.5 shrink-0" />
-					{isExporting
+					{exportMutation.isPending
 						? t("admin.texts.export.exporting")
 						: t("admin.texts.export.submit")}
 				</Button>

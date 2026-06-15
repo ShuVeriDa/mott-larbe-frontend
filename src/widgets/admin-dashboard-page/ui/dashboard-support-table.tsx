@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import Link from "next/link";
@@ -7,18 +8,13 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useParams } from "next/navigation";
 import { cn } from "@/shared/lib/cn";
 import type { AdminDashboardSupport } from "@/entities/admin-dashboard";
+import { formatDateTimeCompact } from "@/shared/lib/format-date";
 
 const STATUS_STYLES: Record<string, string> = {
 	NEW: "bg-red-bg text-red-t",
 	IN_PROGRESS: "bg-amb-bg text-amb-t",
 	ANSWERED: "bg-acc-bg text-acc-t",
 	RESOLVED: "bg-grn-bg text-grn-t",
-};
-
-const formatDateTime = (iso: string) => {
-	const d = new Date(iso);
-	const months = ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"];
-	return `${d.getDate()} ${months[d.getMonth()]}, ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 };
 
 interface DashboardSupportTableProps {
@@ -40,7 +36,7 @@ export const DashboardSupportTable = ({ support }: DashboardSupportTableProps) =
 	};
 
 	return (
-		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="flex items-center gap-2 px-4 py-3.5">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.support.title")}
@@ -110,19 +106,19 @@ export const DashboardSupportTable = ({ support }: DashboardSupportTableProps) =
 									</Typography>
 								</TableCell>
 								<TableCell className="px-4 py-2.5 text-right text-[11.5px] whitespace-nowrap text-t-3">
-									{formatDateTime(thread.createdAt)}
+									{formatDateTimeCompact(thread.createdAt)}
 								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>
 				</Table>
 			</div>
-		</div>
+		</AdminCard>
 	);
 };
 
 export const DashboardSupportTableSkeleton = () => (
-	<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf">
+	<AdminCard>
 		<div className="flex items-center gap-2 px-4 py-3.5">
 			<div className="h-3.5 w-36 animate-pulse rounded bg-surf-3" />
 			<div className="ml-auto h-3 w-12 animate-pulse rounded bg-surf-3" />
@@ -149,5 +145,5 @@ export const DashboardSupportTableSkeleton = () => (
 				))}
 			</TableBody>
 		</Table>
-	</div>
+	</AdminCard>
 );

@@ -1,9 +1,6 @@
 "use client";
 import { useState } from 'react';
-import { useAdminTextDetail } from "@/entities/admin-text/model/use-admin-text-detail";
-import { useAdminTextVersions } from "@/entities/admin-text/model/use-admin-text-versions";
-import { useAdminTextVersionMutations } from "@/entities/admin-text/model/use-admin-text-version-mutations";
-import { useAdminTextSSE } from "@/entities/admin-text/model/use-admin-text-sse";
+import { useAdminTextDetail, useAdminTextVersions, useAdminTextVersionMutations, useAdminTextSSE } from "@/entities/admin-text";
 import type { ProcessingStatus, ProcessTextDto } from "@/entities/admin-text";
 
 type StatusFilter = ProcessingStatus | "all";

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { ArrowRight, Check, RotateCcw, Trash2, User } from "lucide-react";
 
@@ -10,6 +11,7 @@ import type {
 	FeedbackStatus,
 } from "@/entities/feedback";
 import { cn } from "@/shared/lib/cn";
+import { formatDate } from "@/shared/lib/format-date";
 import { Select } from "@/shared/ui/select";
 import { ComponentProps } from "react";
 import { ActionBtn } from "./action-btn";
@@ -25,13 +27,6 @@ const STATUSES: FeedbackStatus[] = [
 	"RESOLVED",
 ];
 const PRIORITIES: FeedbackPriority[] = ["LOW", "MEDIUM", "HIGH", "CRITICAL"];
-
-const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "short",
-		year: "numeric",
-	});
 
 interface FeedbackInfoPanelProps {
 	thread: AdminFeedbackThread;
@@ -96,7 +91,7 @@ export const FeedbackInfoPanel = ({
 					{thread.user.plan ?? "—"}
 				</InfoRow>
 				<InfoRow label={t("admin.feedback.user.registeredAt")}>
-					{thread.user.signupAt ? formatDate(thread.user.signupAt) : "—"}
+					{formatDate(thread.user.signupAt)}
 				</InfoRow>
 			</InfoSection>
 
@@ -158,12 +153,9 @@ export const FeedbackInfoPanel = ({
 
 			{/* Actions */}
 			<div className="px-4 py-3.5">
-				<Typography
-					tag="h3"
-					className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3"
-				>
+				<SectionLabel className="mb-2.5">
 					{t("admin.feedback.actions.title")}
-				</Typography>
+				</SectionLabel>
 				<div className="flex flex-col gap-1.5">
 					{isResolved ? (
 						<ActionBtn

@@ -3,7 +3,9 @@
 import type { AiCacheEntry, AiCacheStatus } from "@/entities/ai-translation";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { Typography } from "@/shared/ui/typography";
 import {
 	Check,
@@ -287,7 +289,7 @@ export const AdminAiCacheTab = () => {
 			{/* Search */}
 			<div className="mb-3 flex items-center gap-2 rounded-card border border-bd-1 bg-surf px-3 py-2">
 				<Search className="size-3.5 shrink-0 text-t-3" strokeWidth={1.5} />
-				<input
+				<Input
 					type="text"
 					value={q}
 					onChange={handleSearchChange}
@@ -297,7 +299,7 @@ export const AdminAiCacheTab = () => {
 			</div>
 
 			{/* Table */}
-			<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+			<AdminCard>
 				{isLoading && (
 					<div className="flex items-center justify-center gap-2 py-10">
 						<div className="size-[18px] animate-spin rounded-full border-2 border-surf-3 border-t-acc" />
@@ -329,7 +331,7 @@ export const AdminAiCacheTab = () => {
 						onPageChange={handlePageChange}
 					/>
 				)}
-			</div>
+			</AdminCard>
 
 			<AiCacheExportHistory runs={exportRuns} />
 

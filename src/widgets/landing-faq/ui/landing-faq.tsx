@@ -3,6 +3,7 @@
 import { ComponentProps } from 'react';
 import { FaqItem, useFaq } from "@/features/landing-faq";
 import { useI18n } from "@/shared/lib/i18n";
+import { EyebrowLabel } from "@/shared/ui/eyebrow-label";
 import { Typography } from "@/shared/ui/typography";
 
 interface FaqDictItem {
@@ -29,12 +30,7 @@ export const LandingFaq = () => {
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
 				<header className="mb-12 text-center max-[640px]:mb-9">
-					<Typography
-						tag="span"
-						className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-acc-bg px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[1.2px] text-acc-t"
-					>
-						{t("landing.faq.eyebrow")}
-					</Typography>
+					<EyebrowLabel>{t("landing.faq.eyebrow")}</EyebrowLabel>
 					<Typography
 						tag="h2"
 						id="faq-title"

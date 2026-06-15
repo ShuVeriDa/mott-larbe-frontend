@@ -7,6 +7,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { Download } from "lucide-react";
 import { ComponentProps, useState } from "react";
 import { Modal, ModalActions } from "@/shared/ui/modal";
+import { useMutation } from "@tanstack/react-query";
 
 type ExportFormat = "json" | "csv";
 
@@ -18,20 +19,23 @@ interface ExportTextModalProps {
 export const ExportTextModal = ({ textId, onClose }: ExportTextModalProps) => {
 	const { t } = useI18n();
 	const [format, setFormat] = useState<ExportFormat>("json");
-	const [isExporting, setIsExporting] = useState(false);
 	const [error, setError] = useState("");
 
-	const handleExport = async () => {
-		setIsExporting(true);
-		setError("");
-		try {
+	const exportMutation = useMutation({
+		mutationFn: async () => {
 			await adminTextApi.exportTextById(textId, format);
+		},
+		onSuccess: () => {
 			onClose();
-		} catch {
+		},
+		onError: () => {
 			setError(t("admin.texts.export.error"));
-		} finally {
-			setIsExporting(false);
-		}
+		},
+	});
+
+	const handleExport = () => {
+		setError("");
+		exportMutation.mutate();
 	};
 
 	return (
@@ -80,7 +84,7 @@ export const ExportTextModal = ({ textId, onClose }: ExportTextModalProps) => {
 			<ModalActions>
 				<Button
 					onClick={onClose}
-					disabled={isExporting}
+					disabled={exportMutation.isPending}
 					title={t("admin.texts.export.cancel")}
 					variant="ghost"
 					className="h-[34px] px-4 rounded-lg text-[13px]"
@@ -89,13 +93,13 @@ export const ExportTextModal = ({ textId, onClose }: ExportTextModalProps) => {
 				</Button>
 				<Button
 					onClick={handleExport}
-					disabled={isExporting}
-					title={isExporting ? t("admin.texts.export.exporting") : t("admin.texts.export.submit")}
+					disabled={exportMutation.isPending}
+					title={exportMutation.isPending ? t("admin.texts.export.exporting") : t("admin.texts.export.submit")}
 					variant="action"
 					className="h-[34px] px-4 rounded-lg text-[13px] flex-1"
 				>
 					<Download className="size-3" />
-					{isExporting ? t("admin.texts.export.exporting") : t("admin.texts.export.submit")}
+					{exportMutation.isPending ? t("admin.texts.export.exporting") : t("admin.texts.export.submit")}
 				</Button>
 			</ModalActions>
 		</Modal>

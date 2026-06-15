@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Button } from "@/shared/ui/button";
 import { ComponentProps, useEffect } from 'react';
 import { X } from "lucide-react";
@@ -107,7 +108,7 @@ return (
 				<div className="grid grid-cols-[1fr_308px] items-start gap-3 max-md:grid-cols-1">
 
 					{/* Left: Table card */}
-					<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+					<AdminCard>
 						<CouponsTabs active={tab} counts={tabCounts} onChange={handleTabChange} />
 						<CouponsToolbar
 							search={search}
@@ -137,7 +138,7 @@ return (
 								onPageChange={handlePageChange}
 							/>
 						)}
-					</div>
+					</AdminCard>
 
 					{/* Right: Detail panel (desktop) */}
 					<div className="sticky top-3.5 max-md:hidden">

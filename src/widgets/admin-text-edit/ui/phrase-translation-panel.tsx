@@ -11,7 +11,7 @@ import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { Modal, ModalActions } from "@/shared/ui/modal";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Languages } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -37,7 +37,6 @@ export const PhraseTranslationPanel = ({
 	const [selectedText, setSelectedText] = useState("");
 	const [translation, setTranslation] = useState("");
 	const [notes, setNotes] = useState("");
-	const [isSaving, setIsSaving] = useState(false);
 	const translationRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -74,10 +73,8 @@ export const PhraseTranslationPanel = ({
 		if (e.key === "Enter") handleSave();
 	};
 
-	const handleSave = async () => {
-		if (!translation.trim()) return;
-		setIsSaving(true);
-		try {
+	const saveMutation = useMutation({
+		mutationFn: async () => {
 			await adminTextPhraseApi.createAutoOccurrence({
 				original: selectedText,
 				translation: translation.trim(),
@@ -89,13 +86,19 @@ export const PhraseTranslationPanel = ({
 			await queryClient.invalidateQueries({
 				queryKey: adminTextPhraseKeys.byPage(textId, pageNumber),
 			});
+		},
+		onSuccess: () => {
 			success(t("admin.texts.editPage.phraseAdded"));
 			handleClose();
-		} catch {
+		},
+		onError: () => {
 			toastError(t("admin.texts.editPage.phraseFailed"));
-		} finally {
-			setIsSaving(false);
-		}
+		},
+	});
+
+	const handleSave = () => {
+		if (!translation.trim()) return;
+		saveMutation.mutate();
 	};
 
 	return (
@@ -147,10 +150,10 @@ export const PhraseTranslationPanel = ({
 				</Button>
 				<Button
 					onClick={handleSave}
-					disabled={!translation.trim() || isSaving}
+					disabled={!translation.trim() || saveMutation.isPending}
 					className="h-[34px] flex-1 rounded-lg bg-acc text-[13px] font-semibold text-white transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
 				>
-					{isSaving ? "…" : t("admin.texts.editPage.phraseSave")}
+					{saveMutation.isPending ? "…" : t("admin.texts.editPage.phraseSave")}
 				</Button>
 			</ModalActions>
 		</Modal>

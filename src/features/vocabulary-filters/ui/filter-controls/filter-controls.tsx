@@ -5,6 +5,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { CEFR_LEVELS, LEARNING_LEVELS } from "@/shared/types";
 import type { LearningLevel, CefrLevel } from "@/shared/types";
 import { FilterGroup } from "@/shared/ui/filter-group";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Select } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
 import type { ComponentProps } from "react";
@@ -50,23 +51,23 @@ export const FilterControls = () => {
 	return (
 		<div className="flex flex-col gap-3">
 			<div>
-				<Typography tag="p" className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
+				<SectionLabel className="mb-1.5">
 					{t("vocabulary.filterByStatus")}
-				</Typography>
+				</SectionLabel>
 				<FilterGroup options={statusOptions} value={status} onValueChange={setStatus} />
 			</div>
 
 			<div>
-				<Typography tag="p" className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
+				<SectionLabel className="mb-1.5">
 					{t("vocabulary.filterByLevel")}
-				</Typography>
+				</SectionLabel>
 				<FilterGroup options={levelOptions} value={cefrLevel} onValueChange={setCefrLevel} />
 			</div>
 
 			<div>
-				<Typography tag="p" className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.7px] text-t-3">
+				<SectionLabel className="mb-1.5">
 					{t("vocabulary.sort.label")}
-				</Typography>
+				</SectionLabel>
 				<Select
 					wrapperClassName="w-auto"
 					className="h-[30px]! text-[12px]!"

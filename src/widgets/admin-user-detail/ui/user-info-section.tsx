@@ -2,6 +2,7 @@ import type { AdminUserDetail } from "@/entities/admin-user";
 import { useI18n } from "@/shared/lib/i18n";
 import { ReactNode } from "react";
 
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 interface UserInfoSectionProps {
 	user: AdminUserDetail;
@@ -41,9 +42,9 @@ export const UserInfoSection = ({ user }: UserInfoSectionProps) => {
 
 	return (
 		<div className="space-y-1.5 border-b border-bd-1 px-4 py-3">
-			<div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+			<SectionLabel>
 				{t("admin.userDetail.account")}
-			</div>
+			</SectionLabel>
 			<InfoRow
 				label={t("admin.userDetail.id")}
 				value={

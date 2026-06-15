@@ -68,6 +68,10 @@ export const AnnotateTokenDialog = ({
 		setScope(nextScope);
 	};
 
+	const handleScopeSelectLocal = () => handleScopeSelect("local");
+	const handleScopeSelectGlobal = () => handleScopeSelect("global");
+	const handleCancelClick = () => handleOpenChange(false);
+
 	const handleSave = () => {
 		if (!selectedLemma || !scope) return;
 		annotate(
@@ -119,14 +123,17 @@ export const AnnotateTokenDialog = ({
 						</div>
 					) : results.length > 0 ? (
 						<div className="p-1">
-							{results.map(lemma => (
-								<LemmaResultItem
-									key={lemma.id}
-									lemma={lemma}
-									selected={selectedLemma?.id === lemma.id}
-									onSelect={() => handleSelectLemma(lemma)}
-								/>
-							))}
+							{results.map(lemma => {
+								const handleSelect = () => handleSelectLemma(lemma);
+								return (
+									<LemmaResultItem
+										key={lemma.id}
+										lemma={lemma}
+										selected={selectedLemma?.id === lemma.id}
+										onSelect={handleSelect}
+									/>
+								);
+							})}
 						</div>
 					) : query.trim().length >= 2 ? (
 						<div className="py-6 text-center text-[12px] text-t-3">
@@ -145,7 +152,7 @@ export const AnnotateTokenDialog = ({
 							active={scope === "local"}
 							label={t("reader.annotate.scopeLocal")}
 							description={t("reader.annotate.scopeLocalDesc")}
-							onClick={() => handleScopeSelect("local")}
+							onClick={handleScopeSelectLocal}
 						/>
 						<AnnotationScopeOption
 							active={scope === "global"}
@@ -153,7 +160,7 @@ export const AnnotateTokenDialog = ({
 								word: token.normalized,
 							})}
 							description={t("reader.annotate.scopeGlobalDesc")}
-							onClick={() => handleScopeSelect("global")}
+							onClick={handleScopeSelectGlobal}
 						/>
 					</div>
 				)}
@@ -162,7 +169,7 @@ export const AnnotateTokenDialog = ({
 					<Button
 						size="bare"
 						title={t("reader.annotate.cancel")}
-						onClick={() => handleOpenChange(false)}
+						onClick={handleCancelClick}
 						className="flex h-[34px] flex-1 items-center justify-center rounded-base border border-[0.5px] border-bd-2 bg-surf-2 text-[13px] font-medium text-t-1 transition-colors hover:border-bd-3 hover:bg-surf-3"
 					>
 						{t("reader.annotate.cancel")}

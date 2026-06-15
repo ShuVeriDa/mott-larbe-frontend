@@ -16,7 +16,7 @@ import {
 	type RichSegment,
 } from "../../lib/render-rich-content";
 import { ArticleToken } from "../article-token";
-import type { PhraseMap } from "@/features/phrase-lookup";
+import type { PhraseMap } from "@/entities/admin-text-phrase";
 import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 export interface HighlightMark {
 	id: string;

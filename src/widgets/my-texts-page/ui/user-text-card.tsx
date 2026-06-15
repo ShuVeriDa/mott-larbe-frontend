@@ -90,8 +90,3 @@ export const UserTextCard = ({ item, lang, onDelete, t }: UserTextCardProps) => 
     </article>
   );
 };
-
-// Skeleton matching card dimensions to prevent CLS
-export const UserTextCardSkeleton = () => (
-  <div className="h-[96px] animate-pulse rounded-xl border border-bd-1 bg-surf-2" />
-);

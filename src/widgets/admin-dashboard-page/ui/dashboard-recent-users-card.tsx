@@ -1,21 +1,17 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import type { AdminDashboardUser } from "@/entities/admin-dashboard";
 import { AVATAR_COLORS } from "@/shared/lib/avatar-colors";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { formatDateCompact } from "@/shared/lib/format-date";
 import { Typography } from "@/shared/ui/typography";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
 const getInitials = (name: string, surname: string) =>
 	`${name[0] ?? ""}${surname[0] ?? ""}`.toUpperCase();
-
-const formatDate = (iso: string) => {
-	const d = new Date(iso);
-	const months = ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"];
-	return `${d.getDate()} ${months[d.getMonth()]}`;
-};
 
 const subTypeBadge = (
 	type: string | null,
@@ -50,7 +46,7 @@ export const DashboardRecentUsersCard = ({ users }: DashboardRecentUsersCardProp
 	const params = useParams<{ lang: string }>();
 
 	return (
-		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.recentUsers.title")}
@@ -90,17 +86,17 @@ export const DashboardRecentUsersCard = ({ users }: DashboardRecentUsersCardProp
 							{subTypeBadge(user.subscriptionType, t)}
 						</div>
 						<div className="hidden shrink-0 text-[11px] text-t-3 sm:block">
-							{formatDate(user.createdAt)}
+							{formatDateCompact(user.createdAt)}
 						</div>
 					</Link>
 				))}
 			</div>
-		</div>
+		</AdminCard>
 	);
 };
 
 export const DashboardRecentUsersCardSkeleton = () => (
-	<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf">
+	<AdminCard>
 		<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
 			<div className="h-3.5 w-32 animate-pulse rounded bg-surf-3" />
 			<div className="h-3 w-10 animate-pulse rounded bg-surf-3" />
@@ -116,5 +112,5 @@ export const DashboardRecentUsersCardSkeleton = () => (
 				</div>
 			))}
 		</div>
-	</div>
+	</AdminCard>
 );

@@ -1,7 +1,12 @@
 "use client";
 
-import type { AdminTag } from "@/entities/admin-tag";
 import { MetaSection } from "@/shared/ui/admin-text-meta-fields";
+
+interface AdminTag {
+	id: string;
+	name: string;
+	_count: { texts: number };
+}
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import type { ComponentProps, KeyboardEvent } from "react";

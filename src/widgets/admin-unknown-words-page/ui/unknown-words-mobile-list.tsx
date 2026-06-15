@@ -8,7 +8,7 @@ import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import { Plus, Clock, FileText, Trash2 } from "lucide-react";
 import type { UnknownWordItem } from "@/entities/admin-unknown-word";
-import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word/model/use-admin-unknown-word-mutations";
+import type { useAdminUnknownWordMutations } from "@/entities/admin-unknown-word";
 import { CountBadge } from "./unknown-words-count-badge";
 import { formatShortDate } from "../lib/format-date";
 

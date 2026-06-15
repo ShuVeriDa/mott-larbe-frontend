@@ -7,6 +7,7 @@ import type {
 } from "@/entities/admin-payment";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { formatDateLong } from "@/shared/lib/format-date";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { X } from "lucide-react";
@@ -45,13 +46,6 @@ const STATUS_CFG: Record<
 		i18nKey: "admin.payments.status.pending",
 	},
 };
-
-const fmtDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", {
-		day: "numeric",
-		month: "long",
-		year: "numeric",
-	});
 
 const fmtAmount = (item: AdminPaymentListItem): string => {
 	if (item.status === "FAILED") return "—";
@@ -95,7 +89,7 @@ export const PaymentReceiptModal = ({ payment, onClose }: Props) => {
 		},
 		{
 			key: t("admin.payments.receipt.date"),
-			value: fmtDate(payment.createdAt),
+			value: formatDateLong(payment.createdAt),
 		},
 		{
 			key: t("admin.payments.receipt.user"),

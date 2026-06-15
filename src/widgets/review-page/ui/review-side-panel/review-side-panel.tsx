@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { getPrimaryTranslation, type ReviewDueWord } from "@/entities/review";
 import type { ReviewSystem } from "../review-topbar";
@@ -42,14 +43,11 @@ export const ReviewSidePanel = ({
 
 	return (
 		<aside className="hidden w-[220px] shrink-0 flex-col gap-3 overflow-y-auto border-l border-bd-1 bg-surf px-4 py-5 lg:flex">
-			<Typography
-				tag="h2"
-				className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
-			>
+			<SectionLabel className="mb-0">
 				{system === "sm2"
 					? t("review.sidePanel.sm2Title")
 					: t("review.sidePanel.deckTitle")}
-			</Typography>
+			</SectionLabel>
 
 			{system === "sm2" && screen === "card" ? (
 				<>
@@ -79,9 +77,9 @@ export const ReviewSidePanel = ({
 			{system === "sm2" ? (
 				<>
 					<div className="border-t border-bd-1 pt-3">
-						<Typography className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
+						<SectionLabel className="mb-1.5">
 							{t("review.sidePanel.streakTitle")}
-						</Typography>
+						</SectionLabel>
 						<div className="flex items-center gap-1.5">
 							<Typography tag="span" aria-hidden="true" className="text-[16px]">🔥</Typography>
 							<Typography className="text-[13px] font-semibold text-t-1">
@@ -92,9 +90,9 @@ export const ReviewSidePanel = ({
 
 					{nextWords.length > 0 ? (
 						<div className="border-t border-bd-1 pt-3">
-							<Typography className="mb-2 text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3">
+							<SectionLabel>
 								{t("review.sm2.intro.queue.title")}
-							</Typography>
+							</SectionLabel>
 							<ul className="flex flex-col gap-1">
 								{nextWords.map((word) => (
 									<li

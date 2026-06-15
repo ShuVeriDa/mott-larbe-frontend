@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Button } from "@/shared/ui/button";
 import { Upload, Plus } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
@@ -200,7 +201,7 @@ export const AdminFeatureFlagsPage = () => {
 					/>
 				)}
 
-				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
+				<AdminCard>
 					{isEmpty ? (
 						<div className="py-16 text-center text-[13px] text-t-3">
 							{t("admin.featureFlags.empty")}
@@ -261,7 +262,7 @@ export const AdminFeatureFlagsPage = () => {
 							t={t}
 						/>
 					)}
-				</div>
+				</AdminCard>
 			</div>
 
 			<FeatureFlagModal

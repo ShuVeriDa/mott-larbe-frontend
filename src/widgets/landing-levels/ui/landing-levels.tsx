@@ -3,6 +3,7 @@
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { EyebrowLabel } from "@/shared/ui/eyebrow-label";
 import { Typography } from "@/shared/ui/typography";
 import { ComponentProps, useState } from "react";
 
@@ -39,12 +40,7 @@ export const LandingLevels = () => {
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
 				<header className="mb-12 max-[640px]:mb-9">
-					<Typography
-						tag="span"
-						className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-acc-bg px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[1.2px] text-acc-t"
-					>
-						{t("landing.levels.eyebrow")}
-					</Typography>
+					<EyebrowLabel>{t("landing.levels.eyebrow")}</EyebrowLabel>
 					<Typography
 						tag="h2"
 						id="levels-title"

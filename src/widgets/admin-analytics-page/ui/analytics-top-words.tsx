@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 
 import Link from "next/link";
@@ -21,7 +22,7 @@ export const AnalyticsTopWords = ({
 	const lang = params?.lang as string;
 
 	return (
-		<div className="rounded-card border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="flex items-center justify-between px-4 pt-3.5 pb-3">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.analytics.topWords.title")}
@@ -72,6 +73,6 @@ export const AnalyticsTopWords = ({
 							</Typography>
 						</div>
 					))}
-		</div>
+		</AdminCard>
 	);
 };

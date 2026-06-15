@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
+import { AdminCard } from "@/shared/ui/admin-card";
 
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
@@ -209,7 +210,7 @@ export const AdminDictionaryPage = () => {
 					/>
 				)}
 
-				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf transition-colors">
+				<AdminCard>
 					{isEmpty ? (
 						<div className="py-16 text-center text-[13px] text-t-3">
 							{t("admin.dictionary.empty")}
@@ -250,7 +251,7 @@ export const AdminDictionaryPage = () => {
 							t={t}
 						/>
 					)}
-				</div>
+				</AdminCard>
 			</div>
 
 			<DictionaryCreateModal

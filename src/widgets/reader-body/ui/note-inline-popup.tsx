@@ -3,8 +3,8 @@
 import { NoteCard } from "@/entities/note";
 import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Button } from "@/shared/ui/button";
-import { Typography } from "@/shared/ui/typography";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
 import { type ComponentProps, useEffect, useRef } from "react";
@@ -76,9 +76,9 @@ export const NoteInlinePopup = ({
 			exit="exit"
 		>
 			<div className="flex shrink-0 items-center justify-between border-b border-bd-1 px-3 py-2">
-				<Typography tag="span" className="text-[11px] font-semibold uppercase tracking-[0.5px] text-t-3">
+				<SectionLabel className="mb-0">
 					{t("reader.notes.title")}
-				</Typography>
+				</SectionLabel>
 				<Button
 					variant="bare"
 					size={null}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { DEFAULT_LOCALE, LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
+import { DEFAULT_LOCALE, LOCALES, getDictionary } from "@/i18n/locales";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 import { SITE_URL } from "@/shared/lib/seo";
 import { SubmissionEditPageClient } from "@/widgets/user-text-edit/ui/submission-edit-page-client";
 
@@ -8,7 +8,7 @@ export const generateMetadata = async (props: {
 	params: Promise<{ lang: string; id: string }>;
 }): Promise<Metadata> => {
 	const { lang, id } = await props.params;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const dict = await getDictionary(lang);
 	const meta = dict.myTexts.meta;
@@ -46,7 +46,7 @@ interface PageProps {
 // in RSC without HydrationBoundary setup. The loading.tsx handles the skeleton.
 const MyTextsSubmitEditPage = async ({ params }: PageProps) => {
 	const { lang, id } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	return <SubmissionEditPageClient draftId={id} lang={lang} />;
 };

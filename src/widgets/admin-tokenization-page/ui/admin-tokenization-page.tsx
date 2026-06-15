@@ -1,6 +1,7 @@
 "use client";
 
 import { ComponentProps } from 'react';
+import { AdminCard } from "@/shared/ui/admin-card";
 import { useAdminTokenizationPage } from "../model/use-admin-tokenization-page";
 import { TokenizationTopbar } from "./tokenization-topbar";
 import { TokenizationStatsRow } from "./tokenization-stats-row";
@@ -93,7 +94,7 @@ return (
 							onSortChange={handleSortChange}
 						/>
 
-						<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+						<AdminCard>
 							<TokenizationBulkBar
 								selectedCount={selectedIds.size}
 								onRun={handleBulkRun}
@@ -122,7 +123,7 @@ return (
 									onPageChange={handlePageChange}
 								/>
 							)}
-						</div>
+						</AdminCard>
 					</div>
 
 					{/* Right — side panel */}

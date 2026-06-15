@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
+import { LOCALES, getDictionary } from "@/i18n/locales";
 import { buildAlternates, buildOpenGraph } from "@/shared/lib/seo";
 import { MyTextsPage } from "@/widgets/my-texts-page";
+import { requireLocale } from "@/shared/lib/i18n";
 
 export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
@@ -12,7 +12,7 @@ interface PageProps {
 
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	const dict = await getDictionary(lang);
 	const { title, description } = dict.myTexts.meta;
@@ -31,7 +31,7 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
 
 const MyTextsRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	return <MyTextsPage lang={lang} />;
 };

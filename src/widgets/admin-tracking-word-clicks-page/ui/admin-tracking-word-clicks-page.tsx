@@ -1,7 +1,8 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { useAdminAnalyticsTopWordClicks, useAnalyticsRange, useInvalidateAdminAnalytics } from "@/features/admin-analytics";
-import type { Dictionary, Locale } from "@/i18n/locales";
+import type { Dictionary, Locale } from "@/i18n/types";
 import { AnalyticsTabs } from "@/widgets/admin-tracking-overview-page";
 import { AnalyticsToolbar } from "@/widgets/admin-tracking-overview-page";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
@@ -37,7 +38,7 @@ export const AdminTrackingWordClicksPage = ({ lang, dict }: AdminTrackingWordCli
 					<AnalyticsToolbar rangeState={rangeState} dict={dict.toolbar} onRefresh={invalidate} />
 				</div>
 
-				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+				<AdminCard>
 					<Table aria-label={dict.wordClicks.title}>
 						<TableHeader>
 							<TableRow className="border-b border-bd-1">
@@ -103,7 +104,7 @@ export const AdminTrackingWordClicksPage = ({ lang, dict }: AdminTrackingWordCli
 							)}
 						</TableBody>
 					</Table>
-				</div>
+				</AdminCard>
 			</div>
 		</div>
 	);

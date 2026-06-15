@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { LOCALES, getDictionary, hasLocale } from "@/i18n/locales";
+import { LOCALES, getDictionary } from "@/i18n/locales";
 import { buildAlternates, buildOpenGraph } from "@/shared/lib/seo";
+import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 import { ErrorBoundary } from "@/shared/ui/error-boundary";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { ScriptGuidePage } from "@/widgets/script-guide-page";
@@ -24,7 +24,7 @@ interface ScriptGuideMeta {
 
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) return {};
+	if (!guardLocaleMetadata(lang)) return {};
 
 	const dict = await getDictionary(lang);
 	const sg = (dict as ScriptGuideMeta).scriptGuide;
@@ -43,7 +43,7 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
 
 const ScriptGuideRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
-	if (!hasLocale(lang)) notFound();
+	requireLocale(lang);
 
 	return (
 		<ErrorBoundary fallback={<div className="p-8 text-t-3 text-sm">Something went wrong.</div>}>

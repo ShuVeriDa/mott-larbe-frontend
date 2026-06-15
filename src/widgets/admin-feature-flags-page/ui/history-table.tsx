@@ -1,14 +1,8 @@
 import type { FeatureFlagHistoryItem, FeatureFlagHistoryEventType } from "@/entities/feature-flag";
 import { cn } from "@/shared/lib/cn";
+import { formatDateTime } from "@/shared/lib/format-date";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/shared/ui/table";
 import { Typography } from "@/shared/ui/typography";
-const formatDate = (iso: string) =>
-	new Date(iso).toLocaleString("ru-RU", {
-		day: "numeric",
-		month: "short",
-		hour: "2-digit",
-		minute: "2-digit",
-	});
 
 const EVENT_DOT: Record<FeatureFlagHistoryEventType, string> = {
 	GLOBAL_ENABLED: "bg-grn",
@@ -95,7 +89,7 @@ export const HistoryTable = ({ items, isLoading, t }: HistoryTableProps) => (
 									)}
 								</TableCell>
 								<TableCell className="py-3 pl-3.5 pr-3.5 text-right text-[11px] text-t-3">
-									{formatDate(item.createdAt)}
+									{formatDateTime(item.createdAt)}
 								</TableCell>
 							</TableRow>
 						))}

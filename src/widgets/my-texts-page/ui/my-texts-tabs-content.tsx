@@ -8,7 +8,8 @@ import {
   userTextKeys,
   useDeleteUserText,
 } from "@/entities/user-text";
-import { UserTextList, UserTextListSkeleton } from "./user-text-list";
+import { UserTextList } from "./user-text-list";
+import { UserTextListSkeleton } from "./user-text-list-skeleton";
 import { UserTextDeleteDialog } from "./user-text-delete-dialog";
 import type { MyTextsTab } from "./my-texts-tabs";
 

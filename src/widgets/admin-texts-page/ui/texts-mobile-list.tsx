@@ -4,10 +4,11 @@ import { Typography } from "@/shared/ui/typography";
 
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminTextListItem } from "@/entities/admin-text";
-import type { useAdminTextMutations } from "@/entities/admin-text/model/use-admin-text-mutations";
+import type { useAdminTextMutations } from "@/entities/admin-text";
 import { TextLevelBadge } from "./text-level-badge";
 import { TextStatusBadge } from "./text-status-badge";
 import { TextProcessingBar } from "./text-processing-bar";
+import { formatDate } from "@/shared/lib/format-date";
 import { TextRowActions } from "./text-row-actions";
 
 interface TextsMobileListProps {
@@ -15,9 +16,6 @@ interface TextsMobileListProps {
 	mutations: ReturnType<typeof useAdminTextMutations>;
 	isLoading: boolean;
 }
-
-const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" });
 
 export const TextsMobileList = ({ texts, mutations, isLoading }: TextsMobileListProps) => {
 	const { t } = useI18n();

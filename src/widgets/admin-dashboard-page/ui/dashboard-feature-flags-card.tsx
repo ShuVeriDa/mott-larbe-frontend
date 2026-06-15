@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
@@ -49,7 +50,7 @@ export const DashboardFeatureFlagsCard = ({ flags, onToggle }: DashboardFeatureF
 	const params = useParams<{ lang: string }>();
 
 	return (
-		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.featureFlags.title")}
@@ -83,12 +84,12 @@ export const DashboardFeatureFlagsCard = ({ flags, onToggle }: DashboardFeatureF
 					<div className="py-8 text-center text-[13px] text-t-3">—</div>
 				)}
 			</div>
-		</div>
+		</AdminCard>
 	);
 };
 
 export const DashboardFeatureFlagsCardSkeleton = () => (
-	<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf">
+	<AdminCard>
 		<div className="flex items-center justify-between gap-2 px-4 pt-3.5">
 			<div className="h-3.5 w-28 animate-pulse rounded bg-surf-3" />
 			<div className="h-3 w-20 animate-pulse rounded bg-surf-3" />
@@ -104,5 +105,5 @@ export const DashboardFeatureFlagsCardSkeleton = () => (
 				</div>
 			))}
 		</div>
-	</div>
+	</AdminCard>
 );

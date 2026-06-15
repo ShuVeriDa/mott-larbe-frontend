@@ -2,25 +2,7 @@
 
 import { useI18n } from "@/shared/lib/i18n";
 import type { UnknownWordStats } from "@/entities/admin-unknown-word";
-
-interface StatCardProps {
-	label: string;
-	value: number | string;
-	sub: string;
-	valueColor?: string;
-}
-
-const StatCard = ({ label, value, sub, valueColor }: StatCardProps) => (
-	<div className="rounded-[10px] border border-bd-1 bg-surf px-3 py-[11px]">
-		<div className="mb-1 text-[10.5px] font-medium text-t-3">{label}</div>
-		<div
-			className={`text-[20px] font-semibold leading-none ${valueColor ?? "text-t-1"}`}
-		>
-			{typeof value === "number" ? value.toLocaleString("ru-RU") : value}
-		</div>
-		<div className="mt-0.5 text-[10.5px] text-t-3">{sub}</div>
-	</div>
-);
+import { AdminStatCard, AdminStatCardSkeleton } from "@/shared/ui/admin-stat-card";
 
 interface UnknownWordsStatsRowProps {
 	stats: UnknownWordStats | undefined;
@@ -37,10 +19,7 @@ export const UnknownWordsStatsRow = ({
 		return (
 			<div className="mb-3.5 grid grid-cols-4 gap-2 max-sm:grid-cols-2">
 				{Array.from({ length: 4 }).map((_, i) => (
-					<div
-						key={i}
-						className="h-[68px] animate-pulse rounded-[10px] bg-surf"
-					/>
+					<AdminStatCardSkeleton key={i} />
 				))}
 			</div>
 		);
@@ -48,27 +27,27 @@ export const UnknownWordsStatsRow = ({
 
 	return (
 		<div className="mb-3.5 grid grid-cols-4 gap-2 max-sm:grid-cols-2">
-			<StatCard
+			<AdminStatCard
 				label={t("admin.unknownWords.stats.totalPending")}
-				value={stats.totalPending}
+				value={stats.totalPending.toLocaleString("ru-RU")}
 				sub={t("admin.unknownWords.stats.totalPendingSub")}
-				valueColor="text-amb"
+				valueClassName="text-amb"
 			/>
-			<StatCard
+			<AdminStatCard
 				label={t("admin.unknownWords.stats.addedToDictionary")}
-				value={stats.totalAddedToDictionary}
+				value={stats.totalAddedToDictionary.toLocaleString("ru-RU")}
 				sub={t("admin.unknownWords.stats.addedToDictionarySub")}
 			/>
-			<StatCard
+			<AdminStatCard
 				label={t("admin.unknownWords.stats.encounteredToday")}
-				value={stats.encounteredToday}
+				value={stats.encounteredToday.toLocaleString("ru-RU")}
 				sub={t("admin.unknownWords.stats.encounteredTodaySub", {
 					count: stats.textsToday,
 				})}
 			/>
-			<StatCard
+			<AdminStatCard
 				label={t("admin.unknownWords.stats.deleted")}
-				value={stats.totalDeleted}
+				value={stats.totalDeleted.toLocaleString("ru-RU")}
 				sub={t("admin.unknownWords.stats.deletedSub")}
 			/>
 		</div>

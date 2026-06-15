@@ -5,12 +5,11 @@ import { useAdminPagePhrases } from "@/entities/admin-text-phrase";
 import { useAnnotatedFormsByPage } from "@/features/word-annotation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 import { AdminTextEditorShell } from "@/shared/ui/admin-text-editor";
 import type { Editor, TipTapDoc } from "@/shared/ui/notion-editor";
-import {
-	PhraseHighlightExtension,
-	WordAnnotationHighlightExtension,
-} from "@/shared/ui/notion-editor";
+import { PhraseHighlightExtension } from "@/shared/ui/notion-editor";
+import { WordAnnotationHighlightExtension } from "@/features/word-annotation";
 import { Languages, Link2 } from "lucide-react";
 import { Typography } from "@/shared/ui/typography";
 import {
@@ -296,7 +295,7 @@ export const TextEditEditor = ({
 			onPageContentChange={onPageContentChange}
 			pageHeaderContent={
 				<div className="border-b border-bd-1 bg-surf px-[22px] pb-2 pt-2 max-sm:px-4">
-					<input
+					<Input
 						type="text"
 						value={currentPageTitle}
 						onChange={handlePageTitleInputChange}

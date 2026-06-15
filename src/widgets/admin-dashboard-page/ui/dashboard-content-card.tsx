@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import type { AdminDashboardContent } from "@/entities/admin-dashboard";
 import { useI18n } from "@/shared/lib/i18n";
 import { CEFR_LEVELS, type CefrLevel } from "@/shared/types";
@@ -61,7 +62,7 @@ export const DashboardContentCard = ({ content }: DashboardContentCardProps) => 
 	);
 
 	return (
-		<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf transition-colors">
+		<AdminCard>
 			<div className="px-4 pt-3.5">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.dashboard.content.title")}
@@ -100,12 +101,12 @@ export const DashboardContentCard = ({ content }: DashboardContentCardProps) => 
 					})}
 				</div>
 			</div>
-		</div>
+		</AdminCard>
 	);
 };
 
 export const DashboardContentCardSkeleton = () => (
-	<div className="overflow-hidden rounded-[12px] border border-bd-1 bg-surf">
+	<AdminCard>
 		<div className="px-4 pt-3.5">
 			<div className="h-3.5 w-20 animate-pulse rounded bg-surf-3" />
 		</div>
@@ -124,5 +125,5 @@ export const DashboardContentCardSkeleton = () => (
 				))}
 			</div>
 		</div>
-	</div>
+	</AdminCard>
 );

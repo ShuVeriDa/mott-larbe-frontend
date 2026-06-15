@@ -1,8 +1,9 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
-import type { Dictionary, Locale } from "@/i18n/locales";
+import type { Dictionary, Locale } from "@/i18n/types";
 import { LIVE_EVENT_TYPES } from "@/features/admin-analytics";
 import type { AnalyticsLiveEventType } from "@/features/admin-analytics";
 import { AnalyticsTabs } from "@/widgets/admin-tracking-overview-page";
@@ -99,7 +100,7 @@ export const AdminTrackingLivePage = ({ lang, dict }: AdminTrackingLivePageProps
 					})}
 				</div>
 
-				<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+				<AdminCard>
 					<Table aria-label={dict.live.title}>
 						<TableHeader>
 							<TableRow className="border-b border-bd-1">
@@ -167,7 +168,7 @@ export const AdminTrackingLivePage = ({ lang, dict }: AdminTrackingLivePageProps
 							)}
 						</TableBody>
 					</Table>
-				</div>
+				</AdminCard>
 			</div>
 		</div>
 	);

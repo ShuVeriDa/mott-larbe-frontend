@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { AdminTextEditorShell } from "@/shared/ui/admin-text-editor";
+import { Input } from "@/shared/ui/input";
 import type { Editor, TipTapDoc } from "@/shared/ui/notion-editor";
 import type { PageContent } from "../model/use-user-text-edit-page";
 import { CharsPopup } from "@/widgets/admin-text-edit/ui/chars-popup";
@@ -83,7 +84,7 @@ export const UserTextEditEditor = ({
       findReplaceCharsPicker={charsPopup}
       pageHeaderContent={
         <div className="border-b border-bd-1 bg-surf px-[22px] pb-2 pt-2 max-sm:px-4">
-          <input
+          <Input
             type="text"
             value={currentPageTitle}
             onChange={handlePageTitleChange}

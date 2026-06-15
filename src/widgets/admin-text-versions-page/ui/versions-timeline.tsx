@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 
+import { AdminCard } from "@/shared/ui/admin-card";
 import { Button } from "@/shared/ui/button";
 
 import { ComponentProps } from 'react';
@@ -92,7 +93,7 @@ export const VersionsTimeline = ({
 	};
 
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+		<AdminCard>
 			{/* Filter tabs */}
 			<div className="flex items-center justify-between gap-3 border-b border-bd-1 px-4 py-3 max-sm:flex-col max-sm:items-start max-sm:gap-2">
 				<Typography tag="span" className="text-[12.5px] font-semibold text-t-1">
@@ -178,6 +179,6 @@ export const VersionsTimeline = ({
 					</div>
 				);
 			})}
-		</div>
+		</AdminCard>
 	);
 };

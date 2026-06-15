@@ -1,4 +1,4 @@
-import type { TipTapDoc } from "@/entities/text/api/types";
+import type { TipTapDoc } from "@/entities/text";
 
 export type ChScript = "LATIN" | "ARABIC";
 export type ScriptVersionStatus = "IDLE" | "RUNNING" | "COMPLETED" | "ERROR";

@@ -2,6 +2,7 @@
 import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
 import type { LearningLevel } from "@/shared/types";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 import { WordCard } from "@/widgets/word-card";
 import { useGroupedList } from "../../model";
@@ -51,13 +52,9 @@ export const VocabularyList = () => {
 						className="flex flex-col gap-1.5"
 					>
 						<header className="mt-2 mb-2 flex items-center justify-between first:mt-0">
-							<Typography
-								tag="h3"
-								id={`section-${sec.status}`}
-								className="text-[11px] font-semibold uppercase tracking-[0.6px] text-t-3"
-							>
+							<SectionLabel className="mb-0">
 								{t(STATUS_LABEL[sec.status])}
-							</Typography>
+							</SectionLabel>
 							<Typography tag="span" className="text-[11px] text-t-3">
 								{t("vocabulary.wordsCount", { count: sec.total })}
 							</Typography>

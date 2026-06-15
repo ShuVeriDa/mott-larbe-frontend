@@ -85,6 +85,8 @@ export const AddToDictionaryButton = ({
 		);
 	}
 
+	const handleRemoveFromFolder = () => handleFolderSelect(null);
+
 	return (
 		<div className="relative w-full">
 			<div
@@ -122,18 +124,20 @@ export const AddToDictionaryButton = ({
 					{currentFolderId !== null && (
 						<button
 							type="button"
-							onClick={() => handleFolderSelect(null)}
+							onClick={handleRemoveFromFolder}
 							className="flex w-full items-center gap-2 px-3 py-2 text-left text-[12px] text-t-2 transition-colors hover:bg-surf-2"
 						>
 							<X className="size-3 shrink-0 text-t-3" strokeWidth={1.5} />
 							{t("reader.panel.removeFromFolder")}
 						</button>
 					)}
-					{folders.map(folder => (
+					{folders.map(folder => {
+						const handleClick = () => handleFolderSelect(folder.id);
+						return (
 						<button
 							key={folder.id}
 							type="button"
-							onClick={() => handleFolderSelect(folder.id)}
+							onClick={handleClick}
 							className={cn(
 								"flex w-full items-center gap-2 px-3 py-2 text-left text-[12px] transition-colors hover:bg-surf-2",
 								folder.id === currentFolderId
@@ -150,7 +154,8 @@ export const AddToDictionaryButton = ({
 								<Check className="ml-auto size-3 text-grn" strokeWidth={2} />
 							)}
 						</button>
-					))}
+					);
+					})}
 					{folders.length === 0 && (
 						<div className="px-3 py-2 text-[12px] text-t-3">
 							{t("reader.panel.noFolders")}

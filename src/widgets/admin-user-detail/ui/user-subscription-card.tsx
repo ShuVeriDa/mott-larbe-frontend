@@ -1,11 +1,13 @@
 "use client";
 
+import { AdminCard } from "@/shared/ui/admin-card";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
 import { ComponentProps, useState } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
-import type { useAdminUserSubscription } from "@/entities/admin-user/model/use-admin-user-subscription";
+import type { useAdminUserSubscription } from "@/entities/admin-user";
 import type { PaymentStatus } from "@/entities/admin-user";
 import { cn } from "@/shared/lib/cn";
 import { Star } from "lucide-react";
@@ -58,7 +60,7 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 		);
 	};
 	return (
-		<div className="overflow-hidden rounded-card border border-bd-1 bg-surf">
+		<AdminCard>
 			<div className="flex items-center justify-between border-b border-bd-1 px-3.5 py-3">
 				<Typography tag="span" className="text-[13px] font-semibold text-t-1">
 					{t("admin.userDetail.subscription.title")}
@@ -156,9 +158,9 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 
 						{data?.paymentHistory && data.paymentHistory.length > 0 && (
 							<>
-								<div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+								<SectionLabel>
 									{t("admin.userDetail.subscription.history")}
-								</div>
+								</SectionLabel>
 								<div>
 									{data.paymentHistory.map((payment) => (
 										<div
@@ -201,6 +203,6 @@ export const UserSubscriptionCard = ({ subscription, onManage }: UserSubscriptio
 					</>
 				)}
 			</div>
-		</div>
+		</AdminCard>
 	);
 };

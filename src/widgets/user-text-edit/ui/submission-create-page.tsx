@@ -6,8 +6,7 @@ import {
   AdminTextPageShell,
   AdminTextConfirmModal,
 } from "@/shared/ui/admin-text-editor";
-import { useSubmissionEditor } from "@/features/my-texts/model/use-submission-editor";
-import { useInitialFromUserText } from "@/features/my-texts/model/use-initial-from-user-text";
+import { useSubmissionEditor, useInitialFromUserText } from "@/features/my-texts";
 import { UserTextEditTopbar } from "./user-text-edit-topbar";
 import { UserTextEditEditor } from "./user-text-edit-editor";
 import { UserTextEditMetaPanel } from "./user-text-edit-meta-panel";

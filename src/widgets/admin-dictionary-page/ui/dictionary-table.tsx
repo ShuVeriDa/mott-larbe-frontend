@@ -5,6 +5,7 @@ import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@
 import type { AdminDictListItem, AdminDictSort } from "@/entities/dictionary";
 import { CefrBadge } from "@/entities/dictionary";
 import { cn } from "@/shared/lib/cn";
+import { formatDateCompact } from "@/shared/lib/format-date";
 import { Button } from "@/shared/ui/button";
 import {
 	ArrowDown,
@@ -16,9 +17,6 @@ import {
 import Link from "next/link";
 import { ComponentProps, useEffect, useRef, useState } from "react";
 import { PosBadge } from "./pos-badge";
-
-const formatDate = (iso: string) =>
-	new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
 
 const SkeletonRow = () => (
 	<TableRow>
@@ -381,7 +379,7 @@ export const DictionaryTable = ({
 											{item.formsCount}
 										</TableCell>
 										<TableCell className="py-3 pl-3.5 text-[11.5px] text-t-3">
-											{formatDate(item.createdAt ?? "")}
+											{formatDateCompact(item.createdAt ?? "")}
 										</TableCell>
 										<TableCell className="py-3 pr-3.5">
 											<div className="flex items-center justify-end gap-0.5">

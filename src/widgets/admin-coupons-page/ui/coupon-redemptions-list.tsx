@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
+import { SectionLabel } from "@/shared/ui/section-label";
 import { cn } from "@/shared/lib/cn";
 import type { AdminCouponDetail } from "@/entities/admin-coupon";
 
@@ -24,9 +24,9 @@ export const CouponRedemptionsList = ({ coupon, sectionTitle }: Props) => {
 
 	return (
 		<div className="border-b border-bd-1">
-			<div className="px-[15px] pb-1 pt-3 text-[10px] font-semibold uppercase tracking-[0.6px] text-t-3">
+			<SectionLabel className="px-[15px] pb-1 pt-3 mb-0">
 				{sectionTitle}
-			</div>
+			</SectionLabel>
 			{coupon.redemptions.slice(0, 5).map((r, i) => {
 				const initials = getInitials(r.user.name, r.user.surname);
 				const colorClass = AVATAR_COLORS[i % AVATAR_COLORS.length];
