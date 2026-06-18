@@ -7,7 +7,8 @@ import { Button } from "@/shared/ui/button";
 import { motion } from "framer-motion";
 import { type ComponentProps } from "react";
 
-export const PROFILE_TAB_IDS = ["main", "security", "subscription", "ai"] as const;
+// "subscription" tab hidden — all features are free. To restore: add "subscription" back to this array.
+export const PROFILE_TAB_IDS = ["main", "security", "ai"] as const;
 export type ProfileTabId = (typeof PROFILE_TAB_IDS)[number];
 
 export interface ProfileTabsProps {
@@ -21,7 +22,7 @@ export const ProfileTabs = ({ active, onChange }: ProfileTabsProps) => {
 	const tabs: { id: ProfileTabId; label: string }[] = [
 		{ id: "main", label: t("profile.tabs.main") },
 		{ id: "security", label: t("profile.tabs.security") },
-		{ id: "subscription", label: t("profile.tabs.subscription") },
+		// { id: "subscription", label: t("profile.tabs.subscription") }, // hidden — all features are free
 		{ id: "ai", label: t("profile.tabs.ai") },
 	];
 

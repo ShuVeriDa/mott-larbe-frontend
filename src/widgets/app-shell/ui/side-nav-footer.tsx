@@ -5,7 +5,7 @@ import { UserMenu } from "@/features/user-menu";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
-import Link from "next/link";
+// import Link from "next/link"; // unused while plan card is hidden
 
 const TG_HREF = "https://t.me/shuverida";
 
@@ -14,11 +14,12 @@ interface SideNavFooterProps {
 	plan: DashboardPlan | undefined;
 }
 
-export const SideNavFooter = ({ isCompactMode, plan }: SideNavFooterProps) => {
-	const { t, lang } = useI18n();
+export const SideNavFooter = ({ isCompactMode, plan: _plan }: SideNavFooterProps) => {
+	const { t } = useI18n();
 
 	return (
 		<>
+			{/* Plan card hidden — all features are free. To restore: uncomment the block below.
 			<div
 				className={cn(
 					"px-3.5 pb-3.5 pt-2",
@@ -69,6 +70,7 @@ export const SideNavFooter = ({ isCompactMode, plan }: SideNavFooterProps) => {
 					<div className="h-[88px] animate-pulse rounded-[9px] bg-surf-2" />
 				)}
 			</div>
+			*/}
 
 			<div className={cn("border-t", isCompactMode && "max-[899px]:hidden")}>
 				<a

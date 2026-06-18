@@ -61,7 +61,10 @@ const SubscriptionRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	requireLocale(lang);
 
-	return <SubscriptionPage />;
+	// Subscription page hidden — all features are free.
+	// To restore: remove the redirect below.
+	const { redirect } = await import("next/navigation");
+	redirect(`/${lang}`);
 };
 
 export default SubscriptionRoutePage;

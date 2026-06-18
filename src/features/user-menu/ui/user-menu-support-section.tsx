@@ -23,6 +23,7 @@ export const UserMenuSupportSection = ({
 				{t("nav.userMenu.support")}
 			</Link>
 		</DropdownMenuPrimitive.Item>
+		{/* Subscription link hidden — all features are free. To restore: uncomment below.
 		<DropdownMenuPrimitive.Item asChild>
 			<Link href={`/${lang}/subscription`} className={itemCls}>
 				<CreditCardIcon
@@ -32,5 +33,6 @@ export const UserMenuSupportSection = ({
 				{t("nav.userMenu.subscription")}
 			</Link>
 		</DropdownMenuPrimitive.Item>
+		*/}
 	</div>
 );

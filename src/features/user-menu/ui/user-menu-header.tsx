@@ -79,6 +79,7 @@ export const UserMenuHeader = ({
 								{roleLabel}
 							</span>
 						)}
+						{/* Plan badge hidden — all features are free. To restore: uncomment below.
 						<span
 							className={cn(
 								"inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium leading-none",
@@ -87,6 +88,7 @@ export const UserMenuHeader = ({
 						>
 							{planName}
 						</span>
+						*/}
 					</div>
 				</div>
 			</div>

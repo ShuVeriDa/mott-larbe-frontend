@@ -1,10 +1,10 @@
 "use client";
 
-import { useMySubscription } from "@/entities/subscription";
+// import { useMySubscription } from "@/entities/subscription"; // unused while plan badge is hidden
 import type { UserProfile } from "@/entities/user";
 import { AvatarUpload } from "@/features/avatar-upload";
 import { useI18n } from "@/shared/lib/i18n";
-import { Badge } from "@/shared/ui/badge";
+// import { Badge } from "@/shared/ui/badge"; // unused while plan badge is hidden
 import { Typography } from "@/shared/ui/typography";
 
 const getInitials = (profile: UserProfile): string => {
@@ -39,11 +39,10 @@ export interface ProfileHeaderProps {
 
 export const ProfileHeader = ({ profile, lang }: ProfileHeaderProps) => {
 	const { t } = useI18n();
-	const { data: subscription } = useMySubscription();
-
-	const planName = subscription?.plan?.name ?? t("profile.header.freePlan");
-	const isPremium =
-		subscription?.status === "ACTIVE" || subscription?.status === "TRIALING";
+	// Plan badge hidden — all features are free. To restore: uncomment useMySubscription and badge below.
+	// const { data: subscription } = useMySubscription();
+	// const planName = subscription?.plan?.name ?? t("profile.header.freePlan");
+	// const isPremium = subscription?.status === "ACTIVE" || subscription?.status === "TRIALING";
 
 	return (
 		<div className="flex flex-col gap-3 rounded-[12px] border-[0.5px] border-bd-1 bg-surf p-5 sm:flex-row sm:items-start sm:gap-3.5">
@@ -73,6 +72,7 @@ export const ProfileHeader = ({ profile, lang }: ProfileHeaderProps) => {
 						<Typography tag="span" className="max-sm:block max-sm:w-full">
 							{getMemberSince(profile.createdAt, lang, t)}
 						</Typography>
+						{/* Plan badge hidden — all features are free. To restore: uncomment below.
 						<Typography
 							tag="span"
 							className="size-[3px] rounded-full bg-surf-4 shrink-0 max-sm:hidden"
@@ -86,6 +86,7 @@ export const ProfileHeader = ({ profile, lang }: ProfileHeaderProps) => {
 						>
 							{planName}
 						</Badge>
+						*/}
 					</div>
 				</div>
 			</div>

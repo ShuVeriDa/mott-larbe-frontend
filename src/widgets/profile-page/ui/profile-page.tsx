@@ -13,9 +13,9 @@ import { TabMain } from "./tab-main";
 const TabSecurity = dynamic(() =>
 	import("./tab-security").then(m => m.TabSecurity),
 );
-const TabSubscription = dynamic(() =>
-	import("./tab-subscription").then(m => m.TabSubscription),
-);
+// const TabSubscription = dynamic(() =>
+// 	import("./tab-subscription").then(m => m.TabSubscription),
+// ); // hidden — all features are free
 const AiSection = dynamic(() =>
 	import("@/widgets/settings-page").then(m => m.AiSection),
 );
@@ -85,7 +85,7 @@ export const ProfilePage = ({ lang }: ProfilePageProps) => {
 					>
 						{activeTab === "main" && <TabMain profile={profile} lang={lang} />}
 						{activeTab === "security" && <TabSecurity profile={profile} />}
-						{activeTab === "subscription" && <TabSubscription lang={lang} />}
+						{/* {activeTab === "subscription" && <TabSubscription lang={lang} />} */}
 						{activeTab === "ai" && <AiSection />}
 					</motion.div>
 				</AnimatePresence>

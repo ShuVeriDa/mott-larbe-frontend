@@ -2,7 +2,7 @@
 
 import { type ComponentProps } from "react";
 import { useFolders } from "@/entities/folder";
-import { useUsage } from "@/entities/subscription";
+// import { useUsage } from "@/entities/subscription"; // unused while folder lock is hidden
 import { useI18n } from "@/shared/lib/i18n";
 import { useUpdateWord } from "./use-update-word";
 
@@ -13,9 +13,8 @@ interface UseFolderSelectParams {
 export const useFolderSelect = ({ wordId }: UseFolderSelectParams) => {
 	const { t } = useI18n();
 	const { data: folders } = useFolders();
-	const { data: usage } = useUsage();
 	const { mutate, isPending } = useUpdateWord();
-	const hasFolders = usage?.limits.dictionaryFolders ?? true;
+	const hasFolders = true; // all features free — lock removed
 
 	const handleSelectClick: NonNullable<ComponentProps<"select">["onClick"]> = (
 		event,

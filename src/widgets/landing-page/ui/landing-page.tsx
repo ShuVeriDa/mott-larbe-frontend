@@ -12,7 +12,7 @@ import { LandingHowItWorks } from "@/widgets/landing-how-it-works";
 import { LandingLanguages } from "@/widgets/landing-languages";
 import { LandingLevels } from "@/widgets/landing-levels";
 import { LandingNav } from "@/widgets/landing-nav";
-import { LandingPricing } from "@/widgets/landing-pricing";
+// import { LandingPricing } from "@/widgets/landing-pricing"; // hidden — all features are free
 import { LandingStats } from "@/widgets/landing-stats";
 import { LandingTestimonials } from "@/widgets/landing-testimonials";
 
@@ -39,7 +39,7 @@ export const LandingPage = () => {
 				<LandingFeatures />
 				<LandingLevels />
 				<LandingTestimonials />
-				<LandingPricing startHref={startHref} />
+				{/* <LandingPricing startHref={startHref} /> */}
 				<LandingLanguages />
 				<LandingFaq />
 				<LandingCta startHref={startHref} loginHref={loginHref} />
