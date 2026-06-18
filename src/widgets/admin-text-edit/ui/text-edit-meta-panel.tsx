@@ -57,6 +57,7 @@ interface TextEditMetaPanelProps {
 	onTagRemove: (tag: string) => void;
 	onDescriptionChange: (v: string) => void;
 	onCoverSelect: (file: File) => void;
+	onCoverRemove: () => void;
 	onAutoTokenizeChange: (v: boolean) => void;
 	onNormalizationChange: (v: boolean) => void;
 	onMorphAnalysisChange: (v: boolean) => void;
@@ -97,6 +98,7 @@ export const TextEditMetaPanel = ({
 	onTagRemove,
 	onDescriptionChange,
 	onCoverSelect,
+	onCoverRemove,
 	onAutoTokenizeChange,
 	onNormalizationChange,
 	onMorphAnalysisChange,
@@ -161,7 +163,9 @@ export const TextEditMetaPanel = ({
 				sectionTitle={t("admin.texts.createPage.sections.cover")}
 				uploadLabel={t("admin.texts.createPage.coverUploadLabel")}
 				uploadSub={t("admin.texts.createPage.coverUploadSub")}
+				removeLabel={t("admin.texts.createPage.coverRemoveLabel")}
 				onCoverSelect={onCoverSelect}
+				onCoverRemove={onCoverRemove}
 			/>
 
 			<TokenizationSection

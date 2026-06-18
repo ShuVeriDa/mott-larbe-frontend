@@ -1,9 +1,9 @@
 "use client";
 
-import { useUploadAvatar } from "@/entities/user";
+import { useUploadAvatar, useUpdateUser } from "@/entities/user";
 import { useToast } from "@/shared/lib/toast";
 import { useI18n } from "@/shared/lib/i18n";
-import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
+import { useRef, useState, type ChangeEvent, type KeyboardEvent, type MouseEvent } from "react";
 
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"] as const;
 const MAX_SIZE = 2 * 1024 * 1024;
@@ -11,11 +11,14 @@ const MAX_SIZE = 2 * 1024 * 1024;
 export const useAvatarUpload = (currentSrc?: string) => {
 	const { t } = useI18n();
 	const { error: toastError } = useToast();
-	const { mutateAsync, isPending } = useUploadAvatar();
+	const { mutateAsync, isPending: isUploading } = useUploadAvatar();
+	const { mutateAsync: updateUser, isPending: isRemoving } = useUpdateUser();
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [blobUrl, setBlobUrl] = useState<string | null>(null);
 	const srcAtUploadRef = useRef<string | undefined>(undefined);
+
+	const isPending = isUploading || isRemoving;
 
 	const handleTrigger = () => {
 		if (!isPending) inputRef.current?.click();
@@ -69,7 +72,14 @@ export const useAvatarUpload = (currentSrc?: string) => {
 		}
 	};
 
-	const displaySrc = blobUrl ?? currentSrc;
+	const handleRemove = async (e: MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation();
+		if (isPending) return;
+		await updateUser({ avatar: "" });
+	};
 
-	return { inputRef, isPending, displaySrc, handleTrigger, handleKeyDown, handleFileChange };
+	const displaySrc = blobUrl ?? currentSrc;
+	const hasAvatar = Boolean(displaySrc);
+
+	return { inputRef, isPending, displaySrc, hasAvatar, handleTrigger, handleKeyDown, handleFileChange, handleRemove };
 };

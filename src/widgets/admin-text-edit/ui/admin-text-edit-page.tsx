@@ -86,6 +86,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 		handleAddPage,
 		handleSelectPage,
 		handleCoverSelect,
+		handleCoverRemove,
 		handleAddTag,
 		handleRemoveTag,
 		handleSaveDraft,
@@ -260,6 +261,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 					onTagRemove={handleRemoveTag}
 					onDescriptionChange={setDescription}
 					onCoverSelect={handleCoverSelect}
+					onCoverRemove={handleCoverRemove}
 					onAutoTokenizeChange={setAutoTokenizeOnSave}
 					onNormalizationChange={setUseNormalization}
 					onMorphAnalysisChange={setUseMorphAnalysis}

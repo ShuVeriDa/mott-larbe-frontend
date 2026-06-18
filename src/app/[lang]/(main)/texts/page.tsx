@@ -2,15 +2,13 @@ import { getDictionary, LOCALES } from "@/i18n/locales";
 import { libraryTextApi, libraryTextKeys } from "@/entities/library-text";
 import { getQueryClient } from "@/shared/lib/query-client";
 import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
-import { TextsCatalogSkeleton } from "@/widgets/texts-catalog-page/ui/texts-catalog-skeleton";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { requireLocale } from "@/shared/lib/i18n";
 
-const TextsCatalogPage = dynamic(
-	() => import("@/widgets/texts-catalog-page").then((m) => m.TextsCatalogPage),
-	{ loading: () => <TextsCatalogSkeleton /> },
+const TextsCatalogPage = dynamic(() =>
+	import("@/widgets/texts-catalog-page").then((m) => m.TextsCatalogPage),
 );
 
 export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));

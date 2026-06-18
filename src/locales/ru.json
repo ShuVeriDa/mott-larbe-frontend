@@ -2196,6 +2196,7 @@
 		},
 		"avatar": {
 			"changeLabel": "Изменить фото профиля",
+			"removeLabel": "Удалить фото",
 			"uploading": "Загрузка...",
 			"fileTooLarge": "Файл слишком большой (максимум 2 МБ)",
 			"invalidType": "Допустимые форматы: JPG, PNG, WebP, GIF"

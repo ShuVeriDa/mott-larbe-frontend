@@ -64,6 +64,7 @@ export const useAdminTextEditPage = (id: string) => {
 	const [description, setDescription] = useState("");
 	const [pendingCoverFile, setPendingCoverFile] = useState<File | null>(null);
 	const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null);
+	const [pendingCoverRemove, setPendingCoverRemove] = useState(false);
 	const [autoTokenizeOnSave, setAutoTokenizeOnSave] = useState(true);
 	const [useNormalization, setUseNormalization] = useState(true);
 	const [useMorphAnalysis, setUseMorphAnalysis] = useState(true);
@@ -154,6 +155,14 @@ export const useAdminTextEditPage = (id: string) => {
 	const handleCoverSelect = (file: File) => {
 		setPendingCoverFile(file);
 		setCoverPreviewUrl(URL.createObjectURL(file));
+		setPendingCoverRemove(false);
+		markUnsaved();
+	};
+
+	const handleCoverRemove = () => {
+		setPendingCoverFile(null);
+		setCoverPreviewUrl(null);
+		setPendingCoverRemove(true);
 		markUnsaved();
 	};
 
@@ -198,12 +207,17 @@ export const useAdminTextEditPage = (id: string) => {
 					useNormalization,
 					useMorphAnalysis,
 					pages: pagesDto,
+					...(pendingCoverRemove && { imageUrl: null }),
 				},
 			});
 
 			if (pendingCoverFile) {
 				await uploadCover.mutateAsync({ id, file: pendingCoverFile });
 				setPendingCoverFile(null);
+			}
+
+			if (pendingCoverRemove) {
+				setPendingCoverRemove(false);
 			}
 
 			setIsUnsaved(false);
@@ -293,6 +307,7 @@ export const useAdminTextEditPage = (id: string) => {
 		handleAddPage,
 		handleSelectPage,
 		handleCoverSelect,
+		handleCoverRemove,
 		handleAddTag,
 		handleRemoveTag,
 		handleSaveDraft,

@@ -2238,6 +2238,7 @@
     },
     "avatar": {
       "changeLabel": "Change profile photo",
+      "removeLabel": "Remove photo",
       "uploading": "Uploading...",
       "fileTooLarge": "File too large (maximum 2 MB)",
       "invalidType": "Allowed formats: JPG, PNG, WebP, GIF"

@@ -2235,6 +2235,7 @@
     },
     "avatar": {
       "changeLabel": "Профилан сурт хийца",
+      "removeLabel": "Сурт дӀаяккха",
       "uploading": "Чуйохуш йу...",
       "fileTooLarge": "Файл тӀе дуккха ду (кхачалла 2 МБ)",
       "invalidType": "Нийса кеп: JPG, PNG, WebP, GIF"

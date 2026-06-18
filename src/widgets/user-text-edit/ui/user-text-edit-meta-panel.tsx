@@ -229,7 +229,7 @@ export const UserTextEditMetaPanel = ({
             sectionTitle={t("admin.texts.createPage.sections.cover")}
             uploadLabel={t("admin.texts.createPage.coverUploadLabel")}
             uploadSub={t("admin.texts.createPage.coverUploadSub")}
-            removeLabel={t("admin.texts.editPage.deleteText")}
+            removeLabel={t("admin.texts.createPage.coverRemoveLabel")}
             onCoverSelect={onCoverSelect!}
             onCoverRemove={onCoverRemove}
           />

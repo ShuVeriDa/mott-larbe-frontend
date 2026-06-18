@@ -36,6 +36,9 @@ export const DashboardContent = ({ data, user, lang, showReviewReminder, dailyWo
 				{/* 4 stat cards */}
 				<StatsGrid stats={data.stats} lang={lang} showReviewReminder={showReviewReminder} dailyWordsGoal={dailyWordsGoal} />
 
+				{/* Genres — catalogue shortcuts */}
+				<GenresSection lang={lang} />
+
 				{/* Continue reading */}
 				<ContinueReading items={data.continueReading} lang={lang} />
 
@@ -81,8 +84,6 @@ export const DashboardContent = ({ data, user, lang, showReviewReminder, dailyWo
 					lang={lang}
 				/>
 
-				{/* Genres — static catalogue shortcuts */}
-				<GenresSection lang={lang} />
 			</div>
 		</div>
 	);
