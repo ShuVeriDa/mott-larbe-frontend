@@ -4,6 +4,7 @@ import type { EditorState, Transaction } from "@tiptap/pm/state";
 import { Plugin, PluginKey } from "@tiptap/pm/state";
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
 import type { SpellingEntry } from "@/entities/spelling-dictionary";
+import { parseCorrectForm } from "@/entities/spelling-dictionary";
 
 export const SPELLING_CORRECTION_CLASS = "spelling-correction";
 
@@ -38,6 +39,33 @@ const applyCase = (original: string, replacement: string): string => {
 	if (isAllCaps) return replacement.toUpperCase();
 	if (isCapitalized) return replacement[0].toUpperCase() + replacement.slice(1);
 	return replacement;
+};
+
+type ContentNode = { type: "text"; text: string; marks?: { type: string }[] };
+
+const applyCaseToNodes = (original: string, nodes: ContentNode[]): ContentNode[] => {
+	if (!original || nodes.length === 0) return nodes;
+	const isAllCaps = original === original.toUpperCase() && original !== original.toLowerCase();
+	const isCapitalized = original[0] === original[0].toUpperCase() && original[0] !== original[0].toLowerCase();
+
+	if (!isAllCaps && !isCapitalized) return nodes;
+
+	if (isAllCaps) {
+		return nodes.map(n => ({ ...n, text: n.text.toUpperCase() }));
+	}
+
+	// capitalize: only first char of first non-empty node
+	const result = nodes.map(n => ({ ...n }));
+	for (let i = 0; i < result.length; i++) {
+		if (result[i].text.length > 0) {
+			result[i] = {
+				...result[i],
+				text: result[i].text[0].toUpperCase() + result[i].text.slice(1),
+			};
+			break;
+		}
+	}
+	return result;
 };
 
 const buildDecorations = (doc: PmNode, entries: SpellingEntry[]): DecorationSet => {
@@ -85,14 +113,35 @@ export const SpellingCorrectionExtension = Extension.create({
 		return {
 			applySpellingFix:
 				(from: number, to: number, correctForm: string) =>
-				({ state, dispatch }) => {
-					const originalText = state.doc.textBetween(from, to);
-					const replacement = applyCase(originalText, correctForm);
-					if (dispatch) {
-						const tr = state.tr.insertText(replacement, from, to);
-						dispatch(tr);
+				({ state, dispatch, chain }) => {
+					const nodes = parseCorrectForm(correctForm);
+					const hasSuperscript = nodes.some(n => n.superscript);
+
+					if (!hasSuperscript) {
+						const originalText = state.doc.textBetween(from, to);
+						const plainText = nodes.map(n => n.text).join("");
+						const replacement = applyCase(originalText, plainText);
+						if (dispatch) {
+							const tr = state.tr.insertText(replacement, from, to);
+							dispatch(tr);
+						}
+						return true;
 					}
-					return true;
+
+					// Build inline content array for insertContent
+					const originalText = state.doc.textBetween(from, to);
+					const rawContent: ContentNode[] = nodes.map(n => ({
+						type: "text" as const,
+						text: n.text,
+						...(n.superscript ? { marks: [{ type: "superscript" }] } : {}),
+					}));
+					const content = applyCaseToNodes(originalText, rawContent);
+
+					return chain()
+						.focus()
+						.deleteRange({ from, to })
+						.insertContentAt(from, content)
+						.run();
 				},
 
 			setSpellingEntries:

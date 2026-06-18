@@ -1,34 +1,37 @@
 "use client";
 
-import Link from "next/link";
 import { useDeleteAllHighlights, useHighlights } from "@/entities/highlight";
 import { scriptVersionsQueryOptions } from "@/entities/text-script-version";
 import { FontFamilyGroup } from "@/features/reader-font-family";
-import { Button } from "@/shared/ui/button";
 import { FontSizeSlider } from "@/features/reader-font-size";
-import { useHighlightVisibility, usePhraseColorVisibility } from "@/features/reader-highlight";
 import {
-	ColumnWidthGroup,
-	SegmentedGroup,
-	useReaderTextLayout,
-} from "@/features/reader-text-width";
+	useHighlightVisibility,
+	usePhraseColorVisibility,
+} from "@/features/reader-highlight";
 import {
 	SCRIPT_OPTIONS,
 	useReaderScript,
 	useReaderScriptAvailability,
 } from "@/features/reader-script";
+import {
+	ColumnWidthGroup,
+	SegmentedGroup,
+	useReaderTextLayout,
+} from "@/features/reader-text-width";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
-import { Eye, EyeOff, Languages, Trash2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { Eye, EyeOff, Languages, Trash2 } from "lucide-react";
+import Link from "next/link";
 import {
-	WORD_SPACING_OPTIONS,
 	LETTER_SPACING_OPTIONS,
 	LINE_HEIGHT_OPTIONS,
 	PAGE_PADDING_OPTIONS,
 	PARAGRAPH_SPACING_OPTIONS,
 	READER_SETTINGS_LEGEND,
+	WORD_SPACING_OPTIONS,
 } from "../lib/reader-settings-form-config";
 import { ReaderSettingsSectionLabel } from "./reader-settings-section-label";
 import { ReaderThemeSelector } from "./reader-theme-selector";
@@ -48,19 +51,23 @@ export const ReaderSettingsBody = ({
 }: ReaderSettingsBodyProps) => {
 	const { t, lang } = useI18n();
 	const layout = useReaderTextLayout();
-	const { script, showDiacritics, setScript, setShowDiacritics } = useReaderScript();
+	const { script, showDiacritics, setScript, setShowDiacritics } =
+		useReaderScript();
 	const { data: scriptVersions = [] } = useQuery({
 		...scriptVersionsQueryOptions(textId ?? ""),
 		enabled: !!textId,
 	});
 	const available = useReaderScriptAvailability(scriptVersions);
-	const visibleScripts = SCRIPT_OPTIONS.filter(o => available.includes(o.value));
+	const visibleScripts = SCRIPT_OPTIONS.filter(o =>
+		available.includes(o.value),
+	);
 	const hasMultipleScripts = visibleScripts.length > 1;
 	const isArabic = script === "ARABIC";
 	const gap = compact ? "mb-3" : "mb-5";
 	const btnH = compact ? "h-8" : "h-10";
 	const { highlightsVisible, setHighlightsVisible } = useHighlightVisibility();
-	const { phraseColorVisible, setPhraseColorVisible } = usePhraseColorVisibility();
+	const { phraseColorVisible, setPhraseColorVisible } =
+		usePhraseColorVisibility();
 	const { data: highlights = [] } = useHighlights(
 		textId ?? "",
 		pageNumber ?? 0,
@@ -72,7 +79,8 @@ export const ReaderSettingsBody = ({
 	const hasHighlights = !!textId && !!pageNumber && highlights.length > 0;
 
 	const handleToggleHighlights = () => setHighlightsVisible(!highlightsVisible);
-	const handleTogglePhraseColor = () => setPhraseColorVisible(!phraseColorVisible);
+	const handleTogglePhraseColor = () =>
+		setPhraseColorVisible(!phraseColorVisible);
 	const handleDeleteAllHighlights = () => {
 		if (!hasHighlights) return;
 		deleteAll(highlights.map(h => h.id));
@@ -88,7 +96,9 @@ export const ReaderSettingsBody = ({
 						label={t("reader.settings.script.switchScript")}
 						compact={compact}
 					/>
-					<div className={cn("flex flex-wrap", gap, compact ? "gap-1" : "gap-1.5")}>
+					<div
+						className={cn("flex flex-wrap", gap, compact ? "gap-1" : "gap-1.5")}
+					>
 						{visibleScripts.map(option => {
 							const active = script === option.value;
 							const handleClick = () => setScript(option.value);
@@ -138,12 +148,20 @@ export const ReaderSettingsBody = ({
 			)}
 
 			{(script === "ARABIC" || script === "LATIN") && (
-				<div className={cn("rounded-base border border-bd-1 bg-surf-2 p-3 md:hidden", gap)}>
+				<div
+					className={cn(
+						"rounded-base border border-bd-1 bg-surf-2 p-3 md:hidden",
+						gap,
+					)}
+				>
 					<ReaderSettingsSectionLabel
 						label={t("reader.settings.script.guideTitle")}
 						compact={compact}
 					/>
-					<Typography tag="p" className="mb-2 text-[11px] leading-relaxed text-t-2">
+					<Typography
+						tag="p"
+						className="mb-2 text-[11px] leading-relaxed text-t-2"
+					>
 						{script === "ARABIC"
 							? t("reader.settings.script.arabicGuideHint")
 							: t("reader.settings.script.latinGuideHint")}
@@ -177,10 +195,7 @@ export const ReaderSettingsBody = ({
 				label={t("reader.settings.font")}
 				compact={compact}
 			/>
-			<FontFamilyGroup
-				fullWidth
-				className={gap}
-			/>
+			<FontFamilyGroup fullWidth className={gap} />
 
 			<div className="max-[767px]:hidden">
 				<ReaderSettingsSectionLabel
@@ -249,6 +264,7 @@ export const ReaderSettingsBody = ({
 				options={PARAGRAPH_SPACING_OPTIONS.map(o => ({
 					value: o.value,
 					label: t(o.labelKey),
+					shortLabel: o.shortLabel,
 				}))}
 				value={layout.paragraphSpacing}
 				onChange={layout.setParagraphSpacing}
@@ -265,11 +281,12 @@ export const ReaderSettingsBody = ({
 				options={WORD_SPACING_OPTIONS.map(o => ({
 					value: o.value,
 					label: t(o.labelKey),
+					shortLabel: o.shortLabel,
 				}))}
 				value={layout.wordSpacing}
 				onChange={layout.setWordSpacing}
 				ariaLabel={t("reader.settings.wordSpacing")}
-				className={cn("flex", gap, compact ? "gap-1" : "gap-1.5")}
+				className={cn("flex text-[10px]", gap, compact ? "gap-1" : "gap-1.5")}
 				buttonClassName={btnH}
 			/>
 
@@ -280,7 +297,11 @@ export const ReaderSettingsBody = ({
 			<div className={cn("flex", gap, compact ? "gap-1" : "gap-1.5")}>
 				<Button
 					onClick={handleToggleHighlights}
-					title={highlightsVisible ? t("reader.settings.highlightsHide") : t("reader.settings.highlightsShow")}
+					title={
+						highlightsVisible
+							? t("reader.settings.highlightsHide")
+							: t("reader.settings.highlightsShow")
+					}
 					aria-pressed={highlightsVisible}
 					className={cn(
 						"flex flex-1 items-center justify-center gap-1.5 rounded-base border border-bd-1 text-t-2 transition-colors",
@@ -331,7 +352,11 @@ export const ReaderSettingsBody = ({
 			/>
 			<Button
 				onClick={handleTogglePhraseColor}
-				title={phraseColorVisible ? t("reader.settings.phraseColorHide") : t("reader.settings.phraseColorShow")}
+				title={
+					phraseColorVisible
+						? t("reader.settings.phraseColorHide")
+						: t("reader.settings.phraseColorShow")
+				}
 				aria-pressed={phraseColorVisible}
 				className={cn(
 					"flex w-full items-center justify-center gap-1.5 rounded-base border border-bd-1 text-t-2 transition-colors",
@@ -341,7 +366,10 @@ export const ReaderSettingsBody = ({
 					compact ? "text-[11px] mb-3" : "text-[12.5px] mb-5",
 				)}
 			>
-				<Languages className={compact ? "size-3" : "size-3.5"} strokeWidth={1.6} />
+				<Languages
+					className={compact ? "size-3" : "size-3.5"}
+					strokeWidth={1.6}
+				/>
 				{phraseColorVisible
 					? t("reader.settings.phraseColorHide")
 					: t("reader.settings.phraseColorShow")}

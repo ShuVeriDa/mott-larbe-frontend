@@ -19,7 +19,7 @@ import {
 	useState,
 } from "react";
 import type { PageContent } from "../model/use-admin-text-edit-page";
-import { CharsPopup } from "./chars-popup";
+import { CharsPopup } from "@/shared/ui/chars-popup";
 import { PHRASE_FORM_EVENT } from "./phrase-translation-panel";
 import {
 	PHRASE_DELETE_EVENT,

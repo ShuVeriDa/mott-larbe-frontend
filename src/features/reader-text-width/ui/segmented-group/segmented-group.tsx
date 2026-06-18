@@ -7,6 +7,7 @@ import { ComponentProps } from "react";
 export interface SegmentedOption<T extends string> {
 	value: T;
 	label: string;
+	shortLabel?: string;
 }
 
 export interface SegmentedGroupProps<T extends string> {
@@ -53,7 +54,14 @@ export const SegmentedGroup = <T extends string>({
 						buttonClassName,
 					)}
 				>
-					{item.label}
+					{item.shortLabel ? (
+						<>
+							<span className="md:hidden">{item.label}</span>
+							<span className="hidden md:inline">{item.shortLabel}</span>
+						</>
+					) : (
+						item.label
+					)}
 				</Button>
 			);
 		})}

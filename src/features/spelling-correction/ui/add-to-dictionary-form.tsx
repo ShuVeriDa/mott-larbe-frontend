@@ -1,13 +1,15 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Check, X, Loader2, ArrowRight } from "lucide-react";
-import type { Editor } from "@tiptap/react";
-import { Input } from "@/shared/ui/input";
+import type { CorrectFormNode } from "@/entities/spelling-dictionary";
+import { serializeCorrectForm } from "@/entities/spelling-dictionary";
 import { spring, variants } from "@/shared/lib/animation";
-import { useAddToSpellingDictionary } from "../model/use-add-to-spelling-dictionary";
 import { useI18n } from "@/shared/lib/i18n";
+import { CorrectFormEditor } from "@/shared/ui/correct-form-editor";
+import type { Editor } from "@tiptap/react";
+import { motion } from "framer-motion";
+import { ArrowRight, Check, Loader2, X } from "lucide-react";
+import { useEffect } from "react";
+import { useAddToSpellingDictionary } from "../model/use-add-to-spelling-dictionary";
 
 interface AddToDictionaryFormProps {
 	wrongForm: string;
@@ -27,32 +29,34 @@ export const AddToDictionaryForm = ({
 	onCancel,
 }: AddToDictionaryFormProps) => {
 	const { t } = useI18n();
-	const inputRef = useRef<HTMLInputElement>(null);
 
-	const handleDone = (correctForm: string) => {
-		editor.commands.applySpellingFix(selectionFrom, selectionTo, correctForm);
+	const handleDone = (correctFormNodes: CorrectFormNode[]) => {
+		editor.commands.applySpellingFix(
+			selectionFrom,
+			selectionTo,
+			serializeCorrectForm(correctFormNodes),
+		);
 		onDone();
 	};
 
-	const { correctForm, error, isPending, handleCorrectFormChange, handleSubmit, reset } =
-		useAddToSpellingDictionary({ onDone: handleDone });
+	const {
+		correctFormNodes,
+		setCorrectFormNodes,
+		correctFormPlainText,
+		error,
+		isPending,
+		handleSubmit,
+		reset,
+	} = useAddToSpellingDictionary({ onDone: handleDone });
 
 	useEffect(() => {
-		inputRef.current?.focus();
 		return () => reset();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const handleFormSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		handleSubmit(wrongForm);
-	};
-
-	const handleKeyDown = (e: React.KeyboardEvent) => {
-		if (e.key === "Escape") {
-			e.preventDefault();
-			onCancel();
-		}
 	};
 
 	return (
@@ -71,17 +75,16 @@ export const AddToDictionaryForm = ({
 
 			<ArrowRight className="size-3 shrink-0 text-t-4" />
 
-			{/* correct form input */}
+			{/* correct form editor */}
 			<form onSubmit={handleFormSubmit} className="flex items-center gap-1">
 				<div className="relative">
-					<Input
-						ref={inputRef}
-						value={correctForm}
-						onChange={handleCorrectFormChange}
-						onKeyDown={handleKeyDown}
+					<CorrectFormEditor
+						value={correctFormNodes}
+						onChange={setCorrectFormNodes}
 						placeholder={t("admin.spellingDictionary.form.placeholder")}
-						className="h-7 w-[160px] border-0 bg-surf-2 px-2 py-0 text-[12px] focus-visible:ring-1 focus-visible:ring-acc/60"
+						className="h-5 min-w-[100px] w-full border bg-surf-1 px-2 py-0 text-[12px]"
 						disabled={isPending}
+						autoFocus
 					/>
 					{error && (
 						<div className="absolute top-full left-0 mt-1 z-10 whitespace-nowrap rounded-[5px] border border-rose-200 bg-rose-50 px-2 py-1 text-[10px] text-rose-600 shadow-sm">
@@ -93,7 +96,7 @@ export const AddToDictionaryForm = ({
 				{/* submit */}
 				<button
 					type="submit"
-					disabled={isPending || !correctForm.trim()}
+					disabled={isPending || !correctFormPlainText.trim()}
 					title={t("admin.spellingDictionary.form.submitTitle")}
 					className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] bg-acc text-white transition-all duration-100 ease-out hover:bg-acc-t active:scale-95 disabled:pointer-events-none disabled:opacity-40"
 				>

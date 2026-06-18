@@ -1,16 +1,25 @@
 "use client";
 
-import { useEffect, type ComponentProps } from "react";
+import { useRef, type ComponentProps } from "react";
 import { useState } from "react";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Modal, ModalActions } from "@/shared/ui/modal";
 import { Typography } from "@/shared/ui/typography";
 import { useI18n } from "@/shared/lib/i18n";
-import type { AdminSpellingEntry, CreateSpellingEntryPayload } from "@/entities/spelling-dictionary";
+import { CorrectFormEditor } from "@/shared/ui/correct-form-editor";
+import type { AdminSpellingEntry, CreateSpellingEntryPayload, CorrectFormNode } from "@/entities/spelling-dictionary";
+import { parseCorrectForm, serializeCorrectForm } from "@/entities/spelling-dictionary";
 
 interface SpellingEntryFormModalProps {
 	open: boolean;
+	editEntry: AdminSpellingEntry | null;
+	isSubmitting: boolean;
+	onSubmit: (payload: CreateSpellingEntryPayload) => void;
+	onClose: () => void;
+}
+
+interface SpellingEntryFormProps {
 	editEntry: AdminSpellingEntry | null;
 	isSubmitting: boolean;
 	onSubmit: (payload: CreateSpellingEntryPayload) => void;
@@ -25,34 +34,6 @@ export const SpellingEntryFormModal = ({
 	onClose,
 }: SpellingEntryFormModalProps) => {
 	const { t } = useI18n();
-	const [wrongForm, setWrongForm] = useState("");
-	const [correctForm, setCorrectForm] = useState("");
-	const [comment, setComment] = useState("");
-
-	useEffect(() => {
-		if (!open) return;
-		setWrongForm(editEntry?.wrongForm ?? "");
-		setCorrectForm(editEntry?.correctForm ?? "");
-		setComment(editEntry?.comment ?? "");
-	}, [open, editEntry]);
-
-	const handleWrongFormChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
-		setWrongForm(e.currentTarget.value);
-
-	const handleCorrectFormChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
-		setCorrectForm(e.currentTarget.value);
-
-	const handleCommentChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
-		setComment(e.currentTarget.value);
-
-	const handleSubmit: NonNullable<ComponentProps<"button">["onClick"]> = () => {
-		if (!wrongForm.trim() || !correctForm.trim()) return;
-		onSubmit({
-			wrongForm: wrongForm.trim(),
-			correctForm: correctForm.trim(),
-			comment: comment.trim() || undefined,
-		});
-	};
 
 	return (
 		<Modal
@@ -63,16 +44,65 @@ export const SpellingEntryFormModal = ({
 				: t("admin.spellingDictionary.modal.createTitle")}
 			className="max-w-[420px]"
 		>
+			{open && (
+				<SpellingEntryForm
+					key={editEntry?.id ?? "new"}
+					editEntry={editEntry}
+					isSubmitting={isSubmitting}
+					onSubmit={onSubmit}
+					onClose={onClose}
+				/>
+			)}
+		</Modal>
+	);
+};
+
+const SpellingEntryForm = ({
+	editEntry,
+	isSubmitting,
+	onSubmit,
+	onClose,
+}: SpellingEntryFormProps) => {
+	const { t } = useI18n();
+	const [wrongForm, setWrongForm] = useState(editEntry?.wrongForm ?? "");
+	const [correctFormNodes, setCorrectFormNodes] = useState<CorrectFormNode[]>(
+		() => parseCorrectForm(editEntry?.correctForm ?? ""),
+	);
+	const [comment, setComment] = useState(editEntry?.comment ?? "");
+	const wrongFormRef = useRef<HTMLInputElement>(null);
+
+	const handleWrongFormChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+		setWrongForm(e.currentTarget.value);
+
+	const handleCommentChange: NonNullable<ComponentProps<"input">["onChange"]> = e =>
+		setComment(e.currentTarget.value);
+
+	const handleSubmit: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+		const correctFormStr = serializeCorrectForm(correctFormNodes);
+		if (!wrongForm.trim() || !correctFormStr.trim()) return;
+		onSubmit({
+			wrongForm: wrongForm.trim(),
+			correctForm: correctFormStr,
+			comment: comment.trim() || undefined,
+		});
+	};
+
+	const correctFormText = correctFormNodes.map(n => n.text).join("").trim();
+
+	return (
+		<>
 			<div className="space-y-3.5">
 				<div>
 					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.spellingDictionary.modal.wrongFormLabel")} <span className="text-red-t">*</span>
 					</Typography>
 					<Input
+						ref={wrongFormRef}
 						value={wrongForm}
 						onChange={handleWrongFormChange}
 						placeholder={t("admin.spellingDictionary.modal.wrongFormPlaceholder")}
 						autoFocus
+						disabled={isSubmitting}
 					/>
 					<Typography tag="p" className="mt-1 text-[11px] text-t-3">
 						{t("admin.spellingDictionary.modal.wrongFormHint")}
@@ -83,10 +113,11 @@ export const SpellingEntryFormModal = ({
 					<Typography tag="label" className="mb-1.5 block text-[11.5px] font-semibold text-t-2">
 						{t("admin.spellingDictionary.modal.correctFormLabel")} <span className="text-red-t">*</span>
 					</Typography>
-					<Input
-						value={correctForm}
-						onChange={handleCorrectFormChange}
+					<CorrectFormEditor
+						value={correctFormNodes}
+						onChange={setCorrectFormNodes}
 						placeholder={t("admin.spellingDictionary.modal.correctFormPlaceholder")}
+						disabled={isSubmitting}
 					/>
 					<Typography tag="p" className="mt-1 text-[11px] text-t-3">
 						{t("admin.spellingDictionary.modal.correctFormHint")}
@@ -101,6 +132,7 @@ export const SpellingEntryFormModal = ({
 						value={comment}
 						onChange={handleCommentChange}
 						placeholder={t("admin.spellingDictionary.modal.commentPlaceholder")}
+						disabled={isSubmitting}
 					/>
 				</div>
 			</div>
@@ -117,7 +149,7 @@ export const SpellingEntryFormModal = ({
 				<Button
 					variant="action"
 					onClick={handleSubmit}
-					disabled={isSubmitting || !wrongForm.trim() || !correctForm.trim()}
+					disabled={isSubmitting || !wrongForm.trim() || !correctFormText}
 					className="h-[34px] flex-1 rounded-lg text-[13px]"
 				>
 					{isSubmitting
@@ -125,6 +157,6 @@ export const SpellingEntryFormModal = ({
 						: t("admin.spellingDictionary.modal.save")}
 				</Button>
 			</ModalActions>
-		</Modal>
+		</>
 	);
 };

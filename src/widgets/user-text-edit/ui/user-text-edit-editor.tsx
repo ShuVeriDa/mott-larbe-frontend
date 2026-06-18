@@ -6,7 +6,7 @@ import { AdminTextEditorShell } from "@/shared/ui/admin-text-editor";
 import { Input } from "@/shared/ui/input";
 import type { Editor, TipTapDoc } from "@/shared/ui/notion-editor";
 import type { PageContent } from "../model/use-user-text-edit-page";
-import { CharsPopup } from "@/widgets/admin-text-edit/ui/chars-popup";
+import { CharsPopup } from "@/shared/ui/chars-popup";
 
 interface UserTextEditEditorProps {
   title: string;

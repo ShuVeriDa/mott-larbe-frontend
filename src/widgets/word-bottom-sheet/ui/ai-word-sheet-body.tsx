@@ -8,6 +8,7 @@ import {
 	useTranslationLanguageStore,
 	WordRefineBlock,
 } from "@/features/ai-word-lookup";
+import { AddToDictionaryButton } from "@/widgets/word-panel/ui/add-to-dictionary-button";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
@@ -32,6 +33,11 @@ interface AiWordSheetBodyProps {
 	normalized: string;
 	contextSentence?: string;
 	lang: string;
+	tokenId: string;
+	inDictionary: boolean;
+	dictionaryEntryId: string | null;
+	currentFolderId: string | null;
+	currentFolderName: string | null;
 }
 
 export const AiWordSheetBody = ({
@@ -39,6 +45,11 @@ export const AiWordSheetBody = ({
 	normalized,
 	contextSentence,
 	lang,
+	tokenId,
+	inDictionary,
+	dictionaryEntryId,
+	currentFolderId,
+	currentFolderName,
 }: AiWordSheetBodyProps) => {
 	const { t } = useI18n();
 	const { state, voted, translate, vote } = useAiWordLookup();
@@ -299,7 +310,17 @@ export const AiWordSheetBody = ({
 				/>
 			</div>
 
-		<div className="shrink-0 pb-[max(16px,env(safe-area-inset-bottom))]" />
+		<div className="shrink-0 border-t border-bd-1 px-4 pt-2.5 pb-[max(12px,env(safe-area-inset-bottom))]">
+			<AddToDictionaryButton
+				tokenId={tokenId}
+				word={word}
+				translation={result.translation}
+				inDictionary={inDictionary}
+				dictionaryEntryId={dictionaryEntryId}
+				currentFolderId={currentFolderId}
+				currentFolderName={currentFolderName}
+			/>
+		</div>
 	</div>
 	);
 };

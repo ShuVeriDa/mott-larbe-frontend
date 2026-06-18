@@ -21,7 +21,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { CharsPopup } from "../../admin-text-edit/ui/chars-popup";
+import { CharsPopup } from "@/shared/ui/chars-popup";
 import { PHRASE_FORM_EVENT } from "../../admin-text-edit/ui/phrase-translation-panel";
 import {
 	PHRASE_DELETE_EVENT,

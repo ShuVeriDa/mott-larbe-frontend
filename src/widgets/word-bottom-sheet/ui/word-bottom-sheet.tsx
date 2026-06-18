@@ -184,6 +184,11 @@ export const WordBottomSheet = ({ textId }: { textId: string }) => {
 							word={token.original}
 							normalized={token.normalized}
 							lang={lang}
+							tokenId={token.id}
+							inDictionary={data.inDictionary}
+							dictionaryEntryId={data.dictionaryEntryId}
+							currentFolderId={data.dictionaryFolder?.id ?? null}
+							currentFolderName={data.dictionaryFolder?.name ?? null}
 						/>
 					)
 				) : (

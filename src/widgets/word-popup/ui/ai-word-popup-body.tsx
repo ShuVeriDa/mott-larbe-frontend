@@ -14,6 +14,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { useWordLookupStore } from "@/features/word-lookup";
+import { AddToDictionaryButton } from "@/widgets/word-panel/ui/add-to-dictionary-button";
 import {
 	Check,
 	CheckCircle2,
@@ -35,6 +36,11 @@ interface AiWordPopupBodyProps {
 	normalized: string;
 	contextSentence?: string;
 	lang: string;
+	tokenId: string;
+	inDictionary: boolean;
+	dictionaryEntryId: string | null;
+	currentFolderId: string | null;
+	currentFolderName: string | null;
 }
 
 export const AiWordPopupBody = ({
@@ -42,6 +48,11 @@ export const AiWordPopupBody = ({
 	normalized,
 	contextSentence,
 	lang,
+	tokenId,
+	inDictionary,
+	dictionaryEntryId,
+	currentFolderId,
+	currentFolderName,
 }: AiWordPopupBodyProps) => {
 	const { t } = useI18n();
 	const { state, voted, translate, vote } = useAiWordLookup();
@@ -353,6 +364,18 @@ export const AiWordPopupBody = ({
 				onOpen={openRefine}
 				onSubmit={handleRefineSubmit}
 			/>
+			<div className="border-t-[0.5px] border-bd-1 px-3.5 py-2">
+				<AddToDictionaryButton
+					tokenId={tokenId}
+					word={word}
+					translation={result.translation}
+					inDictionary={inDictionary}
+					dictionaryEntryId={dictionaryEntryId}
+					currentFolderId={currentFolderId}
+					currentFolderName={currentFolderName}
+					className="h-7 text-[11.5px]"
+				/>
+			</div>
 		</>
 	);
 };

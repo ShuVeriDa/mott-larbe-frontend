@@ -1,12 +1,12 @@
 "use client";
 
 import { useReaderTheme } from "@/features/reader-theme";
-import { THEME_SWATCHES } from "../lib/reader-settings-form-config";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
-import { ReaderCustomColorSwatch } from "./reader-custom-color-swatch";
 import { useTheme } from "next-themes";
+import { THEME_SWATCHES } from "../lib/reader-settings-form-config";
+import { ReaderCustomColorSwatch } from "./reader-custom-color-swatch";
 
 export interface ReaderThemeSelectorProps {
 	compact: boolean;
@@ -21,7 +21,12 @@ export const ReaderThemeSelector = ({ compact }: ReaderThemeSelectorProps) => {
 	const size = compact ? "size-7" : "size-9";
 
 	return (
-		<div className={cn("flex items-center gap-2", compact ? "mb-3" : "mb-5")}>
+		<div
+			className={cn(
+				"flex items-center justify-between",
+				compact ? "mb-3" : "mb-5",
+			)}
+		>
 			{THEME_SWATCHES.map(swatch => {
 				const isActive = theme === swatch.value;
 				const handleClick = () => setTheme(swatch.value);

@@ -11,6 +11,7 @@ import {
 import { useI18n } from "@/shared/lib/i18n";
 import type { SpellingOccurrencesDialogState } from "../model/types";
 import { SpellingOccurrenceItem } from "./spelling-occurrence-item";
+import { parseCorrectForm } from "@/entities/spelling-dictionary";
 
 interface SpellingOccurrencesDialogProps {
 	dialog: SpellingOccurrencesDialogState;
@@ -55,7 +56,9 @@ export const SpellingOccurrencesDialog = ({
 					</span>
 					<span className="text-sm text-t-4">→</span>
 					<span className="rounded-[5px] bg-green-100 px-2 py-0.5 font-mono text-[12px] font-medium text-green-700 select-none">
-						{dialog.correctForm}
+						{parseCorrectForm(dialog.correctForm).map((node, i) =>
+							node.superscript ? <sup key={i}>{node.text}</sup> : <span key={i}>{node.text}</span>
+						)}
 					</span>
 				</div>
 

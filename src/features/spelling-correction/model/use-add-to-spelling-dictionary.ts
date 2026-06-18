@@ -2,53 +2,54 @@
 
 import { useState } from "react";
 import { useCreateSpellingEntry } from "@/entities/spelling-dictionary";
+import type { CorrectFormNode } from "@/entities/spelling-dictionary";
+import { serializeCorrectForm } from "@/entities/spelling-dictionary";
 import { useI18n } from "@/shared/lib/i18n";
 
 interface UseAddToSpellingDictionaryOptions {
-	onDone: (correctForm: string) => void;
+	onDone: (correctFormNodes: CorrectFormNode[]) => void;
 }
 
 export const useAddToSpellingDictionary = ({ onDone }: UseAddToSpellingDictionaryOptions) => {
 	const { t } = useI18n();
-	const [correctForm, setCorrectForm] = useState("");
+	const [correctFormNodes, setCorrectFormNodes] = useState<CorrectFormNode[]>([{ text: "" }]);
 	const [error, setError] = useState<string | null>(null);
 
 	const createMutation = useCreateSpellingEntry();
 
-	const handleCorrectFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setCorrectForm(e.currentTarget.value);
-		setError(null);
-	};
-
 	const handleSubmit = async (wrongForm: string) => {
-		if (!correctForm.trim()) {
+		const plainText = correctFormNodes.map(n => n.text).join("").trim();
+		if (!plainText) {
 			setError(t("admin.spellingDictionary.form.errorRequired"));
 			return;
 		}
-		const trimmed = correctForm.trim();
+		const correctForm = serializeCorrectForm(correctFormNodes);
 		try {
 			await createMutation.mutateAsync({
 				wrongForm: wrongForm.toLowerCase().trim(),
-				correctForm: trimmed,
+				correctForm,
 			});
-			setCorrectForm("");
+			setCorrectFormNodes([{ text: "" }]);
 			setError(null);
-			onDone(trimmed);
+			onDone(correctFormNodes);
 		} catch {
 			setError(t("admin.spellingDictionary.form.errorDuplicate"));
 		}
 	};
 
 	const reset = () => {
-		setCorrectForm("");
+		setCorrectFormNodes([{ text: "" }]);
 		setError(null);
 	};
 
+	const correctFormPlainText = correctFormNodes.map(n => n.text).join("");
+
 	return {
-		correctForm,
+		correctFormNodes,
+		setCorrectFormNodes,
+		correctFormPlainText,
 		error,
 		isPending: createMutation.isPending,
-		handleCorrectFormChange,
 		handleSubmit,
 		reset,
 	};

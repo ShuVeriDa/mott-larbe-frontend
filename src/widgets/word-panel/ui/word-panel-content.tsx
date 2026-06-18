@@ -352,6 +352,11 @@ export const WordPanelContent = ({ token, textId, compact = false }: WordPanelCo
 				normalized={token.normalized}
 				contextSentence={contextSentence}
 				lang={lang}
+				tokenId={token.id}
+				inDictionary={data.inDictionary}
+				dictionaryEntryId={data.dictionaryEntryId}
+				currentFolderId={data.dictionaryFolder?.id ?? null}
+				currentFolderName={data.dictionaryFolder?.name ?? null}
 			/>
 		);
 	}

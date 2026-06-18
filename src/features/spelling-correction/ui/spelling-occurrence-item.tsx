@@ -3,6 +3,7 @@
 import { Checkbox } from "@/shared/ui/checkbox";
 import { Typography } from "@/shared/ui/typography";
 import type { SpellingOccurrence } from "../model/types";
+import { parseCorrectForm } from "@/entities/spelling-dictionary";
 
 interface SpellingOccurrenceItemProps {
 	occurrence: SpellingOccurrence;
@@ -33,7 +34,9 @@ export const SpellingOccurrenceItem = ({
 				</Typography>
 				<Typography tag="span" className="mx-1.5 text-t-4">→</Typography>
 				<Typography tag="span" className="font-semibold text-t-1">
-					{occurrence.correctForm}
+					{parseCorrectForm(occurrence.correctForm).map((node, i) =>
+						node.superscript ? <sup key={i}>{node.text}</sup> : <span key={i}>{node.text}</span>
+					)}
 				</Typography>
 				{occurrence.after ? (
 					<Typography tag="span" className="text-t-3"> {occurrence.after}</Typography>

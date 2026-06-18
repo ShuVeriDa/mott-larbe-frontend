@@ -14,6 +14,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { SectionLabel } from "@/shared/ui/section-label";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { AddToDictionaryButton } from "./add-to-dictionary-button";
 import {
 	Check,
 	CheckCircle2,
@@ -35,6 +36,11 @@ interface AiWordPanelBodyProps {
 	normalized: string;
 	contextSentence?: string;
 	lang: string;
+	tokenId: string;
+	inDictionary: boolean;
+	dictionaryEntryId: string | null;
+	currentFolderId: string | null;
+	currentFolderName: string | null;
 }
 
 export const AiWordPanelBody = ({
@@ -42,6 +48,11 @@ export const AiWordPanelBody = ({
 	normalized,
 	contextSentence,
 	lang,
+	tokenId,
+	inDictionary,
+	dictionaryEntryId,
+	currentFolderId,
+	currentFolderName,
 }: AiWordPanelBodyProps) => {
 	const { t } = useI18n();
 	const { state, voted, translate, vote } = useAiWordLookup();
@@ -327,6 +338,17 @@ export const AiWordPanelBody = ({
 				onOpen={openRefine}
 				onSubmit={handleRefineSubmit}
 			/>
+			<div className="border-t-[0.5px] border-bd-1 px-4 py-3">
+				<AddToDictionaryButton
+					tokenId={tokenId}
+					word={word}
+					translation={result.translation}
+					inDictionary={inDictionary}
+					dictionaryEntryId={dictionaryEntryId}
+					currentFolderId={currentFolderId}
+					currentFolderName={currentFolderName}
+				/>
+			</div>
 		</div>
 	);
 };

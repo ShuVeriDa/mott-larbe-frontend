@@ -88,15 +88,18 @@ export const LibraryTextCard = ({
 	const delay = Math.min(index * 30, 330);
 
 	if (view === "list") {
+		const cover = getLevelCover(item.level);
+
 		return (
 			<Link
 				href={href}
-				className="animate-in fade-in slide-in-from-bottom-1 motion-reduce:animate-none group relative flex items-center gap-3 overflow-hidden rounded-base border border-bd-1 bg-surf px-3.5 py-3 transition-colors duration-150 hover:border-bd-2 hover:bg-surf-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc focus-visible:ring-offset-1"
+				className="animate-in fade-in slide-in-from-bottom-1 motion-reduce:animate-none group relative flex items-center gap-3 overflow-hidden rounded-base border border-bd-1 bg-surf px-3.5 py-3 transition-[border-color,box-shadow] duration-200 hover:border-bd-2 hover:[box-shadow:0_4px_14px_2px_var(--card-glow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc focus-visible:ring-offset-1"
 				style={{
 					animationDelay: `${delay}ms`,
 					animationFillMode: "both",
 					animationDuration: "220ms",
-				}}
+					"--card-glow": `${cover.glow}90`,
+				} as CSSProperties}
 			>
 				<Typography
 					tag="span"

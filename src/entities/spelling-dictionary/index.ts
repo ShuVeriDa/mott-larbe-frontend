@@ -1,4 +1,11 @@
 export { spellingDictionaryApi, spellingDictionaryKeys } from "./api";
+export type { CorrectFormNode } from "./lib";
+export {
+	parseCorrectForm,
+	serializeCorrectForm,
+	getCorrectFormPlainText,
+	correctFormHasSuperscript,
+} from "./lib";
 export type {
 	SpellingEntry,
 	AdminSpellingEntry,

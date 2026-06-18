@@ -3,6 +3,7 @@
 import { type ComponentProps } from "react";
 import { TableRow, TableCell } from "@/shared/ui/table";
 import type { AdminSpellingEntry } from "@/entities/spelling-dictionary";
+import { parseCorrectForm } from "@/entities/spelling-dictionary";
 import { SpellingEntryRowActions } from "./spelling-entry-row-actions";
 
 interface SpellingEntryRowProps {
@@ -24,7 +25,9 @@ export const SpellingEntryRow = ({ entry, onEdit, onDelete }: SpellingEntryRowPr
 			</TableCell>
 			<TableCell className="px-2.5 py-[10px]">
 				<span className="rounded-[5px] bg-green-50 px-1.5 py-0.5 font-mono text-[12px] text-green-700">
-					{entry.correctForm}
+					{parseCorrectForm(entry.correctForm).map((node, i) =>
+						node.superscript ? <sup key={i}>{node.text}</sup> : <span key={i}>{node.text}</span>
+					)}
 				</span>
 			</TableCell>
 			<TableCell className="px-2.5 py-[10px] text-[12.5px] text-t-3 max-sm:hidden">

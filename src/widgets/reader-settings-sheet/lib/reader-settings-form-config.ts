@@ -12,36 +12,53 @@ export const READER_SETTINGS_LEGEND = [
 	{ key: "NEW", swatchClass: "bg-[var(--t-4)]" },
 ] as const;
 
-export const PAGE_PADDING_OPTIONS: Array<{ value: ReaderPagePadding; labelKey: string }> = [
+export const PAGE_PADDING_OPTIONS: Array<{
+	value: ReaderPagePadding;
+	labelKey: string;
+}> = [
 	{ value: "compact", labelKey: "reader.settings.paddingCompact" },
 	{ value: "normal", labelKey: "reader.settings.paddingNormal" },
 	{ value: "wide", labelKey: "reader.settings.paddingWide" },
 ];
 
-export const LINE_HEIGHT_OPTIONS: Array<{ value: ReaderLineHeight; labelKey: string }> = [
+export const LINE_HEIGHT_OPTIONS: Array<{
+	value: ReaderLineHeight;
+	labelKey: string;
+}> = [
 	{ value: "compact", labelKey: "reader.settings.lineCompact" },
 	{ value: "normal", labelKey: "reader.settings.lineNormal" },
 	{ value: "relaxed", labelKey: "reader.settings.lineRelaxed" },
 ];
 
-export const LETTER_SPACING_OPTIONS: Array<{ value: ReaderLetterSpacing; labelKey: string }> = [
+export const LETTER_SPACING_OPTIONS: Array<{
+	value: ReaderLetterSpacing;
+	labelKey: string;
+}> = [
 	{ value: "tight", labelKey: "reader.settings.spacingTight" },
 	{ value: "normal", labelKey: "reader.settings.spacingNormal" },
 	{ value: "wide", labelKey: "reader.settings.spacingWide" },
 ];
 
-export const PARAGRAPH_SPACING_OPTIONS: Array<{ value: ReaderParagraphSpacing; labelKey: string }> = [
-	{ value: "none", labelKey: "reader.settings.paragraphSpacingNone" },
-	{ value: "compact", labelKey: "reader.settings.paragraphSpacingCompact" },
-	{ value: "normal", labelKey: "reader.settings.paragraphSpacingNormal" },
-	{ value: "relaxed", labelKey: "reader.settings.paragraphSpacingRelaxed" },
+export const PARAGRAPH_SPACING_OPTIONS: Array<{
+	value: ReaderParagraphSpacing;
+	labelKey: string;
+	shortLabel?: string;
+}> = [
+	{ value: "none", labelKey: "reader.settings.paragraphSpacingNone", shortLabel: "—" },
+	{ value: "compact", labelKey: "reader.settings.paragraphSpacingCompact", shortLabel: "XS" },
+	{ value: "normal", labelKey: "reader.settings.paragraphSpacingNormal", shortLabel: "M" },
+	{ value: "relaxed", labelKey: "reader.settings.paragraphSpacingRelaxed", shortLabel: "XL" },
 ];
 
-export const WORD_SPACING_OPTIONS: Array<{ value: ReaderWordSpacing; labelKey: string }> = [
-	{ value: "tight", labelKey: "reader.settings.wordSpacingTight" },
-	{ value: "normal", labelKey: "reader.settings.wordSpacingNormal" },
-	{ value: "wide", labelKey: "reader.settings.wordSpacingWide" },
-	{ value: "wider", labelKey: "reader.settings.wordSpacingWider" },
+export const WORD_SPACING_OPTIONS: Array<{
+	value: ReaderWordSpacing;
+	labelKey: string;
+	shortLabel?: string;
+}> = [
+	{ value: "tight", labelKey: "reader.settings.wordSpacingTight", shortLabel: "XS" },
+	{ value: "normal", labelKey: "reader.settings.wordSpacingNormal", shortLabel: "S" },
+	{ value: "wide", labelKey: "reader.settings.wordSpacingWide", shortLabel: "M" },
+	{ value: "wider", labelKey: "reader.settings.wordSpacingWider", shortLabel: "L" },
 ];
 
 export const THEME_SWATCHES: Array<{
@@ -49,7 +66,11 @@ export const THEME_SWATCHES: Array<{
 	color: string;
 	labelKey: string;
 }> = [
-	{ value: "default", color: "#ffffff", labelKey: "reader.settings.themeDefault" },
+	{
+		value: "default",
+		color: "#ffffff",
+		labelKey: "reader.settings.themeDefault",
+	},
 	{ value: "paper", color: "#e8e6df", labelKey: "reader.settings.themePaper" },
 	{ value: "sepia", color: "#f4efe6", labelKey: "reader.settings.themeSepia" },
 	{ value: "warm", color: "#fdf3e3", labelKey: "reader.settings.themeWarm" },

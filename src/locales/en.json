@@ -4500,6 +4500,7 @@
         "correctFormLabel": "Correct form",
         "correctFormPlaceholder": "vakhné·ra",
         "correctFormHint": "With correct spelling and/or stress mark (acute accent over vowel).",
+        "insertNasalization": "Insert superscript н (nasalization)",
         "commentLabel": "Comment (optional)",
         "commentPlaceholder": "Stress on second syllable",
         "cancel": "Cancel",
