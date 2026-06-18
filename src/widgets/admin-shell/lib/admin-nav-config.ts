@@ -22,6 +22,7 @@ import {
 	BookPlus,
 	Tag,
 	SpellCheck,
+	Megaphone,
 } from "lucide-react";
 
 export interface AdminNavItem {
@@ -137,6 +138,11 @@ export const buildAdminNavSections = (t: (key: string) => string, lang: string):
 				href: () => `/${lang}/admin/text-submissions`,
 				label: () => t("admin.nav.textSubmissions"),
 				icon: BookPlus,
+			},
+			{
+				href: () => `/${lang}/admin/announcements`,
+				label: () => t("admin.nav.announcements"),
+				icon: Megaphone,
 			},
 		],
 	},

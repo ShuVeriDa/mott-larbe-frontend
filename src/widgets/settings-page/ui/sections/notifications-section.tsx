@@ -48,7 +48,7 @@ export const NotificationsSection = ({
 		} catch {}
 	};
 
-		const handleRepeatReminderChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ repeatReminder: v });
+	const handleRepeatReminderChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ repeatReminder: v });
 	const handleWeeklyReportChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ weeklyReport: v });
 	const handleNewTextsChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ newTexts: v });
 	const handleSupportRepliesChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ supportReplies: v });
@@ -58,6 +58,7 @@ export const NotificationsSection = ({
 	const handleInAppFeedbackReplyChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ inAppFeedbackReply: v });
 	const handleInAppSuggestionChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ inAppSuggestion: v });
 	const handleInAppTextSubmissionChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ inAppTextSubmission: v });
+	const handleInAppNewTextsChange: NonNullable<ComponentProps<typeof ToggleRow>["onChange"]> = (v) => toggle({ inAppNewTexts: v });
 return (
 		<div className="flex flex-col gap-3.5">
 			<SectionHeader
@@ -116,6 +117,12 @@ return (
 					description={t("settings.notifications.inAppTextSubmissionDesc")}
 					checked={notifications.inAppTextSubmission}
 					onChange={handleInAppTextSubmissionChange}
+				/>
+				<ToggleRow
+					label={t("settings.notifications.inAppNewTexts")}
+					description={t("settings.notifications.inAppNewTextsDesc")}
+					checked={notifications.inAppNewTexts}
+					onChange={handleInAppNewTextsChange}
 				/>
 			</SettingCard>
 

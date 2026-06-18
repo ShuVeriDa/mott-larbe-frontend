@@ -1423,7 +1423,9 @@
       "inAppSuggestion": "Suggestion result",
       "inAppSuggestionDesc": "Notification when your suggested edit is approved or rejected",
       "inAppTextSubmission": "Text moderation result",
-      "inAppTextSubmissionDesc": "Notification when your submitted text is published or rejected"
+      "inAppTextSubmissionDesc": "Notification when your submitted text is published or rejected",
+      "inAppNewTexts": "New texts in the library",
+      "inAppNewTextsDesc": "Receive a notification when a new text appears"
     },
     "shortcuts": {
       "title": "Keyboard shortcuts",
@@ -3158,7 +3160,8 @@
       "subscriptions": "Subscriptions",
       "tracking": "Traffic",
       "phrasebook": "Phrasebook",
-      "textSubmissions": "Text submissions"
+      "textSubmissions": "Text submissions",
+      "announcements": "Announcements"
     },
     "genres": {
       "title": "Genres",
@@ -4520,6 +4523,63 @@
       },
       "pagination": {
         "showing": "Showing {from}–{to} of {total}"
+      }
+    },
+    "announcements": {
+      "pageTitle": "Announcements",
+      "pageSubtitle": "Broadcast notifications to all users",
+      "createButton": "Create announcement",
+      "empty": "No announcements yet",
+      "loadError": "Failed to load",
+      "deleteAriaLabel": "Delete announcement",
+      "table": {
+        "colTitle": "Title",
+        "colBody": "Description",
+        "colText": "Text",
+        "colDate": "Date"
+      },
+      "modal": {
+        "createTitle": "New announcement",
+        "titleLabel": "Title",
+        "titlePlaceholder": "E.g. New book in the library",
+        "bodyLabel": "Description",
+        "bodyPlaceholder": "Briefly describe what is new...",
+        "textLabel": "Linked text (optional)",
+        "textPlaceholder": "Choose a text...",
+        "clearText": "Clear selected text",
+        "send": "Send to all",
+        "sending": "Sending...",
+        "cancel": "Cancel",
+        "templatesLabel": "Templates",
+        "templates": {
+          "newText": {
+            "title": "New text in the library",
+            "body": "A new text has been added to the library. Go and read it!"
+          },
+          "newBook": {
+            "title": "New book in the library",
+            "body": "A new book has been added to the library. We invite you to read it!"
+          },
+          "newPages": {
+            "title": "New pages added",
+            "body": "New pages have been added to the text. Continue reading!"
+          },
+          "platformUpdate": {
+            "title": "Platform update",
+            "body": "We have improved the platform. Check out the new features!"
+          },
+          "newFeature": {
+            "title": "New feature",
+            "body": "A new feature is now available on the platform. Try it out!"
+          }
+        }
+      },
+      "deleteConfirm": {
+        "title": "Delete announcement?",
+        "description": "The announcement will disappear from history. Notifications already sent cannot be recalled.",
+        "confirm": "Delete",
+        "deleting": "Deleting…",
+        "cancel": "Cancel"
       }
     },
     "dictionary": {
@@ -6986,7 +7046,9 @@
       "TEXT_SUBMISSION_REJECTED": "Your text did not pass moderation",
       "NEW_FEEDBACK_THREAD": "New request from a user",
       "NEW_TEXT_SUBMISSION": "New text awaiting moderation",
-      "NEW_SUGGESTION": "New dictionary suggestion"
+      "NEW_SUGGESTION": "New dictionary suggestion",
+      "NEW_LIBRARY_TEXT": "New text in the library",
+      "PLATFORM_ANNOUNCEMENT": "Platform announcement"
     }
   },
   "scriptGuide": {

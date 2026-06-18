@@ -43,8 +43,6 @@ export const NotificationList = ({
 		);
 	}
 
-	const handleReadAll = () => onReadAll();
-
 	return (
 		<div className="flex flex-col">
 			<div className="flex items-center justify-between border-b border-bd-1 px-4 py-2">
@@ -55,7 +53,7 @@ export const NotificationList = ({
 					variant="ghost"
 					size="default"
 					className="h-auto px-2 py-1 text-[11px]"
-					onClick={handleReadAll}
+					onClick={onReadAll}
 				>
 					{t("notifications.markAllRead")}
 				</Button>

@@ -24,6 +24,9 @@ const filterByPrefs = (
 			n.type === "TEXT_SUBMISSION_REJECTED"
 		)
 			return inAppTextSubmission;
+		if (n.type === "NEW_LIBRARY_TEXT")
+			return settings.notifications.inAppNewTexts ?? true;
+		if (n.type === "PLATFORM_ANNOUNCEMENT") return true;
 		return true;
 	});
 };
@@ -31,11 +34,11 @@ const filterByPrefs = (
 export const useNotifications = () => {
 	const qc = useQueryClient();
 
-	const { data: rawNotifications = [], isLoading: isListLoading } = useQuery(
+	const { data: rawNotifications = [], isPending: isListPending } = useQuery(
 		notificationListQueryOptions(),
 	);
 
-	const { data: unreadCountData, isLoading: isCountLoading } = useQuery(
+	const { data: unreadCountData, isPending: isCountPending } = useQuery(
 		notificationUnreadCountQueryOptions(),
 	);
 
@@ -45,6 +48,6 @@ export const useNotifications = () => {
 	return {
 		notifications,
 		unreadCount: unreadCountData?.count ?? 0,
-		isLoading: isListLoading || isCountLoading,
+		isLoading: isListPending || isCountPending,
 	};
 };

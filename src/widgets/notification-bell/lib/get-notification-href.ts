@@ -1,6 +1,6 @@
 import type { Notification } from "@/entities/notification";
 
-export const getNotificationHref = (lang: string, n: Notification): string => {
+export const getNotificationHref = (lang: string, n: Notification): string | null => {
 	switch (n.type) {
 		case "FEEDBACK_REPLY":
 			return `/${lang}/feedback?thread=${n.entityId}`;
@@ -16,5 +16,9 @@ export const getNotificationHref = (lang: string, n: Notification): string => {
 			return `/${lang}/admin/text-submissions?submission=${n.entityId}`;
 		case "NEW_SUGGESTION":
 			return `/${lang}/admin/suggestions?suggestion=${n.entityId}`;
+		case "NEW_LIBRARY_TEXT":
+			return `/${lang}/texts/${n.entityId}`;
+		case "PLATFORM_ANNOUNCEMENT":
+			return n.entityId ? `/${lang}/texts/${n.entityId}` : null;
 	}
 };

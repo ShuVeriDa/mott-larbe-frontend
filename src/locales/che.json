@@ -1423,7 +1423,9 @@
       "inAppSuggestion": "Хийцамийн жоп",
       "inAppSuggestionDesc": "Хьоьга хийцам тIеэцначух я ца тIеэцначух хаам",
       "inAppTextSubmission": "Текстан модерацин жоп",
-      "inAppTextSubmissionDesc": "Хьоьга хьажийна текст арахецначух я ца арахецначух хаам"
+      "inAppTextSubmissionDesc": "Хьоьга хьажийна текст арахецначух я ца арахецначух хаам",
+      "inAppNewTexts": "Библиотекехь керла тексташ",
+      "inAppNewTextsDesc": "Керла текст кхочучу хенахь хаам баккха"
     },
     "shortcuts": {
       "title": "Клавиатурин комбинацеш",
@@ -3156,7 +3158,8 @@
       "openMenu": "Меню дӀаяста",
       "subscriptions": "Подпискаш",
       "phrasebook": "Разговорник",
-      "textSubmissions": "Текстийн дехарш"
+      "textSubmissions": "Текстийн дехарш",
+      "announcements": "Хаамаш"
     },
     "genres": {
       "title": "Жанраш",
@@ -4518,6 +4521,63 @@
       },
       "pagination": {
         "showing": "Гайтина {from}–{to} оцу {total} тӀера"
+      }
+    },
+    "announcements": {
+      "pageTitle": "Хаамаш",
+      "pageSubtitle": "Дерригена пайдахошна хаам бар",
+      "createButton": "Хаам хIотто",
+      "empty": "Хаамаш яц",
+      "loadError": "Схьалаца хилла гIалат",
+      "deleteAriaLabel": "Хаам дIаяккха",
+      "table": {
+        "colTitle": "ЦIе",
+        "colBody": "Сурт",
+        "colText": "Текст",
+        "colDate": "Де"
+      },
+      "modal": {
+        "createTitle": "Керла хаам",
+        "titleLabel": "Цlе",
+        "titlePlaceholder": "Масала: Библиотекехь керла книга",
+        "bodyLabel": "Сурт",
+        "bodyPlaceholder": "Муха хlума кlел а хlоттийна...",
+        "textLabel": "Уьйр текст (догIуш доцу)",
+        "textPlaceholder": "Текст харжа...",
+        "clearText": "Харжина текст дIаяккха",
+        "send": "Дерригена дахьа",
+        "sending": "Дохьуш...",
+        "cancel": "Дlадита",
+        "templatesLabel": "Шаблонаш",
+        "templates": {
+          "newText": {
+            "title": "Библиотекехь керла текст",
+            "body": "Библиотекехь керла текст тӀетоьхна. Вовшахкхета деша!"
+          },
+          "newBook": {
+            "title": "Библиотекехь керла книга",
+            "body": "Библиотекехь керла книга тӀетоьхна. Деша хьехо!"
+          },
+          "newPages": {
+            "title": "Керла агӀонаш тӀетоьхна",
+            "body": "Текстехь керла агӀонаш тӀетоьхна. Деша чӀагӀдалийта!"
+          },
+          "platformUpdate": {
+            "title": "Платформан нисдар",
+            "body": "Платформа нисйина. Керлачу мумкинашца вовшахкхета!"
+          },
+          "newFeature": {
+            "title": "Керла функци",
+            "body": "Платформехь керла функци тӀетоьхна. Хьажа!"
+          }
+        }
+      },
+      "deleteConfirm": {
+        "title": "Хаам дIаяккха?",
+        "description": "Хаам историха яла йолу. Дахийтина хаамаш схьа эца йиш яц.",
+        "confirm": "ДIаяккха",
+        "deleting": "Дояккхуш…",
+        "cancel": "Дlадита"
       }
     },
     "dictionary": {
@@ -6983,7 +7043,9 @@
       "TEXT_SUBMISSION_REJECTED": "Хьан текст модерацица ца эккхийтина",
       "NEW_FEEDBACK_THREAD": "Пайдехошера керла тӀалам",
       "NEW_TEXT_SUBMISSION": "Модерацина хьажа дезаш керла текст ду",
-      "NEW_SUGGESTION": "Словарна керла предложени"
+      "NEW_SUGGESTION": "Словарна керла предложени",
+      "NEW_LIBRARY_TEXT": "Библиотекехь керла текст",
+      "PLATFORM_ANNOUNCEMENT": "Платформан хаам"
     }
   },
   "scriptGuide": {

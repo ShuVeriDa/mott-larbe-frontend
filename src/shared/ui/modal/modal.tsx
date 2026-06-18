@@ -2,10 +2,11 @@
 
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
-import { ComponentProps, type ReactNode, useEffect } from "react";
+import { ComponentProps, type ReactNode, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { variants } from "@/shared/lib/animation";
+import { useFocusTrap } from "@/shared/lib/focus-trap/use-focus-trap";
 
 export interface ModalProps {
 	open: boolean;
@@ -22,6 +23,10 @@ export const Modal = ({
 	children,
 	className,
 }: ModalProps) => {
+	const panelRef = useRef<HTMLDivElement | null>(null);
+
+	useFocusTrap(panelRef, open);
+
 	useEffect(() => {
 		if (!open) return;
 		const onKey = (e: KeyboardEvent) => {
@@ -58,6 +63,7 @@ export const Modal = ({
 					exit="exit"
 				>
 					<motion.div
+						ref={panelRef}
 						className={cn(
 							"w-full max-w-[340px] rounded-t-[16px] sm:rounded-[14px]",
 							"border-[0.5px] border-bd-2 bg-surf shadow-md",

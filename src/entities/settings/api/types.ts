@@ -60,6 +60,7 @@ export interface UserNotifications {
 	inAppFeedbackReply: boolean;
 	inAppSuggestion: boolean;
 	inAppTextSubmission: boolean;
+	inAppNewTexts: boolean;
 }
 
 export interface AllSettings {
@@ -103,6 +104,7 @@ export interface UpdateNotificationsDto {
 	inAppFeedbackReply?: boolean;
 	inAppSuggestion?: boolean;
 	inAppTextSubmission?: boolean;
+	inAppNewTexts?: boolean;
 }
 
 export type ExportFormat = "json" | "csv";
