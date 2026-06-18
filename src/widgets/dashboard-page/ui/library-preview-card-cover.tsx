@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { BookOpen } from "lucide-react";
+import Image from "next/image";
 import type { LibraryPreviewLevelStyle } from "../lib/library-preview-level-styles";
 
 interface LibraryPreviewCardCoverProps {
@@ -14,7 +14,7 @@ export const LibraryPreviewCardCover = ({
 	title,
 }: LibraryPreviewCardCoverProps) => (
 	<div
-		className={`relative flex h-[160px] items-center justify-center md:h-[190px] lg:h-[210px] xl:h-[250px] overflow-hidden ${imageUrl ? "bg-surf-2" : colors.cov}`}
+		className={`relative flex w-full aspect-3/4 items-center justify-center overflow-hidden ${imageUrl ? "bg-surf-2" : colors.cov}`}
 	>
 		{imageUrl ? (
 			<Image
@@ -22,7 +22,8 @@ export const LibraryPreviewCardCover = ({
 				alt={title}
 				fill
 				sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-				className="object-cover"
+				quality={90}
+				className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
 			/>
 		) : (
 			<>

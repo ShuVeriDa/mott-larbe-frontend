@@ -14,8 +14,8 @@ interface TextCoverProps {
 export const TextCover = ({ language, imageUrl, title, priority, className }: TextCoverProps) => (
 	<div
 		className={cn(
-			"relative w-[88px] h-[126px] rounded-card border border-bd-2 bg-surf shrink-0 overflow-hidden",
-			"max-sm:w-[72px] max-sm:h-[104px]",
+			"relative w-[140px] h-[200px] rounded-card border border-bd-2 bg-surf shrink-0 overflow-hidden",
+			"max-sm:w-[110px] max-sm:h-[158px]",
 			className,
 		)}
 	>
@@ -24,8 +24,10 @@ export const TextCover = ({ language, imageUrl, title, priority, className }: Te
 				src={imageUrl}
 				alt={title}
 				fill
-				sizes="(max-width: 640px) 72px, 88px"
-				className="object-cover"
+				sizes="(max-width: 640px) 110px, 140px"
+				quality={90}
+				loading={priority ? "eager" : "lazy"}
+				className="object-cover object-top"
 				priority={priority}
 			/>
 		) : (
@@ -45,7 +47,7 @@ export const TextCover = ({ language, imageUrl, title, priority, className }: Te
 				<div className="h-[2.5px] rounded-full bg-bd-3 w-[70%]" />
 			</div>
 		)}
-		<Typography tag="span" className="absolute bottom-1.5 right-1.5 text-[9px] font-bold tracking-[0.06em] text-acc-t bg-acc-bg border border-acc/20 px-1.5 py-[1px] rounded-[4px]">
+		<Typography tag="span" className="absolute bottom-1.5 right-1.5 text-[9px] font-bold tracking-[0.06em] text-acc-t bg-acc-bg border border-acc/20 px-1.5 py-px rounded-[4px]">
 			{language}
 		</Typography>
 	</div>

@@ -14,7 +14,11 @@ export interface LibraryPreviewCardProps {
 	href?: string;
 }
 
-export const LibraryPreviewCard = ({ item, lang, href }: LibraryPreviewCardProps) => {
+export const LibraryPreviewCard = ({
+	item,
+	lang,
+	href,
+}: LibraryPreviewCardProps) => {
 	const colors = getLibraryPreviewLevelColors(item.level);
 	const pct = Math.round(item.progressPercent);
 
@@ -24,8 +28,12 @@ export const LibraryPreviewCard = ({ item, lang, href }: LibraryPreviewCardProps
 			className="group block cursor-pointer overflow-hidden rounded-card border-[0.5px] border-bd-1 bg-surf outline-none transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-px hover:border-bd-2 hover:[box-shadow:0_4px_14px_2px_var(--card-glow)] focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 			style={{ "--card-glow": `${colors.glow}90` } as CSSProperties}
 		>
-			<LibraryPreviewCardCover colors={colors} imageUrl={item.imageUrl} title={item.title} />
-			<div className="p-2 md:p-[10px_13px_12px]">
+			<LibraryPreviewCardCover
+				colors={colors}
+				imageUrl={item.imageUrl}
+				title={item.title}
+			/>
+			<div className="p-2 md:p-[10px_13px_12px] ">
 				<LibraryPreviewCardMeta item={item} colors={colors} />
 				<LibraryPreviewCardFooter item={item} pct={pct} colors={colors} />
 			</div>
@@ -35,7 +43,7 @@ export const LibraryPreviewCard = ({ item, lang, href }: LibraryPreviewCardProps
 
 export const LibraryPreviewCardSkeleton = () => (
 	<div className="animate-pulse overflow-hidden rounded-card border border-bd-1 bg-surf">
-		<div className="h-[160px] bg-surf-2 md:h-[190px] lg:h-[210px] xl:h-[250px]" />
+		<div className="aspect-3/4 w-full bg-surf-2" />
 		<div className="p-2 md:p-[10px_13px_12px]">
 			<div className="mb-1.5 flex gap-1.5">
 				<div className="h-4 w-8 rounded bg-surf-3" />

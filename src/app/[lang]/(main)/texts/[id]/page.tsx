@@ -173,7 +173,7 @@ const TextDetailsRoutePage = async ({ params }: PageProps) => {
 				{text.description && <p>{text.description}</p>}
 				<a href={`/${lang}/reader/${encodedId}/p/1`}>Читать</a>
 			</noscript>
-			<LibraryTextDetailPage id={id} initialData={text} />
+			<LibraryTextDetailPage id={id} />
 		</>
 	);
 };

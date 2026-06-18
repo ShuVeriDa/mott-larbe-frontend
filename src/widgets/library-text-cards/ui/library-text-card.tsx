@@ -212,7 +212,8 @@ export const LibraryTextCard = ({
 						alt={item.title}
 						fill
 						sizes="(max-width: 640px) calc(50vw - 12px), 224px"
-						className="object-cover"
+						quality={90}
+						className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
 					/>
 				) : (
 					<>

@@ -27,7 +27,7 @@ export const RelatedCover = ({ level, imageUrl, title }: RelatedCoverProps) => {
 					alt={title}
 					width={26}
 					height={36}
-					className="object-cover w-full h-full"
+					className="object-cover object-top w-full h-full"
 				/>
 			) : (
 				<svg

@@ -7,15 +7,14 @@ import {
 	libraryTextKeys,
 	useLibraryTextDetail,
 	useLibraryTextRelated,
-	type LibraryTextDetail,
 } from "@/entities/library-text";
 import { useI18n } from "@/shared/lib/i18n";
 
-export const useLibraryTextDetailPage = (id: string, initialData?: LibraryTextDetail) => {
+export const useLibraryTextDetailPage = (id: string) => {
 	const { t, lang } = useI18n();
 	const queryClient = useQueryClient();
 
-	const detail = useLibraryTextDetail(id, initialData);
+	const detail = useLibraryTextDetail(id);
 	const related = useLibraryTextRelated(id);
 
 	const [copied, setCopied] = useState(false);

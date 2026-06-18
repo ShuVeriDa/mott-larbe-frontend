@@ -61,7 +61,7 @@ export const LibraryTextCards = ({
 
 	// Grid view — использует LibraryPreviewCard как на dashboard
 	const gridClass =
-		"grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3 sm:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(180px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(196px,1fr))] lg:gap-4";
+		"grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-3 sm:grid-cols-[repeat(auto-fill,minmax(148px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(168px,1fr))] lg:gap-4";
 	const cardClass = "min-w-0";
 
 	if (sort === "level") {

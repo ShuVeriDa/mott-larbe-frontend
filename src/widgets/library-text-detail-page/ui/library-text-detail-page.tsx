@@ -25,14 +25,12 @@ import { TextTagsCard } from "./text-tags-card";
 import { BookmarkMenuIcon } from "./bookmark-menu-icon";
 import { FlagIcon } from "./flag-icon";
 import { DetailSkeleton } from "./detail-skeleton";
-import type { LibraryTextDetail } from "@/entities/library-text";
 
 interface LibraryTextDetailPageProps {
 	id: string;
-	initialData?: LibraryTextDetail;
 }
 
-export const LibraryTextDetailPage = ({ id, initialData }: LibraryTextDetailPageProps) => {
+export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 	const {
 		t,
 		lang,
@@ -46,7 +44,7 @@ export const LibraryTextDetailPage = ({ id, initialData }: LibraryTextDetailPage
 		handleRetry,
 		handleToggleBookmark,
 		handleOpenReport,
-	} = useLibraryTextDetailPage(id, initialData);
+	} = useLibraryTextDetailPage(id);
 
 	if (detail.isPending) return <DetailSkeleton />;
 
