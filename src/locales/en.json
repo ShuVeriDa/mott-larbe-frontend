@@ -2236,6 +2236,12 @@
       "memberSince": "Member since",
       "freePlan": "Free plan"
     },
+    "avatar": {
+      "changeLabel": "Change profile photo",
+      "uploading": "Uploading...",
+      "fileTooLarge": "File too large (maximum 2 MB)",
+      "invalidType": "Allowed formats: JPG, PNG, WebP, GIF"
+    },
     "tabs": {
       "main": "General",
       "security": "Security",
@@ -3740,6 +3746,9 @@
         "subscript": "Subscript",
         "superscriptDesc": "Text above the line (exponents, references)",
         "subscriptDesc": "Text below the line (subscripts in formulas)",
+        "insertImage": "Image",
+        "insertImageDesc": "Insert image from file",
+        "mediaGroup": "Media",
         "bulletList": "Bullet list",
         "orderedList": "Numbered list",
         "undo": "Undo",
@@ -5748,6 +5757,10 @@
     "alreadyScheduledForDeletion": "Account is already scheduled for deletion.",
     "samePassword": "New password must be different from the current one.",
     "sameEmail": "New email must be different from the current one.",
+    "avatarTooLarge": "File too large. Maximum size is 2 MB.",
+    "invalidAvatarType": "Invalid format. Please upload JPG, PNG, WebP or GIF.",
+    "imageTooLarge": "File too large. Maximum size is 5 MB.",
+    "invalidImageType": "Invalid format. Please upload JPG, PNG, WebP or GIF.",
     "noActiveSubscription": "No active subscription found.",
     "alreadySubscribed": "You are already subscribed to this plan.",
     "subscriptionRequired": "A subscription is required to access this feature.",

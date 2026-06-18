@@ -5,7 +5,7 @@ import type { Editor, TipTapDoc } from "@/shared/ui/notion-editor";
 import { NotionEditor } from "@/shared/ui/notion-editor";
 import type { Extension } from "@tiptap/core";
 import type { ReactNode, RefObject } from "react";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { AdminTextEditorFooter } from "./admin-text-editor-footer";
 import { AdminTextEditorPageTabs } from "./admin-text-editor-page-tabs";
 import { computeDocStats, PAGE_CHAR_LIMIT } from "./admin-text-editor-stats";
@@ -18,6 +18,7 @@ import { SpellingCorrectionOverlay } from "@/features/spelling-correction";
 import { CharLimitMarkerExtension } from "./model/char-limit-marker-extension";
 import { getAdminTextEditorShortcuts } from "./model/get-admin-text-editor-shortcuts";
 import { useFindReplace } from "./model/use-find-replace";
+import { useEditorImageUpload } from "./model/use-editor-image-upload";
 
 interface AdminTextEditorShellProps {
 	title: string;
@@ -90,6 +91,7 @@ export const AdminTextEditorShell = ({
 		currentDoc ? computeDocStats(currentDoc) : { words: 0, chars: 0, paragraphs: 0 },
 	);
 	const [editor, setEditor] = useState<Editor | null>(null);
+	const editorRef = useRef<Editor | null>(null);
 
 	useLayoutEffect(() => {
 		if (currentDoc) setStats(computeDocStats(currentDoc));
@@ -103,7 +105,9 @@ export const AdminTextEditorShell = ({
 			findReplaceCharHandlerRef.current = null;
 		};
 	}, [findReplace.tryInsertChar, findReplaceCharHandlerRef]);
-	const slashItems = getSlashItems(t);
+
+	const imageUpload = useEditorImageUpload(() => editorRef.current);
+	const slashItems = getSlashItems(t, imageUpload.handleTrigger);
 	const keyboardShortcuts = getAdminTextEditorShortcuts({
 		t,
 		primaryShortcutLabel,
@@ -140,11 +144,22 @@ export const AdminTextEditorShell = ({
 
 	const handleEditorReady = (nextEditor: Editor) => {
 		setEditor(nextEditor);
+		editorRef.current = nextEditor;
 		onEditorReady?.(nextEditor);
 	};
 
 	return (
 		<div className="flex min-h-0 min-w-0 flex-col overflow-hidden border-r border-bd-1 max-[767px]:border-r-0">
+			<input
+				ref={imageUpload.inputRef}
+				type="file"
+				accept="image/jpeg,image/png,image/webp,image/gif"
+				className="sr-only"
+				tabIndex={-1}
+				aria-hidden
+				onChange={imageUpload.handleFileChange}
+			/>
+
 			{topContent}
 
 			<AdminTextEditorTitleField

@@ -45,14 +45,21 @@ export const Avatar = ({
 		{...props}
 	>
 		{src ? (
-			<NextImage
-				src={src}
-				alt={alt ?? ""}
-				fill
-				className="object-cover"
-				sizes="128px"
-				unoptimized={src.startsWith("data:")}
-			/>
+			src.startsWith("/uploads/") || src.startsWith("blob:") || src.startsWith("data:") ? (
+				<img // eslint-disable-line @next/next/no-img-element
+					src={src}
+					alt={alt ?? ""}
+					className="absolute inset-0 size-full object-cover"
+				/>
+			) : (
+				<NextImage
+					src={src}
+					alt={alt ?? ""}
+					fill
+					className="object-cover"
+					sizes="128px"
+				/>
+			)
 		) : null}
 		<AvatarPrimitive.Fallback
 			delayMs={src ? 600 : undefined}

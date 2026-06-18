@@ -2,8 +2,8 @@
 
 import { useMySubscription } from "@/entities/subscription";
 import type { UserProfile } from "@/entities/user";
+import { AvatarUpload } from "@/features/avatar-upload";
 import { useI18n } from "@/shared/lib/i18n";
-import { Avatar } from "@/shared/ui/avatar";
 import { Badge } from "@/shared/ui/badge";
 import { Typography } from "@/shared/ui/typography";
 
@@ -48,13 +48,12 @@ export const ProfileHeader = ({ profile, lang }: ProfileHeaderProps) => {
 	return (
 		<div className="flex flex-col gap-3 rounded-[12px] border-[0.5px] border-bd-1 bg-surf p-5 sm:flex-row sm:items-start sm:gap-3.5">
 			<div className="flex flex-1 items-center gap-3.5 min-w-0">
-				<Avatar
-					className="size-[54px] text-[20px] font-display shrink-0 border-[0.5px] border-bd-2"
-					src={profile.avatar ?? undefined}
+				<AvatarUpload
+					currentSrc={profile.avatarMedium ?? profile.avatar ?? undefined}
 					alt={getDisplayName(profile)}
-				>
-					{getInitials(profile)}
-				</Avatar>
+					initials={getInitials(profile)}
+					className="size-[54px] text-[20px] font-display"
+				/>
 
 				<div className="flex-1 min-w-0">
 					<Typography

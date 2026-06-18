@@ -1,10 +1,11 @@
 import { useI18n } from "@/shared/lib/i18n";
 import type { SlashMenuItem } from "@/shared/ui/notion-editor";
 import { Typography } from "@/shared/ui/typography";
-import { List, ListOrdered, Subscript, Superscript } from "lucide-react";
+import { ImageIcon, List, ListOrdered, Subscript, Superscript } from "lucide-react";
 
 export const getSlashItems = (
 	t: ReturnType<typeof useI18n>["t"],
+	onImageUpload?: () => void,
 ): SlashMenuItem[] => [
 	{
 		title: t("admin.texts.createPage.formatText"),
@@ -109,4 +110,15 @@ export const getSlashItems = (
 		icon: <Subscript className="size-3" />,
 		command: editor => editor.chain().focus().toggleSubscript().run(),
 	},
+	...(onImageUpload
+		? [
+				{
+					title: t("admin.texts.createPage.insertImage"),
+					description: t("admin.texts.createPage.insertImageDesc"),
+					group: t("admin.texts.createPage.mediaGroup"),
+					icon: <ImageIcon className="size-3" />,
+					command: (_editor) => onImageUpload(),
+				} satisfies SlashMenuItem,
+			]
+		: []),
 ];

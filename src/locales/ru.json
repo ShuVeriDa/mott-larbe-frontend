@@ -2194,6 +2194,12 @@
 			"memberSince": "С",
 			"freePlan": "Бесплатный план"
 		},
+		"avatar": {
+			"changeLabel": "Изменить фото профиля",
+			"uploading": "Загрузка...",
+			"fileTooLarge": "Файл слишком большой (максимум 2 МБ)",
+			"invalidType": "Допустимые форматы: JPG, PNG, WebP, GIF"
+		},
 		"tabs": {
 			"main": "Основное",
 			"security": "Безопасность",
@@ -3699,6 +3705,9 @@
 				"subscript": "Подстрочный",
 				"superscriptDesc": "Символы над строкой (индексы, степени)",
 				"subscriptDesc": "Символы под строкой (формулы, индексы)",
+				"insertImage": "Изображение",
+				"insertImageDesc": "Вставить изображение из файла",
+				"mediaGroup": "Медиа",
 				"bulletList": "Маркированный список",
 				"orderedList": "Нумерованный список",
 				"undo": "Отменить",
@@ -5707,6 +5716,10 @@
 		"alreadyScheduledForDeletion": "Аккаунт уже запланирован к удалению.",
 		"samePassword": "Новый пароль должен отличаться от текущего.",
 		"sameEmail": "Новый email должен отличаться от текущего.",
+		"avatarTooLarge": "Файл слишком большой. Максимум 2 МБ.",
+		"invalidAvatarType": "Недопустимый формат. Загрузите JPG, PNG, WebP или GIF.",
+		"imageTooLarge": "Файл слишком большой. Максимум 5 МБ.",
+		"invalidImageType": "Недопустимый формат. Загрузите JPG, PNG, WebP или GIF.",
 		"noActiveSubscription": "Активная подписка не найдена.",
 		"alreadySubscribed": "Вы уже подписаны на этот тариф.",
 		"subscriptionRequired": "Для доступа к этой функции необходима подписка.",

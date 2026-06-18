@@ -63,6 +63,11 @@ export const proxy = async (request: NextRequest) => {
 	const { pathname } = request.nextUrl;
 
 	if (pathname.includes("/.well-known/")) return NextResponse.next();
+
+	// Static uploads served by the backend — proxy directly, skip locale logic
+	if (pathname.startsWith("/uploads/")) {
+		return NextResponse.rewrite(new URL(pathname, API_URL.replace(/\/api$/, "")));
+	}
 	// Locale redirect for paths without a locale prefix
 	const matchedLocale = LOCALES.find(
 		(locale) =>

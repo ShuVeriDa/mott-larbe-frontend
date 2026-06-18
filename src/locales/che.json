@@ -2233,6 +2233,12 @@
       "memberSince": "Дуьйна",
       "freePlan": "Маьрша план"
     },
+    "avatar": {
+      "changeLabel": "Профилан сурт хийца",
+      "uploading": "Чуйохуш йу...",
+      "fileTooLarge": "Файл тӀе дуккха ду (кхачалла 2 МБ)",
+      "invalidType": "Нийса кеп: JPG, PNG, WebP, GIF"
+    },
     "tabs": {
       "main": "Коьртаниг",
       "security": "Кхерамсузлла",
@@ -3738,6 +3744,9 @@
         "subscript": "Подстрочни",
         "superscriptDesc": "МоргӀал лакхахь йолу хьаьркаш",
         "subscriptDesc": "МоргӀал лахахь йолу хьаьркаш",
+        "insertImage": "Сурт",
+        "insertImageDesc": "Файлара сурт чуйохьа",
+        "mediaGroup": "Медиа",
         "bulletList": "Маркировать йина список",
         "orderedList": "Терахьаш долу список",
         "undo": "Юхадаккха",
@@ -5746,6 +5755,10 @@
     "alreadyScheduledForDeletion": "Аккаунт дӀаяккха хьалха билгала йина ю.",
     "samePassword": "Керла пароль хӀинца йолчух хийца аьлла хила еза.",
     "sameEmail": "Керла email хӀинца йолчух хийца аьлла хила еза.",
+    "avatarTooLarge": "Файл тӀе дуккха ду. Кхачалла 2 МБ.",
+    "invalidAvatarType": "Нийса формат дац. JPG, PNG, WebP я GIF чулацо.",
+    "imageTooLarge": "Файл тӀе дуккха ду. Кхачалла 5 МБ.",
+    "invalidImageType": "Нийса формат дац. JPG, PNG, WebP я GIF чулацо.",
     "noActiveSubscription": "Жигар подписка ца карийна.",
     "alreadySubscribed": "Хьо хӀара тарифна подписывать йина ю хьалхе.",
     "subscriptionRequired": "ХӀокху функцина подписка оьшу.",

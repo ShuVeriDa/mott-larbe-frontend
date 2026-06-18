@@ -105,14 +105,21 @@ export const adminTextApi = {
 		return data;
 	},
 
-	uploadCover: async (id: string, file: File): Promise<{ imageUrl: string }> => {
+	uploadCover: async (id: string, file: File): Promise<{ imageUrl: string; imageUrlOptimized: string }> => {
 		const formData = new FormData();
 		formData.append("file", file);
-		const { data } = await http.post<{ imageUrl: string }>(
+		const { data } = await http.post<{ imageUrl: string; imageUrlOptimized: string }>(
 			`/admin/texts/${id}/cover`,
 			formData,
 			{ headers: { "Content-Type": "multipart/form-data" } },
 		);
+		return data;
+	},
+
+	uploadImage: async (file: File): Promise<{ imageUrl: string; imageUrlOptimized: string }> => {
+		const formData = new FormData();
+		formData.append("file", file);
+		const { data } = await http.post<{ imageUrl: string; imageUrlOptimized: string }>("/admin/uploads/image", formData);
 		return data;
 	},
 

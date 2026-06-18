@@ -2,6 +2,7 @@
 
 import { Button } from "@/shared/ui/button";
 import Color from "@tiptap/extension-color";
+import Image from "@tiptap/extension-image";
 import { DragHandle } from "@tiptap/extension-drag-handle-react";
 import Highlight from "@tiptap/extension-highlight";
 import Placeholder from "@tiptap/extension-placeholder";
@@ -119,6 +120,7 @@ export const NotionEditor = ({
 		extensions: [
 			// StarterKit already bundles Underline — configure it here, don't add separately
 			StarterKit.configure({ heading: { levels: [1, 2, 3, 4] } }),
+			Image.configure({ inline: false, allowBase64: false }),
 			Superscript,
 			Subscript,
 			TextAlign.configure({ types: ["heading", "paragraph"] }),

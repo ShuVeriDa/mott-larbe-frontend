@@ -21,6 +21,8 @@ export interface UserProfile {
 	surname: string | null;
 	phone: string | null;
 	avatar: string | null;
+	avatarThumb: string | null;
+	avatarMedium: string | null;
 	language: UserLanguage | null;
 	level: UserLevel | null;
 	createdAt: string;

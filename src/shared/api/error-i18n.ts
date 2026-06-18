@@ -28,6 +28,8 @@ const ERROR_CODE_TO_I18N_KEY: Record<string, string> = {
   ALREADY_SCHEDULED_FOR_DELETION: "apiErrors.alreadyScheduledForDeletion",
   SAME_PASSWORD: "apiErrors.samePassword",
   SAME_EMAIL: "apiErrors.sameEmail",
+  AVATAR_TOO_LARGE: "apiErrors.avatarTooLarge",
+  INVALID_AVATAR_TYPE: "apiErrors.invalidAvatarType",
 
   // Subscription
   NO_ACTIVE_SUBSCRIPTION: "apiErrors.noActiveSubscription",

@@ -11,4 +11,11 @@ export const userApi = {
 		const { data } = await http.patch<UserProfile>("/users", dto);
 		return data;
 	},
+
+	uploadAvatar: async (file: File): Promise<UserProfile> => {
+		const formData = new FormData();
+		formData.append("file", file);
+		const { data } = await http.post<UserProfile>("/users/me/avatar", formData);
+		return data;
+	},
 };

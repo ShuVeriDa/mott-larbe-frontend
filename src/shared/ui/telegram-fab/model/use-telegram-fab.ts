@@ -7,6 +7,7 @@ export const useTelegramFab = () => {
 	const pathname = usePathname();
 
 	const strippedPath = pathname.replace(/^\/(ru|en|che)/, "");
+	const isAdmin = strippedPath.startsWith("/admin");
 	const isReader =
 		/^\/reader\/[^/]+\/p\/[^/]+/.test(strippedPath) ||
 		/^\/my-texts\/[^/]+\/p\/[^/]+/.test(strippedPath);
@@ -65,6 +66,7 @@ export const useTelegramFab = () => {
 	};
 
 	return {
+		isAdmin,
 		isReader,
 		isAppShell,
 		lang,

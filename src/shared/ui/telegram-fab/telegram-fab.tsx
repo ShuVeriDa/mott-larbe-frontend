@@ -16,6 +16,7 @@ const labels = {
 
 export const TelegramFab = () => {
 	const {
+		isAdmin,
 		isReader,
 		isAppShell,
 		lang,
@@ -28,6 +29,8 @@ export const TelegramFab = () => {
 	} = useTelegramFab();
 
 	const t = labels[lang as keyof typeof labels] ?? labels.ru;
+
+	if (isAdmin) return null;
 
 	return (
 		<div
