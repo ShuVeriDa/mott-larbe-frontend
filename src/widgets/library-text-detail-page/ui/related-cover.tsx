@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { CefrLevel } from "@/shared/types";
 
 const COVER_COLORS: Record<string, { bg: string; stroke: string }> = {
@@ -8,37 +9,49 @@ const COVER_COLORS: Record<string, { bg: string; stroke: string }> = {
 
 interface RelatedCoverProps {
 	level: CefrLevel | null;
+	imageUrl: string | null;
+	title: string;
 }
 
-export const RelatedCover = ({ level }: RelatedCoverProps) => {
+export const RelatedCover = ({ level, imageUrl, title }: RelatedCoverProps) => {
 	const colors = level
 		? (COVER_COLORS[level] ?? COVER_COLORS.A)
 		: COVER_COLORS.A;
 	return (
 		<div
-			className={`w-[26px] h-[36px] rounded-[4px] border border-bd-1 shrink-0 flex items-center justify-center ${colors.bg}`}
+			className={`w-[26px] h-[36px] rounded-[4px] border border-bd-1 shrink-0 overflow-hidden flex items-center justify-center ${imageUrl ? "" : colors.bg}`}
 		>
-			<svg
-				width="11"
-				height="11"
-				viewBox="0 0 14 14"
-				fill="none"
-				className={colors.stroke}
-			>
-				<path
-					d="M2 10L7 3l5 7"
-					stroke="currentColor"
-					strokeWidth="1.4"
-					strokeLinecap="round"
-					strokeLinejoin="round"
+			{imageUrl ? (
+				<Image
+					src={imageUrl}
+					alt={title}
+					width={26}
+					height={36}
+					className="object-cover w-full h-full"
 				/>
-				<path
-					d="M4 8h6"
-					stroke="currentColor"
-					strokeWidth="1.4"
-					strokeLinecap="round"
-				/>
-			</svg>
+			) : (
+				<svg
+					width="11"
+					height="11"
+					viewBox="0 0 14 14"
+					fill="none"
+					className={colors.stroke}
+				>
+					<path
+						d="M2 10L7 3l5 7"
+						stroke="currentColor"
+						strokeWidth="1.4"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					/>
+					<path
+						d="M4 8h6"
+						stroke="currentColor"
+						strokeWidth="1.4"
+						strokeLinecap="round"
+					/>
+				</svg>
+			)}
 		</div>
 	);
 };

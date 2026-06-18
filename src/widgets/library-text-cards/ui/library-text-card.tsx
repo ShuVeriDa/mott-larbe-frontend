@@ -9,6 +9,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
 import { CefrBadge } from "@/shared/ui/cefr-badge";
 import { BookOpen } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { type CSSProperties } from "react";
 
@@ -201,25 +202,37 @@ export const LibraryTextCard = ({
 			{/* Cover */}
 			<div
 				className={cn(
-					"relative flex h-[160px] items-center justify-center sm:h-[260px]",
-					cover.cov,
+					"relative flex h-[160px] items-center justify-center sm:h-[260px] overflow-hidden",
+					item.imageUrl ? "bg-surf-2" : cover.cov,
 				)}
 			>
-				<div
-					aria-hidden="true"
-					className="absolute bottom-0 left-0 top-0 w-[3px]"
-					style={{ background: cover.stripe }}
-				/>
-				<BookOpen
-					size={28}
-					aria-hidden="true"
-					className="opacity-60 sm:size-8"
-					style={{ color: cover.stripe }}
-				/>
+				{item.imageUrl ? (
+					<Image
+						src={item.imageUrl}
+						alt={item.title}
+						fill
+						sizes="(max-width: 640px) calc(50vw - 12px), 224px"
+						className="object-cover"
+					/>
+				) : (
+					<>
+						<div
+							aria-hidden="true"
+							className="absolute bottom-0 left-0 top-0 w-[3px]"
+							style={{ background: cover.stripe }}
+						/>
+						<BookOpen
+							size={28}
+							aria-hidden="true"
+							className="opacity-60 sm:size-8"
+							style={{ color: cover.stripe }}
+						/>
+					</>
+				)}
 				{item.isNew && (
 					<Typography
 						tag="span"
-						className="absolute right-2 top-2 rounded bg-acc-bg px-[5px] py-px text-[9px] font-bold uppercase tracking-wider text-acc-t"
+						className="absolute right-2 top-2 rounded bg-acc-bg px-[5px] py-px text-[9px] font-bold uppercase tracking-wider text-acc-t z-10"
 					>
 						{t("library.card.badgeNew")}
 					</Typography>

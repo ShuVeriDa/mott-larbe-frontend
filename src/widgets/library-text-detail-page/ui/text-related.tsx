@@ -33,7 +33,7 @@ export const TextRelated = ({ items, lang, t }: TextRelatedProps) => {
 						href={`/${lang}/texts/${item.id}`}
 						className="flex items-center gap-2.5 px-2 py-2 rounded-base hover:bg-surf-2 transition-colors group"
 					>
-						<RelatedCover level={item.level} />
+						<RelatedCover level={item.level} imageUrl={item.imageUrl} title={item.title} />
 						<div className="flex-1 min-w-0">
 							<Typography
 								tag="p"
