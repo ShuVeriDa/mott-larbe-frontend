@@ -99,14 +99,14 @@ export const TextCreateEditor = ({
 	useEffect(() => {
 		if (!savedId) return;
 		const editor = editorRef.current;
-		if (!editor) return;
+		if (!editor || !editor.commands.setPhraseHighlights) return;
 		editor.commands.setPhraseHighlights(phraseTexts);
 	}, [savedId, phraseTexts, editorVersion]);
 
 	useEffect(() => {
 		if (!savedId) return;
 		const editor = editorRef.current;
-		if (!editor) return;
+		if (!editor || !editor.commands.setWordAnnotationHighlights) return;
 		editor.commands.setWordAnnotationHighlights(annotatedForms);
 	}, [savedId, annotatedForms, editorVersion]);
 
@@ -283,6 +283,7 @@ export const TextCreateEditor = ({
 				showStressMark={showStressMark}
 			showSpellingAdd={showSpellingAdd}
 				extraExtensions={savedId ? editorExtensions : []}
+				editorKey={savedId ? "saved" : "unsaved"}
 				isSelectedPhrase={savedId ? isSelectedPhrase : undefined}
 				onBubbleEditPhrase={savedId ? handleBubbleEditPhrase : undefined}
 				onBubbleDeletePhrase={savedId ? handleBubbleDeletePhrase : undefined}

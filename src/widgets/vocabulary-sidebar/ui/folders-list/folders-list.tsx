@@ -8,7 +8,7 @@ import { Plus } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { FolderItem, useFolders } from "@/entities/folder";
-// import { useUsage } from "@/entities/subscription"; // unused while folder lock is hidden
+import { useUsage } from "@/entities/subscription";
 import { useVocabularyFilters } from "@/features/vocabulary-filters";
 
 const AllWordsIcon = () => (

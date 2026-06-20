@@ -4,3 +4,5 @@ export type { CefrLevel } from "./cefr";
 export { CEFR_LEVELS } from "./cefr";
 export type { PartOfSpeech } from "./pos";
 export { POS_OPTIONS } from "./pos";
+export type { LocalizedName } from "./localized-name";
+export type { PaginatedResponse } from "./paginated-response";

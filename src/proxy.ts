@@ -102,16 +102,19 @@ export const proxy = async (request: NextRequest) => {
 		return buildNext();
 	}
 
+	// Skip refresh on public routes — the user is not authenticated and
+	// there is no point attempting a refresh on the auth/landing pages.
+	// This prevents parallel middleware calls from triggering concurrent
+	// refresh attempts, which would cause token-rotation race conditions on
+	// the backend (second refresh sees an already-rotated hash → all sessions
+	// revoked → request storm of 401 / 429 errors).
+	if (isPublicOnlyRoute(segment)) return buildNext();
+
 	// No access token — attempt silent refresh via httpOnly refresh token cookie.
 	// The backend will issue a new access_token cookie via Set-Cookie.
 	const refreshRes = await tryRefresh(request);
 
 	if (refreshRes) {
-		if (isPublicOnlyRoute(segment)) {
-			const res = buildRedirect(`/${locale}/dashboard`);
-			forwardSetCookies(refreshRes, res);
-			return res;
-		}
 		const res = buildNext();
 		forwardSetCookies(refreshRes, res);
 		return res;

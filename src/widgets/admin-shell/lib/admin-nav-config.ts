@@ -23,6 +23,9 @@ import {
 	Tag,
 	SpellCheck,
 	Megaphone,
+	TreePine,
+	MapPin,
+	ShieldCheck,
 } from "lucide-react";
 
 export interface AdminNavItem {
@@ -112,6 +115,26 @@ export const buildAdminNavSections = (t: (key: string) => string, lang: string):
 				href: () => `/${lang}/admin/spelling-dictionary`,
 				label: () => t("admin.nav.spellingDictionary"),
 				icon: SpellCheck,
+			},
+		],
+	},
+	{
+		titleKey: "admin.nav.heritage",
+		items: [
+			{
+				href: () => `/${lang}/admin/heritage`,
+				label: () => t("admin.nav.heritage"),
+				icon: TreePine,
+			},
+			{
+				href: () => `/${lang}/admin/heritage/geo`,
+				label: () => t("admin.nav.geo"),
+				icon: MapPin,
+			},
+			{
+				href: () => `/${lang}/admin/heritage/moderation`,
+				label: () => t("admin.nav.heritageModeration"),
+				icon: ShieldCheck,
 			},
 		],
 	},

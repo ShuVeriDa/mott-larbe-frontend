@@ -8,6 +8,7 @@ import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { useUpdateUser } from "@/entities/user";
 import type { UserProfile } from "@/entities/user";
+import { PrivacyToggle, usePrivacySettings, useUpdatePrivacy } from "@/entities/user-privacy";
 import { ProfileCard as SettingCard } from "../profile-card";
 
 export interface PersonalDataCardProps {
@@ -18,6 +19,8 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 	const { t } = useI18n();
 	const { success } = useToast();
 	const { mutateAsync, isPending } = useUpdateUser();
+	const { data: privacySettings } = usePrivacySettings();
+	const { mutate: updatePrivacy } = useUpdatePrivacy();
 
 	const [name, setName] = useState(profile.name ?? "");
 	const [surname, setSurname] = useState(profile.surname ?? "");
@@ -44,6 +47,10 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 		setUsername(e.currentTarget.value);
 	const handlePhoneChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) =>
 		setPhone(e.currentTarget.value);
+
+	const handlePhonePrivacyToggle = async (field: "showPhone", value: boolean) => {
+		updatePrivacy({ [field]: value });
+	};
 
 	return (
 		<SettingCard title={t("profile.personalData.title")}>
@@ -93,13 +100,23 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 
 				<div>
 					<InputLabel htmlFor="profile-phone">{t("profile.personalData.phone")}</InputLabel>
-					<Input
-						id="profile-phone"
-						type="tel"
-						value={phone}
-						onChange={handlePhoneChange}
-						placeholder="+7 900 000-00-00"
-					/>
+					<div className="flex items-center gap-1.5">
+						<Input
+							id="profile-phone"
+							type="tel"
+							value={phone}
+							onChange={handlePhoneChange}
+							placeholder="+7 900 000-00-00"
+							className="flex-1"
+						/>
+						{privacySettings && (
+							<PrivacyToggle
+								field="showPhone"
+								settings={privacySettings}
+								onToggle={handlePhonePrivacyToggle}
+							/>
+						)}
+					</div>
 				</div>
 
 				<div className="flex justify-end mt-1 max-sm:justify-stretch">

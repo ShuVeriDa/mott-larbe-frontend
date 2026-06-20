@@ -43,6 +43,7 @@ interface AdminTextEditorShellProps {
 	findReplaceCharHandlerRef?: RefObject<((char: string) => boolean) | null>;
 	findReplaceCharsPicker?: ReactNode;
 	extraExtensions?: Extension[];
+	editorKey?: string | number;
 	showStressMark?: boolean;
 	showSpellingAdd?: boolean;
 	isSelectedPhrase?: (text: string) => boolean;
@@ -76,6 +77,7 @@ export const AdminTextEditorShell = ({
 	findReplaceCharHandlerRef,
 	findReplaceCharsPicker,
 	extraExtensions = [],
+	editorKey,
 	showStressMark = false,
 	showSpellingAdd = false,
 	isSelectedPhrase,
@@ -226,7 +228,7 @@ export const AdminTextEditorShell = ({
 				{showSpellingAdd ? (
 					<SpellingCorrectionOverlay editor={editor}>
 						<NotionEditor
-							key={activePage}
+							key={`${activePage}-${editorKey ?? ""}`}
 							content={
 								pages[activePage]?.doc ?? {
 									type: "doc",
@@ -259,7 +261,7 @@ export const AdminTextEditorShell = ({
 					</SpellingCorrectionOverlay>
 				) : (
 					<NotionEditor
-						key={activePage}
+						key={`${activePage}-${editorKey ?? ""}`}
 						content={
 							pages[activePage]?.doc ?? {
 								type: "doc",

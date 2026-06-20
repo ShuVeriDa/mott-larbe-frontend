@@ -5,8 +5,11 @@ import type { UserProfile } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { ActivityCard } from "./activity-card";
+import { HeritageCard } from "./heritage-card";
 import { LearningSettingsCard } from "./learning-settings-card";
+import { LocationCard } from "./location-card";
 import { PersonalDataCard } from "./personal-data-card";
+import { PrivacySettingsCard } from "./privacy-settings-card";
 import { StatsCard } from "./stats-card";
 
 export interface TabMainProps {
@@ -22,6 +25,8 @@ export const TabMain = ({ profile, lang }: TabMainProps) => {
 		<div className="grid grid-cols-[1fr_300px] gap-3.5 items-start max-lg:grid-cols-1">
 			<div className="flex flex-col gap-3.5">
 				<PersonalDataCard profile={profile} />
+				<HeritageCard lang={lang} />
+				<LocationCard lang={lang} />
 				<LearningSettingsCard profile={profile} />
 			</div>
 
@@ -38,6 +43,7 @@ export const TabMain = ({ profile, lang }: TabMainProps) => {
 						<ActivityCard heatmap={summary.heatmap} />
 					</>
 				) : null}
+				<PrivacySettingsCard />
 			</div>
 		</div>
 	);

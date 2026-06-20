@@ -265,7 +265,6 @@ export const NotionEditor = ({
 		};
 	}, []);
 
-	const handleBubbleAppendTo = () => document.body;
 	const handleSlashCommand = (item: SlashMenuItem) => {
 		if (!slashPortal) return;
 		slashPortal.command(item);
@@ -277,7 +276,7 @@ export const NotionEditor = ({
 			{editor && (
 				<BubbleMenu
 					editor={editor}
-					appendTo={handleBubbleAppendTo}
+					appendTo={document.body}
 					options={{ placement: "top" }}
 					shouldShow={() => bubbleMenuEnabledRef.current && editor.state.selection.content().size > 0}
 					className="z-9997"

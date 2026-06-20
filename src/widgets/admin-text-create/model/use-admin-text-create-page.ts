@@ -135,7 +135,7 @@ export const useAdminTextCreatePage = () => {
 			if (!silent) {
 				if (targetStatus === "published") {
 					success(t("admin.texts.createPage.textPublished"));
-					router.push(`/${lang}/admin/texts/${resultId}`);
+					router.push(`/${lang}/admin/texts/${resultId}/edit`);
 				} else {
 					success(t("admin.texts.createPage.savedDraft"));
 				}
