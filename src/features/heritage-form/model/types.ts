@@ -11,7 +11,7 @@ export interface HeritageFormValues {
 	garaId: string | null;
 	garaCustom: string | null;
 	nekyi: string | null;
-	otherNationId: string | null;
+	otherNationName: string | null;
 }
 
 export interface HeritageFormState {

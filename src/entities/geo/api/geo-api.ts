@@ -1,5 +1,6 @@
 import { http } from "@/shared/api";
 import type {
+	Country,
 	CreateDistrictDto,
 	CreateRegionDto,
 	CreateSettlementDto,
@@ -22,9 +23,16 @@ const buildParams = (q: GeoListQuery): Record<string, string | number> => {
 };
 
 export const geoApi = {
-	getRegions: (query: GeoListQuery = {}) =>
+	getCountries: (query: GeoListQuery = {}) =>
 		http
-			.get<PaginatedResponse<Region>>("/geo/regions", {
+			.get<PaginatedResponse<Country>>("/geo/countries", {
+				params: buildParams(query),
+			})
+			.then((r) => r.data),
+
+	getRegionsByCountry: (countryId: string, query: GeoListQuery = {}) =>
+		http
+			.get<PaginatedResponse<Region>>(`/geo/countries/${countryId}/regions`, {
 				params: buildParams(query),
 			})
 			.then((r) => r.data),
@@ -43,6 +51,14 @@ export const geoApi = {
 				{ params: buildParams(query) },
 			)
 			.then((r) => r.data),
+
+	// Admin CRUD — Countries
+	createCountry: (dto: { code: string; name: Record<string, string> }) =>
+		http.post<Country>("/admin/geo/countries", dto).then((r) => r.data),
+	updateCountry: (id: string, dto: Partial<{ code: string; name: Record<string, string> }>) =>
+		http.patch<Country>(`/admin/geo/countries/${id}`, dto).then((r) => r.data),
+	deleteCountry: (id: string) =>
+		http.delete(`/admin/geo/countries/${id}`).then((r) => r.data),
 
 	// Admin CRUD — Regions
 	createRegion: (dto: CreateRegionDto) =>

@@ -14,6 +14,11 @@ import {
   type UserTextType,
 } from "@/entities/user-text";
 import type { UserTextFieldErrors, UserTextFormState } from "./types";
+import {
+  detectScript,
+  extractTextFromDoc,
+  isScriptMismatch,
+} from "@/shared/lib/script-detector";
 
 const EMPTY_DOC: TipTapDoc = { type: "doc", content: [] };
 const CONTENT_WARN_BYTES = 400_000;
@@ -132,6 +137,12 @@ export const useUserTextEditor = ({
       errors.content = t("myTexts.validation.contentTooLarge");
     }
 
+    const plainText = extractTextFromDoc(content);
+    const script = detectScript(plainText);
+    if (isScriptMismatch(script, language)) {
+      errors.language = t("myTexts.validation.scriptMismatch");
+    }
+
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -200,6 +211,7 @@ export const useUserTextEditor = ({
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLanguage(e.currentTarget.value as UserTextLanguage);
+    if (fieldErrors.language) setFieldErrors((p) => ({ ...p, language: undefined }));
   };
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

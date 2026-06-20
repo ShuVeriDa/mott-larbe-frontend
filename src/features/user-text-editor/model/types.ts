@@ -16,4 +16,5 @@ export interface UserTextFieldErrors {
   title?: string;
   sourceUrl?: string;
   content?: string;
+  language?: string;
 }

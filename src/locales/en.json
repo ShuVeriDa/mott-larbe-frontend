@@ -7133,7 +7133,8 @@
 			"titleRequired": "Please enter a title",
 			"sourceUrlInvalid": "URL must start with http:// or https://",
 			"licenseRequired": "Please select a license for external texts",
-			"contentTooLarge": "Content is too large (over 400 KB). Please shorten it."
+			"contentTooLarge": "Content is too large (over 400 KB). Please shorten it.",
+			"scriptMismatch": "The text script does not match the selected language. Please fix this."
 		},
 		"editor": {
 			"placeholder": "Start typing…"
@@ -7330,12 +7331,17 @@
 	},
 	"location": {
 		"title": "Location",
-		"region": "Region",
+		"country": "Country",
+		"country_placeholder": "Select country...",
+		"region": "Region / State",
 		"region_placeholder": "Select region...",
 		"district": "District",
 		"district_placeholder": "Select district...",
-		"settlement": "City / Village",
+		"settlement": "City / Settlement",
 		"settlement_placeholder": "Select settlement...",
+		"ancestral_village": "Ancestral Village",
+		"ancestral_village_placeholder": "Name of ancestral village...",
+		"ancestral_village_hint": "Chechens traditionally know their ancestral village — the place where the family originates from",
 		"type_city": "City",
 		"type_village": "Village",
 		"type_town": "Town",

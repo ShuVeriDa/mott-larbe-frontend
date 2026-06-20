@@ -42,23 +42,28 @@ export interface UserHeritage {
 	nation: Nation | null;
 
 	tukhumId: string | null;
+	tukhum: Pick<Tukhum, "id" | "name"> | null;
 	hasTukhum: boolean | null;
 
 	taipId: string | null;
+	taip: Pick<Taip, "id" | "name"> | null;
 	taipCustom: string | null;
 	taipStatus: VerificationStatus | null;
 
 	garaId: string | null;
+	gara: Pick<Gara, "id" | "name"> | null;
 	garaCustom: string | null;
 	garaStatus: VerificationStatus | null;
 
 	nekyi: string | null;
 
-	otherNationId: string | null;
+	otherNationName: string | null;
 
+	countryId: string | null;
 	regionId: string | null;
 	districtId: string | null;
 	settlementId: string | null;
+	ancestralVillage: string | null;
 
 	createdAt: string;
 	updatedAt: string;
@@ -73,10 +78,12 @@ export interface UpsertUserHeritageDto {
 	garaId?: string | null;
 	garaCustom?: string | null;
 	nekyi?: string | null;
-	otherNationId?: string | null;
+	otherNationName?: string | null;
+	countryId?: string | null;
 	regionId?: string | null;
 	districtId?: string | null;
 	settlementId?: string | null;
+	ancestralVillage?: string | null;
 }
 
 export interface CreateNationDto {

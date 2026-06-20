@@ -16,6 +16,7 @@ interface UserTextMetaFieldsProps {
   sourceUrl: string;
   titleError?: string;
   sourceUrlError?: string;
+  languageError?: string;
   onTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onLanguageChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onTypeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -32,6 +33,7 @@ export const UserTextMetaFields = ({
   sourceUrl,
   titleError,
   sourceUrlError,
+  languageError,
   onTitleChange,
   onLanguageChange,
   onTypeChange,
@@ -101,6 +103,11 @@ export const UserTextMetaFields = ({
               </option>
             ))}
           </Select>
+          {languageError && (
+            <Typography tag="p" className="text-[11.5px] text-red-500">
+              {languageError}
+            </Typography>
+          )}
         </div>
       </div>
 

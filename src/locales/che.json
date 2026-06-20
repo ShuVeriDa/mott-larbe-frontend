@@ -7130,7 +7130,8 @@
 			"titleRequired": "ЦӀе яздан",
 			"sourceUrlInvalid": "Ссылка http:// я https:// тӀера йолалуш хила деза",
 			"licenseRequired": "Кхечун текстана лицензи харжа",
-			"contentTooLarge": "Текст тӀех доккха ду (400 КБ сов). КӀорта тӀехьашха."
+			"contentTooLarge": "Текст тӀех доккха ду (400 КБ сов). КӀорта тӀехьашха.",
+			"scriptMismatch": "Ч1ии-ч1ии, леци хьо. Д1авала цигара, хьай мотт 1амабе. Харжина мотт текстана юкъ ца хьаьжна."
 		},
 		"editor": {
 			"placeholder": "Яздан йолалахь…"
@@ -7327,12 +7328,17 @@
 	},
 	"location": {
 		"title": "МетигбIаьрзе",
-		"region": "Регион",
+		"country": "Пачхьалкх",
+		"country_placeholder": "Пачхьалкх харжа...",
+		"region": "Регион / ОбластIан",
 		"region_placeholder": "Регион харжа...",
 		"district": "Район",
 		"district_placeholder": "Район харжа...",
-		"settlement": "ГIала / ЮрткIел",
+		"settlement": "ГIала / Меттиг",
 		"settlement_placeholder": "МетигбIаьрзе харжа...",
+		"ancestral_village": "Вайнах юрт",
+		"ancestral_village_placeholder": "Вайнах юрта цIе...",
+		"ancestral_village_hint": "Нохчийн лаьмнашкахь хIора сийначу доьзалан шен юрт ду",
 		"type_city": "ГIала",
 		"type_village": "ЮртIел",
 		"type_town": "Юрт",

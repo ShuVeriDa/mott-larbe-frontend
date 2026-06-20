@@ -7130,7 +7130,8 @@
 			"titleRequired": "Введите название",
 			"sourceUrlInvalid": "Ссылка должна начинаться с http:// или https://",
 			"licenseRequired": "Выберите лицензию для чужого текста",
-			"contentTooLarge": "Текст слишком большой (более 400 КБ). Пожалуйста, сократите."
+			"contentTooLarge": "Текст слишком большой (более 400 КБ). Пожалуйста, сократите.",
+			"scriptMismatch": "Язык текста не совпадает с выбранным языком. Пожалуйста, исправьте."
 		},
 		"editor": {
 			"placeholder": "Начните вводить текст…"
@@ -7327,12 +7328,17 @@
 	},
 	"location": {
 		"title": "Местонахождение",
-		"region": "Регион",
+		"country": "Страна",
+		"country_placeholder": "Выберите страну...",
+		"region": "Регион / Область",
 		"region_placeholder": "Выберите регион...",
 		"district": "Район",
 		"district_placeholder": "Выберите район...",
-		"settlement": "Город / Село",
+		"settlement": "Город / Населённый пункт",
 		"settlement_placeholder": "Выберите населённый пункт...",
+		"ancestral_village": "Родовое село",
+		"ancestral_village_placeholder": "Название родового села...",
+		"ancestral_village_hint": "У чеченцев принято знать своё родовое село — место, откуда происходит семья",
 		"type_city": "Город",
 		"type_village": "Село",
 		"type_town": "Посёлок",

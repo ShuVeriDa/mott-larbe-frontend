@@ -1,5 +1,6 @@
 export { geoApi, geoKeys } from "./api";
 export type {
+	Country,
 	CreateDistrictDto,
 	CreateRegionDto,
 	CreateSettlementDto,
@@ -16,7 +17,8 @@ export type {
 } from "./api";
 
 export {
+	countriesQueryOptions,
+	regionsByCountryQueryOptions,
 	districtsByRegionQueryOptions,
-	regionsQueryOptions,
 	settlementsByDistrictQueryOptions,
 } from "./model";

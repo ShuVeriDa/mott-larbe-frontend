@@ -1,13 +1,14 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { ChangeEvent, ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useI18n } from "@/shared/lib/i18n";
 import { spring, variants } from "@/shared/lib/animation";
 import { Button } from "@/shared/ui/button";
-import { InputLabel } from "@/shared/ui/input";
+import { Input, InputLabel } from "@/shared/ui/input";
 import { useLocationForm } from "../model/use-location-form";
+import { CountrySelector } from "./country-selector";
 import { RegionSelector } from "./region-selector";
 import { DistrictSelector } from "./district-selector";
 import { SettlementSelector } from "./settlement-selector";
@@ -36,11 +37,12 @@ const SubmitButton = ({ isPending }: SubmitButtonProps) => {
 interface FormSectionProps {
 	label: string;
 	children: ReactNode;
+	sectionKey: string;
 }
 
-const FormSection = ({ label, children }: FormSectionProps) => (
+const FormSection = ({ label, children, sectionKey }: FormSectionProps) => (
 	<motion.div
-		key={label}
+		key={sectionKey}
 		variants={variants.fadeUp}
 		initial="hidden"
 		animate="visible"
@@ -61,42 +63,67 @@ export const LocationForm = ({ lang }: LocationFormProps) => {
 	const { t } = useI18n();
 
 	const {
+		selectedCountryId,
 		selectedRegionId,
 		selectedDistrictId,
 		selectedSettlementId,
+		ancestralVillage,
+		countries,
 		regions,
 		districts,
 		settlements,
+		isCountriesPending,
 		isRegionsPending,
 		isDistrictsPending,
 		isSettlementsPending,
 		formAction,
 		isPending,
+		handleCountrySelect,
 		handleRegionSelect,
 		handleDistrictSelect,
 		handleSettlementSelect,
+		handleAncestralVillageChange,
 	} = useLocationForm();
 
+	const showRegionSection = !!selectedCountryId;
 	const showDistrictSection = !!selectedRegionId;
 	const showSettlementSection = !!selectedDistrictId;
 
+	const handleAncestralVillageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+		handleAncestralVillageChange(e.currentTarget.value);
+	};
+
 	return (
 		<form action={formAction} className="flex flex-col gap-4">
-			{/* Region */}
-			<FormSection label={t("location.region")}>
-				<RegionSelector
-					regions={regions}
-					selectedRegionId={selectedRegionId}
-					isLoading={isRegionsPending}
-					onRegionSelect={handleRegionSelect}
+			{/* Country */}
+			<FormSection label={t("location.country")} sectionKey="country">
+				<CountrySelector
+					countries={countries}
+					selectedCountryId={selectedCountryId}
+					isLoading={isCountriesPending}
+					onCountrySelect={handleCountrySelect}
 					lang={lang}
 				/>
 			</FormSection>
 
 			<AnimatePresence mode="sync">
+				{/* Region */}
+				{showRegionSection && (
+					<FormSection key="region" label={t("location.region")} sectionKey="region">
+						<RegionSelector
+							regions={regions}
+							selectedRegionId={selectedRegionId}
+							isLoading={isRegionsPending}
+							isDisabled={!selectedCountryId}
+							onRegionSelect={handleRegionSelect}
+							lang={lang}
+						/>
+					</FormSection>
+				)}
+
 				{/* District */}
 				{showDistrictSection && (
-					<FormSection key="district" label={t("location.district")}>
+					<FormSection key="district" label={t("location.district")} sectionKey="district">
 						<DistrictSelector
 							districts={districts}
 							selectedDistrictId={selectedDistrictId}
@@ -110,7 +137,7 @@ export const LocationForm = ({ lang }: LocationFormProps) => {
 
 				{/* Settlement */}
 				{showSettlementSection && (
-					<FormSection key="settlement" label={t("location.settlement")}>
+					<FormSection key="settlement" label={t("location.settlement")} sectionKey="settlement">
 						<SettlementSelector
 							settlements={settlements}
 							selectedSettlementId={selectedSettlementId}
@@ -122,6 +149,21 @@ export const LocationForm = ({ lang }: LocationFormProps) => {
 					</FormSection>
 				)}
 			</AnimatePresence>
+
+			{/* Ancestral village — always visible, independent text field */}
+			<FormSection label={t("location.ancestral_village")} sectionKey="ancestral">
+				<Input
+					name="ancestralVillage"
+					value={ancestralVillage}
+					onChange={handleAncestralVillageInputChange}
+					placeholder={t("location.ancestral_village_placeholder")}
+					maxLength={100}
+					autoComplete="off"
+				/>
+				<p className="text-[11px] text-t-3 leading-tight mt-0.5">
+					{t("location.ancestral_village_hint")}
+				</p>
+			</FormSection>
 
 			{/* Submit */}
 			<div className="flex justify-end pt-1 max-sm:justify-stretch">

@@ -46,12 +46,13 @@ interface HeritageViewProps {
 const HeritageView = ({ heritage, lang }: HeritageViewProps) => {
 	const { t } = useI18n();
 
-	const nationName =
-		heritage.nation?.name?.[lang as keyof typeof heritage.nation.name] ??
-		heritage.nation?.name?.ru ??
-		null;
+	const localize = (name: { [key: string]: string } | null | undefined) =>
+		name?.[lang] ?? name?.ru ?? null;
 
-	const taipName = heritage.taipCustom ?? null;
+	const nationName = localize(heritage.nation?.name);
+	const tukhumName = localize(heritage.tukhum?.name);
+	const taipName = heritage.taip ? localize(heritage.taip.name) : (heritage.taipCustom ?? null);
+	const garaName = heritage.gara ? localize(heritage.gara.name) : (heritage.garaCustom ?? null);
 
 	const isNakhchiy = heritage.nation?.slug === "nakhchiy";
 
@@ -60,13 +61,13 @@ const HeritageView = ({ heritage, lang }: HeritageViewProps) => {
 			<HeritageRow label={t("heritage.nation")} value={nationName} />
 			{isNakhchiy && (
 				<>
-					<HeritageRow label={t("heritage.tukhum")} value={null} />
+					<HeritageRow label={t("heritage.tukhum")} value={tukhumName} />
 					<HeritageRow label={t("heritage.taip")} value={taipName}>
 						{heritage.taipStatus && (
 							<VerificationBadge status={heritage.taipStatus} />
 						)}
 					</HeritageRow>
-					<HeritageRow label={t("heritage.gara")} value={heritage.garaCustom}>
+					<HeritageRow label={t("heritage.gara")} value={garaName}>
 						{heritage.garaStatus && (
 							<VerificationBadge status={heritage.garaStatus} />
 						)}

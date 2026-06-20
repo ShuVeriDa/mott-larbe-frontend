@@ -1,14 +1,12 @@
 "use client";
 
-import type { ChangeEvent } from "react";
+import type { Nation } from "@/entities/heritage";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
-import type { Nation } from "@/entities/heritage";
+import type { ChangeEvent } from "react";
 import type { NationMode } from "../model/types";
 
 interface NationSelectorProps {
-	nations: Nation[];
-	nakhchiyNation: Nation | undefined;
 	otherNations: Nation[];
 	nationMode: NationMode;
 	otherNationId: string | null;
@@ -24,35 +22,47 @@ interface NationCardProps {
 	onClick: () => void;
 }
 
-const NationCard = ({ label, description, isSelected, onClick }: NationCardProps) => (
+const NationCard = ({
+	label,
+	description,
+	isSelected,
+	onClick,
+}: NationCardProps) => (
 	<button
 		type="button"
 		onClick={onClick}
 		className={cn(
-			"relative flex flex-col gap-1 w-full rounded-[10px] border px-4 py-3 text-left",
+			"relative flex flex-col justify-center  gap-1 w-full rounded-[10px] border px-2.5  text-left",
 			"transition-all duration-150 ease-out",
 			"hover:border-acc/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/40",
-			"min-h-[44px]",
+			"min-h-[34px]",
 			isSelected
 				? "border-acc bg-acc/5 text-acc"
 				: "border-bd-2 bg-surf-2 text-t-1",
 		)}
 		aria-pressed={isSelected}
 	>
-		<span className="text-[13px] font-semibold leading-tight">{label}</span>
+		<span className="text-[13px]  leading-tight">{label}</span>
 		{description && (
-			<span className={cn("text-[11px] leading-tight", isSelected ? "text-acc/70" : "text-t-3")}>
+			<span
+				className={cn(
+					"text-[11px] leading-tight",
+					isSelected ? "text-acc/70" : "text-t-3",
+				)}
+			>
 				{description}
 			</span>
 		)}
 		{isSelected && (
-			<span className="absolute right-3 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-acc" aria-hidden="true" />
+			<span
+				className="absolute right-3 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-acc"
+				aria-hidden="true"
+			/>
 		)}
 	</button>
 );
 
 export const NationSelector = ({
-	nakhchiyNation,
 	otherNations,
 	nationMode,
 	otherNationId,
@@ -63,7 +73,7 @@ export const NationSelector = ({
 	const { t } = useI18n();
 
 	const getLocalizedName = (nation: Nation) =>
-		(nation.name as Record<string, string>)[lang] ?? nation.name.ru;
+		nation.name[lang as keyof typeof nation.name] ?? nation.name.ru;
 
 	const handleNakhchiyClick = () => onNationSelect("nakhchiy");
 	const handleOtherClick = () => onNationSelect("other");
@@ -98,7 +108,7 @@ export const NationSelector = ({
 					aria-label={t("heritage.nation")}
 				>
 					<option value="">{t("heritage.nation_select_placeholder")}</option>
-					{otherNations.map((nation) => (
+					{otherNations.map(nation => (
 						<option key={nation.id} value={nation.id}>
 							{getLocalizedName(nation)}
 						</option>

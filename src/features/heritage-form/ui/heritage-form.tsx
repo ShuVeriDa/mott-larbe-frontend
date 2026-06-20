@@ -77,7 +77,6 @@ export const HeritageForm = ({ lang }: HeritageFormProps) => {
 		otherNationId,
 		nakhchiyNation,
 		otherNations,
-		nations,
 		tukhumy,
 		taips,
 		formAction,
@@ -107,8 +106,6 @@ export const HeritageForm = ({ lang }: HeritageFormProps) => {
 			{/* Nation */}
 			<FormSection label={t("heritage.nation")}>
 				<NationSelector
-					nations={nations}
-					nakhchiyNation={nakhchiyNation}
 					otherNations={otherNations}
 					nationMode={nationMode}
 					otherNationId={otherNationId}

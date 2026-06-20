@@ -1,5 +1,6 @@
 export {
+	countriesQueryOptions,
+	regionsByCountryQueryOptions,
 	districtsByRegionQueryOptions,
-	regionsQueryOptions,
 	settlementsByDistrictQueryOptions,
 } from "./queries";

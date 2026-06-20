@@ -93,6 +93,10 @@ export const useHeritageForm = () => {
 		const garaCustomRaw = formData.get("garaCustom") as string | null;
 		const nekyiRaw = formData.get("nekyi") as string | null;
 
+		const selectedOtherNation = nationMode === "other"
+			? nations.find((n: Nation) => n.id === otherNationId) ?? null
+			: null;
+
 		const dto: HeritageFormValues = {
 			nationId: nakhchiyNation?.id && nationMode === "nakhchiy"
 				? nakhchiyNation.id
@@ -104,7 +108,7 @@ export const useHeritageForm = () => {
 			garaId: selectedGaraId,
 			garaCustom: garaCustomRaw ? sanitizeCustomField(garaCustomRaw, 100) : null,
 			nekyi: nekyiRaw ? sanitizeCustomField(nekyiRaw, 200) : null,
-			otherNationId: nationMode === "other" ? otherNationId : null,
+			otherNationName: selectedOtherNation?.name?.ru ?? null,
 		};
 
 		try {

@@ -5,8 +5,9 @@ import { Pencil, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import {
+	countriesQueryOptions,
+	regionsByCountryQueryOptions,
 	districtsByRegionQueryOptions,
-	regionsQueryOptions,
 	settlementsByDistrictQueryOptions,
 	type SettlementType,
 } from "@/entities/geo";
@@ -60,9 +61,14 @@ const LocationView = ({ heritage, lang }: LocationViewProps) => {
 	const { t } = useI18n();
 	const langKey = lang as "che" | "ru" | "en";
 
+	const { data: countriesData } = useQuery({
+		...countriesQueryOptions(),
+		enabled: !!heritage.countryId,
+	});
+
 	const { data: regionsData } = useQuery({
-		...regionsQueryOptions(),
-		enabled: !!heritage.regionId,
+		...regionsByCountryQueryOptions(heritage.countryId ?? ""),
+		enabled: !!heritage.countryId,
 	});
 
 	const { data: districtsData } = useQuery({
@@ -75,10 +81,12 @@ const LocationView = ({ heritage, lang }: LocationViewProps) => {
 		enabled: !!heritage.districtId,
 	});
 
+	const country = countriesData?.items.find((c) => c.id === heritage.countryId);
 	const region = regionsData?.items.find((r) => r.id === heritage.regionId);
 	const district = districtsData?.items.find((d) => d.id === heritage.districtId);
 	const settlement = settlementsData?.items.find((s) => s.id === heritage.settlementId);
 
+	const countryName = country?.name?.[langKey] ?? country?.name?.ru ?? null;
 	const regionName = region?.name?.[langKey] ?? region?.name?.ru ?? null;
 	const districtName = district?.name?.[langKey] ?? district?.name?.ru ?? null;
 	const settlementName = settlement?.name?.[langKey] ?? settlement?.name?.ru ?? null;
@@ -86,6 +94,7 @@ const LocationView = ({ heritage, lang }: LocationViewProps) => {
 
 	return (
 		<div className="flex flex-col">
+			<LocationRow label={t("location.country")} value={countryName} />
 			<LocationRow label={t("location.region")} value={regionName} />
 			<LocationRow label={t("location.district")} value={districtName} />
 			<LocationRow label={t("location.settlement")} value={settlementName}>
@@ -95,6 +104,9 @@ const LocationView = ({ heritage, lang }: LocationViewProps) => {
 					</Badge>
 				)}
 			</LocationRow>
+			{heritage.ancestralVillage && (
+				<LocationRow label={t("location.ancestral_village")} value={heritage.ancestralVillage} />
+			)}
 		</div>
 	);
 };
@@ -123,7 +135,13 @@ export const LocationCard = ({ lang }: LocationCardProps) => {
 	const handleEditOpen = () => setIsEditing(true);
 	const handleEditClose = () => setIsEditing(false);
 
-	const hasLocation = !!(heritage?.regionId || heritage?.districtId || heritage?.settlementId);
+	const hasLocation = !!(
+		heritage?.countryId ||
+		heritage?.regionId ||
+		heritage?.districtId ||
+		heritage?.settlementId ||
+		heritage?.ancestralVillage
+	);
 
 	const headExtra = isEditing ? (
 		<Button

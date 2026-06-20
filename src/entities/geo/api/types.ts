@@ -4,9 +4,15 @@ export type { LocalizedName, PaginatedResponse };
 
 export type SettlementType = "city" | "village" | "town";
 
+export interface Country {
+	id: string;
+	code: string;
+	name: LocalizedName;
+}
+
 export interface Region {
 	id: string;
-	countryCode: string;
+	countryId: string;
 	name: LocalizedName;
 }
 

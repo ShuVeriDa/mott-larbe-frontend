@@ -3,7 +3,8 @@
 import { useActionState, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-	regionsQueryOptions,
+	countriesQueryOptions,
+	regionsByCountryQueryOptions,
 	districtsByRegionQueryOptions,
 	settlementsByDistrictQueryOptions,
 } from "@/entities/geo";
@@ -23,15 +24,23 @@ export const useLocationForm = () => {
 	const { toastApiError } = useApiErrorToast();
 	const queryClient = useQueryClient();
 
+	const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null);
 	const [selectedRegionId, setSelectedRegionId] = useState<string | null>(null);
 	const [selectedDistrictId, setSelectedDistrictId] = useState<string | null>(null);
 	const [selectedSettlementId, setSelectedSettlementId] = useState<string | null>(null);
+	const [ancestralVillage, setAncestralVillage] = useState<string>("");
 
 	const { data: currentHeritage } = useQuery(myHeritageQueryOptions());
 
-	const { data: regionsData, isPending: isRegionsPending } = useQuery(
-		regionsQueryOptions(),
+	const { data: countriesData, isPending: isCountriesPending } = useQuery(
+		countriesQueryOptions(),
 	);
+	const countries = countriesData?.items ?? [];
+
+	const { data: regionsData, isPending: isRegionsPending } = useQuery({
+		...regionsByCountryQueryOptions(selectedCountryId ?? ""),
+		enabled: !!selectedCountryId,
+	});
 	const regions = regionsData?.items ?? [];
 
 	const { data: districtsData, isPending: isDistrictsPending } = useQuery({
@@ -48,12 +57,16 @@ export const useLocationForm = () => {
 
 	const submitAction = async (
 		_prev: LocationFormState,
-		_formData: FormData,
+		formData: FormData,
 	): Promise<LocationFormState> => {
+		const ancestralVillageRaw = (formData.get("ancestralVillage") as string | null)?.trim() ?? null;
+
 		const dto: LocationFormValues = {
+			countryId: selectedCountryId,
 			regionId: selectedRegionId,
 			districtId: selectedDistrictId,
 			settlementId: selectedSettlementId,
+			ancestralVillage: ancestralVillageRaw || null,
 		};
 
 		try {
@@ -72,6 +85,13 @@ export const useLocationForm = () => {
 		{ success: false, error: null },
 	);
 
+	const handleCountrySelect = (countryId: string | null) => {
+		setSelectedCountryId(countryId);
+		setSelectedRegionId(null);
+		setSelectedDistrictId(null);
+		setSelectedSettlementId(null);
+	};
+
 	const handleRegionSelect = (regionId: string | null) => {
 		setSelectedRegionId(regionId);
 		setSelectedDistrictId(null);
@@ -87,19 +107,27 @@ export const useLocationForm = () => {
 		setSelectedSettlementId(settlementId);
 	};
 
+	const handleAncestralVillageChange = (value: string) => {
+		setAncestralVillage(value);
+	};
+
 	return {
 		// State
+		selectedCountryId,
 		selectedRegionId,
 		selectedDistrictId,
 		selectedSettlementId,
+		ancestralVillage,
 
 		// Data
+		countries,
 		regions,
 		districts,
 		settlements,
 		currentHeritage,
 
 		// Loading states
+		isCountriesPending,
 		isRegionsPending,
 		isDistrictsPending,
 		isSettlementsPending,
@@ -110,8 +138,10 @@ export const useLocationForm = () => {
 		isPending,
 
 		// Handlers
+		handleCountrySelect,
 		handleRegionSelect,
 		handleDistrictSelect,
 		handleSettlementSelect,
+		handleAncestralVillageChange,
 	};
 };

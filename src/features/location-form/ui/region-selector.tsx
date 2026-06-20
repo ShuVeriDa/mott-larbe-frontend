@@ -9,6 +9,7 @@ interface RegionSelectorProps {
 	regions: Region[];
 	selectedRegionId: string | null;
 	isLoading: boolean;
+	isDisabled: boolean;
 	onRegionSelect: (id: string | null) => void;
 	lang: string;
 }
@@ -17,6 +18,7 @@ export const RegionSelector = ({
 	regions,
 	selectedRegionId,
 	isLoading,
+	isDisabled,
 	onRegionSelect,
 	lang,
 }: RegionSelectorProps) => {
@@ -34,7 +36,7 @@ export const RegionSelector = ({
 			variant="lg"
 			value={selectedRegionId ?? ""}
 			onChange={handleChange}
-			disabled={isLoading}
+			disabled={isDisabled || isLoading}
 			aria-label={t("location.region")}
 		>
 			<option value="">{t("location.region_placeholder")}</option>

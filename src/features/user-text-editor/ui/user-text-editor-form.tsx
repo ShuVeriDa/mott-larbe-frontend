@@ -87,6 +87,7 @@ export const UserTextEditorForm = (props: UserTextEditorFormProps) => {
             sourceUrl={sourceUrl}
             titleError={fieldErrors.title}
             sourceUrlError={fieldErrors.sourceUrl}
+            languageError={fieldErrors.language}
             onTitleChange={handleTitleChange}
             onLanguageChange={handleLanguageChange}
             onTypeChange={handleTypeChange}
