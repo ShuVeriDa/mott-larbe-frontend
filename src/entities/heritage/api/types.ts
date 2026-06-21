@@ -63,6 +63,7 @@ export interface UserHeritage {
 	regionId: string | null;
 	districtId: string | null;
 	settlementId: string | null;
+	settlementCustom: string | null;
 	ancestralVillage: string | null;
 
 	createdAt: string;
@@ -83,6 +84,7 @@ export interface UpsertUserHeritageDto {
 	regionId?: string | null;
 	districtId?: string | null;
 	settlementId?: string | null;
+	settlementCustom?: string | null;
 	ancestralVillage?: string | null;
 }
 

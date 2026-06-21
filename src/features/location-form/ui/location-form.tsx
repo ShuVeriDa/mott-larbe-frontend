@@ -2,6 +2,7 @@
 
 import type { ChangeEvent, ReactNode } from "react";
 import { useFormStatus } from "react-dom";
+import { PenLine } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useI18n } from "@/shared/lib/i18n";
 import { spring, variants } from "@/shared/lib/animation";
@@ -67,6 +68,8 @@ export const LocationForm = ({ lang }: LocationFormProps) => {
 		selectedRegionId,
 		selectedDistrictId,
 		selectedSettlementId,
+		settlementCustom,
+		isCustomSettlement,
 		ancestralVillage,
 		countries,
 		regions,
@@ -82,6 +85,8 @@ export const LocationForm = ({ lang }: LocationFormProps) => {
 		handleRegionSelect,
 		handleDistrictSelect,
 		handleSettlementSelect,
+		handleToggleCustomSettlement,
+		handleSettlementCustomChange,
 		handleAncestralVillageChange,
 	} = useLocationForm();
 
@@ -91,6 +96,10 @@ export const LocationForm = ({ lang }: LocationFormProps) => {
 
 	const handleAncestralVillageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		handleAncestralVillageChange(e.currentTarget.value);
+	};
+
+	const handleSettlementCustomInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+		handleSettlementCustomChange(e.currentTarget.value);
 	};
 
 	return (
@@ -135,17 +144,59 @@ export const LocationForm = ({ lang }: LocationFormProps) => {
 					</FormSection>
 				)}
 
-				{/* Settlement */}
+				{/* Settlement — with custom input toggle */}
 				{showSettlementSection && (
 					<FormSection key="settlement" label={t("location.settlement")} sectionKey="settlement">
-						<SettlementSelector
-							settlements={settlements}
-							selectedSettlementId={selectedSettlementId}
-							isLoading={isSettlementsPending}
-							isDisabled={!selectedDistrictId}
-							onSettlementSelect={handleSettlementSelect}
-							lang={lang}
-						/>
+						<AnimatePresence mode="wait" initial={false}>
+							{isCustomSettlement ? (
+								<motion.div
+									key="custom"
+									variants={variants.fadeUp}
+									initial="hidden"
+									animate="visible"
+									exit="exit"
+									transition={spring.snappy}
+								>
+									<Input
+										name="settlementCustom"
+										value={settlementCustom}
+										onChange={handleSettlementCustomInputChange}
+										placeholder={t("location.settlement_custom_placeholder")}
+										maxLength={100}
+										autoComplete="off"
+										autoFocus
+									/>
+								</motion.div>
+							) : (
+								<motion.div
+									key="select"
+									variants={variants.fadeUp}
+									initial="hidden"
+									animate="visible"
+									exit="exit"
+									transition={spring.snappy}
+								>
+									<SettlementSelector
+										settlements={settlements}
+										selectedSettlementId={selectedSettlementId}
+										isLoading={isSettlementsPending}
+										isDisabled={!selectedDistrictId}
+										onSettlementSelect={handleSettlementSelect}
+										lang={lang}
+									/>
+								</motion.div>
+							)}
+						</AnimatePresence>
+						<button
+							type="button"
+							onClick={handleToggleCustomSettlement}
+							className="flex items-center gap-1 mt-1 text-[11px] text-t-3 hover:text-accent transition-colors duration-150 ease-out self-start"
+						>
+							<PenLine className="h-3 w-3" aria-hidden />
+							{isCustomSettlement
+								? t("location.settlement_pick_from_list")
+								: t("location.settlement_not_in_list")}
+						</button>
 					</FormSection>
 				)}
 			</AnimatePresence>

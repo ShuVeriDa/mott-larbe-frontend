@@ -28,6 +28,8 @@ export const useLocationForm = () => {
 	const [selectedRegionId, setSelectedRegionId] = useState<string | null>(null);
 	const [selectedDistrictId, setSelectedDistrictId] = useState<string | null>(null);
 	const [selectedSettlementId, setSelectedSettlementId] = useState<string | null>(null);
+	const [settlementCustom, setSettlementCustom] = useState<string>("");
+	const [isCustomSettlement, setIsCustomSettlement] = useState(false);
 	const [ancestralVillage, setAncestralVillage] = useState<string>("");
 
 	const { data: currentHeritage } = useQuery(myHeritageQueryOptions());
@@ -60,12 +62,14 @@ export const useLocationForm = () => {
 		formData: FormData,
 	): Promise<LocationFormState> => {
 		const ancestralVillageRaw = (formData.get("ancestralVillage") as string | null)?.trim() ?? null;
+		const settlementCustomRaw = (formData.get("settlementCustom") as string | null)?.trim() ?? null;
 
 		const dto: LocationFormValues = {
 			countryId: selectedCountryId,
 			regionId: selectedRegionId,
 			districtId: selectedDistrictId,
-			settlementId: selectedSettlementId,
+			settlementId: isCustomSettlement ? null : selectedSettlementId,
+			settlementCustom: isCustomSettlement ? (settlementCustomRaw || null) : null,
 			ancestralVillage: ancestralVillageRaw || null,
 		};
 
@@ -101,10 +105,22 @@ export const useLocationForm = () => {
 	const handleDistrictSelect = (districtId: string | null) => {
 		setSelectedDistrictId(districtId);
 		setSelectedSettlementId(null);
+		setIsCustomSettlement(false);
+		setSettlementCustom("");
 	};
 
 	const handleSettlementSelect = (settlementId: string | null) => {
 		setSelectedSettlementId(settlementId);
+	};
+
+	const handleToggleCustomSettlement = () => {
+		setIsCustomSettlement(prev => !prev);
+		setSelectedSettlementId(null);
+		setSettlementCustom("");
+	};
+
+	const handleSettlementCustomChange = (value: string) => {
+		setSettlementCustom(value);
 	};
 
 	const handleAncestralVillageChange = (value: string) => {
@@ -117,6 +133,8 @@ export const useLocationForm = () => {
 		selectedRegionId,
 		selectedDistrictId,
 		selectedSettlementId,
+		settlementCustom,
+		isCustomSettlement,
 		ancestralVillage,
 
 		// Data
@@ -142,6 +160,8 @@ export const useLocationForm = () => {
 		handleRegionSelect,
 		handleDistrictSelect,
 		handleSettlementSelect,
+		handleToggleCustomSettlement,
+		handleSettlementCustomChange,
 		handleAncestralVillageChange,
 	};
 };

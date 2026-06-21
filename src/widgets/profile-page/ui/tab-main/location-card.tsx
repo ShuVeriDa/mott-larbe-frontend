@@ -89,7 +89,7 @@ const LocationView = ({ heritage, lang }: LocationViewProps) => {
 	const countryName = country?.name?.[langKey] ?? country?.name?.ru ?? null;
 	const regionName = region?.name?.[langKey] ?? region?.name?.ru ?? null;
 	const districtName = district?.name?.[langKey] ?? district?.name?.ru ?? null;
-	const settlementName = settlement?.name?.[langKey] ?? settlement?.name?.ru ?? null;
+	const settlementName = settlement?.name?.[langKey] ?? settlement?.name?.ru ?? heritage.settlementCustom ?? null;
 	const settlementType = settlement?.type ?? null;
 
 	return (
@@ -140,6 +140,7 @@ export const LocationCard = ({ lang }: LocationCardProps) => {
 		heritage?.regionId ||
 		heritage?.districtId ||
 		heritage?.settlementId ||
+		heritage?.settlementCustom ||
 		heritage?.ancestralVillage
 	);
 

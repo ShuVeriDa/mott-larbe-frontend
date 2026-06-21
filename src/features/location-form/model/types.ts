@@ -3,6 +3,7 @@ export interface LocationFormValues {
 	regionId: string | null;
 	districtId: string | null;
 	settlementId: string | null;
+	settlementCustom: string | null;
 	ancestralVillage: string | null;
 }
 
