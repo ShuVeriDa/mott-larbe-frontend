@@ -24,6 +24,7 @@ export const AuthPage = ({ initialMode = "login" }: AuthPageProps) => {
 	return (
 		<div className="grid min-h-dvh grid-cols-[1.1fr_1fr] bg-panel max-[900px]:grid-cols-1">
 			<BrandPanel
+				className="max-[900px]:hidden"
 				homeHref={homeHref}
 				termsHref={termsHref}
 				privacyHref={privacyHref}
@@ -31,6 +32,7 @@ export const AuthPage = ({ initialMode = "login" }: AuthPageProps) => {
 			<FormPanel
 				mode={mode}
 				onModeChange={setMode}
+				homeHref={homeHref}
 				forgotHref={forgotHref}
 				successHref={successHref}
 				termsHref={termsHref}

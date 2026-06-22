@@ -14,6 +14,7 @@ import { TopControls } from "./top-controls";
 interface FormPanelProps {
 	mode: AuthMode;
 	onModeChange: (mode: AuthMode) => void;
+	homeHref: string;
 	forgotHref: string;
 	successHref: string;
 	termsHref: string;
@@ -23,6 +24,7 @@ interface FormPanelProps {
 export const FormPanel = ({
 	mode,
 	onModeChange,
+	homeHref,
 	forgotHref,
 	successHref,
 	termsHref,
@@ -37,7 +39,7 @@ export const FormPanel = ({
 		onModeChange("login");
 	return (
 		<section className="relative flex flex-col bg-panel px-12 py-10 max-[900px]:px-8 max-[900px]:pb-12 max-[900px]:pt-8 max-[640px]:px-5 max-[640px]:pb-9 max-[640px]:pt-[22px]">
-			<TopControls />
+			<TopControls homeHref={homeHref} />
 
 			<div className="flex flex-1 flex-col items-center justify-center">
 				<div className="w-full max-w-[380px] max-[640px]:max-w-none">

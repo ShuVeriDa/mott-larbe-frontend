@@ -25,50 +25,52 @@ export const SideNavContent = ({
 	const sections = buildNavSections(lang);
 
 	return (
-		<div className="flex-1 overflow-y-auto overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-			<LayoutGroup id="nav">
-			{sections.map((section, secIdx) => (
-				<div key={section.titleKey}>
-					{secIdx > 0 ? (
-						<div
-							className={cn(
-								"mx-3.5 my-1.5 h-px bg-bd-1 transition-[margin] duration-200",
-								isCompactMode && "max-[899px]:mx-2",
-							)}
-						/>
-					) : null}
-					<NavSection
-						labelKey={section.titleKey}
-						isCompactMode={isCompactMode}
-					/>
-					{section.items.map((item, i) => {
-						const href = item.href(lang);
-						const active =
-							pathname === href || (i === 0 && pathname.includes("reader"));
-						const Icon = item.icon;
-						return (
-							<NavItem
-								key={href}
-								href={href}
-								icon={<Icon className="size-[15px] shrink-0" />}
-								labelKey={item.labelKey}
-								active={active}
-								isCompactMode={isCompactMode}
+		<div className="flex min-h-0 flex-1 flex-col overflow-x-hidden">
+			<div className="shrink-0">
+				<LayoutGroup id="nav">
+				{sections.map((section, secIdx) => (
+					<div key={section.titleKey}>
+						{secIdx > 0 ? (
+							<div
+								className={cn(
+									"mx-3.5 my-1.5 h-px bg-bd-1 transition-[margin] duration-200",
+									isCompactMode && "max-[899px]:mx-2",
+								)}
 							/>
-						);
-					})}
-				</div>
-			))}
+						) : null}
+						<NavSection
+							labelKey={section.titleKey}
+							isCompactMode={isCompactMode}
+						/>
+						{section.items.map((item, i) => {
+							const href = item.href(lang);
+							const active =
+								pathname === href || (i === 0 && pathname.includes("reader"));
+							const Icon = item.icon;
+							return (
+								<NavItem
+									key={href}
+									href={href}
+									icon={<Icon className="size-[15px] shrink-0" />}
+									labelKey={item.labelKey}
+									active={active}
+									isCompactMode={isCompactMode}
+								/>
+							);
+						})}
+					</div>
+				))}
+				</LayoutGroup>
 
-			</LayoutGroup>
-			{stats?.streakDays?.length ? (
-				<div className={cn(isCompactMode && "max-[899px]:hidden")}>
-					<div className="mx-3.5 my-1.5 h-px bg-bd-1" />
-					<NavStreak stats={stats} />
-				</div>
-			) : null}
+				{stats?.streakDays?.length ? (
+					<div className={cn(isCompactMode && "max-[899px]:hidden")}>
+						<div className="mx-3.5 my-1.5 h-px bg-bd-1" />
+						<NavStreak stats={stats} />
+					</div>
+				) : null}
+			</div>
 
-			<div className={cn(isCompactMode && "max-[899px]:hidden")}>
+			<div className={cn("flex-1 overflow-y-auto overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden", isCompactMode && "max-[899px]:hidden")}>
 				<NavVocab />
 			</div>
 		</div>

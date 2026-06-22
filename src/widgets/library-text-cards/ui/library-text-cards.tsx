@@ -10,18 +10,23 @@ import type { CefrLevel } from "@/shared/types";
 import { CEFR_LEVELS } from "@/shared/types";
 import { CefrBadge } from "@/shared/ui/cefr-badge";
 import { LibraryPreviewCard } from "@/widgets/dashboard-page/ui/library-preview-card";
+import type { RefObject } from "react";
 import { LibraryTextCard } from "./library-text-card";
+import { VirtualGridCards } from "./virtual-grid-cards";
+import { VirtualListCards } from "./virtual-list-cards";
 
 interface LibraryTextCardsProps {
 	items: LibraryTextListItem[];
 	view: LibraryView;
 	sort: string;
+	scrollRef: RefObject<HTMLElement | null>;
 }
 
 export const LibraryTextCards = ({
 	items,
 	view,
 	sort,
+	scrollRef,
 }: LibraryTextCardsProps) => {
 	const { t, lang } = useI18n();
 
@@ -50,19 +55,8 @@ export const LibraryTextCards = ({
 	}
 
 	if (view === "list") {
-		return (
-			<div className="flex flex-col gap-1.5">
-				{items.map((item, i) => (
-					<LibraryTextCard key={item.id} item={item} view="list" index={i} />
-				))}
-			</div>
-		);
+		return <VirtualListCards items={items} scrollRef={scrollRef} />;
 	}
-
-	// Grid view — использует LibraryPreviewCard как на dashboard
-	const gridClass =
-		"grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-3 sm:grid-cols-[repeat(auto-fill,minmax(148px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(168px,1fr))] lg:gap-4";
-	const cardClass = "min-w-0";
 
 	if (sort === "level") {
 		const groups = new Map<CefrLevel, LibraryTextListItem[]>();
@@ -71,11 +65,14 @@ export const LibraryTextCards = ({
 			if (!groups.has(lvl)) groups.set(lvl, []);
 			groups.get(lvl)!.push(item);
 		}
-		const orderedLevels = CEFR_LEVELS.filter(l => groups.has(l));
+		const orderedLevels = CEFR_LEVELS.filter((l) => groups.has(l));
+
+		const gridClass =
+			"grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-3 sm:grid-cols-[repeat(auto-fill,minmax(148px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(168px,1fr))] lg:gap-4";
 
 		return (
 			<div className="flex flex-col gap-0">
-				{orderedLevels.map(lvl => {
+				{orderedLevels.map((lvl) => {
 					const group = groups.get(lvl)!;
 					return (
 						<div key={lvl} className="mb-5">
@@ -90,8 +87,8 @@ export const LibraryTextCards = ({
 								</Typography>
 							</div>
 							<div className={gridClass}>
-								{group.map(item => (
-									<div key={item.id} className={cardClass}>
+								{group.map((item) => (
+									<div key={item.id} className="min-w-0">
 										<LibraryPreviewCard item={item} lang={lang} />
 									</div>
 								))}
@@ -103,13 +100,5 @@ export const LibraryTextCards = ({
 		);
 	}
 
-	return (
-		<div className={gridClass}>
-			{items.map(item => (
-				<div key={item.id} className={cardClass}>
-					<LibraryPreviewCard item={item} lang={lang} />
-				</div>
-			))}
-		</div>
-	);
+	return <VirtualGridCards items={items} scrollRef={scrollRef} />;
 };

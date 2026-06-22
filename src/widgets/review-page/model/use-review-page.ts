@@ -11,6 +11,7 @@ import { dictionaryKeys } from "@/entities/dictionary";
 import { usePhraseReviewStats } from "@/entities/phrasebook";
 import { useSettings } from "@/entities/settings";
 import { useSessionMode } from "@/features/session-mode";
+import { useTelegramToastStore } from "@/shared/ui/telegram-fab/model/telegram-toast-store";
 import { useReviewFlow } from "./use-review-flow";
 
 interface Sm2Counts {
@@ -34,6 +35,7 @@ export const useReviewPage = () => {
 	const { system, screen, switchSystem, goToCard, goToDone, goToIntro, goToRetry } =
 		useReviewFlow();
 	const { mode: sessionMode, setMode: setSessionMode } = useSessionMode();
+	const triggerSmartMoment = useTelegramToastStore(s => s.triggerSmartMoment);
 	const { data: settings } = useSettings();
 	const enableDecks = settings?.preferences.enableDecks ?? false;
 	const enableSm2 = settings?.preferences.enableSm2 ?? true;
@@ -95,6 +97,7 @@ export const useReviewPage = () => {
 		setSm2Counts(counts);
 		qc.invalidateQueries({ queryKey: reviewKeys.root });
 		qc.invalidateQueries({ queryKey: dictionaryKeys.root });
+		triggerSmartMoment();
 		goToDone();
 	};
 
@@ -113,6 +116,7 @@ export const useReviewPage = () => {
 		setDeckCounts(counts);
 		setDeckAgainCards(againCards);
 		qc.invalidateQueries({ queryKey: deckKeys.root });
+		triggerSmartMoment();
 		goToDone();
 	};
 

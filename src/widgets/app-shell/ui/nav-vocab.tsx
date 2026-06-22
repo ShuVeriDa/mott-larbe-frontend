@@ -24,9 +24,7 @@ export const NavVocab = () => {
 	return (
 		<div className="flex flex-col w-full px-3.5 pb-2.5 pt-1.5 border-t-[0.5px] border-t-[bd]">
 			<div className="mb-1.5 flex items-center justify-between ">
-				<SectionLabel className="mb-0">
-					{t("nav.recentWords")}
-				</SectionLabel>
+				<SectionLabel className="mb-0">{t("nav.recentWords")}</SectionLabel>
 				<Link
 					href={`/${lang}/vocabulary`}
 					className="text-[10.5px] text-acc transition-colors hover:underline"

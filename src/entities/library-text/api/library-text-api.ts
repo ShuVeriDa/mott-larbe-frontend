@@ -23,7 +23,7 @@ export const libraryTextApi = {
 				...(query.genreId ? { genreId: query.genreId } : {}),
 				...(query.maxWords ? { maxWords: query.maxWords } : {}),
 				page: query.page ?? 1,
-				limit: query.limit ?? 50,
+				limit: query.limit ?? 20,
 			},
 			paramsSerializer: (p) => {
 				const sp = new URLSearchParams();

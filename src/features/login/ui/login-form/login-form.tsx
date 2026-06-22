@@ -130,14 +130,14 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 				>
 					<input
 						type="checkbox"
-						className="peer sr-only"
+						className="peer absolute size-4 opacity-0"
 						checked={remember}
 						onChange={handleRememberChange}
 					/>
 					<Typography
 						tag="span"
 						aria-hidden="true"
-						className="relative inline-flex size-4 shrink-0 items-center justify-center rounded-[4px] border-[0.5px] border-bd-3 bg-surf transition-colors peer-checked:border-acc peer-checked:bg-acc peer-checked:[&>svg]:opacity-100"
+						className="relative inline-flex size-4 shrink-0 items-center justify-center rounded-[4px] border-[0.5px] border-bd-3 bg-surf transition-colors peer-checked:border-acc peer-checked:bg-acc peer-focus-visible:ring-2 peer-focus-visible:ring-acc peer-focus-visible:ring-offset-1 peer-checked:[&>svg]:opacity-100"
 					>
 						<svg
 							viewBox="0 0 12 8"

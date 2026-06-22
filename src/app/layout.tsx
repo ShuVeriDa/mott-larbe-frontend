@@ -2,7 +2,7 @@ import { ReactNode, Suspense } from 'react';
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Golos_Text, Geist_Mono, Inter, Lora, Merriweather, PT_Serif, Source_Serif_4, Scheherazade_New, Amiri, Noto_Naskh_Arabic, Lateef, Reem_Kufi } from "next/font/google";
 import { QueryProvider } from "@/shared/ui/query-provider";
-import { TelegramFab, TelegramToast } from "@/shared/ui/telegram-fab";
+import { TelegramToast } from "@/shared/ui/telegram-fab";
 import { ThemeProvider } from "@/shared/ui/theme-provider";
 import { TooltipProvider } from "@/shared/ui/tooltip";
 import { ErrorBoundary } from "@/shared/ui/error-boundary";
@@ -208,9 +208,6 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => (
 					<SwRegister />
 					<TooltipProvider>
 						{children}
-						<ErrorBoundary fallback={null}>
-							<Suspense fallback={null}><TelegramFab /></Suspense>
-						</ErrorBoundary>
 						<ErrorBoundary fallback={null}>
 							<Suspense fallback={null}><TelegramToast /></Suspense>
 						</ErrorBoundary>

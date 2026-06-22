@@ -5,9 +5,10 @@ import { useReaderFocusMode } from "@/features/reader-focus-mode";
 import { useReaderSessionTracker } from "@/features/reader-session-tracker";
 import { useReaderSettingsInit, useReaderSettingsSync } from "@/features/reader-settings-sync";
 import { useI18n } from "@/shared/lib/i18n";
+import { useTelegramToastStore } from "@/shared/ui/telegram-fab/model/telegram-toast-store";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReaderKeyboard } from "./use-reader-keyboard";
 import { useShallow } from "zustand/react/shallow";
 
@@ -32,6 +33,18 @@ export const useReaderPage = (
 	useReaderSessionTracker(textId, pageNumber, data?.wordCount ?? 0);
 
 	const totalPages = data?.totalPages ?? 0;
+	const triggerSmartMoment = useTelegramToastStore(s => s.triggerSmartMoment);
+	const lastPageTriggered = useRef(false);
+
+	useEffect(() => {
+		if (totalPages > 0 && pageNumber === totalPages && !lastPageTriggered.current) {
+			lastPageTriggered.current = true;
+			triggerSmartMoment();
+		}
+		if (pageNumber !== totalPages) {
+			lastPageTriggered.current = false;
+		}
+	}, [pageNumber, totalPages, triggerSmartMoment]);
 
 	useEffect(() => {
 		if (!totalPages) return;

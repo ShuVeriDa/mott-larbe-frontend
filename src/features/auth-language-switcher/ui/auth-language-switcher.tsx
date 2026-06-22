@@ -40,7 +40,7 @@ export const AuthLanguageSwitcher = () => {
 
 	return (
 		<div
-			className="inline-flex gap-px rounded-[8px] border-[0.5px] border-bd-2 bg-surf p-[3px]"
+			className="inline-flex gap-0 rounded-[9px] border-[0.5px] border-bd-1 bg-surf-2 p-[3px]"
 			role="tablist"
 			aria-label="Language"
 		>
@@ -59,8 +59,10 @@ export const AuthLanguageSwitcher = () => {
 						onClick={handleClick}
 						title={LABELS[locale]}
 						className={cn(
-							"h-[26px] rounded-[6px] px-2.5 text-[11.5px] font-semibold tracking-[0.3px] transition-colors",
-							isActive ? "bg-surf-3 text-t-1" : "text-t-3 hover:text-t-1",
+							"h-[22px] rounded-[5px] px-2 text-[10.5px] font-semibold tracking-[0.3px] transition-colors",
+							isActive
+								? "bg-surf text-t-1 shadow-sm"
+								: "text-t-3 hover:text-t-2",
 						)}
 					>
 						{LABELS[locale]}

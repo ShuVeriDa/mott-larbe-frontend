@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { BrandMark } from "@/shared/ui/brand-mark";
 import { Typography } from "@/shared/ui/typography";
@@ -11,17 +12,19 @@ interface BrandPanelProps {
 	homeHref: string;
 	termsHref: string;
 	privacyHref: string;
+	className?: string;
 }
 
 export const BrandPanel = ({
 	homeHref,
 	termsHref,
 	privacyHref,
+	className,
 }: BrandPanelProps) => {
 	const { t } = useI18n();
 
 	return (
-		<aside className="relative flex flex-col  overflow-hidden border-r-[0.5px] border-bd-2 bg-surf px-12 py-10 max-[900px]:border-b-[0.5px] max-[900px]:border-r-0 max-[900px]:px-8 max-[900px]:pb-9 max-[900px]:pt-7 max-[640px]:px-5 max-[640px]:pb-7 max-[640px]:pt-[22px]">
+		<aside className={cn("relative flex flex-col  overflow-hidden border-r-[0.5px] border-bd-2 bg-surf px-12 py-10 max-[900px]:border-b-[0.5px] max-[900px]:border-r-0 max-[900px]:px-8 max-[900px]:pb-9 max-[900px]:pt-7 max-[640px]:px-5 max-[640px]:pb-7 max-[640px]:pt-[22px]", className)}>
 			<div
 				aria-hidden="true"
 				className="pointer-events-none absolute inset-0 opacity-85"
