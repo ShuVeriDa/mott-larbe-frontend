@@ -1,7 +1,9 @@
 "use client";
 
+import { ease } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
 
 interface StatItem {
 	prefixKey: string;
@@ -15,11 +17,11 @@ const ITEMS: StatItem[] = [
 		emKey: "landing.stats.textsValue",
 		labelKey: "landing.stats.texts",
 	},
-	{
-		prefixKey: "landing.stats.wordsPrefix",
-		emKey: "landing.stats.wordsValue",
-		labelKey: "landing.stats.words",
-	},
+	// {
+	// 	prefixKey: "landing.stats.wordsPrefix",
+	// 	emKey: "landing.stats.wordsValue",
+	// 	labelKey: "landing.stats.words",
+	// },
 	{
 		prefixKey: "landing.stats.levelsPrefix",
 		emKey: "landing.stats.levelsValue",
@@ -32,29 +34,45 @@ const ITEMS: StatItem[] = [
 	},
 ];
 
+const container = {
+	hidden: {},
+	visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const item = {
+	hidden: { opacity: 0, y: 14 },
+	visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: ease.enter } },
+};
+
 export const LandingStats = () => {
 	const { t } = useI18n();
 	return (
 		<section
-			className="border-[0.5px] border-y border-bd-1 bg-surf-2 py-7"
+			className="border-[0.5px] border-bd-1 bg-surf-2 py-7"
 			aria-label={t("landing.stats.ariaLabel")}
 		>
 			<div className="mx-auto w-full max-w-[1120px] px-7 max-[900px]:px-[22px] max-[640px]:px-[18px]">
-				<div className="grid grid-cols-4 gap-5 max-[900px]:grid-cols-2 max-[900px]:gap-6 max-[380px]:grid-cols-1">
-					{ITEMS.map(item => (
-						<div key={item.labelKey} className="text-center">
+				<motion.div
+					className="grid grid-cols-3 gap-5 max-[900px]:grid-cols-3 max-[900px]:gap-6 max-[380px]:grid-cols-1"
+					variants={container}
+					initial="hidden"
+					whileInView="visible"
+					viewport={{ once: true, margin: "-60px" }}
+				>
+					{ITEMS.map(stat => (
+						<motion.div key={stat.labelKey} variants={item} className="text-center">
 							<div className="font-display text-[30px] font-semibold leading-[1.05] tracking-[-0.5px] text-t-1 max-[900px]:text-[26px]">
-								{t(item.prefixKey)}
+								{t(stat.prefixKey)}
 								<Typography tag="em" className="not-italic text-acc-t">
-									{t(item.emKey)}
+									{t(stat.emKey)}
 								</Typography>
 							</div>
 							<div className="mt-1.5 text-[11.5px] uppercase tracking-[0.8px] text-t-3">
-								{t(item.labelKey)}
+								{t(stat.labelKey)}
 							</div>
-						</div>
+						</motion.div>
 					))}
-				</div>
+				</motion.div>
 			</div>
 		</section>
 	);

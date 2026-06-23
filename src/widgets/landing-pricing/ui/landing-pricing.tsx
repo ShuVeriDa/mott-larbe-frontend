@@ -63,7 +63,7 @@ export const LandingPricing = ({ startHref }: LandingPricingProps) => {
 	return (
 		<section
 			id="pricing"
-			className="border-[0.5px] border-y border-bd-1 bg-surf-2 px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
+			className="border-[0.5px] border-bd-1 bg-surf-2  px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
 			aria-labelledby="pricing-title"
 		>
 			<div className="mx-auto w-full max-w-[1120px]">

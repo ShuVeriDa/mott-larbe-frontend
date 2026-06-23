@@ -74,7 +74,7 @@ export const FeatureComparison = () => {
 		.filter((p): p is Plan => p !== null);
 
 	return (
-		<div className="hidden border-[0.5px] border-t border-bd-1 px-4 pb-3.5 pt-3.5 md:block">
+		<div className="hidden border-t-[0.5px] border-bd-1 px-4 pb-3.5 pt-3.5 md:block">
 			<SectionLabel className="block pb-1.5 mb-0">
 				{t("subscription.comparison.title")}
 			</SectionLabel>

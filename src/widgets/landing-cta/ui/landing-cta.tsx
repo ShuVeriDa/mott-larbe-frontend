@@ -1,7 +1,9 @@
 "use client";
 
+import { ease } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -10,16 +12,32 @@ interface LandingCtaProps {
 	loginHref: string;
 }
 
+const ctaVariants = {
+	hidden: { opacity: 0, y: 24, scale: 0.98 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		scale: 1,
+		transition: { duration: 0.6, ease: ease.enter },
+	},
+};
+
 export const LandingCta = ({ startHref, loginHref }: LandingCtaProps) => {
 	const { t } = useI18n();
 
 	return (
 		<section
-			className="px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
+			className="bg-surf-3 px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
 			aria-labelledby="cta-title"
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
-				<div className="relative overflow-hidden rounded-[18px] border-[0.5px] border-bd-2 bg-surf px-12 py-16 text-center max-[640px]:rounded-[14px] max-[640px]:px-[22px] max-[640px]:py-9">
+				<motion.div
+					className="relative overflow-hidden rounded-[18px] border-[0.5px] border-bd-2 bg-surf px-12 py-16 text-center max-[640px]:rounded-[14px] max-[640px]:px-[22px] max-[640px]:py-9"
+					variants={ctaVariants}
+					initial="hidden"
+					whileInView="visible"
+					viewport={{ once: true, margin: "-80px" }}
+				>
 					<div
 						aria-hidden="true"
 						className="pointer-events-none absolute inset-0 z-0"
@@ -28,7 +46,7 @@ export const LandingCta = ({ startHref, loginHref }: LandingCtaProps) => {
 								"radial-gradient(circle at 15% 20%, rgba(34,84,211,0.12), transparent 40%), radial-gradient(circle at 85% 80%, rgba(109,78,212,0.1), transparent 45%)",
 						}}
 					/>
-					<div className="relative z-[1]">
+					<div className="relative z-1">
 						<Typography
 							tag="h2"
 							id="cta-title"
@@ -61,7 +79,7 @@ export const LandingCta = ({ startHref, loginHref }: LandingCtaProps) => {
 							{t("landing.cta.foot")}
 						</Typography>
 					</div>
-				</div>
+				</motion.div>
 			</div>
 		</section>
 	);

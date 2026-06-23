@@ -1,6 +1,5 @@
 "use client";
 
-import type { DemoWordEntry } from "@/entities/landing";
 import { useI18n } from "@/shared/lib/i18n";
 import { LandingCta } from "@/widgets/landing-cta";
 import { LandingDemo } from "@/widgets/landing-demo";
@@ -14,19 +13,11 @@ import { LandingLevels } from "@/widgets/landing-levels";
 import { LandingNav } from "@/widgets/landing-nav";
 // import { LandingPricing } from "@/widgets/landing-pricing"; // hidden — all features are free
 import { LandingStats } from "@/widgets/landing-stats";
-import { LandingTestimonials } from "@/widgets/landing-testimonials";
 
 export const LandingPage = () => {
 	const { lang, dict } = useI18n();
 	const loginHref = `/${lang}/auth`;
 	const startHref = `/${lang}/auth?mode=register`;
-
-	const wordsDict =
-		((
-			dict as unknown as {
-				landing?: { demoWords?: Record<string, DemoWordEntry> };
-			}
-		).landing?.demoWords as Record<string, DemoWordEntry>) ?? {};
 
 	return (
 		<div className="flex min-h-dvh flex-col bg-bg">
@@ -34,12 +25,11 @@ export const LandingPage = () => {
 			<main className="flex-1">
 				<LandingHero startHref={startHref} />
 				<LandingStats />
-				<LandingDemo wordsDict={wordsDict} />
+				<LandingDemo />
 				<LandingHowItWorks />
 				<LandingFeatures />
 				<LandingLevels />
-				<LandingTestimonials />
-				{/* <LandingPricing startHref={startHref} /> */}
+{/* <LandingPricing startHref={startHref} /> */}
 				<LandingLanguages />
 				<LandingFaq />
 				<LandingCta startHref={startHref} loginHref={loginHref} />

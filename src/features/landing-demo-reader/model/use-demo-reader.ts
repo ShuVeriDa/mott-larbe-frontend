@@ -22,6 +22,9 @@ interface PopupPosition {
 
 interface UseDemoReaderArgs {
 	cardRef: RefObject<HTMLDivElement | null>;
+	/** Optional outer container ref. When popup is rendered outside cardRef (to escape overflow:hidden),
+	 * pass the outer relative-positioned container here so top offset is corrected. */
+	containerRef?: RefObject<HTMLDivElement | null>;
 	wordsDict: Record<string, DemoWordEntry>;
 }
 
@@ -33,7 +36,7 @@ const POPUP_APPROX_HEIGHT = 240;
 const isMobile = () =>
 	typeof window !== "undefined" && window.innerWidth <= 640;
 
-export const useDemoReader = ({ cardRef, wordsDict }: UseDemoReaderArgs) => {
+export const useDemoReader = ({ cardRef, containerRef, wordsDict }: UseDemoReaderArgs) => {
 	const [activeWord, setActiveWord] = useState<string | null>(null);
 	const [activeData, setActiveData] = useState<DemoWordEntry | null>(null);
 	const [position, setPosition] = useState<PopupPosition | null>(null);
@@ -51,25 +54,29 @@ export const useDemoReader = ({ cardRef, wordsDict }: UseDemoReaderArgs) => {
 	const computePosition = (token: HTMLElement): PopupPosition | null => {
 		const card = cardRef.current;
 		if (!card) return null;
-		const cardBox = card.getBoundingClientRect();
+		// The container popup is rendered in (may differ from card when escaping overflow:hidden)
+		const container = containerRef?.current ?? card;
+		const containerBox = container.getBoundingClientRect();
 		const tokBox = token.getBoundingClientRect();
 
-		let top = tokBox.bottom - cardBox.top + GAP;
-		const tokCenterX = tokBox.left - cardBox.left + tokBox.width / 2;
+		let top = tokBox.bottom - containerBox.top + GAP;
+		const tokCenterX = tokBox.left - containerBox.left + tokBox.width / 2;
 		let left = tokCenterX - POPUP_WIDTH / 2;
 		left = Math.max(
 			PADDING,
-			Math.min(cardBox.width - POPUP_WIDTH - PADDING, left),
+			Math.min(containerBox.width - POPUP_WIDTH - PADDING, left),
 		);
 		const arrowX = Math.max(
 			14,
 			Math.min(POPUP_WIDTH - 26, tokCenterX - left - 6),
 		);
 		let above = false;
-		if (top + POPUP_APPROX_HEIGHT > cardBox.height - PADDING) {
-			top = tokBox.top - cardBox.top - POPUP_APPROX_HEIGHT - GAP;
+		if (top + POPUP_APPROX_HEIGHT > containerBox.height - PADDING) {
+			top = tokBox.top - containerBox.top - POPUP_APPROX_HEIGHT - GAP;
 			above = true;
 		}
+		// Clamp so popup never goes above the container
+		top = Math.max(PADDING, top);
 		return { top, left, arrowX, above };
 	};
 

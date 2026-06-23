@@ -1,8 +1,10 @@
 "use client";
 
+import { ease } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { EyebrowLabel } from "@/shared/ui/eyebrow-label";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
 
 interface LanguageItem {
 	name: string;
@@ -27,14 +29,35 @@ export const LandingLanguages = () => {
 			}
 		).landing?.languages?.items ?? [];
 
+	const headerVariants = {
+		hidden: { opacity: 0, y: 16 },
+		visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: ease.enter } },
+	};
+
+	const gridContainer = {
+		hidden: {},
+		visible: { transition: { staggerChildren: 0.14 } },
+	};
+
+	const cardVariants = {
+		hidden: { opacity: 0, y: 20 },
+		visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: ease.enter } },
+	};
+
 	return (
 		<section
 			id="languages"
-			className="px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
+			className="bg-surf-3 px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
 			aria-labelledby="languages-title"
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
-				<header className="mb-12 text-center max-[640px]:mb-9">
+				<motion.header
+					className="mb-12 text-center max-[640px]:mb-9"
+					variants={headerVariants}
+					initial="hidden"
+					whileInView="visible"
+					viewport={{ once: true, margin: "-80px" }}
+				>
 					<EyebrowLabel>{t("landing.languages.eyebrow")}</EyebrowLabel>
 					<Typography
 						tag="h2"
@@ -46,12 +69,19 @@ export const LandingLanguages = () => {
 					<Typography className="mx-auto mt-3.5 max-w-[540px] text-base leading-[1.55] text-t-2 max-[640px]:text-[14.5px]">
 						{t("landing.languages.sub")}
 					</Typography>
-				</header>
+				</motion.header>
 
-				<div className="grid grid-cols-2 gap-6 max-[640px]:grid-cols-1">
+				<motion.div
+					className="grid grid-cols-2 gap-6 max-[640px]:grid-cols-1"
+					variants={gridContainer}
+					initial="hidden"
+					whileInView="visible"
+					viewport={{ once: true, margin: "-60px" }}
+				>
 					{items.map(item => (
-						<article
+						<motion.article
 							key={item.tag}
+							variants={cardVariants}
 							className="rounded-[16px] border-[0.5px] border-bd-2 bg-surf p-7"
 						>
 							<div className="mb-4 flex items-start justify-between gap-3">
@@ -86,18 +116,18 @@ export const LandingLanguages = () => {
 								).map(([val, label]) => (
 									<div
 										key={label}
-										className="rounded-[10px] bg-bg px-3 py-3 text-center"
+										className="rounded-[10px] bg-surf-2 border-[0.5px] border-bd-1 px-3 py-3 text-center"
 									>
-										<div className="font-display text-[17px] font-semibold text-t-1">
+										<div className="font-display text-[17px] max-[440px]:text-[15px] font-semibold text-t-1">
 											{val}
 										</div>
 										<div className="mt-0.5 text-[11.5px] text-t-3">{label}</div>
 									</div>
 								))}
 							</div>
-						</article>
+						</motion.article>
 					))}
-				</div>
+				</motion.div>
 			</div>
 		</section>
 	);

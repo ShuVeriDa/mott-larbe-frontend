@@ -1,13 +1,24 @@
 "use client";
 
+import { ease } from "@/shared/lib/animation";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { EyebrowLabel } from "@/shared/ui/eyebrow-label";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
+import {
+	BookOpen,
+	CheckCircle,
+	Flame,
+	LucideIcon,
+	Plus,
+	RefreshCw,
+	Zap,
+} from "lucide-react";
 import { ComponentProps, useState } from "react";
 
-const LEVEL_KEYS = ["a1", "a2", "b1", "b2", "c1", "c2"] as const;
+const LEVEL_KEYS = ["a", "b", "c"] as const;
 type LevelKey = (typeof LEVEL_KEYS)[number];
 
 const DEMO_WORDS = [
@@ -28,18 +39,77 @@ const STATUS_COLOR: Record<WordStatus, string> = {
 
 const STAT_KEYS = ["s1", "s2", "s3", "s4", "s5", "s6"] as const;
 
+type Tone = "acc" | "grn" | "amb" | "pur";
+
+interface StatMeta {
+	tone: Tone;
+	iconBg: string;
+	iconColor: string;
+	Icon: LucideIcon;
+}
+
+const STAT_META: Record<(typeof STAT_KEYS)[number], StatMeta> = {
+	s1: {
+		tone: "acc",
+		iconBg: "bg-acc-bg",
+		iconColor: "text-acc-t",
+		Icon: BookOpen,
+	},
+	s2: {
+		tone: "grn",
+		iconBg: "bg-grn-bg",
+		iconColor: "text-grn-t",
+		Icon: CheckCircle,
+	},
+	s3: { tone: "grn", iconBg: "bg-grn-bg", iconColor: "text-grn-t", Icon: Zap },
+	s4: { tone: "pur", iconBg: "bg-pur-bg", iconColor: "text-pur-t", Icon: Plus },
+	s5: {
+		tone: "amb",
+		iconBg: "bg-amb-bg",
+		iconColor: "text-amb-t",
+		Icon: RefreshCw,
+	},
+	s6: {
+		tone: "amb",
+		iconBg: "bg-amb-bg",
+		iconColor: "text-amb-t",
+		Icon: Flame,
+	},
+};
+
+const sectionVariants = {
+	hidden: { opacity: 0, y: 20 },
+	visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: ease.enter } },
+};
+
+const cardsContainer = {
+	hidden: {},
+	visible: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+};
+
+const cardVariant = {
+	hidden: { opacity: 0, y: 18 },
+	visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: ease.enter } },
+};
+
 export const LandingLevels = () => {
 	const { t } = useI18n();
-	const [active, setActive] = useState<LevelKey>("b1");
+	const [active, setActive] = useState<LevelKey>("b");
 
 	return (
 		<section
 			id="levels"
-			className="px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
+			className="border-[0.5px] border-bd-1 bg-surf-2 px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
 			aria-labelledby="levels-title"
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
-				<header className="mb-12 max-[640px]:mb-9">
+				<motion.header
+					className="mb-12 max-[640px]:mb-9"
+					variants={sectionVariants}
+					initial="hidden"
+					whileInView="visible"
+					viewport={{ once: true, margin: "-80px" }}
+				>
 					<EyebrowLabel>{t("landing.levels.eyebrow")}</EyebrowLabel>
 					<Typography
 						tag="h2"
@@ -51,12 +121,16 @@ export const LandingLevels = () => {
 					<Typography className="mt-3.5 max-w-[620px] text-base leading-[1.55] text-t-2 max-[640px]:text-[14.5px]">
 						{t("landing.levels.sub")}
 					</Typography>
-				</header>
+				</motion.header>
 
-				<div
+				<motion.div
 					className="mb-10 flex flex-wrap gap-2"
 					role="tablist"
 					aria-label="CEFR levels"
+					variants={sectionVariants}
+					initial="hidden"
+					whileInView="visible"
+					viewport={{ once: true, margin: "-60px" }}
 				>
 					{LEVEL_KEYS.map(key => {
 						const handleClick: NonNullable<
@@ -69,26 +143,37 @@ export const LandingLevels = () => {
 								aria-selected={active === key}
 								onClick={handleClick}
 								className={cn(
-									"rounded-full border-[0.5px] px-4 py-1.5 text-[13px] font-semibold transition-colors",
+									"rounded-full flex gap-1.5 border-[0.5px] px-4 py-1.5 text-[13px] font-semibold transition-colors max-[440px]:text-[13px] max-[440px]:px-2",
 									active === key
 										? "border-acc bg-acc-bg text-acc-t"
 										: "border-bd-2 bg-surf text-t-2 hover:border-bd-3 hover:text-t-1",
 								)}
 							>
-								{t(`landing.levels.tabs.${key}.label`)}
+								<Typography tag="span">
+									{t(`landing.levels.tabs.${key}.label`)}
+								</Typography>
 								<Typography
 									tag="span"
-									className="ml-1.5 font-normal opacity-60"
+									className={cn(
+										" font-normal",
+										active == key ? "opacity-100" : "opacity-60",
+									)}
 								>
 									{t(`landing.levels.tabs.${key}.name`)}
 								</Typography>
 							</Button>
 						);
 					})}
-				</div>
+				</motion.div>
 
-				<div className="grid grid-cols-2 gap-5 max-[640px]:grid-cols-1">
-					<article className="rounded-[14px] border-[0.5px] border-bd-2 bg-surf p-6">
+				<motion.div
+					className="grid grid-cols-2 gap-5 max-[640px]:grid-cols-1"
+					variants={cardsContainer}
+					initial="hidden"
+					whileInView="visible"
+					viewport={{ once: true, margin: "-60px" }}
+				>
+					<motion.article variants={cardVariant} className="rounded-[14px] border-[0.5px] border-bd-2 bg-surf p-6">
 						<div className="mb-4 flex items-center justify-between">
 							<Typography
 								tag="h3"
@@ -107,7 +192,7 @@ export const LandingLevels = () => {
 							{DEMO_WORDS.map(({ word, translation, status }) => (
 								<li
 									key={word}
-									className="flex items-center gap-3 rounded-[8px] bg-bg px-3 py-2"
+									className="flex items-center gap-3 rounded-[8px] px-3 py-2 bg-surf-2 border-[0.5px] border-bd-1"
 								>
 									<Typography
 										tag="span"
@@ -131,29 +216,44 @@ export const LandingLevels = () => {
 						<Button className="mt-4 text-[13px] font-medium text-acc-t hover:underline">
 							{t("landing.levels.myDict.viewAll")}
 						</Button>
-					</article>
+					</motion.article>
 
-					<article className="rounded-[14px] border-[0.5px] border-bd-2 bg-surf p-6">
+					<motion.article variants={cardVariant} className="rounded-[14px] border-[0.5px] border-bd-2 bg-surf p-5">
 						<Typography
 							tag="h3"
-							className="mb-6 text-[15px] font-semibold text-t-1"
+							className="mb-4 text-[15px] font-semibold text-t-1"
 						>
 							{t("landing.levels.weekStats.title")}
 						</Typography>
-						<div className="grid grid-cols-3 gap-x-4 gap-y-6">
-							{STAT_KEYS.map(k => (
-								<div key={k} className="text-center">
-									<div className="font-display text-[24px] font-bold leading-none text-t-1">
-										{t(`landing.levels.weekStats.${k}v`)}
+						<div className="grid grid-cols-3 gap-2">
+							{STAT_KEYS.map(k => {
+								const m = STAT_META[k];
+								return (
+									<div
+										key={k}
+										className="rounded-[10px] border-[0.5px] border-bd-1 bg-surf-2 p-3"
+									>
+										<div
+											className={cn(
+												"mb-2.5 flex size-6 items-center justify-center rounded-[6px]",
+												m.iconBg,
+											)}
+											aria-hidden="true"
+										>
+											<m.Icon size={13} className={m.iconColor} />
+										</div>
+										<div className="font-display text-[20px] font-semibold leading-none tracking-[-0.4px] text-t-1">
+											{t(`landing.levels.weekStats.${k}v`)}
+										</div>
+										<div className="mt-1 text-[10.5px] text-t-3">
+											{t(`landing.levels.weekStats.${k}l`)}
+										</div>
 									</div>
-									<div className="mt-1 text-[11.5px] uppercase tracking-[0.6px] text-t-3">
-										{t(`landing.levels.weekStats.${k}l`)}
-									</div>
-								</div>
-							))}
+								);
+							})}
 						</div>
-					</article>
-				</div>
+					</motion.article>
+				</motion.div>
 			</div>
 		</section>
 	);

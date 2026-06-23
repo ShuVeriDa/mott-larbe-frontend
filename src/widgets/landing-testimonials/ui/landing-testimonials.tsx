@@ -1,8 +1,10 @@
 "use client";
 
+import { ease } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { EyebrowLabel } from "@/shared/ui/eyebrow-label";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
 import { QuoteIcon } from "lucide-react";
 
 interface TestimonialItem {
@@ -11,6 +13,21 @@ interface TestimonialItem {
 	role: string;
 	level: string;
 }
+
+const headerVariants = {
+	hidden: { opacity: 0, y: 16 },
+	visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: ease.enter } },
+};
+
+const gridContainer = {
+	hidden: {},
+	visible: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+};
+
+const cardVariants = {
+	hidden: { opacity: 0, y: 20 },
+	visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: ease.enter } },
+};
 
 export const LandingTestimonials = () => {
 	const { t, dict } = useI18n();
@@ -24,11 +41,17 @@ export const LandingTestimonials = () => {
 
 	return (
 		<section
-			className="border-[0.5px] border-y border-bd-1 bg-surf-2 px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
+			className="border-[0.5px]  border-bd-1 bg-surf-2  px-7 py-[88px] max-[900px]:px-[22px] max-[900px]:py-16 max-[640px]:px-[18px] max-[640px]:py-14"
 			aria-labelledby="testimonials-title"
 		>
 			<div className="mx-auto w-full max-w-[1120px]">
-				<header className="mb-12 text-center max-[640px]:mb-9">
+				<motion.header
+					className="mb-12 text-center max-[640px]:mb-9"
+					variants={headerVariants}
+					initial="hidden"
+					whileInView="visible"
+					viewport={{ once: true, margin: "-80px" }}
+				>
 					<EyebrowLabel>{t("landing.testimonials.eyebrow")}</EyebrowLabel>
 					<Typography
 						tag="h2"
@@ -40,12 +63,19 @@ export const LandingTestimonials = () => {
 					<Typography className="mx-auto mt-3.5 max-w-[540px] text-base leading-[1.55] text-t-2 max-[640px]:text-[14.5px]">
 						{t("landing.testimonials.sub")}
 					</Typography>
-				</header>
+				</motion.header>
 
-				<div className="grid grid-cols-3 gap-5 max-[900px]:grid-cols-1 max-[900px]:gap-4">
+				<motion.div
+					className="grid grid-cols-3 gap-5 max-[900px]:grid-cols-1 max-[900px]:gap-4"
+					variants={gridContainer}
+					initial="hidden"
+					whileInView="visible"
+					viewport={{ once: true, margin: "-60px" }}
+				>
 					{items.map((item, idx) => (
-						<article
+						<motion.article
 							key={idx}
+							variants={cardVariants}
 							className="flex flex-col rounded-[14px] border-[0.5px] border-bd-2 bg-surf p-6"
 						>
 							<QuoteIcon
@@ -70,9 +100,9 @@ export const LandingTestimonials = () => {
 									{item.level}
 								</Typography>
 							</div>
-						</article>
+						</motion.article>
 					))}
-				</div>
+				</motion.div>
 			</div>
 		</section>
 	);

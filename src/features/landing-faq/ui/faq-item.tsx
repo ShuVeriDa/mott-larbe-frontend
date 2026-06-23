@@ -37,7 +37,7 @@ export const FaqItem = ({
 			title={question}
 			className="flex w-full items-center justify-between border-0 bg-transparent px-5 py-[18px] text-left font-[inherit] text-[15px] font-medium text-t-1 transition-colors"
 		>
-			<Typography tag="span">{question}</Typography>
+			<Typography tag="span" className="truncate pr-3">{question}</Typography>
 			<Typography
 				tag="span"
 				className={cn(

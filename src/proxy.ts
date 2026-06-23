@@ -33,7 +33,7 @@ const isPublicOnlyRoute = (segment: string | null): boolean =>
 	segment === null || segment === "auth" || segment === "reset-password";
 
 const isProtectedRoute = (segment: string | null): boolean =>
-	segment !== null && segment !== "auth" && segment !== "reset-password";
+	!isPublicOnlyRoute(segment);
 
 // Calls the backend refresh endpoint. The backend sets access_token via
 // Set-Cookie (httpOnly) in the response — we forward those cookies to the

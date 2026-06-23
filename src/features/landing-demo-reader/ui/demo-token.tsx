@@ -1,8 +1,8 @@
 "use client";
 
-import { Typography } from "@/shared/ui/typography";
-import { type ComponentProps, type MouseEvent, type ReactNode } from 'react';
 import { cn } from "@/shared/lib/cn";
+import { Typography } from "@/shared/ui/typography";
+import { type ComponentProps, type MouseEvent, type ReactNode } from "react";
 
 export type DemoTokenStatus = "default" | "studied" | "unknown";
 
@@ -26,7 +26,7 @@ export const DemoToken = ({
 		onSelect(word, e.currentTarget);
 	};
 
-	const handleKeyDown: NonNullable<ComponentProps<"span">["onKeyDown"]> = (e) => {
+	const handleKeyDown: NonNullable<ComponentProps<"span">["onKeyDown"]> = e => {
 		if (e.key === "Enter" || e.key === " ") {
 			e.preventDefault();
 			onSelect(word, e.currentTarget as HTMLElement);
@@ -34,7 +34,8 @@ export const DemoToken = ({
 	};
 
 	return (
-		<Typography tag="span"
+		<Typography
+			tag="span"
 			data-demo-token
 			data-word={word}
 			role="button"
@@ -42,15 +43,13 @@ export const DemoToken = ({
 			onClick={handleClick}
 			onKeyDown={handleKeyDown}
 			className={cn(
-				"inline cursor-pointer rounded-[3px] px-[2px] py-[1px] transition-colors hover:bg-acc/10",
+				"inline cursor-pointer rounded-[3px] px-[2px] py-px transition-colors hover:bg-acc/10",
 				status === "studied" &&
 					!active &&
-					"border-b-[1.5px] border-dotted border-grn pb-[1px]",
-				status === "unknown" &&
-					!active &&
-					"bg-amb-bg font-medium text-amb-t",
+					"border-b-[1.5px] border-dotted border-grn pb-px",
+				status === "unknown" && !active && "bg-amb-bg font-medium text-amb-t",
 				active &&
-					"!bg-acc-bg !text-acc-t font-semibold outline outline-[0.5px] outline-acc/25",
+					"bg-acc-bg! text-acc-t! font-semibold outline-[0.5px] outline-acc/25",
 			)}
 		>
 			{children}

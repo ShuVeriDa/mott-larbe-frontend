@@ -6,7 +6,7 @@ import type { DemoWordEntry } from "@/entities/landing";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
-import { Plus, X } from "lucide-react";
+import { BookOpen, Check, ExternalLink, Pencil } from "lucide-react";
 import type { CSSProperties } from "react";
 
 interface DemoPopupProps {
@@ -31,7 +31,6 @@ export const DemoPopup = ({
 	isMobile,
 	isAdded,
 	onAdd,
-	onClose,
 }: DemoPopupProps) => {
 	const { t } = useI18n();
 
@@ -52,8 +51,8 @@ export const DemoPopup = ({
 			aria-label={word}
 			style={style}
 			className={cn(
-				"absolute z-30 w-[240px] overflow-hidden rounded-card border-[0.5px] border-bd-2 bg-surf shadow-lg",
-				"max-[640px]:left-4 max-[640px]:right-4 max-[640px]:w-[calc(100%-32px)] max-[640px]:max-w-[320px]",
+				"absolute z-30 w-[280px] overflow-hidden rounded-card border-[0.5px] border-bd-2 bg-surf shadow-lg",
+				"max-[640px]:left-4 max-[640px]:right-4 max-[640px]:w-[calc(100%-32px)] max-[640px]:max-w-[340px]",
 				"before:absolute before:h-3 before:w-3 before:bg-surf",
 				"before:border-l-[0.5px] before:border-t-[0.5px] before:border-bd-2",
 				"before:max-[640px]:hidden",
@@ -63,64 +62,69 @@ export const DemoPopup = ({
 					: "before:top-[-6px] before:rotate-45",
 			)}
 		>
-			<div className="border-b-[0.5px] border-bd-1 px-[13px] pb-[9px] pt-[11px]">
-				<div className="mb-[2px] text-[16px] font-semibold tracking-[-0.2px] text-t-1">
-					{word}
-				</div>
-				<div className="text-[11px] text-t-3">
-					{t("landing.demo.baseLabel")}{" "}
-					<Typography tag="strong" className="font-medium text-t-2">
-						{data.base}
-					</Typography>{" "}
-					· {data.pos}
+			{/* Header: word + badge */}
+			<div className="border-b-[0.5px] border-bd-1 px-3 pb-2.5 pt-3">
+				<div className="flex items-center gap-2">
+					<div className="text-[16px] font-semibold tracking-[-0.2px] text-t-1">
+						{word}
+					</div>
+					<span className="flex shrink-0 items-center gap-1 rounded-[4px] border-[0.5px] border-grn/30 bg-grn/15 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.5px] text-grn">
+						<BookOpen className="size-2" strokeWidth={1.8} />
+						{t("landing.hero.popupBadge")}
+					</span>
 				</div>
 			</div>
-			<div className="border-b-[0.5px] border-bd-1 px-[13px] py-[9px]">
-				<div className="mb-[3px] text-[13.5px] font-medium text-t-1">
-					{data.trans}
+
+			{/* Body: translation + base + pos */}
+			<div className="border-b-[0.5px] border-bd-1 px-3 py-2.5">
+				<div className="text-[14px] font-medium text-t-1">{data.trans}</div>
+				<div className="mt-1.5 text-[11.5px] text-t-3">
+					{t("landing.hero.popupBase")}{" "}
+					<Typography tag="span" className="font-medium text-t-2">
+						{data.base}
+					</Typography>
+				</div>
+				<div className="mt-0.5 text-[11.5px] text-t-3">
+					{t("landing.hero.popupPosLabel")}{" "}
+					<Typography tag="span" className="text-t-2">
+						{data.pos}
+					</Typography>
 				</div>
 				{data.extra ? (
-					<div className="text-[11.5px] leading-[1.5] text-t-3">
-						{data.extra}
-					</div>
+					<div className="mt-1 text-[11px] italic text-t-3">{data.extra}</div>
 				) : null}
 			</div>
-			{data.tags.length > 0 ? (
-				<div className="flex flex-wrap gap-1 border-b-[0.5px] border-bd-1 px-[13px] py-[7px]">
-					{data.tags.map(tag => (
-						<Typography
-							tag="span"
-							key={tag}
-							className="rounded bg-surf-2 px-[6px] py-[2px] text-[9.5px] font-semibold uppercase tracking-[0.4px] text-t-2"
-						>
-							{tag}
-						</Typography>
-					))}
-				</div>
-			) : null}
-			<div className="flex gap-1.5 p-[7px]">
+
+			{/* Footer: add button + icon buttons */}
+			<div className="flex items-center justify-between gap-1.5 px-3 py-2">
 				<Button
 					onClick={onAdd}
-					title={
-						isAdded ? t("landing.demo.addedBtn") : t("landing.demo.addBtn")
-					}
 					className={cn(
-						"flex h-7 flex-1 items-center justify-center gap-1 rounded-md border-0 text-[11px] font-semibold transition-opacity",
+						"flex h-[30px] flex-1 items-center justify-center gap-1.5 rounded-base text-[11.5px] font-semibold transition-opacity",
 						isAdded
-							? "border-[0.5px] border-grn bg-grn-bg text-grn-t"
-							: "bg-acc text-white hover:opacity-[0.88]",
+							? "bg-grn text-white hover:opacity-[0.88]"
+							: "bg-grn text-white hover:opacity-[0.88]",
 					)}
 				>
-					<Plus size={11} strokeWidth={2} />
+					<Check size={10} strokeWidth={2.2} />
 					{isAdded ? t("landing.demo.addedBtn") : t("landing.demo.addBtn")}
 				</Button>
-				<Button
-					onClick={onClose}
-					aria-label={t("landing.nav.close")}
-					className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-[0.5px] border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 hover:text-t-1"
-				>
-					<X size={11} strokeWidth={2} />
-				</Button>
+				<div className="flex gap-1">
+					<Button
+						size={"bare"}
+						aria-hidden="true"
+						className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-base border-[0.5px] border-bd-1 bg-surf-2 text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
+					>
+						<Pencil size={11} strokeWidth={1.5} />
+					</Button>
+					<Button
+						size={"bare"}
+						aria-hidden="true"
+						className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-base border-[0.5px] border-bd-1 bg-surf-2 text-t-3 transition-colors hover:bg-surf-3 hover:text-t-1"
+					>
+						<ExternalLink size={11} strokeWidth={1.5} />
+					</Button>
+				</div>
 			</div>
 		</div>
 	);
