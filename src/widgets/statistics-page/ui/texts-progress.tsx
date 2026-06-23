@@ -1,8 +1,10 @@
 "use client";
 
 import type { TextProgressItem } from "@/entities/statistics";
+import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { TextRow } from "./text-row";
 
@@ -33,11 +35,18 @@ export const TextsProgress = ({ items, lang }: TextsProgressProps) => {
 					{t("statistics.texts.empty")}
 				</div>
 			) : (
-				<div className="flex flex-col">
+				<motion.div
+					className="flex flex-col"
+					variants={variants.staggerContainer}
+					initial="hidden"
+					animate="visible"
+				>
 					{items.map(item => (
-						<TextRow key={item.id} item={item} lang={lang} />
+						<motion.div key={item.id} variants={variants.staggerItem}>
+							<TextRow item={item} lang={lang} />
+						</motion.div>
 					))}
-				</div>
+				</motion.div>
 			)}
 		</section>
 	);

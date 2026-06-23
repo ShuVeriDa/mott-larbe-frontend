@@ -3,6 +3,7 @@ import type { TextProgressItem } from "@/entities/statistics";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { BookOpen } from "lucide-react";
 import Link from "next/link";
 
 const colorForPercent = (percent: number): { bar: string; pct: string } => {
@@ -25,27 +26,13 @@ export const TextRow = ({ item, lang }: TextRowProps) => {
 	return (
 		<Link
 			href={`/${lang}/texts/${item.id}`}
-			className="flex items-center gap-3 border-b border-bd-1 py-2 transition-colors last:border-b-0 hover:rounded-base hover:bg-surf-2 hover:px-1.5 hover:-mx-1.5 max-[480px]:gap-2"
+			className="flex items-center gap-3 border-b border-bd-1 py-2 transition-[background-color,transform] duration-150 ease-out last:border-b-0 hover:rounded-base hover:bg-surf-2 hover:px-1.5 hover:-mx-1.5 [@media(hover:hover)]:hover:-translate-y-px max-[480px]:gap-2"
 		>
 			<div
 				className="flex size-[34px] shrink-0 items-center justify-center rounded-base bg-acc-bg max-[480px]:size-6"
 				aria-hidden="true"
 			>
-				<svg
-					width="14"
-					height="14"
-					viewBox="0 0 28 28"
-					fill="none"
-					stroke="var(--acc)"
-					strokeWidth="1.6"
-				>
-					<path
-						d="M5 22L14 7l9 15"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path d="M8 17h12" strokeLinecap="round" />
-				</svg>
+				<BookOpen className="size-3.5 text-acc" />
 			</div>
 
 			<div className="min-w-0 flex-1">

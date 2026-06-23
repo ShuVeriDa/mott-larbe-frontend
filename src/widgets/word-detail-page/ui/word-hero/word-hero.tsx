@@ -31,7 +31,7 @@ export const WordHero = ({ entry }: WordHeroProps) => {
 	return (
 		<section
 			aria-labelledby="word-hero-title"
-			className="relative mb-4 overflow-hidden rounded-[14px] border-[0.5px] border-bd-1 bg-surf p-[26px_28px_22px] max-md:p-[18px_16px_16px]"
+			className="relative mb-4 overflow-hidden rounded-[14px] border-[0.5px] border-bd-1 bg-surf p-[26px_28px_22px] max-md:p-[18px_16px_16px] transition-[border-color,box-shadow] duration-200 ease-out hover:border-bd-2 hover:shadow-sm"
 		>
 			<Typography
 				tag="span"
@@ -109,8 +109,8 @@ export const WordHero = ({ entry }: WordHeroProps) => {
 					className={cn(
 						"flex size-11 shrink-0 items-center justify-center rounded-full",
 						"border-[0.5px] border-acc/15 bg-acc-bg",
-						"transition-colors duration-150",
-						"hover:bg-acc hover:text-white",
+						"transition-[color,background-color,transform] duration-150",
+						"hover:bg-acc hover:text-white active:scale-95",
 						"disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-acc-bg",
 						"max-md:size-[38px]",
 					)}

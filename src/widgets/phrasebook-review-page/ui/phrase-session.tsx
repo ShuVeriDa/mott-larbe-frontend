@@ -8,6 +8,7 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useSwipe } from "@/shared/lib/swipe";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { usePhraseSession, type PhraseCounts } from "../model";
 import { PhraseFront } from "./phrase-front";
 import { PhraseBack } from "./phrase-back";
@@ -99,15 +100,7 @@ export const PhraseSession = ({ phrases, onFinish, onBack, onProgress }: PhraseS
 						onClick={onBack}
 						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 					>
-						<svg viewBox="0 0 12 12" fill="none" className="size-3">
-							<path
-								d="M8 6H4M5 3L2 6l3 3"
-								stroke="currentColor"
-								strokeWidth="1.2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</svg>
+						<ArrowLeft className="size-3" />
 						{t("phrasebook.review.card.exit")}
 					</Button>
 				) : null}
@@ -115,15 +108,7 @@ export const PhraseSession = ({ phrases, onFinish, onBack, onProgress }: PhraseS
 					onClick={skip}
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 				>
-					<svg viewBox="0 0 12 12" fill="none" className="size-3">
-						<path
-							d="M2 6h8M7 3l3 3-3 3"
-							stroke="currentColor"
-							strokeWidth="1.2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<ArrowRight className="size-3" />
 					{t("phrasebook.review.card.skip")}
 				</Button>
 			</div>

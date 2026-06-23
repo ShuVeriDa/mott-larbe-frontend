@@ -7,6 +7,8 @@ import { getPrimaryTranslation, type ReviewDueWord } from "@/entities/review";
 import type { ReviewSystem } from "../review-topbar";
 import type { ReviewScreen } from "../../model";
 import { StatRow } from "./stat-row";
+import { motion } from "framer-motion";
+import { variants } from "@/shared/lib/animation";
 
 interface Sm2Counts {
 	easy: number;
@@ -50,33 +52,62 @@ export const ReviewSidePanel = ({
 			</SectionLabel>
 
 			{system === "sm2" && screen === "card" ? (
-				<>
-					<StatRow
-						label={t("review.sidePanel.passed")}
-						value={sm2Passed}
-						tone="neu"
-					/>
+				<motion.div
+					variants={variants.staggerContainer}
+					initial="hidden"
+					animate="visible"
+					className="flex flex-col gap-1"
+				>
+					<motion.div variants={variants.staggerItem}>
+						<StatRow
+							label={t("review.sidePanel.passed")}
+							value={sm2Passed}
+							tone="neu"
+						/>
+					</motion.div>
 					<div className="flex flex-col gap-1">
-						<StatRow label={t("review.sidePanel.easy")} value={sm2Counts.easy} tone="grn" />
-						<StatRow label={t("review.sidePanel.good")} value={sm2Counts.good} tone="acc" />
-						<StatRow label={t("review.sidePanel.hard")} value={sm2Counts.hard} tone="amb" />
+						<motion.div variants={variants.staggerItem}>
+							<StatRow label={t("review.sidePanel.easy")} value={sm2Counts.easy} tone="grn" />
+						</motion.div>
+						<motion.div variants={variants.staggerItem}>
+							<StatRow label={t("review.sidePanel.good")} value={sm2Counts.good} tone="acc" />
+						</motion.div>
+						<motion.div variants={variants.staggerItem}>
+							<StatRow label={t("review.sidePanel.hard")} value={sm2Counts.hard} tone="amb" />
+						</motion.div>
 					</div>
-				</>
+				</motion.div>
 			) : null}
 
 			{system === "deck" && screen === "card" ? (
-				<div className="flex flex-col gap-1">
-					<StatRow label={t("review.sidePanel.know")} value={deckCounts.know} tone="grn" />
-					<StatRow label={t("review.sidePanel.again")} value={deckCounts.again} tone="amb" />
+				<motion.div
+					className="flex flex-col gap-1"
+					variants={variants.staggerContainer}
+					initial="hidden"
+					animate="visible"
+				>
+					<motion.div variants={variants.staggerItem}>
+						<StatRow label={t("review.sidePanel.know")} value={deckCounts.know} tone="grn" />
+					</motion.div>
+					<motion.div variants={variants.staggerItem}>
+						<StatRow label={t("review.sidePanel.again")} value={deckCounts.again} tone="amb" />
+					</motion.div>
 					{deckPassed > 0 ? (
-						<StatRow label={t("review.sidePanel.passed")} value={deckPassed} tone="neu" />
+						<motion.div variants={variants.staggerItem}>
+							<StatRow label={t("review.sidePanel.passed")} value={deckPassed} tone="neu" />
+						</motion.div>
 					) : null}
-				</div>
+				</motion.div>
 			) : null}
 
 			{system === "sm2" ? (
 				<>
-					<div className="border-t border-bd-1 pt-3">
+					<motion.div
+						className="border-t border-bd-1 pt-3"
+						initial={{ opacity: 0, y: 8 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+					>
 						<SectionLabel className="mb-1.5">
 							{t("review.sidePanel.streakTitle")}
 						</SectionLabel>
@@ -86,18 +117,29 @@ export const ReviewSidePanel = ({
 								{t("review.sidePanel.streakDays", { n: streak })}
 							</Typography>
 						</div>
-					</div>
+					</motion.div>
 
 					{nextWords.length > 0 ? (
-						<div className="border-t border-bd-1 pt-3">
+						<motion.div
+							className="border-t border-bd-1 pt-3"
+							initial={{ opacity: 0, y: 8 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+						>
 							<SectionLabel>
 								{t("review.sm2.intro.queue.title")}
 							</SectionLabel>
-							<ul className="flex flex-col gap-1">
+							<motion.ul
+								className="flex flex-col gap-1"
+								variants={variants.staggerContainer}
+								initial="hidden"
+								animate="visible"
+							>
 								{nextWords.map((word) => (
-									<li
+									<motion.li
 										key={word.lemmaId}
-										className="flex items-center gap-1.5 rounded-base px-2 py-1.5 hover:bg-surf-2"
+										className="flex items-center gap-1.5 rounded-base px-2 py-1.5 hover:bg-surf-2 transition-colors duration-150"
+										variants={variants.staggerItem}
 									>
 										<Typography
 											tag="span"
@@ -111,10 +153,10 @@ export const ReviewSidePanel = ({
 										>
 											{getPrimaryTranslation(word.lemma)}
 										</Typography>
-									</li>
+									</motion.li>
 								))}
-							</ul>
-						</div>
+							</motion.ul>
+						</motion.div>
 					) : null}
 				</>
 			) : null}

@@ -35,7 +35,7 @@ export const LibraryPreviewCardCover = ({
 				<BookOpen
 					size={26}
 					aria-hidden="true"
-					className="opacity-70 md:size-7 lg:size-8 xl:size-9"
+					className="opacity-70 transition-transform duration-200 ease-out group-hover:scale-110 md:size-7 lg:size-8 xl:size-9"
 					style={{ color: colors.stripe }}
 				/>
 			</>

@@ -9,34 +9,13 @@ import {
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { Clock, Crown } from "lucide-react";
 import Link from "next/link";
 import { ProfileCard as SettingCard } from "../profile-card";
 import { LimitBar } from "./limit-bar";
 
-const FreeIcon = () => (
-	<svg
-		viewBox="0 0 16 16"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.4"
-		className="size-4"
-	>
-		<circle cx="8" cy="8" r="6" />
-		<path d="M8 5v4l2.5 1.5" strokeLinecap="round" />
-	</svg>
-);
-
-const PremiumIcon = () => (
-	<svg
-		viewBox="0 0 16 16"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.4"
-		className="size-4"
-	>
-		<path d="M2 11l2.5-5L8 9l3.5-7L14 11H2z" strokeLinejoin="round" />
-	</svg>
-);
+const FreeIcon = () => <Clock className="size-4" />;
+const PremiumIcon = () => <Crown className="size-4" />;
 
 const getStatusLabel = (
 	sub: Subscription,

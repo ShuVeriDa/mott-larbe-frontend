@@ -12,7 +12,7 @@ import {
 	libraryFilterProgressLabelKey,
 } from "../lib/library-filter-bar-config";
 import { ENABLED_LANGUAGES } from "@/shared/lib/languages";
-import { FilterSelect } from "./filter-select";
+import { FilterSelect } from "@/shared/ui/filter-select";
 
 interface LevelSelectProps {
 	level: CefrLevel | "all";

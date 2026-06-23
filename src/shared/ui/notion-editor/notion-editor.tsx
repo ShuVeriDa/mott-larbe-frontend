@@ -19,6 +19,7 @@ import type {
 	SuggestionKeyDownProps,
 	SuggestionProps,
 } from "@tiptap/suggestion";
+import { GripVertical, Plus } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 import { ComponentProps, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -324,14 +325,7 @@ export const NotionEditor = ({
 						onMouseDown={handleInsertSlash}
 						className="flex h-6 w-6 items-center justify-center rounded-[5px] text-t-4 transition-colors hover:bg-surf-2 hover:text-t-2"
 					>
-						<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-							<path
-								d="M8 3v10M3 8h10"
-								stroke="currentColor"
-								strokeWidth="1.5"
-								strokeLinecap="round"
-							/>
-						</svg>
+						<Plus className="size-3.5" />
 					</Button>
 				</FloatingMenu>
 			)}
@@ -339,14 +333,7 @@ export const NotionEditor = ({
 			{editor && (
 				<DragHandle editor={editor}>
 					<div className="ml-1 flex h-5 w-4 cursor-grab items-center justify-center rounded-[4px] text-t-4 opacity-0 transition-opacity group-hover:opacity-100 hover:opacity-100! hover:bg-surf-2 hover:text-t-2 active:cursor-grabbing">
-						<svg width="10" height="14" viewBox="0 0 10 16" fill="none">
-							<circle cx="3" cy="4" r="1.2" fill="currentColor" />
-							<circle cx="7" cy="4" r="1.2" fill="currentColor" />
-							<circle cx="3" cy="8" r="1.2" fill="currentColor" />
-							<circle cx="7" cy="8" r="1.2" fill="currentColor" />
-							<circle cx="3" cy="12" r="1.2" fill="currentColor" />
-							<circle cx="7" cy="12" r="1.2" fill="currentColor" />
-						</svg>
+						<GripVertical className="size-3.5" />
 					</div>
 				</DragHandle>
 			)}

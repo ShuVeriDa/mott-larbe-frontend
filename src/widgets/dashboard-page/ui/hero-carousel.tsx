@@ -10,7 +10,7 @@ import {
 	type CarouselApi,
 } from "@/shared/ui/carousel";
 import { Typography } from "@/shared/ui/typography";
-import { BookOpen } from "lucide-react";
+import { BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { getLibraryPreviewLevelColors } from "../lib/library-preview-level-styles";
@@ -253,13 +253,9 @@ const HeroArrow = ({ direction, onClick }: HeroArrowProps) => {
 };
 
 const ChevronLeftIcon = () => (
-	<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-3.5 text-t-1" aria-hidden="true">
-		<path d="M9 2.5 4.5 7 9 11.5" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
+	<ChevronLeft className="size-3.5 text-t-1" aria-hidden="true" />
 );
 
 const ChevronRightIcon = () => (
-	<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-3.5 text-t-1" aria-hidden="true">
-		<path d="M5 2.5 9.5 7 5 11.5" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
+	<ChevronRight className="size-3.5 text-t-1" aria-hidden="true" />
 );

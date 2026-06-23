@@ -1,3 +1,4 @@
+import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 import type { CefrLevel } from "@/shared/types";
 
@@ -30,27 +31,7 @@ export const RelatedCover = ({ level, imageUrl, title }: RelatedCoverProps) => {
 					className="object-cover object-top w-full h-full"
 				/>
 			) : (
-				<svg
-					width="11"
-					height="11"
-					viewBox="0 0 14 14"
-					fill="none"
-					className={colors.stroke}
-				>
-					<path
-						d="M2 10L7 3l5 7"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M4 8h6"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-					/>
-				</svg>
+				<ImageIcon className={`size-3 ${colors.stroke}`} />
 			)}
 		</div>
 	);

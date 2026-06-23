@@ -3,13 +3,18 @@ import { Skeleton } from "@/shared/ui/skeleton";
 export interface PhrasebookMobileStatItemProps {
 	value: number | null;
 	label: string;
+	index?: number;
 }
 
 export const PhrasebookMobileStatItem = ({
 	value,
 	label,
+	index = 0,
 }: PhrasebookMobileStatItemProps) => (
-	<div className="flex flex-col items-center bg-surf-2 border-[0.5px] border-bd-1 rounded-lg px-3.5 py-1.5 shrink-0">
+	<div
+		className="flex flex-col items-center bg-surf-2 border-[0.5px] border-bd-1 rounded-lg px-3.5 py-1.5 shrink-0 animate-in fade-in slide-in-from-bottom-1 motion-reduce:animate-none"
+		style={{ animationDuration: "250ms", animationDelay: `${index * 50}ms`, animationFillMode: "both" }}
+	>
 		{value === null ? (
 			<Skeleton className="w-6 h-4 rounded mb-0.5" />
 		) : (

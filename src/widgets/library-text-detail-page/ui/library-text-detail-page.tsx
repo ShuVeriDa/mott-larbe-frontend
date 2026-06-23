@@ -2,10 +2,9 @@
 
 import { Typography } from "@/shared/ui/typography";
 
+import { duration, ease, variants } from "@/shared/lib/animation";
+import { detailCardVariants, detailGridVariants } from "../lib/variants";
 import { Button } from "@/shared/ui/button";
-import { ComponentProps } from "react";
-import Link from "next/link";
-import { useLibraryTextDetailPage } from "../model";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -13,18 +12,23 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import { TextHero } from "./text-hero";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, ChevronLeft, Ellipsis, Share2 } from "lucide-react";
+import Link from "next/link";
+import { ComponentProps } from "react";
+import { useLibraryTextDetailPage } from "../model";
+import { BookmarkMenuIcon } from "./bookmark-menu-icon";
+import { DetailSkeleton } from "./detail-skeleton";
+import { FlagIcon } from "./flag-icon";
 import { TextDescription } from "./text-description";
-import { TextProgressCard } from "./text-progress-card";
-import { TextVocabCard } from "./text-vocab-card";
+import { TextHero } from "./text-hero";
 import { TextInfoCard } from "./text-info-card";
 import { TextPagesCard } from "./text-pages-card";
+import { TextProgressCard } from "./text-progress-card";
 import { TextRelated } from "./text-related";
 import { TextReportDialog } from "./text-report-dialog";
 import { TextTagsCard } from "./text-tags-card";
-import { BookmarkMenuIcon } from "./bookmark-menu-icon";
-import { FlagIcon } from "./flag-icon";
-import { DetailSkeleton } from "./detail-skeleton";
+import { TextVocabCard } from "./text-vocab-card";
 
 interface LibraryTextDetailPageProps {
 	id: string;
@@ -49,12 +53,13 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 	if (detail.isPending) return <DetailSkeleton />;
 
 	if (detail.isError) {
-		const handleRetryClick: NonNullable<
-			ComponentProps<"button">["onClick"]
-		> = handleRetry;
+		const handleRetryClick: NonNullable<ComponentProps<"button">["onClick"]> =
+			handleRetry;
 		return (
 			<div className="flex flex-1 flex-col items-center justify-center gap-3 py-20 text-t-3">
-				<Typography tag="p" className="text-sm text-t-2">{t("library.textDetail.error")}</Typography>
+				<Typography tag="p" className="text-sm text-t-2">
+					{t("library.textDetail.error")}
+				</Typography>
 				<Button
 					onClick={handleRetryClick}
 					className="text-xs text-acc-t hover:underline"
@@ -77,28 +82,30 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 	return (
 		<div className="flex flex-1 flex-col overflow-hidden">
 			{/* Topbar */}
-			<header className="h-12 bg-panel border-b border-bd-1 flex items-center gap-2.5 px-5 shrink-0 max-sm:h-11 max-sm:px-3.5">
+			<motion.header
+				initial={{ opacity: 0, y: -6 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: duration.slow, ease: ease.enter }}
+				className="h-12 bg-surf border-b border-bd-1 flex items-center gap-2.5 px-5 shrink-0 max-sm:h-11 max-sm:px-3.5"
+			>
 				<Link
 					href={`/${lang}/texts`}
 					className="flex items-center gap-1.5 text-xs text-t-2 hover:text-t-1 hover:bg-surf-2 px-2 py-1 rounded-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
 				>
-					<svg
-						width="11"
-						height="11"
-						viewBox="0 0 16 16"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.5"
-						aria-hidden="true"
-					>
-						<path d="M10 12L6 8l4-4" />
-					</svg>
+					<ChevronLeft size={13} aria-hidden="true" />
 					{t("library.textDetail.back")}
 				</Link>
 
-				<Typography tag="span" className="w-px h-3.5 bg-bd-2" aria-hidden="true" />
+				<Typography
+					tag="span"
+					className="w-px h-3.5 bg-bd-2"
+					aria-hidden="true"
+				/>
 
-				<nav aria-label={t("library.textDetail.breadcrumbNav")} className="hidden sm:flex">
+				<nav
+					aria-label={t("library.textDetail.breadcrumbNav")}
+					className="hidden sm:flex"
+				>
 					<ol className="flex items-center gap-1.5 text-xs text-t-3">
 						<li>
 							<Link
@@ -108,65 +115,37 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 								{t("nav.texts")}
 							</Link>
 						</li>
-						<li aria-hidden="true" className="text-t-4">/</li>
-						<li aria-current="page" className="text-t-2">{t("library.textDetail.breadcrumb")}</li>
+						<li aria-hidden="true" className="text-t-4">
+							/
+						</li>
+						<li aria-current="page" className="text-t-2">
+							{t("library.textDetail.breadcrumb")}
+						</li>
 					</ol>
 				</nav>
 
 				<div className="ml-auto flex items-center gap-1.5">
 					<Button
+						size={"bare"}
 						onClick={handleShare}
 						title={t("library.textDetail.share")}
 						className="w-7 h-7 rounded-base border border-bd-2 flex items-center justify-center text-t-2 hover:bg-surf-2 transition-colors"
 					>
 						{copied ? (
-							<svg
-								width="13"
-								height="13"
-								viewBox="0 0 16 16"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="1.5"
-							>
-								<polyline
-									points="2,8 6,12 14,4"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							</svg>
+							<Check size={13} />
 						) : (
-							<svg
-								width="13"
-								height="13"
-								viewBox="0 0 16 16"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="1.5"
-							>
-								<circle cx="12" cy="4" r="1.5" />
-								<circle cx="4" cy="8" r="1.5" />
-								<circle cx="12" cy="12" r="1.5" />
-								<path d="M5.5 7.5l5-2.5M5.5 8.5l5 2.5" />
-							</svg>
+							<Share2 size={13} />
 						)}
 					</Button>
 
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button
+								size={"bare"}
 								title={t("library.textDetail.more")}
 								className="w-7 h-7 rounded-base border border-bd-2 flex items-center justify-center text-t-2 hover:bg-surf-2 transition-colors data-[state=open]:bg-surf-2"
 							>
-								<svg
-									width="13"
-									height="13"
-									viewBox="0 0 16 16"
-									fill="currentColor"
-								>
-									<circle cx="8" cy="3" r="1.3" />
-									<circle cx="8" cy="8" r="1.3" />
-									<circle cx="8" cy="13" r="1.3" />
-								</svg>
+								<Ellipsis size={13} />
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end" className="min-w-[168px]">
@@ -190,7 +169,7 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
-			</header>
+			</motion.header>
 
 			{/* Scrollable content */}
 			<main className="flex-1 overflow-y-auto px-8 pb-12 pt-7 [scrollbar-color:var(--bd-2)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-thumb]:rounded-[2px] [&::-webkit-scrollbar-thumb]:bg-bd-2 max-sm:px-3.5 max-sm:pt-4 max-md:px-5">
@@ -211,47 +190,80 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 						t={t}
 					/>
 
-					<TextDescription description={text.description} t={t} />
+					<motion.div
+						variants={variants.fadeUp}
+						initial="hidden"
+						animate="visible"
+					>
+						<TextDescription description={text.description} t={t} />
+					</motion.div>
 
 					{text.tags.length > 0 && (
-						<div className="mb-4">
+						<motion.div
+							className="mb-4"
+							variants={variants.fadeUp}
+							initial="hidden"
+							animate="visible"
+						>
 							<TextTagsCard tags={text.tags} t={t} />
-						</div>
+						</motion.div>
 					)}
 
-					<div className="grid grid-cols-2 gap-3 mb-4 animate-[fadeUp_0.3s_0.1s_ease_both] max-sm:grid-cols-1 max-sm:gap-2.5">
-						<TextProgressCard
-							progressPercent={text.progressPercent}
-							currentPage={text.currentPage}
-							totalPages={text.totalPages}
-							lastOpened={text.lastOpened}
-							t={t}
-						/>
-						<TextVocabCard wordStats={text.wordStats} t={t} />
-						<TextInfoCard
-							level={text.level}
-							language={text.language}
-							author={text.author}
-							source={text.source}
-							publishedAt={text.publishedAt}
-							totalPages={text.totalPages}
-							wordCount={text.wordCount}
-							lang={lang}
-							t={t}
-						/>
-						{text.totalPages > 0 && (
-							<TextPagesCard
-								pages={text.pages}
-								currentPage={text.currentPage}
+					<motion.div
+						className="grid grid-cols-2 gap-3 mb-4 max-sm:grid-cols-1 max-sm:gap-2.5"
+						variants={detailGridVariants}
+						initial="hidden"
+						animate="visible"
+					>
+						<motion.div variants={detailCardVariants}>
+							<TextProgressCard
 								progressPercent={text.progressPercent}
+								currentPage={text.currentPage}
+								totalPages={text.totalPages}
+								lastOpened={text.lastOpened}
 								t={t}
 							/>
+						</motion.div>
+						<motion.div variants={detailCardVariants}>
+							<TextVocabCard wordStats={text.wordStats} t={t} />
+						</motion.div>
+						<motion.div variants={detailCardVariants}>
+							<TextInfoCard
+								level={text.level}
+								language={text.language}
+								author={text.author}
+								source={text.source}
+								publishedAt={text.publishedAt}
+								totalPages={text.totalPages}
+								wordCount={text.wordCount}
+								lang={lang}
+								t={t}
+							/>
+						</motion.div>
+						{text.totalPages > 0 && (
+							<motion.div variants={detailCardVariants}>
+								<TextPagesCard
+									pages={text.pages}
+									currentPage={text.currentPage}
+									progressPercent={text.progressPercent}
+									t={t}
+								/>
+							</motion.div>
 						)}
-					</div>
+					</motion.div>
 
-					{related.isSuccess && related.data.length > 0 && (
-						<TextRelated items={related.data} lang={lang} t={t} />
-					)}
+					<AnimatePresence>
+						{related.isSuccess && related.data.length > 0 && (
+							<motion.div
+								key="related"
+								initial={{ opacity: 0, y: 10 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ duration: duration.slow, ease: ease.enter }}
+							>
+								<TextRelated items={related.data} lang={lang} t={t} />
+							</motion.div>
+						)}
+					</AnimatePresence>
 				</div>
 			</main>
 
@@ -264,4 +276,3 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 		</div>
 	);
 };
-

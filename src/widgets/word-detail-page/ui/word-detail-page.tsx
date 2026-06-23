@@ -1,7 +1,9 @@
 "use client";
 
 import { useDictionaryDetail } from "@/entities/dictionary";
+import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
+import { motion } from "framer-motion";
 import { ContextsSection } from "./contexts-section";
 import { HistoryCard } from "./history-card";
 import { MorphologySection } from "./morphology-section";
@@ -40,14 +42,19 @@ export const WordDetailPage = ({ id }: WordDetailPageProps) => {
 		<>
 			<WordDetailTopbar entry={data} />
 
-			<article
+			<motion.article
 				className="flex-1 overflow-y-auto px-7 pt-6 pb-10 max-md:overflow-visible max-md:px-3.5 max-md:pt-3.5 max-md:pb-7 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded [&::-webkit-scrollbar-thumb]:bg-surf-4"
 				aria-labelledby="word-hero-title"
+				variants={variants.staggerContainer}
+				initial="hidden"
+				animate="visible"
 			>
-				<WordHero entry={data} />
+				<motion.div variants={variants.staggerItem}>
+					<WordHero entry={data} />
+				</motion.div>
 
 				<div className="grid grid-cols-[1fr_280px] items-start gap-3.5 max-lg:grid-cols-[1fr_240px] max-md:grid-cols-1 max-md:gap-0">
-					<div className="min-w-0">
+					<motion.div className="min-w-0" variants={variants.staggerItem}>
 						<SensesSection senses={data.senses} />
 						<MorphologySection
 							forms={data.lemma?.morphForms ?? []}
@@ -61,8 +68,8 @@ export const WordDetailPage = ({ id }: WordDetailPageProps) => {
 							lang={lang}
 						/>
 						<RelatedSection related={data.related} lang={lang} />
-					</div>
-					<aside className="min-w-0">
+					</motion.div>
+					<motion.aside className="min-w-0" variants={variants.staggerItem}>
 						<StatusCard
 							wordId={data.id}
 							learningLevel={data.learningLevel}
@@ -70,9 +77,9 @@ export const WordDetailPage = ({ id }: WordDetailPageProps) => {
 						/>
 						<Sm2Card sm2={data.sm2} reviewHistory={data.reviewHistory} />
 						<HistoryCard logs={data.reviewHistory.logs} />
-					</aside>
+					</motion.aside>
 				</div>
-			</article>
+			</motion.article>
 		</>
 	);
 };

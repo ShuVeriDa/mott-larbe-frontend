@@ -5,6 +5,7 @@ import { Typography } from "@/shared/ui/typography";
 import type { FeedbackThread } from "@/entities/feedback";
 import { Button } from "@/shared/ui/button";
 import { useInfiniteScroll } from "@/shared/lib/use-infinite-scroll";
+import { Plus } from "lucide-react";
 import { ComponentProps, useRef } from "react";
 import { FeedbackEmpty } from "./feedback-empty";
 import { FeedbackThreadItem } from "./feedback-thread-item";
@@ -54,16 +55,7 @@ export const FeedbackThreadList = ({
 					title={t("feedback.newThread")}
 					className="flex h-9 w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg bg-acc text-[13px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88]"
 				>
-					<svg
-						viewBox="0 0 14 14"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.8"
-						strokeLinecap="round"
-						className="size-3"
-					>
-						<path d="M7 2v10M2 7h10" />
-					</svg>
+					<Plus className="size-3" />
 					{t("feedback.newThread")}
 				</Button>
 			</div>

@@ -12,7 +12,9 @@ export const Chip = ({ active = false, className, ...props }: ChipProps) => (
 		aria-pressed={active}
 		className={cn(
 			"shrink-0 h-[26px] px-[9px] rounded-md text-[11px] font-medium font-[inherit]",
-			"border-[0.5px] cursor-pointer transition-colors duration-100 whitespace-nowrap",
+			"border-[0.5px] cursor-pointer whitespace-nowrap",
+			"transition-[background-color,border-color,color,transform] duration-150 ease-out",
+			"hover:scale-[1.04] active:scale-[0.95]",
 			"focus-visible:ring-2 focus-visible:ring-acc/40 outline-none",
 			active
 				? "bg-acc-bg border-acc/20 text-acc-t dark:border-acc/25"

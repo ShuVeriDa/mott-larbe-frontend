@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
+import { AlignLeft } from "lucide-react";
 
 interface WordsStatCardProps {
 	wordsInDictionary: number;
@@ -22,16 +23,7 @@ export const WordsStatCard = ({
 	return (
 		<div className="cursor-default rounded-card border border-bd-1 bg-surf p-[13px_14px]">
 			<div className="mb-2.5 flex size-7 items-center justify-center rounded-base bg-grn-bg">
-				<svg
-					viewBox="0 0 14 14"
-					fill="none"
-					stroke="currentColor"
-					strokeWidth="1.4"
-					className="size-[13px] text-grn-t"
-					aria-hidden="true"
-				>
-					<path d="M2 4h10M2 7h7M2 10h5" strokeLinecap="round" />
-				</svg>
+				<AlignLeft className="size-[13px] text-grn-t" aria-hidden="true" />
 			</div>
 			<div className="mb-[3px] font-display text-[24px] font-normal leading-none tracking-[-0.3px] text-t-1 max-sm:text-[22px]">
 				{wordsInDictionary.toLocaleString()}
@@ -50,7 +42,7 @@ export const WordsStatCard = ({
 			{hasGoal && (
 				<div className="h-[3px] overflow-hidden rounded-full bg-surf-3">
 					<div
-						className={`h-full rounded-full transition-all duration-500 ${done ? "bg-grn" : "bg-acc"}`}
+						className={`h-full rounded-full transition-all duration-500 ease-out ${done ? "bg-grn" : "bg-acc"}`}
 						style={{ width: `${progress * 100}%` }}
 					/>
 				</div>

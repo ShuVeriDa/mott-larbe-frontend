@@ -3,6 +3,7 @@
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import type { Editor } from "@tiptap/react";
+import { Check, X } from "lucide-react";
 import type { ComponentProps } from "react";
 import { useState } from "react";
 
@@ -156,15 +157,7 @@ export const ColorPanel = ({
 											tag="span"
 											className="absolute right-0.5 top-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-acc"
 										>
-											<svg width="6" height="5" viewBox="0 0 6 5" fill="none">
-												<path
-													d="M1 2.5l1.5 1.5 2.5-3"
-													stroke="white"
-													strokeWidth="1.2"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-												/>
-											</svg>
+											<Check className="size-2.5 text-white" />
 										</Typography>
 									)}
 								</Button>
@@ -199,35 +192,14 @@ export const ColorPanel = ({
 									style={{ background: c.value ?? undefined }}
 								>
 									{c.value === null && (
-										<svg
-											width="10"
-											height="10"
-											viewBox="0 0 10 10"
-											fill="none"
-											className="text-t-3"
-										>
-											<path
-												d="M1 1l8 8M9 1L1 9"
-												stroke="currentColor"
-												strokeWidth="1.3"
-												strokeLinecap="round"
-											/>
-										</svg>
+										<X className="size-2.5 text-t-3" />
 									)}
 									{isActive && (
 										<Typography
 											tag="span"
 											className="absolute right-0.5 top-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-acc"
 										>
-											<svg width="6" height="5" viewBox="0 0 6 5" fill="none">
-												<path
-													d="M1 2.5l1.5 1.5 2.5-3"
-													stroke="white"
-													strokeWidth="1.2"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-												/>
-											</svg>
+											<Check className="size-2.5 text-white" />
 										</Typography>
 									)}
 								</Button>

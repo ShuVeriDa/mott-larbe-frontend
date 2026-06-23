@@ -1,8 +1,11 @@
 "use client";
 import type { WeakSpotsData } from "@/entities/statistics";
+import { variants } from "@/shared/lib/animation";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -69,103 +72,131 @@ export const WeakSpotsCard = ({ data, lang }: WeakSpotsCardProps) => {
 				))}
 			</div>
 
-			{isEmpty ? (
-				<div className="flex h-20 items-center justify-center gap-1.5 text-center text-[11px] text-grn">
-					<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-3.5 shrink-0" aria-hidden="true">
-						<path d="M3 8.5l3.5 3.5 6.5-7" strokeLinecap="round" strokeLinejoin="round" />
-					</svg>
-					{t("statistics.weakSpots.allGood")}
-				</div>
-			) : tab === "texts" ? (
-				<div className="flex flex-col gap-2">
-					{data.abandonedTexts.map(text => (
-						<Link
-							key={text.id}
-							href={`/${lang}/texts/${text.id}`}
-							className="flex items-center gap-2.5 rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-2.5 py-2 transition-colors hover:border-bd-2 hover:bg-surf-3"
-						>
-							<div className="min-w-0 flex-1">
-								<Typography
-									tag="p"
-									className="truncate text-[11.5px] font-medium text-t-1"
-								>
-									{text.title}
-								</Typography>
-								<Typography tag="p" className="text-[10px] text-t-3">
-									{text.level && <span className="mr-1.5">{text.level}</span>}
-									{t("statistics.weakSpots.lastOpened")}{" "}
-									{formatDate(text.lastOpened)}
-								</Typography>
-							</div>
-							<div className="shrink-0 text-right">
-								<Typography
-									tag="p"
-									className="text-[11px] font-semibold text-amb-t"
-								>
-									{text.progressPercent}%
-								</Typography>
-							</div>
-						</Link>
-					))}
-				</div>
-			) : tab === "words" ? (
-				<div className="flex flex-col gap-1.5">
-					{data.strugglingWords.map((w, i) => (
-						<div key={i} className="flex items-center gap-2">
-							<div className="min-w-0 flex-1">
-								<Typography
-									tag="span"
-									className="text-[12px] font-semibold text-t-1"
-								>
-									{w.word}
-								</Typography>
-								<Typography
-									tag="span"
-									className="ml-1.5 text-[10.5px] text-t-3"
-								>
-									{w.translation}
-								</Typography>
-							</div>
-							<Typography tag="span" className="shrink-0 text-[10px] text-t-3">
-								{t("statistics.weakSpots.notReviewed", {
-									days: Math.floor(
-										(Date.now() - new Date(w.updatedAt).getTime()) / 86400000,
-									),
-								})}
-							</Typography>
-						</div>
-					))}
-				</div>
-			) : (
-				<div className="flex flex-col gap-1.5">
-					{data.lowAccuracy.map((w, i) => (
-						<div key={i} className="flex items-center gap-2">
-							<div className="min-w-0 flex-1">
-								<Typography
-									tag="span"
-									className="text-[12px] font-semibold text-t-1"
-								>
-									{w.word}
-								</Typography>
-								<Typography
-									tag="span"
-									className="ml-1.5 text-[10.5px] text-t-3"
-								>
-									{w.translation}
-								</Typography>
-							</div>
-							<div className="shrink-0 rounded-md bg-red/10 px-1.5 py-0.5">
-								<Typography
-									tag="span"
-									className="text-[10px] font-semibold text-red"
-								>
-									{w.wrongCount}✗
+			<AnimatePresence mode="wait">
+				{isEmpty ? (
+					<motion.div
+						key={`empty-${tab}`}
+						variants={variants.fadeIn}
+						initial="hidden"
+						animate="visible"
+						exit="exit"
+						className="flex h-20 items-center justify-center gap-1.5 text-center text-[11px] text-grn"
+					>
+						<Check className="size-3.5 shrink-0" aria-hidden="true" />
+						{t("statistics.weakSpots.allGood")}
+					</motion.div>
+				) : tab === "texts" ? (
+					<motion.div
+						key="texts"
+						variants={variants.fadeUp}
+						initial="hidden"
+						animate="visible"
+						exit="exit"
+						className="flex flex-col gap-2"
+					>
+						{data.abandonedTexts.map(text => (
+							<Link
+								key={text.id}
+								href={`/${lang}/texts/${text.id}`}
+								className="flex items-center gap-2.5 rounded-lg border-[0.5px] border-bd-1 bg-surf-2 px-2.5 py-2 transition-colors hover:border-bd-2 hover:bg-surf-3"
+							>
+								<div className="min-w-0 flex-1">
+									<Typography
+										tag="p"
+										className="truncate text-[11.5px] font-medium text-t-1"
+									>
+										{text.title}
+									</Typography>
+									<Typography tag="p" className="text-[10px] text-t-3">
+										{text.level && <span className="mr-1.5">{text.level}</span>}
+										{t("statistics.weakSpots.lastOpened")}{" "}
+										{formatDate(text.lastOpened)}
+									</Typography>
+								</div>
+								<div className="shrink-0 text-right">
+									<Typography
+										tag="p"
+										className="text-[11px] font-semibold text-amb-t"
+									>
+										{text.progressPercent}%
+									</Typography>
+								</div>
+							</Link>
+						))}
+					</motion.div>
+				) : tab === "words" ? (
+					<motion.div
+						key="words"
+						variants={variants.fadeUp}
+						initial="hidden"
+						animate="visible"
+						exit="exit"
+						className="flex flex-col gap-1.5"
+					>
+						{data.strugglingWords.map((w, i) => (
+							<div key={i} className="flex items-center gap-2">
+								<div className="min-w-0 flex-1">
+									<Typography
+										tag="span"
+										className="text-[12px] font-semibold text-t-1"
+									>
+										{w.word}
+									</Typography>
+									<Typography
+										tag="span"
+										className="ml-1.5 text-[10.5px] text-t-3"
+									>
+										{w.translation}
+									</Typography>
+								</div>
+								<Typography tag="span" className="shrink-0 text-[10px] text-t-3">
+									{t("statistics.weakSpots.notReviewed", {
+										days: Math.floor(
+											(Date.now() - new Date(w.updatedAt).getTime()) / 86400000,
+										),
+									})}
 								</Typography>
 							</div>
-						</div>
-					))}
-				</div>
-			)}
+						))}
+					</motion.div>
+				) : (
+					<motion.div
+						key="accuracy"
+						variants={variants.fadeUp}
+						initial="hidden"
+						animate="visible"
+						exit="exit"
+						className="flex flex-col gap-1.5"
+					>
+						{data.lowAccuracy.map((w, i) => (
+							<div key={i} className="flex items-center gap-2">
+								<div className="min-w-0 flex-1">
+									<Typography
+										tag="span"
+										className="text-[12px] font-semibold text-t-1"
+									>
+										{w.word}
+									</Typography>
+									<Typography
+										tag="span"
+										className="ml-1.5 text-[10.5px] text-t-3"
+									>
+										{w.translation}
+									</Typography>
+								</div>
+								<div className="shrink-0 rounded-md bg-red/10 px-1.5 py-0.5">
+									<Typography
+										tag="span"
+										className="text-[10px] font-semibold text-red"
+									>
+										{w.wrongCount}✗
+									</Typography>
+								</div>
+							</div>
+						))}
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</section>
 	);
 };

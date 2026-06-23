@@ -32,7 +32,7 @@ export const LibraryPreviewCardMeta = ({
 				</Typography>
 			</div>
 
-			<div className="mb-0.5 line-clamp-2 text-[12.5px] font-semibold leading-[1.35] text-t-1">
+			<div className="mb-0.5 line-clamp-2 h-[35px] text-[12.5px] font-semibold leading-[1.35] text-t-1">
 				{item.title}
 			</div>
 			{item.author ? (

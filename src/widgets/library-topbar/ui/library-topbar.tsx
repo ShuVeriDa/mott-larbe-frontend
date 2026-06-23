@@ -5,7 +5,11 @@ import { useLibraryFilters } from "@/features/library-filters";
 import { useI18n } from "@/shared/lib/i18n";
 import { SearchBox } from "@/shared/ui/search-box";
 import { Typography } from "@/shared/ui/typography";
-import { LibraryFilterBar, LibraryFilterBarSortSelect, LibraryFilterViewToggle } from "@/widgets/library-filter-bar";
+import {
+	LibraryFilterBar,
+	LibraryFilterBarSortSelect,
+	LibraryFilterViewToggle,
+} from "@/widgets/library-filter-bar";
 import type { ChangeEvent } from "react";
 import { useRef, useState } from "react";
 import { StatDot } from "./stat-dot";
@@ -17,7 +21,8 @@ interface LibraryTopbarProps {
 
 export const LibraryTopbar = ({ counts, title }: LibraryTopbarProps) => {
 	const { t } = useI18n();
-	const { search, setSearch, sort, setSort, view, setView } = useLibraryFilters();
+	const { search, setSearch, sort, setSort, view, setView } =
+		useLibraryFilters();
 
 	const [inputValue, setInputValue] = useState(search);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -32,7 +37,7 @@ export const LibraryTopbar = ({ counts, title }: LibraryTopbarProps) => {
 	return (
 		<div>
 			{/* Desktop title row */}
-			<div className="flex shrink-0 items-center gap-2.5 border-b-[0.5px] border-bd-1 bg-white px-[22px] py-3 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
+			<div className="flex shrink-0 items-center gap-2.5 border-b-[0.5px] border-bd-1 bg-surf-1 px-[22px] py-3 max-md:gap-2 max-md:px-[14px] max-md:py-2.5">
 				<Typography
 					tag="h1"
 					className="shrink-0 text-[13.5px] font-semibold text-t-1 max-md:text-[15px]"

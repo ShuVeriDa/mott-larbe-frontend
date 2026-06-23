@@ -1,12 +1,16 @@
 "use client";
 
+import { useState } from "react";
+import { motion } from "framer-motion";
 import type { Phrase, PhraseWord } from "@/entities/phrasebook";
+import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
+import { Button } from "@/shared/ui/button";
 import { SectionLabel } from "@/shared/ui/section-label";
+import { Check, Plus } from "lucide-react";
 import { PhraseWordToken } from "./phrase-word-token";
 import { useAddPhraseWords } from "../model/use-add-phrase-words";
 import { toast } from "sonner";
-import { useState } from "react";
 
 interface PhraseDetailProps {
 	phrase: Phrase;
@@ -41,7 +45,13 @@ export const PhraseDetail = ({ phrase }: PhraseDetailProps) => {
 	};
 
 	return (
-		<div className="border-t border-bd-1 px-3.5 py-3 flex flex-col gap-2.5">
+		<motion.div
+			className="border-t border-bd-1 px-3.5 py-3 flex flex-col gap-2.5"
+			variants={variants.fadeUp}
+			initial="hidden"
+			animate="visible"
+			exit="exit"
+		>
 			{phrase.words.length > 0 && (
 				<div>
 					<SectionLabel className="mb-1.5">
@@ -88,56 +98,32 @@ export const PhraseDetail = ({ phrase }: PhraseDetailProps) => {
 			)}
 
 			<div className="flex items-center gap-2">
-				<button
-					type="button"
+				<Button
+					variant="ghost"
 					onClick={handleAddAllToVocab}
 					disabled={addedToVocab || isPending}
 					className={
 						addedToVocab
-							? "inline-flex items-center gap-1 h-[26px] px-2.5 bg-surf-3 text-t-3 rounded-base text-[11.5px] font-semibold font-[inherit] cursor-default"
-							: "inline-flex items-center gap-1 h-[26px] px-2.5 bg-grn-bg text-grn-t rounded-base text-[11.5px] font-semibold font-[inherit] cursor-pointer hover:opacity-80 transition-opacity"
+							? "inline-flex items-center gap-1 h-[26px] px-2.5 bg-surf-3 text-t-3 rounded-base text-[11.5px] font-semibold cursor-default"
+							: "inline-flex items-center gap-1 h-[26px] px-2.5 bg-grn-bg text-grn-t rounded-base text-[11.5px] font-semibold cursor-pointer hover:opacity-80 transition-opacity"
 					}
 				>
 					{addedToVocab ? (
 						<>
-							<svg
-								viewBox="0 0 16 16"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="1.5"
-								className="w-[11px] h-[11px]"
-							>
-								<path
-									d="M3 8l3.5 3.5L13 5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							</svg>
+							<Check className="size-[11px]" />
 							{t("phrasebook.detail.addedToVocab")}
 						</>
 					) : (
 						<>
-							<svg
-								viewBox="0 0 16 16"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="1.5"
-								className="w-[11px] h-[11px]"
-							>
-								<circle cx="8" cy="8" r="5.5" />
-								<path
-									d="M8 5.5v5M5.5 8h5"
-									strokeLinecap="round"
-								/>
-							</svg>
+							<Plus className="size-[11px]" />
 							{t("phrasebook.detail.addToVocab")}
 						</>
 					)}
-				</button>
+				</Button>
 				<span className="text-[11px] text-t-3">
 					{t("phrasebook.detail.addToVocabHint")}
 				</span>
 			</div>
-		</div>
+		</motion.div>
 	);
 };

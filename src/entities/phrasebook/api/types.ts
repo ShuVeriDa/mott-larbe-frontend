@@ -110,4 +110,13 @@ export interface PhrasesQuery {
 	lang?: PhraseLang;
 	saved?: true;
 	search?: string;
+	page?: number;
+	limit?: number;
+}
+
+export interface GetPhrasesResponse {
+	items: Phrase[];
+	page: number;
+	limit: number;
+	total: number;
 }

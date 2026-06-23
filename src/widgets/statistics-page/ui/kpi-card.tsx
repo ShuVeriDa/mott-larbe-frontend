@@ -4,6 +4,7 @@ import type { StatsDelta } from "@/entities/statistics";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { TrendingDown, TrendingUp } from "lucide-react";
 import { type ReactNode } from "react";
 import { Line, LineChart, ResponsiveContainer } from "recharts";
 
@@ -58,7 +59,7 @@ export const KpiCard = ({ label, value, delta, tone, icon, sparkline }: KpiCardP
 	const hasActivity = sparkline.some((v) => v > 0);
 
 	return (
-		<div className="rounded-card border-[0.5px] border-bd-1 bg-surf p-3.5 transition-colors hover:border-bd-2 hover:shadow-sm">
+		<div className="rounded-card border-[0.5px] border-bd-1 bg-surf p-3.5 transition-[border-color,box-shadow,transform] duration-200 ease-out hover:border-bd-2 hover:shadow-md [@media(hover:hover)]:hover:-translate-y-0.5">
 			<div className="mb-2 flex items-start justify-between">
 				<div
 					className={cn("flex size-7 items-center justify-center rounded-base", TONE_BG[tone])}
@@ -95,13 +96,9 @@ export const KpiCard = ({ label, value, delta, tone, icon, sparkline }: KpiCardP
 					className={cn("mt-1.5 flex items-center gap-[3px] text-[11px] font-medium", trendColor)}
 				>
 					{delta.delta && delta.delta > 0 ? (
-						<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-2.5" aria-hidden="true">
-							<path d="M2 7l3-4 3 4" />
-						</svg>
+						<TrendingUp className="size-2.5" aria-hidden="true" />
 					) : delta.delta && delta.delta < 0 ? (
-						<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-2.5" aria-hidden="true">
-							<path d="M2 3l3 4 3-4" />
-						</svg>
+						<TrendingDown className="size-2.5" aria-hidden="true" />
 					) : null}
 					{trendValue}
 				</Typography>

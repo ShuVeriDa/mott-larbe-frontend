@@ -4,6 +4,7 @@ import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export interface ChoiceCardSm2Props {
 	word: string;
@@ -78,13 +79,24 @@ export const ChoiceCardSm2 = ({
 					const handleClick = () => handleSelect(idx);
 
 					return (
-						<button
+						<motion.button
 							key={idx}
 							type="button"
 							onClick={handleClick}
 							disabled={selection !== null}
+							whileTap={!revealed ? { scale: 0.97 } : undefined}
+							animate={
+								revealed
+									? isCorrect
+										? { scale: [1, 1.03, 1] }
+										: isSelected
+											? { x: [0, -4, 4, -2, 0] }
+											: { opacity: 0.4 }
+									: {}
+							}
+							transition={{ duration: 0.3, ease: "easeOut" }}
 							className={cn(
-								"rounded-card border px-3.5 py-3 text-left text-[13px] font-medium transition-colors",
+								"rounded-card border px-3.5 py-3 text-left text-[13px] font-medium transition-colors duration-200",
 								!revealed &&
 									"border-bd-3 bg-surf-2 text-t-1 hover:border-bd-4 hover:bg-surf-3",
 								revealed && isCorrect && "border-grn/50 bg-grn-bg text-grn-t",
@@ -95,11 +107,11 @@ export const ChoiceCardSm2 = ({
 								revealed &&
 									!isSelected &&
 									!isCorrect &&
-									"border-bd-2 bg-surf-2 text-t-3 opacity-40",
+									"border-bd-2 bg-surf-2 text-t-3",
 							)}
 						>
 							{opt}
-						</button>
+						</motion.button>
 					);
 				})}
 			</div>

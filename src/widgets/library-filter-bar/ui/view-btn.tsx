@@ -24,7 +24,9 @@ export const ViewBtn = ({
 		title={ariaLabel}
 		aria-pressed={active}
 		className={cn(
-			"flex h-[26px] w-[26px] items-center justify-center transition-all duration-100",
+			"flex h-[26px] w-[26px] items-center justify-center rounded-md",
+			"transition-[background-color,color,transform] duration-150 ease-out",
+			"hover:scale-[1.1] active:scale-[0.92] hover:text-t-1",
 			active ? "bg-surf-2 text-acc-t" : "bg-transparent text-t-3",
 		)}
 	>

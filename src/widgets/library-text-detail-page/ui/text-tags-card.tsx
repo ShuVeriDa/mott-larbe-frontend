@@ -12,7 +12,7 @@ export const TextTagsCard = ({ tags, t }: TextTagsCardProps) => {
 	if (tags.length === 0) return null;
 
 	return (
-		<div className="bg-surf border border-bd-1 rounded-card px-[17px] py-[15px] animate-[fadeUp_0.3s_0.12s_ease_both]">
+		<div className="bg-surf border border-bd-1 rounded-card px-[17px] py-[15px]">
 			<Typography
 				tag="h2"
 				className="text-[10px] font-semibold tracking-widest uppercase text-t-3 mb-3"

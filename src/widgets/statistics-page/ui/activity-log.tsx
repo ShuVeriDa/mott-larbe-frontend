@@ -7,9 +7,12 @@ import type {
 	ActivityItemMetaReview,
 	ActivityType,
 } from "@/entities/statistics";
+import { variants } from "@/shared/lib/animation";
 import { formatRelativeFromNow } from "@/shared/lib/format-relative-time";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
+import { AlignLeft, BookOpen, Clock } from "lucide-react";
 import { ReactNode } from "react";
 
 interface ActivityLogProps {
@@ -18,32 +21,19 @@ interface ActivityLogProps {
 
 const TONE_BY_TYPE: Record<
 	ActivityType,
-	{ bg: string; stroke: string; icon: ReactNode }
+	{ bg: string; icon: ReactNode }
 > = {
 	READ_TEXT: {
 		bg: "bg-acc-bg",
-		stroke: "stroke-acc",
-		icon: (
-			<>
-				<path d="M2 3h5v10H2z" />
-				<path d="M9 3h5v10H9z" />
-			</>
-		),
+		icon: <BookOpen className="size-3 text-acc" />,
 	},
 	REVIEW: {
 		bg: "bg-amb-bg",
-		stroke: "stroke-amb",
-		icon: (
-			<>
-				<circle cx="8" cy="8" r="5.5" />
-				<path d="M8 5v3.5l2 2" strokeLinecap="round" />
-			</>
-		),
+		icon: <Clock className="size-3 text-amb" />,
 	},
 	ADD_WORDS: {
 		bg: "bg-grn-bg",
-		stroke: "stroke-grn",
-		icon: <path d="M3 5h10M3 8h7M3 11h5" strokeLinecap="round" />,
+		icon: <AlignLeft className="size-3 text-grn" />,
 	},
 };
 
@@ -95,28 +85,27 @@ export const ActivityLog = ({ items }: ActivityLogProps) => {
 					{t("statistics.activity.empty")}
 				</div>
 			) : (
-				<ul className="flex max-h-[220px] flex-col overflow-y-auto">
+				<motion.ul
+					className="flex max-h-[220px] flex-col overflow-y-auto"
+					variants={variants.staggerContainer}
+					initial="hidden"
+					animate="visible"
+				>
 					{items.map((item, idx) => {
 						const tone = TONE_BY_TYPE[item.type];
 						const time = formatRelativeFromNow(item.date, t);
 						const { title, description } = getActivityStrings(item, t);
 						return (
-							<li
+							<motion.li
 								key={`${item.date}-${idx}`}
+								variants={variants.staggerItem}
 								className="flex items-center gap-2.5 border-b border-bd-1 py-2 last:border-b-0"
 							>
 								<div
 									className={`flex size-7 shrink-0 items-center justify-center rounded-base ${tone.bg}`}
 									aria-hidden="true"
 								>
-									<svg
-										viewBox="0 0 16 16"
-										fill="none"
-										strokeWidth="1.5"
-										className={`size-3 ${tone.stroke}`}
-									>
-										{tone.icon}
-									</svg>
+									{tone.icon}
 								</div>
 								<div className="min-w-0 flex-1">
 									<Typography
@@ -134,10 +123,10 @@ export const ActivityLog = ({ items }: ActivityLogProps) => {
 										{time}
 									</Typography>
 								</div>
-							</li>
+							</motion.li>
 						);
 					})}
-				</ul>
+				</motion.ul>
 			)}
 		</section>
 	);

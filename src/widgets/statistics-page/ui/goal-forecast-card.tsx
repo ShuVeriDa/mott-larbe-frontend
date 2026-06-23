@@ -1,7 +1,9 @@
 "use client";
 import type { GoalForecast } from "@/entities/statistics";
+import { ease, duration } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
 
 interface GoalForecastCardProps {
 	data: GoalForecast;
@@ -24,9 +26,11 @@ export const GoalForecastCard = ({ data }: GoalForecastCardProps) => {
 			{/* Progress bar */}
 			<div className="mb-3">
 				<div className="h-2 w-full overflow-hidden rounded-full bg-surf-3">
-					<div
-						className="h-full rounded-full bg-acc transition-[width]"
-						style={{ width: `${data.pct}%` }}
+					<motion.div
+						className="h-full rounded-full bg-acc"
+						initial={{ width: 0 }}
+						animate={{ width: `${data.pct}%` }}
+						transition={{ duration: duration.slow, ease: ease.enter, delay: 0.15 }}
 					/>
 				</div>
 				<div className="mt-1.5 flex items-center justify-between">

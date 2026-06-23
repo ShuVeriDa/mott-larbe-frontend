@@ -5,7 +5,7 @@ import { Input } from "@/shared/ui/input";
 
 import { cn } from "@/shared/lib/cn";
 import { Typography } from "@/shared/ui/typography";
-import { AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { AlertCircle, ArrowRight, Check, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useLoginForm } from "../../model";
 
@@ -139,17 +139,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 						aria-hidden="true"
 						className="relative inline-flex size-4 shrink-0 items-center justify-center rounded-[4px] border-[0.5px] border-bd-3 bg-surf transition-colors peer-checked:border-acc peer-checked:bg-acc peer-focus-visible:ring-2 peer-focus-visible:ring-acc peer-focus-visible:ring-offset-1 peer-checked:[&>svg]:opacity-100"
 					>
-						<svg
-							viewBox="0 0 12 8"
-							className="h-2.5 w-3 text-white opacity-0 transition-opacity"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						>
-							<polyline points="1 4 4.5 7 11 1" />
-						</svg>
+						<Check className="size-2.5 text-white opacity-0 transition-opacity" />
 					</Typography>
 					{t("auth.fields.remember")}
 				</Typography>

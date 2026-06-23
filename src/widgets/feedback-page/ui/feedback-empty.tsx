@@ -1,5 +1,6 @@
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { MessageSquare } from "lucide-react";
 type Translator = (key: string) => string;
 
 interface FeedbackEmptyProps {
@@ -10,15 +11,7 @@ interface FeedbackEmptyProps {
 export const FeedbackEmpty = ({ t, onNewThread }: FeedbackEmptyProps) => (
 	<div className="flex flex-1 flex-col items-center justify-center px-6 py-12 text-center">
 		<div className="mb-3 flex size-10 items-center justify-center rounded-[10px] bg-surf-2">
-			<svg
-				viewBox="0 0 20 20"
-				fill="none"
-				stroke="currentColor"
-				strokeWidth="1.4"
-				className="size-5 text-t-3"
-			>
-				<path d="M16 14H11l-4 3V14H4a1.5 1.5 0 0 1-1.5-1.5V4A1.5 1.5 0 0 1 4 2.5h12A1.5 1.5 0 0 1 17.5 4v8.5A1.5 1.5 0 0 1 16 14z" />
-			</svg>
+			<MessageSquare className="size-5 text-t-3" />
 		</div>
 		<Typography tag="p" className="mb-1 text-[13px] font-semibold text-t-1">
 			{t("feedback.empty.title")}

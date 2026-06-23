@@ -2,6 +2,7 @@
 
 import { cn } from "@/shared/lib/cn";
 import useEmblaCarousel from "embla-carousel-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { useEffect, useRef } from "react";
 
@@ -78,13 +79,9 @@ export const HorizontalScrollRow = ({ children, className }: HorizontalScrollRow
 };
 
 const ChevronLeftIcon = () => (
-	<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-3.5 text-t-1" aria-hidden="true">
-		<path d="M9 2.5 4.5 7 9 11.5" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
+	<ChevronLeft className="size-3.5 text-t-1" aria-hidden="true" />
 );
 
 const ChevronRightIcon = () => (
-	<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-3.5 text-t-1" aria-hidden="true">
-		<path d="M5 2.5 9.5 7 5 11.5" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
+	<ChevronRight className="size-3.5 text-t-1" aria-hidden="true" />
 );

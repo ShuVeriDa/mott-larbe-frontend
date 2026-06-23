@@ -1,5 +1,6 @@
 "use client";
 
+import { ScrollText } from "lucide-react";
 import { Typography } from "@/shared/ui/typography";
 import type { TextPhraseDetail, TextPhraseListItem, TextPhraseOccurrence } from "@/entities/text-phrase";
 import { PhraseCardHeaderView, PhraseCardHeaderEdit } from "./phrase-card-header";
@@ -61,17 +62,7 @@ export const PhraseCard = ({
 		return (
 			<div className="flex h-full flex-col items-center justify-center gap-3 px-6 text-center">
 				<div className="flex size-14 items-center justify-center rounded-full bg-surf-2">
-					<svg
-						className="size-7 text-t-4"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.5"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					>
-						<path d="M3 5h12M3 8h9M3 11h6M13 13l9 9M13 22H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8" />
-					</svg>
+					<ScrollText className="size-7 text-t-4" />
 				</div>
 				<Typography tag="p" className="text-[13px] text-t-3">
 					{t("admin.textPhrases.selectPhrase")}

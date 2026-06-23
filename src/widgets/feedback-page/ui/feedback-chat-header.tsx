@@ -4,6 +4,7 @@ import { FeedbackStatusDot } from "./feedback-status-dot";
 
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { ChevronLeft } from "lucide-react";
 type Translator = (key: string) => string;
 
 interface FeedbackChatHeaderProps {
@@ -33,17 +34,7 @@ export const FeedbackChatHeader = ({
 			aria-label={t("feedback.back")}
 			className="hidden size-[30px] shrink-0 items-center justify-center rounded-lg border border-bd-1 bg-surf-2 text-t-2 transition-colors hover:bg-surf-3 max-sm:flex"
 		>
-			<svg
-				viewBox="0 0 16 16"
-				fill="none"
-				stroke="currentColor"
-				strokeWidth="1.6"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-				className="size-3.5"
-			>
-				<path d="M10 3L5 8l5 5" />
-			</svg>
+			<ChevronLeft className="size-3.5" />
 		</Button>
 
 		<div className="min-w-0 flex-1">

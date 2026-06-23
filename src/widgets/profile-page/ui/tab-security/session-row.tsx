@@ -4,33 +4,11 @@ import type { UserSession } from "@/entities/auth";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { Monitor, Smartphone } from "lucide-react";
 import { type ComponentProps } from "react";
 
-const DesktopIcon = () => (
-	<svg
-		viewBox="0 0 16 16"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.4"
-		className="size-3.5"
-	>
-		<rect x="2" y="3" width="12" height="8" rx="1.5" />
-		<path d="M5 11v1.5M11 11v1.5M3.5 12.5h9" strokeLinecap="round" />
-	</svg>
-);
-
-const PhoneIcon = () => (
-	<svg
-		viewBox="0 0 16 16"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.4"
-		className="size-3.5"
-	>
-		<rect x="4.5" y="1.5" width="7" height="12" rx="1.5" />
-		<circle cx="8" cy="11.5" r=".8" fill="currentColor" stroke="none" />
-	</svg>
-);
+const DesktopIcon = () => <Monitor className="size-3.5" />;
+const PhoneIcon = () => <Smartphone className="size-3.5" />;
 
 const isPhone = (device: string) => /iphone|android|mobile|ipad/i.test(device);
 

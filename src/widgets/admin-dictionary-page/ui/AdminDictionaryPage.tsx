@@ -5,6 +5,7 @@ import { AdminCard } from "@/shared/ui/admin-card";
 
 import { ComponentProps } from 'react';
 import { useI18n } from "@/shared/lib/i18n";
+import { Download, Plus, Upload } from "lucide-react";
 import { useAdminDictionaryPage } from "../model/use-admin-dictionary-page";
 import { DictionaryAddExampleModal } from "./dictionary-add-example-modal";
 import { DictionaryAddSenseModal } from "./dictionary-add-sense-modal";
@@ -107,20 +108,7 @@ export const AdminDictionaryPage = () => {
 							title={t("admin.dictionary.import")}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
-							<svg
-								className="size-[11px]"
-								viewBox="0 0 15 15"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="1.4"
-							>
-								<path
-									d="M7.5 10V1M4 4l3.5-3.5L11 4"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-								<path d="M2 12h11" strokeLinecap="round" />
-							</svg>
+							<Upload className="size-[11px]" />
 							{t("admin.dictionary.import")}
 						</Button>
 						<Button
@@ -128,20 +116,7 @@ export const AdminDictionaryPage = () => {
 							title={t("admin.dictionary.export")}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border border-bd-2 bg-surf px-3 text-[12px] text-t-2 transition-colors hover:border-bd-3 hover:text-t-1"
 						>
-							<svg
-								className="size-[11px]"
-								viewBox="0 0 15 15"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="1.4"
-							>
-								<path
-									d="M7.5 1v9M4 7l3.5 3.5L11 7"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-								<path d="M2 12h11" strokeLinecap="round" />
-							</svg>
+							<Download className="size-[11px]" />
 							{t("admin.dictionary.export")}
 						</Button>
 						<Button
@@ -149,16 +124,7 @@ export const AdminDictionaryPage = () => {
 							title={t("admin.dictionary.create")}
 							className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-[.88]"
 						>
-							<svg
-								className="size-[11px]"
-								viewBox="0 0 15 15"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="1.8"
-								strokeLinecap="round"
-							>
-								<path d="M7.5 2v11M2 7.5h11" />
-							</svg>
+							<Plus className="size-[11px]" />
 							{t("admin.dictionary.create")}
 						</Button>
 					</>

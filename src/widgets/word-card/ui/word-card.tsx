@@ -16,8 +16,10 @@ import {
 	formatReviewIn,
 } from "@/shared/lib/format-relative-time";
 import { useI18n } from "@/shared/lib/i18n";
+import { variants } from "@/shared/lib/animation";
 import { SectionLabel } from "@/shared/ui/section-label";
 import { Typography } from "@/shared/ui/typography";
+import { AnimatePresence, motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { ComponentProps, MouseEvent } from "react";
@@ -87,8 +89,9 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 			className={cn(
 				"relative flex cursor-pointer gap-3 rounded-card border-[0.5px] border-bd-1 bg-surf p-[11px_14px]",
 				expanded ? "items-start" : "items-center",
-				"transition-[border-color,box-shadow] duration-100",
+				"transition-[border-color,box-shadow,transform] duration-150 ease-out",
 				"hover:border-bd-2 hover:shadow-sm",
+				!expanded && "[@media(hover:hover)]:hover:translate-y-[-2px]",
 				"outline-none focus-visible:border-acc focus-visible:shadow-[0_0_0_2px_var(--acc-bg)]",
 				expanded && "border-acc shadow-[0_0_0_2px_var(--acc-bg)]",
 			)}
@@ -137,8 +140,16 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 					</Typography>
 				</div>
 
+				<AnimatePresence initial={false}>
 				{expanded ? (
-					<div className="mt-3 border-t-[0.5px] border-bd-1 pt-3">
+					<motion.div
+						key="expanded"
+						variants={variants.fadeUp}
+						initial="hidden"
+						animate="visible"
+						exit="exit"
+						className="mt-3 border-t-[0.5px] border-bd-1 pt-3"
+					>
 						<div className="flex flex-col gap-4 sm:flex-row sm:gap-5">
 
 							{/* Левая колонка: пример + формы */}
@@ -233,8 +244,10 @@ export const WordCard = ({ entry, expanded, onToggle }: WordCardProps) => {
 								<DeleteWordButton wordId={entry.id} word={entry.word} className="w-full mt-0.5" />
 							</div>
 						</div>
-					</div>
+				</motion.div>
 				) : null}
+				</AnimatePresence>
+
 			</div>
 
 			{/* Правый блок: бейджи (свёрнуто) или только иконка перехода (раскрыто — абсолютно) */}

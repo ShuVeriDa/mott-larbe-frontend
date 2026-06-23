@@ -72,7 +72,7 @@ export const Sm2Card = ({ sm2, reviewHistory }: Sm2CardProps) => {
 				className="mb-3 h-[5px] overflow-hidden rounded-[3px] bg-surf-3"
 			>
 				<div
-					className="h-full rounded-[3px] bg-amb"
+					className="h-full rounded-[3px] bg-amb transition-[width] duration-500 ease-out motion-reduce:transition-none"
 					style={{ width: `${fillPercent}%` }}
 				/>
 			</div>

@@ -1,7 +1,9 @@
 "use client";
 import type { ReviewSessionsStats } from "@/entities/statistics";
+import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
 import { ReviewStatItem } from "./review-stat-item";
 
 interface ReviewSessionsCardProps {
@@ -25,35 +27,52 @@ export const ReviewSessionsCard = ({ data }: ReviewSessionsCardProps) => {
 				</Typography>
 			</header>
 
-			<div className="grid grid-cols-2 gap-3">
-				<ReviewStatItem
-					label={t("statistics.reviewSessions.sessions")}
-					value={data.totalSessions.toLocaleString()}
-				/>
-				<ReviewStatItem
-					label={t("statistics.reviewSessions.totalCards")}
-					value={data.totalCards.toLocaleString()}
-				/>
-				<ReviewStatItem
-					label={t("statistics.reviewSessions.avgPerSession")}
-					value={data.avgCardsPerSession.toLocaleString()}
-					sub={t("statistics.reviewSessions.cardsUnit")}
-				/>
-				<ReviewStatItem
-					label={t("statistics.reviewSessions.bestDay")}
-					value={data.bestDayCount.toLocaleString()}
-					sub={t("statistics.reviewSessions.cardsUnit")}
-				/>
-				<ReviewStatItem
-					label={t("statistics.reviewSessions.avgDuration")}
-					value={durationLabel}
-				/>
-				<ReviewStatItem
-					label={t("statistics.reviewSessions.mastered")}
-					value={data.masteredWords.toLocaleString()}
-					sub={t("statistics.reviewSessions.wordsUnit")}
-				/>
-			</div>
+			<motion.div
+				className="grid grid-cols-2 gap-3"
+				variants={variants.staggerContainer}
+				initial="hidden"
+				animate="visible"
+			>
+				<motion.div variants={variants.staggerItem}>
+					<ReviewStatItem
+						label={t("statistics.reviewSessions.sessions")}
+						value={data.totalSessions.toLocaleString()}
+					/>
+				</motion.div>
+				<motion.div variants={variants.staggerItem}>
+					<ReviewStatItem
+						label={t("statistics.reviewSessions.totalCards")}
+						value={data.totalCards.toLocaleString()}
+					/>
+				</motion.div>
+				<motion.div variants={variants.staggerItem}>
+					<ReviewStatItem
+						label={t("statistics.reviewSessions.avgPerSession")}
+						value={data.avgCardsPerSession.toLocaleString()}
+						sub={t("statistics.reviewSessions.cardsUnit")}
+					/>
+				</motion.div>
+				<motion.div variants={variants.staggerItem}>
+					<ReviewStatItem
+						label={t("statistics.reviewSessions.bestDay")}
+						value={data.bestDayCount.toLocaleString()}
+						sub={t("statistics.reviewSessions.cardsUnit")}
+					/>
+				</motion.div>
+				<motion.div variants={variants.staggerItem}>
+					<ReviewStatItem
+						label={t("statistics.reviewSessions.avgDuration")}
+						value={durationLabel}
+					/>
+				</motion.div>
+				<motion.div variants={variants.staggerItem}>
+					<ReviewStatItem
+						label={t("statistics.reviewSessions.mastered")}
+						value={data.masteredWords.toLocaleString()}
+						sub={t("statistics.reviewSessions.wordsUnit")}
+					/>
+				</motion.div>
+			</motion.div>
 		</section>
 	);
 };

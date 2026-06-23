@@ -1,7 +1,9 @@
 "use client";
 import type { WordsBreakdown } from "@/entities/statistics";
+import { ease, duration } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
 import { WordLegendRow } from "./word-legend-row";
 
 interface WordProgressCardProps {
@@ -66,39 +68,45 @@ export const WordProgressCard = ({ words }: WordProgressCardProps) => {
 							strokeWidth="10"
 							stroke="var(--surf-3)"
 						/>
-						<circle
+						<motion.circle
 							cx="44"
 							cy="44"
 							r={RADIUS}
 							fill="none"
 							strokeWidth="10"
 							stroke="var(--grn)"
-							strokeDasharray={`${knownDash} ${CIRCUMFERENCE}`}
 							strokeLinecap="round"
+							initial={{ strokeDasharray: `0 ${CIRCUMFERENCE}` }}
+							animate={{ strokeDasharray: `${knownDash} ${CIRCUMFERENCE}` }}
+							transition={{ duration: duration.slow, ease: ease.enter, delay: 0.1 }}
 						/>
-						<circle
+						<motion.circle
 							cx="44"
 							cy="44"
 							r={RADIUS}
 							fill="none"
 							strokeWidth="10"
 							stroke="var(--acc)"
-							strokeDasharray={`${learningDash} ${CIRCUMFERENCE}`}
 							strokeDashoffset={-knownDash}
 							strokeLinecap="round"
 							opacity="0.7"
+							initial={{ strokeDasharray: `0 ${CIRCUMFERENCE}` }}
+							animate={{ strokeDasharray: `${learningDash} ${CIRCUMFERENCE}` }}
+							transition={{ duration: duration.slow, ease: ease.enter, delay: 0.2 }}
 						/>
-						<circle
+						<motion.circle
 							cx="44"
 							cy="44"
 							r={RADIUS}
 							fill="none"
 							strokeWidth="10"
 							stroke="var(--amb)"
-							strokeDasharray={`${newDash} ${CIRCUMFERENCE}`}
 							strokeDashoffset={-(knownDash + learningDash)}
 							strokeLinecap="round"
 							opacity="0.7"
+							initial={{ strokeDasharray: `0 ${CIRCUMFERENCE}` }}
+							animate={{ strokeDasharray: `${newDash} ${CIRCUMFERENCE}` }}
+							transition={{ duration: duration.slow, ease: ease.enter, delay: 0.3 }}
 						/>
 					</svg>
 					<div className="absolute inset-0 flex flex-col items-center justify-center">

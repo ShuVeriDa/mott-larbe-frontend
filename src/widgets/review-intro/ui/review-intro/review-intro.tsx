@@ -11,6 +11,8 @@ import { SectionLabel } from "@/shared/ui/section-label";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { Sm2Guide } from "../sm2-guide";
+import { motion } from "framer-motion";
+import { variants, spring } from "@/shared/lib/animation";
 
 export interface ReviewIntroProps {
 	stats: ReviewStats | undefined;
@@ -55,11 +57,17 @@ export const ReviewIntro = ({
 	const remainder = Math.max(queue.length - QUEUE_PREVIEW, 0);
 
 	return (
-		<section
+		<motion.section
 			className="flex flex-1 flex-col items-center justify-center px-6 py-8 max-md:justify-start max-md:px-4 max-md:pt-6"
 			aria-busy={loading}
+			variants={variants.staggerContainer}
+			initial="hidden"
+			animate="visible"
 		>
-			<div className="mb-5 flex gap-2.5 max-md:w-full max-md:flex-wrap max-md:gap-2">
+			<motion.div
+				className="mb-5 flex gap-2.5 max-md:w-full max-md:flex-wrap max-md:gap-2"
+				variants={variants.staggerContainer}
+			>
 				<StatBox
 					value={dueCount}
 					label={t("review.sm2.intro.stats.due")}
@@ -81,39 +89,46 @@ export const ReviewIntro = ({
 					label={t("review.sm2.intro.stats.streak")}
 					tone="grn"
 				/>
-			</div>
+			</motion.div>
 
-			<Typography
-				tag="h2"
-				className="mb-1.5 text-center font-display text-[21px] font-normal text-t-1"
-			>
-				{t("review.sm2.intro.title")}
-			</Typography>
-			<Typography className="mb-5 max-w-[340px] text-center text-[13px] leading-[1.6] text-t-3">
-				{loading
-					? t("review.sm2.intro.loading")
-					: error
-						? t("review.sm2.intro.error")
-						: dueCount === 0
-							? t("review.sm2.intro.empty")
-							: t("review.sm2.intro.subtitle", { count: dueCount })}
-			</Typography>
+			<motion.div variants={variants.staggerItem}>
+				<Typography
+					tag="h2"
+					className="mb-1.5 text-center font-display text-[21px] font-normal text-t-1"
+				>
+					{t("review.sm2.intro.title")}
+				</Typography>
+				<Typography className="mb-5 max-w-[340px] text-center text-[13px] leading-[1.6] text-t-3">
+					{loading
+						? t("review.sm2.intro.loading")
+						: error
+							? t("review.sm2.intro.error")
+							: dueCount === 0
+								? t("review.sm2.intro.empty")
+								: t("review.sm2.intro.subtitle", { count: dueCount })}
+				</Typography>
+			</motion.div>
 
-			<div className="mb-4 w-full max-w-[420px]">
+			<motion.div className="mb-4 w-full max-w-[420px]" variants={variants.staggerItem}>
 				<ModeSelector value={sessionMode} onChange={onModeChange} />
-			</div>
+			</motion.div>
 
-			<Button
-				variant="action"
-				size="lg"
-				onClick={onStart}
-				disabled={loading || dueCount === 0 || queue.length === 0}
-			>
-				{t("review.sm2.intro.start")}
-			</Button>
+			<motion.div variants={variants.staggerItem}>
+				<Button
+					variant="action"
+					size="lg"
+					onClick={onStart}
+					disabled={loading || dueCount === 0 || queue.length === 0}
+				>
+					{t("review.sm2.intro.start")}
+				</Button>
+			</motion.div>
 
 			{queue.length > 0 ? (
-				<div className="mt-5 w-full max-w-[420px] border-t border-bd-1 pt-4">
+				<motion.div
+					className="mt-5 w-full max-w-[420px] border-t border-bd-1 pt-4"
+					variants={variants.staggerItem}
+				>
 					<div className="mb-2 flex items-center justify-between">
 						<SectionLabel className="mb-0">
 							{t("review.sm2.intro.queue.title")}
@@ -121,11 +136,15 @@ export const ReviewIntro = ({
 						<Sm2Guide />
 					</div>
 
-					<ul className="flex flex-col gap-1">
+					<motion.ul
+						className="flex flex-col gap-1"
+						variants={variants.staggerContainer}
+					>
 						{queue.slice(0, QUEUE_PREVIEW).map(item => (
-							<li
+							<motion.li
 								key={item.lemmaId}
 								className="flex items-center gap-2.5 rounded-base border-[0.5px] border-bd-1 bg-surf px-3 py-2"
+								variants={variants.staggerItem}
 							>
 								<Typography
 									tag="span"
@@ -144,17 +163,17 @@ export const ReviewIntro = ({
 								>
 									{getPrimaryTranslation(item.lemma)}
 								</Typography>
-							</li>
+							</motion.li>
 						))}
-					</ul>
+					</motion.ul>
 					{remainder > 0 ? (
 						<Typography className="mt-1.5 text-center text-[11.5px] text-t-3">
 							{t("review.sm2.intro.queue.more", { count: remainder })}
 						</Typography>
 					) : null}
-				</div>
+				</motion.div>
 			) : null}
-		</section>
+		</motion.section>
 	);
 };
 
@@ -171,12 +190,15 @@ const toneClasses: Record<StatBoxProps["tone"], string> = {
 };
 
 const StatBox = ({ value, label, tone }: StatBoxProps) => (
-	<div className="min-w-[80px] rounded-card border-[0.5px] border-bd-2 bg-surf px-4 py-3 text-center shadow-sm max-md:min-w-0 max-md:flex-1 max-md:basis-[calc(50%-4px)]">
+	<motion.div
+		className="min-w-[80px] rounded-card border-[0.5px] border-bd-2 bg-surf px-4 py-3 text-center shadow-sm max-md:min-w-0 max-md:flex-1 max-md:basis-[calc(50%-4px)]"
+		variants={variants.staggerItem}
+	>
 		<div
 			className={`font-display text-[22px] font-semibold leading-[1.1] tabular-nums max-md:text-[20px] ${toneClasses[tone]}`}
 		>
 			{value}
 		</div>
 		<div className="mt-1 text-[11px] text-t-3">{label}</div>
-	</div>
+	</motion.div>
 );

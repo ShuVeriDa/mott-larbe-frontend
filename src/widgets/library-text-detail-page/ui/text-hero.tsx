@@ -1,9 +1,13 @@
+"use client";
+
 import type { LibraryTextLanguage } from "@/entities/library-text";
 import { cn } from "@/shared/lib/cn";
 import type { CefrLevel } from "@/shared/types";
 import { Badge } from "@/shared/ui/badge";
 import { buttonVariants } from "@/shared/ui/button";
 import { CefrBadge } from "@/shared/ui/cefr-badge";
+import { duration, ease } from "@/shared/lib/animation";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { TextCover } from "./text-cover";
 
@@ -51,7 +55,12 @@ export const TextHero = ({
 	const isNotReady = totalPages === 0;
 
 	return (
-		<div className="flex gap-5 mb-6 animate-[fadeUp_0.3s_ease_both] max-sm:gap-3.5">
+		<motion.div
+			initial={{ opacity: 0, y: 14 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: duration.slower, ease: ease.enter }}
+			className="flex gap-5 mb-6 max-sm:gap-3.5"
+		>
 			<TextCover language={language} imageUrl={imageUrl} title={title} priority />
 
 			<div className="flex-1 min-w-0 flex flex-col gap-2.5">
@@ -132,6 +141,6 @@ export const TextHero = ({
 					)}
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	);
 };

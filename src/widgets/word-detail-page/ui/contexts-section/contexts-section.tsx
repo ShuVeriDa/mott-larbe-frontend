@@ -56,7 +56,7 @@ const ContextItem = ({
 		<li>
 			<Link
 				href={`/${lang}/reader/${ctx.text.id}`}
-				className="block rounded-[8px] border-[0.5px] border-bd-1 bg-surf-2 px-3 py-2.5 transition-colors duration-150 hover:border-bd-2"
+				className="block rounded-[8px] border-[0.5px] border-bd-1 bg-surf-2 px-3 py-2.5 transition-[border-color,transform] duration-150 ease-out hover:border-bd-2 [@media(hover:hover)]:hover:translate-x-0.5"
 			>
 				<Typography tag="p" className="mb-1 text-[13px] leading-[1.6] text-t-2">
 					«

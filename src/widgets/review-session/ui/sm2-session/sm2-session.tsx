@@ -8,27 +8,23 @@ import {
 import { FlipCard } from "@/features/flip-card";
 import { RatingButtons } from "@/features/rate-word";
 import type { SessionMode } from "@/features/session-mode";
+import { duration, ease } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { useSwipe } from "@/shared/lib/swipe";
-import { Button } from "@/shared/ui/button";
+import { MotionButton } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft, ArrowRight, ArrowRightLeft } from "lucide-react";
 import { useEffect, useState } from "react";
+import { buildSm2Options } from "../../lib/build-sm2-options";
 import { useSm2Session } from "../../model";
 import { ChoiceCardSm2 } from "../choice-card";
 import { FlashcardBack } from "../flashcard-back";
 import { FlashcardFront } from "../flashcard-front";
 import { TypingCardSm2 } from "../typing-card";
+import { SwipeHint } from "./swipe-hint";
 
 const SWIPE_HINT_KEY = "review_swipe_hint_seen";
-
-const SwipeHint = ({ visible }: { visible: boolean }) => {
-	if (!visible) return null;
-	return (
-		<p className="mt-2 text-center text-[11px] opacity-50 text-t-2 pointer-events-none select-none">
-			← Hard · Easy →
-		</p>
-	);
-};
 
 export interface Sm2SessionProps {
 	words: ReviewDueWord[];
@@ -45,43 +41,6 @@ export interface Sm2SessionProps {
 		},
 	) => void;
 }
-
-const buildOptions = (
-	words: ReviewDueWord[],
-	currentIndex: number,
-): { options: string[]; correctIndex: number } => {
-	const current = words[currentIndex];
-	if (!current) return { options: [], correctIndex: 0 };
-
-	const correct = getPrimaryTranslation(current.lemma);
-	if (!correct) return { options: [], correctIndex: 0 };
-
-	const seen = new Set<string>([correct.toLowerCase()]);
-	const pool: string[] = [];
-
-	for (let i = 0; i < words.length; i++) {
-		if (i === currentIndex) continue;
-		// Primary translation (headword or user dictionary entry — always filled)
-		const primary = getPrimaryTranslation(words[i].lemma);
-		if (primary && !seen.has(primary.toLowerCase())) {
-			seen.add(primary.toLowerCase());
-			pool.push(primary);
-		}
-		// Additional headword translations for more variety
-		for (const hw of words[i].lemma.headwords) {
-			const t = hw.entry.rawTranslate?.trim();
-			if (t && !seen.has(t.toLowerCase())) {
-				seen.add(t.toLowerCase());
-				pool.push(t);
-			}
-		}
-	}
-
-	const distractors = pool.slice(0, 3);
-	const all = [correct, ...distractors].slice(0, 4);
-	all.sort();
-	return { options: all, correctIndex: all.indexOf(correct) };
-};
 
 export const Sm2Session = ({
 	words,
@@ -110,17 +69,10 @@ export const Sm2Session = ({
 	} = session;
 
 	useEffect(() => {
-		onProgress?.(currentIndex, total, counts);
-	}, [counts, currentIndex, onProgress, total]);
-
-	useEffect(() => {
-		if (isFinished) onFinish(counts);
-	}, [counts, isFinished, onFinish]);
-
-	useEffect(() => {
 		const handleKey = (e: KeyboardEvent) => {
-			// intentional: delegated event inspects the actual clicked element
-			const tag = (e.target as HTMLElement | null)?.tagName;
+			const tag = (e.currentTarget as Window & typeof globalThis) === window
+				? (e.target as HTMLElement | null)?.tagName
+				: null;
 			if (tag === "INPUT" || tag === "TEXTAREA") return;
 
 			if (e.key === " " || e.key === "Enter") {
@@ -150,6 +102,30 @@ export const Sm2Session = ({
 		return () => window.removeEventListener("keydown", handleKey);
 	}, [flip, flipped, rate]);
 
+	const handleRate = (quality: ReviewQuality) => {
+		const nextIndex = currentIndex + 1;
+		const nextCounts = {
+			...counts,
+			easy: quality === 5 ? counts.easy + 1 : counts.easy,
+			good: quality === 4 ? counts.good + 1 : counts.good,
+			hard: quality <= 2 ? counts.hard + 1 : counts.hard,
+		};
+		onProgress?.(nextIndex, total, nextCounts);
+		rate(quality);
+		if (nextIndex >= total) {
+			onFinish(nextCounts);
+		}
+	};
+
+	const handleSkip = () => {
+		const nextIndex = currentIndex + 1;
+		onProgress?.(nextIndex, total, counts);
+		skip();
+		if (nextIndex >= total) {
+			onFinish(counts);
+		}
+	};
+
 	const handleDismissHint = () => {
 		if (!swipeHintVisible) return;
 		localStorage.setItem(SWIPE_HINT_KEY, "1");
@@ -158,11 +134,11 @@ export const Sm2Session = ({
 
 	const swipe = useSwipe({
 		enabled: flipped,
-		onSwipeLeft: () => { handleDismissHint(); rate(0); },
-		onSwipeRight: () => { handleDismissHint(); rate(5); },
+		onSwipeLeft: () => { handleDismissHint(); handleRate(0); },
+		onSwipeRight: () => { handleDismissHint(); handleRate(5); },
 	});
 
-	const { options, correctIndex } = buildOptions(words, currentIndex);
+	const { options, correctIndex } = buildSm2Options(words, currentIndex);
 
 	if (!current) return null;
 
@@ -177,7 +153,6 @@ export const Sm2Session = ({
 	const backWord = mode === "wordToTrans" ? word : translation;
 	const backTranslation = mode === "wordToTrans" ? translation : word;
 
-	// Fall back to flashcard when translation is missing or insufficient distractors for choice
 	const hasTranslation = translation !== "";
 	const hasEnoughOptions = options.length >= 2;
 	const effectiveMode =
@@ -197,9 +172,11 @@ export const Sm2Session = ({
 		>
 			<div className="mb-4 flex w-full max-w-[520px] items-center gap-2.5">
 				<div className="h-1 flex-1 overflow-hidden rounded-full bg-surf-3">
-					<div
-						className="h-full origin-left rounded-full bg-acc transition-transform duration-400"
-						style={{ transform: `scaleX(${progressPct / 100})` }}
+					<motion.div
+						className="h-full origin-left rounded-full bg-acc"
+						animate={{ scaleX: progressPct / 100 }}
+						transition={{ duration: duration.slow, ease: ease.enter }}
+						style={{ originX: 0 }}
 					/>
 				</div>
 				<Typography
@@ -221,7 +198,7 @@ export const Sm2Session = ({
 					cardNumber={currentIndex + 1}
 					options={options}
 					correctIndex={correctIndex}
-					onRate={rate}
+					onRate={handleRate}
 				/>
 			) : effectiveMode === "typing" ? (
 				<TypingCardSm2
@@ -230,7 +207,7 @@ export const Sm2Session = ({
 					pos={frontPos}
 					cardNumber={currentIndex + 1}
 					correctAnswer={backTranslation}
-					onRate={rate}
+					onRate={handleRate}
 				/>
 			) : (
 				<FlipCard
@@ -260,65 +237,51 @@ export const Sm2Session = ({
 				/>
 			)}
 
-			{isFlashcard ? <RatingButtons visible={flipped} onRate={rate} /> : null}
-			{isFlashcard ? <SwipeHint visible={flipped && swipeHintVisible} /> : null}
+			<AnimatePresence>
+				{isFlashcard && <RatingButtons key="rating" visible={flipped} onRate={handleRate} />}
+			</AnimatePresence>
+			<AnimatePresence>
+				{isFlashcard && <SwipeHint key="hint" visible={flipped && swipeHintVisible} />}
+			</AnimatePresence>
 
 			<div className="mt-2.5 flex w-full max-w-[520px] items-center gap-2">
 				{onBack ? (
-					<Button
+					<MotionButton
 						onClick={onBack}
+						whileTap={{ scale: 0.95 }}
 						className="flex h-10 cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 					>
-						<svg viewBox="0 0 12 12" fill="none" className="size-3">
-							<path
-								d="M8 6H4M5 3L2 6l3 3"
-								stroke="currentColor"
-								strokeWidth="1.2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</svg>
+						<ArrowLeft className="size-3" />
 						{t("review.sm2.card.exit")}
-					</Button>
+					</MotionButton>
 				) : null}
-				<Button
-					onClick={skip}
+				<MotionButton
+					onClick={handleSkip}
+					whileTap={{ scale: 0.95 }}
 					className="flex h-10 cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 				>
-					<svg viewBox="0 0 12 12" fill="none" className="size-3">
-						<path
-							d="M2 6h8M7 3l3 3-3 3"
-							stroke="currentColor"
-							strokeWidth="1.2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<ArrowRight className="size-3 group-hover:translate-x-0.5 transition-transform duration-150 ease-out" />
 					{t("review.sm2.card.skip")}
-				</Button>
+				</MotionButton>
 				<div className="flex-1" />
-				{isFlashcard ? (
-					<Button
-						onClick={toggleMode}
-						aria-label={t("review.sm2.card.modeToggle")}
-						className="flex h-10 cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-surf-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-3"
-					>
-						<svg viewBox="0 0 12 12" fill="none" className="size-3 text-t-3">
-							<path
-								d="M1 4h10M1 8h10M4 1L1 4l3 3"
-								stroke="currentColor"
-								strokeWidth="1.2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</svg>
-						{t(
-							mode === "wordToTrans"
-								? "review.sm2.card.modeBack"
-								: "review.sm2.card.modeFront",
-						)}
-					</Button>
-				) : null}
+				<AnimatePresence>
+					{isFlashcard && (
+						<MotionButton
+							key="mode-toggle"
+							onClick={toggleMode}
+							whileTap={{ scale: 0.95 }}
+							aria-label={t("review.sm2.card.modeToggle")}
+							className="flex h-10 cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-surf-2 px-3 text-[12px] text-t-2 transition-colors hover:bg-surf-3"
+						>
+							<ArrowRightLeft className="size-3 text-t-3" />
+							{t(
+								mode === "wordToTrans"
+									? "review.sm2.card.modeBack"
+									: "review.sm2.card.modeFront",
+							)}
+						</MotionButton>
+					)}
+				</AnimatePresence>
 			</div>
 		</div>
 	);

@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronLeft } from "lucide-react";
 import { TabBar, TabContent, TabItem, Tabs } from "@/shared/ui/tabs";
 import { Typography } from "@/shared/ui/typography";
 import Link from "next/link";
@@ -24,21 +25,7 @@ export const ScriptGuidePage = () => {
 					href={`/${lang}/texts`}
 					className="mb-6 inline-flex items-center gap-1.5 rounded-base px-2 py-1 -ml-2 text-sm text-t-3 transition-colors duration-100 hover:bg-surf-2 hover:text-t-1"
 				>
-					<svg
-						width="14"
-						height="14"
-						viewBox="0 0 14 14"
-						fill="none"
-						aria-hidden="true"
-					>
-						<path
-							d="M9 11L5 7L9 3"
-							stroke="currentColor"
-							strokeWidth="1.5"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<ChevronLeft className="size-3.5" aria-hidden="true" />
 					{t("scriptGuide.backToTexts")}
 				</Link>
 

@@ -59,17 +59,25 @@ export const VocabularyList = () => {
 								{t("vocabulary.wordsCount", { count: sec.total })}
 							</Typography>
 						</header>
-						{sec.items.map((entry) => {
+						{sec.items.map((entry, idx) => {
 						  const handleToggle: NonNullable<ComponentProps<typeof WordCard>["onToggle"]> = () =>
 									setExpandedId((prev) => (prev === entry.id ? null : entry.id));
 						  return (
-							<WordCard
+							<div
 								key={entry.id}
-								entry={entry}
-								expanded={expandedId === entry.id}
-								onToggle={handleToggle
-								}
-							/>
+								className="animate-in fade-in slide-in-from-bottom-1 motion-reduce:animate-none"
+								style={{
+									animationDelay: `${Math.min(idx * 25, 250)}ms`,
+									animationDuration: "200ms",
+									animationFillMode: "both",
+								}}
+							>
+								<WordCard
+									entry={entry}
+									expanded={expandedId === entry.id}
+									onToggle={handleToggle}
+								/>
+							</div>
 						);
 						})}
 					</section>

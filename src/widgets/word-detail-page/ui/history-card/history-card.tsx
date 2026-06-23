@@ -4,8 +4,10 @@ import { Typography } from "@/shared/ui/typography";
 
 import type { DetailReviewLog } from "@/entities/dictionary";
 import { cn } from "@/shared/lib/cn";
+import { variants } from "@/shared/lib/animation";
 import { formatNextReview } from "@/shared/lib/format-relative-time";
 import { useI18n } from "@/shared/lib/i18n";
+import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { CardSection } from "../card-section";
 
@@ -34,13 +36,19 @@ export const HistoryCard = ({ logs }: HistoryCardProps) => {
 			title={t("vocabulary.wordDetail.sections.history")}
 			bodyClassName="px-4 py-2"
 		>
-			<ul className="flex flex-col">
+			<motion.ul
+				className="flex flex-col"
+				variants={variants.staggerContainer}
+				initial="hidden"
+				animate="visible"
+			>
 				{logs.map(log => {
 					const correct = log.correct;
 					const delta = log.intervalDelta;
 					return (
-						<li
+						<motion.li
 							key={log.id}
+							variants={variants.staggerItem}
 							className="flex items-center gap-2.5 border-b-[0.5px] border-bd-1 py-1.5 last:border-b-0"
 						>
 							<Typography
@@ -83,10 +91,10 @@ export const HistoryCard = ({ logs }: HistoryCardProps) => {
 												})
 											: ""}
 							</Typography>
-						</li>
+						</motion.li>
 					);
 				})}
-			</ul>
+			</motion.ul>
 		</CardSection>
 	);
 };

@@ -3,6 +3,7 @@
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import type { Editor } from "@tiptap/react";
+import { ChevronDown } from "lucide-react";
 import type { ComponentProps } from "react";
 import { useState } from "react";
 import { createPortal } from "react-dom";
@@ -63,21 +64,7 @@ export const BlockTypeDropdown = ({ editor }: { editor: Editor }) => {
 				className="flex h-7 items-center gap-1 rounded-[6px] px-2 text-[12px] font-medium text-t-2 transition-colors hover:bg-surf-2 hover:text-t-1 select-none"
 			>
 				{currentLabel}
-				<svg
-					width="10"
-					height="6"
-					viewBox="0 0 10 6"
-					fill="none"
-					className="opacity-50"
-				>
-					<path
-						d="M1 1l4 4 4-4"
-						stroke="currentColor"
-						strokeWidth="1.4"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</svg>
+				<ChevronDown className="size-2.5 opacity-50" />
 			</Button>
 			{open &&
 				anchor &&

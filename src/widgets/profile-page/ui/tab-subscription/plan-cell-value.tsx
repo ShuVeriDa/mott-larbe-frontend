@@ -1,18 +1,9 @@
 "use client";
 
+import { Check } from "lucide-react";
 import { Typography } from "@/shared/ui/typography";
 
-const CheckIcon = () => (
-	<svg
-		viewBox="0 0 12 12"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.5"
-		className="size-3 text-grn-t"
-	>
-		<path d="M2 6l3 3 5-5" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
-);
+const CheckIcon = () => <Check className="size-3 text-grn-t" />;
 
 const DashIcon = () => (
 	<Typography

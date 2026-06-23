@@ -3,9 +3,12 @@
 import { usePhraseReviewStats } from "@/entities/phrasebook";
 import { useStatistics, type StatsPeriod } from "@/entities/statistics";
 import { PeriodTabs } from "@/features/stats-period-tabs";
+import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
+import { Lock } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useState } from "react";
@@ -65,17 +68,7 @@ export const StatisticsPage = () => {
 			) : is403(error) ? (
 				<div className="flex flex-1 flex-col items-center justify-center gap-3 px-5 py-20 text-center">
 					<div className="flex size-12 items-center justify-center rounded-full bg-acc-bg">
-						<svg
-							viewBox="0 0 20 20"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="1.5"
-							className="size-5 text-acc"
-							aria-hidden="true"
-						>
-							<rect x="4" y="9" width="12" height="9" rx="2" />
-							<path d="M7 9V6a3 3 0 1 1 6 0v3" strokeLinecap="round" />
-						</svg>
+						<Lock className="size-5 text-acc" aria-hidden="true" />
 					</div>
 					<Typography tag="p" className="text-sm font-semibold text-t-1">
 						{t("statistics.premium.title")}
@@ -106,79 +99,90 @@ export const StatisticsPage = () => {
 					</Button>
 				</div>
 			) : (
-				<div className="flex flex-col gap-3.5 overflow-y-auto px-[22px] pb-7 pt-4 max-md:px-4 max-md:pb-6 max-md:pt-3.5 max-[480px]:px-3 max-[480px]:pb-5 max-[480px]:pt-3">
+				<motion.div
+					className="flex flex-col gap-3.5 overflow-y-auto px-[22px] pb-7 pt-4 max-md:px-4 max-md:pb-6 max-md:pt-3.5 max-[480px]:px-3 max-[480px]:pb-5 max-[480px]:pt-3"
+					variants={variants.staggerContainer}
+					initial="hidden"
+					animate="visible"
+				>
 					{/* Row 1: KPI */}
-					<KpiGrid header={data.header} sparklines={data.kpiSparklines} />
+					<motion.div variants={variants.staggerItem}>
+						<KpiGrid header={data.header} sparklines={data.kpiSparklines} />
+					</motion.div>
 
 					{/* Row 2: Streak + heatmap */}
-					<StreakBlock
-						streak={data.streak}
-						heatmap={data.heatmap}
-						heatmapWeek={data.heatmapWeek}
-						period={period}
-					/>
+					<motion.div variants={variants.staggerItem}>
+						<StreakBlock
+							streak={data.streak}
+							heatmap={data.heatmap}
+							heatmapWeek={data.heatmapWeek}
+							period={period}
+						/>
+					</motion.div>
 
 					{/* Row 3: Achievements */}
-					<AchievementsCard data={data.achievements} />
+					<motion.div variants={variants.staggerItem}>
+						<AchievementsCard data={data.achievements} />
+					</motion.div>
 
 					{/* Row 4: Events + Vocabulary growth */}
-					<div className="grid grid-cols-2 gap-3.5 max-md:grid-cols-1">
+					<motion.div variants={variants.staggerItem} className="grid grid-cols-2 gap-3.5 max-md:grid-cols-1">
 						<EventsChart chart={data.eventsChart} />
 						<VocabularyGrowthChart
 							points={data.vocabularyGrowth}
 							period={period}
 						/>
-					</div>
+					</motion.div>
 
 					{/* Row 5: Progress + Per day */}
-					<div className="grid grid-cols-2 gap-2 max-md:grid-cols-1">
+					<motion.div variants={variants.staggerItem} className="grid grid-cols-2 gap-2 max-md:grid-cols-1">
 						<ProgressCard words={data.words} phrases={data.phraseProgress} />
 						<PerDayChart
 							wordsPoints={data.wordsPerDay}
 							phrasesPoints={data.phrasesPerDay}
 							period={period}
 						/>
-					</div>
+					</motion.div>
 
 					{/* Row 6: Retention + Weekday activity */}
-					<div className="grid grid-cols-2 gap-2 max-md:grid-cols-1">
+					<motion.div variants={variants.staggerItem} className="grid grid-cols-2 gap-2 max-md:grid-cols-1">
 						<RetentionCard data={data.retention} />
 						<WeekdayActivityCard data={data.weekdayActivity} />
-					</div>
+					</motion.div>
 
 					{/* Row 7: Review sessions + Top words + Weak spots */}
-					<div className="grid grid-cols-3 gap-2 max-lg:grid-cols-1">
+					<motion.div variants={variants.staggerItem} className="grid grid-cols-3 gap-2 max-lg:grid-cols-1">
 						<ReviewSessionsCard data={data.reviewSessions} />
 						<TopWordsCard data={data.topWords} />
 						<WeakSpotsCard data={data.weakSpots} lang={lang} />
-					</div>
+					</motion.div>
 
 					{/* Row 8: Texts progress + Reading speed */}
-					<div className="grid grid-cols-3 items-stretch gap-2 max-lg:grid-cols-1">
+					<motion.div variants={variants.staggerItem} className="grid grid-cols-3 items-stretch gap-2 max-lg:grid-cols-1">
 						<div className="col-span-2 h-full max-lg:col-span-1">
 							<TextsProgress items={data.texts} lang={lang} />
 						</div>
 						<ReadingSpeedCard data={data.readingSpeed} />
-					</div>
+					</motion.div>
 
 					{/* Row 9a: Accuracy + Phrase stats */}
-					<div className="grid grid-cols-2 gap-2 max-sm:grid-cols-1">
+					<motion.div variants={variants.staggerItem} className="grid grid-cols-2 gap-2 max-sm:grid-cols-1">
 						<AccuracyCard
 							accuracy={data.accuracy}
 							phraseAccuracy={data.phraseAccuracy}
 						/>
 						<PhraseStatsCard phraseStats={phraseStats} />
-					</div>
+					</motion.div>
 
 					{/* Row 9b: Text levels + Goal forecast + Activity log */}
-					<div className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">
+					<motion.div variants={variants.staggerItem} className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">
 						<TextLevelsCard items={data.texts} />
 						<GoalForecastCard data={data.goalForecast} />
 						<div className="max-md:col-span-2 max-sm:col-span-1">
 							<ActivityLog items={data.recentActivity} />
 						</div>
-					</div>
-				</div>
+					</motion.div>
+				</motion.div>
 			)}
 		</>
 	);

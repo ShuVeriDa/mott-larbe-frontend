@@ -8,6 +8,8 @@ import { Typography } from "@/shared/ui/typography";
 import { DeckDailyWords } from "../deck-daily-words";
 import { DeckGuide } from "../deck-guide";
 import { DeckSettingsPanel } from "../deck-settings-panel";
+import { motion } from "framer-motion";
+import { variants } from "@/shared/lib/animation";
 
 export interface ReviewDeckIntroProps {
 	stats: DeckStats | undefined;
@@ -115,26 +117,33 @@ export const ReviewDeckIntro = ({
 	];
 
 	return (
-		<section className="flex flex-1 flex-col items-center justify-center px-5 py-7 max-md:justify-start max-md:px-4 max-md:pt-6">
-			<Typography
-				tag="h2"
-				className="mb-1 text-center font-display text-[20px] font-normal text-t-1"
-			>
-				{t("review.deck.intro.title")}
-			</Typography>
-			{!loading && !error ? (
-				<p className="mb-5 w-full max-w-[500px] whitespace-pre-line text-center text-[13px] leading-[1.75] text-t-2">
-					{t("review.deck.intro.subtitle")}
-				</p>
-			) : (
-				<p className="mb-5 text-[13px] text-t-3">
-					{loading
-						? t("review.deck.intro.loading")
-						: t("review.deck.intro.error")}
-				</p>
-			)}
+		<motion.section
+			className="flex flex-1 flex-col items-center justify-center px-5 py-7 max-md:justify-start max-md:px-4 max-md:pt-6"
+			variants={variants.staggerContainer}
+			initial="hidden"
+			animate="visible"
+		>
+			<motion.div variants={variants.staggerItem}>
+				<Typography
+					tag="h2"
+					className="mb-1 text-center font-display text-[20px] font-normal text-t-1"
+				>
+					{t("review.deck.intro.title")}
+				</Typography>
+				{!loading && !error ? (
+					<p className="mb-5 w-full max-w-[500px] whitespace-pre-line text-center text-[13px] leading-[1.75] text-t-2">
+						{t("review.deck.intro.subtitle")}
+					</p>
+				) : (
+					<p className="mb-5 text-[13px] text-t-3">
+						{loading
+							? t("review.deck.intro.loading")
+							: t("review.deck.intro.error")}
+					</p>
+				)}
+			</motion.div>
 
-			<div className="mb-4 w-full max-w-[500px]">
+			<motion.div className="mb-4 w-full max-w-[500px]" variants={variants.staggerItem}>
 				{!premiumLocked ? (
 					<div className="mb-2 flex items-center justify-between">
 						<span className="text-[11px] uppercase tracking-wide text-t-3">
@@ -146,39 +155,44 @@ export const ReviewDeckIntro = ({
 						</div>
 					</div>
 				) : null}
-				<ul className="flex flex-col gap-1.5">
+				<motion.ul
+					className="flex flex-col gap-1.5"
+					variants={variants.staggerContainer}
+				>
 					{rows.map(({ key, ...row }) => (
 						<DeckRow key={key} {...row} />
 					))}
-				</ul>
+				</motion.ul>
 				{stats != null && !premiumLocked ? (
 					<Typography className="mt-2 text-center text-[11.5px] text-t-3">
 						{t("review.deck.intro.totalWords", { count: stats.total })}
 					</Typography>
 				) : null}
-			</div>
+			</motion.div>
 
 			{!premiumLocked ? (
-				<div className="mb-4 w-full max-w-[500px]">
+				<motion.div className="mb-4 w-full max-w-[500px]" variants={variants.staggerItem}>
 					<DeckDailyWords />
-				</div>
+				</motion.div>
 			) : null}
 
 			{!premiumLocked ? (
-				<div className="mb-4 w-full max-w-[420px]">
+				<motion.div className="mb-4 w-full max-w-[420px]" variants={variants.staggerItem}>
 					<ModeSelector value={sessionMode} onChange={onModeChange} />
-				</div>
+				</motion.div>
 			) : null}
 
-			<Button
-				variant="action"
-				size="lg"
-				onClick={onStart}
-				disabled={loading || premiumLocked || !hasDue}
-				className="w-full max-w-[400px]"
-			>
-				{t("review.deck.intro.start")}
-			</Button>
+			<motion.div className="w-full max-w-[400px]" variants={variants.staggerItem}>
+				<Button
+					variant="action"
+					size="lg"
+					onClick={onStart}
+					disabled={loading || premiumLocked || !hasDue}
+					className="w-full"
+				>
+					{t("review.deck.intro.start")}
+				</Button>
+			</motion.div>
 
 			{premiumLocked ? (
 				<div className="mt-4 flex w-full max-w-[340px] flex-col items-center gap-2 rounded-card border-[0.5px] border-pur/20 bg-pur-bg p-4 text-center">
@@ -199,7 +213,7 @@ export const ReviewDeckIntro = ({
 					</Button>
 				</div>
 			) : null}
-		</section>
+		</motion.section>
 	);
 };
 
@@ -217,8 +231,9 @@ const DeckRow = ({
 	const pct = max > 0 ? Math.min((count / max) * 100, 100) : 0;
 
 	return (
-		<li
+		<motion.li
 			className={`flex items-center gap-3 rounded-card border-[0.5px] ${border ?? "border-bd-2"} bg-surf px-3.5 py-3 shadow-sm`}
+			variants={variants.staggerItem}
 		>
 			<div
 				className={`flex size-8 shrink-0 items-center justify-center rounded-base text-[14px] ${bg}`}
@@ -230,9 +245,11 @@ const DeckRow = ({
 				<div className="text-[13px] font-semibold text-t-1">{title}</div>
 				<div className="mt-px text-[11px] text-t-3">{desc}</div>
 				<div className="mt-1 h-1 w-[52px] overflow-hidden rounded-full bg-surf-3 max-md:hidden">
-					<div
+					<motion.div
 						className={`h-full rounded-full ${bar}`}
-						style={{ width: `${pct}%` }}
+						initial={{ width: 0 }}
+						animate={{ width: `${pct}%` }}
+						transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
 					/>
 				</div>
 			</div>
@@ -244,6 +261,6 @@ const DeckRow = ({
 					{t("review.deck.intro.row.of", { max })}
 				</div>
 			</div>
-		</li>
+		</motion.li>
 	);
 };

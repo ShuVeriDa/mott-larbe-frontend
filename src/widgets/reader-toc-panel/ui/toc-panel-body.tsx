@@ -59,10 +59,10 @@ export const TocPanelBody = ({
 							title={label}
 							onClick={handleClick}
 							className={cn(
-								"flex w-full items-baseline gap-2 rounded-[6px] px-2.5 py-2 text-left text-[13px] transition-colors",
+								"flex w-full items-baseline gap-2 rounded-[6px] px-2.5 py-2 text-left text-[13px] transition-[colors,transform] duration-150 ease-out",
 								isActive
 									? "bg-acc-bg text-acc-t"
-									: "text-t-2 hover:bg-surf-2 hover:text-t-1",
+									: "text-t-2 hover:bg-surf-2 hover:text-t-1 [@media(hover:hover)]:hover:translate-x-1",
 							)}
 						>
 							<Typography

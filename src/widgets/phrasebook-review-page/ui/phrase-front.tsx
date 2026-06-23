@@ -3,6 +3,7 @@
 import type { PhraseDue } from "@/entities/phrasebook";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { Clock } from "lucide-react";
 
 interface PhraseFrontProps {
 	phrase: PhraseDue;
@@ -47,10 +48,7 @@ export const PhraseFront = ({ phrase, cardNumber }: PhraseFrontProps) => {
 				) : null}
 			</div>
 			<Typography className="mt-3.5 flex items-center gap-1 text-[12px] text-t-3">
-				<svg viewBox="0 0 13 13" fill="none" className="size-3">
-					<circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.2" />
-					<path d="M6.5 5v1.5l1 1" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-				</svg>
+				<Clock className="size-3" />
 				{t("review.sm2.card.flipHint")}
 			</Typography>
 		</>

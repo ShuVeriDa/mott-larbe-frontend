@@ -2,7 +2,7 @@
 
 import { useGenres } from "@/entities/genre";
 import { useI18n } from "@/shared/lib/i18n";
-import { FilterSelect } from "./filter-select";
+import { FilterSelect } from "@/shared/ui/filter-select";
 
 interface LibraryFilterBarGenreSelectProps {
 	genreId: string | null;

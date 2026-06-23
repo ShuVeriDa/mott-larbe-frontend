@@ -13,6 +13,7 @@ import { useAdminTextVersionDetail } from "@/entities/admin-text";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { CefrBadge } from "@/shared/ui/cefr-badge";
+import { Play } from "lucide-react";
 import { ReactNode } from "react";
 
 const LangLabel: Record<string, string> = {
@@ -309,15 +310,7 @@ export const VersionsSidebar = ({
 								</>
 							) : (
 								<>
-									<svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-										<path
-											d="M5 3.5l8 4.5-8 4.5V3.5z"
-											stroke="#fff"
-											strokeWidth="1.4"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-										/>
-									</svg>
+									<Play className="size-3 fill-white text-white" />
 									{t("admin.texts.versions.sidebar.runBtn")}
 								</>
 							)}

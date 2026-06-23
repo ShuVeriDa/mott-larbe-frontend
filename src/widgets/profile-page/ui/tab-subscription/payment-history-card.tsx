@@ -7,21 +7,10 @@ import {
 } from "@/entities/subscription";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { CreditCard } from "lucide-react";
 import { ProfileCard as SettingCard } from "../profile-card";
 
-const CardIcon = () => (
-	<svg
-		viewBox="0 0 16 16"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.4"
-		className="size-4 text-t-3"
-	>
-		<rect x="1.5" y="3.5" width="13" height="9" rx="1.5" />
-		<path d="M1.5 6.5h13" strokeLinecap="round" />
-		<path d="M4 9.5h3" strokeLinecap="round" />
-	</svg>
-);
+const CardIcon = () => <CreditCard className="size-4 text-t-3" />;
 
 const STATUS_STYLE: Record<Payment["status"], string> = {
 	SUCCEEDED: "text-grn-t bg-grn-bg",

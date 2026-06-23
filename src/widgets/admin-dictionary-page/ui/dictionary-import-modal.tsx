@@ -1,5 +1,6 @@
 "use client";
 
+import { Upload } from "lucide-react";
 import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 import { ComponentProps, DragEvent, useRef, useState } from 'react';
@@ -120,11 +121,7 @@ export const DictionaryImportModal = ({
 						onDrop={handleDrop}
 						onClick={handleDropzoneClick}
 					>
-						<svg className="size-8 text-t-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
-							<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" strokeLinecap="round" strokeLinejoin="round" />
-							<polyline points="17 8 12 3 7 8" strokeLinecap="round" strokeLinejoin="round" />
-							<line x1="12" y1="3" x2="12" y2="15" strokeLinecap="round" />
-						</svg>
+						<Upload className="size-8 text-t-3" />
 						{file ? (
 							<Typography tag="p" className="text-[13px] font-medium text-t-1">{file.name}</Typography>
 						) : (

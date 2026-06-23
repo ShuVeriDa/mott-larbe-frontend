@@ -3,6 +3,8 @@
 import { Typography } from "@/shared/ui/typography";
 import { FontSizeGroup } from "@/features/reader-font-size";
 import { useI18n } from "@/shared/lib/i18n";
+import { variants } from "@/shared/lib/animation";
+import { motion } from "framer-motion";
 import { ScriptSwitcherFooter } from "./script-switcher-footer";
 
 const LEGEND = [
@@ -19,7 +21,12 @@ export const ReaderFooter = ({ textId }: ReaderFooterProps) => {
 	const { t } = useI18n();
 
 	return (
-		<footer className="flex shrink-0 items-center gap-2.5 border-t-[0.5px] border-bd-1 bg-surf px-4 py-2.5 max-md:hidden">
+		<motion.footer
+			variants={variants.fadeUp}
+			initial="hidden"
+			animate="visible"
+			className="flex shrink-0 items-center gap-2.5 border-t-[0.5px] border-bd-1 bg-surf px-4 py-2.5 max-md:hidden"
+		>
 			<Typography tag="span" className="text-[11px] text-t-3 shrink-0">
 				{t("reader.footer.size")}:
 			</Typography>
@@ -49,6 +56,6 @@ export const ReaderFooter = ({ textId }: ReaderFooterProps) => {
 					</Typography>
 				))}
 			</div>
-		</footer>
+		</motion.footer>
 	);
 };

@@ -1,6 +1,8 @@
 "use client";
 
 import { MouseEvent } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { variants } from "@/shared/lib/animation";
 import { getPhraseTranslation, type Phrase } from "@/entities/phrasebook";
 import { useTranslationLanguageStore } from "@/features/ai-word-lookup";
 import { usePhrasebookFilters } from "@/features/phrasebook-filters";
@@ -8,6 +10,7 @@ import { useSavePhrase } from "@/features/save-phrase";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Checkbox } from "@/shared/ui/checkbox";
+import { Bookmark, Copy } from "lucide-react";
 import { toast } from "sonner";
 import { PhraseActionButton } from "./phrase-action-button";
 import { PhraseDetail } from "./phrase-detail";
@@ -58,10 +61,14 @@ export const PhraseCard = ({ phrase, selectionMode, selected }: PhraseCardProps)
 	const dotColor = LANG_DOT_COLOR[phrase.lang] ?? LANG_DOT_COLOR.che;
 
 	return (
-		<article
+		<motion.article
+			variants={variants.fadeIn}
+			initial="hidden"
+			animate="visible"
 			className={cn(
 				"bg-surf border-[0.5px] rounded-[10px] overflow-hidden cursor-pointer",
-				"transition-[border-color,box-shadow] duration-150",
+				"transition-[border-color,box-shadow,transform] duration-150 ease-out",
+				"[@media(hover:hover)]:hover:-translate-y-px",
 				selected
 					? "border-primary"
 					: isOpen
@@ -118,36 +125,21 @@ export const PhraseCard = ({ phrase, selectionMode, selected }: PhraseCardProps)
 								: t("phrasebook.card.save")
 						}
 					>
-						<svg
-							viewBox="0 0 16 16"
-							fill={phrase.saved ? "currentColor" : "none"}
-							stroke="currentColor"
-							strokeWidth="1.5"
-							className="w-3 h-3"
-						>
-							<path d="M3 2h10v12l-5-3-5 3V2z" />
-						</svg>
+						<Bookmark className="size-3" fill={phrase.saved ? "currentColor" : "none"} />
 					</PhraseActionButton>
 					<PhraseActionButton
 						onClick={handleCopy}
 						title={t("phrasebook.card.copy")}
 					>
-						<svg
-							viewBox="0 0 16 16"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="1.5"
-							className="w-3 h-3"
-						>
-							<rect x="5" y="5" width="8" height="9" rx="1.5" />
-							<path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v8A1.5 1.5 0 0 0 3.5 13H5" />
-						</svg>
+						<Copy className="size-3" />
 					</PhraseActionButton>
 				</div>
 			</div>
 
-			{!selectionMode && isOpen && <PhraseDetail phrase={phrase} />}
-		</article>
+			<AnimatePresence>
+				{!selectionMode && isOpen && <PhraseDetail phrase={phrase} />}
+			</AnimatePresence>
+		</motion.article>
 	);
 };
 

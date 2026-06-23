@@ -1,7 +1,9 @@
 "use client";
 import type { TopWordsData } from "@/entities/statistics";
+import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
 interface TopWordsCardProps {
@@ -53,76 +55,99 @@ export const TopWordsCard = ({ data }: TopWordsCardProps) => {
 				</div>
 			</header>
 
-			{isEmpty ? (
-				<div className="flex h-20 items-center justify-center text-[11px] text-t-3">
-					{t("statistics.topWords.empty")}
-				</div>
-			) : isHardest ? (
-				<div className="flex flex-col gap-1.5">
-					{data.hardest.map((w, i) => (
-						<div key={i} className="flex items-center gap-2">
-							<Typography
-								tag="span"
-								className="w-4 shrink-0 text-[10px] text-t-3"
-							>
-								{i + 1}.
-							</Typography>
-							<div className="min-w-0 flex-1">
+			<AnimatePresence mode="wait">
+				{isEmpty ? (
+					<motion.div
+						key={`empty-${tab}`}
+						variants={variants.fadeIn}
+						initial="hidden"
+						animate="visible"
+						exit="exit"
+						className="flex h-20 items-center justify-center text-[11px] text-t-3"
+					>
+						{t("statistics.topWords.empty")}
+					</motion.div>
+				) : isHardest ? (
+					<motion.div
+						key="hardest"
+						variants={variants.fadeUp}
+						initial="hidden"
+						animate="visible"
+						exit="exit"
+						className="flex flex-col gap-1.5"
+					>
+						{data.hardest.map((w, i) => (
+							<div key={i} className="flex items-center gap-2">
 								<Typography
 									tag="span"
-									className="block truncate text-[12px] font-semibold text-t-1"
+									className="w-4 shrink-0 text-[10px] text-t-3"
 								>
-									{w.word}
+									{i + 1}.
 								</Typography>
-								<Typography
-									tag="span"
-									className="block truncate text-[10.5px] text-t-3"
-								>
-									{w.translation}
-								</Typography>
+								<div className="min-w-0 flex-1">
+									<Typography
+										tag="span"
+										className="block truncate text-[12px] font-semibold text-t-1"
+									>
+										{w.word}
+									</Typography>
+									<Typography
+										tag="span"
+										className="block truncate text-[10.5px] text-t-3"
+									>
+										{w.translation}
+									</Typography>
+								</div>
+								<div className="shrink-0 rounded-md bg-red/10 px-1.5 py-0.5">
+									<Typography
+										tag="span"
+										className="text-[10px] font-semibold text-red"
+									>
+										{w.wrongCount}✗
+									</Typography>
+								</div>
 							</div>
-							<div className="shrink-0 rounded-md bg-red/10 px-1.5 py-0.5">
+						))}
+					</motion.div>
+				) : (
+					<motion.div
+						key="mastered"
+						variants={variants.fadeUp}
+						initial="hidden"
+						animate="visible"
+						exit="exit"
+						className="flex flex-col gap-1.5"
+					>
+						{data.recentlyMastered.map((w, i) => (
+							<div key={i} className="flex items-center gap-2">
 								<Typography
 									tag="span"
-									className="text-[10px] font-semibold text-red"
+									className="w-4 shrink-0 text-[10px] text-t-3"
 								>
-									{w.wrongCount}✗
+									{i + 1}.
 								</Typography>
+								<div className="min-w-0 flex-1">
+									<Typography
+										tag="span"
+										className="block truncate text-[12px] font-semibold text-t-1"
+									>
+										{w.word}
+									</Typography>
+									<Typography
+										tag="span"
+										className="block truncate text-[10.5px] text-t-3"
+									>
+										{w.translation}
+									</Typography>
+								</div>
+								<span className="shrink-0 text-[13px]" aria-hidden="true">
+									✅
+								</span>
 							</div>
-						</div>
-					))}
-				</div>
-			) : (
-				<div className="flex flex-col gap-1.5">
-					{data.recentlyMastered.map((w, i) => (
-						<div key={i} className="flex items-center gap-2">
-							<Typography
-								tag="span"
-								className="w-4 shrink-0 text-[10px] text-t-3"
-							>
-								{i + 1}.
-							</Typography>
-							<div className="min-w-0 flex-1">
-								<Typography
-									tag="span"
-									className="block truncate text-[12px] font-semibold text-t-1"
-								>
-									{w.word}
-								</Typography>
-								<Typography
-									tag="span"
-									className="block truncate text-[10.5px] text-t-3"
-								>
-									{w.translation}
-								</Typography>
-							</div>
-							<span className="shrink-0 text-[13px]" aria-hidden="true">
-								✅
-							</span>
-						</div>
-					))}
-				</div>
-			)}
+						))}
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</section>
 	);
 };

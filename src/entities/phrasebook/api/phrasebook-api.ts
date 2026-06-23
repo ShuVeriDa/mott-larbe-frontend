@@ -5,6 +5,7 @@ import type {
 	PhrasebookSaveResponse,
 	PhrasebookStats,
 	PhrasesQuery,
+	GetPhrasesResponse,
 	SuggestPhraseDto,
 	SuggestPhraseResponse,
 	PhraseDue,
@@ -16,12 +17,14 @@ import type {
 
 const buildParams = (
 	query: PhrasesQuery,
-): Record<string, string | boolean> => {
-	const params: Record<string, string | boolean> = {};
+): Record<string, string | boolean | number> => {
+	const params: Record<string, string | boolean | number> = {};
 	if (query.categoryId) params.categoryId = query.categoryId;
 	if (query.lang) params.lang = query.lang;
 	if (query.saved) params.saved = true;
 	if (query.search) params.search = query.search;
+	if (query.page) params.page = query.page;
+	if (query.limit) params.limit = query.limit;
 	return params;
 };
 
@@ -37,8 +40,8 @@ export const phrasebookApi = {
 		return data;
 	},
 
-	phrases: async (query: PhrasesQuery): Promise<Phrase[]> => {
-		const { data } = await http.get<Phrase[]>("/phrasebook/phrases", {
+	phrases: async (query: PhrasesQuery): Promise<GetPhrasesResponse> => {
+		const { data } = await http.get<GetPhrasesResponse>("/phrasebook/phrases", {
 			params: buildParams(query),
 		});
 		return data;

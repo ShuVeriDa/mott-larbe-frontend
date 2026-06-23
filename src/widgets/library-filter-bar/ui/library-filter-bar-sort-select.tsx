@@ -3,7 +3,7 @@
 import type { LibrarySortOption } from "@/entities/library-text";
 import { useI18n } from "@/shared/lib/i18n";
 import { LIBRARY_FILTER_SORT_OPTIONS } from "../lib/library-filter-sort-options";
-import { FilterSelect } from "./filter-select";
+import { FilterSelect } from "@/shared/ui/filter-select";
 
 export interface LibraryFilterBarSortSelectProps {
 	sort: LibrarySortOption;

@@ -1,3 +1,5 @@
+import { Info } from "lucide-react";
+
 interface StatBoxProps {
 	value: number;
 	label: string;
@@ -22,10 +24,7 @@ export const StatBox = ({ value, label, tone, hint }: StatBoxProps) => (
 		<div className="mt-1 flex items-center justify-center gap-0.5 text-[11px] text-t-3">
 			{label}
 			{hint ? (
-				<svg viewBox="0 0 12 12" fill="none" className="size-3 shrink-0 text-t-4 opacity-60">
-					<circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.1" />
-					<path d="M6 5.5v3M6 4h.01" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
-				</svg>
+				<Info className="size-3 shrink-0 text-t-4 opacity-60" />
 			) : null}
 		</div>
 	</div>

@@ -2,12 +2,11 @@
 
 import type { DictionarySort } from "@/entities/dictionary";
 import { useI18n } from "@/shared/lib/i18n";
+import type { CefrLevel, LearningLevel } from "@/shared/types";
 import { CEFR_LEVELS, LEARNING_LEVELS } from "@/shared/types";
-import type { LearningLevel, CefrLevel } from "@/shared/types";
 import { FilterGroup } from "@/shared/ui/filter-group";
-import { Select } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
-import type { ComponentProps } from "react";
+import { FilterSelect } from "@/shared/ui/filter-select";
 import { useVocabularyFilters } from "../../model";
 
 const STATUS_LABELS: Record<LearningLevel, string> = {
@@ -44,8 +43,11 @@ export const FilterBar = () => {
 		...CEFR_LEVELS.map(l => ({ value: l, label: l })),
 	];
 
-	const handleSortChange: NonNullable<ComponentProps<typeof Select>["onChange"]> = e =>
-		setSort(e.currentTarget.value as DictionarySort);
+	const sortOptions = SORT_OPTIONS.map(opt => ({
+		value: opt,
+		label: t(SORT_LABEL_KEY[opt]),
+	}));
+	const handleSortChange = (v: string) => setSort(v as DictionarySort);
 
 	return (
 		<div
@@ -68,19 +70,13 @@ export const FilterBar = () => {
 					value={cefrLevel}
 					onValueChange={setCefrLevel}
 				/>
-				<Select
-					wrapperClassName="ml-auto w-auto shrink-0"
-					className="h-[26px]! text-[11px]!"
+
+				<FilterSelect
 					value={sort}
+					options={sortOptions}
 					onChange={handleSortChange}
 					aria-label={t("vocabulary.sort.label")}
-				>
-					{SORT_OPTIONS.map(opt => (
-						<option key={opt} value={opt}>
-							{t(SORT_LABEL_KEY[opt])}
-						</option>
-					))}
-				</Select>
+				/>
 			</div>
 
 			{/* Narrow: two aligned rows */}
@@ -95,7 +91,11 @@ export const FilterBar = () => {
 					{t("vocabulary.filterByStatus")}
 				</Typography>
 				<div className="flex items-center gap-1.5 py-1">
-					<FilterGroup options={statusOptions} value={status} onValueChange={setStatus} />
+					<FilterGroup
+						options={statusOptions}
+						value={status}
+						onValueChange={setStatus}
+					/>
 				</div>
 
 				<Typography
@@ -105,20 +105,17 @@ export const FilterBar = () => {
 					{t("vocabulary.filterByLevel")}
 				</Typography>
 				<div className="flex items-center gap-1.5 py-1">
-					<FilterGroup options={levelOptions} value={cefrLevel} onValueChange={setCefrLevel} />
-					<Select
-						wrapperClassName="ml-auto w-auto shrink-0"
-						className="h-[26px]! text-[11px]!"
+					<FilterGroup
+						options={levelOptions}
+						value={cefrLevel}
+						onValueChange={setCefrLevel}
+					/>
+					<FilterSelect
 						value={sort}
+						options={sortOptions}
 						onChange={handleSortChange}
 						aria-label={t("vocabulary.sort.label")}
-					>
-						{SORT_OPTIONS.map(opt => (
-							<option key={opt} value={opt}>
-								{t(SORT_LABEL_KEY[opt])}
-							</option>
-						))}
-					</Select>
+					/>
 				</div>
 			</div>
 		</div>

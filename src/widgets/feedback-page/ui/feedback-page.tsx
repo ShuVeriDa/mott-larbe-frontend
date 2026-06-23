@@ -1,5 +1,6 @@
 "use client";
 
+import { MessageSquare, Plus } from "lucide-react";
 import { Typography } from "@/shared/ui/typography";
 
 import { Button } from "@/shared/ui/button";
@@ -88,16 +89,7 @@ export const FeedbackPage = () => {
 					title={t("feedback.new")}
 					className="hidden h-[30px] items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white shadow-[0_1px_4px_rgba(34,84,211,0.3)] transition-opacity hover:opacity-[0.88] max-sm:flex"
 				>
-					<svg
-						viewBox="0 0 14 14"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.8"
-						strokeLinecap="round"
-						className="size-[11px]"
-					>
-						<path d="M7 2v10M2 7h10" />
-					</svg>
+					<Plus className="size-[11px]" />
 					{t("feedback.new")}
 				</Button>
 			</div>
@@ -140,15 +132,7 @@ export const FeedbackPage = () => {
 				) : (
 					<div className="flex flex-1 flex-col items-center justify-center gap-2 max-sm:hidden">
 						<div className="flex size-12 items-center justify-center rounded-xl bg-surf-2">
-							<svg
-								viewBox="0 0 20 20"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="1.4"
-								className="size-6 text-t-3"
-							>
-								<path d="M16 14H11l-4 3V14H4a1.5 1.5 0 0 1-1.5-1.5V4A1.5 1.5 0 0 1 4 2.5h12A1.5 1.5 0 0 1 17.5 4v8.5A1.5 1.5 0 0 1 16 14z" />
-							</svg>
+							<MessageSquare className="size-6 text-t-3" />
 						</div>
 						<Typography tag="p" className="text-[13px] text-t-3">{t("feedback.selectThread")}</Typography>
 					</div>

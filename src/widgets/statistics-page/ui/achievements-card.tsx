@@ -1,8 +1,11 @@
 "use client";
 import type { AchievementsData } from "@/entities/statistics";
+import { variants } from "@/shared/lib/animation";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { LEFT_GROUPS, RIGHT_GROUPS } from "../lib/achievement-groups";
 import { AchievementGroupSection } from "./achievement-group-section";
@@ -37,30 +40,32 @@ export const AchievementsCard = ({ data }: AchievementsCardProps) => {
 						{data.reached}/{data.total} · {pct}%
 					</Typography>
 				</div>
-				<svg
-					viewBox="0 0 16 16"
-					fill="none"
-					strokeWidth="1.5"
-					className={cn("size-4 shrink-0 stroke-t-3 transition-transform", isExpanded && "rotate-180")}
-				>
-					<path d="M4 6l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
-				</svg>
+				<ChevronDown className={cn("size-4 shrink-0 text-t-3 transition-transform", isExpanded && "rotate-180")} />
 			</button>
 
-			{isExpanded && (
-				<div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-3 max-sm:grid-cols-1">
-					<div className="flex flex-col gap-3">
-						{LEFT_GROUPS.map(group => (
-							<AchievementGroupSection key={group.labelKey} group={group} byId={byId} t={t} />
-						))}
-					</div>
-					<div className="flex flex-col gap-3">
-						{RIGHT_GROUPS.map(group => (
-							<AchievementGroupSection key={group.labelKey} group={group} byId={byId} t={t} />
-						))}
-					</div>
-				</div>
-			)}
+			<AnimatePresence initial={false}>
+				{isExpanded && (
+					<motion.div
+						className="mt-3 grid grid-cols-2 gap-x-6 gap-y-3 max-sm:grid-cols-1"
+						initial={{ opacity: 0, height: 0 }}
+						animate={{ opacity: 1, height: "auto" }}
+						exit={{ opacity: 0, height: 0 }}
+						transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+						style={{ overflow: "hidden" }}
+					>
+						<div className="flex flex-col gap-3">
+							{LEFT_GROUPS.map(group => (
+								<AchievementGroupSection key={group.labelKey} group={group} byId={byId} t={t} />
+							))}
+						</div>
+						<div className="flex flex-col gap-3">
+							{RIGHT_GROUPS.map(group => (
+								<AchievementGroupSection key={group.labelKey} group={group} byId={byId} t={t} />
+							))}
+						</div>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</section>
 	);
 };

@@ -2,14 +2,17 @@
 
 import { useFoldersSummary } from "@/entities/folder";
 import { cn } from "@/shared/lib/cn";
+import { duration, ease } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import { CheckCircle2, Clock, FolderOpen, ListOrdered } from "lucide-react";
+import { motion } from "framer-motion";
 import type { ComponentType, SVGProps } from "react";
 interface SummaryItemProps {
 	tone: "acc" | "neutral" | "grn" | "amb";
 	icon: ComponentType<SVGProps<SVGSVGElement> & { strokeWidth?: number }>;
 	value: number;
 	label: string;
+	index: number;
 }
 
 const TONE_CLASSES = {
@@ -19,8 +22,14 @@ const TONE_CLASSES = {
 	amb: "bg-amb-bg text-amb",
 } as const;
 
-const SummaryItem = ({ tone, icon: Icon, value, label }: SummaryItemProps) => (
-	<div className="rounded-card border-[0.5px] border-bd-1 bg-surf px-[15px] py-[13px] transition-[border-color,box-shadow] hover:border-bd-2 hover:shadow-sm">
+const SummaryItem = ({ tone, icon: Icon, value, label, index }: SummaryItemProps) => (
+	<motion.div
+		className="rounded-card border-[0.5px] border-bd-1 bg-surf px-[15px] py-[13px] transition-[border-color,box-shadow] hover:border-bd-2 hover:shadow-sm"
+		initial={{ opacity: 0, y: 10 }}
+		whileInView={{ opacity: 1, y: 0 }}
+		viewport={{ once: true, margin: "-40px" }}
+		transition={{ duration: duration.slow, ease: ease.enter, delay: index * 0.06 }}
+	>
 		<div
 			className={cn(
 				"mb-[9px] flex size-7 items-center justify-center rounded-base",
@@ -33,7 +42,7 @@ const SummaryItem = ({ tone, icon: Icon, value, label }: SummaryItemProps) => (
 			{value}
 		</div>
 		<div className="mt-[3px] text-[11px] text-t-3">{label}</div>
-	</div>
+	</motion.div>
 );
 
 const SkeletonItem = () => (
@@ -62,24 +71,28 @@ export const FoldersSummary = () => {
 	return (
 		<div className="grid grid-cols-2 gap-[9px] lg:grid-cols-4">
 			<SummaryItem
+				index={0}
 				tone="acc"
 				icon={FolderOpen}
 				value={data.foldersCount}
 				label={t("vocabulary.foldersPage.summary.foldersCount")}
 			/>
 			<SummaryItem
+				index={1}
 				tone="neutral"
 				icon={ListOrdered}
 				value={data.wordsInFolders}
 				label={t("vocabulary.foldersPage.summary.wordsInFolders")}
 			/>
 			<SummaryItem
+				index={2}
 				tone="grn"
 				icon={CheckCircle2}
 				value={data.knownWords}
 				label={t("vocabulary.foldersPage.summary.knownWords")}
 			/>
 			<SummaryItem
+				index={3}
 				tone="amb"
 				icon={Clock}
 				value={data.wordsWithoutFolder}

@@ -7,6 +7,7 @@ export type {
 	PhrasebookCategory,
 	PhrasebookStats,
 	PhrasesQuery,
+	GetPhrasesResponse,
 	PhraseWord,
 	PhraseExample,
 	PhraseStatus,

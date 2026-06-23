@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { MouseEvent } from "react";
+import { spring } from "@/shared/lib/animation";
+import { motion } from "framer-motion";
 import type {
 	PhrasebookCategory,
 	PhraseCategoryProgress,
@@ -50,7 +52,11 @@ export const PhrasebookCategoryItem = ({
 				)}
 			>
 				{active && (
-					<span className="absolute left-0 top-1 bottom-1 w-0.5 bg-acc rounded-r-sm" />
+					<motion.span
+						layoutId="category-active-indicator"
+						className="absolute left-0 top-1 bottom-1 w-0.5 bg-acc rounded-r-sm"
+						transition={spring.snappy}
+					/>
 				)}
 				<span className="text-[14px] shrink-0 leading-none">
 					{category.emoji}

@@ -3,7 +3,9 @@
 import { Typography } from "@/shared/ui/typography";
 
 import type { DetailSense } from "@/entities/dictionary";
+import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
+import { motion } from "framer-motion";
 import { CardSection } from "../card-section";
 
 export interface SensesSectionProps {
@@ -20,10 +22,16 @@ export const SensesSection = ({ senses }: SensesSectionProps) => {
 					{t("vocabulary.wordDetail.senses.empty")}
 				</Typography>
 			) : (
-				<ol className="flex flex-col">
+				<motion.ol
+					className="flex flex-col"
+					variants={variants.staggerContainer}
+					initial="hidden"
+					animate="visible"
+				>
 					{senses.map((sense, idx) => (
-						<li
+						<motion.li
 							key={sense.id}
+							variants={variants.staggerItem}
 							className="border-b-[0.5px] border-bd-1 py-2.5 first:pt-0 last:border-b-0 last:pb-0"
 						>
 							<div className="mb-1 text-[10px] font-bold text-t-4">
@@ -65,9 +73,9 @@ export const SensesSection = ({ senses }: SensesSectionProps) => {
 									))}
 								</div>
 							) : null}
-						</li>
+						</motion.li>
 					))}
-				</ol>
+				</motion.ol>
 			)}
 		</CardSection>
 	);

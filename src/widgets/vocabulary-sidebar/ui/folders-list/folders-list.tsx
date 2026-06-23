@@ -3,38 +3,15 @@
 import { Button } from "@/shared/ui/button";
 
 import { ComponentProps } from 'react';
-import { Plus } from "lucide-react";
-// import { Lock } from "lucide-react"; // unused while folder lock is hidden
+import { Folder, LayoutList, Plus } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { FolderItem, useFolders } from "@/entities/folder";
 import { useUsage } from "@/entities/subscription";
 import { useVocabularyFilters } from "@/features/vocabulary-filters";
 
-const AllWordsIcon = () => (
-	<svg viewBox="0 0 16 16" fill="none" className="size-[14px]">
-		<rect
-			x="2"
-			y="4"
-			width="12"
-			height="9"
-			rx="1.5"
-			stroke="currentColor"
-			strokeWidth="1.3"
-		/>
-		<path d="M2 7h12" stroke="currentColor" strokeWidth="1.2" />
-	</svg>
-);
-
-const FolderIcon = () => (
-	<svg viewBox="0 0 16 16" fill="none" className="size-[14px]">
-		<path
-			d="M2 12V5a1 1 0 011-1h3.5L8 6h5a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1z"
-			stroke="currentColor"
-			strokeWidth="1.3"
-		/>
-	</svg>
-);
+const AllWordsIcon = () => <LayoutList className="size-[14px]" />;
+const FolderIcon = () => <Folder className="size-[14px]" />;
 
 export interface FoldersListProps {
 	totalAllWords: number;

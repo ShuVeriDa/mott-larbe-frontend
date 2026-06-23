@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { Home } from "lucide-react";
 import { usePhrasebookReviewPage } from "../model";
 import { PhraseReviewDone } from "./phrase-review-done";
 import { PhraseReviewIntro } from "./phrase-review-intro";
@@ -48,19 +49,7 @@ export const PhrasebookReviewPage = ({
 	return (
 		<>
 			<header className="flex shrink-0 items-center gap-2.5 border-b-[0.5px] border-bd-1 bg-surf px-[22px] py-3 transition-colors duration-200 max-md:gap-2 max-md:px-3.5 max-md:py-2.5">
-				<svg
-					viewBox="0 0 15 15"
-					fill="none"
-					className="size-3.5 shrink-0 text-t-3 max-md:hidden"
-					aria-hidden="true"
-				>
-					<path
-						d="M7.5 2L2 5.5v7h4v-4h3v4h4v-7L7.5 2z"
-						stroke="currentColor"
-						strokeWidth="1.2"
-						strokeLinejoin="round"
-					/>
-				</svg>
+				<Home className="size-3.5 shrink-0 text-t-3 max-md:hidden" aria-hidden="true" />
 				<Typography
 					tag="span"
 					className="whitespace-nowrap text-[13.5px] font-semibold text-t-1 max-md:hidden"

@@ -18,6 +18,7 @@ import { useSwipe } from "@/shared/lib/swipe";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { FlashcardBack } from "@/widgets/review-session";
+import { ArrowLeft, Clock, Star } from "lucide-react";
 import { useEffect } from "react";
 import { useDeckSession, type DeckCounts } from "../../model";
 import { ChoiceCardDeck } from "../choice-card";
@@ -280,15 +281,7 @@ export const DeckSession = ({
 					onClick={onBack}
 					className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base border-[0.5px] border-bd-2 bg-transparent px-3 text-[12px] text-t-3 transition-colors hover:bg-surf-2 hover:text-t-2"
 				>
-					<svg viewBox="0 0 12 12" fill="none" className="size-3">
-						<path
-							d="M8 6H4M5 3L2 6l3 3"
-							stroke="currentColor"
-							strokeWidth="1.2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
+					<ArrowLeft className="size-3" />
 					{t("review.deck.card.backToDecks")}
 				</Button>
 				<Typography tag="span" className="ml-2 text-[12px] text-t-3">
@@ -337,9 +330,7 @@ const DeckCardFront = ({
 					className="absolute bottom-3 right-3.5 flex items-center gap-1 text-[10.5px] font-medium text-red-t"
 					title={t("review.deck.card.hardWord")}
 				>
-					<svg viewBox="0 0 10 10" fill="currentColor" className="size-2.5">
-						<path d="M5 1L6.18 3.62 9 4.12 7 6.08 7.45 9 5 7.77 2.55 9 3 6.08 1 4.12 3.82 3.62z" />
-					</svg>
+					<Star className="size-2.5 fill-current" />
 					×{againStreak}
 				</Typography>
 			) : null}
@@ -357,21 +348,7 @@ const DeckCardFront = ({
 			) : null}
 
 			<Typography className="mt-3.5 flex items-center gap-1 text-[12px] text-t-3 opacity-60">
-				<svg viewBox="0 0 13 13" fill="none" className="size-3">
-					<circle
-						cx="6.5"
-						cy="6.5"
-						r="4"
-						stroke="currentColor"
-						strokeWidth="1.2"
-					/>
-					<path
-						d="M6.5 5v1.5l1 1"
-						stroke="currentColor"
-						strokeWidth="1.2"
-						strokeLinecap="round"
-					/>
-				</svg>
+				<Clock className="size-3" />
 				{t("review.sm2.card.flipHint")}
 			</Typography>
 		</>

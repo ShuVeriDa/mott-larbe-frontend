@@ -1,9 +1,9 @@
 "use client";
 
 import type { LibraryTextListItem } from "@/entities/library-text";
-import { useVirtualizer } from "@tanstack/react-virtual";
-import { LibraryPreviewCard } from "@/widgets/dashboard-page/ui/library-preview-card";
 import { useI18n } from "@/shared/lib/i18n";
+import { LibraryPreviewCard } from "@/widgets/dashboard-page/ui/library-preview-card";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import type { RefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 
@@ -49,7 +49,11 @@ const useContainerColumns = () => {
 	return { containerRef, columns };
 };
 
-const VirtualGridCardsDesktop = ({ items, scrollRef }: VirtualGridCardsProps) => {
+const VirtualGridCardsDesktop = ({
+	items,
+	scrollRef,
+}: VirtualGridCardsProps) => {
+	"use no memo";
 	const { lang } = useI18n();
 	const { containerRef, columns } = useContainerColumns();
 	const rowCount = Math.ceil(items.length / columns);
@@ -67,7 +71,7 @@ const VirtualGridCardsDesktop = ({ items, scrollRef }: VirtualGridCardsProps) =>
 				className="relative w-full"
 				style={{ height: `${virtualizer.getTotalSize()}px` }}
 			>
-				{virtualizer.getVirtualItems().map((virtualRow) => {
+				{virtualizer.getVirtualItems().map(virtualRow => {
 					const startIndex = virtualRow.index * columns;
 					const rowItems = items.slice(startIndex, startIndex + columns);
 					return (
@@ -80,10 +84,11 @@ const VirtualGridCardsDesktop = ({ items, scrollRef }: VirtualGridCardsProps) =>
 								transform: `translateY(${virtualRow.start}px)`,
 								display: "grid",
 								gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-								gap: `${GAP}px`,
+								columnGap: `${GAP}px`,
+								paddingBottom: `${GAP}px`,
 							}}
 						>
-							{rowItems.map((item) => (
+							{rowItems.map(item => (
 								<div key={item.id} className="min-w-0">
 									<LibraryPreviewCard item={item} lang={lang} />
 								</div>
@@ -96,11 +101,13 @@ const VirtualGridCardsDesktop = ({ items, scrollRef }: VirtualGridCardsProps) =>
 	);
 };
 
-const FlatGridCardsMobile = ({ items }: Pick<VirtualGridCardsProps, "items">) => {
+const FlatGridCardsMobile = ({
+	items,
+}: Pick<VirtualGridCardsProps, "items">) => {
 	const { lang } = useI18n();
 	return (
 		<div className="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-3">
-			{items.map((item) => (
+			{items.map(item => (
 				<div key={item.id} className="min-w-0">
 					<LibraryPreviewCard item={item} lang={lang} />
 				</div>
@@ -109,14 +116,17 @@ const FlatGridCardsMobile = ({ items }: Pick<VirtualGridCardsProps, "items">) =>
 	);
 };
 
-export const VirtualGridCards = ({ items, scrollRef }: VirtualGridCardsProps) => {
-	const [isMobile, setIsMobile] = useState(() =>
-		typeof window !== "undefined" ? window.innerWidth < 768 : false,
-	);
+export const VirtualGridCards = ({
+	items,
+	scrollRef,
+}: VirtualGridCardsProps) => {
+	const [isMobile, setIsMobile] = useState(() => {
+		if (typeof window === "undefined") return false;
+		return window.matchMedia("(max-width: 767px)").matches;
+	});
 
 	useEffect(() => {
 		const mql = window.matchMedia("(max-width: 767px)");
-		setIsMobile(mql.matches);
 		const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
 		mql.addEventListener("change", handler);
 		return () => mql.removeEventListener("change", handler);

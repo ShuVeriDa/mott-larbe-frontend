@@ -18,7 +18,7 @@ export const PhrasebookOverview = ({
 	const { data, isLoading } = usePhrasebookStats();
 
 	return (
-		<div className="flex items-center gap-2 px-3.5 py-2.5 bg-surf border-[0.5px] border-bd-1 rounded-card shrink-0  ">
+		<div className="flex items-center gap-2 px-3.5 py-2.5 bg-surf border-[0.5px] border-bd-1 rounded-card shrink-0 animate-in fade-in slide-in-from-bottom-1 motion-reduce:animate-none" style={{ animationDuration: "300ms", animationFillMode: "both" }}>
 			<PhrasebookStatItem
 				value={isLoading ? null : (data?.totalPhrases ?? 0)}
 				label={t("phrasebook.overview.phrases")}

@@ -3,6 +3,7 @@
 import type { DashboardStreakDay } from "@/entities/dashboard";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { Flame } from "lucide-react";
 import Link from "next/link";
 
 interface StreakCalendarProps {
@@ -105,17 +106,5 @@ const StreakStat = ({ value, label, colorClass }: StreakStatProps) => (
 );
 
 const StreakFlameIcon = () => (
-	<svg
-		viewBox="0 0 14 14"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="1.3"
-		className="size-[14px] text-amb-t"
-		aria-hidden="true"
-	>
-		<path
-			d="M7 1.5C7 1.5 9.5 4 9.5 6.5C9.5 8 8.4 9 7 9C5.6 9 4.5 8 4.5 6.5C4.5 5.5 5 4.5 5 4.5C5 4.5 4 6 4.5 7C3.5 6.5 3 5.5 3 4.5C3 6.5 4.5 8.5 4.5 10C4.5 11.4 5.6 12.5 7 12.5C8.4 12.5 9.5 11.4 9.5 10C9.5 8 11 6 7 1.5Z"
-			strokeLinejoin="round"
-		/>
-	</svg>
+	<Flame className="size-[14px] text-amb-t" aria-hidden="true" />
 );

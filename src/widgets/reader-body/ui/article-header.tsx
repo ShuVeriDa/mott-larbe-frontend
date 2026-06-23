@@ -3,6 +3,8 @@
 import { Typography } from "@/shared/ui/typography";
 import type { TextPageResponse } from "@/entities/text";
 import { useI18n } from "@/shared/lib/i18n";
+import { duration, ease } from "@/shared/lib/animation";
+import { motion } from "framer-motion";
 
 export interface ArticleProgressBarProps {
 	progress: number;
@@ -32,6 +34,16 @@ export interface ArticleHeaderProps {
 	showProgress?: boolean;
 }
 
+const headerVariants = {
+	hidden: {},
+	visible: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
+} as const;
+
+const itemVariants = {
+	hidden: { opacity: 0, y: 8 },
+	visible: { opacity: 1, y: 0, transition: { duration: duration.slow, ease: ease.enter } },
+} as const;
+
 export const ArticleHeader = ({ data, currentPage, showProgress = false }: ArticleHeaderProps) => {
 	const { t } = useI18n();
 
@@ -47,11 +59,21 @@ export const ArticleHeader = ({ data, currentPage, showProgress = false }: Artic
 	].filter(Boolean);
 
 	return (
-		<header className="mb-8" dir="ltr">
+		<motion.header
+			className="mb-8"
+			dir="ltr"
+			variants={headerVariants}
+			initial="hidden"
+			animate="visible"
+		>
 			{showProgress && <ArticleProgressBar progress={data.progress} />}
+
 			{/* Meta line — editorial caption style */}
 			{metaTokens.length > 0 && (
-				<div className="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1">
+				<motion.div
+					variants={itemVariants}
+					className="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1"
+				>
 					{metaTokens.map((token, i) => (
 						<span key={i} className="flex items-center gap-x-2">
 							<Typography
@@ -65,34 +87,41 @@ export const ArticleHeader = ({ data, currentPage, showProgress = false }: Artic
 							)}
 						</span>
 					))}
-				</div>
+				</motion.div>
 			)}
 
 			{/* Rule above title */}
-			<div className="mb-4 h-px w-full bg-bd-2" />
+			<motion.div variants={itemVariants} className="mb-4 h-px w-full bg-bd-2" />
 
 			{/* Book title */}
-			<Typography
-				tag="h1"
-				className="mb-1 font-display text-[clamp(1.5rem,3vw,2rem)] font-medium leading-[1.25] tracking-[-0.3px] text-t-1"
-			>
-				{data.title}
-			</Typography>
+			<motion.div variants={itemVariants}>
+				<Typography
+					tag="h1"
+					className="mb-1 font-display text-[clamp(1.5rem,3vw,2rem)] font-medium leading-[1.25] tracking-[-0.3px] text-t-1"
+				>
+					{data.title}
+				</Typography>
+			</motion.div>
 
 			{/* Chapter / page title — italic */}
-			{data.page.title ? (
-				<Typography
-					tag="h2"
-					className="mb-3 font-display text-[clamp(0.95rem,2vw,1.15rem)] font-normal italic leading-snug text-t-2"
-				>
-					{data.page.title}
-				</Typography>
-			) : (
-				<div className="mb-3" />
-			)}
+			<motion.div variants={itemVariants}>
+				{data.page.title ? (
+					<Typography
+						tag="h2"
+						className="mb-3 font-display text-[clamp(0.95rem,2vw,1.15rem)] font-normal italic leading-snug text-t-2"
+					>
+						{data.page.title}
+					</Typography>
+				) : (
+					<div className="mb-3" />
+				)}
+			</motion.div>
 
 			{/* Byline — author · wordcount · page */}
-			<div className="flex flex-wrap items-center gap-x-3 gap-y-0.5">
+			<motion.div
+				variants={itemVariants}
+				className="flex flex-wrap items-center gap-x-3 gap-y-0.5"
+			>
 				{data.author && (
 					<Typography tag="span" className="text-[12px] text-t-2">
 						{data.author}
@@ -108,7 +137,7 @@ export const ArticleHeader = ({ data, currentPage, showProgress = false }: Artic
 						total: data.totalPages,
 					})}
 				</Typography>
-			</div>
-		</header>
+			</motion.div>
+		</motion.header>
 	);
 };

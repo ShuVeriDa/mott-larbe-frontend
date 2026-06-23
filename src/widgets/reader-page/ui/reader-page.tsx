@@ -5,7 +5,7 @@ import { ReaderTopbar } from "@/widgets/reader-topbar";
 import { WordPopup } from "@/widgets/word-popup";
 import dynamic from "next/dynamic";
 import { useReaderPage } from "../model/use-reader-page";
-import { ReaderLoading } from "./reader-loading";
+import { ReaderPageSkeleton } from "./reader-page-skeleton";
 import { ReaderError } from "./reader-error";
 import { ReaderLayout } from "./reader-layout";
 import { ReaderFocusExitButton } from "./reader-focus-exit-button";
@@ -183,7 +183,7 @@ export const ReaderPage = ({ textId, pageNumber, routeBase = "reader", apiFn, ba
 		handleCloseRail,
 	} = useReaderPage(textId, pageNumber, routeBase, apiFn);
 
-	if (isLoading) return <ReaderLoading />;
+	if (isLoading) return <ReaderPageSkeleton />;
 	if (isError || !data) return <ReaderError />;
 
 	return (

@@ -5,6 +5,7 @@ import { Typography } from "@/shared/ui/typography";
 import { Button } from "@/shared/ui/button";
 
 import { cn } from "@/shared/lib/cn";
+import { MoreVertical } from "lucide-react";
 import { type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 import type { Folder } from "../../api/types";
 import { DEFAULT_FOLDER_COLOR } from "../../lib/folder-presets";
@@ -152,11 +153,7 @@ export const FolderCard = ({
 								"focus-visible:opacity-100",
 							)}
 						>
-							<svg viewBox="0 0 14 14" className="size-[13px]" aria-hidden>
-								<circle cx="7" cy="3" r="1" fill="currentColor" />
-								<circle cx="7" cy="7" r="1" fill="currentColor" />
-								<circle cx="7" cy="11" r="1" fill="currentColor" />
-							</svg>
+							<MoreVertical className="size-[13px]" aria-hidden />
 						</Button>
 					) : null}
 				</div>

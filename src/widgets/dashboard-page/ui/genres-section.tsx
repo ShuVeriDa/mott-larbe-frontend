@@ -1,11 +1,8 @@
 "use client";
 
-import type { Genre } from "@/entities/genre";
 import { useGenres } from "@/entities/genre";
 import { useI18n } from "@/shared/lib/i18n";
-import { Typography } from "@/shared/ui/typography";
 import {
-	Anchor,
 	Award,
 	Baby,
 	BookHeart,
@@ -51,8 +48,7 @@ import {
 	Zap,
 	type LucideIcon,
 } from "lucide-react";
-import Link from "next/link";
-import type { CSSProperties } from "react";
+import { GenreCard } from "./genre-card";
 import { HorizontalScrollRow } from "./horizontal-scroll-row";
 import { SectionHeader } from "./section-header";
 
@@ -191,44 +187,17 @@ export const GenresSection = ({ lang }: GenresSectionProps) => {
 				</div>
 			) : (
 				<HorizontalScrollRow>
-					{(genres ?? []).map((genre) => (
-						<GenreCard key={genre.id} genre={genre} lang={lang} />
+					{(genres ?? []).map((genre, index) => (
+						<GenreCard
+							key={genre.id}
+							genre={genre}
+							lang={lang}
+							style={getGenreStyle(genre.slug)}
+							index={index}
+						/>
 					))}
 				</HorizontalScrollRow>
 			)}
 		</section>
-	);
-};
-
-interface GenreCardProps {
-	genre: Genre;
-	lang: string;
-}
-
-const GenreCard = ({ genre, lang }: GenreCardProps) => {
-	const style = getGenreStyle(genre.slug);
-	const Icon = style.icon;
-
-	return (
-		<Link
-			href={`/${lang}/texts?genreId=${genre.id}`}
-			className="group relative flex h-[88px] w-[110px] shrink-0 flex-col justify-between overflow-hidden rounded-xl border border-white/5 bg-surf-2 p-3 outline-none transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:[box-shadow:0_6px_20px_2px_var(--genre-glow)] focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
-			style={{ "--genre-glow": `${style.glow}55` } as CSSProperties}
-		>
-			<div className={`absolute inset-0 bg-linear-to-br ${style.gradient} transition-opacity duration-200`} />
-
-			<Icon
-				size={20}
-				className={`relative z-10 ${style.iconColor} transition-transform duration-200 ease-out group-hover:scale-110`}
-				strokeWidth={1.6}
-			/>
-
-			<Typography
-				tag="span"
-				className="relative z-10 line-clamp-2 text-[12px] font-semibold leading-tight text-t-1"
-			>
-				{genre.name}
-			</Typography>
-		</Link>
 	);
 };

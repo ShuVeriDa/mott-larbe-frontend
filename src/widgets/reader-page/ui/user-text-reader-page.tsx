@@ -3,7 +3,7 @@
 import { userTextReaderContextApi } from "@/entities/reader-context/api/user-text-reader-context-api";
 import { useI18n } from "@/shared/lib/i18n";
 import { ReaderPage } from "./reader-page";
-import { ReaderLoading } from "./reader-loading";
+import { ReaderPageSkeleton } from "./reader-page-skeleton";
 import { ReaderError } from "./reader-error";
 import { useUserTextReaderContext } from "@/entities/reader-context/model/use-user-text-reader-context";
 
@@ -17,7 +17,7 @@ export const UserTextReaderPage = ({ userTextId, pageNumber }: UserTextReaderPag
 
 	const { isPending, isError } = useUserTextReaderContext(userTextId, pageNumber);
 
-	if (isPending) return <ReaderLoading />;
+	if (isPending) return <ReaderPageSkeleton />;
 	if (isError) return <ReaderError />;
 
 	return (

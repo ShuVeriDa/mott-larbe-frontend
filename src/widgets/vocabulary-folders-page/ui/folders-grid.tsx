@@ -4,6 +4,8 @@ import { useReorderFolders } from "@/features/update-folder";
 import { cn } from "@/shared/lib/cn";
 import { formatRelativeFromNow } from "@/shared/lib/format-relative-time";
 import { useI18n } from "@/shared/lib/i18n";
+import { duration, ease } from "@/shared/lib/animation";
+import { motion } from "framer-motion";
 import {
 	DndContext,
 	KeyboardSensor,
@@ -35,6 +37,7 @@ export interface FoldersGridProps {
 
 interface SortableCardProps {
 	folder: Folder;
+	index: number;
 	cardLabels: {
 		new: string;
 		learning: string;
@@ -61,6 +64,7 @@ interface SortableCardProps {
 
 const SortableCard = ({
 	folder,
+	index,
 	cardLabels,
 	menuLabel,
 	openMenuId,
@@ -81,7 +85,7 @@ const SortableCard = ({
 	} = useSortable({ id: folder.id });
 
 	return (
-		<div
+		<motion.div
 			ref={setNodeRef}
 			style={{
 				transform: CSS.Transform.toString(transform),
@@ -91,6 +95,10 @@ const SortableCard = ({
 				"relative cursor-grab touch-none active:cursor-grabbing",
 				isDragging && "z-50 opacity-50 shadow-lg",
 			)}
+			initial={{ opacity: 0, y: 10 }}
+			whileInView={{ opacity: 1, y: 0 }}
+			viewport={{ once: true, margin: "-40px" }}
+			transition={{ duration: duration.slow, ease: ease.enter, delay: index * 0.05 }}
 			{...attributes}
 			{...listeners}
 		>
@@ -112,7 +120,7 @@ const SortableCard = ({
 					/>
 				}
 			/>
-		</div>
+		</motion.div>
 	);
 };
 
@@ -230,7 +238,7 @@ export const FoldersGrid = ({
 				strategy={rectSortingStrategy}
 			>
 				<div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-					{list.map(folder => {
+					{list.map((folder, idx) => {
 						const handleOpen: NonNullable<
 							ComponentProps<typeof SortableCard>["onOpen"]
 						> = () => open(folder);
@@ -251,6 +259,7 @@ export const FoldersGrid = ({
 							<SortableCard
 								key={folder.id}
 								folder={folder}
+								index={idx}
 								cardLabels={cardLabels}
 								menuLabel={t("vocabulary.foldersPage.card.menu")}
 								openMenuId={openMenuId}

@@ -1,9 +1,11 @@
 "use client";
 
 import type { DictionaryStats } from "@/entities/dictionary";
+import { variants } from "@/shared/lib/animation";
 import { useI18n } from "@/shared/lib/i18n";
 import type { LearningLevel } from "@/shared/types";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
 
 interface Row {
 	key: string;
@@ -47,28 +49,37 @@ export const StatsList = ({ stats }: StatsListProps) => {
 	] satisfies (Row & { key: LearningLevel | "TOTAL" })[];
 
 	return (
-		<ul className="flex flex-col gap-[5px]">
+		<motion.ul
+			className="flex flex-col gap-[5px]"
+			variants={variants.staggerContainer}
+			initial="hidden"
+			animate="visible"
+		>
 			{rows.map(row => (
-				<Typography
-					tag="li"
+				<motion.li
 					key={row.key}
-					className="flex items-center justify-between rounded-[8px] border-[0.5px] border-bd-1 bg-surf-2 px-2.5 py-2 transition-colors hover:border-bd-2"
+					variants={variants.staggerItem}
 				>
-					<div className="flex items-center gap-[7px]">
-						<Typography
-							tag="span"
-							aria-hidden="true"
-							className={`size-[7px] rounded-full ${row.dotClass}`}
-						/>
-						<Typography tag="span" className="text-xs text-t-2">
-							{row.label}
+					<Typography
+						tag="div"
+						className="flex items-center justify-between rounded-[8px] border-[0.5px] border-bd-1 bg-surf-2 px-2.5 py-2 transition-colors hover:border-bd-2"
+					>
+						<div className="flex items-center gap-[7px]">
+							<Typography
+								tag="span"
+								aria-hidden="true"
+								className={`size-[7px] rounded-full ${row.dotClass}`}
+							/>
+							<Typography tag="span" className="text-xs text-t-2">
+								{row.label}
+							</Typography>
+						</div>
+						<Typography tag="span" className="font-display text-[16px] text-t-1">
+							{row.value}
 						</Typography>
-					</div>
-					<Typography tag="span" className="font-display text-[16px] text-t-1">
-						{row.value}
 					</Typography>
-				</Typography>
+				</motion.li>
 			))}
-		</ul>
+		</motion.ul>
 	);
 };

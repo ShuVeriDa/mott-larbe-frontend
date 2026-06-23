@@ -1,3 +1,5 @@
+export { useHoverProps } from "./use-hover-props";
+
 export const duration = {
   fast:   0.15,
   base:   0.2,
@@ -33,6 +35,11 @@ export const variants = {
     hidden:  { opacity: 0, scale: 0.95 },
     visible: { opacity: 1, scale: 1,    transition: { duration: duration.base, ease: ease.enter } },
     exit:    { opacity: 0, scale: 0.95, transition: { duration: duration.fast, ease: ease.exit  } },
+  },
+  slideInFromTop: {
+    hidden:  { opacity: 0, y: -8 },
+    visible: { opacity: 1, y: 0,  transition: { duration: duration.slow, ease: ease.enter } },
+    exit:    { opacity: 0, y: -4, transition: { duration: duration.fast, ease: ease.exit  } },
   },
   slideInFromBottom: {
     hidden:  { opacity: 0, y: '100%' },

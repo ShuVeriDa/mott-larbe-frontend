@@ -5,13 +5,13 @@ import { Typography } from "@/shared/ui/typography";
 import type { LibraryTextListItem } from "@/entities/library-text";
 import type { LibraryView } from "@/features/library-filters";
 
+import { AlignLeft } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
 import { CEFR_LEVELS } from "@/shared/types";
 import { CefrBadge } from "@/shared/ui/cefr-badge";
 import { LibraryPreviewCard } from "@/widgets/dashboard-page/ui/library-preview-card";
 import type { RefObject } from "react";
-import { LibraryTextCard } from "./library-text-card";
 import { VirtualGridCards } from "./virtual-grid-cards";
 import { VirtualListCards } from "./virtual-list-cards";
 
@@ -33,17 +33,7 @@ export const LibraryTextCards = ({
 	if (items.length === 0) {
 		return (
 			<div className="flex flex-col items-center justify-center gap-2.5 py-20 text-t-3">
-				<svg
-					width="36"
-					height="36"
-					viewBox="0 0 36 36"
-					fill="none"
-					stroke="currentColor"
-					strokeWidth="1.5"
-					className="opacity-25"
-				>
-					<path d="M4 8h28M4 16h20M4 24h14M4 32h8" />
-				</svg>
+				<AlignLeft className="size-9 opacity-25" />
 				<Typography tag="p" className="text-sm font-medium text-t-2">
 					{t("library.empty.title")}
 				</Typography>
@@ -65,14 +55,14 @@ export const LibraryTextCards = ({
 			if (!groups.has(lvl)) groups.set(lvl, []);
 			groups.get(lvl)!.push(item);
 		}
-		const orderedLevels = CEFR_LEVELS.filter((l) => groups.has(l));
+		const orderedLevels = CEFR_LEVELS.filter(l => groups.has(l));
 
 		const gridClass =
 			"grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-3 sm:grid-cols-[repeat(auto-fill,minmax(148px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(168px,1fr))] lg:gap-4";
 
 		return (
 			<div className="flex flex-col gap-0">
-				{orderedLevels.map((lvl) => {
+				{orderedLevels.map(lvl => {
 					const group = groups.get(lvl)!;
 					return (
 						<div key={lvl} className="mb-5">
@@ -87,7 +77,7 @@ export const LibraryTextCards = ({
 								</Typography>
 							</div>
 							<div className={gridClass}>
-								{group.map((item) => (
+								{group.map(item => (
 									<div key={item.id} className="min-w-0">
 										<LibraryPreviewCard item={item} lang={lang} />
 									</div>

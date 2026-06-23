@@ -1,23 +1,26 @@
 "use client";
 
+import { useRef } from "react";
+import { useInView } from "react-intersection-observer";
 import {
 	usePhrasebookCategories,
+	usePhrasebookStats,
 	usePhrases,
-	type PhrasesQuery,
 } from "@/entities/phrasebook";
 import { usePhrasebookFilters } from "@/features/phrasebook-filters";
 import { usePhrasebookParams } from "../model/use-phrasebook-params";
-import { useDebounce } from "@/shared/lib/debounce";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
+import { Bookmark } from "lucide-react";
 import { toast } from "sonner";
 import { useBulkSavePhrases } from "../model/use-bulk-save-phrases";
-import { PhraseCard } from "./phrase-card";
 import { PhraseListSkeleton } from "./phrase-card-skeleton";
 import { PhraseEmptyState } from "./phrase-empty-state";
+import { VirtualPhraseList } from "./virtual-phrase-list";
 
 export const PhraseList = () => {
 	const { t } = useI18n();
+	const scrollRef = useRef<HTMLDivElement>(null);
 	const { categoryId, lang, savedOnly } = usePhrasebookParams();
 	const {
 		search,
@@ -28,23 +31,39 @@ export const PhraseList = () => {
 		clearSelection,
 	} = usePhrasebookFilters();
 	const { data: categories } = usePhrasebookCategories();
-	const debouncedSearch = useDebounce(search, 300);
+	const { data: stats } = usePhrasebookStats();
 	const { mutate: bulkSave, isPending: isSaving } = useBulkSavePhrases();
 
-	const query: PhrasesQuery = {
+	const {
+		data,
+		isPending,
+		isFetchingNextPage,
+		hasNextPage,
+		fetchNextPage,
+	} = usePhrases({
 		...(categoryId ? { categoryId } : {}),
 		...(lang ? { lang } : {}),
 		...(savedOnly ? { saved: true as const } : {}),
-		...(debouncedSearch ? { search: debouncedSearch } : {}),
-	};
+		...(search ? { search } : {}),
+	});
 
-	const { data: phrases, isPending } = usePhrases(query);
+	const { ref: sentinelRef } = useInView({
+		rootMargin: "300px",
+		threshold: 0,
+		onChange: (inView) => {
+			if (inView && hasNextPage && !isFetchingNextPage) fetchNextPage();
+		},
+	});
 
+	const phrases = data?.pages.flatMap(p => p.items) ?? [];
 	const activeCategory = categoryId
 		? categories?.find(c => c.id === categoryId)
 		: null;
 
-	const allIds = phrases?.map(p => p.id) ?? [];
+	const totalFromQuery = data?.pages[0]?.total;
+	const exactCount = totalFromQuery ?? activeCategory?.phraseCount ?? stats?.totalPhrases;
+
+	const allIds = phrases.map(p => p.id);
 	const allSelected = allIds.length > 0 && allIds.every(id => selectedPhraseIds.has(id));
 
 	const handleToggleSelectAll = () => {
@@ -63,7 +82,7 @@ export const PhraseList = () => {
 		});
 	};
 
-	const canSelect = !isPending && !!phrases?.length;
+	const canSelect = !isPending && phrases.length > 0;
 
 	return (
 		<div className="flex-1 flex flex-col min-w-0 gap-2.5">
@@ -78,11 +97,11 @@ export const PhraseList = () => {
 								</h2>
 							</>
 						)}
-						{phrases?.length ? (
+						{exactCount != null && (
 							<span className="text-[12px] text-t-3">
-								{t("phrasebook.phraseCount", { count: phrases.length })}
+								{t("phrasebook.phraseCount", { count: exactCount })}
 							</span>
-						) : null}
+						)}
 						{canSelect && (
 							<Button variant="ghost" onClick={enterSelectionMode} className="ml-auto">
 								{t("phrasebook.selection.enter")}
@@ -106,15 +125,7 @@ export const PhraseList = () => {
 								{t("phrasebook.selection.cancel")}
 							</Button>
 							<Button variant="save" onClick={handleBulkSave} disabled={isSaving}>
-								<svg
-									viewBox="0 0 16 16"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="1.5"
-									className="size-3"
-								>
-									<path d="M3 2h10v12l-5-3-5 3V2z" />
-								</svg>
+								<Bookmark className="size-3" />
 								{t("phrasebook.selection.saveSelected")}
 							</Button>
 						</div>
@@ -122,20 +133,25 @@ export const PhraseList = () => {
 				)}
 			</div>
 
-			<div className="flex-1 overflow-y-auto flex flex-col gap-1.5 pb-1 [&::-webkit-scrollbar]:hidden">
+			<div
+				ref={scrollRef}
+				className="flex-1 overflow-y-auto flex flex-col pb-1 [&::-webkit-scrollbar]:hidden"
+			>
 				{isPending ? (
 					<PhraseListSkeleton />
-				) : !phrases?.length ? (
+				) : phrases.length === 0 ? (
 					<PhraseEmptyState />
 				) : (
-					phrases.map(phrase => (
-						<PhraseCard
-							key={phrase.id}
-							phrase={phrase}
+					<>
+						<VirtualPhraseList
+							phrases={phrases}
+							scrollRef={scrollRef}
 							selectionMode={selectionMode}
-							selected={selectedPhraseIds.has(phrase.id)}
+							selectedPhraseIds={selectedPhraseIds}
 						/>
-					))
+						<div ref={sentinelRef} className="h-1 shrink-0" />
+						{isFetchingNextPage && <PhraseListSkeleton />}
+					</>
 				)}
 			</div>
 		</div>

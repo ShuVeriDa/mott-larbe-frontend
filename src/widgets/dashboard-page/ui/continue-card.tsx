@@ -1,9 +1,11 @@
 "use client";
 
 import type { DashboardContinueItem } from "@/entities/dashboard";
+import { spring, useHoverProps } from "@/shared/lib/animation";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import {
 	LANGUAGE_DOT_COLOR,
@@ -21,71 +23,74 @@ export const ContinueCard = ({ item, lang }: ContinueCardProps) => {
 	const isAlmostDone = pct >= 80;
 	const dotColor = LANGUAGE_DOT_COLOR[item.language] ?? "#6b6a62";
 	const langLabel = LANGUAGE_LABEL[lang]?.[item.language] ?? item.language;
+	const hoverProps = useHoverProps({ y: -4 }, { scale: 0.97 }, spring.default);
 
 	return (
-		<Link
-			href={`/${lang}/reader/${item.id}/p/${item.currentPage}`}
-			className="group flex flex-col overflow-hidden rounded-card border-[0.5px] border border-bd-1 bg-surf outline-none transition-[transform,border-color,box-shadow] duration-150 hover:-translate-y-px hover:border-bd-2 hover:shadow-md focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
-		>
-			<div className="relative h-[5px] w-full bg-surf-3">
-				<div
-					className="absolute left-0 top-0 h-full rounded-r-[3px] transition-[width]"
-					style={{
-						width: `${pct}%`,
-						background: isAlmostDone ? "var(--grn)" : "var(--acc)",
-					}}
-				/>
-			</div>
-
-			<div className="flex flex-1 flex-col p-[13px_14px_14px]">
-				<div className="mb-2 flex items-center gap-[5px]">
-					<Typography
-						tag="span"
-						className="size-[6px] shrink-0 rounded-full"
-						style={{ background: dotColor }}
+		<motion.div {...hoverProps}>
+			<Link
+				href={`/${lang}/reader/${item.id}/p/${item.currentPage}`}
+				className="group flex flex-col overflow-hidden rounded-card border-[0.5px] border-bd-1 bg-surf outline-none transition-[border-color,box-shadow] duration-250 ease-out hover:border-bd-2 hover:shadow-md focus-visible:ring-2 focus-visible:ring-acc/70 focus-visible:ring-offset-1"
+			>
+				<div className="relative h-[5px] w-full bg-surf-3">
+					<div
+						className="absolute left-0 top-0 h-full rounded-r-[3px] transition-[width]"
+						style={{
+							width: `${pct}%`,
+							background: isAlmostDone ? "var(--grn)" : "var(--acc)",
+						}}
 					/>
-					<Typography
-						tag="span"
-						className="text-[10px] font-semibold uppercase tracking-[0.5px] text-t-2"
-					>
-						{langLabel}
-					</Typography>
 				</div>
 
-				<div className="mb-[3px] flex-1 text-[13px] font-semibold leading-[1.35] text-t-1">
-					{item.title}
-				</div>
-				<div className="mb-3 text-[11px] text-t-2">
-					{t("dashboard.continueReading.pageOf", {
-						current: item.currentPage,
-						total: item.totalPages,
-					})}
-					{item.level ? ` · ${t(`shared.cefrLevel.${item.level}`)}` : ""}
-				</div>
+				<div className="flex flex-1 flex-col p-[13px_14px_14px]">
+					<div className="mb-2 flex items-center gap-[5px]">
+						<Typography
+							tag="span"
+							className="size-[6px] shrink-0 rounded-full"
+							style={{ background: dotColor }}
+						/>
+						<Typography
+							tag="span"
+							className="text-[10px] font-semibold uppercase tracking-[0.5px] text-t-2"
+						>
+							{langLabel}
+						</Typography>
+					</div>
 
-				<div className="flex items-center justify-between">
-					<Typography
-						tag="span"
-						className={cn(
-							"text-[12px] font-semibold",
-							isAlmostDone ? "text-grn" : "text-acc",
-						)}
-					>
-						{pct}%
-					</Typography>
-					<Typography
-						tag="span"
-						className={cn(
-							"rounded-[5px] border-none px-[9px] py-[3px] text-[11px] font-semibold transition-opacity group-hover:opacity-80",
-							isAlmostDone ? "bg-grn-bg text-grn-t" : "bg-acc-bg text-acc-t",
-						)}
-					>
-						{isAlmostDone
-							? t("dashboard.continueReading.almostDone")
-							: t("dashboard.continueReading.continue")}
-					</Typography>
+					<div className="mb-[3px] flex-1 text-[13px] font-semibold leading-[1.35] text-t-1">
+						{item.title}
+					</div>
+					<div className="mb-3 text-[11px] text-t-2">
+						{t("dashboard.continueReading.pageOf", {
+							current: item.currentPage,
+							total: item.totalPages,
+						})}
+						{item.level ? ` · ${t(`shared.cefrLevel.${item.level}`)}` : ""}
+					</div>
+
+					<div className="flex items-center justify-between">
+						<Typography
+							tag="span"
+							className={cn(
+								"text-[12px] font-semibold",
+								isAlmostDone ? "text-grn" : "text-acc",
+							)}
+						>
+							{pct}%
+						</Typography>
+						<Typography
+							tag="span"
+							className={cn(
+								"rounded-[5px] border-none px-[9px] py-[3px] text-[11px] font-semibold transition-opacity group-hover:opacity-80",
+								isAlmostDone ? "bg-grn-bg text-grn-t" : "bg-acc-bg text-acc-t",
+							)}
+						>
+							{isAlmostDone
+								? t("dashboard.continueReading.almostDone")
+								: t("dashboard.continueReading.continue")}
+						</Typography>
+					</div>
 				</div>
-			</div>
-		</Link>
+			</Link>
+		</motion.div>
 	);
 };

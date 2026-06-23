@@ -1656,7 +1656,7 @@
 				"ratingTitle": "How to rate cards",
 				"rating": [
 					{
-						"label": "Юха а",
+						"label": "Forgot",
 						"desc": "You couldn't recall the word at all. Interval resets; word reappears later in this session."
 					},
 					{
@@ -1693,11 +1693,11 @@
 				"row": {
 					"repeat": "REPEAT — Review",
 					"repeatDesc": "Forgotten cards — reviewed every day",
-					"new": "Керла",
+					"new": "New",
 					"newDesc": "Recently added words",
 					"old": "OLD — Aged",
 					"oldDesc": "Pushed out of NEW when it overflowed",
-					"retired": "Тохарлера",
+					"retired": "Retired",
 					"retiredDesc": "Pushed out of OLD",
 					"numbered": "Esalar #{n}",
 					"numberedDesc": "Rotates daily · {total} numbered decks total",
@@ -1743,11 +1743,11 @@
 				"ratingLabel": "Did you remember the word?",
 				"rate": {
 					"again": {
-						"label": "Юха а",
+						"label": "Again",
 						"sub": "stays in Esalar"
 					},
 					"know": {
-						"label": "Дагахь хаа",
+						"label": "Know",
 						"sub": "leaves Esalar"
 					}
 				},
@@ -1780,17 +1780,17 @@
 				"how": [
 					{
 						"icon": "🆕",
-						"name": "Керла",
+						"name": "New",
 						"desc": "All new words land here. This deck is reviewed every day — the word is fresh and needs reinforcement. Once the deck fills up, the oldest word moves to OLD."
 					},
 					{
 						"icon": "📦",
-						"name": "Хьалхалера",
+						"name": "Old",
 						"desc": "Words that graduated from NEW. Reviewed daily alongside NEW. When OLD fills up, the oldest word moves to RETIRED."
 					},
 					{
 						"icon": "🗂️",
-						"name": "Тохарлера",
+						"name": "Retired",
 						"desc": "Archive deck. Words are reviewed daily along with the others. When RETIRED fills up, words move into numbered decks."
 					},
 					{
@@ -1800,7 +1800,7 @@
 					},
 					{
 						"icon": "🔁",
-						"name": "Юха",
+						"name": "Repeat",
 						"desc": "If you tap 'Move to REPEAT' during a session, the word lands here and is reviewed every day until you tap 'Return to deck'. Use it for words that just won't stick."
 					}
 				],
@@ -1815,11 +1815,11 @@
 				"ratingTitle": "How to rate cards",
 				"rating": [
 					{
-						"label": "Дагахь хаа",
+						"label": "Know",
 						"desc": "You recognized the word — it moves forward along the path."
 					},
 					{
-						"label": "Юха а",
+						"label": "Again",
 						"desc": "You didn't remember — the word stays in place and reappears later in the same session."
 					}
 				],

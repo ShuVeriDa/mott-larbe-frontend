@@ -1,5 +1,6 @@
 import type { KpiSparklines, StatsHeader } from "@/entities/statistics";
 import type { KpiCardProps } from "../ui/kpi-card";
+import { AlignLeft, BookOpen, Clock, RefreshCw } from "lucide-react";
 
 export const formatReadingTime = (
 	minutes: number,
@@ -22,11 +23,7 @@ export const buildKpiItems = (
 		delta: header.wordsLearned,
 		tone: "acc",
 		sparkline: sparklines.wordsLearned,
-		icon: (
-			<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-[13px]">
-				<path d="M3 5h10M3 8h7M3 11h5" strokeLinecap="round" />
-			</svg>
-		),
+		icon: <AlignLeft className="size-[13px]" />,
 	},
 	{
 		label: t("statistics.kpi.reading"),
@@ -38,12 +35,7 @@ export const buildKpiItems = (
 		delta: header.readingTimeMinutes,
 		tone: "grn",
 		sparkline: sparklines.readingTime,
-		icon: (
-			<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-[13px]">
-				<circle cx="8" cy="8" r="5.5" />
-				<path d="M8 5v3.5l2 2" strokeLinecap="round" />
-			</svg>
-		),
+		icon: <Clock className="size-[13px]" />,
 	},
 	{
 		label: t("statistics.kpi.reviews"),
@@ -51,12 +43,7 @@ export const buildKpiItems = (
 		delta: header.reviews,
 		tone: "amb",
 		sparkline: sparklines.reviews,
-		icon: (
-			<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-[13px]">
-				<path d="M8 3v5l3 2" strokeLinecap="round" />
-				<path d="M3.5 5.5A5.5 5.5 0 1 1 3 9" strokeLinecap="round" />
-			</svg>
-		),
+		icon: <RefreshCw className="size-[13px]" />,
 	},
 	{
 		label: t("statistics.kpi.texts"),
@@ -64,11 +51,6 @@ export const buildKpiItems = (
 		delta: header.textsRead,
 		tone: "pur",
 		sparkline: sparklines.textsRead,
-		icon: (
-			<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-[13px]">
-				<path d="M2 3h5v10H2z" />
-				<path d="M9 3h5v10H9z" />
-			</svg>
-		),
+		icon: <BookOpen className="size-[13px]" />,
 	},
 ];

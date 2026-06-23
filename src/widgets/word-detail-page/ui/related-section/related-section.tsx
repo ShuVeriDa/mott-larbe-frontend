@@ -29,7 +29,7 @@ export const RelatedSection = ({ related, lang }: RelatedSectionProps) => {
 						<li key={`${rel.lemmaId}-${rel.type}`} className="shrink-0">
 							<Link
 								href={`/${lang}/vocabulary?search=${encodeURIComponent(rel.baseForm)}`}
-								className="flex items-center gap-1.5 rounded-[8px] border-[0.5px] border-bd-1 bg-surf-2 px-2.5 py-1.5 transition-colors duration-150 hover:border-bd-2"
+								className="flex items-center gap-1.5 rounded-[8px] border-[0.5px] border-bd-1 bg-surf-2 px-2.5 py-1.5 transition-[border-color,transform] duration-150 ease-out hover:border-bd-2 [@media(hover:hover)]:hover:translate-y-[-2px]"
 								title={typeLabel}
 							>
 								<Typography

@@ -17,7 +17,9 @@ import {
 	TooltipTrigger,
 } from "@/shared/ui/tooltip";
 import { Typography } from "@/shared/ui/typography";
+import { variants } from "@/shared/lib/animation";
 import { ChevronLeft, MoreHorizontal } from "lucide-react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { getTopbarActions } from "../lib/topbar-actions";
 import { useReaderTopbar } from "../model/use-reader-topbar";
@@ -122,7 +124,12 @@ export const ReaderTopbar = ({
 	const secondaryActions = actions.filter(a => a.priority === "secondary");
 
 	return (
-		<header className="flex h-[46px] shrink-0 items-center gap-2 border-b-[0.5px] border-bd-1 bg-surf px-4 max-md:sticky max-md:top-0 max-md:z-80">
+		<motion.header
+			variants={variants.slideInFromTop}
+			initial="hidden"
+			animate="visible"
+			className="flex h-[46px] shrink-0 items-center gap-2 border-b-[0.5px] border-bd-1 bg-surf px-4 max-md:sticky max-md:top-0 max-md:z-80"
+		>
 			<Link
 				href={backHref ?? `/${lang}/texts`}
 				className="inline-flex shrink-0 items-center gap-1.5 rounded-base px-2 py-1 max-md:p-3 max-md:min-h-[44px] text-[12.5px] text-t-2 transition-colors duration-100 hover:bg-surf-2 hover:text-t-1"
@@ -240,6 +247,6 @@ export const ReaderTopbar = ({
 					</DropdownMenu>
 				)}
 			</div>
-		</header>
+		</motion.header>
 	);
 };

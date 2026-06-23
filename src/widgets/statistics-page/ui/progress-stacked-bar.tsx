@@ -1,5 +1,7 @@
 "use client";
+import { ease, duration } from "@/shared/lib/animation";
 import { cn } from "@/shared/lib/cn";
+import { motion } from "framer-motion";
 
 export interface ProgressSegmentDef {
 	key: string;
@@ -22,10 +24,12 @@ export const ProgressStackedBar = ({ segments, total }: ProgressStackedBarProps)
 				const pct = (seg.value / safeTotal) * 100;
 				if (pct <= 0) return null;
 				return (
-					<div
+					<motion.div
 						key={seg.key}
-						className={cn("h-full transition-[width]", seg.colorClass)}
-						style={{ width: `${pct}%` }}
+						className={cn("h-full", seg.colorClass)}
+						initial={{ width: 0 }}
+						animate={{ width: `${pct}%` }}
+						transition={{ duration: duration.slow, ease: ease.enter, delay: 0.1 }}
 					/>
 				);
 			})}

@@ -1,8 +1,10 @@
 "use client";
 import type { RetentionData } from "@/entities/statistics";
+import { ease, duration } from "@/shared/lib/animation";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { motion } from "framer-motion";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 interface RetentionCardProps {
@@ -115,12 +117,14 @@ export const RetentionCard = ({ data }: RetentionCardProps) => {
 										</Typography>
 									</div>
 									<div className="h-1 overflow-hidden rounded-full bg-surf-3">
-										<div
+										<motion.div
 											className={cn(
-												"h-full rounded-full transition-[width]",
+												"h-full rounded-full",
 												cfg?.colorClass ?? "bg-surf-3",
 											)}
-											style={{ width: `${pct}%` }}
+											initial={{ width: 0 }}
+											animate={{ width: `${pct}%` }}
+											transition={{ duration: duration.slow, ease: ease.enter, delay: 0.1 }}
 										/>
 									</div>
 								</div>
