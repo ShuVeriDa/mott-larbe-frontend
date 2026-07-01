@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { scriptVersionsQueryOptions } from "@/entities/text-script-version";
 import {
+	OrthographyToggle,
 	SCRIPT_OPTIONS,
 	useReaderScript,
 	useReaderScriptAvailability,
@@ -60,6 +61,8 @@ export const ScriptSwitcherFooter = ({ textId }: ScriptSwitcherFooterProps) => {
 					);
 				})}
 			</div>
+
+			<OrthographyToggle />
 
 			{script === "ARABIC" && (
 				<Button

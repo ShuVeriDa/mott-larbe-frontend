@@ -53,6 +53,7 @@ const UserTextEditPageInner = ({
       editor={
         <UserTextEditEditor
           title={title}
+          language={language}
           pages={pages}
           pageTitles={pageTitles}
           activePage={activePage}

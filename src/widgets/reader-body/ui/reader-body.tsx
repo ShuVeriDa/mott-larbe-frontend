@@ -29,6 +29,9 @@ import {
 	useReaderScript,
 } from "@/features/reader-script";
 import {
+	convertTokensToOld,
+} from "@/shared/lib/chechen-ortho";
+import {
 	COLUMN_WIDTH_PX,
 	LETTER_SPACING_VALUE,
 	LINE_HEIGHT_VALUE,
@@ -72,7 +75,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 	const activeToken = useWordLookupStore(s => s.activeToken);
 
 	// Script selection
-	const { script, showDiacritics } = useReaderScript();
+	const { script, showDiacritics, orthography } = useReaderScript();
 	const scriptQuery = useScriptPage(
 		data.id,
 		data.page.pageNumber,
@@ -83,12 +86,16 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 	const displayContentRich = scriptData?.contentRich ?? data.page.contentRich;
 	const displayTokens = scriptData?.tokens ?? data.tokens;
 	const applyDiacriticsStrip = script === "ARABIC" && !showDiacritics;
+	const isOldOrtho = orthography === "OLD";
 	const articleLang = script === "ARABIC" ? "ar" : script === "LATIN" ? "che-Latn" : lang;
-	const tokensForDisplay = applyDiacriticsStrip
+	const tokensAfterDiacritics = applyDiacriticsStrip
 		? displayTokens.map(t =>
 			t.displayText ? { ...t, displayText: stripArabicDiacritics(t.displayText) } : t,
 		  )
 		: displayTokens;
+	const tokensForDisplay = isOldOrtho
+		? convertTokensToOld(tokensAfterDiacritics)
+		: tokensAfterDiacritics;
 
 	const [phraseTranslate, setPhraseTranslate] = useState<{
 		phrase: string;
@@ -211,9 +218,12 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 		: [];
 
 	const isArabicScript = script === "ARABIC";
-	const contentRichForDisplay = applyDiacriticsStrip
+	const contentRichAfterDiacritics = applyDiacriticsStrip
 		? stripDiacriticsFromDoc(displayContentRich)
 		: displayContentRich;
+	// Old orthography: tokens carry converted displayText — no doc conversion needed.
+	// We pass the original doc as cyrillicContentRich so offset mapping stays correct.
+	const contentRichForDisplay = contentRichAfterDiacritics;
 	const fontVars = {
 		"--reader-font-size": isArabicScript ? `${arabicFontSize}px` : `${fontSize}px`,
 		"--reader-line-height": String(LINE_HEIGHT_VALUE[lineHeight]),
@@ -257,8 +267,8 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 				phraseColorVisible={phraseColorVisible}
 				pageNumber={currentPage}
 				isRtl={script === "ARABIC"}
-				cyrillicRaw={isNonCyrillic ? data.page.contentRaw : undefined}
-				cyrillicContentRich={isNonCyrillic ? data.page.contentRich : undefined}
+				cyrillicRaw={isNonCyrillic || isOldOrtho ? data.page.contentRaw : undefined}
+				cyrillicContentRich={isNonCyrillic || isOldOrtho ? data.page.contentRich : undefined}
 			/>
 			{/* Note line group icons — rendered via portal at measured positions */}
 			{mounted && noteGroups.length > 0 &&

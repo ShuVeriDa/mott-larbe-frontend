@@ -7,9 +7,11 @@ import { Input } from "@/shared/ui/input";
 import type { Editor, TipTapDoc } from "@/shared/ui/notion-editor";
 import type { PageContent } from "../model/use-user-text-edit-page";
 import { CharsPopup } from "@/shared/ui/chars-popup";
+import { OrthographyPreviewToggle } from "@/features/reader-script";
 
 interface UserTextEditEditorProps {
   title: string;
+  language?: string;
   pages: PageContent[];
   activePage: number;
   pageTitles?: string[];
@@ -26,6 +28,7 @@ interface UserTextEditEditorProps {
 
 export const UserTextEditEditor = ({
   title,
+  language,
   pages,
   activePage,
   pageTitles,
@@ -62,6 +65,9 @@ export const UserTextEditEditor = ({
   const currentPageTitle = pageTitles?.[activePage] ?? "";
 
   const charsPopup = <CharsPopup onInsert={handleInsertChar} />;
+  const orthographyPreview = (
+    <OrthographyPreviewToggle language={language ?? ""} editorRef={editorRef} />
+  );
 
   return (
     <AdminTextEditorShell
@@ -80,8 +86,8 @@ export const UserTextEditEditor = ({
       onPrimaryAction={onPrimaryAction}
       getPageLabel={index => t("admin.texts.createPage.pageN", { n: index + 1 })}
       onEditorReady={handleEditorReady}
-      toolbarExtraItems={charsPopup}
-      notionExtraToolbarItems={charsPopup}
+      toolbarExtraItems={<>{charsPopup}{orthographyPreview}</>}
+      notionExtraToolbarItems={<>{charsPopup}{orthographyPreview}</>}
       findReplaceCharHandlerRef={findReplaceInsertRef}
       findReplaceCharsPicker={charsPopup}
       showSpellingAdd={showSpellingAdd}

@@ -2022,7 +2022,13 @@
 				"guideTitle": "How to read",
 				"arabicGuideHint": "Arabic script reads right to left. Diacritics (vowel marks) are optional — fluent readers read without them. The ۬ sign over a vowel indicates a front (soft) variant.",
 				"latinGuideHint": "Latin script of 1992. Important: J = Ӏ (pharyngeal), Y = Y /j/. Umlauts Ä/Ö/Ü are soft vowels Аь/Оь/Уь. Nasal Ŋ at the end of words.",
-				"guideLink": "Full guide"
+				"guideLink": "Full guide",
+				"orthographyToggle": "Orthography",
+				"orthographyNew": "New spelling",
+				"orthographyOld": "Old spelling",
+				"orthographyNewShort": "New",
+				"orthographyOldShort": "Old",
+				"orthographyHint": "Texts are written in the new orthography. Switch to read in the familiar spelling."
 			}
 		},
 		"notes": {

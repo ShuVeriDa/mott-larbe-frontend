@@ -47,6 +47,7 @@ export const UserTextCreatePage = ({ lang }: UserTextCreatePageProps) => {
       editor={
         <UserTextEditEditor
           title={title}
+          language={language}
           pages={pages}
           pageTitles={pageTitles}
           activePage={activePage}

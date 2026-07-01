@@ -83,6 +83,7 @@ export const SubmissionCreatePage = ({ lang, fromUserTextId }: SubmissionCreateP
         editor={
           <UserTextEditEditor
             title={title}
+            language={language}
             pages={pages}
             pageTitles={pages.map((p) => p.title)}
             activePage={activePage}

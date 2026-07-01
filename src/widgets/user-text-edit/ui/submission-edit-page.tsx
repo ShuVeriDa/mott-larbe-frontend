@@ -107,6 +107,7 @@ const SubmissionEditPageInner = ({
         editor={
           <UserTextEditEditor
             title={title}
+            language={language}
             pages={pages}
             pageTitles={pages.map((p) => p.title)}
             activePage={activePage}
