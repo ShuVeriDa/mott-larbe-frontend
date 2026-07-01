@@ -110,6 +110,7 @@ const SubmissionEditPageInner = ({
             pages={pages}
             pageTitles={pages.map((p) => p.title)}
             activePage={activePage}
+            showSpellingAdd
             onTitleChange={handleTitleDirect}
             onPageContentChange={handlePageContentChange}
             onPageTitleChange={handlePageTitleChange}

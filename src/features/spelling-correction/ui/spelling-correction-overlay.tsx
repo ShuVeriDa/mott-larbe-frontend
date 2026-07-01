@@ -28,6 +28,7 @@ export const SpellingCorrectionOverlay = ({
 		close,
 		handleToggle,
 		handleToggleAll,
+		handleSelectCorrectForm,
 		handleApply,
 	} = useSpellingOccurrencesDialog(editor);
 
@@ -44,6 +45,7 @@ export const SpellingCorrectionOverlay = ({
 				someChecked={someChecked}
 				onToggle={handleToggle}
 				onToggleAll={handleToggleAll}
+				onSelectCorrectForm={handleSelectCorrectForm}
 				onApply={handleApply}
 				onClose={close}
 			/>

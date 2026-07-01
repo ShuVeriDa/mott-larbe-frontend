@@ -56,6 +56,7 @@ const UserTextEditPageInner = ({
           pages={pages}
           pageTitles={pageTitles}
           activePage={activePage}
+          showSpellingAdd
           onTitleChange={handleTitleChange}
           onPageContentChange={handlePageContentChange}
           onPageTitleChange={handlePageTitleChange}

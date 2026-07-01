@@ -5,6 +5,7 @@ export {
 	serializeCorrectForm,
 	getCorrectFormPlainText,
 	correctFormHasSuperscript,
+	buildMatchRegex,
 } from "./lib";
 export type {
 	SpellingEntry,
@@ -13,6 +14,7 @@ export type {
 	CreateSpellingEntryPayload,
 	UpdateSpellingEntryPayload,
 	FetchSpellingEntriesParams,
+	SpellingMatchType,
 } from "./api";
 export {
 	spellingDictionaryQueryOptions,

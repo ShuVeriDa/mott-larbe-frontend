@@ -9,9 +9,9 @@ import {
 	DialogTitle,
 } from "@/shared/ui/dialog";
 import { useI18n } from "@/shared/lib/i18n";
+import { parseCorrectForm } from "@/entities/spelling-dictionary";
 import type { SpellingOccurrencesDialogState } from "../model/types";
 import { SpellingOccurrenceItem } from "./spelling-occurrence-item";
-import { parseCorrectForm } from "@/entities/spelling-dictionary";
 
 interface SpellingOccurrencesDialogProps {
 	dialog: SpellingOccurrencesDialogState;
@@ -21,6 +21,7 @@ interface SpellingOccurrencesDialogProps {
 	someChecked: boolean;
 	onToggle: (index: number) => void;
 	onToggleAll: () => void;
+	onSelectCorrectForm: (index: number, correctForm: string) => void;
 	onApply: () => void;
 	onClose: () => void;
 }
@@ -33,6 +34,7 @@ export const SpellingOccurrencesDialog = ({
 	someChecked,
 	onToggle,
 	onToggleAll,
+	onSelectCorrectForm,
 	onApply,
 	onClose,
 }: SpellingOccurrencesDialogProps) => {
@@ -42,6 +44,12 @@ export const SpellingOccurrencesDialog = ({
 		if (!open) onClose();
 	};
 
+	// All forms: primary + extra correctForms (deduplicated)
+	const allCorrectForms = [
+		dialog.correctForm,
+		...dialog.correctForms.filter(f => f !== dialog.correctForm),
+	];
+
 	return (
 		<Dialog open={dialog.isOpen} onOpenChange={handleOpenChange}>
 			<DialogContent aria-describedby={undefined} className="max-w-lg gap-0 p-0">
@@ -50,16 +58,24 @@ export const SpellingOccurrencesDialog = ({
 				</DialogHeader>
 
 				{/* word pair header */}
-				<div className="flex items-center gap-2 border-t border-bd-1 px-5 py-3">
+				<div className="flex flex-wrap items-center gap-2 border-t border-bd-1 px-5 py-3">
 					<span className="rounded-[5px] bg-rose-100 px-2 py-0.5 font-mono text-[12px] text-rose-700 line-through select-none">
 						{dialog.wrongForm}
 					</span>
 					<span className="text-sm text-t-4">→</span>
-					<span className="rounded-[5px] bg-green-100 px-2 py-0.5 font-mono text-[12px] font-medium text-green-700 select-none">
-						{parseCorrectForm(dialog.correctForm).map((node, i) =>
-							node.superscript ? <sup key={i}>{node.text}</sup> : <span key={i}>{node.text}</span>
-						)}
-					</span>
+					{allCorrectForms.map((form, i) => (
+						<span
+							key={form}
+							className="rounded-[5px] bg-green-100 px-2 py-0.5 font-mono text-[12px] font-medium text-green-700 select-none"
+						>
+							{i > 0 && (
+								<span className="mr-1 text-[10px] text-green-500 font-normal">или</span>
+							)}
+							{parseCorrectForm(form).map((node, j) =>
+								node.superscript ? <sup key={j}>{node.text}</sup> : <span key={j}>{node.text}</span>
+							)}
+						</span>
+					))}
 				</div>
 
 				{/* occurrences list */}
@@ -94,7 +110,9 @@ export const SpellingOccurrencesDialog = ({
 									key={occ.index}
 									occurrence={occ}
 									checked={!deselected.has(occ.index)}
+									allCorrectForms={allCorrectForms}
 									onToggle={onToggle}
+									onSelectCorrectForm={onSelectCorrectForm}
 								/>
 							))}
 						</div>

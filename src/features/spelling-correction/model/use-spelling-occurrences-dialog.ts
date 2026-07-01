@@ -2,35 +2,40 @@
 
 import { useState } from "react";
 import type { Editor } from "@tiptap/react";
+import type { SpellingMatchType } from "@/entities/spelling-dictionary";
+import { buildMatchRegex } from "@/entities/spelling-dictionary";
 import type { SpellingOccurrence, SpellingOccurrencesDialogState } from "./types";
 
 const CONTEXT_CHARS = 40;
 const CLOSED: SpellingOccurrencesDialogState = {
 	isOpen: false,
 	wrongForm: "",
+	matchType: "substring",
 	correctForm: "",
+	correctForms: [],
 	occurrences: [],
 };
 
 const extractContext = (fullText: string, from: number, to: number): { before: string; after: string } => {
 	const rawBefore = fullText.slice(Math.max(0, from - CONTEXT_CHARS), from);
 	const rawAfter = fullText.slice(to, to + CONTEXT_CHARS);
-
-	// trim to nearest word boundary so we don't cut mid-word
 	const before = rawBefore.replace(/^\S*\s?/, "").trimStart();
 	const after = rawAfter.replace(/\s?\S*$/, "").trimEnd();
-
 	return { before, after };
 };
 
-const findOccurrences = (editor: Editor, wrongForm: string, correctForm: string): SpellingOccurrence[] => {
+const findOccurrences = (
+	editor: Editor,
+	wrongForm: string,
+	matchType: SpellingMatchType,
+	correctForm: string,
+	correctForms: string[],
+): SpellingOccurrence[] => {
 	const doc = editor.state.doc;
 	const fullText = doc.textContent;
-	const pattern = new RegExp(wrongForm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+	const pattern = buildMatchRegex(wrongForm, matchType);
 	const occurrences: SpellingOccurrence[] = [];
 
-	// Build a cumulative offset map: for each text offset we can resolve the doc pos.
-	// textChunks[i].startOffset = position of chunk[i].text[0] in fullText
 	const textChunks: { text: string; pos: number; startOffset: number }[] = [];
 	let cumulative = 0;
 	doc.descendants((node, pos) => {
@@ -40,8 +45,6 @@ const findOccurrences = (editor: Editor, wrongForm: string, correctForm: string)
 		}
 	});
 
-	// Converts a fullText offset to the corresponding absolute ProseMirror doc position.
-	// Returns null if the offset falls inside a node boundary gap (shouldn't happen with textContent).
 	const textOffsetToDocPos = (offset: number): number | null => {
 		for (const chunk of textChunks) {
 			if (offset >= chunk.startOffset && offset < chunk.startOffset + chunk.text.length) {
@@ -58,13 +61,15 @@ const findOccurrences = (editor: Editor, wrongForm: string, correctForm: string)
 		const textTo = textFrom + match[0].length;
 
 		const from = textOffsetToDocPos(textFrom);
-		// `to` must point one past the last character — resolve end of match independently
-		// so cross-node matches get the correct doc position even if from/to are in different chunks.
 		const toResolved = textTo > 0 ? textOffsetToDocPos(textTo - 1) : null;
 		if (from === null || toResolved === null) continue;
 
 		const to = toResolved + 1;
 		const { before, after } = extractContext(fullText, textFrom, textTo);
+
+		// For suffix: wrongForm is at the end of match[0], so matchOffset = match length - wrongForm length.
+		// For prefix/substring/whole_word: wrongForm starts at 0.
+		const matchOffset = matchType === "suffix" ? match[0].length - wrongForm.length : 0;
 
 		occurrences.push({
 			index,
@@ -74,6 +79,8 @@ const findOccurrences = (editor: Editor, wrongForm: string, correctForm: string)
 			after,
 			from,
 			to,
+			selectedCorrectForm: correctForm,
+			matchOffset,
 		});
 		index++;
 	}
@@ -81,14 +88,40 @@ const findOccurrences = (editor: Editor, wrongForm: string, correctForm: string)
 	return occurrences;
 };
 
+/**
+ * Builds the full replacement string for an occurrence.
+ * For suffix: keep the prefix of the word, replace only the suffix.
+ * For prefix: replace only the prefix, keep the rest of the word.
+ * For substring/whole_word: replace the whole match.
+ */
+const buildReplacement = (
+	originalText: string,
+	correctForm: string,
+	matchOffset: number,
+	matchType: SpellingMatchType,
+	wrongForm: string,
+): string => {
+	if (matchType === "suffix") {
+		// originalText = "духаре", wrongForm = "ре", matchOffset = 6
+		// keep "духа" + correctForm "риэ" = "духариэ"
+		return originalText.slice(0, matchOffset) + correctForm;
+	}
+	if (matchType === "prefix") {
+		// originalText = "ресан", wrongForm = "ре", matchOffset = 0
+		// correctForm "риэ" + "сан" = "риэсан"
+		return correctForm + originalText.slice(wrongForm.length);
+	}
+	return correctForm;
+};
+
 export const useSpellingOccurrencesDialog = (editor: Editor | null) => {
 	const [dialog, setDialog] = useState<SpellingOccurrencesDialogState>(CLOSED);
 	const [deselected, setDeselected] = useState<Set<number>>(new Set());
 
-	const open = (wrongForm: string, correctForm: string) => {
+	const open = (wrongForm: string, matchType: SpellingMatchType, correctForm: string, correctForms: string[]) => {
 		if (!editor) return;
-		const occurrences = findOccurrences(editor, wrongForm, correctForm);
-		setDialog({ isOpen: true, wrongForm, correctForm, occurrences });
+		const occurrences = findOccurrences(editor, wrongForm, matchType, correctForm, correctForms);
+		setDialog({ isOpen: true, wrongForm, matchType, correctForm, correctForms, occurrences });
 		setDeselected(new Set());
 	};
 
@@ -109,6 +142,15 @@ export const useSpellingOccurrencesDialog = (editor: Editor | null) => {
 		});
 	};
 
+	const handleSelectCorrectForm = (index: number, correctForm: string) => {
+		setDialog(prev => ({
+			...prev,
+			occurrences: prev.occurrences.map(o =>
+				o.index === index ? { ...o, selectedCorrectForm: correctForm } : o,
+			),
+		}));
+	};
+
 	const selectedCount = dialog.occurrences.length - deselected.size;
 	const allChecked = deselected.size === 0;
 	const someChecked = deselected.size > 0 && deselected.size < dialog.occurrences.length;
@@ -124,13 +166,19 @@ export const useSpellingOccurrencesDialog = (editor: Editor | null) => {
 	const handleApply = () => {
 		if (!editor) return;
 
-		// Apply replacements in reverse order so earlier positions stay valid
 		const toFix = dialog.occurrences
 			.filter(o => !deselected.has(o.index))
 			.sort((a, b) => b.from - a.from);
 
 		for (const occ of toFix) {
-			editor.commands.applySpellingFix(occ.from, occ.to, occ.correctForm);
+			const replacement = buildReplacement(
+				occ.originalText,
+				occ.selectedCorrectForm,
+				occ.matchOffset,
+				dialog.matchType,
+				dialog.wrongForm,
+			);
+			editor.commands.applySpellingFix(occ.from, occ.to, replacement);
 		}
 
 		close();
@@ -146,6 +194,7 @@ export const useSpellingOccurrencesDialog = (editor: Editor | null) => {
 		close,
 		handleToggle,
 		handleToggleAll,
+		handleSelectCorrectForm,
 		handleApply,
 	};
 };

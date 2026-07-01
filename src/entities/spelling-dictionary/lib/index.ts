@@ -5,3 +5,4 @@ export {
 	getCorrectFormPlainText,
 	correctFormHasSuperscript,
 } from "./correct-form";
+export { buildMatchRegex } from "./match-regex";

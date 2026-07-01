@@ -2,10 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import type { Editor } from "@tiptap/react";
+import type { SpellingMatchType } from "@/entities/spelling-dictionary";
 import { SPELLING_CORRECTION_CLASS } from "@/shared/ui/notion-editor";
 
 interface UseSpellingCorrectionPopupOptions {
-	onOpen: (wrongForm: string, correctForm: string) => void;
+	onOpen: (wrongForm: string, matchType: SpellingMatchType, correctForm: string, correctForms: string[]) => void;
 }
 
 export const useSpellingCorrectionPopup = (
@@ -25,9 +26,20 @@ export const useSpellingCorrectionPopup = (
 
 			const wrongForm = span.dataset.wrongForm ?? "";
 			const correctForm = span.dataset.correctForm ?? "";
+			const matchType = (span.dataset.matchType ?? "substring") as SpellingMatchType;
+			const correctFormsRaw = span.dataset.correctForms ?? "";
+
+			let correctForms: string[] = [];
+			if (correctFormsRaw) {
+				try {
+					correctForms = JSON.parse(correctFormsRaw) as string[];
+				} catch {
+					// ignore malformed data
+				}
+			}
 
 			if (wrongForm && correctForm) {
-				onOpen(wrongForm, correctForm);
+				onOpen(wrongForm, matchType, correctForm, correctForms);
 			}
 		};
 

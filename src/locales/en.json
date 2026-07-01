@@ -4589,6 +4589,12 @@
 			"searchPlaceholder": "Search…",
 			"loadError": "Failed to load",
 			"addToSpellingTitle": "Add to spelling dictionary",
+			"matchTypeShort": {
+				"substring": "substr",
+				"whole_word": "word",
+				"prefix": "prefix",
+				"suffix": "suffix"
+			},
 			"table": {
 				"wrongForm": "Wrong form",
 				"correctForm": "Correct form",
@@ -4620,10 +4626,21 @@
 				"wrongFormLabel": "Wrong form",
 				"wrongFormPlaceholder": "vakhnera",
 				"wrongFormHint": "Stored in lowercase. Search is case-insensitive.",
+				"matchTypeLabel": "Match type",
+				"matchType": {
+					"substring": "Substring (anywhere)",
+					"whole_word": "Whole word",
+					"prefix": "Word start (prefix)",
+					"suffix": "Word end (suffix)"
+				},
 				"correctFormLabel": "Correct form",
 				"correctFormPlaceholder": "vakhné·ra",
 				"correctFormHint": "With correct spelling and/or stress mark (acute accent over vowel).",
 				"insertNasalization": "Insert superscript н (nasalization)",
+				"additionalFormsLabel": "Additional variants",
+				"addAnotherForm": "Add variant",
+				"removeForm": "Remove variant",
+				"additionalFormPlaceholder": "alternative form…",
 				"commentLabel": "Comment (optional)",
 				"commentPlaceholder": "Stress on second syllable",
 				"cancel": "Cancel",

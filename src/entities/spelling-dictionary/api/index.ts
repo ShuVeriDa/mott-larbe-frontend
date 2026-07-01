@@ -7,4 +7,5 @@ export type {
 	CreateSpellingEntryPayload,
 	UpdateSpellingEntryPayload,
 	FetchSpellingEntriesParams,
+	SpellingMatchType,
 } from "./types";

@@ -4587,6 +4587,12 @@
 			"searchPlaceholder": "Лахар…",
 			"loadError": "Хаа ца хилира",
 			"addToSpellingTitle": "Йозаллин словарь чу тӀетоха",
+			"matchTypeShort": {
+				"substring": "дакъа",
+				"whole_word": "дош",
+				"prefix": "хьалха",
+				"suffix": "тӀехьа"
+			},
 			"table": {
 				"wrongForm": "Нийса йоцу форма",
 				"correctForm": "Нийса форма",
@@ -4618,10 +4624,21 @@
 				"wrongFormLabel": "Нийса йоцу форма",
 				"wrongFormPlaceholder": "вахнера",
 				"wrongFormHint": "Лахарчу регистрехь йовсу. Лахар регистр ца хоуьйтуш.",
+				"matchTypeLabel": "Лараш тип",
+				"matchType": {
+					"substring": "Дашан дакъа (массанхьа)",
+					"whole_word": "Дош цаьрца",
+					"prefix": "Дашан хьалха",
+					"suffix": "Дашан тӀехьа (кхел)"
+				},
 				"correctFormLabel": "Нийса форма",
 				"correctFormPlaceholder": "вахне́ра",
 				"correctFormHint": "Нийса йозанца а, хьаьрк тӀегӀерта ярца а.",
 				"insertNasalization": "ТӀехьара н тӀетоха (назализаци)",
+				"additionalFormsLabel": "Кхин хуьлу кепаш",
+				"addAnotherForm": "Кеп тӀетоха",
+				"removeForm": "Кеп дӀадаккха",
+				"additionalFormPlaceholder": "кхин кеп…",
 				"commentLabel": "Хаам (ца деза)",
 				"commentPlaceholder": "Хьаьрк шолгӀачу слоге тӀегӀерта ю",
 				"cancel": "Юхадаккха",

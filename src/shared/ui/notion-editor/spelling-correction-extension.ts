@@ -4,7 +4,7 @@ import type { EditorState, Transaction } from "@tiptap/pm/state";
 import { Plugin, PluginKey } from "@tiptap/pm/state";
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
 import type { SpellingEntry } from "@/entities/spelling-dictionary";
-import { parseCorrectForm } from "@/entities/spelling-dictionary";
+import { parseCorrectForm, buildMatchRegex } from "@/entities/spelling-dictionary";
 
 export const SPELLING_CORRECTION_CLASS = "spelling-correction";
 
@@ -68,6 +68,7 @@ const applyCaseToNodes = (original: string, nodes: ContentNode[]): ContentNode[]
 	return result;
 };
 
+
 const buildDecorations = (doc: PmNode, entries: SpellingEntry[]): DecorationSet => {
 	if (entries.length === 0) return DecorationSet.empty;
 
@@ -78,21 +79,34 @@ const buildDecorations = (doc: PmNode, entries: SpellingEntry[]): DecorationSet 
 		const text = node.text;
 
 		for (const entry of entries) {
-			const wrong = entry.wrongForm; // always lowercase
-			// Build a regex that matches the wrongForm as a substring (not word-boundary — partial match allowed)
-			// We search case-insensitively but store the match range for case-preserving replacement
-			const pattern = new RegExp(wrong.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+			const pattern = buildMatchRegex(entry.wrongForm, entry.matchType);
 			let match: RegExpExecArray | null;
 
 			while ((match = pattern.exec(text)) !== null) {
 				const from = pos + match.index;
 				const to = from + match[0].length;
 
+				const correctFormsAttr = entry.correctForms.length > 0
+					? JSON.stringify(entry.correctForms)
+					: "";
+
+				// For prefix/suffix, match[0] includes the rest of the word.
+				// matchOffset = where wrongForm starts inside match[0].
+				// prefix: wrongForm is at start (0), suffix: wrongForm is at end.
+				const wrongLen = entry.wrongForm.length;
+				const matchOffset =
+					entry.matchType === "suffix"
+						? match[0].length - wrongLen
+						: 0;
+
 				decorations.push(
 					Decoration.inline(from, to, {
 						class: SPELLING_CORRECTION_CLASS,
 						"data-wrong-form": entry.wrongForm,
 						"data-correct-form": entry.correctForm,
+						"data-correct-forms": correctFormsAttr,
+						"data-match-type": entry.matchType,
+						"data-match-offset": String(matchOffset),
 						"data-entry-id": entry.id,
 						"data-original-text": match[0],
 						"data-from": String(from),

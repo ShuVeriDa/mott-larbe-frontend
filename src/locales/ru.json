@@ -4586,6 +4586,12 @@
 			"searchPlaceholder": "Поиск…",
 			"loadError": "Ошибка загрузки",
 			"addToSpellingTitle": "Добавить в словарь правописания",
+			"matchTypeShort": {
+				"substring": "часть",
+				"whole_word": "слово",
+				"prefix": "начало",
+				"suffix": "оконч."
+			},
 			"table": {
 				"wrongForm": "Неправильная форма",
 				"correctForm": "Правильная форма",
@@ -4617,10 +4623,21 @@
 				"wrongFormLabel": "Неправильная форма",
 				"wrongFormPlaceholder": "вахнера",
 				"wrongFormHint": "Сохраняется в нижнем регистре. Поиск без учёта регистра.",
+				"matchTypeLabel": "Тип совпадения",
+				"matchType": {
+					"substring": "Подстрока (везде)",
+					"whole_word": "Целое слово",
+					"prefix": "Начало слова",
+					"suffix": "Конец слова (окончание)"
+				},
 				"correctFormLabel": "Правильная форма",
 				"correctFormPlaceholder": "вахне́ра",
 				"correctFormHint": "С правильным написанием и/или ударением (акут над гласной).",
 				"insertNasalization": "Вставить надстрочную н (назализация)",
+				"additionalFormsLabel": "Дополнительные варианты",
+				"addAnotherForm": "Добавить вариант",
+				"removeForm": "Удалить вариант",
+				"additionalFormPlaceholder": "альтернативный вариант…",
 				"commentLabel": "Комментарий (необязательно)",
 				"commentPlaceholder": "Ударение на второй слог",
 				"cancel": "Отмена",

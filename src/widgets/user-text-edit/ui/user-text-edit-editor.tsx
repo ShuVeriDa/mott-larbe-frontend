@@ -13,6 +13,7 @@ interface UserTextEditEditorProps {
   pages: PageContent[];
   activePage: number;
   pageTitles?: string[];
+  showSpellingAdd?: boolean;
   onTitleChange: (value: string) => void;
   onPageContentChange: (doc: TipTapDoc) => void;
   onPageTitleChange?: (value: string) => void;
@@ -28,6 +29,7 @@ export const UserTextEditEditor = ({
   pages,
   activePage,
   pageTitles,
+  showSpellingAdd = false,
   onTitleChange,
   onPageContentChange,
   onPageTitleChange,
@@ -82,6 +84,7 @@ export const UserTextEditEditor = ({
       notionExtraToolbarItems={charsPopup}
       findReplaceCharHandlerRef={findReplaceInsertRef}
       findReplaceCharsPicker={charsPopup}
+      showSpellingAdd={showSpellingAdd}
       pageHeaderContent={
         <div className="border-b border-bd-1 bg-surf px-[22px] pb-2 pt-2 max-sm:px-4">
           <Input

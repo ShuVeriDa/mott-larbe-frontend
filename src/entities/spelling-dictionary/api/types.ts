@@ -1,7 +1,11 @@
+export type SpellingMatchType = "substring" | "whole_word" | "prefix" | "suffix";
+
 export interface SpellingEntry {
 	id: string;
 	wrongForm: string;
 	correctForm: string;
+	correctForms: string[];
+	matchType: SpellingMatchType;
 	comment: string | null;
 }
 
@@ -21,12 +25,16 @@ export interface PaginatedSpellingEntries {
 export interface CreateSpellingEntryPayload {
 	wrongForm: string;
 	correctForm: string;
+	correctForms?: string[];
+	matchType?: SpellingMatchType;
 	comment?: string;
 }
 
 export interface UpdateSpellingEntryPayload {
 	wrongForm?: string;
 	correctForm?: string;
+	correctForms?: string[];
+	matchType?: SpellingMatchType;
 	comment?: string;
 }
 

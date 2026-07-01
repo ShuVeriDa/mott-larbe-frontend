@@ -50,6 +50,7 @@ export const UserTextCreatePage = ({ lang }: UserTextCreatePageProps) => {
           pages={pages}
           pageTitles={pageTitles}
           activePage={activePage}
+          showSpellingAdd
           onTitleChange={handleTitleChange}
           onPageContentChange={handlePageContentChange}
           onPageTitleChange={handlePageTitleChange}

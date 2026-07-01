@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useCreateSpellingEntry } from "@/entities/spelling-dictionary";
-import type { CorrectFormNode } from "@/entities/spelling-dictionary";
+import type { CorrectFormNode, SpellingMatchType } from "@/entities/spelling-dictionary";
 import { serializeCorrectForm } from "@/entities/spelling-dictionary";
 import { useI18n } from "@/shared/lib/i18n";
 
@@ -13,6 +13,7 @@ interface UseAddToSpellingDictionaryOptions {
 export const useAddToSpellingDictionary = ({ onDone }: UseAddToSpellingDictionaryOptions) => {
 	const { t } = useI18n();
 	const [correctFormNodes, setCorrectFormNodes] = useState<CorrectFormNode[]>([{ text: "" }]);
+	const [matchType, setMatchType] = useState<SpellingMatchType>("substring");
 	const [error, setError] = useState<string | null>(null);
 
 	const createMutation = useCreateSpellingEntry();
@@ -28,8 +29,10 @@ export const useAddToSpellingDictionary = ({ onDone }: UseAddToSpellingDictionar
 			await createMutation.mutateAsync({
 				wrongForm: wrongForm.toLowerCase().trim(),
 				correctForm,
+				matchType,
 			});
 			setCorrectFormNodes([{ text: "" }]);
+			setMatchType("substring");
 			setError(null);
 			onDone(correctFormNodes);
 		} catch {
@@ -39,6 +42,7 @@ export const useAddToSpellingDictionary = ({ onDone }: UseAddToSpellingDictionar
 
 	const reset = () => {
 		setCorrectFormNodes([{ text: "" }]);
+		setMatchType("substring");
 		setError(null);
 	};
 
@@ -48,6 +52,8 @@ export const useAddToSpellingDictionary = ({ onDone }: UseAddToSpellingDictionar
 		correctFormNodes,
 		setCorrectFormNodes,
 		correctFormPlainText,
+		matchType,
+		setMatchType,
 		error,
 		isPending: createMutation.isPending,
 		handleSubmit,
