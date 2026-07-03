@@ -43,3 +43,65 @@ export interface FetchSpellingEntriesParams {
 	limit?: number;
 	search?: string;
 }
+
+export interface SpellingOccurrence {
+	id: string;
+	tokenId: string;
+	textId: string;
+	textTitle: string;
+	pageNumber: number;
+	before: string;
+	match: string;
+	after: string;
+}
+
+export interface PaginatedSpellingOccurrences {
+	items: SpellingOccurrence[];
+	total: number;
+	page: number;
+	limit: number;
+	canBulkFix: boolean;
+	entry?: {
+		id: string;
+		wrongForm: string;
+		correctForm: string;
+		correctForms: string[];
+		matchType: SpellingMatchType;
+	};
+	appliedMatchType?: SpellingMatchType;
+}
+
+export interface SpellingOccurrenceTextOption {
+	id: string;
+	title: string;
+}
+
+export interface FetchSpellingOccurrencesParams {
+	page?: number;
+	limit?: number;
+	textIds?: string[];
+	matchType?: SpellingMatchType;
+}
+
+export interface FetchSpellingOccurrenceTextsParams {
+	search?: string;
+}
+
+export interface FixOccurrencesPayload {
+	updates: { tokenId: string; original: string }[];
+}
+
+export interface FixOccurrencesResult {
+	updated: unknown[];
+	errors: { tokenId: string; message: string }[];
+}
+
+export interface FindReplaceOccurrencesParams extends FetchSpellingOccurrencesParams {
+	wrongForm: string;
+	matchType: SpellingMatchType;
+}
+
+export interface FindReplaceTextsParams extends FetchSpellingOccurrenceTextsParams {
+	wrongForm: string;
+	matchType: SpellingMatchType;
+}

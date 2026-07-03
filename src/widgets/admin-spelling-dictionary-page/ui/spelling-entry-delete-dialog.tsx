@@ -4,6 +4,7 @@ import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { Modal, ModalActions } from "@/shared/ui/modal";
 import { useI18n } from "@/shared/lib/i18n";
+import { parseCorrectForm } from "@/entities/spelling-dictionary";
 import type { AdminSpellingEntry } from "@/entities/spelling-dictionary";
 
 interface SpellingEntryDeleteDialogProps {
@@ -12,6 +13,11 @@ interface SpellingEntryDeleteDialogProps {
 	onConfirm: () => void;
 	onClose: () => void;
 }
+
+const renderCorrectForm = (value: string) =>
+	parseCorrectForm(value).map((node, i) =>
+		node.superscript ? <sup key={i}>{node.text}</sup> : <span key={i}>{node.text}</span>,
+	);
 
 export const SpellingEntryDeleteDialog = ({
 	entry,
@@ -37,7 +43,7 @@ export const SpellingEntryDeleteDialog = ({
 					<Typography tag="p" className="font-mono text-[13px] font-medium text-t-1">
 						<span className="text-red-t line-through">{entry.wrongForm}</span>
 						{" → "}
-						<span>{entry.correctForm}</span>
+						<span>{renderCorrectForm(entry.correctForm)}</span>
 					</Typography>
 					{entry.comment && (
 						<Typography tag="p" className="mt-0.5 text-[12px] text-t-3">

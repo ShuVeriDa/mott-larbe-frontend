@@ -100,8 +100,8 @@ export const AdminLogsPage = () => {
 							onChange={setPage}
 						/>
 					)}
-				</div>
-			</AdminCard>
+				</AdminCard>
+			</div>
 
 			<LogsDetailPanel
 				open={!!selectedId}

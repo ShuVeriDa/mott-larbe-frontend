@@ -2965,6 +2965,10 @@
 				"title": "Dictionary Entry — Admin | Mott Larbe",
 				"description": "View and edit dictionary entry details, senses, examples and morphological forms"
 			},
+			"spellingDictionaryDetail": {
+				"title": "Spelling Entry Occurrences — Admin | Mott Larbe",
+				"description": "View and fix occurrences of a spelling entry across the published library"
+			},
 			"subscriptions": {
 				"title": "Subscriptions — Admin | Mott Larbe",
 				"description": "Manage user subscriptions, billing cycles, and payment history"
@@ -4591,6 +4595,7 @@
 			"subtitle": "Words with correct spelling and stress marks",
 			"entriesCount": "{count} entries",
 			"add": "Add",
+			"findReplace": "Find & Replace",
 			"entries": "Entries",
 			"searchPlaceholder": "Search…",
 			"loadError": "Failed to load",
@@ -4661,11 +4666,82 @@
 				"deleting": "Deleting…"
 			},
 			"actions": {
+				"viewOccurrences": "View occurrences in library",
 				"edit": "Edit",
 				"delete": "Delete"
 			},
 			"pagination": {
 				"showing": "Showing {from}–{to} of {total}"
+			}
+		},
+		"spellingDictionaryDetail": {
+			"title": "Library occurrences",
+			"back": "Back to dictionary",
+			"occurrences": "Occurrences",
+			"occurrencesCount": "{count} occurrences",
+			"loadError": "Failed to load",
+			"selectRow": "Select occurrence",
+			"selectAll": "Select all",
+			"page": "p. {page}",
+			"fixOne": "Fix",
+			"fixing": "Fixing…",
+			"openInEditor": "Open in editor",
+			"openInEditorTooltip": "Open the text in the editor at this word",
+			"selectedCount": "Selected: {count}",
+			"fixSelected": "Fix selected ({count})",
+			"canBulkFixDisabledTooltip": "This entry has multiple valid correct forms — automatic fixing is disabled. Use \"Open in editor\" to pick a form manually.",
+			"canBulkFixDisabledByMatchTypeTooltip": "With \"Prefix\" or \"Suffix\" match type, automatic fixing would replace the entire word, which may be incorrect. Use \"Open in editor\" to fix manually.",
+			"fixPartialError": "Failed to fix {count} occurrences. They may have already been changed. Refresh the list and try again.",
+			"matchType": {
+				"substring": "Substring",
+				"wholeWord": "Whole word",
+				"prefix": "Prefix",
+				"suffix": "Suffix"
+			},
+			"matchTypeFilter": {
+				"default": "As stored in entry",
+				"ariaLabel": "Match type (search filter)"
+			},
+			"table": {
+				"occurrence": "Occurrence"
+			},
+			"textFilter": {
+				"placeholder": "All texts",
+				"searchPlaceholder": "Search text…",
+				"empty": "No texts found",
+				"ariaLabel": "Filter by text"
+			},
+			"empty": {
+				"title": "No occurrences found",
+				"subtitle": "This word does not appear in the selected texts."
+			},
+			"confirmDialog": {
+				"title": "Fix occurrences?",
+				"subtitle": "{count} occurrences will be fixed. This action cannot be undone.",
+				"cancel": "Cancel",
+				"confirm": "Fix",
+				"fixing": "Fixing…"
+			},
+			"pagination": {
+				"showing": "Showing {from}–{to} of {total}",
+				"perPage": "Show",
+				"perPageOption": "{count} per page"
+			}
+		},
+		"spellingDictionaryFindReplace": {
+			"title": "Find & Replace",
+			"back": "Back to dictionary",
+			"wrongFormLabel": "Search for",
+			"wrongFormPlaceholder": "вахнера",
+			"matchTypeLabel": "Match type",
+			"correctFormLabel": "Replace with",
+			"correctFormPlaceholder": "вахне́ра",
+			"emptyQuery": "Enter a word or phrase to search",
+			"matchType": {
+				"substring": "Substring",
+				"wholeWord": "Whole word",
+				"prefix": "Prefix",
+				"suffix": "Suffix"
 			}
 		},
 		"announcements": {

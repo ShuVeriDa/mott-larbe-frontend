@@ -2961,6 +2961,10 @@
 				"title": "Словарная статья — Admin | Мотт Ларбе",
 				"description": "Просмотр и редактирование словарной статьи, значений, примеров и форм"
 			},
+			"spellingDictionaryDetail": {
+				"title": "Вхождения записи словаря правописания — Admin | Мотт Ларбе",
+				"description": "Просмотр и исправление вхождений записи словаря правописания в опубликованной библиотеке"
+			},
 			"subscriptions": {
 				"title": "Подписки — Админ | Мотт Ларбе",
 				"description": "Управление подписками пользователей, циклами оплаты и историей платежей"
@@ -4588,6 +4592,7 @@
 			"subtitle": "Слова с правильным написанием и ударением",
 			"entriesCount": "{count} записей",
 			"add": "Добавить",
+			"findReplace": "Найти и исправить",
 			"entries": "Записи",
 			"searchPlaceholder": "Поиск…",
 			"loadError": "Ошибка загрузки",
@@ -4658,11 +4663,82 @@
 				"deleting": "Удаление…"
 			},
 			"actions": {
+				"viewOccurrences": "Показать вхождения в библиотеке",
 				"edit": "Редактировать",
 				"delete": "Удалить"
 			},
 			"pagination": {
 				"showing": "Показано {from}–{to} из {total}"
+			}
+		},
+		"spellingDictionaryDetail": {
+			"title": "Вхождения в библиотеке",
+			"back": "Назад к словарю",
+			"occurrences": "Вхождения",
+			"occurrencesCount": "{count} вхождений",
+			"loadError": "Ошибка загрузки",
+			"selectRow": "Выбрать вхождение",
+			"selectAll": "Выбрать все",
+			"page": "стр. {page}",
+			"fixOne": "Исправить",
+			"fixing": "Исправление…",
+			"openInEditor": "Открыть в редакторе",
+			"openInEditorTooltip": "Открыть текст в редакторе на этом слове",
+			"selectedCount": "Выбрано: {count}",
+			"fixSelected": "Исправить выбранные ({count})",
+			"canBulkFixDisabledTooltip": "Для этой записи несколько вариантов правильной формы — автоматическое исправление отключено. Используйте «Открыть в редакторе», чтобы выбрать вариант вручную.",
+			"canBulkFixDisabledByMatchTypeTooltip": "При типе совпадения «Начало слова» или «Окончание» автоматическое исправление меняет всё слово целиком, что может быть некорректно. Используйте «Открыть в редакторе», чтобы исправить вручную.",
+			"fixPartialError": "Не удалось исправить {count} вхождений. Возможно, они уже были изменены. Обновите список и попробуйте снова.",
+			"matchType": {
+				"substring": "Подстрока",
+				"wholeWord": "Целое слово",
+				"prefix": "Начало слова",
+				"suffix": "Окончание"
+			},
+			"matchTypeFilter": {
+				"default": "Как в записи",
+				"ariaLabel": "Тип совпадения (фильтр поиска)"
+			},
+			"table": {
+				"occurrence": "Вхождение"
+			},
+			"textFilter": {
+				"placeholder": "Все тексты",
+				"searchPlaceholder": "Поиск текста…",
+				"empty": "Тексты не найдены",
+				"ariaLabel": "Фильтр по тексту"
+			},
+			"empty": {
+				"title": "Вхождений не найдено",
+				"subtitle": "Слово не встречается в выбранных текстах."
+			},
+			"confirmDialog": {
+				"title": "Исправить вхождения?",
+				"subtitle": "Будет исправлено {count} вхождений. Это действие нельзя отменить.",
+				"cancel": "Отмена",
+				"confirm": "Исправить",
+				"fixing": "Исправление…"
+			},
+			"pagination": {
+				"showing": "Показано {from}–{to} из {total}",
+				"perPage": "Показывать по",
+				"perPageOption": "{count} на странице"
+			}
+		},
+		"spellingDictionaryFindReplace": {
+			"title": "Найти и исправить",
+			"back": "Назад к словарю",
+			"wrongFormLabel": "Что искать",
+			"wrongFormPlaceholder": "вахнера",
+			"matchTypeLabel": "Тип совпадения",
+			"correctFormLabel": "На что заменить",
+			"correctFormPlaceholder": "вахне́ра",
+			"emptyQuery": "Введите слово или фразу для поиска",
+			"matchType": {
+				"substring": "Подстрока",
+				"wholeWord": "Целое слово",
+				"prefix": "Начало слова",
+				"suffix": "Окончание"
 			}
 		},
 		"announcements": {

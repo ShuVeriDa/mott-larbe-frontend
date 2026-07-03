@@ -8,4 +8,13 @@ export type {
 	UpdateSpellingEntryPayload,
 	FetchSpellingEntriesParams,
 	SpellingMatchType,
+	SpellingOccurrence,
+	PaginatedSpellingOccurrences,
+	SpellingOccurrenceTextOption,
+	FetchSpellingOccurrencesParams,
+	FetchSpellingOccurrenceTextsParams,
+	FixOccurrencesPayload,
+	FixOccurrencesResult,
+	FindReplaceOccurrencesParams,
+	FindReplaceTextsParams,
 } from "./types";

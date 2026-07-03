@@ -1,4 +1,11 @@
-export { spellingDictionaryQueryOptions, adminSpellingDictionaryQueryOptions } from "./queries";
+export {
+	spellingDictionaryQueryOptions,
+	adminSpellingDictionaryQueryOptions,
+	spellingOccurrencesQueryOptions,
+	spellingOccurrenceTextsQueryOptions,
+	findReplaceOccurrencesQueryOptions,
+	findReplaceTextsQueryOptions,
+} from "./queries";
 export { useSpellingDictionary } from "./use-spelling-dictionary";
 export {
 	useAdminSpellingDictionary,
@@ -6,3 +13,4 @@ export {
 	useUpdateSpellingEntry,
 	useDeleteSpellingEntry,
 } from "./use-admin-spelling-dictionary";
+export { useFixOccurrences } from "./use-fix-occurrences";

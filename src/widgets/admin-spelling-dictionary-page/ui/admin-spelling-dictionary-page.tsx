@@ -1,6 +1,7 @@
 "use client";
 
-import { Plus, Search } from "lucide-react";
+import Link from "next/link";
+import { Plus, Search, Wand2 } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { AdminCard } from "@/shared/ui/admin-card";
@@ -13,7 +14,7 @@ import { SpellingEntryDeleteDialog } from "./spelling-entry-delete-dialog";
 import { SpellingPagination } from "./spelling-pagination";
 
 export const AdminSpellingDictionaryPage = () => {
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
 	const {
 		page,
 		limit,
@@ -63,7 +64,15 @@ export const AdminSpellingDictionaryPage = () => {
 							: t("admin.spellingDictionary.subtitle")}
 					</Typography>
 				</div>
-				<div className="ml-auto shrink-0">
+				<div className="ml-auto flex shrink-0 items-center gap-2">
+					<Button variant="outline" asChild className="h-[30px] px-3 text-[12px]">
+						<Link href={`/${lang}/admin/spelling-dictionary/search`}>
+							<Wand2 className="size-[13px]" />
+							<Typography tag="span" className="max-sm:hidden">
+								{t("admin.spellingDictionary.findReplace")}
+							</Typography>
+						</Link>
+					</Button>
 					<Button
 						onClick={openCreate}
 						className="flex h-[30px] cursor-pointer items-center gap-1.5 rounded-base bg-acc px-3 text-[12px] font-semibold text-white transition-opacity hover:opacity-88"

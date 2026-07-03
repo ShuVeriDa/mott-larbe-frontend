@@ -1,7 +1,8 @@
 "use client";
 
 import { type ComponentProps } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { Pencil, TextSearch, Trash2 } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import { useI18n } from "@/shared/lib/i18n";
 import type { AdminSpellingEntry } from "@/entities/spelling-dictionary";
@@ -20,7 +21,7 @@ export const SpellingEntryRowActions = ({
 	onEdit,
 	onDelete,
 }: SpellingEntryRowActionsProps) => {
-	const { t } = useI18n();
+	const { t, lang } = useI18n();
 
 	const handleEdit: NonNullable<ComponentProps<"button">["onClick"]> = () =>
 		onEdit(entry);
@@ -29,6 +30,16 @@ export const SpellingEntryRowActions = ({
 
 	return (
 		<div className="flex items-center gap-1">
+			<Button
+				size="bare"
+				asChild
+				title={t("admin.spellingDictionary.actions.viewOccurrences")}
+				className={btnClass}
+			>
+				<Link href={`/${lang}/admin/spelling-dictionary/${entry.id}`}>
+					<TextSearch />
+				</Link>
+			</Button>
 			<Button
 				size="bare"
 				onClick={handleEdit}

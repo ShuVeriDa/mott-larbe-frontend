@@ -2962,6 +2962,10 @@
 				"title": "Дошаман статья — Администратор | Мотт Ларбе",
 				"description": "Дошаман статья, маьӀнаш, масалш а, тайпанаш а гар а, таяр а"
 			},
+			"spellingDictionaryDetail": {
+				"title": "Йозанан дошамера дешан тарлуш хилар — Администратор | Мотт Ларбе",
+				"description": "Йозанан дошамера дешан библиотекехь тарлуш хилар гар а, нийсаяр а"
+			},
 			"subscriptions": {
 				"title": "Подпискаш — Администратор | Мотт Ларбе",
 				"description": "Пользователийн подпискашца, такхаран циклашца, такхаран историца гӀуллакх дар"
@@ -4589,6 +4593,7 @@
 			"subtitle": "Нийса йозанца а, хьаьркашца а дешнаш",
 			"entriesCount": "{count} запись",
 			"add": "ТӀетоха",
+			"findReplace": "Лаха а, нийсаде а",
 			"entries": "Записаш",
 			"searchPlaceholder": "Лахар…",
 			"loadError": "Хаа ца хилира",
@@ -4659,11 +4664,82 @@
 				"deleting": "ДӀайохуш…"
 			},
 			"actions": {
+				"viewOccurrences": "Библиотекехь тарлуш хилар гар",
 				"edit": "Нийсаде",
 				"delete": "ДӀадаккха"
 			},
 			"pagination": {
 				"showing": "Гайтина {from}–{to} оцу {total} тӀера"
+			}
+		},
+		"spellingDictionaryDetail": {
+			"title": "Библиотекехь тарлуш хилар",
+			"back": "Дошамна тӀе юхаверза",
+			"occurrences": "Тарлуш хилар",
+			"occurrencesCount": "{count} тарлуш хилар",
+			"loadError": "Йохор хилла кхачориг",
+			"selectRow": "Тарлуш хилар харжа",
+			"selectAll": "Массо а харжа",
+			"page": "агӀо {page}",
+			"fixOne": "Нийсаде",
+			"fixing": "Нийсадуш…",
+			"openInEditor": "Редакторехь схьайиллан",
+			"openInEditorTooltip": "Оцу дешан тӀехь текст редакторехь схьайиллан",
+			"selectedCount": "Харжина: {count}",
+			"fixSelected": "Харжина беш нийсаде ({count})",
+			"canBulkFixDisabledTooltip": "ХӀокху статьяна дӀах кхин нийса дешнаш ю — автоматически нийсаяр бекъина ду. Дийцаре агӀо харжа деза \"Редакторехь схьайиллан\" тӀедиллина.",
+			"canBulkFixDisabledByMatchTypeTooltip": "\"Дешан долалуш\" я \"Чаккхе\" тарлуш хиларан тайпанца автоматически нийсаяр дуьззина дош хийца тарло, х1ара нийса дацар мега. Дийцаре агӀо харжа деза \"Редакторехь схьайиллан\" тӀедиллина.",
+			"fixPartialError": "{count} тарлуш хилар нийсадан ца хилла. Царах цхьаберш хийцина хила тарло. Список керлаяхьа, юха гӀерта.",
+			"matchType": {
+				"substring": "Дешан дакъа",
+				"wholeWord": "Дуьззина дош",
+				"prefix": "Дешан долалуш",
+				"suffix": "Чаккхе"
+			},
+			"matchTypeFilter": {
+				"default": "Статьяхь санна",
+				"ariaLabel": "Тарлуш хиларан тайпа (лахарна фильтр)"
+			},
+			"table": {
+				"occurrence": "Тарлуш хилар"
+			},
+			"textFilter": {
+				"placeholder": "Массо а текстех",
+				"searchPlaceholder": "Текст лаха…",
+				"empty": "Тексташ ца карийна",
+				"ariaLabel": "Текстаца фильтр"
+			},
+			"empty": {
+				"title": "Тарлуш хилар ца карийна",
+				"subtitle": "ХӀара дош харжина текстешкахь ца тарло."
+			},
+			"confirmDialog": {
+				"title": "Тарлуш хилар нийсаде?",
+				"subtitle": "{count} тарлуш хилар нийсадийр ду. ХӀара гӀуллакх юха дӀаяккхалур дац.",
+				"cancel": "Юхаяккха",
+				"confirm": "Нийсаде",
+				"fixing": "Нийсадуш…"
+			},
+			"pagination": {
+				"showing": "Гайтина {from}–{to} оцу {total} тӀера",
+				"perPage": "Гайта",
+				"perPageOption": "{count} агӀонехь"
+			}
+		},
+		"spellingDictionaryFindReplace": {
+			"title": "Лаха а, нийсаде а",
+			"back": "Дошамна тӀе юхаверза",
+			"wrongFormLabel": "Лаха деза",
+			"wrongFormPlaceholder": "вахнера",
+			"matchTypeLabel": "Тарлуш хиларан тайпа",
+			"correctFormLabel": "Нийсаде деза",
+			"correctFormPlaceholder": "вахне́ра",
+			"emptyQuery": "Лаха деза дош я предложени яздан",
+			"matchType": {
+				"substring": "Дешан дакъа",
+				"wholeWord": "Дуьззина дош",
+				"prefix": "Дешан долалуш",
+				"suffix": "Чаккхе"
 			}
 		},
 		"announcements": {
