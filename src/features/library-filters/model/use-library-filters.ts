@@ -6,17 +6,23 @@ import type {
 	LibrarySortOption,
 	LibraryTextLanguage,
 } from "@/entities/library-text";
+import { useCurrentUser } from "@/entities/user";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import type { LibraryView } from "./library-filter-store";
 
 const DEFAULT_SORT: LibrarySortOption = "newest";
 const DEFAULT_VIEW: LibraryView = "grid";
+// Applied once per tab: distinguishes "first visit, no filter chosen yet" from
+// "user explicitly reset the filter to all languages" — both look identical
+// as an absent `lang` URL param, so a session flag is the only way to tell them apart.
+const LANG_DEFAULT_APPLIED_KEY = "library-filters:lang-default-applied";
 
 export const useLibraryFilters = () => {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const pathname = usePathname();
+	const { data: user } = useCurrentUser();
 
 	const set = useCallback(
 		(updates: Record<string, string | null>) => {
@@ -34,7 +40,8 @@ export const useLibraryFilters = () => {
 	);
 
 	const level: CefrLevel | "all" = (searchParams.get("level") as CefrLevel | null) ?? "all";
-	const lang: LibraryTextLanguage | "all" = (searchParams.get("lang") as LibraryTextLanguage | null) ?? "all";
+	const langParam = searchParams.get("lang") as LibraryTextLanguage | null;
+	const lang: LibraryTextLanguage | "all" = langParam ?? "all";
 	const status: LibraryProgressStatus | "all" = (searchParams.get("status") as LibraryProgressStatus | null) ?? "all";
 	const sort: LibrarySortOption = (searchParams.get("sort") as LibrarySortOption | null) ?? DEFAULT_SORT;
 	const view: LibraryView = (searchParams.get("view") as LibraryView | null) ?? DEFAULT_VIEW;
@@ -44,6 +51,19 @@ export const useLibraryFilters = () => {
 		const raw = Number(searchParams.get("maxWords"));
 		return Number.isFinite(raw) && raw > 0 ? raw : null;
 	})();
+
+	// First visit this tab, no explicit filter yet → default to the user's
+	// study language instead of "all". Runs once per tab (sessionStorage flag),
+	// so an explicit reset back to "all" later is respected, not overridden again.
+	useEffect(() => {
+		if (langParam !== null) return;
+		if (!user?.language) return;
+		if (sessionStorage.getItem(LANG_DEFAULT_APPLIED_KEY)) return;
+
+		sessionStorage.setItem(LANG_DEFAULT_APPLIED_KEY, "1");
+		if (user.language === "CHE") return; // "CHE" already renders identically to "all" today
+		set({ lang: user.language });
+	}, [langParam, user?.language, set]);
 
 	const setLevel = (v: CefrLevel | "all") => set({ level: v });
 	const setLang = (v: LibraryTextLanguage | "all") => set({ lang: v });

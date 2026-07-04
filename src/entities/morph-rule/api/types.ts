@@ -1,3 +1,5 @@
+import type { AppLanguage } from "@/shared/lib/languages";
+
 export type MorphRuleType =
   | "NOUN_CASE"
   | "PLURAL"
@@ -7,7 +9,7 @@ export type MorphRuleType =
   | "PREFIX"
   | "REGEX";
 
-export type MorphLanguage = "CHE" | "RU";
+export type MorphLanguage = AppLanguage;
 
 export type MorphRuleStatus = "all" | "active" | "inactive" | "regex";
 

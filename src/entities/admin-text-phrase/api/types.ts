@@ -1,4 +1,6 @@
-export type PhraseLanguage = "CHE" | "RU" | "AR" | "EN";
+import type { AppLanguage } from "@/shared/lib/languages";
+
+export type PhraseLanguage = AppLanguage;
 
 export interface TextPhrase {
   id: string;

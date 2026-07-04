@@ -1,6 +1,7 @@
 import type { CefrLevel } from "@/shared/types";
+import type { AppLanguage } from "@/shared/lib/languages";
 
-export type LibraryTextLanguage = "CHE" | "RU" | "EN";
+export type LibraryTextLanguage = AppLanguage;
 export type LibraryProgressStatus = "NEW" | "IN_PROGRESS" | "COMPLETED";
 export type LibrarySortOption =
 	| "newest"

@@ -175,6 +175,7 @@ export const AdminTextEditPage = ({ textId }: AdminTextEditPageProps) => {
 			editor={
 				<TextEditEditor
 					title={title}
+					language={language}
 					pages={pages}
 					activePage={activePage}
 					processingStatus={textData.processingStatus}

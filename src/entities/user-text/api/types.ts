@@ -1,8 +1,9 @@
 import type { TipTapDoc } from "@/shared/ui/notion-editor";
+import type { AppLanguage } from "@/shared/lib/languages";
 
 export type UserTextType = "ORIGINAL" | "EXTERNAL";
 
-export type UserTextLanguage = "CHE" | "RU" | "AR" | "EN";
+export type UserTextLanguage = AppLanguage;
 
 // List item — content (TipTap JSON) excluded to keep list payloads small.
 // Used by card components and list queries.

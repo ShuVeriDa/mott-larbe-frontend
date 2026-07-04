@@ -145,7 +145,7 @@ export const adminUserApi = {
 	},
 
 	setFeatureFlag: async (id: string, flagId: string, value: boolean): Promise<void> => {
-		await http.put(`/admin/users/${id}/feature-flags/${flagId}`, { value });
+		await http.put(`/admin/users/${id}/feature-flags/${flagId}`, { isEnabled: value });
 	},
 
 	deleteFeatureFlag: async (id: string, flagId: string): Promise<void> => {

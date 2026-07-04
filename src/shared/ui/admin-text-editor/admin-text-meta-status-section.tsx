@@ -4,10 +4,13 @@ import {
 	FieldSelect,
 	MetaSection,
 } from "@/shared/ui/admin-text-meta-fields";
+import { useI18n } from "@/shared/lib/i18n";
+import { LANGUAGES, type AppLanguage } from "@/shared/lib/languages";
+import type { ComponentProps } from "react";
+import { LANGUAGE_I18N_KEY } from "./lib/language-i18n-key";
 
 type TextStatus = "draft" | "published" | "archived";
-type TextLanguage = "CHE" | "RU";
-import type { ComponentProps } from "react";
+type TextLanguage = AppLanguage;
 
 interface AdminTextMetaStatusSectionLabels {
 	statusSection: string;
@@ -15,8 +18,6 @@ interface AdminTextMetaStatusSectionLabels {
 	statusPublished: string;
 	statusArchived: string;
 	langLabel: string;
-	langChe: string;
-	langRu: string;
 }
 
 interface AdminTextMetaStatusSectionProps {
@@ -34,6 +35,8 @@ export const AdminTextMetaStatusSection = ({
 	onStatusChange,
 	onLanguageChange,
 }: AdminTextMetaStatusSectionProps) => {
+	const { t } = useI18n();
+
 	const handleStatusChange: NonNullable<
 		ComponentProps<typeof FieldSelect>["onChange"]
 	> = e => onStatusChange(e.currentTarget.value as TextStatus);
@@ -53,8 +56,11 @@ export const AdminTextMetaStatusSection = ({
 
 			<MetaSection title={labels.langLabel}>
 				<FieldSelect value={language} onChange={handleLanguageChange}>
-					<option value="CHE">{labels.langChe}</option>
-					<option value="RU">{labels.langRu}</option>
+					{LANGUAGES.map(l => (
+						<option key={l.code} value={l.code}>
+							{t(LANGUAGE_I18N_KEY[l.code])}
+						</option>
+					))}
 				</FieldSelect>
 			</MetaSection>
 		</>

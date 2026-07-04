@@ -3,6 +3,7 @@
 import type { ProcessingStatus } from "@/entities/admin-text";
 import { useAdminPagePhrases } from "@/entities/admin-text-phrase";
 import { useAnnotatedFormsByPage } from "@/features/word-annotation";
+import type { AppLanguage } from "@/shared/lib/languages";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -40,6 +41,7 @@ const editorExtensions = [PhraseHighlightExtension, WordAnnotationHighlightExten
 
 interface TextEditEditorProps {
 	title: string;
+	language: AppLanguage;
 	pages: PageContent[];
 	activePage: number;
 	processingStatus: ProcessingStatus;
@@ -61,6 +63,7 @@ interface TextEditEditorProps {
 
 export const TextEditEditor = ({
 	title,
+	language,
 	pages,
 	activePage,
 	processingStatus,
@@ -281,6 +284,7 @@ export const TextEditEditor = ({
 	return (
 		<AdminTextEditorShell
 			title={title}
+			language={language}
 			pages={pages}
 			activePage={activePage}
 			stickyTopClassName="top-[52px]"

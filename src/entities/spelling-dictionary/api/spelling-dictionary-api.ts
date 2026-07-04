@@ -2,6 +2,7 @@ import { http } from "@/shared/api";
 import type {
 	AdminSpellingEntry,
 	CreateSpellingEntryPayload,
+	FetchAllSpellingEntriesParams,
 	FetchSpellingEntriesParams,
 	FetchSpellingOccurrencesParams,
 	FetchSpellingOccurrenceTextsParams,
@@ -20,8 +21,8 @@ const joinTextIds = (textIds?: string[]): string | undefined =>
 	textIds?.length ? textIds.join(",") : undefined;
 
 export const spellingDictionaryApi = {
-	getAll: async (): Promise<SpellingEntry[]> => {
-		const { data } = await http.get<SpellingEntry[]>("/spelling-dictionary/all");
+	getAll: async (params?: FetchAllSpellingEntriesParams): Promise<SpellingEntry[]> => {
+		const { data } = await http.get<SpellingEntry[]>("/spelling-dictionary/all", { params });
 		return data;
 	},
 

@@ -1,9 +1,10 @@
 import type { TipTapDoc, TipTapMark, TipTapNode } from "@/shared/ui/notion-editor";
 import type { CefrLevel, LearningLevel } from "@/shared/types";
+import type { AppLanguage } from "@/shared/lib/languages";
 
 export type { TipTapDoc, TipTapMark, TipTapNode };
 
-export type TextLanguage = "CHE" | "RU" | "EN" | string;
+export type TextLanguage = AppLanguage;
 
 export interface TextToken {
 	id: string;

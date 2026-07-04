@@ -8,6 +8,7 @@ import {
 import {
 	useCurrentUser,
 	useUpdateUser,
+	useVisibleLanguages,
 	type UserLanguage,
 	type UserLevel,
 } from "@/entities/user";
@@ -28,6 +29,7 @@ export const useLearningSection = ({
 }: UseLearningSectionParams) => {
 	const { t } = useI18n();
 	const { data: user } = useCurrentUser();
+	const visibleLanguages = useVisibleLanguages();
 	const { mutateAsync: updatePrefs, isPending: isPrefSaving } =
 		useUpdatePreferences();
 	const { mutateAsync: updateGoals, isPending: isGoalsSaving } =
@@ -81,7 +83,7 @@ export const useLearningSection = ({
 	};
 
 	const handleLearningLangChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		setLearningLang(e.currentTarget.value as "CHE" | "RU");
+		setLearningLang(e.currentTarget.value as UserLanguage);
 	};
 
 	const handleLevelChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -135,6 +137,7 @@ export const useLearningSection = ({
 
 	return {
 		learningLang,
+		visibleLanguages,
 		level,
 		transLang,
 		dailyWords,

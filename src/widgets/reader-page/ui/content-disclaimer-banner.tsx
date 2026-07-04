@@ -23,9 +23,13 @@ const bannerVariants = {
 	},
 } as const;
 
-export const ContentDisclaimerBanner = () => {
+interface ContentDisclaimerBannerProps {
+	textId: string;
+}
+
+export const ContentDisclaimerBanner = ({ textId }: ContentDisclaimerBannerProps) => {
 	const { t } = useI18n();
-	const { showDisclaimer, dismiss } = useContentDisclaimer();
+	const { showDisclaimer, dismiss } = useContentDisclaimer(textId);
 
 	return (
 		<AnimatePresence initial={false}>

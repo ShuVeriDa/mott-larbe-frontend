@@ -111,7 +111,7 @@ const ReaderPageInner = ({
 				backLabel={backLabel}
 			/>
 		)}
-		{!focusMode.active && <ContentDisclaimerBanner />}
+		{!focusMode.active && <ContentDisclaimerBanner textId={textId} />}
 			<ReaderLayout
 				textId={textId}
 				pageNumber={pageNumber}
@@ -125,7 +125,7 @@ const ReaderPageInner = ({
 				onCloseRail={handleCloseRail}
 				onNavigate={handleNavigate}
 			/>
-			{!focusMode.active && <ReaderFooter textId={textId} />}
+			{!focusMode.active && <ReaderFooter textId={textId} language={data.language} />}
 			<WordPopup />
 			<WordBottomSheet textId={textId} />
 			<ReaderSettingsSheet open={settingsOpen} onClose={handleCloseRail} textId={textId} pageNumber={pageNumber} />

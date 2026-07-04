@@ -1,4 +1,6 @@
-export type UserLanguage = "CHE" | "RU";
+import type { AppLanguage } from "@/shared/lib/languages";
+
+export type UserLanguage = AppLanguage;
 export type UserLevel = "A" | "B" | "C";
 
 export type PermissionCode =

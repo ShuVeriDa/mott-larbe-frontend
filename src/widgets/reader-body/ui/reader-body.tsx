@@ -87,7 +87,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 	const displayTokens = scriptData?.tokens ?? data.tokens;
 	const applyDiacriticsStrip = script === "ARABIC" && !showDiacritics;
 	const isOldOrtho = orthography === "OLD";
-	const articleLang = script === "ARABIC" ? "ar" : script === "LATIN" ? "che-Latn" : lang;
+	const articleLang = script === "ARABIC" || data.language === "AR" ? "ar" : script === "LATIN" ? "che-Latn" : lang;
 	const tokensAfterDiacritics = applyDiacriticsStrip
 		? displayTokens.map(t =>
 			t.displayText ? { ...t, displayText: stripArabicDiacritics(t.displayText) } : t,
@@ -217,7 +217,14 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 			}))
 		: [];
 
+	// Two independent RTL triggers that must never be merged into one flag:
+	// (a) isArabicScript — CHE text transliterated into Arabic script (ChScript toggle).
+	// (b) isArabicLanguage — the text's own language is AR (a real Arabic text).
+	// A text can only ever be one or the other: the ChScript toggle only exists
+	// for CHE texts, and AR-language texts don't expose it (see ScriptSwitcher below).
 	const isArabicScript = script === "ARABIC";
+	const isArabicLanguage = data.language === "AR";
+	const isRtlDisplay = isArabicScript || isArabicLanguage;
 	const contentRichAfterDiacritics = applyDiacriticsStrip
 		? stripDiacriticsFromDoc(displayContentRich)
 		: displayContentRich;
@@ -225,10 +232,10 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 	// We pass the original doc as cyrillicContentRich so offset mapping stays correct.
 	const contentRichForDisplay = contentRichAfterDiacritics;
 	const fontVars = {
-		"--reader-font-size": isArabicScript ? `${arabicFontSize}px` : `${fontSize}px`,
+		"--reader-font-size": isRtlDisplay ? `${arabicFontSize}px` : `${fontSize}px`,
 		"--reader-line-height": String(LINE_HEIGHT_VALUE[lineHeight]),
 		"--reader-word-spacing": WORD_SPACING_VALUE[wordSpacing],
-		...(isArabicScript ? { "--reader-arabic-font": arabicFontCssValue } : {}),
+		...(isRtlDisplay ? { "--reader-arabic-font": arabicFontCssValue } : {}),
 		...(theme === "custom" && bgColor ? { backgroundColor: bgColor } : {}),
 	};
 
@@ -239,10 +246,10 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 				"bg-bg text-t-1 transition-colors duration-250",
 				"[&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded [&::-webkit-scrollbar-thumb]:bg-surf-4",
 				PAGE_PADDING_CLASS[pagePadding],
-				isArabicScript ? "arabic-script" : FONT_FAMILY_CLASS[fontFamily],
+				isRtlDisplay ? "arabic-script" : FONT_FAMILY_CLASS[fontFamily],
 			)}
 			data-reader-theme={theme}
-			dir={isArabicScript ? "rtl" : undefined}
+			dir={isRtlDisplay ? "rtl" : undefined}
 			lang={articleLang}
 			style={fontVars}
 			onPointerDown={swipe.onPointerDown}
@@ -266,7 +273,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 				onSelectPhrase={handleSelectPhrase}
 				phraseColorVisible={phraseColorVisible}
 				pageNumber={currentPage}
-				isRtl={script === "ARABIC"}
+				isRtl={isRtlDisplay}
 				cyrillicRaw={isNonCyrillic || isOldOrtho ? data.page.contentRaw : undefined}
 				cyrillicContentRich={isNonCyrillic || isOldOrtho ? data.page.contentRich : undefined}
 			/>

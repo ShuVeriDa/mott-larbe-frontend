@@ -28,11 +28,11 @@ export const AdminTextMetaPrimaryActionsSection = ({
 	onPrimaryAction,
 	onSecondaryAction,
 }: AdminTextMetaPrimaryActionsSectionProps) => {
-	const showTooltip = isBackgroundRunning && !!backgroundTooltip;
+	const showBackgroundTooltip = isBackgroundRunning && !!backgroundTooltip;
 	return (
 		<div className="flex flex-col gap-1.5 border-t border-bd-1 bg-surf-2 px-4 py-[14px] transition-colors max-[767px]:bg-surf">
 			<TooltipProvider>
-				<Tooltip open={showTooltip}>
+				<Tooltip open={showBackgroundTooltip}>
 					<TooltipTrigger asChild>
 						<Button
 							onClick={onPrimaryAction}
@@ -54,7 +54,7 @@ export const AdminTextMetaPrimaryActionsSection = ({
 				</Tooltip>
 			</TooltipProvider>
 			<TooltipProvider>
-				<Tooltip open={showTooltip}>
+				<Tooltip open={showBackgroundTooltip}>
 					<TooltipTrigger asChild>
 						<Button
 							onClick={onSecondaryAction}

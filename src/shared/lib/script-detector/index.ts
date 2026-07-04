@@ -1,3 +1,5 @@
+import type { AppLanguage } from "@/shared/lib/languages";
+
 export type TextScript = "cyrillic" | "latin" | "arabic" | "mixed" | "empty";
 
 const CYRILLIC_RE = /[Ѐ-ӿ]/;
@@ -41,13 +43,11 @@ export const detectScript = (text: string): TextScript => {
   return dominant;
 };
 
-export type UserTextLanguage = "CHE" | "RU" | "AR" | "EN";
-
 // Returns true if the detected script contradicts the declared language.
 // Only catches obvious mismatches (e.g. Latin text declared as CHE/RU).
 export const isScriptMismatch = (
   script: TextScript,
-  language: UserTextLanguage,
+  language: AppLanguage,
 ): boolean => {
   if (script === "empty" || script === "mixed") return false;
 

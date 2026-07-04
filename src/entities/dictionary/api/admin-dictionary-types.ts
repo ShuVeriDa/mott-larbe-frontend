@@ -1,6 +1,7 @@
 import type { CefrLevel } from "@/shared/types";
+import type { AppLanguage } from "@/shared/lib/languages";
 
-export type AdminDictLanguage = "CHE" | "RU";
+export type AdminDictLanguage = AppLanguage;
 export type AdminDictGramCase = "NOM" | "GEN" | "DAT" | "ERG" | "INS" | "LOC" | "ALL";
 export type AdminDictGramNumber = "SG" | "PL";
 export type AdminDictTab = "all" | "no_senses" | "no_examples" | "no_forms";

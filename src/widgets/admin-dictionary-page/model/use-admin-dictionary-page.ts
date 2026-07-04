@@ -17,6 +17,7 @@ import type {
 	AdminImportResult,
 } from "@/entities/dictionary";
 import type { CefrLevel } from "@/shared/types";
+import type { AppLanguage } from "@/shared/lib/languages";
 
 const LIMIT = 20;
 
@@ -75,7 +76,7 @@ export const useAdminDictionaryPage = () => {
 
 	const listQuery = useAdminDictionaryList({
 		q: debouncedSearch || undefined,
-		language: (language as "CHE" | "RU") || undefined,
+		language: (language as AppLanguage) || undefined,
 		pos: pos || undefined,
 		level: (level as CefrLevel) || undefined,
 		sort,

@@ -189,16 +189,16 @@ export const RegisterForm = ({
 							variant="bare"
 							size={null}
 							onClick={handleLevelClick}
-							title={cefrLevel}
+							title={t(`auth.fields.level${cefrLevel}`)}
 							className={cn(
-								"h-9 rounded-[9px] border-[0.5px] text-[12.5px] font-semibold transition-colors",
+								"h-9 min-w-0 whitespace-normal rounded-[9px] border-[0.5px] px-1 text-[11px] font-semibold leading-tight transition-colors",
 								level === cefrLevel
 									? "border-acc bg-acc text-white"
 									: "border-bd-2 bg-surf text-t-2 hover:border-bd-3 hover:text-t-1",
 							)}
 							aria-pressed={level === cefrLevel}
 						>
-							{cefrLevel}
+							{t(`auth.fields.level${cefrLevel}`)}
 						</Button>
 					))}
 				</div>

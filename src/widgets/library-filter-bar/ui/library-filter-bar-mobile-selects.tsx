@@ -4,6 +4,7 @@ import type {
 	LibraryProgressStatus,
 	LibraryTextLanguage,
 } from "@/entities/library-text";
+import { useVisibleLanguages } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import type { CefrLevel } from "@/shared/types";
 import {
@@ -11,7 +12,6 @@ import {
 	LIBRARY_FILTER_BAR_PROGRESS_STATUSES,
 	libraryFilterProgressLabelKey,
 } from "../lib/library-filter-bar-config";
-import { ENABLED_LANGUAGES } from "@/shared/lib/languages";
 import { FilterSelect } from "@/shared/ui/filter-select";
 
 interface LevelSelectProps {
@@ -43,9 +43,10 @@ interface LangSelectProps {
 
 export const LibraryFilterBarLangSelect = ({ lang, onLangChange }: LangSelectProps) => {
 	const { t } = useI18n();
+	const visibleLanguages = useVisibleLanguages();
 	const options = [
 		{ value: "all", label: t("library.filterLang") },
-		...ENABLED_LANGUAGES.map(l => ({ value: l.code as LibraryTextLanguage | "all", label: t(`shared.lang.${l.code}`) })),
+		...visibleLanguages.map(l => ({ value: l.code as LibraryTextLanguage | "all", label: t(`shared.lang.${l.code}`) })),
 	];
 	const handleLangChange = (v: string) => onLangChange(v as LibraryTextLanguage | "all");
 	return (

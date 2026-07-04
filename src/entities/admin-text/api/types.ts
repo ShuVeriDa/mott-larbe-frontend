@@ -1,7 +1,9 @@
+import type { AppLanguage } from "@/shared/lib/languages";
+
 export type TextStatus = "draft" | "published" | "archived";
 export type ProcessingStatus = "IDLE" | "RUNNING" | "COMPLETED" | "ERROR";
 export type TextLevel = "A" | "B" | "C";
-export type TextLanguage = "CHE" | "RU" | "AR" | "EN";
+export type TextLanguage = AppLanguage;
 export type TextSortBy = "createdAt" | "title" | "level" | "readCount";
 export type TextSortOrder = "asc" | "desc";
 export type AdminTextsTab = "all" | "published" | "draft" | "archived" | "processing" | "error";

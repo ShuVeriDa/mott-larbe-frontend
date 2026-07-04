@@ -1,9 +1,10 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
+import type { AppLanguage } from "@/shared/lib/languages";
 
 type TextStatus = "draft" | "published" | "archived";
-type TextLanguage = "CHE" | "RU";
+type TextLanguage = AppLanguage;
 type TextLevel = "A" | "B" | "C";
 
 interface AdminTag {
@@ -131,8 +132,6 @@ export const AdminTextMetaPanelShell = ({
 					statusPublished: t("admin.texts.createPage.statusOptions.published"),
 					statusArchived: t("admin.texts.createPage.statusOptions.archived"),
 					langLabel: t("admin.texts.createPage.sections.metadata"),
-					langChe: t("admin.texts.createPage.langChe"),
-					langRu: t("admin.texts.createPage.langRu"),
 				}}
 				onStatusChange={onStatusChange}
 				onLanguageChange={onLanguageChange}

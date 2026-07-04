@@ -105,6 +105,7 @@ export const AdminTextCreatePage = () => {
 				editor={
 					<TextCreateEditor
 						title={title}
+						language={language}
 						pages={pages}
 						activePage={activePage}
 						savedId={savedId}

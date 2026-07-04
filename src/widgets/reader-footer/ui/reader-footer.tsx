@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/ui/typography";
 import { FontSizeGroup } from "@/features/reader-font-size";
+import type { AppLanguage } from "@/shared/lib/languages";
 import { useI18n } from "@/shared/lib/i18n";
 import { variants } from "@/shared/lib/animation";
 import { motion } from "framer-motion";
@@ -15,9 +16,11 @@ const LEGEND = [
 
 export interface ReaderFooterProps {
 	textId?: string;
+	/** ChScript transliteration only applies to CHE texts — omit for other languages. */
+	language?: AppLanguage;
 }
 
-export const ReaderFooter = ({ textId }: ReaderFooterProps) => {
+export const ReaderFooter = ({ textId, language }: ReaderFooterProps) => {
 	const { t } = useI18n();
 
 	return (
@@ -32,7 +35,7 @@ export const ReaderFooter = ({ textId }: ReaderFooterProps) => {
 			</Typography>
 			<FontSizeGroup />
 
-			{textId && (
+			{textId && language === "CHE" && (
 				<>
 					<Typography tag="span" aria-hidden="true" className="h-4 w-px bg-bd-2 shrink-0" />
 					<ScriptSwitcherFooter textId={textId} />

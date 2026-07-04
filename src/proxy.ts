@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { DEFAULT_LOCALE, LOCALES, type Locale } from "@/i18n/locale-list";
 
 const ACCESS_TOKEN_COOKIE = "access_token";
+const REFRESH_TOKEN_COOKIE = "refreshToken";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:9555/api";
 
 const getPreferredLocale = (request: NextRequest): Locale => {
@@ -34,30 +35,6 @@ const isPublicOnlyRoute = (segment: string | null): boolean =>
 
 const isProtectedRoute = (segment: string | null): boolean =>
 	!isPublicOnlyRoute(segment);
-
-// Calls the backend refresh endpoint. The backend sets access_token via
-// Set-Cookie (httpOnly) in the response — we forward those cookies to the
-// browser via NextResponse.
-const tryRefresh = async (
-	request: NextRequest,
-): Promise<Response | null> => {
-	try {
-		const res = await fetch(`${API_URL}/auth/login/access-token`, {
-			method: "POST",
-			headers: { cookie: request.headers.get("cookie") ?? "" },
-		});
-		if (!res.ok) return null;
-		return res;
-	} catch {
-		return null;
-	}
-};
-
-const forwardSetCookies = (from: Response, to: NextResponse): void => {
-	for (const value of from.headers.getSetCookie()) {
-		to.headers.append("Set-Cookie", value);
-	}
-};
 
 export const proxy = async (request: NextRequest) => {
 	const { pathname } = request.nextUrl;
@@ -102,23 +79,26 @@ export const proxy = async (request: NextRequest) => {
 		return buildNext();
 	}
 
-	// Skip refresh on public routes — the user is not authenticated and
-	// there is no point attempting a refresh on the auth/landing pages.
-	// This prevents parallel middleware calls from triggering concurrent
-	// refresh attempts, which would cause token-rotation race conditions on
-	// the backend (second refresh sees an already-rotated hash → all sessions
-	// revoked → request storm of 401 / 429 errors).
 	if (isPublicOnlyRoute(segment)) return buildNext();
 
-	// No access token — attempt silent refresh via httpOnly refresh token cookie.
-	// The backend will issue a new access_token cookie via Set-Cookie.
-	const refreshRes = await tryRefresh(request);
+	// No access token cookie (expired or never issued). Do NOT attempt a
+	// server-side refresh here — the client-side axios interceptor in
+	// shared/api/http.ts is the single source of truth for token refresh.
+	// Having both the proxy and the interceptor call the refresh endpoint
+	// independently caused a rotation race: two refresh requests could reach
+	// the backend with the same still-valid refresh token, the loser would be
+	// treated as token replay, and the backend would revoke every session —
+	// logging the user out roughly every hour regardless of "remember me".
+	//
+	// If a refresh token cookie is present, optimistically let the request
+	// through — the page loads, the first client-side API call gets a 401,
+	// and the interceptor refreshes the access token and retries. If there is
+	// no refresh token either, the user is truly signed out.
+	const hasRefreshToken = Boolean(
+		request.cookies.get(REFRESH_TOKEN_COOKIE)?.value,
+	);
 
-	if (refreshRes) {
-		const res = buildNext();
-		forwardSetCookies(refreshRes, res);
-		return res;
-	}
+	if (hasRefreshToken) return buildNext();
 
 	// Not authenticated
 	if (isProtectedRoute(segment)) {

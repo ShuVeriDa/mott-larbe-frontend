@@ -1,9 +1,9 @@
 "use client";
 
 import type { LibraryTextLanguage } from "@/entities/library-text";
+import { useVisibleLanguages } from "@/entities/user";
 import { Typography } from "@/shared/ui/typography";
 import { useI18n } from "@/shared/lib/i18n";
-import { ENABLED_LANGUAGES } from "@/shared/lib/languages";
 import { FilterGroup } from "@/shared/ui/filter-group";
 
 export interface LibraryFilterBarLangGroupProps {
@@ -16,10 +16,11 @@ export const LibraryFilterBarLangGroup = ({
 	onLangChange,
 }: LibraryFilterBarLangGroupProps) => {
 	const { t } = useI18n();
+	const visibleLanguages = useVisibleLanguages();
 
 	const options: { value: LibraryTextLanguage | "all"; label: string }[] = [
 		{ value: "all", label: t("library.all") },
-		...ENABLED_LANGUAGES.map(l => ({
+		...visibleLanguages.map(l => ({
 			value: l.code as LibraryTextLanguage | "all",
 			label: t(`shared.lang.${l.code}`),
 		})),

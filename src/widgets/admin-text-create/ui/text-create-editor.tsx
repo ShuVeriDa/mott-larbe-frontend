@@ -2,6 +2,7 @@
 
 import { useAdminPagePhrases } from "@/entities/admin-text-phrase";
 import { useAnnotatedFormsByPage } from "@/features/word-annotation";
+import type { AppLanguage } from "@/shared/lib/languages";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -42,6 +43,7 @@ const editorExtensions = [PhraseHighlightExtension, WordAnnotationHighlightExten
 
 interface TextCreateEditorProps {
 	title: string;
+	language: AppLanguage;
 	pages: { doc: TipTapDoc; wordCount: number }[];
 	activePage: number;
 	showStressMark?: boolean;
@@ -59,6 +61,7 @@ interface TextCreateEditorProps {
 
 export const TextCreateEditor = ({
 	title,
+	language,
 	pages,
 	activePage,
 	showStressMark = false,
@@ -275,6 +278,7 @@ export const TextCreateEditor = ({
 		<>
 			<AdminTextEditorShell
 				title={title}
+				language={language}
 				pages={pages}
 				activePage={activePage}
 				stickyTopClassName="top-[52px]"

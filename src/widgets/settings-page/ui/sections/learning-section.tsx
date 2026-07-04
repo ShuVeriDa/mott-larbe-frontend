@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/button";
 import { InputLabel } from "@/shared/ui/input";
 import { Select } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
+import { LEARNING_LANGUAGE_I18N_KEY } from "../../lib/learning-language-i18n-key";
 import { useLearningSection } from "../../model/use-learning-section";
 import { SectionHeader } from "../section-header";
 import { SettingCard } from "../setting-card";
@@ -23,6 +24,7 @@ export const LearningSection = ({
 	const { t } = useI18n();
 	const {
 		learningLang,
+		visibleLanguages,
 		level,
 		transLang,
 		dailyWords,
@@ -64,12 +66,11 @@ export const LearningSection = ({
 								value={learningLang}
 								onChange={handleLearningLangChange}
 							>
-								<option value="CHE">
-									{t("settings.learning.learningLangChe")}
-								</option>
-								{/* <option value="RU">
-									{t("settings.learning.learningLangRu")}
-								</option> */}
+								{visibleLanguages.map(l => (
+									<option key={l.code} value={l.code}>
+										{t(LEARNING_LANGUAGE_I18N_KEY[l.code])}
+									</option>
+								))}
 							</Select>
 						</div>
 						<div className="flex-1">

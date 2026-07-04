@@ -1,3 +1,5 @@
+import type { AppLanguage } from "@/shared/lib/languages";
+
 export type SpellingMatchType = "substring" | "whole_word" | "prefix" | "suffix";
 
 export interface SpellingEntry {
@@ -7,6 +9,7 @@ export interface SpellingEntry {
 	correctForms: string[];
 	matchType: SpellingMatchType;
 	comment: string | null;
+	language: AppLanguage;
 }
 
 export interface AdminSpellingEntry extends SpellingEntry {
@@ -42,6 +45,11 @@ export interface FetchSpellingEntriesParams {
 	page?: number;
 	limit?: number;
 	search?: string;
+	language?: AppLanguage;
+}
+
+export interface FetchAllSpellingEntriesParams {
+	language?: AppLanguage;
 }
 
 export interface SpellingOccurrence {

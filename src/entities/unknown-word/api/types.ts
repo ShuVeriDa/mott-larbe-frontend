@@ -1,3 +1,5 @@
+import type { AppLanguage } from "@/shared/lib/languages";
+
 export type UnknownWordStatus =
 	| "PENDING"
 	| "ADDED_TO_DICTIONARY"
@@ -58,7 +60,7 @@ export interface FetchUnknownWordsQuery {
 }
 
 export interface AddToDictionaryPayload {
-	language: "CHE" | "RU";
+	language: AppLanguage;
 	translation: string;
 	headword?: string;
 	partOfSpeech?: string;

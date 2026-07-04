@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/shared/lib/i18n";
+import type { AppLanguage } from "@/shared/lib/languages";
 import type { Editor, TipTapDoc } from "@/shared/ui/notion-editor";
 import { NotionEditor } from "@/shared/ui/notion-editor";
 import type { Extension } from "@tiptap/core";
@@ -24,6 +25,8 @@ interface AdminTextEditorShellProps {
 	title: string;
 	pages: { doc: TipTapDoc }[];
 	activePage: number;
+	/** Text language — "AR" switches the Tiptap editor to RTL input. Default: "CHE" behavior (LTR). */
+	language?: AppLanguage;
 	stickyTopClassName: string;
 	pagesSummary: string;
 	primaryShortcutLabel: string;
@@ -58,6 +61,7 @@ export const AdminTextEditorShell = ({
 	title,
 	pages,
 	activePage,
+	language,
 	stickyTopClassName,
 	pagesSummary,
 	primaryShortcutLabel,
@@ -88,6 +92,7 @@ export const AdminTextEditorShell = ({
 	onBubbleDeleteAnnotation,
 }: AdminTextEditorShellProps) => {
 	const { t } = useI18n();
+	const editorDir = language === "AR" ? "rtl" : "ltr";
 	const currentDoc = pages[activePage]?.doc;
 	const [stats, setStats] = useState(() =>
 		currentDoc ? computeDocStats(currentDoc) : { words: 0, chars: 0, paragraphs: 0 },
@@ -238,6 +243,7 @@ export const AdminTextEditorShell = ({
 							placeholder={t("admin.texts.createPage.startTyping")}
 							slashMenuItems={slashItems}
 							extraToolbarItems={notionExtraToolbarItems}
+							dir={editorDir}
 							extraExtensions={[
 								CharLimitMarkerExtension.configure({
 									limit: PAGE_CHAR_LIMIT,
@@ -271,6 +277,7 @@ export const AdminTextEditorShell = ({
 						placeholder={t("admin.texts.createPage.startTyping")}
 						slashMenuItems={slashItems}
 						extraToolbarItems={notionExtraToolbarItems}
+						dir={editorDir}
 						extraExtensions={[
 							CharLimitMarkerExtension.configure({
 								limit: PAGE_CHAR_LIMIT,
