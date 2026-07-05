@@ -2572,6 +2572,8 @@
 			"level": "level",
 			"langChe": "Chechen",
 			"langRu": "Russian",
+			"langAr": "Arabic",
+			"langEn": "English",
 			"dueToday": "{count} words due"
 		},
 		"stats": {

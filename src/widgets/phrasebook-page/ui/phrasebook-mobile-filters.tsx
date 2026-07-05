@@ -2,17 +2,18 @@
 
 import { usePhrasebookParams } from "../model/use-phrasebook-params";
 import { useI18n } from "@/shared/lib/i18n";
-import { ENABLED_LANGUAGES } from "@/shared/lib/languages";
+import { useVisibleLanguages } from "@/entities/user";
 import { FilterGroup } from "@/shared/ui/filter-group";
 import { PhraseLang } from "@/entities/phrasebook";
 
 export const PhrasebookMobileFilters = () => {
 	const { t } = useI18n();
 	const { lang, savedOnly, setLang, setSavedOnly } = usePhrasebookParams();
+	const visibleLanguages = useVisibleLanguages();
 
 	const langOptions: { value: PhraseLang | null; label: string }[] = [
 		{ value: null, label: t("phrasebook.filters.allLangs") },
-		...ENABLED_LANGUAGES.map(l => ({
+		...visibleLanguages.map(l => ({
 			value: l.code as PhraseLang,
 			label: t(`shared.lang.${l.code}`),
 		})),

@@ -3,6 +3,7 @@
 import type { UserProfile } from "@/entities/user";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
+import { GREETING_LANGUAGE_I18N_KEY } from "../lib/greeting-language-i18n-key";
 import { formatGreetingDate, getGreetingKey } from "../lib/greeting";
 
 interface GreetingIntroProps {
@@ -34,9 +35,7 @@ export const GreetingIntro = ({ user, lang }: GreetingIntroProps) => {
 					<>
 						<Typography tag="span" className="size-[3px] rounded-full bg-t-4" />
 						<Typography tag="span">
-							{user.language === "CHE"
-								? t("dashboard.greeting.langChe")
-								: t("dashboard.greeting.langRu")}
+							{t(GREETING_LANGUAGE_I18N_KEY[user.language])}
 						</Typography>
 					</>
 				) : null}
