@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "pwa-install-dismissed-at";
-const SNOOZE_DAYS = 14;
+const SNOOZE_DAYS = 7;
 
 const readDismissedAt = (): number | null => {
 	try {
