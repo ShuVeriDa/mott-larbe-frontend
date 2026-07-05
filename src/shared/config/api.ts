@@ -16,3 +16,6 @@ export const WS_URL = (() => {
 
 export const ACCESS_TOKEN_STORAGE_KEY = "access_token";
 export const REMEMBER_ME_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
+
+// Public bot username (not a secret) for the Telegram Login Widget.
+export const TELEGRAM_BOT_USERNAME = process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME ?? "";

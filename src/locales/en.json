@@ -953,6 +953,11 @@
 			"signup": "Sign up",
 			"signin": "Sign in"
 		},
+		"oauth": {
+			"divider": "or",
+			"google": "Continue with Google"
+		},
+		"telegramLogin": "Log in with Telegram",
 		"errors": {
 			"email": "Enter a valid email",
 			"loginIdentifier": "Enter a valid email or username",
@@ -962,7 +967,9 @@
 			"surname": "Enter your surname",
 			"username": "Enter a username between 2 and 16 characters",
 			"loginFailed": "Sign-in failed. Check your email and password.",
-			"registerFailed": "Could not create account. Please try again."
+			"registerFailed": "Could not create account. Please try again.",
+			"oauthFailed": "Could not sign in with Google. Please try again.",
+			"oauthStateMismatch": "Your sign-in session expired. Please try signing in with Google again."
 		},
 		"resetPassword": {
 			"meta": {
@@ -2303,7 +2310,21 @@
 			"newEmail": "New email",
 			"emailChangeSent": "Confirmation link sent to the new email address",
 			"unknownLocation": "Unknown",
-			"terminateAllConfirm": "Terminate all active sessions? You will be signed out on all devices except this one."
+			"terminateAllConfirm": "Terminate all active sessions? You will be signed out on all devices except this one.",
+			"connectedAccounts": {
+				"title": "Sign-in methods",
+				"notLinked": "Not linked",
+				"link": "Link",
+				"unlink": "Unlink",
+				"unlinkConfirm": "Unlink this sign-in method?",
+				"unlinked": "Account unlinked",
+				"lastMethodHint": "Cannot unlink the only sign-in method",
+				"setPasswordTitle": "Password",
+				"setPasswordMeta": "No password set — you sign in with Google",
+				"setPassword": "Set password",
+				"setPasswordSent": "A password-setup email has been sent to your inbox",
+				"linkedSuccess": "Google linked successfully"
+			}
 		},
 		"subscription": {
 			"currentPlan": "Current plan",
@@ -3076,6 +3097,12 @@
 			"phone": "Phone",
 			"registered": "Registered",
 			"lastActive": "Last activity",
+			"authMethod": {
+				"password": "Password",
+				"passwordSet": "Set",
+				"passwordNotSet": "Not set — signs in with Google",
+				"providers": "Linked providers"
+			},
 			"roles": "Roles",
 			"addRole": "Add",
 			"revokeRole": "Revoke role",
@@ -5968,6 +5995,10 @@
 		"accountUnavailable": "Account is unavailable.",
 		"accountScheduledForDeletion": "Account is scheduled for deletion. Contact support to restore.",
 		"accountBlocked": "Account has been blocked.",
+		"passwordNotSet": "This account has no password set. Sign in with Google or reset your password.",
+		"lastLoginMethod": "Cannot unlink the only sign-in method. Set a password first.",
+		"accountNotFound": "Linked account not found.",
+		"accountAlreadyLinked": "This account is already linked to another profile.",
 		"userNotFound": "User not found.",
 		"userAlreadyExists": "User with this email or username already exists.",
 		"usernameTaken": "This username is already taken.",

@@ -1,0 +1,1 @@
+export { useLinkTelegramAccount } from "./model";

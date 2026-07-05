@@ -952,6 +952,11 @@
 			"signup": "Зарегистрируйтесь",
 			"signin": "Войти"
 		},
+		"oauth": {
+			"divider": "или",
+			"google": "Войти через Google"
+		},
+		"telegramLogin": "Войти через Telegram",
 		"errors": {
 			"email": "Введите корректный email",
 			"loginIdentifier": "Введите корректный email или username",
@@ -961,7 +966,9 @@
 			"surname": "Введите фамилию",
 			"username": "Введите username от 2 до 16 символов",
 			"loginFailed": "Не удалось войти. Проверьте email и пароль.",
-			"registerFailed": "Не удалось создать аккаунт. Попробуйте ещё раз."
+			"registerFailed": "Не удалось создать аккаунт. Попробуйте ещё раз.",
+			"oauthFailed": "Не удалось войти через Google. Попробуйте снова.",
+			"oauthStateMismatch": "Сессия входа устарела. Попробуйте войти через Google ещё раз."
 		},
 		"resetPassword": {
 			"meta": {
@@ -2299,7 +2306,21 @@
 			"newEmail": "Новый email",
 			"emailChangeSent": "Ссылка подтверждения отправлена на новый адрес",
 			"unknownLocation": "Неизвестно",
-			"terminateAllConfirm": "Завершить все активные сессии? Вы выйдете со всех устройств, кроме текущего."
+			"terminateAllConfirm": "Завершить все активные сессии? Вы выйдете со всех устройств, кроме текущего.",
+			"connectedAccounts": {
+				"title": "Способы входа",
+				"notLinked": "Не привязан",
+				"link": "Привязать",
+				"unlink": "Отвязать",
+				"unlinkConfirm": "Отвязать этот способ входа?",
+				"unlinked": "Аккаунт отвязан",
+				"lastMethodHint": "Нельзя отвязать единственный способ входа",
+				"setPasswordTitle": "Пароль",
+				"setPasswordMeta": "Пароль не установлен — вы входите через Google",
+				"setPassword": "Установить пароль",
+				"setPasswordSent": "Письмо для установки пароля отправлено на вашу почту",
+				"linkedSuccess": "Google успешно привязан"
+			}
 		},
 		"subscription": {
 			"currentPlan": "Текущий план",
@@ -3072,6 +3093,12 @@
 			"phone": "Телефон",
 			"registered": "Регистрация",
 			"lastActive": "Последняя активность",
+			"authMethod": {
+				"password": "Пароль",
+				"passwordSet": "Установлен",
+				"passwordNotSet": "Не установлен — вход через Google",
+				"providers": "Привязанные провайдеры"
+			},
 			"roles": "Роли",
 			"addRole": "Добавить",
 			"revokeRole": "Снять роль",
@@ -5965,6 +5992,10 @@
 		"accountUnavailable": "Аккаунт недоступен.",
 		"accountScheduledForDeletion": "Аккаунт запланирован к удалению. Обратитесь в поддержку для восстановления.",
 		"accountBlocked": "Аккаунт заблокирован.",
+		"passwordNotSet": "У этого аккаунта не задан пароль. Войдите через Google или сбросьте пароль.",
+		"lastLoginMethod": "Нельзя отвязать единственный способ входа. Сначала установите пароль.",
+		"accountNotFound": "Привязанный аккаунт не найден.",
+		"accountAlreadyLinked": "Этот аккаунт уже привязан к другому профилю.",
 		"userNotFound": "Пользователь не найден.",
 		"userAlreadyExists": "Пользователь с таким email или именем уже существует.",
 		"usernameTaken": "Это имя пользователя уже занято.",

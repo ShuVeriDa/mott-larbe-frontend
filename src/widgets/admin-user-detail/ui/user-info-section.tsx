@@ -70,6 +70,20 @@ export const UserInfoSection = ({ user }: UserInfoSectionProps) => {
 			/>
 			<InfoRow label={t("admin.userDetail.registered")} value={signupDate} />
 			<InfoRow label={t("admin.userDetail.lastActive")} value={lastActive} />
+			<InfoRow
+				label={t("admin.userDetail.authMethod.password")}
+				value={
+					user.hasPassword
+						? t("admin.userDetail.authMethod.passwordSet")
+						: t("admin.userDetail.authMethod.passwordNotSet")
+				}
+			/>
+			{user.linkedProviders.length > 0 ? (
+				<InfoRow
+					label={t("admin.userDetail.authMethod.providers")}
+					value={user.linkedProviders.join(", ")}
+				/>
+			) : null}
 		</div>
 	);
 };

@@ -1,2 +1,3 @@
 export { AuthPage } from "./ui/auth-page";
-export type { AuthMode } from "./model";
+export { isOAuthError } from "./model";
+export type { AuthMode, OAuthError } from "./model";

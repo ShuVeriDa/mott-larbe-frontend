@@ -89,3 +89,27 @@ export interface EmailChangeRequestDto {
 export interface RevokeSessionsResponse {
 	revoked: number;
 }
+
+export type OAuthProvider = "GOOGLE" | "TELEGRAM";
+
+export interface TelegramAuthData {
+	id: number;
+	first_name: string;
+	last_name?: string;
+	username?: string;
+	photo_url?: string;
+	auth_date: number;
+	hash: string;
+}
+
+export interface LinkedAccount {
+	id: string;
+	provider: OAuthProvider;
+	email: string;
+	createdAt: string;
+}
+
+export interface LinkedAccountsResponse {
+	hasPassword: boolean;
+	accounts: LinkedAccount[];
+}

@@ -952,6 +952,11 @@
 			"signup": "Регистраци йе",
 			"signin": "ЧугӀо"
 		},
+		"oauth": {
+			"divider": "йа",
+			"google": "Google-ца чувала"
+		},
+		"telegramLogin": "Telegram-ца чувала",
 		"errors": {
 			"email": "Нийса email язъе",
 			"loginIdentifier": "Нийса email йа лелорхочун цӀе язъе",
@@ -961,7 +966,9 @@
 			"surname": "Фамили язъе",
 			"username": "2 тӀера 16 символ тӀекхаччалц лелорхочун цӀе язъе",
 			"loginFailed": "Чуваха ца хилла. Email а, пароль а талла.",
-			"registerFailed": "Аккаунт кхолла ца хилла. Юха гӀорта."
+			"registerFailed": "Аккаунт кхолла ца хилла. Юха гӀорта.",
+			"oauthFailed": "Google-ца чувала ца хилла. Юха гӀорта.",
+			"oauthStateMismatch": "Чувалин сессица т1ех даьлла. Google-ца юха гӀорта."
 		},
 		"resetPassword": {
 			"meta": {
@@ -2300,7 +2307,21 @@
 			"newEmail": "Керла email",
 			"emailChangeSent": "ТӀечӀагӀдаран хьажорг керлачу адресе дӀаяхьийтина",
 			"unknownLocation": "Ца хууш",
-			"terminateAllConfirm": "Йерриг жигара сессеш чекхъяха лаьий хьуна? ХӀинцалерниг йоцуш, йерриг гӀирсаш тӀера аравер ву хьо."
+			"terminateAllConfirm": "Йерриг жигара сессеш чекхъяха лаьий хьуна? ХӀинцалерниг йоцуш, йерриг гӀирсаш тӀера аравер ву хьо.",
+			"connectedAccounts": {
+				"title": "Чувалин способаш",
+				"notLinked": "Юкъадаьхна яц",
+				"link": "Юкъадаха",
+				"unlink": "ДӀаяккха",
+				"unlinkConfirm": "ХӀара чувалин способ дӀаяккхийта лаьий хьуна?",
+				"unlinked": "Аккаунт дӀаяьккхина",
+				"lastMethodHint": "Юкъара чувалин хIора способ дIаяккхалур яц",
+				"setPasswordTitle": "Пароль",
+				"setPasswordMeta": "Пароль йац — хьо Google-ца чувогIу",
+				"setPassword": "Пароль дIайилла",
+				"setPasswordSent": "Пароль дIайиллархьама кехат hьан почтане даьхкина",
+				"linkedSuccess": "Google юкъадаьхна ду"
+			}
 		},
 		"subscription": {
 			"currentPlan": "ХӀинцалера план",
@@ -3073,6 +3094,12 @@
 			"phone": "Телефон",
 			"registered": "Регистраци йина хан",
 			"lastActive": "ТӀаьххьара жигаралла",
+			"authMethod": {
+				"password": "Пароль",
+				"passwordSet": "ДӀайиллина",
+				"passwordNotSet": "ДӀайиллина яц — Google-ца чувогIу",
+				"providers": "Юкъадаьхна провайдераш"
+			},
 			"roles": "Ролеш",
 			"addRole": "ТӀетоха",
 			"revokeRole": "Роль дӀаяккха",
@@ -5966,6 +5993,10 @@
 		"accountUnavailable": "Аккаунт латтац.",
 		"accountScheduledForDeletion": "Аккаунт дӀаяккха билгала йина ю. Юха меттахотто команде язде.",
 		"accountBlocked": "Аккаунт блок йина ю.",
+		"passwordNotSet": "ХIара аккаунтана пароль йац. Google-ца чувала йа пароль меттае.",
+		"lastLoginMethod": "Юкъара чувалин хIора способ дIаяккхалур яц. Хьалхе пароль дIайилла.",
+		"accountNotFound": "Юкъадаьхна аккаунт ца карийна.",
+		"accountAlreadyLinked": "ХIара аккаунт кхин профильца юкъадаьхна ду.",
 		"userNotFound": "Пользователь ца карийна.",
 		"userAlreadyExists": "Иштта йолу email я цӀе йолу пользователь хьалха кхоьллина ю.",
 		"usernameTaken": "И пользователан цӀе хьалха эцна ю.",

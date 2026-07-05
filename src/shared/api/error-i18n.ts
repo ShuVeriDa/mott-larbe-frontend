@@ -18,6 +18,10 @@ const ERROR_CODE_TO_I18N_KEY: Record<string, string> = {
   ACCOUNT_UNAVAILABLE: "apiErrors.accountUnavailable",
   ACCOUNT_SCHEDULED_FOR_DELETION: "apiErrors.accountScheduledForDeletion",
   ACCOUNT_BLOCKED: "apiErrors.accountBlocked",
+  PASSWORD_NOT_SET: "apiErrors.passwordNotSet",
+  LAST_LOGIN_METHOD: "apiErrors.lastLoginMethod",
+  ACCOUNT_NOT_FOUND: "apiErrors.accountNotFound",
+  ACCOUNT_ALREADY_LINKED: "apiErrors.accountAlreadyLinked",
 
   // User
   USER_NOT_FOUND: "apiErrors.userNotFound",

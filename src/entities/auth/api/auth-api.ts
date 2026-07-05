@@ -5,11 +5,13 @@ import type {
 	ChangePasswordDto,
 	ConfirmPasswordResetDto,
 	EmailChangeRequestDto,
+	LinkedAccountsResponse,
 	LoginDto,
 	OkResponse,
 	RegisterDto,
 	RequestPasswordResetDto,
 	RevokeSessionsResponse,
+	TelegramAuthData,
 	UserSession,
 	ValidatePasswordResetResponse,
 } from "./types";
@@ -91,6 +93,26 @@ export const authApi = {
 
 	requestEmailChange: async (body: EmailChangeRequestDto): Promise<OkResponse> => {
 		const { data } = await http.post<OkResponse>("/auth/email-change/request", body);
+		return data;
+	},
+
+	getLinkedAccounts: async (): Promise<LinkedAccountsResponse> => {
+		const { data } = await http.get<LinkedAccountsResponse>("/auth/linked-accounts");
+		return data;
+	},
+
+	unlinkAccount: async (id: string): Promise<OkResponse> => {
+		const { data } = await http.delete<OkResponse>(`/auth/linked-accounts/${id}`);
+		return data;
+	},
+
+	loginWithTelegram: async (body: TelegramAuthData): Promise<AuthResponse> => {
+		const { data } = await http.post<AuthResponse>("/auth/telegram", body);
+		return data;
+	},
+
+	linkTelegramAccount: async (body: TelegramAuthData): Promise<OkResponse> => {
+		const { data } = await http.post<OkResponse>("/auth/telegram/link", body);
 		return data;
 	},
 };

@@ -5,7 +5,7 @@ import {
 	LOCALES,
 	getDictionary,
 } from "@/i18n/locales";
-import { AuthPage, type AuthMode } from "@/widgets/auth-page";
+import { AuthPage, isOAuthError, type AuthMode } from "@/widgets/auth-page";
 import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
@@ -59,16 +59,17 @@ export const generateMetadata = async (props: {
 
 interface PageProps {
 	params: Promise<{ lang: string }>;
-	searchParams: Promise<{ mode?: string }>;
+	searchParams: Promise<{ mode?: string; error?: string }>;
 }
 
 const AuthPageContent = async ({ params, searchParams }: PageProps) => {
 	const { lang } = await params;
-	const { mode } = await searchParams;
+	const { mode, error } = await searchParams;
 	requireLocale(lang);
 
 	const dict = await getDictionary(lang);
 	const initialMode: AuthMode = mode === "register" ? "register" : "login";
+	const oauthError = isOAuthError(error) ? error : undefined;
 	const meta =
 		initialMode === "register"
 			? dict.auth.meta.register
@@ -96,7 +97,7 @@ const AuthPageContent = async ({ params, searchParams }: PageProps) => {
 				// biome-ignore lint/security/noDangerouslySetInnerHtml: structured data
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
 			/>
-			<AuthPage initialMode={initialMode} />
+			<AuthPage initialMode={initialMode} oauthError={oauthError} />
 		</>
 	);
 };

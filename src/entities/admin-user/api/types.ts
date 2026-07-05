@@ -146,6 +146,8 @@ export interface UserSubscriptionResponse {
 	paymentHistory: UserPaymentHistoryItem[];
 }
 
+export type AdminAuthProvider = "GOOGLE" | "TELEGRAM";
+
 export interface AdminUserDetail {
 	id: string;
 	email: string;
@@ -161,6 +163,8 @@ export interface AdminUserDetail {
 	roles: UserRoleItem[];
 	subscription: UserSubscriptionCurrent | null;
 	learningStats: UserLearningStats;
+	hasPassword: boolean;
+	linkedProviders: AdminAuthProvider[];
 }
 
 // ── Events ───────────────────────────────────────────────────────────────────

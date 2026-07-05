@@ -2,13 +2,16 @@
 
 import { Button } from "@/shared/ui/button";
 
-import { LoginForm } from "@/features/login";
+import { LoginForm, GoogleLoginButton, TelegramLoginButton } from "@/features/login";
 import { RegisterForm } from "@/features/register";
 import { useI18n } from "@/shared/lib/i18n";
 import { Typography } from "@/shared/ui/typography";
 import { ComponentProps } from "react";
 import type { AuthMode } from "../../model";
+import type { OAuthError } from "../../model/oauth-error";
 import { AuthTabs } from "./auth-tabs";
+import { AuthDivider } from "./auth-divider";
+import { OAuthErrorBanner } from "./oauth-error-banner";
 import { TopControls } from "./top-controls";
 
 interface FormPanelProps {
@@ -19,6 +22,7 @@ interface FormPanelProps {
 	successHref: string;
 	termsHref: string;
 	privacyHref: string;
+	oauthError?: OAuthError;
 }
 
 export const FormPanel = ({
@@ -29,6 +33,7 @@ export const FormPanel = ({
 	successHref,
 	termsHref,
 	privacyHref,
+	oauthError,
 }: FormPanelProps) => {
 	const { t } = useI18n();
 	const isLogin = mode === "login";
@@ -55,6 +60,8 @@ export const FormPanel = ({
 						)}
 					</Typography>
 
+					<OAuthErrorBanner error={oauthError} />
+
 					<AuthTabs mode={mode} onChange={onModeChange} />
 
 					{isLogin ? (
@@ -66,6 +73,12 @@ export const FormPanel = ({
 							privacyHref={privacyHref}
 						/>
 					)}
+
+					<AuthDivider />
+					<div className="flex flex-col gap-2.5">
+						<GoogleLoginButton />
+						<TelegramLoginButton successHref={successHref} />
+					</div>
 
 					<Typography className="mt-[18px] text-center text-[12.5px] text-t-2">
 						{isLogin ? (
