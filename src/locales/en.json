@@ -7390,6 +7390,50 @@
 			"examplesTitle": "Example words"
 		}
 	},
+	"pwaInstall": {
+		"meta": {
+			"title": "Install the app — Mott Larbe",
+			"description": "How to install Mott Larbe on your phone or computer without an app store."
+		},
+		"banner": {
+			"title": "Install the app",
+			"subtitle": "A real app, just like from Google Play — straight from your browser",
+			"installButton": "Install",
+			"dismissLabel": "Close"
+		},
+		"ios": {
+			"cta": "How to install on iPhone",
+			"step1": "Tap \"Share\" at the bottom of the Safari screen",
+			"step2": "Choose \"Add to Home Screen\"",
+			"step3": "Tap \"Add\" in the top-right corner"
+		},
+		"android": {
+			"step1": "Open the menu (⋮) in the top-right corner of Chrome",
+			"step2": "Choose \"Install app\"",
+			"step3": "Confirm the installation"
+		},
+		"desktop": {
+			"step1": "Find the install icon in the address bar",
+			"step2": "Click \"Install\"",
+			"step3": "The app will open in its own window"
+		},
+		"guide": {
+			"title": "Install Mott Larbe as an app",
+			"tabs": {
+				"ios": "iPhone / iPad",
+				"android": "Android",
+				"desktop": "Desktop"
+			},
+			"benefits": {
+				"title": "This is a real app",
+				"explainer": "The same as an app from Google Play or the App Store — but it installs straight from your browser, no store needed",
+				"offline": "Works without an internet connection",
+				"quickAccess": "Its own icon on your home screen, opens in its own window — no browser address bar",
+				"noStore": "Always available, even if an app store isn't accessible in your region"
+			}
+		},
+		"settingsLink": "Install the app"
+	},
 	"heritage": {
 		"title": "Heritage",
 		"nation": "Nation (Qam)",

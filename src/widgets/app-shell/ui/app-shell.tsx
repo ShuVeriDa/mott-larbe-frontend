@@ -1,3 +1,4 @@
+import { PwaInstallBanner } from "@/features/pwa-install-prompt";
 import { ToastViewport } from "@/shared/ui/toast";
 import { type ReactNode, Suspense } from "react";
 import { BottomNav } from "./bottom-nav";
@@ -23,5 +24,6 @@ export const AppShell = ({ children }: AppShellProps) => (
 			<BottomNav />
 		</Suspense>
 		<ToastViewport />
+		<PwaInstallBanner />
 	</>
 );

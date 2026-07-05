@@ -11,6 +11,8 @@ import { useToast } from "@/shared/lib/toast";
 import { Button } from "@/shared/ui/button";
 import { Select } from "@/shared/ui/select";
 import { Typography } from "@/shared/ui/typography";
+import { Download } from "lucide-react";
+import Link from "next/link";
 import { ComponentProps, useState } from "react";
 import { SectionHeader } from "../section-header";
 import { SettingCard } from "../setting-card";
@@ -68,6 +70,20 @@ return (
 						</Button>
 					</div>
 				</form>
+			</SettingCard>
+
+			<SettingCard title={t("pwaInstall.guide.title")} noBody>
+				<div className="flex items-center justify-between gap-3 px-4 py-3.5">
+					<Typography tag="span" className="text-[12.5px] text-t-2">
+						{t("pwaInstall.banner.subtitle")}
+					</Typography>
+					<Button asChild variant="outline" size="default">
+						<Link href="/pwa-guide">
+							<Download className="h-3.5 w-3.5" aria-hidden="true" />
+							{t("pwaInstall.settingsLink")}
+						</Link>
+					</Button>
+				</div>
 			</SettingCard>
 		</div>
 	);
