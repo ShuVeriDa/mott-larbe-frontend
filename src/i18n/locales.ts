@@ -1,5 +1,5 @@
 import "server-only";
-import { cache } from "react";
+import { cacheLife } from "next/cache";
 import type { Locale } from "./locale-list";
 
 const dictionaries = {
@@ -10,10 +10,11 @@ const dictionaries = {
 
 export type Dictionary = Awaited<ReturnType<(typeof dictionaries)["ru"]>>;
 
-export const getDictionary = cache(
-	async (locale: Locale): Promise<Dictionary> =>
-		dictionaries[locale]() as Promise<Dictionary>,
-);
+export const getDictionary = async (locale: Locale): Promise<Dictionary> => {
+	"use cache";
+	cacheLife("max");
+	return dictionaries[locale]() as Promise<Dictionary>;
+};
 
 export { DEFAULT_LOCALE, LOCALES, hasLocale } from "./locale-list";
 export type { Locale } from "./locale-list";

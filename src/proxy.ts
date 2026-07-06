@@ -23,18 +23,27 @@ const getLocaleFromPathname = (pathname: string): Locale => {
 		: DEFAULT_LOCALE;
 };
 
-// Segment after locale: null = landing root, "auth"|"reset-password" = public auth pages
+// Segment after locale: null = landing root, "auth"|"reset-password" = signed-out-only
+// auth pages (a signed-in user is bounced to /dashboard from these).
+const isPublicOnlyRoute = (segment: string | null): boolean =>
+	segment === null || segment === "auth" || segment === "reset-password";
+
+// Public evergreen guide content — crawlable by anonymous visitors and search
+// engines, but also fine to view while signed in (unlike isPublicOnlyRoute,
+// this must NOT bounce an authenticated visitor to /dashboard).
+const PUBLIC_GUIDE_SEGMENTS = new Set(["script-guide", "pwa-guide"]);
+
 const getRouteSegment = (pathname: string): string | null => {
 	const parts = pathname.split("/");
 	const segment = parts[2];
 	return segment || null;
 };
 
-const isPublicOnlyRoute = (segment: string | null): boolean =>
-	segment === null || segment === "auth" || segment === "reset-password";
+const isAlwaysAccessibleRoute = (segment: string | null): boolean =>
+	isPublicOnlyRoute(segment) || PUBLIC_GUIDE_SEGMENTS.has(segment ?? "");
 
 const isProtectedRoute = (segment: string | null): boolean =>
-	!isPublicOnlyRoute(segment);
+	!isAlwaysAccessibleRoute(segment);
 
 export const proxy = async (request: NextRequest) => {
 	const { pathname } = request.nextUrl;
@@ -79,7 +88,7 @@ export const proxy = async (request: NextRequest) => {
 		return buildNext();
 	}
 
-	if (isPublicOnlyRoute(segment)) return buildNext();
+	if (isAlwaysAccessibleRoute(segment)) return buildNext();
 
 	// No access token cookie (expired or never issued). Do NOT attempt a
 	// server-side refresh here — the client-side axios interceptor in

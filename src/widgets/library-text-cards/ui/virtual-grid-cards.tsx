@@ -65,13 +65,27 @@ const VirtualGridCardsDesktop = ({
 		overscan: OVERSCAN,
 	});
 
+	const virtualRows = virtualizer.getVirtualItems();
+
+	// Before hydration the virtualizer has no scroll container to measure,
+	// so it reports zero virtual rows — that would leave crawlers and
+	// no-JS visitors with an empty grid. Render the first screenful as a
+	// plain (non-virtualized) fallback until real measurements land.
+	if (virtualRows.length === 0) {
+		return (
+			<div ref={containerRef} className="w-full">
+				<FlatGridCards items={items} />
+			</div>
+		);
+	}
+
 	return (
 		<div ref={containerRef} className="w-full">
 			<div
 				className="relative w-full"
 				style={{ height: `${virtualizer.getTotalSize()}px` }}
 			>
-				{virtualizer.getVirtualItems().map(virtualRow => {
+				{virtualRows.map(virtualRow => {
 					const startIndex = virtualRow.index * columns;
 					const rowItems = items.slice(startIndex, startIndex + columns);
 					return (
@@ -101,7 +115,7 @@ const VirtualGridCardsDesktop = ({
 	);
 };
 
-const FlatGridCardsMobile = ({
+const FlatGridCards = ({
 	items,
 }: Pick<VirtualGridCardsProps, "items">) => {
 	const { lang } = useI18n();
@@ -133,7 +147,7 @@ export const VirtualGridCards = ({
 	}, []);
 
 	if (isMobile) {
-		return <FlatGridCardsMobile items={items} />;
+		return <FlatGridCards items={items} />;
 	}
 
 	return <VirtualGridCardsDesktop items={items} scrollRef={scrollRef} />;

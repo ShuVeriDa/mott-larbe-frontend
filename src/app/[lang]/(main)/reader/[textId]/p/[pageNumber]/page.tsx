@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import {
 	DEFAULT_LOCALE,
 	LOCALES,
@@ -11,7 +12,7 @@ import type { ReaderContextResponse } from "@/entities/reader-context";
 import { textKeys } from "@/entities/text";
 import { highlightKeys } from "@/entities/highlight";
 import { noteKeys } from "@/entities/note";
-import { ReaderPage } from "@/widgets/reader-page";
+import { ReaderPage, ReaderPageSkeleton } from "@/widgets/reader-page";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/shared/lib/query-client";
 
@@ -85,20 +86,22 @@ export const generateMetadata = async ({
 			description,
 			...(imageUrl && { images: [imageUrl] }),
 		},
+		robots: {
+			index: false,
+			follow: false,
+		},
 	};
 };
 
-const ReaderTextPageRoutePage = async ({
-	params,
-}: {
-	params: Promise<PageRouteParams>;
-}) => {
-	const { lang, textId, pageNumber } = await params;
-	requireLocale(lang);
+interface ReaderPagePrefetchProps {
+	textId: string;
+	page: number;
+}
 
-	const page = parsePage(pageNumber);
-	if (!page) notFound();
-
+// Isolated in its own Suspense boundary because the prefetch below goes through
+// axios (readerContextApi), which Next's Cache Components model can't track as
+// cached — without a boundary here it blocks the whole route shell from streaming.
+const ReaderPagePrefetch = async ({ textId, page }: ReaderPagePrefetchProps) => {
 	// generateMetadata already prefetched readerContext via the same cache()-wrapped
 	// QueryClient — this is a no-op if metadata ran first, and a safety net if not.
 	const queryClient = getQueryClient();
@@ -119,6 +122,24 @@ const ReaderTextPageRoutePage = async ({
 		<HydrationBoundary state={dehydrate(queryClient)}>
 			<ReaderPage textId={textId} pageNumber={page} />
 		</HydrationBoundary>
+	);
+};
+
+const ReaderTextPageRoutePage = async ({
+	params,
+}: {
+	params: Promise<PageRouteParams>;
+}) => {
+	const { lang, textId, pageNumber } = await params;
+	requireLocale(lang);
+
+	const page = parsePage(pageNumber);
+	if (!page) notFound();
+
+	return (
+		<Suspense fallback={<ReaderPageSkeleton />}>
+			<ReaderPagePrefetch textId={textId} page={page} />
+		</Suspense>
 	);
 };
 

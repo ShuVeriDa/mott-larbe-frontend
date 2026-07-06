@@ -40,7 +40,7 @@
 	"landing": {
 		"meta": {
 			"title": "Mott Larbe — learn Chechen through reading",
-			"description": "Language platform: real texts with click-to-translate, morphological analysis and personal vocabulary. Levels A, B, C."
+			"description": "Language platform: real texts with click-to-translate, morphological analysis, personal vocabulary, and spaced repetition. Levels A, B, C."
 		},
 		"brand": {
 			"name": "Mott Larbe",
@@ -7329,7 +7329,7 @@
 	"scriptGuide": {
 		"meta": {
 			"title": "Script reading guide — Mott Larbe",
-			"description": "How to read Chechen Arabic and Latin scripts: letter tables, key rules, word examples."
+			"description": "How to read Chechen Arabic and Latin scripts: letter tables, key orthography rules, transcription, and word examples for beginners."
 		},
 		"pageTitle": "Writing systems",
 		"pageSubtitle": "Arabic 2.0 and Latin scripts for the Chechen language",
@@ -7435,7 +7435,7 @@
 	"pwaInstall": {
 		"meta": {
 			"title": "Install the app — Mott Larbe",
-			"description": "How to install Mott Larbe on your phone or computer without an app store."
+			"description": "How to install Mott Larbe as an app on iPhone, Android, or desktop — no App Store or Google Play needed, with offline access."
 		},
 		"banner": {
 			"title": "Install the app",

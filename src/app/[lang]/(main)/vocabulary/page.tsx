@@ -3,7 +3,6 @@ import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
 import { VocabularyPage } from "@/widgets/vocabulary-page";
 import type { Metadata } from "next";
 import { requireLocale } from "@/shared/lib/i18n";
-import VocabularyJsonLd from "./vocabulary-json-ld";
 
 export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
@@ -30,7 +29,7 @@ export const generateMetadata = async (props: {
 			images: [`${SITE_URL}/opengraph-image.png`],
 		},
 		robots: {
-			index: true,
+			index: false,
 			follow: true,
 		},
 	};
@@ -44,15 +43,7 @@ const VocabularyRoutePage = async ({ params }: PageProps) => {
 	const { lang } = await params;
 	requireLocale(lang);
 
-	const dict = await getDictionary(lang);
-	const { title, description } = dict.vocabulary.meta;
-
-	return (
-		<>
-			<VocabularyJsonLd lang={lang} title={title} description={description} />
-			<VocabularyPage />
-		</>
-	);
+	return <VocabularyPage />;
 };
 
 export default VocabularyRoutePage;

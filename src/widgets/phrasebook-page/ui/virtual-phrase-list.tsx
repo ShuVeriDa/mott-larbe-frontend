@@ -16,6 +16,23 @@ const ESTIMATED_ITEM_HEIGHT = 62;
 const OVERSCAN = 5;
 const GAP = 6;
 
+const FlatPhraseList = ({
+	phrases,
+	selectionMode,
+	selectedPhraseIds,
+}: Omit<VirtualPhraseListProps, "scrollRef">) => (
+	<div className="flex flex-col gap-1.5">
+		{phrases.map(phrase => (
+			<PhraseCard
+				key={phrase.id}
+				phrase={phrase}
+				selectionMode={selectionMode}
+				selected={selectedPhraseIds.has(phrase.id)}
+			/>
+		))}
+	</div>
+);
+
 export const VirtualPhraseList = ({
 	phrases,
 	scrollRef,
@@ -30,12 +47,28 @@ export const VirtualPhraseList = ({
 		gap: GAP,
 	});
 
+	const virtualRows = virtualizer.getVirtualItems();
+
+	// Before hydration the virtualizer has no scroll container to measure,
+	// so it reports zero virtual rows — that would leave crawlers and
+	// no-JS visitors with an empty phrase list. Render a plain
+	// (non-virtualized) fallback until real measurements land.
+	if (virtualRows.length === 0) {
+		return (
+			<FlatPhraseList
+				phrases={phrases}
+				selectionMode={selectionMode}
+				selectedPhraseIds={selectedPhraseIds}
+			/>
+		);
+	}
+
 	return (
 		<div
 			className="relative w-full"
 			style={{ height: `${virtualizer.getTotalSize()}px` }}
 		>
-			{virtualizer.getVirtualItems().map(virtualRow => {
+			{virtualRows.map(virtualRow => {
 				const phrase = phrases[virtualRow.index];
 				return (
 					<div

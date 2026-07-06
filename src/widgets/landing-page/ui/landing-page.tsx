@@ -1,6 +1,3 @@
-"use client";
-
-import { useI18n } from "@/shared/lib/i18n";
 import { LandingCta } from "@/widgets/landing-cta";
 import { LandingDemo } from "@/widgets/landing-demo";
 import { LandingFaq } from "@/widgets/landing-faq";
@@ -14,8 +11,11 @@ import { LandingNav } from "@/widgets/landing-nav";
 // import { LandingPricing } from "@/widgets/landing-pricing"; // hidden — all features are free
 import { LandingStats } from "@/widgets/landing-stats";
 
-export const LandingPage = () => {
-	const { lang, dict } = useI18n();
+interface LandingPageProps {
+	lang: string;
+}
+
+export const LandingPage = ({ lang }: LandingPageProps) => {
 	const loginHref = `/${lang}/auth`;
 	const startHref = `/${lang}/auth?mode=register`;
 

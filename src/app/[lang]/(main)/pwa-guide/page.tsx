@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { LOCALES, getDictionary } from "@/i18n/locales";
-import { buildAlternates, buildOpenGraph } from "@/shared/lib/seo";
+import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
 import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
 import { ErrorBoundary } from "@/shared/ui/error-boundary";
 import { Skeleton } from "@/shared/ui/skeleton";
@@ -42,9 +42,29 @@ const PwaGuideRoutePage = async ({ params }: PageProps) => {
 
 	const dict = await getDictionary(lang);
 	const content = getPwaGuideContent(dict);
+	const url = `${SITE_URL}/${lang}/pwa-guide`;
+
+	const howToJsonLd = {
+		"@context": "https://schema.org",
+		"@type": "HowTo",
+		"@id": `${url}/#howto`,
+		name: content.pageTitle,
+		description: content.iosCta,
+		step: [content.iosSteps.step1, content.iosSteps.step2, content.iosSteps.step3]
+			.filter(Boolean)
+			.map((text, index) => ({
+				"@type": "HowToStep",
+				position: index + 1,
+				text,
+			})),
+	};
 
 	return (
 		<ErrorBoundary fallback={<div className="p-8 text-t-3 text-sm">Something went wrong.</div>}>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd).replace(/</g, "\\u003c") }}
+			/>
 			<Suspense fallback={<Skeleton className="h-screen w-full" />}>
 				<PwaInstallGuidePage content={content} />
 			</Suspense>

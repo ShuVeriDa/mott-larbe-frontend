@@ -7,6 +7,7 @@ import {
 } from "@/i18n/locales";
 import { AuthPage, isOAuthError, type AuthMode } from "@/widgets/auth-page";
 import { guardLocaleMetadata, requireLocale } from "@/shared/lib/i18n";
+import { getSafeRedirectPath } from "@/shared/lib/safe-redirect";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mottlarbe.com";
 
@@ -59,13 +60,14 @@ export const generateMetadata = async (props: {
 
 interface PageProps {
 	params: Promise<{ lang: string }>;
-	searchParams: Promise<{ mode?: string; error?: string }>;
+	searchParams: Promise<{ mode?: string; error?: string; redirect?: string }>;
 }
 
 const AuthPageContent = async ({ params, searchParams }: PageProps) => {
 	const { lang } = await params;
-	const { mode, error } = await searchParams;
+	const { mode, error, redirect } = await searchParams;
 	requireLocale(lang);
+	const redirectTo = getSafeRedirectPath(redirect);
 
 	const dict = await getDictionary(lang);
 	const initialMode: AuthMode = mode === "register" ? "register" : "login";
@@ -97,7 +99,7 @@ const AuthPageContent = async ({ params, searchParams }: PageProps) => {
 				// biome-ignore lint/security/noDangerouslySetInnerHtml: structured data
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
 			/>
-			<AuthPage initialMode={initialMode} oauthError={oauthError} />
+			<AuthPage initialMode={initialMode} oauthError={oauthError} redirectTo={redirectTo} />
 		</>
 	);
 };

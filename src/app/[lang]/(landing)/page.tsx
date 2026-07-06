@@ -91,7 +91,7 @@ const LandingRoutePage = async ({ params }: PageProps) => {
 					dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
 				/>
 			)}
-			<LandingPage />
+			<LandingPage lang={lang} />
 		</>
 	);
 };

@@ -7,6 +7,7 @@ import {
 	libraryTextKeys,
 	useLibraryTextDetail,
 	useLibraryTextRelated,
+	type LibraryTextDetail,
 } from "@/entities/library-text";
 import { useI18n } from "@/shared/lib/i18n";
 

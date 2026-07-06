@@ -16,15 +16,6 @@ const COLUMNS: FooterColumn[] = [
 		links: [
 			{ labelKey: "landing.footer.links.features", href: "#features" },
 			{ labelKey: "landing.footer.links.faq", href: "#faq" },
-			{ labelKey: "landing.footer.links.changelog", href: "#" },
-		],
-	},
-	{
-		titleKey: "landing.footer.legal",
-		links: [
-			{ labelKey: "landing.footer.links.terms", href: "#" },
-			{ labelKey: "landing.footer.links.privacy", href: "#" },
-			{ labelKey: "landing.footer.links.cookies", href: "#" },
 		],
 	},
 ];
@@ -53,8 +44,8 @@ export const LandingFooter = () => {
 	return (
 		<footer className="border-t-[0.5px] border-bd-1 bg-surf-2 px-7 pb-8 pt-14 max-[900px]:px-[22px] max-[640px]:px-[18px]">
 			<div className="mx-auto w-full max-w-[1120px]">
-				<div className="mb-9 grid grid-cols-[1.5fr_1fr_1fr] gap-10 max-[900px]:grid-cols-3 max-[900px]:gap-8 max-[640px]:gap-7 max-[380px]:grid-cols-2">
-					<div className="max-[380px]:col-span-2">
+				<div className="mb-9 grid grid-cols-[1.5fr_1fr] gap-10 max-[640px]:gap-7 max-[380px]:grid-cols-1">
+					<div>
 						<Link
 							href={`/${lang}/dashboard`}
 							className="flex w-fit max-w-full items-start gap-2.5 rounded-sm outline-offset-2 focus-visible:outline-2 focus-visible:outline-acc"

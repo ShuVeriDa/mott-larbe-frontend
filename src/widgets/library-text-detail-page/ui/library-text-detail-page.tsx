@@ -3,7 +3,6 @@
 import { Typography } from "@/shared/ui/typography";
 
 import { duration, ease, variants } from "@/shared/lib/animation";
-import { detailCardVariants, detailGridVariants } from "../lib/variants";
 import { Button } from "@/shared/ui/button";
 import {
 	DropdownMenu,
@@ -16,6 +15,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Check, ChevronLeft, Ellipsis, Share2 } from "lucide-react";
 import Link from "next/link";
 import { ComponentProps } from "react";
+import { detailCardVariants, detailGridVariants } from "../lib/variants";
 import { useLibraryTextDetailPage } from "../model";
 import { BookmarkMenuIcon } from "./bookmark-menu-icon";
 import { DetailSkeleton } from "./detail-skeleton";
@@ -131,11 +131,7 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 						title={t("library.textDetail.share")}
 						className="w-7 h-7 rounded-base border border-bd-2 flex items-center justify-center text-t-2 hover:bg-surf-2 transition-colors"
 					>
-						{copied ? (
-							<Check size={13} />
-						) : (
-							<Share2 size={13} />
-						)}
+						{copied ? <Check size={13} /> : <Share2 size={13} />}
 					</Button>
 
 					<DropdownMenu>
@@ -172,7 +168,7 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 			</motion.header>
 
 			{/* Scrollable content */}
-			<main className="flex-1 overflow-y-auto px-8 pb-12 pt-7 [scrollbar-color:var(--bd-2)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-thumb]:rounded-[2px] [&::-webkit-scrollbar-thumb]:bg-bd-2 max-sm:px-3.5 max-sm:pt-4 max-md:px-5">
+			<main className="flex justify-center overflow-y-auto px-8 pb-12 pt-7 [scrollbar-color:var(--bd-2)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-thumb]:rounded-[2px] [&::-webkit-scrollbar-thumb]:bg-bd-2 max-sm:px-3.5 max-sm:pt-4 max-md:px-5">
 				<div className="max-w-[860px]">
 					<TextHero
 						id={id}

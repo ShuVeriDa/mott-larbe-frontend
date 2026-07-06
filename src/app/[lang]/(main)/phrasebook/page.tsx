@@ -39,7 +39,7 @@ export const generateMetadata = async (props: {
 			description,
 		},
 		robots: {
-			index: true,
+			index: false,
 			follow: true,
 		},
 	};
@@ -67,6 +67,12 @@ const PhrasebookRoutePage = async ({ params }: PageProps) => {
 			queryKey: phrasebookKeys.stats(),
 			queryFn: () => phrasebookApi.stats(),
 			staleTime: 2 * 60 * 1000,
+		}),
+		queryClient.prefetchInfiniteQuery({
+			queryKey: phrasebookKeys.phrases({}),
+			queryFn: ({ pageParam }) =>
+				phrasebookApi.phrases({ page: pageParam as number, limit: 30 }),
+			initialPageParam: 1,
 		}),
 	]);
 

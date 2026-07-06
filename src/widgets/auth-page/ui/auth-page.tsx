@@ -10,16 +10,17 @@ import { FormPanel } from "./form-panel";
 interface AuthPageProps {
 	initialMode?: AuthMode;
 	oauthError?: OAuthError;
+	redirectTo?: string | null;
 }
 
-export const AuthPage = ({ initialMode = "login", oauthError }: AuthPageProps) => {
+export const AuthPage = ({ initialMode = "login", oauthError, redirectTo }: AuthPageProps) => {
 	const { lang } = useI18n();
 	const [mode, setMode] = useState<AuthMode>(initialMode);
 
 
 	const homeHref = `/${lang}`;
 	const forgotHref = `/${lang}/reset-password`;
-	const successHref = `/${lang}/dashboard`;
+	const successHref = redirectTo ?? `/${lang}/dashboard`;
 	const termsHref = `/${lang}/terms`;
 	const privacyHref = `/${lang}/privacy`;
 

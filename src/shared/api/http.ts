@@ -38,7 +38,11 @@ export const http = axios.create({
 	headers: { "X-Requested-With": "XMLHttpRequest" },
 });
 
-const PUBLIC_SEGMENTS = new Set(["auth", "reset-password"]);
+// Keep in sync with the always-accessible route segments in src/proxy.ts —
+// a 401 on these pages (e.g. an anonymous visitor's useCurrentUser() call)
+// must NOT force-navigate them to /auth, since they're allowed to browse
+// this content while signed out.
+const PUBLIC_SEGMENTS = new Set(["auth", "reset-password", "script-guide", "pwa-guide"]);
 
 const isOnPublicPage = (): boolean => {
 	const parts = window.location.pathname.split("/");

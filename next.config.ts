@@ -65,6 +65,9 @@ const nextConfig: NextConfig = {
 		return [
 			{ source: "/index", destination: "/", permanent: true },
 			{ source: "/home",  destination: "/", permanent: true },
+			{ source: "/:lang(che|ru|en)/script-guide/arabic", destination: "/:lang/script-guide?tab=arabic", permanent: true },
+			{ source: "/:lang(che|ru|en)/script-guide/latin",  destination: "/:lang/script-guide?tab=latin",  permanent: true },
+			{ source: "/:lang(che|ru|en)/suggest-text", destination: "/:lang/my-texts/submit/new", permanent: true },
 		];
 	},
 	images: {
@@ -82,8 +85,12 @@ const nextConfig: NextConfig = {
 				headers: securityHeaders,
 			},
 			{
-				source: "/:lang(che|ru|en)/(reader|review|dashboard|admin|profile|settings|progress|feedback)(.*)",
+				source: "/:lang(che|ru|en)/(reader|review|dashboard|admin|profile|settings|progress|subscription|my-texts|vocabulary|texts|phrasebook|feedback)(.*)",
 				headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+			},
+			{
+				source: "/:lang(che|ru|en)/reset-password",
+				headers: [{ key: "Referrer-Policy", value: "no-referrer" }],
 			},
 			{
 				source: "/sw.js",

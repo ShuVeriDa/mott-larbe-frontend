@@ -24,12 +24,22 @@ const VirtualListCardsDesktop = ({ items, scrollRef }: VirtualListCardsProps) =>
 		gap: GAP,
 	});
 
+	const virtualRows = virtualizer.getVirtualItems();
+
+	// Before hydration the virtualizer has no scroll container to measure,
+	// so it reports zero virtual rows — that would leave crawlers and
+	// no-JS visitors with an empty list. Render a plain (non-virtualized)
+	// fallback until real measurements land.
+	if (virtualRows.length === 0) {
+		return <FlatListCards items={items} />;
+	}
+
 	return (
 		<div
 			className="relative w-full"
 			style={{ height: `${virtualizer.getTotalSize()}px` }}
 		>
-			{virtualizer.getVirtualItems().map((virtualRow) => {
+			{virtualRows.map((virtualRow) => {
 				const item = items[virtualRow.index];
 				return (
 					<div
@@ -47,7 +57,7 @@ const VirtualListCardsDesktop = ({ items, scrollRef }: VirtualListCardsProps) =>
 	);
 };
 
-const FlatListCardsMobile = ({ items }: Pick<VirtualListCardsProps, "items">) => (
+const FlatListCards = ({ items }: Pick<VirtualListCardsProps, "items">) => (
 	<div className="flex flex-col gap-1.5">
 		{items.map((item, i) => (
 			<LibraryTextCard key={item.id} item={item} view="list" index={i} />
@@ -69,7 +79,7 @@ export const VirtualListCards = ({ items, scrollRef }: VirtualListCardsProps) =>
 	}, []);
 
 	if (isMobile) {
-		return <FlatListCardsMobile items={items} />;
+		return <FlatListCards items={items} />;
 	}
 
 	return <VirtualListCardsDesktop items={items} scrollRef={scrollRef} />;

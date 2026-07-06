@@ -38,7 +38,7 @@ export const generateMetadata = async ({
 			title,
 			description,
 		},
-		robots: { index: true, follow: true },
+		robots: { index: false, follow: true },
 	};
 };
 

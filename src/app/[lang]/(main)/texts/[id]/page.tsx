@@ -1,3 +1,4 @@
+import { cache } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, LOCALES } from "@/i18n/locales";
@@ -7,7 +8,7 @@ import type { LibraryTextDetail } from "@/entities/library-text";
 import { API_URL } from "@/shared/config";
 import { SITE_URL, OG_LOCALES, buildAlternates } from "@/shared/lib/seo";
 
-const fetchTextForSeo = async (id: string): Promise<LibraryTextDetail | null> => {
+const fetchTextForSeo = cache(async (id: string): Promise<LibraryTextDetail | null> => {
 	try {
 		const res = await fetch(`${API_URL}/texts/${encodeURIComponent(id)}`, {
 			next: { revalidate: 3600 },
@@ -17,7 +18,7 @@ const fetchTextForSeo = async (id: string): Promise<LibraryTextDetail | null> =>
 	} catch {
 		return null;
 	}
-};
+});
 
 const PAGE_SIZE = 500;
 
@@ -90,7 +91,7 @@ export const generateMetadata = async (props: {
 			description,
 			images: [text.imageUrl ?? `${SITE_URL}/og-default.png`],
 		},
-		robots: { index: true, follow: true },
+		robots: { index: false, follow: true },
 	};
 };
 
@@ -104,7 +105,10 @@ const TextDetailsRoutePage = async ({ params }: PageProps) => {
 	const { lang, id } = await params;
 	requireLocale(lang);
 
-	const text = await fetchTextForSeo(id);
+	const [dict, text] = await Promise.all([
+		getDictionary(lang),
+		fetchTextForSeo(id),
+	]);
 	if (!text) notFound();
 
 	const encodedId = encodeURIComponent(id);
@@ -146,7 +150,7 @@ const TextDetailsRoutePage = async ({ params }: PageProps) => {
 				{
 					"@type": "ListItem",
 					position: 2,
-					name: "Библиотека",
+					name: dict.library.title,
 					item: textsUrl,
 				},
 				{
