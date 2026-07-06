@@ -22,6 +22,11 @@ export const authApi = {
 		return data;
 	},
 
+	restore: async (body: LoginDto): Promise<AuthResponse> => {
+		const { data } = await http.post<AuthResponse>("/auth/restore", body);
+		return data;
+	},
+
 	register: async (body: RegisterDto): Promise<AuthResponse> => {
 		const { data } = await http.post<AuthResponse>("/auth/register", body);
 		return data;

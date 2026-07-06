@@ -22,6 +22,8 @@ const ERROR_CODE_TO_I18N_KEY: Record<string, string> = {
   LAST_LOGIN_METHOD: "apiErrors.lastLoginMethod",
   ACCOUNT_NOT_FOUND: "apiErrors.accountNotFound",
   ACCOUNT_ALREADY_LINKED: "apiErrors.accountAlreadyLinked",
+  RESTORE_GRACE_PERIOD_EXPIRED: "apiErrors.restoreGracePeriodExpired",
+  NOT_SCHEDULED_FOR_DELETION: "apiErrors.notScheduledForDeletion",
 
   // User
   USER_NOT_FOUND: "apiErrors.userNotFound",

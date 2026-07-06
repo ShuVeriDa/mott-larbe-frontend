@@ -958,6 +958,15 @@
 			"google": "Continue with Google"
 		},
 		"telegramLogin": "Log in with Telegram",
+		"restore": {
+			"title": "This account was deleted on {date}",
+			"titleNoDate": "This account was deleted",
+			"description": "You can restore it within 30 days of deletion. After that, the data will be permanently removed.",
+			"error": "Could not restore the account. Please try again.",
+			"confirm": "Restore account",
+			"restoring": "Restoring…",
+			"dismiss": "Cancel"
+		},
 		"errors": {
 			"email": "Enter a valid email",
 			"loginIdentifier": "Enter a valid email or username",
@@ -5999,6 +6008,8 @@
 		"lastLoginMethod": "Cannot unlink the only sign-in method. Set a password first.",
 		"accountNotFound": "Linked account not found.",
 		"accountAlreadyLinked": "This account is already linked to another profile.",
+		"restoreGracePeriodExpired": "The 30-day restore window has passed. This account can no longer be restored.",
+		"notScheduledForDeletion": "This account is not scheduled for deletion.",
 		"userNotFound": "User not found.",
 		"userAlreadyExists": "User with this email or username already exists.",
 		"usernameTaken": "This username is already taken.",

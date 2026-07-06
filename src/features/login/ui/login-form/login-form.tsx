@@ -8,6 +8,7 @@ import { Typography } from "@/shared/ui/typography";
 import { AlertCircle, ArrowRight, Check, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useLoginForm } from "../../model";
+import { RestoreAccountPrompt } from "./restore-account-prompt";
 
 interface LoginFormProps {
 	forgotHref: string;
@@ -24,16 +25,33 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 		remember,
 		showPw,
 		errors,
+		restoreDeletedAt,
+		isRestoring,
+		restoreError,
 		handleSubmit,
+		handleRestoreConfirm,
+		handleRestoreDismiss,
 		handleEmailChange,
 		handlePasswordChange,
 		handleTogglePasswordVisibility,
 		handleRememberChange,
 	} = useLoginForm({ successHref });
 
+	const showRestorePrompt = restoreDeletedAt !== null;
+
 	return (
 		<form action={handleSubmit} noValidate autoComplete="on">
-			{error ? (
+			{showRestorePrompt ? (
+				<RestoreAccountPrompt
+					deletedAt={restoreDeletedAt}
+					isRestoring={isRestoring}
+					hasError={Boolean(restoreError)}
+					onConfirm={handleRestoreConfirm}
+					onDismiss={handleRestoreDismiss}
+				/>
+			) : null}
+
+			{error && !showRestorePrompt ? (
 				<div
 					role="alert"
 					className="mb-4 flex items-start gap-2.5 rounded-[8px] border-[0.5px] border-amb/25 bg-amb-bg px-3 py-2.5 text-[12px] text-amb-t"
@@ -147,7 +165,7 @@ export const LoginForm = ({ forgotHref, successHref }: LoginFormProps) => {
 
 			<Button
 				type="submit"
-				disabled={isPending}
+				disabled={isPending || showRestorePrompt}
 				title={t("auth.submit.login")}
 				className={cn(
 					"inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-[9px] bg-acc text-[13.5px] font-semibold text-white transition-opacity hover:opacity-[0.92] active:translate-y-px max-[640px]:h-[46px] max-[640px]:text-[14px]",

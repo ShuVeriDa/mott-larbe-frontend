@@ -8,6 +8,9 @@ export interface ApiErrorBody {
   timestamp: string;
   path: string;
   correlationId: string;
+  // Some errors (e.g. ACCOUNT_SCHEDULED_FOR_DELETION) attach extra structured
+  // fields beyond the base shape — see AllExceptionsFilter on the backend.
+  [extra: string]: unknown;
 }
 
 export const getApiErrorCode = (error: unknown): string => {
@@ -16,6 +19,13 @@ export const getApiErrorCode = (error: unknown): string => {
     if (data?.code) return data.code;
   }
   return "INTERNAL_SERVER_ERROR";
+};
+
+export const getApiErrorBody = (error: unknown): Partial<ApiErrorBody> | undefined => {
+  if (isAxiosError(error)) {
+    return error.response?.data as Partial<ApiErrorBody> | undefined;
+  }
+  return undefined;
 };
 
 // withCredentials: true ensures the httpOnly access_token cookie is sent
