@@ -52,6 +52,8 @@ export const TextCover = ({
 						<div className="size-[3px] rounded-full bg-bd-3" />
 						<div className="size-[3px] rounded-full bg-bd-3" />
 						<div className="size-[3px] rounded-full bg-bd-3" />
+						<div className="size-[3px] rounded-full bg-bd-3" />
+						<div className="size-[3px] rounded-full bg-bd-3" />
 					</div>
 				</div>
 

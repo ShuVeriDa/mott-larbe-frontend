@@ -1,7 +1,7 @@
 import { Typography } from "@/shared/ui/typography";
 
 export const TextCoverWordPopup = () => (
-	<div className="absolute left-[75%] top-[42%] w-[62px] -translate-x-1/2 overflow-hidden rounded-[6px] border-[0.5px] border-bd-2 bg-surf shadow-lg">
+	<div className="absolute left-[73%] top-[49%] w-[62px] -translate-x-1/2 overflow-hidden rounded-[6px] border-[0.5px] border-bd-2 bg-surf shadow-lg">
 		<div className="flex items-center gap-1 border-b-[0.5px] border-bd-1 px-1.5 pt-1.5 pb-1">
 			<div className="h-[3px] w-[26px] rounded-full bg-t-4/60" />
 			<Typography

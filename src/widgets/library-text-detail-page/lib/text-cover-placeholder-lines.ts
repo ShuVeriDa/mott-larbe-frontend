@@ -3,7 +3,7 @@ export const TEXT_COVER_PLACEHOLDER_LINES: {
 	accent?: boolean;
 	textAlign?: "left" | "center" | "right";
 }[] = [
-	{ width: 30, textAlign: "center" },
+	{ width: 40, accent: true, textAlign: "center" },
 	{ width: 100 },
 	{ width: 70 },
 	{ width: 100, accent: true },
