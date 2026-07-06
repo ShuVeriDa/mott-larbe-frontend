@@ -171,6 +171,7 @@ export const useUserTextEditPage = (id: string, lang: string) => {
 
   const { data: userText } = useSuspenseQuery(userTextDetailQueryOptions(id));
   const { data: scriptVersions = [] } = useQuery(userScriptVersionsQueryOptions(id));
+  const isBackgroundRunning = scriptVersions.some((v) => v.status === "RUNNING");
 
   const [title, setTitle] = useState(userText.title);
   const [language, setLanguage] = useState<UserTextLanguage>(userText.language);
@@ -266,7 +267,7 @@ export const useUserTextEditPage = (id: string, lang: string) => {
     handleDescriptionChange, handleGenreChange, handleCoverSelect, handleCoverRemove,
     handlePageTitleChange,
     isSaving: updateMutation.isPending,
-    isBackgroundRunning: scriptVersions.some((v) => v.status === "RUNNING"),
+    isBackgroundRunning,
     handleTitleChange, handleLanguageChange, handleTypeChange,
     handleAuthorChange, handleSourceChange,
     handlePageContentChange, handleAddPage, handleSelectPage, handleDeletePage,

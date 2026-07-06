@@ -99,7 +99,7 @@ const LocationView = ({ heritage, lang }: LocationViewProps) => {
 			<LocationRow label={t("location.district")} value={districtName} />
 			<LocationRow label={t("location.settlement")} value={settlementName}>
 				{settlementType && (
-					<Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 shrink-0">
+					<Badge variant="neu" className="text-[10px] px-1.5 py-0 h-4 shrink-0">
 						{t(SETTLEMENT_TYPE_KEYS[settlementType])}
 					</Badge>
 				)}

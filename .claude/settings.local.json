@@ -12,7 +12,8 @@
       "Bash(xargs -I{} echo {})",
       "Bash(npx prisma *)",
       "Bash(echo \"EXIT:$?\")",
-      "Bash(npx eslint *)"
+      "Bash(npx eslint *)",
+      "Bash(netstat -ano)"
     ]
   }
 }

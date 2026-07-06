@@ -7,6 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { myHeritageQueryOptions, type UserHeritage } from "@/entities/heritage";
 import { HeritageForm, VerificationBadge } from "@/features/heritage-form";
 import { useI18n } from "@/shared/lib/i18n";
+import { getLocalizedName } from "@/shared/lib/localized-name";
+import type { LocalizedName } from "@/shared/types";
 import { spring, variants } from "@/shared/lib/animation";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
@@ -46,8 +48,8 @@ interface HeritageViewProps {
 const HeritageView = ({ heritage, lang }: HeritageViewProps) => {
 	const { t } = useI18n();
 
-	const localize = (name: { [key: string]: string } | null | undefined) =>
-		name?.[lang] ?? name?.ru ?? null;
+	const localize = (name: LocalizedName | null | undefined) =>
+		name ? getLocalizedName(name, lang) : null;
 
 	const nationName = localize(heritage.nation?.name);
 	const tukhumName = localize(heritage.tukhum?.name);

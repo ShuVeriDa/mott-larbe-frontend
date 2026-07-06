@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/shared/lib/i18n";
 import { useToast } from "@/shared/lib/toast";
@@ -25,7 +25,7 @@ export const useEntrySuggest = ({ open, onOpenChange, onSuccess, normalized, raw
 	const router = useRouter();
 	const { success, error } = useToast();
 	const { data: currentUser, isLoading: isUserLoading } = useCurrentUser();
-	const { mutate, isPending } = useCreateSuggestion();
+	const { mutateAsync } = useCreateSuggestion();
 
 	const [field, setField] = useState<FieldKey>("rawTranslate");
 	const [newValue, setNewValue] = useState("");
@@ -67,31 +67,26 @@ export const useEntrySuggest = ({ open, onOpenChange, onSuccess, normalized, raw
 		setComment(e.currentTarget.value);
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		if (!newValue.trim()) return;
+	const [, submitAction, isPending] = useActionState(async () => {
+		if (!newValue.trim()) return null;
 
-		mutate(
-			{
+		try {
+			await mutateAsync({
 				normalized,
 				rawWord,
 				currentTranslation,
 				field,
 				newValue: newValue.trim(),
 				comment: comment.trim() || undefined,
-			},
-			{
-				onSuccess: () => {
-					success(t("suggest.success"));
-					onOpenChange(false);
-					onSuccess?.();
-				},
-				onError: () => {
-					error(t("suggest.error"));
-				},
-			},
-		);
-	};
+			});
+			success(t("suggest.success"));
+			onOpenChange(false);
+			onSuccess?.();
+		} catch {
+			error(t("suggest.error"));
+		}
+		return null;
+	}, null);
 
 	const handleClose = () => onOpenChange(false);
 
@@ -106,7 +101,7 @@ export const useEntrySuggest = ({ open, onOpenChange, onSuccess, normalized, raw
 		handleFieldChange,
 		handleNewValueChange,
 		handleCommentChange,
-		handleSubmit,
+		submitAction,
 		handleClose,
 	};
 };

@@ -51,12 +51,12 @@ export const useAdminHeritageModeration = () => {
 		enabled: !!selectedTukhumNationId && reviewForm.addToDirectory,
 	});
 
-	const items = pendingQuery.data?.data ?? [];
+	const items = pendingQuery.data?.items ?? [];
 	const total = pendingQuery.data?.total ?? 0;
 	const totalPages = Math.max(1, Math.ceil(total / LIMIT));
 	const stats = statsQuery.data ?? { pending: 0, verified: 0, rejected: 0 };
-	const nations = nationsQuery.data?.data ?? [];
-	const tukhumy = tukhumQuery.data?.data ?? [];
+	const nations = nationsQuery.data?.items ?? [];
+	const tukhumy = tukhumQuery.data?.items ?? [];
 
 	const invalidateModeration = () => {
 		queryClient.invalidateQueries({ queryKey: heritageKeys.moderation() });

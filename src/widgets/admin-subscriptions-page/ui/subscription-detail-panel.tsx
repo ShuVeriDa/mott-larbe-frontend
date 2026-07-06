@@ -90,8 +90,7 @@ export const SubscriptionDetailPanel = ({ sub, isLoading, userId, onExtend, onCa
 
 	const handleRevokeRole = (roleId: string) => revokeRole.mutate({ roleId });
 	const handleApplyCoupon = (code: string) => applyCoupon.mutate(code);
-	const handleGoToProfile: NonNullable<ComponentProps<"button">["onClick"]> = () =>
-		router.push(`/admin/users/${userId}`);
+	const handleGoToProfile = () => router.push(`/admin/users/${userId}`);
 
 	return (
 		<div className="flex flex-col gap-2.5">

@@ -13,7 +13,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
-import { NotionEditor } from "@/shared/ui/notion-editor";
+import type { AppLanguage } from "@/shared/lib/languages";
+import { AdminTextEditorShell } from "@/shared/ui/admin-text-editor";
 import { SubmissionLicenseFields } from "./submission-license-fields";
 import { SubmissionSubmitButton } from "./submission-submit-button";
 import { CopyFromUserTextPicker } from "./copy-from-user-text-picker";
@@ -37,7 +38,8 @@ export const SubmissionEditorForm = (props: SubmissionEditorFormProps) => {
     sourceUrl,
     licenseType,
     publicationYear,
-    contentRich,
+    pages,
+    activePage,
     fieldErrors,
     isExternal,
     isContentTooLarge,
@@ -53,7 +55,10 @@ export const SubmissionEditorForm = (props: SubmissionEditorFormProps) => {
     handleSourceUrlChange,
     handleLicenseTypeChange,
     handlePublicationYearChange,
-    handleContentUpdate,
+    handlePageContentChange,
+    handleAddPage,
+    handleSelectPage,
+    handleDeletePage,
     handleSaveDraft,
     handleRequestSubmit,
     handleConfirmSubmit,
@@ -67,8 +72,21 @@ export const SubmissionEditorForm = (props: SubmissionEditorFormProps) => {
     handleTitleChange({
       currentTarget: { value: dto.title },
     } as React.ChangeEvent<HTMLInputElement>);
-    handleContentUpdate(richContent);
+    handlePageContentChange(richContent);
   };
+
+  const handleShellPageContentChange = (doc: TipTapDoc) => {
+    handlePageContentChange(doc);
+  };
+
+  const handleShellTitleChange = (value: string) => {
+    handleTitleChange({
+      currentTarget: { value },
+    } as React.ChangeEvent<HTMLInputElement>);
+  };
+
+  const getPageLabel = (index: number) =>
+    t("admin.texts.createPage.pageN", { n: index + 1 });
 
   if (isLoadingDraft) {
     return (
@@ -120,25 +138,11 @@ export const SubmissionEditorForm = (props: SubmissionEditorFormProps) => {
           {/* Left: meta fields */}
           <div className="shrink-0 overflow-y-auto border-b border-bd-1 bg-surf p-4 lg:w-[280px] lg:border-b-0 lg:border-r">
             <div className="flex flex-col gap-3">
-              {/* Title */}
-              <div className="flex flex-col gap-1">
-                <Label htmlFor="sub-title" className="text-[12px] font-medium text-t-2">
-                  {t("myTexts.fields.title")}
-                </Label>
-                <Input
-                  id="sub-title"
-                  type="text"
-                  value={title}
-                  onChange={handleTitleChange}
-                  placeholder={t("myTexts.fields.titlePlaceholder")}
-                  maxLength={500}
-                />
-                {fieldErrors.title && (
-                  <Typography tag="p" className="text-[11.5px] text-red-500">
-                    {fieldErrors.title}
-                  </Typography>
-                )}
-              </div>
+              {fieldErrors.title && (
+                <Typography tag="p" className="text-[11.5px] text-red-500">
+                  {fieldErrors.title}
+                </Typography>
+              )}
 
               {/* Submission type */}
               <div className="flex flex-col gap-1">
@@ -226,26 +230,35 @@ export const SubmissionEditorForm = (props: SubmissionEditorFormProps) => {
             </div>
           </div>
 
-          {/* Right: TipTap editor */}
+          {/* Right: multi-page TipTap editor */}
           <div className="flex flex-1 flex-col overflow-hidden bg-surf">
-            {isContentTooLarge && (
-              <div className="shrink-0 bg-yellow-50 px-4 py-2 dark:bg-yellow-900/20">
-                <Typography tag="p" className="text-[11.5px] text-yellow-800 dark:text-yellow-400">
-                  {t("myTexts.validation.contentTooLarge")}
-                </Typography>
-              </div>
-            )}
-
-            <div className="flex-1 overflow-y-auto">
-              <NotionEditor
-                content={contentRich}
-                onUpdate={handleContentUpdate}
-                slashMenuItems={[]}
-                placeholder={t("myTexts.editor.placeholder")}
-                minHeight="100%"
-                showStressMark
-              />
-            </div>
+            <AdminTextEditorShell
+              title={title}
+              pages={pages}
+              activePage={activePage}
+              language={language as AppLanguage}
+              stickyTopClassName="top-0"
+              pagesSummary={t("admin.texts.createPage.pages", { n: pages.length })}
+              primaryShortcutLabel={t("myTexts.submit.sendToModeration")}
+              onTitleChange={handleShellTitleChange}
+              onPageContentChange={handleShellPageContentChange}
+              onAddPage={handleAddPage}
+              onSelectPage={handleSelectPage}
+              onDeletePage={handleDeletePage}
+              onSaveDraft={handleSaveDraft}
+              onPrimaryAction={handleRequestSubmit}
+              getPageLabel={getPageLabel}
+              showStressMark
+              topContent={
+                isContentTooLarge ? (
+                  <div className="shrink-0 bg-yellow-50 px-4 py-2 dark:bg-yellow-900/20">
+                    <Typography tag="p" className="text-[11.5px] text-yellow-800 dark:text-yellow-400">
+                      {t("myTexts.validation.contentTooLarge")}
+                    </Typography>
+                  </div>
+                ) : undefined
+              }
+            />
           </div>
         </div>
       </div>

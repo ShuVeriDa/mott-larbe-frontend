@@ -33,10 +33,10 @@ export const useAdminHeritagePage = () => {
 	const taipsQuery = useQuery({ ...taipsByNationQueryOptions(selectedNationId), enabled: !!selectedNationId });
 	const garasQuery = useQuery({ ...garasByTaipQueryOptions(selectedTaipId), enabled: !!selectedTaipId });
 
-	const nations = nationsQuery.data?.data ?? [];
-	const tukhumy = tukhumQuery.data?.data ?? [];
-	const taips = taipsQuery.data?.data ?? [];
-	const garas = garasQuery.data?.data ?? [];
+	const nations = nationsQuery.data?.items ?? [];
+	const tukhumy = tukhumQuery.data?.items ?? [];
+	const taips = taipsQuery.data?.items ?? [];
+	const garas = garasQuery.data?.items ?? [];
 
 	const invalidateNations = () => queryClient.invalidateQueries({ queryKey: heritageKeys.nations() });
 	const invalidateTukhumy = () => queryClient.invalidateQueries({ queryKey: heritageKeys.tukhumy() });

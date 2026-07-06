@@ -10,6 +10,12 @@ import { useI18n } from "@/shared/lib/i18n";
 import { SectionLabel } from "@/shared/ui/section-label";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/shared/ui/tooltip";
 import { Sm2Guide } from "../sm2-guide";
 import { motion } from "framer-motion";
 import { variants, spring } from "@/shared/lib/animation";
@@ -181,6 +187,7 @@ interface StatBoxProps {
 	value: number;
 	label: string;
 	tone: "amb" | "acc" | "grn";
+	hint?: string;
 }
 
 const toneClasses: Record<StatBoxProps["tone"], string> = {
@@ -189,7 +196,7 @@ const toneClasses: Record<StatBoxProps["tone"], string> = {
 	grn: "text-grn",
 };
 
-const StatBox = ({ value, label, tone }: StatBoxProps) => (
+const StatBox = ({ value, label, tone, hint }: StatBoxProps) => (
 	<motion.div
 		className="min-w-[80px] rounded-card border-[0.5px] border-bd-2 bg-surf px-4 py-3 text-center shadow-sm max-md:min-w-0 max-md:flex-1 max-md:basis-[calc(50%-4px)]"
 		variants={variants.staggerItem}
@@ -199,6 +206,19 @@ const StatBox = ({ value, label, tone }: StatBoxProps) => (
 		>
 			{value}
 		</div>
-		<div className="mt-1 text-[11px] text-t-3">{label}</div>
+		{hint ? (
+			<TooltipProvider>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<div className="mt-1 cursor-help text-[11px] text-t-3 underline decoration-dotted underline-offset-2">
+							{label}
+						</div>
+					</TooltipTrigger>
+					<TooltipContent>{hint}</TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
+		) : (
+			<div className="mt-1 text-[11px] text-t-3">{label}</div>
+		)}
 	</motion.div>
 );

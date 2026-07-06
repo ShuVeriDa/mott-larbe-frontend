@@ -4,6 +4,7 @@ import { SectionLabel } from "@/shared/ui/section-label";
 import { FolderIcon, type Folder } from "@/entities/folder";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
+import { Typography } from "@/shared/ui/typography";
 import { type ReactNode } from "react";
 import { useFolderPickerPopover } from "../../model";
 

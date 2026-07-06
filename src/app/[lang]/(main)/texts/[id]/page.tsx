@@ -1,24 +1,26 @@
-import { cache } from "react";
+import type { LibraryTextDetail } from "@/entities/library-text";
+import { getDictionary, LOCALES } from "@/i18n/locales";
+import { API_URL } from "@/shared/config";
+import { requireLocale } from "@/shared/lib/i18n";
+import { buildAlternates, OG_LOCALES, SITE_URL } from "@/shared/lib/seo";
+import { LibraryTextDetailPage } from "@/widgets/library-text-detail-page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getDictionary, LOCALES } from "@/i18n/locales";
-import { requireLocale } from "@/shared/lib/i18n";
-import { LibraryTextDetailPage } from "@/widgets/library-text-detail-page";
-import type { LibraryTextDetail } from "@/entities/library-text";
-import { API_URL } from "@/shared/config";
-import { SITE_URL, OG_LOCALES, buildAlternates } from "@/shared/lib/seo";
+import { cache } from "react";
 
-const fetchTextForSeo = cache(async (id: string): Promise<LibraryTextDetail | null> => {
-	try {
-		const res = await fetch(`${API_URL}/texts/${encodeURIComponent(id)}`, {
-			next: { revalidate: 3600 },
-		});
-		if (!res.ok) return null;
-		return res.json() as Promise<LibraryTextDetail>;
-	} catch {
-		return null;
-	}
-});
+const fetchTextForSeo = cache(
+	async (id: string): Promise<LibraryTextDetail | null> => {
+		try {
+			const res = await fetch(`${API_URL}/texts/${encodeURIComponent(id)}`, {
+				next: { revalidate: 3600 },
+			});
+			if (!res.ok) return null;
+			return res.json() as Promise<LibraryTextDetail>;
+		} catch {
+			return null;
+		}
+	},
+);
 
 const PAGE_SIZE = 500;
 
@@ -33,7 +35,7 @@ export const generateStaticParams = async () => {
 				{ next: { revalidate: 3600 } },
 			);
 			if (!res.ok) break;
-			const data = await res.json() as { items: { id: string }[] };
+			const data = (await res.json()) as { items: { id: string }[] };
 			const items = data.items ?? [];
 			items.forEach(({ id }) => ids.push(id));
 			if (items.length < PAGE_SIZE) break;
@@ -43,7 +45,7 @@ export const generateStaticParams = async () => {
 		}
 	}
 
-	return LOCALES.flatMap((lang) => ids.map((id) => ({ lang, id })));
+	return LOCALES.flatMap(lang => ids.map(id => ({ lang, id })));
 };
 
 export const generateMetadata = async (props: {
@@ -62,7 +64,10 @@ export const generateMetadata = async (props: {
 	const fallbackMeta = dict.library.textDetail.meta;
 	const path = `/texts/${encodeURIComponent(id)}`;
 	const title = (text.title ?? fallbackMeta.title).slice(0, 60);
-	const description = (text.description ?? fallbackMeta.description).slice(0, 160);
+	const description = (text.description ?? fallbackMeta.description).slice(
+		0,
+		160,
+	);
 	const { canonical, languages } = buildAlternates(lang, path);
 
 	return {
@@ -82,7 +87,12 @@ export const generateMetadata = async (props: {
 			images: [
 				text.imageUrl
 					? { url: text.imageUrl, width: 1200, height: 630, alt: title }
-					: { url: `${SITE_URL}/og-default.png`, width: 1200, height: 630, alt: title },
+					: {
+							url: `${SITE_URL}/og-default.png`,
+							width: 1200,
+							height: 630,
+							alt: title,
+						},
 			],
 		},
 		twitter: {
@@ -121,7 +131,9 @@ const TextDetailsRoutePage = async ({ params }: PageProps) => {
 			"@type": "Article",
 			headline: text.title,
 			...(text.description ? { description: text.description } : {}),
-			...(text.author ? { author: { "@type": "Person", name: text.author } } : {}),
+			...(text.author
+				? { author: { "@type": "Person", name: text.author } }
+				: {}),
 			...(text.imageUrl ? { image: text.imageUrl } : {}),
 			...(text.publishedAt ? { datePublished: text.publishedAt } : {}),
 			...(text.updatedAt ? { dateModified: text.updatedAt } : {}),
@@ -167,7 +179,9 @@ const TextDetailsRoutePage = async ({ params }: PageProps) => {
 		<>
 			<script
 				type="application/ld+json"
-				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+				}}
 			/>
 			{/* Critical content for crawlers without JS.
 			    Browsers with JS see the hydrated LibraryTextDetailPage instead. */}
@@ -175,7 +189,9 @@ const TextDetailsRoutePage = async ({ params }: PageProps) => {
 				<h1>{text.title}</h1>
 				{text.author && <p>{text.author}</p>}
 				{text.description && <p>{text.description}</p>}
-				<a href={`/${lang}/reader/${encodedId}/p/1`}>Читать</a>
+				<a href={`/${lang}/reader/${encodedId}/p/1`}>
+					{dict.library.textDetail.read}
+				</a>
 			</noscript>
 			<LibraryTextDetailPage id={id} />
 		</>

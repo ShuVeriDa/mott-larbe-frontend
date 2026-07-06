@@ -46,6 +46,8 @@ export const useAiBatchTranslate = (tokens: TextToken[]) => {
           russianGloss: null,
           transliteration: null,
           partOfSpeech: null,
+          baseForm: null,
+          nounClass: null,
           example: null,
           source: "gemini",
           status: "PENDING",

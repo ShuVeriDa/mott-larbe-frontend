@@ -3,7 +3,7 @@
 import { AdminCard } from "@/shared/ui/admin-card";
 import type { AdminCouponDetail } from "@/entities/admin-coupon";
 import { useI18n } from "@/shared/lib/i18n";
-import { ComponentProps, useState } from 'react';
+import { useState } from 'react';
 import { CouponHeroSection } from "./coupon-hero-section";
 import { CouponUsageSection } from "./coupon-usage-section";
 import { CouponRedemptionsList } from "./coupon-redemptions-list";
@@ -49,7 +49,7 @@ export const CouponDetailPanel = ({
 		);
 	}
 
-	const handleCopy: NonNullable<ComponentProps<"button">["onClick"]> = () => {
+	const handleCopy = () => {
 		navigator.clipboard.writeText(coupon.code).then(() => {
 			setCopied(true);
 			setTimeout(() => setCopied(false), 1500);

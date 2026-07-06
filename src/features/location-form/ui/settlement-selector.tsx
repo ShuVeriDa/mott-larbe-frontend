@@ -2,6 +2,7 @@
 
 import type { ChangeEvent } from "react";
 import { useI18n } from "@/shared/lib/i18n";
+import { getLocalizedName } from "@/shared/lib/localized-name";
 import { Select } from "@/shared/ui/select";
 import type { Settlement, SettlementType } from "@/entities/geo";
 
@@ -30,13 +31,10 @@ export const SettlementSelector = ({
 }: SettlementSelectorProps) => {
 	const { t } = useI18n();
 
-	const getLocalizedName = (item: Settlement) =>
-		(item.name as Record<string, string>)[lang] ?? item.name.ru;
-
 	const getSettlementLabel = (item: Settlement) => {
 		const typeKey = SETTLEMENT_TYPE_KEYS[item.type];
 		const typeName = typeKey ? t(typeKey) : item.type;
-		return `${getLocalizedName(item)} (${typeName})`;
+		return `${getLocalizedName(item.name, lang)} (${typeName})`;
 	};
 
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {

@@ -5,6 +5,7 @@ import { AdminTabStrip } from "@/shared/ui/admin-tab-strip";
 import { Typography } from "@/shared/ui/typography";
 import { useAdminHeritagePage } from "../model/use-admin-heritage-page";
 import type { HeritageTab } from "../model/types";
+import type { Gara, Nation, Taip, Tukhum } from "@/entities/heritage";
 import { NationsTab } from "./nations-tab";
 import { TukhumyTab } from "./tukhumy-tab";
 import { TaipsTab } from "./taips-tab";
@@ -22,22 +23,22 @@ export const AdminHeritagePage = () => {
 	];
 
 	const handleOpenNationCreate = () => state.setNationModal({ open: true, item: null });
-	const handleOpenNationEdit = (item: Parameters<typeof state.setNationModal>[0]["item"]) =>
+	const handleOpenNationEdit = (item: Nation) =>
 		state.setNationModal({ open: true, item });
 	const handleCloseNation = () => state.setNationModal({ open: false, item: null });
 
 	const handleOpenTukhumCreate = () => state.setTukhumModal({ open: true, item: null });
-	const handleOpenTukhumEdit = (item: Parameters<typeof state.setTukhumModal>[0]["item"]) =>
+	const handleOpenTukhumEdit = (item: Tukhum) =>
 		state.setTukhumModal({ open: true, item });
 	const handleCloseTukhum = () => state.setTukhumModal({ open: false, item: null });
 
 	const handleOpenTaipCreate = () => state.setTaipModal({ open: true, item: null });
-	const handleOpenTaipEdit = (item: Parameters<typeof state.setTaipModal>[0]["item"]) =>
+	const handleOpenTaipEdit = (item: Taip) =>
 		state.setTaipModal({ open: true, item });
 	const handleCloseTaip = () => state.setTaipModal({ open: false, item: null });
 
 	const handleOpenGaraCreate = () => state.setGaraModal({ open: true, item: null });
-	const handleOpenGaraEdit = (item: Parameters<typeof state.setGaraModal>[0]["item"]) =>
+	const handleOpenGaraEdit = (item: Gara) =>
 		state.setGaraModal({ open: true, item });
 	const handleCloseGara = () => state.setGaraModal({ open: false, item: null });
 

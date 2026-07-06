@@ -2,6 +2,7 @@
 
 import type { ChangeEvent } from "react";
 import { useI18n } from "@/shared/lib/i18n";
+import { getLocalizedName } from "@/shared/lib/localized-name";
 import { Select } from "@/shared/ui/select";
 import type { Tukhum } from "@/entities/heritage";
 
@@ -24,8 +25,7 @@ export const TukhumSelector = ({
 }: TukhumSelectorProps) => {
 	const { t } = useI18n();
 
-	const getLocalizedName = (item: Tukhum) =>
-		(item.name as Record<string, string>)[lang] ?? item.name.ru;
+	const getTukhumName = (item: Tukhum) => getLocalizedName(item.name, lang);
 
 	const handleTukhumChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		const val = e.currentTarget.value;
@@ -48,7 +48,7 @@ export const TukhumSelector = ({
 				<option value="">{t("heritage.tukhum_placeholder")}</option>
 				{tukhumy.map((item) => (
 					<option key={item.id} value={item.id}>
-						{getLocalizedName(item)}
+						{getTukhumName(item)}
 					</option>
 				))}
 			</Select>

@@ -2,6 +2,7 @@
 
 import type { ChangeEvent } from "react";
 import { useI18n } from "@/shared/lib/i18n";
+import { getLocalizedName } from "@/shared/lib/localized-name";
 import { Select } from "@/shared/ui/select";
 import type { Region } from "@/entities/geo";
 
@@ -24,8 +25,7 @@ export const RegionSelector = ({
 }: RegionSelectorProps) => {
 	const { t } = useI18n();
 
-	const getLocalizedName = (item: Region) =>
-		(item.name as Record<string, string>)[lang] ?? item.name.ru;
+	const getRegionName = (item: Region) => getLocalizedName(item.name, lang);
 
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		onRegionSelect(e.currentTarget.value || null);
@@ -42,7 +42,7 @@ export const RegionSelector = ({
 			<option value="">{t("location.region_placeholder")}</option>
 			{regions.map((region) => (
 				<option key={region.id} value={region.id}>
-					{getLocalizedName(region)}
+					{getRegionName(region)}
 				</option>
 			))}
 		</Select>

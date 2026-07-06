@@ -44,7 +44,7 @@ const editorExtensions = [PhraseHighlightExtension, WordAnnotationHighlightExten
 interface TextCreateEditorProps {
 	title: string;
 	language: AppLanguage;
-	pages: { doc: TipTapDoc; wordCount: number }[];
+	pages: { doc: TipTapDoc; wordCount: number; title: string }[];
 	activePage: number;
 	showStressMark?: boolean;
 	showSpellingAdd?: boolean;

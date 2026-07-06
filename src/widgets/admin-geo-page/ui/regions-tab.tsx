@@ -1,10 +1,11 @@
 "use client";
 
-import type { Region, CreateRegionDto, PaginatedResponse } from "@/entities/geo";
+import type { Country, Region, CreateRegionDto, PaginatedResponse } from "@/entities/geo";
 import { useI18n } from "@/shared/lib/i18n";
 import { Button } from "@/shared/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/shared/ui/dialog";
-import { Input, InputLabel } from "@/shared/ui/input";
+import { InputLabel } from "@/shared/ui/input";
+import { Select } from "@/shared/ui/select";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { Typography } from "@/shared/ui/typography";
 import { useEffect, useState } from "react";
@@ -13,8 +14,11 @@ import { LocalizedNameFields } from "./localized-name-fields";
 
 interface RegionsTabProps {
 	regions: Region[];
+	countries: Country[];
+	selectedCountryId: string;
 	query: UseQueryResult<PaginatedResponse<Region>>;
 	modal: { open: boolean; item: Region | null };
+	onSelectCountry: (id: string) => void;
 	onOpenCreate: () => void;
 	onOpenEdit: (item: Region) => void;
 	onCloseModal: () => void;
@@ -25,8 +29,11 @@ interface RegionsTabProps {
 
 export const RegionsTab = ({
 	regions,
+	countries,
+	selectedCountryId,
 	query,
 	modal,
+	onSelectCountry,
 	onOpenCreate,
 	onOpenEdit,
 	onCloseModal,
@@ -35,6 +42,9 @@ export const RegionsTab = ({
 	deleteMutation,
 }: RegionsTabProps) => {
 	const { t } = useI18n();
+
+	const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+		onSelectCountry(e.currentTarget.value);
 
 	const handleEdit = (item: Region) => onOpenEdit(item);
 	const handleDelete = (item: Region) => {
@@ -55,17 +65,29 @@ export const RegionsTab = ({
 
 	return (
 		<>
-			<div className="flex items-center justify-between px-5 py-3">
-				<Typography tag="p" className="text-[12px] text-t-3">
-					{t("admin.geo.regions.subtitle")}
-				</Typography>
-				<Button variant="action" size="default" onClick={onOpenCreate}>
+			<div className="flex flex-col gap-2 border-b border-bd-1 px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
+				<div className="flex items-center gap-2">
+					<InputLabel htmlFor="region-country-filter" className="mb-0 whitespace-nowrap">
+						{t("admin.geo.filterByCountry")}
+					</InputLabel>
+					<Select id="region-country-filter" value={selectedCountryId} onChange={handleCountryChange}>
+						<option value="">{t("admin.geo.selectCountry")}</option>
+						{countries.map((c) => (
+							<option key={c.id} value={c.id}>{c.name.ru}</option>
+						))}
+					</Select>
+				</div>
+				<Button variant="action" size="default" onClick={onOpenCreate} disabled={!selectedCountryId}>
 					{t("admin.geo.regions.create")}
 				</Button>
 			</div>
 
-			<div className="overflow-x-auto px-5 pb-5">
-				{query.isPending ? (
+			<div className="overflow-x-auto px-5 pb-5 pt-3">
+				{!selectedCountryId ? (
+					<div className="py-16 text-center text-[13px] text-t-3">
+						{t("admin.geo.selectCountryFirst")}
+					</div>
+				) : query.isPending ? (
 					<TableSkeleton />
 				) : (
 					<table className="w-full text-[13px]">
@@ -74,7 +96,6 @@ export const RegionsTab = ({
 								<th className="pb-2 pr-4">{t("admin.heritage.table.nameChe")}</th>
 								<th className="pb-2 pr-4">{t("admin.heritage.table.nameRu")}</th>
 								<th className="pb-2 pr-4">{t("admin.heritage.table.nameEn")}</th>
-								<th className="pb-2 pr-4">{t("admin.geo.table.countryCode")}</th>
 								<th className="pb-2 text-right">{t("admin.heritage.table.actions")}</th>
 							</tr>
 						</thead>
@@ -91,7 +112,7 @@ export const RegionsTab = ({
 						</tbody>
 					</table>
 				)}
-				{!query.isPending && regions.length === 0 && (
+				{selectedCountryId && !query.isPending && regions.length === 0 && (
 					<div className="py-16 text-center text-[13px] text-t-3">
 						{t("admin.geo.empty")}
 					</div>
@@ -101,6 +122,8 @@ export const RegionsTab = ({
 			<RegionModal
 				open={modal.open}
 				item={modal.item}
+				countries={countries}
+				defaultCountryId={selectedCountryId}
 				isPending={isPending}
 				onSubmit={handleSubmit}
 				onClose={onCloseModal}
@@ -126,7 +149,6 @@ const RegionRow = ({ item, isDeleting, onEdit, onDelete }: RegionRowProps) => {
 			<td className="py-2.5 pr-4 font-medium text-t-1">{item.name.che}</td>
 			<td className="py-2.5 pr-4 text-t-2">{item.name.ru}</td>
 			<td className="py-2.5 pr-4 text-t-2">{item.name.en}</td>
-			<td className="py-2.5 pr-4 font-mono text-[12px] text-t-3">{item.countryCode}</td>
 			<td className="py-2.5 text-right">
 				<div className="flex justify-end gap-2">
 					<Button variant="ghost" size="default" onClick={handleEdit}>{t("common.edit")}</Button>
@@ -142,30 +164,32 @@ const RegionRow = ({ item, isDeleting, onEdit, onDelete }: RegionRowProps) => {
 interface RegionModalProps {
 	open: boolean;
 	item: Region | null;
+	countries: Country[];
+	defaultCountryId: string;
 	isPending: boolean;
 	onSubmit: (data: CreateRegionDto) => void;
 	onClose: () => void;
 }
 
-const RegionModal = ({ open, item, isPending, onSubmit, onClose }: RegionModalProps) => {
+const RegionModal = ({ open, item, countries, defaultCountryId, isPending, onSubmit, onClose }: RegionModalProps) => {
 	const { t } = useI18n();
 	const [name, setName] = useState({ che: "", ru: "", en: "" });
-	const [countryCode, setCountryCode] = useState("RU");
+	const [countryId, setCountryId] = useState(defaultCountryId);
 
 	useEffect(() => {
 		if (open) {
 			setName(item?.name ?? { che: "", ru: "", en: "" });
-			setCountryCode(item?.countryCode ?? "RU");
+			setCountryId(item?.countryId ?? defaultCountryId);
 		}
-	}, [open, item]);
+	}, [open, item, defaultCountryId]);
 
-	const handleCountryCodeChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-		setCountryCode(e.currentTarget.value.toUpperCase());
+	const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+		setCountryId(e.currentTarget.value);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (!name.che.trim() || !name.ru.trim() || !countryCode.trim()) return;
-		onSubmit({ name: { che: name.che.trim(), ru: name.ru.trim(), en: name.en.trim() }, countryCode: countryCode.trim() });
+		if (!name.che.trim() || !name.ru.trim() || !countryId) return;
+		onSubmit({ name: { che: name.che.trim(), ru: name.ru.trim(), en: name.en.trim() }, countryId });
 	};
 
 	return (
@@ -177,18 +201,16 @@ const RegionModal = ({ open, item, isPending, onSubmit, onClose }: RegionModalPr
 					</DialogTitle>
 				</DialogHeader>
 				<form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-2">
-					<LocalizedNameFields value={name} onChange={setName} idPrefix="region" />
 					<div>
-						<InputLabel htmlFor="region-country">{t("admin.geo.table.countryCode")}</InputLabel>
-						<Input
-							id="region-country"
-							value={countryCode}
-							onChange={handleCountryCodeChange}
-							placeholder="RU"
-							maxLength={3}
-							required
-						/>
+						<InputLabel htmlFor="region-country">{t("admin.geo.filterByCountry")}</InputLabel>
+						<Select id="region-country" value={countryId} onChange={handleCountryChange} required>
+							<option value="">{t("admin.geo.selectCountry")}</option>
+							{countries.map((c) => (
+								<option key={c.id} value={c.id}>{c.name.ru}</option>
+							))}
+						</Select>
 					</div>
+					<LocalizedNameFields value={name} onChange={setName} idPrefix="region" />
 					<div className="flex justify-end gap-2 pt-2">
 						<Button type="button" variant="ghost" onClick={onClose}>{t("common.cancel")}</Button>
 						<Button type="submit" variant="action" disabled={isPending}>

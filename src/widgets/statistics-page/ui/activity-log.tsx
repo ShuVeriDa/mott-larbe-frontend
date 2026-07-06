@@ -39,7 +39,7 @@ const TONE_BY_TYPE: Record<
 
 const getActivityStrings = (
 	item: ActivityItem,
-	t: (k: string, v?: Record<string, unknown>) => string,
+	t: (k: string, v?: Record<string, string | number>) => string,
 ) => {
 	if (item.type === "READ_TEXT") {
 		const m = item.meta as ActivityItemMetaReadText;

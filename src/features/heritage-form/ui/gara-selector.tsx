@@ -4,6 +4,7 @@ import type { ChangeEvent } from "react";
 
 import { PlusIcon } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
+import { getLocalizedName } from "@/shared/lib/localized-name";
 import { Button } from "@/shared/ui/button";
 import { Select } from "@/shared/ui/select";
 import { useQuery } from "@tanstack/react-query";
@@ -35,8 +36,7 @@ export const GaraSelector = ({
 	});
 	const garas = garasData?.items ?? [];
 
-	const getLocalizedName = (item: Gara) =>
-		(item.name as Record<string, string>)[lang] ?? item.name.ru;
+	const getGaraName = (item: Gara) => getLocalizedName(item.name, lang);
 
 	const handleGaraChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		onGaraSelect(e.currentTarget.value || null);
@@ -56,7 +56,7 @@ export const GaraSelector = ({
 				<option value="">{t("heritage.gara_placeholder")}</option>
 				{garas.map((gara) => (
 					<option key={gara.id} value={gara.id}>
-						{getLocalizedName(gara)}
+						{getGaraName(gara)}
 					</option>
 				))}
 			</Select>

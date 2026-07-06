@@ -60,6 +60,7 @@ export const UnknownWordsAddModal = ({
 
 	const handleSubmit = () => {
 		if (action === "new") {
+			if (!state) return;
 			const forms = formsRaw
 				.split(",")
 				.map((s) => s.trim())
@@ -171,7 +172,7 @@ export const UnknownWordsAddModal = ({
 			{/* New entry fields */}
 			{action === "new" && state && (
 				<NewEntryForm
-					state={state}
+					placeholder={state.word}
 					headword={headword}
 					partOfSpeech={partOfSpeech}
 					translation={translation}
@@ -184,7 +185,6 @@ export const UnknownWordsAddModal = ({
 					onLevelChange={handleLevelChange}
 					onDomainChange={handleDomainChange}
 					onFormsRawChange={handleFormsRawChange}
-					t={t}
 				/>
 			)}
 

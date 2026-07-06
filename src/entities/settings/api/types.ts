@@ -12,6 +12,9 @@ export type ReaderLineHeightPref = "compact" | "normal" | "relaxed";
 export type ReaderLetterSpacingPref = "tight" | "normal" | "wide";
 export type ReaderParagraphSpacingPref = "none" | "compact" | "normal" | "relaxed";
 export type ReaderThemePref = "default" | "paper" | "sepia" | "warm" | "night" | "green" | "slate" | "custom";
+export type ReaderWordSpacingPref = "tight" | "normal" | "wide" | "wider";
+export type ReaderArabicFontFamilyPref = "scheherazade" | "amiri" | "noto-naskh" | "lateef" | "reem-kufi";
+export type ReaderArabicFontSizePref = 16 | 18 | 20 | 22 | 24 | 26 | 28 | 32 | 36;
 
 export interface UserPreferences {
 	userId: string;
@@ -39,6 +42,9 @@ export interface UserPreferences {
 	readerParagraphSpacing: ReaderParagraphSpacingPref;
 	readerTheme: ReaderThemePref;
 	readerBgColor: string;
+	readerWordSpacing: ReaderWordSpacingPref;
+	readerArabicFontFamily: ReaderArabicFontFamilyPref;
+	readerArabicFontSize: ReaderArabicFontSizePref;
 }
 
 export interface UserGoals {

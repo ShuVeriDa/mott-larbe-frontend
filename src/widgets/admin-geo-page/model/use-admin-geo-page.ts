@@ -3,9 +3,11 @@
 import {
 	geoApi,
 	geoKeys,
-	regionsQueryOptions,
+	countriesQueryOptions,
+	regionsByCountryQueryOptions,
 	districtsByRegionQueryOptions,
 	settlementsByDistrictQueryOptions,
+	type Country,
 	type District,
 	type Region,
 	type Settlement,
@@ -22,16 +24,19 @@ export const useAdminGeoPage = () => {
 	const [districtModal, setDistrictModal] = useState<{ open: boolean; item: District | null }>({ open: false, item: null });
 	const [settlementModal, setSettlementModal] = useState<{ open: boolean; item: Settlement | null }>({ open: false, item: null });
 
+	const [selectedCountryId, setSelectedCountryId] = useState<string>("");
 	const [selectedRegionId, setSelectedRegionId] = useState<string>("");
 	const [selectedDistrictId, setSelectedDistrictId] = useState<string>("");
 
-	const regionsQuery = useQuery(regionsQueryOptions());
+	const countriesQuery = useQuery(countriesQueryOptions());
+	const regionsQuery = useQuery({ ...regionsByCountryQueryOptions(selectedCountryId), enabled: !!selectedCountryId });
 	const districtsQuery = useQuery({ ...districtsByRegionQueryOptions(selectedRegionId), enabled: !!selectedRegionId });
 	const settlementsQuery = useQuery({ ...settlementsByDistrictQueryOptions(selectedDistrictId), enabled: !!selectedDistrictId });
 
-	const regions = regionsQuery.data?.data ?? [];
-	const districts = districtsQuery.data?.data ?? [];
-	const settlements = settlementsQuery.data?.data ?? [];
+	const countries = countriesQuery.data?.items ?? [];
+	const regions = regionsQuery.data?.items ?? [];
+	const districts = districtsQuery.data?.items ?? [];
+	const settlements = settlementsQuery.data?.items ?? [];
 
 	const invalidateRegions = () => queryClient.invalidateQueries({ queryKey: geoKeys.regions() });
 	const invalidateDistricts = () => queryClient.invalidateQueries({ queryKey: geoKeys.districts() });
@@ -88,13 +93,17 @@ export const useAdminGeoPage = () => {
 	return {
 		activeTab,
 		setActiveTab,
+		selectedCountryId,
+		setSelectedCountryId,
 		selectedRegionId,
 		setSelectedRegionId,
 		selectedDistrictId,
 		setSelectedDistrictId,
+		countries,
 		regions,
 		districts,
 		settlements,
+		countriesQuery,
 		regionsQuery,
 		districtsQuery,
 		settlementsQuery,

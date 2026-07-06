@@ -53,11 +53,10 @@ export const useReaderSettingsInit = () => {
 			setTheme(p.readerTheme);
 			if (p.readerBgColor) setBgColor(p.readerBgColor);
 			setHighlightsVisible(p.highlightKnown);
-			const pAny = p as Record<string, unknown>;
-			if (pAny.readerWordSpacing) setWordSpacing(pAny.readerWordSpacing as ReaderWordSpacing);
-			if (pAny.readerArabicFontFamily) setArabicFamily(pAny.readerArabicFontFamily as ReaderFontFamily);
-			if (pAny.readerArabicFontSize && ARABIC_FONT_SIZE_STEPS.includes(pAny.readerArabicFontSize as typeof ARABIC_FONT_SIZE_STEPS[number])) {
-				setArabicFontSize(pAny.readerArabicFontSize as typeof ARABIC_FONT_SIZE_STEPS[number]);
+			if (p.readerWordSpacing) setWordSpacing(p.readerWordSpacing as ReaderWordSpacing);
+			if (p.readerArabicFontFamily) setArabicFamily(p.readerArabicFontFamily as ReaderFontFamily);
+			if (p.readerArabicFontSize && ARABIC_FONT_SIZE_STEPS.includes(p.readerArabicFontSize as typeof ARABIC_FONT_SIZE_STEPS[number])) {
+				setArabicFontSize(p.readerArabicFontSize as typeof ARABIC_FONT_SIZE_STEPS[number]);
 			}
 		}).catch(() => {
 			// API unavailable — keep localStorage values as fallback

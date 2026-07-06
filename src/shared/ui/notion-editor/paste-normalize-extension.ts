@@ -1,5 +1,5 @@
 import { Extension } from "@tiptap/core";
-import type { CommandProps } from "@tiptap/core";
+import type { CommandProps, JSONContent } from "@tiptap/core";
 import type { Editor } from "@tiptap/react";
 
 declare module "@tiptap/core" {
@@ -89,7 +89,7 @@ const plainTextToNodes = (rawText: string) => {
  * Headings are preserved as-is (not merged).
  */
 const extractAndNormalize = (editor: Editor, commands: CommandProps["commands"]): boolean => {
-	const doc = editor.getJSON();
+	const doc = editor.getJSON() as JSONContent;
 	if (!doc.content) return false;
 
 	interface RawNode {
@@ -100,7 +100,7 @@ const extractAndNormalize = (editor: Editor, commands: CommandProps["commands"])
 
 	const rawNodes: RawNode[] = [];
 
-	const walk = (nodes: typeof doc.content) => {
+	const walk = (nodes: JSONContent[] | undefined) => {
 		for (const node of nodes ?? []) {
 			if (node.type === "heading") {
 				const text = (node.content ?? [])

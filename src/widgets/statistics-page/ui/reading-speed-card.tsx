@@ -116,8 +116,8 @@ export const ReadingSpeedCard = ({ data }: ReadingSpeedCardProps) => {
 							}}
 							labelStyle={{ color: "var(--t-3)", fontSize: 11 }}
 							cursor={{ stroke: "var(--bd-2)", strokeWidth: 1 }}
-							formatter={(v: number) => [
-								`${v} ${t("statistics.readingSpeed.wpm")}`,
+							formatter={(v) => [
+								`${v ?? 0} ${t("statistics.readingSpeed.wpm")}`,
 								"",
 							]}
 						/>

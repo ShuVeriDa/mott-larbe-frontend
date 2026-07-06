@@ -87,7 +87,7 @@ export const RetentionCard = ({ data }: RetentionCardProps) => {
 										fontSize: 12,
 										color: "var(--t-1)",
 									}}
-									formatter={(v: number) => [v.toLocaleString(), ""]}
+									formatter={(v) => [(v ?? 0).toLocaleString(), ""]}
 								/>
 							</PieChart>
 						</ResponsiveContainer>

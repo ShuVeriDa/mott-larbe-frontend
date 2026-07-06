@@ -2435,6 +2435,7 @@
 				"description": "Read texts in Chechen and Russian with progress tracking, vocabulary stats and related texts."
 			},
 			"back": "Back",
+			"read": "Read",
 			"breadcrumb": "Text card",
 			"share": "Share",
 			"description": "Description",
@@ -3302,10 +3303,13 @@
 			"subtitle": "Manage regions, districts and settlements directories",
 			"empty": "No entries found",
 			"deleteConfirm": "Delete \"{name}\"?",
+			"selectCountry": "Select country...",
+			"selectCountryFirst": "Select a country to view data",
 			"selectRegion": "Select region...",
 			"selectRegionFirst": "Select a region to view data",
 			"selectDistrict": "Select district...",
 			"selectDistrictFirst": "Select a district to view data",
+			"filterByCountry": "Country:",
 			"filterByRegion": "Region:",
 			"tabs": {
 				"regions": "Regions",

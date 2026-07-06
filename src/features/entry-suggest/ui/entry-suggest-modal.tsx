@@ -35,7 +35,7 @@ export const EntrySuggestModal = ({
 		handleFieldChange,
 		handleNewValueChange,
 		handleCommentChange,
-		handleSubmit,
+		submitAction,
 		handleClose,
 	} = useEntrySuggest({
 		open,
@@ -57,7 +57,7 @@ export const EntrySuggestModal = ({
 				</span>
 			}
 		>
-			<form action={handleSubmit} className="space-y-3">
+			<form action={submitAction} className="space-y-3">
 				<div>
 					<InputLabel>{t("suggest.wordLabel")}</InputLabel>
 					<div

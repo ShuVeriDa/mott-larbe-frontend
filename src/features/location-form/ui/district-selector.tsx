@@ -2,6 +2,7 @@
 
 import type { ChangeEvent } from "react";
 import { useI18n } from "@/shared/lib/i18n";
+import { getLocalizedName } from "@/shared/lib/localized-name";
 import { Select } from "@/shared/ui/select";
 import type { District } from "@/entities/geo";
 
@@ -24,8 +25,7 @@ export const DistrictSelector = ({
 }: DistrictSelectorProps) => {
 	const { t } = useI18n();
 
-	const getLocalizedName = (item: District) =>
-		(item.name as Record<string, string>)[lang] ?? item.name.ru;
+	const getDistrictName = (item: District) => getLocalizedName(item.name, lang);
 
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		onDistrictSelect(e.currentTarget.value || null);
@@ -42,7 +42,7 @@ export const DistrictSelector = ({
 			<option value="">{t("location.district_placeholder")}</option>
 			{districts.map((district) => (
 				<option key={district.id} value={district.id}>
-					{getLocalizedName(district)}
+					{getDistrictName(district)}
 				</option>
 			))}
 		</Select>

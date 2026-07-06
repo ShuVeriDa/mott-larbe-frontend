@@ -4,8 +4,8 @@ import { Input, InputLabel } from "@/shared/ui/input";
 import type { LocalizedName } from "@/entities/heritage";
 
 interface LocalizedNameFieldsProps {
-	value: Partial<LocalizedName>;
-	onChange: (value: Partial<LocalizedName>) => void;
+	value: LocalizedName;
+	onChange: (value: LocalizedName) => void;
 	idPrefix: string;
 }
 

@@ -60,10 +60,7 @@ export const StatsList = ({ stats }: StatsListProps) => {
 					key={row.key}
 					variants={variants.staggerItem}
 				>
-					<Typography
-						tag="div"
-						className="flex items-center justify-between rounded-[8px] border-[0.5px] border-bd-1 bg-surf-2 px-2.5 py-2 transition-colors hover:border-bd-2"
-					>
+					<div className="flex items-center justify-between rounded-[8px] border-[0.5px] border-bd-1 bg-surf-2 px-2.5 py-2 transition-colors hover:border-bd-2">
 						<div className="flex items-center gap-[7px]">
 							<Typography
 								tag="span"
@@ -77,7 +74,7 @@ export const StatsList = ({ stats }: StatsListProps) => {
 						<Typography tag="span" className="font-display text-[16px] text-t-1">
 							{row.value}
 						</Typography>
-					</Typography>
+					</div>
 				</motion.li>
 			))}
 		</motion.ul>

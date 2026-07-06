@@ -8,7 +8,12 @@ import { Button } from "@/shared/ui/button";
 import { Input, InputLabel } from "@/shared/ui/input";
 import { useUpdateUser } from "@/entities/user";
 import type { UserProfile } from "@/entities/user";
-import { PrivacyToggle, usePrivacySettings, useUpdatePrivacy } from "@/entities/user-privacy";
+import {
+	PrivacyToggle,
+	usePrivacySettings,
+	useUpdatePrivacy,
+	type PrivacyField,
+} from "@/entities/user-privacy";
 import { ProfileCard as SettingCard } from "../profile-card";
 
 export interface PersonalDataCardProps {
@@ -48,7 +53,7 @@ export const PersonalDataCard = ({ profile }: PersonalDataCardProps) => {
 	const handlePhoneChange: NonNullable<ComponentProps<typeof Input>["onChange"]> = (e) =>
 		setPhone(e.currentTarget.value);
 
-	const handlePhonePrivacyToggle = async (field: "showPhone", value: boolean) => {
+	const handlePhonePrivacyToggle = async (field: PrivacyField, value: boolean) => {
 		updatePrivacy({ [field]: value });
 	};
 

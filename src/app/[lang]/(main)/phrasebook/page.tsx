@@ -1,21 +1,21 @@
-import { getDictionary, LOCALES } from "@/i18n/locales";
 import { phrasebookApi, phrasebookKeys } from "@/entities/phrasebook";
+import { getDictionary, LOCALES } from "@/i18n/locales";
+import { requireLocale } from "@/shared/lib/i18n";
 import { getQueryClient } from "@/shared/lib/query-client";
-import { buildAlternates, buildOpenGraph, SITE_URL } from "@/shared/lib/seo";
-import { PhrasebookPageSkeleton } from "@/widgets/phrasebook-page";
+import { buildAlternates, buildOpenGraph } from "@/shared/lib/seo";
 import { ErrorBoundary } from "@/shared/ui/error-boundary";
-import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
+import { PhrasebookPageSkeleton } from "@/widgets/phrasebook-page";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { requireLocale } from "@/shared/lib/i18n";
 import PhrasebookJsonLd from "./phrasebook-json-ld";
 
 const PhrasebookPage = dynamic(
-	() => import("@/widgets/phrasebook-page").then((m) => m.PhrasebookPage),
+	() => import("@/widgets/phrasebook-page").then(m => m.PhrasebookPage),
 	{ loading: () => <PhrasebookPageSkeleton /> },
 );
 
-export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
+export const generateStaticParams = () => LOCALES.map(lang => ({ lang }));
 
 export const generateMetadata = async (props: {
 	params: Promise<{ lang: string }>;

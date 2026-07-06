@@ -3,6 +3,7 @@
 import type { ChangeEvent } from "react";
 import { PlusIcon, ListIcon } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
+import { getLocalizedName } from "@/shared/lib/localized-name";
 import { Button } from "@/shared/ui/button";
 import { Select } from "@/shared/ui/select";
 import type { Taip } from "@/entities/heritage";
@@ -32,8 +33,7 @@ export const TaipSelector = ({
 }: TaipSelectorProps) => {
 	const { t } = useI18n();
 
-	const getLocalizedName = (item: Taip) =>
-		(item.name as Record<string, string>)[lang] ?? item.name.ru;
+	const getTaipName = (item: Taip) => getLocalizedName(item.name, lang);
 
 	const handleTaipChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		onTaipSelect(e.currentTarget.value || null);
@@ -51,7 +51,7 @@ export const TaipSelector = ({
 				<option value="">{t("heritage.taip_placeholder")}</option>
 				{taips.map((taip) => (
 					<option key={taip.id} value={taip.id}>
-						{getLocalizedName(taip)}
+						{getTaipName(taip)}
 					</option>
 				))}
 			</Select>

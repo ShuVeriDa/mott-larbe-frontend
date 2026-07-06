@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
-import { hasLocale } from "@/i18n/locale-list";
+import { hasLocale, type Locale } from "@/i18n/locale-list";
 
-export const requireLocale = (lang: string) => {
+export const requireLocale: (lang: string) => asserts lang is Locale = (lang) => {
 	if (!hasLocale(lang)) notFound();
 };
 
-export const guardLocaleMetadata = (lang: string): boolean => {
+export const guardLocaleMetadata = (lang: string): lang is Locale => {
 	return hasLocale(lang);
 };

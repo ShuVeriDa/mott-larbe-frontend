@@ -5,6 +5,7 @@ import { AdminTabStrip } from "@/shared/ui/admin-tab-strip";
 import { Typography } from "@/shared/ui/typography";
 import { useAdminGeoPage } from "../model/use-admin-geo-page";
 import type { GeoTab } from "../model/types";
+import type { District, Region, Settlement } from "@/entities/geo";
 import { RegionsTab } from "./regions-tab";
 import { DistrictsTab } from "./districts-tab";
 import { SettlementsTab } from "./settlements-tab";
@@ -20,17 +21,17 @@ export const AdminGeoPage = () => {
 	];
 
 	const handleOpenRegionCreate = () => state.setRegionModal({ open: true, item: null });
-	const handleOpenRegionEdit = (item: Parameters<typeof state.setRegionModal>[0]["item"]) =>
+	const handleOpenRegionEdit = (item: Region) =>
 		state.setRegionModal({ open: true, item });
 	const handleCloseRegion = () => state.setRegionModal({ open: false, item: null });
 
 	const handleOpenDistrictCreate = () => state.setDistrictModal({ open: true, item: null });
-	const handleOpenDistrictEdit = (item: Parameters<typeof state.setDistrictModal>[0]["item"]) =>
+	const handleOpenDistrictEdit = (item: District) =>
 		state.setDistrictModal({ open: true, item });
 	const handleCloseDistrict = () => state.setDistrictModal({ open: false, item: null });
 
 	const handleOpenSettlementCreate = () => state.setSettlementModal({ open: true, item: null });
-	const handleOpenSettlementEdit = (item: Parameters<typeof state.setSettlementModal>[0]["item"]) =>
+	const handleOpenSettlementEdit = (item: Settlement) =>
 		state.setSettlementModal({ open: true, item });
 	const handleCloseSettlement = () => state.setSettlementModal({ open: false, item: null });
 
@@ -57,8 +58,11 @@ export const AdminGeoPage = () => {
 				{state.activeTab === "regions" && (
 					<RegionsTab
 						regions={state.regions}
+						countries={state.countries}
+						selectedCountryId={state.selectedCountryId}
 						query={state.regionsQuery}
 						modal={state.regionModal}
+						onSelectCountry={state.setSelectedCountryId}
 						onOpenCreate={handleOpenRegionCreate}
 						onOpenEdit={handleOpenRegionEdit}
 						onCloseModal={handleCloseRegion}

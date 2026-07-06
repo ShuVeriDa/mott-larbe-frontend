@@ -36,12 +36,12 @@ export interface GeoListQuery {
 }
 
 export interface CreateRegionDto {
-	countryCode: string;
+	countryId: string;
 	name: LocalizedName;
 }
 
 export interface UpdateRegionDto {
-	countryCode?: string;
+	countryId?: string;
 	name?: Partial<LocalizedName>;
 }
 
