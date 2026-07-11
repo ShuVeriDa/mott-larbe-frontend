@@ -5,12 +5,19 @@ const isDev = process.env.NODE_ENV !== "production";
 // Derive the API origin from NEXT_PUBLIC_API_URL so connect-src covers it.
 // Falls back to localhost for local development.
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:9555";
+// NEXT_PUBLIC_API_URL may be a same-origin relative path (e.g. "/api" for
+// single-tunnel ngrok dev, see rewrites() below) — new URL() has no base to
+// resolve it against, so fall back to the real backend host it proxies to,
+// mirroring proxy.ts's BACKEND_ORIGIN and api.ts's SERVER_API_URL.
+const resolvedApiUrl = apiUrl.startsWith("/")
+	? (process.env.DEV_API_PROXY_TARGET ?? "http://localhost:9555")
+	: apiUrl;
 const apiOrigin = (() => {
 	try {
-		const { origin } = new URL(apiUrl);
+		const { origin } = new URL(resolvedApiUrl);
 		return origin;
 	} catch {
-		return apiUrl;
+		return resolvedApiUrl;
 	}
 })();
 

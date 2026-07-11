@@ -10,6 +10,7 @@ import { duration, ease } from "@/shared/lib/animation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { TextCover } from "./text-cover";
+import { TextReadersCount } from "./text-readers-count";
 
 import { Typography } from "@/shared/ui/typography";
 type Translator = (
@@ -26,6 +27,7 @@ interface TextHeroProps {
 	author: string | null;
 	wordCount: number;
 	readingTime: number;
+	readersCount: number;
 	progressPercent: number;
 	currentPage: number;
 	totalPages: number;
@@ -42,6 +44,7 @@ export const TextHero = ({
 	author,
 	wordCount,
 	readingTime,
+	readersCount,
 	progressPercent,
 	currentPage,
 	totalPages,
@@ -50,6 +53,7 @@ export const TextHero = ({
 }: TextHeroProps) => {
 	const readPage = currentPage > 0 ? currentPage : 1;
 	const readerHref = `/${lang}/reader/${id}/p/${readPage}`;
+	const restartHref = `/${lang}/reader/${id}/p/1`;
 	const isCompleted = progressPercent >= 100;
 	const isStarted = progressPercent > 0;
 	const isNotReady = totalPages === 0;
@@ -70,6 +74,11 @@ export const TextHero = ({
 					<Badge variant="neu">
 						{t("library.textDetail.status.published")}
 					</Badge>
+					{isCompleted && (
+						<Badge variant="grn">
+							{t("library.textDetail.status.completed")}
+						</Badge>
+					)}
 				</div>
 
 				<Typography
@@ -97,6 +106,15 @@ export const TextHero = ({
 					<Typography tag="span">
 						~{readingTime} {t("library.card.minUnit")}
 					</Typography>
+					{readersCount > 0 && (
+						<>
+							<Typography
+								tag="span"
+								className="w-[2px] h-[2px] rounded-full bg-t-4"
+							/>
+							<TextReadersCount count={readersCount} t={t} />
+						</>
+					)}
 				</div>
 
 				<div className="flex items-center gap-2 mt-0.5 flex-wrap max-[380px]:gap-1.5">
@@ -112,10 +130,10 @@ export const TextHero = ({
 						</Typography>
 					) : isCompleted ? (
 						<Link
-							href={readerHref}
+							href={restartHref}
 							className={buttonVariants({ variant: "action", size: "lg" })}
 						>
-							{t("library.textDetail.cta.completed")}
+							{t("library.textDetail.cta.restart")}
 						</Link>
 					) : (
 						<Link

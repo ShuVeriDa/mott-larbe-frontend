@@ -99,6 +99,7 @@ export interface LibraryTextDetail {
 	currentPage: number;
 	wordStats: LibraryTextWordStats;
 	isFavorite: boolean;
+	readersCount: number;
 }
 
 export interface LibraryRelatedText {

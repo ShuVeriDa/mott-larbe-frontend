@@ -1,10 +1,13 @@
 import { cn } from "@/shared/lib/cn";
 import type { LibraryTextPage } from "@/entities/library-text";
 import { Typography } from "@/shared/ui/typography";
+import Link from "next/link";
 import { CheckIcon } from "./check-icon";
 type Translator = (key: string, vars?: Record<string, string | number>) => string;
 
 interface TextPagesCardProps {
+	id: string;
+	lang: string;
 	pages: LibraryTextPage[];
 	currentPage: number;
 	progressPercent: number;
@@ -12,6 +15,8 @@ interface TextPagesCardProps {
 }
 
 export const TextPagesCard = ({
+	id,
+	lang,
 	pages,
 	currentPage,
 	progressPercent,
@@ -36,9 +41,10 @@ export const TextPagesCard = ({
 						});
 
 					return (
-						<div
+						<Link
 							key={page.id}
-							className="flex items-center gap-2 px-1.5 py-[5px] rounded-base"
+							href={`/${lang}/reader/${id}/p/${page.pageNumber}`}
+							className="flex items-center gap-2 px-1.5 py-[5px] rounded-base transition-colors hover:bg-surf-2"
 						>
 							<Typography tag="span"
 								className={cn(
@@ -70,7 +76,7 @@ export const TextPagesCard = ({
 									{t("library.textDetail.pagesCard.current")}
 								</Typography>
 							)}
-						</div>
+						</Link>
 					);
 				})}
 			</div>

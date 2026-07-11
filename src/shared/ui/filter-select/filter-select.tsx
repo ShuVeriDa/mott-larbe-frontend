@@ -15,6 +15,7 @@ interface FilterSelectProps {
 	value: string;
 	options: FilterSelectOption[];
 	onChange: (value: string) => void;
+	onOpenChange?: (open: boolean) => void;
 	placeholder?: string;
 	"aria-label"?: string;
 }
@@ -41,6 +42,7 @@ export const FilterSelect = ({
 	value,
 	options,
 	onChange,
+	onOpenChange,
 	placeholder,
 	"aria-label": ariaLabel,
 }: FilterSelectProps) => {
@@ -49,7 +51,11 @@ export const FilterSelect = ({
 	const handleChange = (v: string) => onChange(fromRadix(v));
 
 	return (
-		<Select.Root value={toRadix(value)} onValueChange={handleChange}>
+		<Select.Root
+			value={toRadix(value)}
+			onValueChange={handleChange}
+			onOpenChange={onOpenChange}
+		>
 			<Select.Trigger
 				aria-label={ariaLabel}
 				className={cn(

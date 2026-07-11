@@ -179,6 +179,7 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 						author={text.author}
 						wordCount={text.wordCount}
 						readingTime={text.readingTime}
+						readersCount={text.readersCount}
 						progressPercent={text.progressPercent}
 						currentPage={text.currentPage}
 						totalPages={text.totalPages}
@@ -239,6 +240,8 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 						{text.totalPages > 0 && (
 							<motion.div variants={detailCardVariants}>
 								<TextPagesCard
+									id={id}
+									lang={lang}
 									pages={text.pages}
 									currentPage={text.currentPage}
 									progressPercent={text.progressPercent}

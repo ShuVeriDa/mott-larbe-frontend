@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/cn";
 
+import { Badge } from "@/shared/ui/badge";
 import { Typography } from "@/shared/ui/typography";
 type Translator = (key: string, vars?: Record<string, string | number>) => string;
 
@@ -22,6 +23,7 @@ export const TextProgressCard = ({
 }: TextProgressCardProps) => {
 	const donePages = currentPage > 0 ? currentPage : 0;
 	const dotsCount = Math.min(totalPages, MAX_DOTS);
+	const isCompleted = progressPercent >= 100;
 
 	const formatLastRead = (iso: string | null) => {
 		if (!iso) return null;
@@ -36,9 +38,16 @@ export const TextProgressCard = ({
 
 	return (
 		<div className="bg-surf border border-bd-1 rounded-card px-[17px] py-[15px]">
-			<Typography tag="h2" className="text-[10px] font-semibold tracking-widest uppercase text-t-3 mb-3">
-				{t("library.textDetail.progress.label")}
-			</Typography>
+			<div className="flex items-center justify-between gap-2 mb-3">
+				<Typography tag="h2" className="text-[10px] font-semibold tracking-widest uppercase text-t-3">
+					{t("library.textDetail.progress.label")}
+				</Typography>
+				{isCompleted && (
+					<Badge variant="grn">
+						{t("library.textDetail.status.completed")}
+					</Badge>
+				)}
+			</div>
 			<Typography tag="p" className="font-display text-[30px] font-normal text-t-1 leading-none mb-0.5 max-sm:text-[26px]">
 				{progressPercent}%
 			</Typography>

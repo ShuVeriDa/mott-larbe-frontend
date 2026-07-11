@@ -2437,6 +2437,7 @@
 			"breadcrumb": "Text card",
 			"share": "Share",
 			"description": "Description",
+			"readersCount": "Read by {count}",
 			"progress": {
 				"label": "Reading progress",
 				"pagesRead": "Read {done} of {total} pages",
@@ -2480,6 +2481,7 @@
 				"continue": "Continue",
 				"page": "Page {cur} / {total}",
 				"completed": "Completed",
+				"restart": "Read again",
 				"notReady": "Text not ready yet"
 			},
 			"more": "More",
@@ -2506,7 +2508,8 @@
 				}
 			},
 			"status": {
-				"published": "Published"
+				"published": "Published",
+				"completed": "Completed"
 			},
 			"level": {
 				"A": "A — Beginner",
@@ -2603,7 +2606,22 @@
 			"langRu": "Russian",
 			"langAr": "Arabic",
 			"langEn": "English",
-			"dueToday": "{count} words due"
+			"dueToday": "{count} words due",
+			"hijriDate": "{day} {month} {year} AH",
+			"hijriMonths": {
+				"1": "Muharram",
+				"2": "Safar",
+				"3": "Rabi al-Awwal",
+				"4": "Rabi al-Thani",
+				"5": "Jumada al-Awwal",
+				"6": "Jumada al-Thani",
+				"7": "Rajab",
+				"8": "Shaaban",
+				"9": "Ramadan",
+				"10": "Shawwal",
+				"11": "Dhu al-Qadah",
+				"12": "Dhu al-Hijjah"
+			}
 		},
 		"stats": {
 			"textsRead": "texts read",

@@ -39,25 +39,25 @@ export const NavVocab = () => {
 						key={item.id}
 						className="flex items-center justify-between w-full gap-1.5 py-[4.5px] border-b-[0.5px] border-b-[bd]"
 					>
-						<div className="flex flex-col w-full">
+						<div className="flex min-w-0 flex-1 flex-col">
 							<Typography
 								tag="span"
-								className="min-w-0 flex-1 truncate text-[12px] font-medium text-t-1"
+								className="truncate text-[12px] font-medium text-t-1"
 							>
 								{item.word}
 							</Typography>
 							<Typography
 								tag="span"
-								className="max-w-[150px] truncate text-[10.5px] text-t-3"
+								className="truncate text-[10.5px] text-t-3"
 							>
 								{item.translation}
 							</Typography>
 						</div>
-						<div>
+						<div className="shrink-0">
 							<Typography
 								tag="span"
 								className={cn(
-									"shrink-0 rounded-[3px] px-1.5 py-0.5 text-[10px] font-semibold uppercase",
+									"inline-block shrink-0 whitespace-nowrap rounded-[3px] px-1.5 py-0.5 text-[10px] font-semibold uppercase",
 									STATUS_CLASS[item.wordProgressStatus] ?? "bg-surf-3 text-t-3",
 								)}
 							>

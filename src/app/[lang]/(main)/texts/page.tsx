@@ -15,6 +15,7 @@ export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
 interface PageProps {
 	params: Promise<{ lang: string }>;
+	searchParams: Promise<{ genre?: string }>;
 }
 
 export const generateMetadata = async ({
@@ -94,18 +95,25 @@ const TextsJsonLd = ({
 	);
 };
 
-const TextsCatalogRoutePage = async ({ params }: PageProps) => {
+const TextsCatalogRoutePage = async ({ params, searchParams }: PageProps) => {
 	const { lang } = await params;
 	requireLocale(lang);
+	// Reading `searchParams` (even just to key the prefetch by it) marks this
+	// route as query-dependent, so Next.js's Cache Components model can't treat
+	// `/texts` and `/texts?genre=X` as the same static shell — without this, a
+	// prefetch already warmed for the bare `/texts` sidebar link (which is in
+	// the viewport on every page under this layout) could get reused for a
+	// `?genre=X` deep link, silently dropping the query string on navigation.
+	const { genre } = await searchParams;
 
 	const dict = await getDictionary(lang);
 	const { title, description } = dict.library.meta;
 
 	const queryClient = getQueryClient();
 	await queryClient.prefetchInfiniteQuery({
-		queryKey: libraryTextKeys.infinite({}),
+		queryKey: libraryTextKeys.infinite({ genreId: genre }),
 		queryFn: ({ pageParam }) =>
-			libraryTextApi.list({ page: pageParam as number, limit: 20 }),
+			libraryTextApi.list({ page: pageParam as number, limit: 20, genreId: genre }),
 		initialPageParam: 1,
 	});
 
