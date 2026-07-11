@@ -5,6 +5,8 @@ export {
 	type ReaderOrthography,
 } from "./model";
 export { ScriptSwitcher } from "./ui/script-switcher";
+export { ArabicScriptLabel } from "./ui/arabic-script-label";
+export { MottLarbeLabel } from "./ui/mott-larbe-label";
 export { DiacriticsToggle } from "./ui/diacritics-toggle";
 export { OrthographyToggle } from "./ui/orthography-toggle";
 export { OrthographyPreviewToggle } from "./ui/orthography-preview-toggle";

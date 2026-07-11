@@ -55,12 +55,11 @@ export const OrthographyPreviewToggle = ({
 				onClick={handleOpen}
 				aria-label={t("reader.settings.script.orthographyToggle")}
 				className={cn(
-					"h-7 rounded-md px-2 text-[11px] font-medium text-t-2",
+					"h-7 whitespace-nowrap rounded-md px-2 text-[11px] font-medium text-t-2",
 					"transition-colors duration-150 ease-out hover:bg-surf-3 hover:text-t-1",
 				)}
 			>
-				<span className="hidden sm:inline">{t("reader.settings.script.orthographyOld")}</span>
-				<span className="inline sm:hidden">{t("reader.settings.script.orthographyOldShort")}</span>
+				{t("reader.settings.script.orthographyOld")}
 			</Button>
 
 			<Sheet open={isOpen} onOpenChange={setIsOpen}>

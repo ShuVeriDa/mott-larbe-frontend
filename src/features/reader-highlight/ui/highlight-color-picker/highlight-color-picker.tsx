@@ -4,6 +4,8 @@ import { NoteForm } from "@/entities/note";
 import { cn } from "@/shared/lib/cn";
 import { useI18n } from "@/shared/lib/i18n";
 import { variants, spring } from "@/shared/lib/animation";
+import { useMediaQuery } from "@/shared/lib/media-query";
+import { useTokenRangeSelectionStore } from "@/shared/lib/token-range-selection";
 import { Button } from "@/shared/ui/button";
 import { Highlighter, MessageSquare, Palette, Sparkles, Trash2 } from "lucide-react";
 import { AnimatePresence, motion, type HTMLMotionProps } from "framer-motion";
@@ -24,6 +26,7 @@ const PRESET_COLORS: HighlightColor[] = [
 export interface HighlightColorPickerProps {
 	x: number;
 	y: number;
+	bottom: number;
 	onPick: (color: HighlightColor | string) => void;
 	onRemove?: () => void;
 	onDismiss: () => void;
@@ -35,6 +38,7 @@ export interface HighlightColorPickerProps {
 export const HighlightColorPicker = ({
 	x,
 	y,
+	bottom,
 	onPick,
 	onRemove,
 	onDismiss,
@@ -50,9 +54,20 @@ export const HighlightColorPicker = ({
 	useEffect(() => {
 		const handleOutside = (e: MouseEvent | TouchEvent) => {
 			const target = e instanceof TouchEvent ? e.touches[0]?.target : (e as MouseEvent).target;
-			if (ref.current && !ref.current.contains(target as Node)) {
-				onDismiss();
-			}
+			if (!(target instanceof Node)) return;
+			if (ref.current?.contains(target)) return;
+
+			// While a touch range-selection is active, a tap on a WORD inside the
+			// article is not "outside" — it's the user extending the range (see
+			// ArticleToken's onRangeTap). This listener fires on touchstart, which
+			// happens before the token's own onClick, so without this guard every
+			// tap-to-extend would dismiss the toolbar first and the extend would
+			// never be reached.
+			const isRangeSelecting = useTokenRangeSelectionStore.getState().isActive;
+			const isInsideArticle = (target as Element).closest?.("[data-article-rich]");
+			if (isRangeSelecting && isInsideArticle) return;
+
+			onDismiss();
 		};
 		document.addEventListener("mousedown", handleOutside as EventListener);
 		document.addEventListener("touchstart", handleOutside as EventListener, { passive: true });
@@ -62,12 +77,18 @@ export const HighlightColorPicker = ({
 		};
 	}, [onDismiss]);
 
+	// Touch devices (Android/iOS) render their own native selection action bar
+	// directly above the selected text. Placing our toolbar above it too causes
+	// an overlap, so on touch we anchor below the selection instead — the two
+	// UIs then sit in separate zones instead of fighting for the same space.
+	const isTouchDevice = useMediaQuery("(pointer: coarse)");
+
 	const POPUP_HALF_W = 130;
 	const POPUP_H = 96;
 	const clampedX = typeof window !== "undefined"
 		? Math.min(Math.max(x, POPUP_HALF_W), window.innerWidth - POPUP_HALF_W)
 		: x;
-	const rawTop = y - 48;
+	const rawTop = isTouchDevice ? bottom + 12 : y - 48;
 	const clampedTop = typeof window !== "undefined"
 		? Math.min(Math.max(rawTop, 8), window.innerHeight - POPUP_H - 8)
 		: rawTop;

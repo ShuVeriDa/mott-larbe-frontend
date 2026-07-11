@@ -7,13 +7,7 @@ import { UserMenuNavSection } from "./user-menu-nav-section";
 import { UserMenuSupportSection } from "./user-menu-support-section";
 import { UserMenuThemeSection } from "./user-menu-theme-section";
 
-interface UserMenuContentProps {
-	showThemeToggle?: boolean;
-}
-
-export const UserMenuContent = ({
-	showThemeToggle = false,
-}: UserMenuContentProps) => {
+export const UserMenuContent = () => {
 	const {
 		t,
 		lang,
@@ -58,14 +52,12 @@ export const UserMenuContent = ({
 				onLanguageItemSelect={handleLanguageItemSelect}
 				onLocaleClick={handleLocaleClick}
 			/>
-			{showThemeToggle && (
-				<UserMenuThemeSection
-					t={t}
-					theme={theme}
-					onThemeItemSelect={handleThemeItemSelect}
-					onSetTheme={handleSetTheme}
-				/>
-			)}
+			<UserMenuThemeSection
+				t={t}
+				theme={theme}
+				onThemeItemSelect={handleThemeItemSelect}
+				onSetTheme={handleSetTheme}
+			/>
 			<UserMenuLogoutSection
 				t={t}
 				isPending={logout.isPending}

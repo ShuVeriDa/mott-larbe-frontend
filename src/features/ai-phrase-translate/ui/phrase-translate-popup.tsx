@@ -24,11 +24,35 @@ import { createPortal } from "react-dom";
 import { useAiPhraseTranslate } from "../model/use-ai-phrase-translate";
 import { PhraseRefineBlock } from "./phrase-refine-block";
 
+const POPUP_WIDTH = 280;
+const SAFE_MARGIN = 10;
+
+const computePosition = (
+	x: number,
+	y: number,
+	bottom: number,
+	popupHeight: number,
+) => {
+	if (typeof window === "undefined") return { left: 0, top: 0 };
+	const left = Math.max(
+		SAFE_MARGIN,
+		Math.min(x - POPUP_WIDTH / 2, window.innerWidth - POPUP_WIDTH - SAFE_MARGIN),
+	);
+	const topAbove = y - 8 - popupHeight;
+	const topBelow = bottom + 8;
+	const fitsAbove = topAbove >= SAFE_MARGIN;
+	const top = fitsAbove
+		? topAbove
+		: Math.min(topBelow, window.innerHeight - popupHeight - SAFE_MARGIN);
+	return { left, top };
+};
+
 interface PhraseTranslatePopupProps {
 	phrase: string;
 	displayPhrase?: string;
 	x: number;
 	y: number;
+	bottom: number;
 	lang: string;
 	contextSentence?: string;
 	onClose: () => void;
@@ -39,6 +63,7 @@ export const PhraseTranslatePopup = ({
 	displayPhrase,
 	x,
 	y,
+	bottom,
 	lang,
 	contextSentence,
 	onClose,
@@ -52,6 +77,18 @@ export const PhraseTranslatePopup = ({
 	const { targetLanguage } = useTranslationLanguageStore();
 	const ref = useRef<HTMLDivElement>(null);
 	const [showCyrillic, setShowCyrillic] = useState(false);
+	const [popupHeight, setPopupHeight] = useState(160);
+
+	useEffect(() => {
+		const el = ref.current;
+		if (!el) return;
+		const observer = new ResizeObserver(entries => {
+			const h = entries[0]?.contentRect.height;
+			if (h && h > 0) setPopupHeight(h);
+		});
+		observer.observe(el);
+		return () => observer.disconnect();
+	}, []);
 
 	const hasKey = keyStatus?.hasKey ?? false;
 
@@ -98,16 +135,7 @@ export const PhraseTranslatePopup = ({
 
 	const handleGlossToggle = () => setGlossOpen(prev => !prev);
 
-	const POPUP_WIDTH = 280;
-	const SAFE_MARGIN = 10;
-	const left = Math.max(
-		SAFE_MARGIN,
-		Math.min(
-			x - POPUP_WIDTH / 2,
-			window.innerWidth - POPUP_WIDTH - SAFE_MARGIN,
-		),
-	);
-	const top = y - 8;
+	const { left, top } = computePosition(x, y, bottom, popupHeight);
 
 	return createPortal(
 		<motion.div
@@ -115,7 +143,7 @@ export const PhraseTranslatePopup = ({
 			role="dialog"
 			aria-label={t("aiTranslation.phrase.title")}
 			className="fixed z-200 w-[280px] overflow-hidden rounded-card border-[0.5px] border-bd-2 bg-surf shadow-lg"
-			style={{ left, top, transform: "translateY(-100%)" }}
+			style={{ left, top }}
 			variants={variants.fadeUp}
 			initial="hidden"
 			animate="visible"

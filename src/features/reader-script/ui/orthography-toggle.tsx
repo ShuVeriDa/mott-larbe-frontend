@@ -32,7 +32,7 @@ export const OrthographyToggle = () => {
 						aria-pressed={isOld}
 						aria-label={t("reader.settings.script.orthographyToggle")}
 						className={cn(
-							"h-[26px] rounded-[5px] border-[0.5px] border-bd-1 leading-none transition-colors duration-100 ease-out",
+							"h-[26px] whitespace-nowrap rounded-[5px] border-[0.5px] border-bd-1 leading-none transition-colors duration-100 ease-out",
 							"px-2.5 text-[11px] font-medium",
 							"sm:px-3 sm:text-[11.5px]",
 							isOld
@@ -40,16 +40,9 @@ export const OrthographyToggle = () => {
 								: "bg-surf-2 text-t-2 hover:border-bd-2 hover:text-t-1",
 						)}
 					>
-						<span className="hidden sm:inline">
-							{isOld
-								? t("reader.settings.script.orthographyOld")
-								: t("reader.settings.script.orthographyNew")}
-						</span>
-						<span className="inline sm:hidden">
-							{isOld
-								? t("reader.settings.script.orthographyOldShort")
-								: t("reader.settings.script.orthographyNewShort")}
-						</span>
+						{isOld
+							? t("reader.settings.script.orthographyOld")
+							: t("reader.settings.script.orthographyNew")}
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent side="top">

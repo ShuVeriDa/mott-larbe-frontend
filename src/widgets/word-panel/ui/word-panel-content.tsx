@@ -54,6 +54,7 @@ const WORD_LEVEL_COLORS: Record<string, string> = {
 
 const PanelHeader = ({
 	word,
+	wordModern,
 	baseForm,
 	wordLevel,
 	grammar,
@@ -64,6 +65,7 @@ const PanelHeader = ({
 	nounClassLabel,
 }: {
 	word: string;
+	wordModern: string | null;
 	baseForm: string;
 	wordLevel: string | null;
 	grammar: string | null;
@@ -79,6 +81,11 @@ const PanelHeader = ({
 			<div className="mb-1 flex items-start gap-2">
 				<div className="font-display text-[22px] font-medium tracking-[-0.3px] text-t-1">
 					{word}
+					{wordModern ? (
+						<span className="ml-2 text-[15px] font-normal text-t-3">
+							{wordModern}
+						</span>
+					) : null}
 				</div>
 				{wordLevel ? (
 					<Typography
@@ -230,6 +237,7 @@ const PanelBody = ({
 		<div className="flex-1 overflow-y-auto [scrollbar-width:thin]">
 			<PanelHeader
 				word={token.original}
+				wordModern={lookup.wordModern ?? null}
 				baseForm={lookup.baseForm ?? token.original}
 				wordLevel={lookup.wordLevel}
 				grammar={showGrammar ? lookup.grammar : null}

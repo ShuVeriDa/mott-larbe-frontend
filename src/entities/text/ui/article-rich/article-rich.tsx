@@ -51,6 +51,9 @@ export interface ArticleRichProps {
 	isRtl?: boolean;
 	cyrillicRaw?: string;
 	cyrillicContentRich?: TipTapDoc;
+	isTokenInRange?: (position: number) => boolean;
+	onTokenLongPress?: (token: TextToken) => void;
+	onTokenRangeTap?: (token: TextToken) => void;
 }
 
 // ── Highlight ranges ──────────────────────────────────────────────────────────
@@ -143,9 +146,13 @@ interface ParagraphProps {
 	displayOnly?: boolean;
 	isRtl?: boolean;
 	cyrillicParaText?: string;
+	isTokenInRange?: (position: number) => boolean;
+	onTokenLongPress?: (token: TextToken) => void;
+	onTokenRangeTap?: (token: TextToken) => void;
 }
 
 const PHRASE_HIGHLIGHT_COLOR = "rgba(167, 139, 250, 0.18)"; // violet-400/18
+const RANGE_SELECTION_CLASS = "bg-acc-bg text-acc-t transition-all duration-150 ease-out";
 
 const Paragraph = ({
 	segments,
@@ -161,6 +168,9 @@ const Paragraph = ({
 	displayOnly,
 	isRtl,
 	cyrillicParaText,
+	isTokenInRange,
+	onTokenLongPress,
+	onTokenRangeTap,
 }: ParagraphProps) => {
 	const nodes: ReactNode[] = [];
 	// When displaying non-Cyrillic script, allRanges positions are relative to
@@ -171,8 +181,10 @@ const Paragraph = ({
 	let lastTokenPosition: number | null = null;
 	let lastToken: TextToken | null = null;
 
-	// Buffer for current phrase group
-	type PhraseSegment = { node: ReactNode; kind: "token" | "gap" };
+	// Buffer for current phrase group. Gap segments carry the position of the
+	// token immediately before them, so we can decide whether the gap sits
+	// between two in-range tokens (range-selection highlight) once flushed.
+	type PhraseSegment = { node: ReactNode; kind: "token" | "gap"; afterPosition?: number };
 	let phraseBuffer: PhraseSegment[] = [];
 	let currentPhrase: PagePhraseOccurrence | null = null;
 
@@ -194,21 +206,28 @@ const Paragraph = ({
 				className="cursor-pointer rounded-sm"
 				style={phraseColorVisible ? { backgroundColor: PHRASE_HIGHLIGHT_COLOR, borderRadius: "3px", padding: "0 1px" } : undefined}
 			>
-				{phraseBuffer.map((seg, i) =>
-					seg.kind === "gap" ? (
-						<span
-							key={i}
-							data-phrase-gap={phraseId}
-							onClick={handleGapClick}
-						>
-							{seg.node}
-						</span>
-					) : (
+				{phraseBuffer.map((seg, i) => {
+					if (seg.kind === "gap") {
+						const gapInRange = seg.afterPosition !== undefined
+							&& isTokenInRange?.(seg.afterPosition)
+							&& isTokenInRange?.(seg.afterPosition + 1);
+						return (
+							<span
+								key={i}
+								data-phrase-gap={phraseId}
+								onClick={handleGapClick}
+								className={gapInRange ? RANGE_SELECTION_CLASS : undefined}
+							>
+								{seg.node}
+							</span>
+						);
+					}
+					return (
 						<span key={i} data-phrase-token={phraseId}>
 							{seg.node}
 						</span>
-					),
-				)}
+					);
+				})}
 			</span>,
 		);
 
@@ -270,7 +289,10 @@ const Paragraph = ({
 					token={tok}
 					displayText={seg.value !== tok.original ? seg.value : undefined}
 					active={activeTokenId === tok.id}
+					inRange={isTokenInRange?.(tok.position)}
 					onSelect={onSelectToken}
+					onLongPress={onTokenLongPress}
+					onRangeTap={onTokenRangeTap}
 				>
 					{supParts.map((s, i) => <sup key={i}>{s.value}</sup>)}
 				</ArticleToken>
@@ -309,7 +331,7 @@ const Paragraph = ({
 
 		if (isInsidePhrase) {
 			if (!currentPhrase) currentPhrase = gapPhrase!;
-			phraseBuffer.push({ node: segText, kind: "gap" });
+			phraseBuffer.push({ node: segText, kind: "gap", afterPosition: lastTokenPosition ?? undefined });
 			paraOffset += segLen;
 			cyrillicOffset += cyrillicSegLen;
 			continue;
@@ -318,15 +340,27 @@ const Paragraph = ({
 		// Not inside phrase — flush any open buffer first
 		if (currentPhrase) flushPhrase();
 
+		// Gap highlight for range selection: the gap right after lastTokenPosition
+		// is "inside" the range only if both the token before it and the token
+		// after it (lastTokenPosition + 1, since positions are sequential within
+		// a paragraph) are in range — otherwise this is the trailing gap after
+		// the range's last token, which must NOT be highlighted.
+		const gapInRange = lastTokenPosition !== null
+			&& !segText.includes("\n")
+			&& isTokenInRange?.(lastTokenPosition)
+			&& isTokenInRange?.(lastTokenPosition + 1);
+
 		// Normal text with possible highlights (use Cyrillic positions for range lookup)
 		const overlapping = allRanges.filter(r => r.start < rangeEnd && r.end > rangeStart);
 
 		if (!overlapping.length) {
 			const inner = wrapMarks(segText, seg.marks, keyCounter++);
 			nodes.push(
-				displayOnly
-					? <bdi key={keyCounter++}>{inner}</bdi>
-					: <Fragment key={keyCounter++}>{inner}</Fragment>
+				gapInRange
+					? <span key={keyCounter++} className={RANGE_SELECTION_CLASS}>{inner}</span>
+					: displayOnly
+						? <bdi key={keyCounter++}>{inner}</bdi>
+						: <Fragment key={keyCounter++}>{inner}</Fragment>
 			);
 			paraOffset += segLen;
 			cyrillicOffset += cyrillicSegLen;
@@ -336,6 +370,9 @@ const Paragraph = ({
 		// For text segments, slicing uses display text positions (segStart/segEnd).
 		// When cyrillicParaText is set, map Cyrillic range positions back to display offsets.
 		// Since punctuation is identical across scripts, the lengths match for text segments.
+		// NOTE: gapInRange is not applied to the <mark>-wrapped branch below — a gap
+		// that both overlaps an existing highlight/note AND falls inside a new
+		// range-selection is a rare double-role case, deferred to Step 5 polish.
 		let cursor = 0;
 		for (const r of overlapping) {
 			const relStart = Math.max(0, r.start - rangeStart);
@@ -392,6 +429,9 @@ export const ArticleRich = ({
 	isRtl = false,
 	cyrillicRaw,
 	cyrillicContentRich,
+	isTokenInRange,
+	onTokenLongPress,
+	onTokenRangeTap,
 }: ArticleRichProps) => {
 	const paragraphs = renderRichContent(contentRich, tokens, displayOnly, cyrillicRaw, cyrillicContentRich);
 
@@ -454,6 +494,9 @@ export const ArticleRich = ({
 								displayOnly={displayOnly}
 								isRtl={isRtl}
 								cyrillicParaText={cyrillicParaText}
+								isTokenInRange={isTokenInRange}
+								onTokenLongPress={onTokenLongPress}
+								onTokenRangeTap={onTokenRangeTap}
 							/>
 						</motion.div>
 					);

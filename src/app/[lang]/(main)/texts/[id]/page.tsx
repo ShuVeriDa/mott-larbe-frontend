@@ -1,6 +1,6 @@
 import type { LibraryTextDetail } from "@/entities/library-text";
 import { getDictionary, LOCALES } from "@/i18n/locales";
-import { API_URL } from "@/shared/config";
+import { SERVER_API_URL } from "@/shared/config";
 import { requireLocale } from "@/shared/lib/i18n";
 import { buildAlternates, OG_LOCALES, SITE_URL } from "@/shared/lib/seo";
 import { LibraryTextDetailPage } from "@/widgets/library-text-detail-page";
@@ -11,7 +11,7 @@ import { cache } from "react";
 const fetchTextForSeo = cache(
 	async (id: string): Promise<LibraryTextDetail | null> => {
 		try {
-			const res = await fetch(`${API_URL}/texts/${encodeURIComponent(id)}`, {
+			const res = await fetch(`${SERVER_API_URL}/texts/${encodeURIComponent(id)}`, {
 				next: { revalidate: 3600 },
 			});
 			if (!res.ok) return null;
@@ -31,7 +31,7 @@ export const generateStaticParams = async () => {
 	while (true) {
 		try {
 			const res = await fetch(
-				`${API_URL}/texts?limit=${PAGE_SIZE}&page=${page}`,
+				`${SERVER_API_URL}/texts?limit=${PAGE_SIZE}&page=${page}`,
 				{ next: { revalidate: 3600 } },
 			);
 			if (!res.ok) break;

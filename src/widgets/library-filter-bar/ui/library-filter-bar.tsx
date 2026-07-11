@@ -68,7 +68,11 @@ export const LibraryFilterBar = ({
 		search !== "";
 
 	return (
-		<nav ref={containerRef} className="border-b border-bd-1 bg-white" aria-label={t("library.filtersLabel")}>
+		<nav
+			ref={containerRef}
+			className="border-b border-bd-1 bg-surf"
+			aria-label={t("library.filtersLabel")}
+		>
 			<div className="flex shrink-0 items-center gap-1 overflow-x-auto px-3 py-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 				{usePills ? (
 					<>

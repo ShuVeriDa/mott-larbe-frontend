@@ -1,6 +1,7 @@
 import { ReactNode, Suspense } from 'react';
 import { getDictionary } from "@/i18n/locales";
 import { I18nProvider, requireLocale } from "@/shared/lib/i18n";
+import { PwaInstallBanner } from "@/features/pwa-install-prompt";
 
 interface AuthLayoutShellProps {
 	children: ReactNode;
@@ -19,6 +20,7 @@ const AuthLayoutShell = async ({ children, params }: AuthLayoutShellProps) => {
 	return (
 		<I18nProvider lang={lang} dict={dict}>
 			{children}
+			<PwaInstallBanner />
 		</I18nProvider>
 	);
 };

@@ -102,6 +102,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 		displayPhrase?: string;
 		x: number;
 		y: number;
+		bottom: number;
 		contextSentence?: string;
 		useSheet: boolean;
 	} | null>(null);
@@ -144,6 +145,9 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 		handlePickColor,
 		handleRemoveHighlight,
 		handleDismiss,
+		isTokenInRange,
+		onTokenLongPress,
+		onTokenRangeTap,
 	} = useReaderHighlights(data.id, data.page.pageNumber, data.page.contentRaw, tokensForDisplay, isNonCyrillic);
 
 	const {
@@ -187,6 +191,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 			displayPhrase: isNonCyrillic ? selection.text : undefined,
 			x: selection.x,
 			y: selection.y,
+			bottom: selection.bottom,
 			contextSentence,
 			useSheet,
 		});
@@ -276,6 +281,9 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 				isRtl={isRtlDisplay}
 				cyrillicRaw={isNonCyrillic || isOldOrtho ? data.page.contentRaw : undefined}
 				cyrillicContentRich={isNonCyrillic || isOldOrtho ? data.page.contentRich : undefined}
+				isTokenInRange={isTokenInRange}
+				onTokenLongPress={onTokenLongPress}
+				onTokenRangeTap={onTokenRangeTap}
 			/>
 			{/* Note line group icons — rendered via portal at measured positions */}
 			{mounted && noteGroups.length > 0 &&
@@ -297,6 +305,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 					<HighlightColorPicker
 						x={selection.x}
 						y={selection.y}
+						bottom={selection.bottom}
 						onPick={handlePickColor}
 						onDismiss={handleDismiss}
 						hasExisting={!!matchedHighlight}
@@ -315,6 +324,7 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 							displayPhrase={phraseTranslate.displayPhrase}
 							x={phraseTranslate.x}
 							y={phraseTranslate.y}
+							bottom={phraseTranslate.bottom}
 							contextSentence={phraseTranslate.contextSentence}
 							lang={lang}
 							onClose={handleClosePhraseTranslate}

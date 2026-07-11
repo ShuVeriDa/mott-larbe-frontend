@@ -3,7 +3,14 @@ import { DEFAULT_LOCALE, LOCALES, type Locale } from "@/i18n/locale-list";
 
 const ACCESS_TOKEN_COOKIE = "access_token";
 const REFRESH_TOKEN_COOKIE = "refreshToken";
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:9555/api";
+// May be a same-origin relative path (e.g. "/api" for single-tunnel ngrok dev —
+// see next.config.ts's rewrites()), which has no origin to rewrite a request
+// against here. Fall back to the real backend host in that case, mirroring
+// next.config.ts's own devApiProxyTarget resolution.
+const rawApiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:9555/api";
+const BACKEND_ORIGIN = rawApiUrl.startsWith("/")
+	? (process.env.DEV_API_PROXY_TARGET ?? "http://localhost:9555")
+	: rawApiUrl.replace(/\/api$/, "");
 
 const getPreferredLocale = (request: NextRequest): Locale => {
 	const acceptLanguage = request.headers.get("accept-language") ?? "";
@@ -52,7 +59,7 @@ export const proxy = async (request: NextRequest) => {
 
 	// Static uploads served by the backend — proxy directly, skip locale logic
 	if (pathname.startsWith("/uploads/")) {
-		return NextResponse.rewrite(new URL(pathname, API_URL.replace(/\/api$/, "")));
+		return NextResponse.rewrite(new URL(pathname, BACKEND_ORIGIN));
 	}
 	// Locale redirect for paths without a locale prefix
 	const matchedLocale = LOCALES.find(
@@ -119,6 +126,6 @@ export const proxy = async (request: NextRequest) => {
 
 export const config = {
 	matcher: [
-		"/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|opengraph-image|twitter-image|manifest|icon|apple-icon|sw\\.js|\\.well-known).*)",
+		"/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|opengraph-image|twitter-image|manifest|icon|apple-icon|sw\\.js|\\.well-known).*)",
 	],
 };

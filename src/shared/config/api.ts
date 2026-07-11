@@ -6,6 +6,15 @@ export const API_URL = (() => {
 	return url ?? "http://localhost:9555/api";
 })();
 
+// Server-side fetch() calls (generateStaticParams, RSC, metadata) run in Node,
+// not through the Next.js HTTP server, so next.config.ts's rewrites() proxy for
+// a relative API_URL (e.g. "/api", used for single-tunnel ngrok dev so the
+// browser stays same-origin for cookies) never applies — a relative URL has no
+// base and fetch() throws. Resolve against the real backend host in that case.
+export const SERVER_API_URL = API_URL.startsWith("/")
+	? `${process.env.DEV_API_PROXY_TARGET ?? "http://localhost:9555"}${API_URL}`
+	: API_URL;
+
 export const WS_URL = (() => {
 	const url = process.env.NEXT_PUBLIC_WS_URL;
 	if (!url && process.env.NODE_ENV === "production") {

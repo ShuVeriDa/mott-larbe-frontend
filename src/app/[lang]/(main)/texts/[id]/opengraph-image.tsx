@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { API_URL } from "@/shared/config";
+import { SERVER_API_URL } from "@/shared/config";
 import type { LibraryTextDetail } from "@/entities/library-text";
 
 export const runtime = "edge";
@@ -9,7 +9,7 @@ export const contentType = "image/png";
 
 const fetchText = async (id: string): Promise<LibraryTextDetail | null> => {
 	try {
-		const res = await fetch(`${API_URL}/texts/${encodeURIComponent(id)}`, {
+		const res = await fetch(`${SERVER_API_URL}/texts/${encodeURIComponent(id)}`, {
 			next: { revalidate: 3600 },
 		});
 		if (!res.ok) return null;

@@ -80,7 +80,7 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 	> = handleOpenReport;
 
 	return (
-		<div className="flex flex-1 flex-col overflow-hidden">
+		<div className="flex flex-1 flex-col overflow-hidden max-md:overflow-visible">
 			{/* Topbar */}
 			<motion.header
 				initial={{ opacity: 0, y: -6 }}
@@ -168,8 +168,8 @@ export const LibraryTextDetailPage = ({ id }: LibraryTextDetailPageProps) => {
 			</motion.header>
 
 			{/* Scrollable content */}
-			<main className="flex justify-center overflow-y-auto px-8 pb-12 pt-7 [scrollbar-color:var(--bd-2)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-thumb]:rounded-[2px] [&::-webkit-scrollbar-thumb]:bg-bd-2 max-sm:px-3.5 max-sm:pt-4 max-md:px-5">
-				<div className="max-w-[860px]">
+			<main className="flex justify-center overflow-y-auto px-8 pb-12 pt-7 [scrollbar-color:var(--bd-2)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-thumb]:rounded-[2px] [&::-webkit-scrollbar-thumb]:bg-bd-2 max-sm:px-3.5 max-sm:pt-4 max-md:overflow-visible max-md:px-5">
+				<div className="w-full min-w-0 max-w-[860px]">
 					<TextHero
 						id={id}
 						lang={lang}

@@ -9,6 +9,8 @@ import {
 	usePhraseColorVisibility,
 } from "@/features/reader-highlight";
 import {
+	ArabicScriptLabel,
+	MottLarbeLabel,
 	SCRIPT_OPTIONS,
 	useReaderScript,
 	useReaderScriptAvailability,
@@ -51,8 +53,14 @@ export const ReaderSettingsBody = ({
 }: ReaderSettingsBodyProps) => {
 	const { t, lang } = useI18n();
 	const layout = useReaderTextLayout();
-	const { script, showDiacritics, setScript, setShowDiacritics } =
-		useReaderScript();
+	const {
+		script,
+		showDiacritics,
+		orthography,
+		setScript,
+		setShowDiacritics,
+		setOrthography,
+	} = useReaderScript();
 	const { data: scriptVersions = [] } = useQuery({
 		...scriptVersionsQueryOptions(textId ?? ""),
 		enabled: !!textId,
@@ -87,6 +95,9 @@ export const ReaderSettingsBody = ({
 	};
 
 	const handleToggleDiacritics = () => setShowDiacritics(!showDiacritics);
+	const isOldOrthography = orthography === "OLD";
+	const handleToggleOrthography = () =>
+		setOrthography(isOldOrthography ? "NEW" : "OLD");
 
 	return (
 		<>
@@ -118,7 +129,14 @@ export const ReaderSettingsBody = ({
 											: "bg-surf-2 text-t-2 hover:border-bd-2 hover:text-t-1",
 									)}
 								>
-									{t(option.fullKey)}
+									{option.value === "ARABIC" ? (
+										<ArabicScriptLabel showDiacritics={showDiacritics} />
+									) : (
+										<MottLarbeLabel
+											script={option.value}
+											isOld={isOldOrthography}
+										/>
+									)}
 								</Button>
 							);
 						})}
@@ -144,6 +162,34 @@ export const ReaderSettingsBody = ({
 								: t("reader.settings.script.diacriticsShow")}
 						</Button>
 					)}
+				</div>
+			)}
+
+			{script === "CYRILLIC" && (
+				<div className="md:hidden">
+					<ReaderSettingsSectionLabel
+						label={t("reader.settings.script.orthographyToggle")}
+						compact={compact}
+					/>
+					<Button
+						variant="bare"
+						size={null}
+						onClick={handleToggleOrthography}
+						aria-pressed={isOldOrthography}
+						className={cn(
+							"w-full rounded-base border border-bd-1 leading-none transition-colors duration-100",
+							gap,
+							btnH,
+							compact ? "text-[11px]" : "text-[13px]",
+							isOldOrthography
+								? "border-acc/20 bg-acc-bg text-acc-t"
+								: "bg-surf-2 text-t-2 hover:border-bd-2 hover:text-t-1",
+						)}
+					>
+						{isOldOrthography
+							? t("reader.settings.script.orthographyOld")
+							: t("reader.settings.script.orthographyNew")}
+					</Button>
 				</div>
 			)}
 

@@ -2047,8 +2047,6 @@
 				"orthographyToggle": "Orthography",
 				"orthographyNew": "New spelling",
 				"orthographyOld": "Old spelling",
-				"orthographyNewShort": "New",
-				"orthographyOldShort": "Old",
 				"orthographyHint": "Texts are written in the new orthography. Switch to read in the familiar spelling."
 			}
 		},
@@ -7454,9 +7452,9 @@
 			"step3": "Tap \"Add\" in the top-right corner"
 		},
 		"android": {
-			"step1": "Open the menu (⋮) in the top-right corner of Chrome",
-			"step2": "Choose \"Install app\"",
-			"step3": "Confirm the installation"
+			"step1": "Open your browser's menu (usually ⋮ in the top-right corner)",
+			"step2": "Choose \"Install\" or \"Add to Home screen\"",
+			"step3": "Confirm the installation — the exact wording depends on your browser"
 		},
 		"desktop": {
 			"step1": "Find the install icon in the address bar",

@@ -1,5 +1,5 @@
 import axios, { isAxiosError } from "axios";
-import { API_URL } from "@/shared/config";
+import { API_URL, SERVER_API_URL } from "@/shared/config";
 
 export interface ApiErrorBody {
   statusCode: number;
@@ -32,8 +32,16 @@ export const getApiErrorBody = (error: unknown): Partial<ApiErrorBody> | undefin
 // automatically with every request — no client-side token reading needed.
 // X-Requested-With is a custom header that browsers block in simple CORS
 // requests, giving the backend an additional CSRF signal to verify.
+//
+// baseURL must differ by environment: in the browser, API_URL (which may be a
+// same-origin relative path like "/api" for single-tunnel ngrok dev, so auth
+// cookies stay same-origin) is proxied by next.config.ts's rewrites(). But
+// server-side calls (e.g. queryClient.prefetchQuery in a Server Component)
+// never go through that HTTP-level proxy — a relative baseURL has no origin
+// to resolve against there, so server-side must use the resolved absolute
+// SERVER_API_URL instead.
 export const http = axios.create({
-	baseURL: API_URL,
+	baseURL: typeof window === "undefined" ? SERVER_API_URL : API_URL,
 	withCredentials: true,
 	headers: { "X-Requested-With": "XMLHttpRequest" },
 });

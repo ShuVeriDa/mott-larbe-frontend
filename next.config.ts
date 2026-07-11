@@ -49,8 +49,25 @@ const securityHeaders = [
 	},
 ];
 
+// Extra dev origins (LAN IP, ngrok tunnel domain, etc.) via comma-separated env var,
+// e.g. NEXT_DEV_ORIGINS="abcd1234.ngrok-free.app,192.168.31.52"
+const extraDevOrigins = (process.env.NEXT_DEV_ORIGINS ?? "")
+	.split(",")
+	.map(origin => origin.trim())
+	.filter(Boolean);
+
+// When testing through a single ngrok tunnel (frontend only, including a
+// production build for that testing), the browser must call the API on the
+// SAME origin as the page — otherwise the backend's auth cookies (Domain=
+// <backend host>) never reach this app's proxy.ts middleware, since cookies
+// don't cross hostnames. Setting DEV_API_PROXY_TARGET rewrites /api/* and
+// /uploads/* to the local backend server-side, so the browser only ever talks
+// to one origin, exactly like the plain localhost setup. Not gated on isDev:
+// ngrok testing is sometimes done against a production build.
+const devApiProxyTarget = process.env.DEV_API_PROXY_TARGET;
+
 const nextConfig: NextConfig = {
-	allowedDevOrigins: isDev ? ["192.168.31.52"] : [],
+	allowedDevOrigins: isDev ? ["192.168.31.52", ...extraDevOrigins] : [],
 	trailingSlash: false,
 	reactCompiler: true,
 	env: {
@@ -60,6 +77,13 @@ const nextConfig: NextConfig = {
 	experimental: {
 		optimizePackageImports: ["lucide-react", "framer-motion"],
 		viewTransition: true,
+	},
+	async rewrites() {
+		if (!devApiProxyTarget) return [];
+		return [
+			{ source: "/api/:path*", destination: `${devApiProxyTarget}/api/:path*` },
+			{ source: "/uploads/:path*", destination: `${devApiProxyTarget}/uploads/:path*` },
+		];
 	},
 	async redirects() {
 		return [

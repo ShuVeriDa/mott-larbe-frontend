@@ -140,7 +140,7 @@ export const UserMenu = ({
 					sideOffset={4}
 					className={dropdownContentCls}
 				>
-					<UserMenuContent showThemeToggle />
+					<UserMenuContent />
 				</DropdownMenuPrimitive.Content>
 			</DropdownMenuPrimitive.Portal>
 		</DropdownMenuPrimitive.Root>

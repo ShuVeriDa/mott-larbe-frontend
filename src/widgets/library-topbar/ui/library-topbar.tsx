@@ -88,7 +88,7 @@ export const LibraryTopbar = ({ counts, title }: LibraryTopbarProps) => {
 			</div>
 
 			{/* Mobile row 1: search + sort + view toggle */}
-			<div className="flex items-center gap-1.5 border-b border-bd-1 bg-white px-3 py-1.5 sm:hidden">
+			<div className="flex items-center gap-1.5 border-b border-bd-1 bg-surf-1 px-3 py-1.5 sm:hidden">
 				<SearchBox
 					value={inputValue}
 					onChange={handleSearch}

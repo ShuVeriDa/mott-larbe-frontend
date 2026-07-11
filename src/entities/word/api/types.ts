@@ -34,6 +34,8 @@ export interface WordLookupResponse {
 	nounClass: string | null;
 	nounClassPlural: string | null;
 	baseForm: string | null;
+	wordModern: string | null;
+	wordModernAccented: string | null;
 	forms: string[];
 	tags: string[];
 	wordLevel: string | null;

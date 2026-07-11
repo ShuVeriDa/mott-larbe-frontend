@@ -6,7 +6,7 @@ export const textScriptVersionApi = {
 
 	getVersions: async (textId: string): Promise<TextScriptVersionInfo[]> => {
 		const { data } = await http.get<TextScriptVersionInfo[]>(
-			`/admin/texts/${textId}/script-versions`,
+			`/texts/${textId}/script-versions`,
 		);
 		return data;
 	},

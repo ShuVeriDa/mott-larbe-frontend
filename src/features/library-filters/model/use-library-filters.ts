@@ -24,9 +24,15 @@ export const useLibraryFilters = () => {
 	const pathname = usePathname();
 	const { data: user } = useCurrentUser();
 
+	// Reads from `window.location.search` (the live URL) rather than the
+	// `searchParams` snapshot this hook instance rendered with. This hook mounts
+	// several times on the same page (topbar, filter bar, page data), so two
+	// instances can each hold a `searchParams` closure taken before the other's
+	// `router.replace` has landed — building off that stale snapshot would
+	// silently drop whatever the other instance just added (e.g. `genre`).
 	const set = useCallback(
 		(updates: Record<string, string | null>) => {
-			const params = new URLSearchParams(searchParams.toString());
+			const params = new URLSearchParams(window.location.search);
 			for (const [key, value] of Object.entries(updates)) {
 				if (value === null || value === "" || value === "all") {
 					params.delete(key);
@@ -36,7 +42,7 @@ export const useLibraryFilters = () => {
 			}
 			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 		},
-		[searchParams, router, pathname],
+		[router, pathname],
 	);
 
 	const level: CefrLevel | "all" = (searchParams.get("level") as CefrLevel | null) ?? "all";
@@ -59,9 +65,9 @@ export const useLibraryFilters = () => {
 		if (langParam !== null) return;
 		if (!user?.language) return;
 		if (sessionStorage.getItem(LANG_DEFAULT_APPLIED_KEY)) return;
-
 		sessionStorage.setItem(LANG_DEFAULT_APPLIED_KEY, "1");
 		if (user.language === "CHE") return; // "CHE" already renders identically to "all" today
+
 		set({ lang: user.language });
 	}, [langParam, user?.language, set]);
 

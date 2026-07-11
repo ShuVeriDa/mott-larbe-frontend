@@ -1,7 +1,7 @@
 export const DetailSkeleton = () => (
-	<div className="flex flex-1 flex-col overflow-hidden">
+	<div className="flex flex-1 flex-col overflow-hidden max-md:overflow-visible">
 		<div className="h-12 bg-panel border-b border-bd-1 shrink-0" />
-		<div className="flex-1 overflow-y-auto px-8 pb-12 pt-7 max-sm:px-3.5 max-sm:pt-4 max-md:px-5">
+		<div className="flex-1 overflow-y-auto px-8 pb-12 pt-7 max-sm:px-3.5 max-sm:pt-4 max-md:overflow-visible max-md:px-5">
 			<div className="max-w-[860px] animate-pulse">
 				<div className="flex gap-5 mb-6">
 					<div className="w-[88px] h-[126px] rounded-card bg-surf-3 shrink-0" />

@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { scriptVersionsQueryOptions } from "@/entities/text-script-version";
 import {
+	ArabicScriptLabel,
+	MottLarbeLabel,
 	OrthographyToggle,
 	SCRIPT_OPTIONS,
 	useReaderScript,
@@ -19,7 +21,9 @@ interface ScriptSwitcherFooterProps {
 
 export const ScriptSwitcherFooter = ({ textId }: ScriptSwitcherFooterProps) => {
 	const { t, lang } = useI18n();
-	const { script, showDiacritics, setScript, setShowDiacritics } = useReaderScript();
+	const { script, showDiacritics, orthography, setScript, setShowDiacritics } =
+		useReaderScript();
+	const isOldOrthography = orthography === "OLD";
 	const { data: scriptVersions = [] } = useQuery(scriptVersionsQueryOptions(textId));
 	const available = useReaderScriptAvailability(scriptVersions);
 
@@ -55,7 +59,16 @@ export const ScriptSwitcherFooter = ({ textId }: ScriptSwitcherFooterProps) => {
 									: "bg-surf-2 text-t-2 hover:border-bd-2 hover:text-t-1",
 							)}
 						>
-							<span className="hidden sm:inline">{t(option.fullKey)}</span>
+							<span className="hidden sm:inline">
+								{option.value === "ARABIC" ? (
+									<ArabicScriptLabel showDiacritics={showDiacritics} />
+								) : (
+									<MottLarbeLabel
+										script={option.value}
+										isOld={isOldOrthography}
+									/>
+								)}
+							</span>
 							<span className="inline sm:hidden" dir={option.value === "ARABIC" ? "rtl" : undefined}>{t(option.shortKey)}</span>
 						</Button>
 					);

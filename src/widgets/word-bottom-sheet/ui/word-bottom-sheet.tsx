@@ -48,6 +48,11 @@ const SheetBody = ({
 				<div className="border-b border-bd-1 px-4 pb-3">
 					<div className="mb-1 font-display text-[20px] font-semibold tracking-[-0.3px] text-t-1">
 						{token.original}
+						{lookup.wordModern ? (
+							<span className="ml-2 text-[14px] font-normal text-t-3">
+								{lookup.wordModern}
+							</span>
+						) : null}
 					</div>
 					<div className="text-[12px] text-t-3">
 						{t("reader.panel.baseForm")}:{" "}

@@ -8,8 +8,8 @@ import {
 	type HighlightColor,
 } from "@/entities/highlight";
 import { resolveCyrillicText, type TextToken } from "@/entities/text";
-import { useTextSelection } from "@/features/reader-highlight";
-import { useRef } from "react";
+import { useTextSelection, useTokenRangeSelection } from "@/features/reader-highlight";
+import { useEffect, useRef } from "react";
 
 // Get the [start, end) of needle in haystack (first occurrence)
 const findOffset = (haystack: string, needle: string): { start: number; end: number } | null => {
@@ -30,7 +30,31 @@ export const useReaderHighlights = (
 	isNonCyrillic?: boolean,
 ) => {
 	const articleRef = useRef<HTMLDivElement>(null);
-	const { selection, clearSelection } = useTextSelection(articleRef);
+	const { selection: nativeSelection, clearSelection: clearNativeSelection } = useTextSelection(articleRef);
+	const tokenRange = useTokenRangeSelection(articleRef, displayTokens ?? [], contentRaw);
+	const { isActive: isRangeSelectionActive, resolveSelectionState, endSelection: endRangeSelection } = tokenRange;
+
+	// Touch-mode selection takes priority outright when active — it must NOT
+	// merge with (or defer to) native selection. Touch browsers can synthesize
+	// mouse events after a touch gesture, so a stray native Selection can exist
+	// even while range-selection mode is active; trusting native selection as
+	// a fallback here would resurface the native action-bar problem this
+	// feature exists to avoid. Native `selection` only matters when touch-range
+	// mode is not active (desktop, or touch before any long-press has started).
+	const selection = isRangeSelectionActive ? resolveSelectionState() : nativeSelection;
+
+	const clearSelection = () => {
+		clearNativeSelection();
+		endRangeSelection();
+	};
+
+	// The token-range-selection store is a page-agnostic singleton — reset it
+	// whenever the page identity changes (swipe navigation) or this hook
+	// unmounts, so a selection started on one page can never silently swallow
+	// the first tap on a different page.
+	useEffect(() => {
+		return () => endRangeSelection();
+	}, [textId, pageNumber, endRangeSelection]);
 
 	const { data: highlights = [] } = useHighlights(textId, pageNumber);
 	const { mutate: createHighlight } = useCreateHighlight(textId, pageNumber);
@@ -135,6 +159,9 @@ export const useReaderHighlights = (
 		clearSelection();
 	};
 
+	const handleTokenLongPress = (token: TextToken) => tokenRange.startSelection(token.position);
+	const handleTokenRangeTap = (token: TextToken) => tokenRange.extendSelection(token.position);
+
 	return {
 		articleRef,
 		selection,
@@ -143,5 +170,8 @@ export const useReaderHighlights = (
 		handlePickColor,
 		handleRemoveHighlight,
 		handleDismiss,
+		isTokenInRange: tokenRange.isInRange,
+		onTokenLongPress: handleTokenLongPress,
+		onTokenRangeTap: handleTokenRangeTap,
 	};
 };

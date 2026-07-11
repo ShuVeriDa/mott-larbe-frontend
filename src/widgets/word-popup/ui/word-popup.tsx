@@ -60,6 +60,11 @@ const WordPopupBody = ({
 				<div className="flex items-start gap-2">
 					<div className="text-[17px] font-semibold tracking-[-0.2px] text-t-1">
 						{token.original}
+						{lookup.wordModern ? (
+							<span className="ml-1.5 text-[13px] font-normal text-t-3">
+								{lookup.wordModern}
+							</span>
+						) : null}
 					</div>
 					<span className="mt-0.5 flex shrink-0 items-center gap-1 rounded-[4px] border-[0.5px] border-grn/30 bg-grn/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] text-grn">
 						<BookOpen className="size-2.5" strokeWidth={1.8} />
