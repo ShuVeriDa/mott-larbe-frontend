@@ -49,7 +49,7 @@ import { extractSentence } from "@/shared/lib/extract-sentence";
 import { useMounted } from "@/shared/lib/mounted";
 import { useSwipe } from "@/shared/lib/swipe/use-swipe";
 import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useInlineNotes } from "../model/use-inline-notes";
 import { useReaderHighlights } from "../model/use-reader-highlights";
@@ -73,6 +73,11 @@ export const ReaderBody = ({ data, currentPage, onNavigate }: ReaderBodyProps) =
 	const showProgress = settings?.preferences.showProgress ?? true;
 	const onSelectToken = useSelectToken(data.page.contentRaw, popupMode, mobileDisplayMode);
 	const activeToken = useWordLookupStore(s => s.activeToken);
+	const setContentLanguage = useWordLookupStore(s => s.setContentLanguage);
+
+	useEffect(() => {
+		setContentLanguage(data.language);
+	}, [data.language, setContentLanguage]);
 
 	// Script selection
 	const { script, showDiacritics, orthography } = useReaderScript();

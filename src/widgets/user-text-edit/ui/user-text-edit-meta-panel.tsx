@@ -12,15 +12,8 @@ import { ScriptVersionsPanel } from "@/features/reader-script";
 import type { UserTextLanguage, UserTextType } from "@/entities/user-text";
 import type { SubmissionLicenseType, SubmissionType } from "@/features/text-submission";
 import { useGenres } from "@/entities/genre";
+import { useVisibleLanguages } from "@/entities/user";
 import { UserTextMobileMetaSheet } from "./user-text-mobile-meta-sheet";
-
-// Only Chechen language for now — other languages commented out until platform expands
-const LANGUAGE_OPTIONS: { value: UserTextLanguage; label: string }[] = [
-  { value: "CHE", label: "Нохчийн" },
-  // { value: "RU", label: "Русский" },
-  // { value: "AR", label: "Ӏарабийн" },
-  // { value: "EN", label: "English" },
-];
 
 const LICENSE_OPTIONS: { value: SubmissionLicenseType; label: string }[] = [
   { value: "PUBLIC_DOMAIN", label: "Дерриге а доьзна" },
@@ -76,6 +69,12 @@ export const UserTextEditMetaPanel = ({
 }: UserTextEditMetaPanelProps) => {
   const { t } = useI18n();
   const { data: genres = [] } = useGenres();
+  const visibleLanguages = useVisibleLanguages();
+
+  const languageOptions: { value: UserTextLanguage; label: string }[] = visibleLanguages.map((lang) => ({
+    value: lang.code,
+    label: t(`myTexts.fields.languageOptions.${lang.code.toLowerCase()}`),
+  }));
 
   const isOriginal = type === "ORIGINAL";
   const isExternal = type === "EXTERNAL";
@@ -114,7 +113,7 @@ export const UserTextEditMetaPanel = ({
       <div>
         <FieldLabel>{t("myTexts.fields.language")}</FieldLabel>
         <FieldSelect value={language} onChange={handleLanguageChange}>
-          {LANGUAGE_OPTIONS.map(opt => (
+          {languageOptions.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </FieldSelect>
@@ -251,7 +250,7 @@ export const UserTextEditMetaPanel = ({
 
       {/* Mobile sheet */}
       <UserTextMobileMetaSheet
-        language={language} type={type} author={author} sourceUrl={sourceUrl}
+        language={language} languageOptions={languageOptions} type={type} author={author} sourceUrl={sourceUrl}
         isSaving={isSaving} onLanguageChange={onLanguageChange} onTypeChange={onTypeChange}
         onAuthorChange={onAuthorChange} onSourceChange={onSourceChange}
         onSaveDraft={onSaveDraft} onPrimaryAction={onPrimaryAction} t={t}

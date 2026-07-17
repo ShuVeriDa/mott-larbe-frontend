@@ -1,6 +1,7 @@
 "use client";
 
-import { useGeminiKeyStatus } from "@/entities/ai-translation";
+import { useGeminiKeyStatus, toSourceLanguage } from "@/entities/ai-translation";
+import type { TextLanguage } from "@/entities/text";
 import {
 	useAiKeyNudge,
 	useAiSessionStore,
@@ -36,6 +37,7 @@ interface AiWordPanelBodyProps {
 	normalized: string;
 	contextSentence?: string;
 	lang: string;
+	contentLanguage: TextLanguage | null;
 	tokenId: string;
 	inDictionary: boolean;
 	dictionaryEntryId: string | null;
@@ -48,6 +50,7 @@ export const AiWordPanelBody = ({
 	normalized,
 	contextSentence,
 	lang,
+	contentLanguage,
 	tokenId,
 	inDictionary,
 	dictionaryEntryId,
@@ -68,10 +71,10 @@ export const AiWordPanelBody = ({
 	useEffect(() => {
 		if (!hasKey) return;
 		if (sessionEntry) return;
-		translate(normalized, contextSentence, targetLanguage);
+		translate(normalized, contextSentence, targetLanguage, toSourceLanguage(contentLanguage));
 		// translate исключён из deps намеренно — это нестабильная функция из useState-хука
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [normalized, contextSentence, hasKey, sessionEntry, targetLanguage]);
+	}, [normalized, contextSentence, hasKey, sessionEntry, targetLanguage, contentLanguage]);
 
 	const displayState = sessionEntry
 		? ({ phase: "done", result: sessionEntry.translation } as const)

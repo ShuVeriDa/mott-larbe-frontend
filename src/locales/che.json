@@ -7321,6 +7321,98 @@
 		"rejection": {
 			"label": "ДӀаяккхаран бахьана",
 			"resubmit": "Нисдан, юха дӀаяхьа"
+		},
+		"generate": {
+			"tabLabel": "Кхолла",
+			"modeTabs": {
+				"label": "Редакторан режим",
+				"write": "Яздан"
+			},
+			"wordsSection": {
+				"title": "Текстана дешнаш",
+				"fromDictionary": "Хьайн словарера",
+				"emptyDictionary": "Хьан словарь ду хоза — тӀетаса дешнаш текст йешча я «Словарь» декъехь.",
+				"unknownLanguage": "мотт билгал ца хилла",
+				"customWordsPlaceholder": "Хьайн дош тӀетаса",
+				"limitReached": "Массо тӀех доккха — 30 дош",
+				"selectedCount": "{count} / 30 дош"
+			},
+			"contentType": {
+				"label": "Текстан тайпа",
+				"prose": "Дезачу текст",
+				"dialogue": "Диалог",
+				"story": "Хаттар"
+			},
+			"topic": {
+				"label": "Текстан тема",
+				"family": "Доьзал",
+				"food": "Юург",
+				"travel": "ГӀуллакхаш",
+				"nature": "Дуьне",
+				"city": "ГӀала",
+				"work": "Балха",
+				"holidays": "Праздникаш",
+				"friendship": "ДоттагӀалла",
+				"custom": "Хьайн тема",
+				"customPlaceholder": "Текстан тема яздан",
+				"customRequired": "Хьайн тема билгалдаккха"
+			},
+			"tone": {
+				"label": "Тон",
+				"any": "Хьаьжна цахилар",
+				"neutral": "Нейтральни",
+				"conversational": "Къамелан",
+				"formal": "Расми"
+			},
+			"dialogueCharacterCount": {
+				"label": "Персонажийн терго"
+			},
+			"grammarFocus": {
+				"label": "Грамматикан акцент",
+				"none": "Хьаьжна цахилар",
+				"pastTense": "Дуьйна замано",
+				"presentTense": "ХӀинцалерчу замано",
+				"futureTense": "Дуьхьалдерчу замано",
+				"pluralFormation": "Дукхаллин чоьтарг",
+				"comparatives": "Тайлон дакъош",
+				"questions": "Хаттаран конструкцеш",
+				"negation": "Кхочушдацар",
+				"conditionals": "Кхин конструкцеш",
+				"possessives": "Дуьнешдалар",
+				"custom": "Хьайн тема",
+				"customPlaceholder": "Масала: артикли, эргатив",
+				"customRequired": "Грамматикан тема билгалдаккха"
+			},
+			"length": {
+				"label": "Дуьйцу (дешнаш)"
+			},
+			"difficulty": {
+				"label": "МогӀам",
+				"any": "Хьаьжна цахилар"
+			},
+			"submit": "Кхолла",
+			"generating": "Кхолладо…",
+			"usedWordsFeedback": "Кхочушдина {used} {total} дешнех",
+			"needsGeminiKey": {
+				"title": "Gemini-ключ оьшу",
+				"body": "Текст кхолла лаахь, настройкашкахь хьайн Google Gemini API-ключ тӀетаса.",
+				"cta": "Ключ тӀетасар",
+				"cancel": "ДӀаяккха"
+			},
+			"errors": {
+				"parseError": "AI-жоп схематизировать ца хилла, кхин юха бехке",
+				"genericError": "Текст кхолла ца хилла"
+			},
+			"authorValue": "ИИ-с кхоьллина",
+			"applyMode": {
+				"title": "Х1ун дан рузалт?",
+				"replace": "Заменить дан",
+				"replaceWarning": "Т1аьхьенца долу текст заменить хир бу",
+				"append": "Долчу текстана т1етаса",
+				"newPage": "Керла ког кхолла",
+				"cancel": "Д1аяккха",
+				"previewTitle": "Хьалха гарар"
+			}
 		}
 	},
 	"notifications": {
@@ -7473,7 +7565,7 @@
 		},
 		"desktop": {
 			"step1": "Адресийн могӀам чохь тӀетохаран сурт лаха",
-			"step2": "«ТӀетоха» тӀе теха",
+			"step2": "«ТӀетоха» я «Приложенехь ДӀаяккха» тӀе теха",
 			"step3": "Приложени кхечу корехь схьайоьллу"
 		},
 		"guide": {

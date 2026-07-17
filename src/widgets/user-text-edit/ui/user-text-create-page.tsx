@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AdminTextPageShell } from "@/shared/ui/admin-text-editor";
+import { NeedsGeminiKeyCta } from "@/features/generate-user-text";
 import { useUserTextCreatePage } from "../model/use-user-text-edit-page";
 import { UserTextEditTopbar } from "./user-text-edit-topbar";
 import { UserTextEditEditor } from "./user-text-edit-editor";
@@ -14,18 +15,22 @@ interface UserTextCreatePageProps {
 export const UserTextCreatePage = ({ lang }: UserTextCreatePageProps) => {
   const [isMetaPanelVisible, setIsMetaPanelVisible] = useState(true);
   const handleToggleMetaPanel = () => setIsMetaPanelVisible(v => !v);
+  const [isGeminiKeyCtaOpen, setIsGeminiKeyCtaOpen] = useState(false);
 
   const {
-    t, title, language, type, author, sourceUrl,
+    title, language, type, author, sourceUrl,
     description, coverPreviewUrl, genreId,
-    pages, pageTitles, activePage, isUnsaved, isSaving, isBackgroundRunning,
+    pages, pageTitles, activePage, isUnsaved, isSaving, isBackgroundRunning, editorMode,
     handleTitleChange, handleLanguageChange, handleTypeChange,
     handleAuthorChange, handleSourceChange,
     handleDescriptionChange, handleGenreChange, handleCoverSelect, handleCoverRemove,
-    handlePageContentChange, handlePageTitleChange,
+    handlePageContentChange, handlePageTitleChange, handleEditorModeChange, handleGenerated,
     handleAddPage, handleSelectPage, handleDeletePage,
     handleSaveDraft, handlePrimaryAction, handleSubmitForReview,
   } = useUserTextCreatePage(lang);
+
+  const handleNeedsGeminiKey = () => setIsGeminiKeyCtaOpen(true);
+  const handleCloseGeminiKeyCta = () => setIsGeminiKeyCtaOpen(false);
 
   return (
     <AdminTextPageShell
@@ -52,6 +57,7 @@ export const UserTextCreatePage = ({ lang }: UserTextCreatePageProps) => {
           pageTitles={pageTitles}
           activePage={activePage}
           showSpellingAdd
+          editorMode={editorMode}
           onTitleChange={handleTitleChange}
           onPageContentChange={handlePageContentChange}
           onPageTitleChange={handlePageTitleChange}
@@ -60,6 +66,9 @@ export const UserTextCreatePage = ({ lang }: UserTextCreatePageProps) => {
           onDeletePage={handleDeletePage}
           onSaveDraft={handleSaveDraft}
           onPrimaryAction={handlePrimaryAction}
+          onEditorModeChange={handleEditorModeChange}
+          onGenerated={handleGenerated}
+          onNeedsGeminiKey={handleNeedsGeminiKey}
         />
       }
       metaPanel={
@@ -85,6 +94,7 @@ export const UserTextCreatePage = ({ lang }: UserTextCreatePageProps) => {
           onPrimaryAction={handlePrimaryAction}
         />
       }
+      bottomSlot={<NeedsGeminiKeyCta open={isGeminiKeyCtaOpen} onClose={handleCloseGeminiKeyCta} />}
     />
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import type { TextToken } from "@/entities/text";
+import type { TextToken, TextLanguage } from "@/entities/text";
 import type { PagePhraseOccurrence } from "@/entities/admin-text-phrase";
 
 export type WordLookupSurface = "popup" | "panel" | "sheet" | null;
@@ -17,6 +17,8 @@ export interface WordLookupState {
 	activeToken: TextToken | null;
 	activePhrase: PagePhraseOccurrence | null;
 	contextSentence: string | undefined;
+	/** Content language of the text currently open in the reader. */
+	contentLanguage: TextLanguage | null;
 	surface: WordLookupSurface;
 	anchor: PopupAnchor | null;
 	panelOpen: boolean;
@@ -33,6 +35,7 @@ export interface WordLookupState {
 	closePanel: () => void;
 	closePopup: () => void;
 	closeSheet: () => void;
+	setContentLanguage: (language: TextLanguage) => void;
 	clear: () => void;
 }
 
@@ -40,6 +43,7 @@ export const useWordLookupStore = create<WordLookupState>((set) => ({
 	activeToken: null,
 	activePhrase: null,
 	contextSentence: undefined,
+	contentLanguage: null,
 	surface: null,
 	anchor: null,
 	panelOpen: false,
@@ -111,6 +115,7 @@ export const useWordLookupStore = create<WordLookupState>((set) => ({
 				? { surface: null, activeToken: null, contextSentence: undefined, sheetExpanded: false }
 				: state,
 		),
+	setContentLanguage: (language) => set({ contentLanguage: language }),
 	clear: () =>
 		set({
 			activeToken: null,

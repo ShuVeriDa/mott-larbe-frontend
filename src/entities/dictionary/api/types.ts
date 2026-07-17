@@ -1,4 +1,7 @@
 import type { CefrLevel, LearningLevel } from "@/shared/types";
+import type { AppLanguage } from "@/shared/lib/languages";
+
+export type DictionaryLemmaLanguage = AppLanguage;
 
 export interface MorphForm {
 	form: string;
@@ -33,6 +36,7 @@ export interface Lemma {
 	id: string;
 	baseForm: string;
 	partOfSpeech: string | null;
+	language: DictionaryLemmaLanguage;
 	morphForms: MorphForm[];
 	headwords: Headword[];
 	wordContexts: WordContext[];
@@ -171,6 +175,7 @@ export interface DetailLemma {
 	id: string;
 	baseForm: string;
 	partOfSpeech: string | null;
+	language: DictionaryLemmaLanguage;
 	frequency: number | null;
 	transliteration: string | null;
 	audioUrl: string | null;

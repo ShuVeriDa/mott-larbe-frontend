@@ -1,6 +1,6 @@
 "use client";
 
-import type { AiWordTranslation, TranslationLanguage } from "@/entities/ai-translation";
+import type { AiWordTranslation, SourceLanguage, TranslationLanguage } from "@/entities/ai-translation";
 import { aiTranslationApi } from "@/entities/ai-translation";
 import { getApiErrorCode } from "@/shared/api";
 import { useApiErrorToast } from "@/shared/lib/api-error-toast";
@@ -30,6 +30,7 @@ export const useAiWordLookup = () => {
 		word: string,
 		contextSentence?: string,
 		targetLanguage?: TranslationLanguage,
+		sourceLanguage?: SourceLanguage,
 	) => {
 		setState({ phase: "loading" });
 		try {
@@ -37,6 +38,7 @@ export const useAiWordLookup = () => {
 				word,
 				contextSentence,
 				targetLanguage,
+				sourceLanguage,
 			});
 			setState({ phase: "done", result });
 			if (result.fallbackUsed) {

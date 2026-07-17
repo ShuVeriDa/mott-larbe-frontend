@@ -7321,6 +7321,98 @@
 		"rejection": {
 			"label": "Причина отклонения",
 			"resubmit": "Исправить и отправить снова"
+		},
+		"generate": {
+			"tabLabel": "Сгенерировать",
+			"modeTabs": {
+				"label": "Режим редактора",
+				"write": "Написать"
+			},
+			"wordsSection": {
+				"title": "Слова для текста",
+				"fromDictionary": "Из вашего словаря",
+				"emptyDictionary": "В словаре пока нет слов — добавьте их при чтении текстов или в разделе «Словарь».",
+				"unknownLanguage": "язык не определён",
+				"customWordsPlaceholder": "Добавьте своё слово",
+				"limitReached": "Максимум 30 слов",
+				"selectedCount": "{count} / 30 слов"
+			},
+			"contentType": {
+				"label": "Тип текста",
+				"prose": "Обычный текст",
+				"dialogue": "Диалог",
+				"story": "Рассказ"
+			},
+			"topic": {
+				"label": "Тема текста",
+				"family": "Семья",
+				"food": "Еда",
+				"travel": "Путешествия",
+				"nature": "Природа",
+				"city": "Город",
+				"work": "Работа",
+				"holidays": "Праздники",
+				"friendship": "Дружба",
+				"custom": "Своя тема",
+				"customPlaceholder": "Опишите тему текста",
+				"customRequired": "Укажите свою тему"
+			},
+			"tone": {
+				"label": "Тон",
+				"any": "Не важно",
+				"neutral": "Нейтральный",
+				"conversational": "Разговорный",
+				"formal": "Формальный"
+			},
+			"dialogueCharacterCount": {
+				"label": "Число персонажей"
+			},
+			"grammarFocus": {
+				"label": "Грамматический акцент",
+				"none": "Не важно",
+				"pastTense": "Прошедшее время",
+				"presentTense": "Настоящее время",
+				"futureTense": "Будущее время",
+				"pluralFormation": "Множественное число",
+				"comparatives": "Сравнительная степень",
+				"questions": "Вопросительные конструкции",
+				"negation": "Отрицание",
+				"conditionals": "Условные конструкции",
+				"possessives": "Притяжательность",
+				"custom": "Своя тема",
+				"customPlaceholder": "Например: артикли, эргативный падеж",
+				"customRequired": "Укажите грамматическую тему"
+			},
+			"length": {
+				"label": "Длина (слов)"
+			},
+			"difficulty": {
+				"label": "Сложность",
+				"any": "Любая"
+			},
+			"submit": "Сгенерировать",
+			"generating": "Генерируем…",
+			"usedWordsFeedback": "Использовано {used} из {total} слов",
+			"needsGeminiKey": {
+				"title": "Нужен ключ Gemini",
+				"body": "Чтобы генерировать тексты, подключите свой API-ключ Google Gemini в настройках.",
+				"cta": "Настроить ключ",
+				"cancel": "Отмена"
+			},
+			"errors": {
+				"parseError": "Не удалось разобрать ответ ИИ, попробуйте ещё раз",
+				"genericError": "Не удалось сгенерировать текст"
+			},
+			"authorValue": "Сгенерировано ИИ",
+			"applyMode": {
+				"title": "Как применить результат?",
+				"replace": "Заменить",
+				"replaceWarning": "Текущий текст на странице будет заменён",
+				"append": "Дополнить текущий текст",
+				"newPage": "Создать новую страницу",
+				"cancel": "Отмена",
+				"previewTitle": "Предпросмотр"
+			}
 		}
 	},
 	"notifications": {
@@ -7473,7 +7565,7 @@
 		},
 		"desktop": {
 			"step1": "Найдите иконку установки в адресной строке",
-			"step2": "Нажмите «Установить»",
+			"step2": "Нажмите «Установить» или «Открыть в приложении»",
 			"step3": "Приложение откроется в отдельном окне"
 		},
 		"guide": {

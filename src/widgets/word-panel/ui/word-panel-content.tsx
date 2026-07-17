@@ -341,6 +341,7 @@ export const WordPanelContent = ({ token, textId, compact = false }: WordPanelCo
 	const { data, isLoading, isError } = useWordLookup(token.id);
 	const { t, lang } = useI18n();
 	const contextSentence = useWordLookupStore(s => s.contextSentence);
+	const contentLanguage = useWordLookupStore(s => s.contentLanguage);
 	const { data: settings } = useSettings();
 	const showGrammar = settings?.preferences.showGrammar ?? true;
 	const showExamples = settings?.preferences.showExamples ?? true;
@@ -360,6 +361,7 @@ export const WordPanelContent = ({ token, textId, compact = false }: WordPanelCo
 				normalized={token.normalized}
 				contextSentence={contextSentence}
 				lang={lang}
+				contentLanguage={contentLanguage}
 				tokenId={token.id}
 				inDictionary={data.inDictionary}
 				dictionaryEntryId={data.dictionaryEntryId}

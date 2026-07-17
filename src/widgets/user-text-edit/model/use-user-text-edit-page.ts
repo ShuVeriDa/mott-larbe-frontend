@@ -16,8 +16,12 @@ import {
 import { useSuspenseQuery, useQuery } from "@tanstack/react-query";
 import { userScriptVersionsQueryOptions } from "@/entities/text-script-version";
 import type { TipTapDoc } from "@/shared/ui/notion-editor";
+import type { GeneratedTextResult } from "@/entities/text-generation";
+import type { GenerationApplyMode } from "@/features/generate-user-text";
 
 const EMPTY_DOC: TipTapDoc = { type: "doc", content: [{ type: "paragraph" }] };
+
+export type EditorMode = "write" | "generate";
 
 export interface PageContent {
   doc: TipTapDoc;
@@ -52,12 +56,17 @@ const unpackPages = (content: unknown): PageContent[] => {
   return [{ doc: content as TipTapDoc }];
 };
 
+const appendTipTapDocs = (base: TipTapDoc, addition: TipTapDoc): TipTapDoc => ({
+  type: "doc",
+  content: [...(Array.isArray(base.content) ? base.content : []), ...(Array.isArray(addition.content) ? addition.content : [])],
+});
+
 // ─── Create mode hook ─────────────────────────────────────────────────────────
 
 export const useUserTextCreatePage = (lang: string) => {
   const { t } = useI18n();
   const router = useRouter();
-  const { success, error: toastError } = useToast();
+  const { toast, success, error: toastError } = useToast();
   const createMutation = useCreateUserText();
 
   const [title, setTitle] = useState("");
@@ -73,8 +82,11 @@ export const useUserTextCreatePage = (lang: string) => {
   const [pageTitles, setPageTitles] = useState<string[]>([""]);
   const [activePage, setActivePage] = useState(0);
   const [isUnsaved, setIsUnsaved] = useState(false);
+  const [editorMode, setEditorMode] = useState<EditorMode>("write");
 
   const markUnsaved = () => setIsUnsaved(true);
+
+  const handleEditorModeChange = (mode: EditorMode) => setEditorMode(mode);
 
   const handleTitleChange = (value: string) => { setTitle(value); markUnsaved(); };
   const handleLanguageChange = (v: UserTextLanguage) => { setLanguage(v); markUnsaved(); };
@@ -99,8 +111,43 @@ export const useUserTextCreatePage = (lang: string) => {
     markUnsaved();
   };
 
-  const handleAddPage = () => {
-    setPages(prev => [...prev, { doc: EMPTY_DOC }]);
+  const handleGenerated = (
+    result: GeneratedTextResult,
+    selectedWordsCount: number,
+    applyMode: GenerationApplyMode,
+  ) => {
+    if (applyMode === "replace") {
+      handlePageContentChange(result.content);
+    } else if (applyMode === "append") {
+      const currentDoc = pages[activePage]?.doc ?? EMPTY_DOC;
+      handlePageContentChange(appendTipTapDocs(currentDoc, result.content));
+    } else {
+      handleAddPage(result.content);
+    }
+
+    if (result.description) {
+      setDescription(result.description);
+      markUnsaved();
+    }
+    if (result.genreId) {
+      setGenreId(result.genreId);
+      markUnsaved();
+    }
+    // "append" mixes generated content into a page the user may have already
+    // authored themselves — don't overwrite their attribution in that case.
+    if (applyMode !== "append") {
+      setAuthor(t("myTexts.generate.authorValue"));
+      markUnsaved();
+    }
+
+    setEditorMode("write");
+    if (result.usedWords.length < selectedWordsCount) {
+      toast(t("myTexts.generate.usedWordsFeedback", { used: result.usedWords.length, total: selectedWordsCount }));
+    }
+  };
+
+  const handleAddPage = (initialDoc: TipTapDoc = EMPTY_DOC) => {
+    setPages(prev => [...prev, { doc: initialDoc }]);
     setPageTitles(prev => [...prev, ""]);
     setActivePage(pages.length);
     markUnsaved();
@@ -147,13 +194,13 @@ export const useUserTextCreatePage = (lang: string) => {
   return {
     t, title, language, type, author, sourceUrl,
     description, coverPreviewUrl, genreId,
-    pages, pageTitles, activePage, isUnsaved,
+    pages, pageTitles, activePage, isUnsaved, editorMode,
     isSaving: createMutation.isPending,
     isBackgroundRunning: false,
     handleTitleChange, handleLanguageChange, handleTypeChange,
     handleAuthorChange, handleSourceChange,
     handleDescriptionChange, handleGenreChange, handleCoverSelect, handleCoverRemove,
-    handlePageContentChange, handlePageTitleChange,
+    handlePageContentChange, handlePageTitleChange, handleEditorModeChange, handleGenerated,
     handleAddPage, handleSelectPage, handleDeletePage,
     handleSaveDraft: () => handleSave(),
     handlePrimaryAction: () => handleSave(),

@@ -1,11 +1,12 @@
 "use client";
-import { useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSettings } from "@/entities/settings";
 import { useI18n } from "@/shared/lib/i18n";
 import { variants, spring } from "@/shared/lib/animation";
 import { Typography } from "@/shared/ui/typography";
-import type { SettingsSectionId } from "../model/section-list";
+import { SECTIONS, type SettingsSectionId } from "../model/section-list";
 import { AiSection } from "./sections/ai-section";
 import { AppearanceSection } from "./sections/appearance-section";
 import { DataSection } from "./sections/data-section";
@@ -17,6 +18,24 @@ import { ShortcutsSection } from "./sections/shortcuts-section";
 import { SettingsNav } from "./settings-nav";
 import { SettingsTopbar } from "./settings-topbar";
 
+const resolveSection = (sectionParam: string | null): SettingsSectionId => {
+	const match = SECTIONS.find((section) => section.id === sectionParam);
+	return match?.id ?? "appearance";
+};
+
+// Isolated so useSearchParams() doesn't force the whole SettingsPage into a dynamic hole —
+// only this leaf needs a Suspense boundary.
+const SectionFromSearchParams = ({ onSection }: { onSection: (id: SettingsSectionId) => void }) => {
+	const searchParams = useSearchParams();
+	const sectionParam = searchParams.get("section");
+
+	useEffect(() => {
+		onSection(resolveSection(sectionParam));
+	}, [sectionParam, onSection]);
+
+	return null;
+};
+
 export const SettingsPage = () => {
 	const { t } = useI18n();
 	const { data, isLoading, isError } = useSettings();
@@ -26,6 +45,9 @@ export const SettingsPage = () => {
 
 	return (
 		<>
+			<Suspense fallback={null}>
+				<SectionFromSearchParams onSection={setActive} />
+			</Suspense>
 			<SettingsTopbar />
 			<div className="flex min-h-0 flex-1 overflow-hidden max-md:flex-col">
 				<SettingsNav active={active} onChange={setActive} />

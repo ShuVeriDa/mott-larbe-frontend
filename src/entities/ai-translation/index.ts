@@ -17,6 +17,7 @@ export type {
   GeminiModel,
   RefinePhraseDto,
   SaveRefinementDto,
+  SourceLanguage,
   TranslatePhraseDto,
   TranslateWordDto,
   TranslationLanguage,
@@ -24,3 +25,4 @@ export type {
 export { useGeminiKeyStatus } from "./model/use-gemini-key-status";
 export { useAiWordTranslation } from "./model/use-ai-word-translation";
 export { useAiPhraseTranslation } from "./model/use-ai-phrase-translation";
+export { toSourceLanguage } from "./lib/to-source-language";

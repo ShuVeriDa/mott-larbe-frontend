@@ -5,9 +5,15 @@ import { requireLocale } from "@/shared/lib/i18n";
 import { buildAlternates, OG_LOCALES, SITE_URL } from "@/shared/lib/seo";
 import { LibraryTextDetailPage } from "@/widgets/library-text-detail-page";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { cache } from "react";
 
+// Anonymous, cached fetch for public SEO metadata only. Some languages
+// (e.g. EN/AR) are gated behind per-user feature flags on the backend, so
+// this always looks like "not found" for those texts — that's fine for SEO
+// (gated content shouldn't be indexed under a real title anyway), but it
+// must NEVER be used to decide whether to notFound() the actual page: a
+// signed-in user with the flag enabled can still legitimately view it via
+// the authenticated client-side fetch in LibraryTextDetailPage.
 const fetchTextForSeo = cache(
 	async (id: string): Promise<LibraryTextDetail | null> => {
 		try {
@@ -59,12 +65,10 @@ export const generateMetadata = async (props: {
 		fetchTextForSeo(id),
 	]);
 
-	if (!text) notFound();
-
 	const fallbackMeta = dict.library.textDetail.meta;
 	const path = `/texts/${encodeURIComponent(id)}`;
-	const title = (text.title ?? fallbackMeta.title).slice(0, 60);
-	const description = (text.description ?? fallbackMeta.description).slice(
+	const title = (text?.title ?? fallbackMeta.title).slice(0, 60);
+	const description = (text?.description ?? fallbackMeta.description).slice(
 		0,
 		160,
 	);
@@ -81,11 +85,11 @@ export const generateMetadata = async (props: {
 			description,
 			locale: OG_LOCALES[lang] ?? "ru_RU",
 			siteName: "Mott Larbe",
-			...(text.publishedAt ? { publishedTime: text.publishedAt } : {}),
-			...(text.updatedAt ? { modifiedTime: text.updatedAt } : {}),
-			...(text.author ? { authors: [text.author] } : {}),
+			...(text?.publishedAt ? { publishedTime: text.publishedAt } : {}),
+			...(text?.updatedAt ? { modifiedTime: text.updatedAt } : {}),
+			...(text?.author ? { authors: [text.author] } : {}),
 			images: [
-				text.imageUrl
+				text?.imageUrl
 					? { url: text.imageUrl, width: 1200, height: 630, alt: title }
 					: {
 							url: `${SITE_URL}/og-default.png`,
@@ -96,10 +100,10 @@ export const generateMetadata = async (props: {
 			],
 		},
 		twitter: {
-			card: text.imageUrl ? "summary_large_image" : "summary",
+			card: text?.imageUrl ? "summary_large_image" : "summary",
 			title,
 			description,
-			images: [text.imageUrl ?? `${SITE_URL}/og-default.png`],
+			images: [text?.imageUrl ?? `${SITE_URL}/og-default.png`],
 		},
 		robots: { index: false, follow: true },
 	};
@@ -119,80 +123,90 @@ const TextDetailsRoutePage = async ({ params }: PageProps) => {
 		getDictionary(lang),
 		fetchTextForSeo(id),
 	]);
-	if (!text) notFound();
 
+	// `text` is null both when the id truly doesn't exist and when this
+	// language is gated behind a feature flag the anonymous SSR fetch can't
+	// see. Either way we must NOT notFound() here — a signed-in user with
+	// access still needs to reach LibraryTextDetailPage, whose client-side
+	// fetch carries their auth cookie and resolves the real outcome.
 	const encodedId = encodeURIComponent(id);
 	const pageUrl = `${SITE_URL}/${lang}/texts/${encodedId}`;
 	const textsUrl = `${SITE_URL}/${lang}/texts`;
 
-	const jsonLd = [
-		{
-			"@context": "https://schema.org",
-			"@type": "Article",
-			headline: text.title,
-			...(text.description ? { description: text.description } : {}),
-			...(text.author
-				? { author: { "@type": "Person", name: text.author } }
-				: {}),
-			...(text.imageUrl ? { image: text.imageUrl } : {}),
-			...(text.publishedAt ? { datePublished: text.publishedAt } : {}),
-			...(text.updatedAt ? { dateModified: text.updatedAt } : {}),
-			inLanguage: LANG_CODE[text.language] ?? "ru",
-			url: pageUrl,
-			publisher: {
-				"@type": "Organization",
-				name: "Mott Larbe",
-				url: SITE_URL,
-				logo: {
-					"@type": "ImageObject",
-					url: `${SITE_URL}/icons/icon-512x512.png`,
-				},
-			},
-		},
-		{
-			"@context": "https://schema.org",
-			"@type": "BreadcrumbList",
-			itemListElement: [
+	const jsonLd = text
+		? [
 				{
-					"@type": "ListItem",
-					position: 1,
-					name: "Mott Larbe",
-					item: `${SITE_URL}/${lang}`,
+					"@context": "https://schema.org",
+					"@type": "Article",
+					headline: text.title,
+					...(text.description ? { description: text.description } : {}),
+					...(text.author
+						? { author: { "@type": "Person", name: text.author } }
+						: {}),
+					...(text.imageUrl ? { image: text.imageUrl } : {}),
+					...(text.publishedAt ? { datePublished: text.publishedAt } : {}),
+					...(text.updatedAt ? { dateModified: text.updatedAt } : {}),
+					inLanguage: LANG_CODE[text.language] ?? "ru",
+					url: pageUrl,
+					publisher: {
+						"@type": "Organization",
+						name: "Mott Larbe",
+						url: SITE_URL,
+						logo: {
+							"@type": "ImageObject",
+							url: `${SITE_URL}/icons/icon-512x512.png`,
+						},
+					},
 				},
 				{
-					"@type": "ListItem",
-					position: 2,
-					name: dict.library.title,
-					item: textsUrl,
+					"@context": "https://schema.org",
+					"@type": "BreadcrumbList",
+					itemListElement: [
+						{
+							"@type": "ListItem",
+							position: 1,
+							name: "Mott Larbe",
+							item: `${SITE_URL}/${lang}`,
+						},
+						{
+							"@type": "ListItem",
+							position: 2,
+							name: dict.library.title,
+							item: textsUrl,
+						},
+						{
+							"@type": "ListItem",
+							position: 3,
+							name: text.title,
+							item: pageUrl,
+						},
+					],
 				},
-				{
-					"@type": "ListItem",
-					position: 3,
-					name: text.title,
-					item: pageUrl,
-				},
-			],
-		},
-	];
+			]
+		: null;
 
 	return (
 		<>
-			<script
-				type="application/ld+json"
-				dangerouslySetInnerHTML={{
-					__html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-				}}
-			/>
+			{jsonLd && (
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+					}}
+				/>
+			)}
 			{/* Critical content for crawlers without JS.
 			    Browsers with JS see the hydrated LibraryTextDetailPage instead. */}
-			<noscript>
-				<h1>{text.title}</h1>
-				{text.author && <p>{text.author}</p>}
-				{text.description && <p>{text.description}</p>}
-				<a href={`/${lang}/reader/${encodedId}/p/1`}>
-					{dict.library.textDetail.read}
-				</a>
-			</noscript>
+			{text && (
+				<noscript>
+					<h1>{text.title}</h1>
+					{text.author && <p>{text.author}</p>}
+					{text.description && <p>{text.description}</p>}
+					<a href={`/${lang}/reader/${encodedId}/p/1`}>
+						{dict.library.textDetail.read}
+					</a>
+				</noscript>
+			)}
 			<LibraryTextDetailPage id={id} />
 		</>
 	);

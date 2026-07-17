@@ -9,13 +9,6 @@ import { MetaSection, FieldLabel, FieldInput, FieldSelect } from "@/shared/ui/ad
 import type { UserTextLanguage, UserTextType } from "@/entities/user-text";
 import type { SubmissionLicenseType, SubmissionType } from "@/features/text-submission";
 
-const LANGUAGE_OPTIONS: { value: UserTextLanguage; label: string }[] = [
-  { value: "CHE", label: "Нохчийн" },
-  { value: "RU", label: "Русский" },
-  { value: "AR", label: "Ӏарабийн" },
-  { value: "EN", label: "English" },
-];
-
 const TYPE_OPTIONS: { value: UserTextType | SubmissionType; label: string }[] = [
   { value: "EXTERNAL", label: "Кхечун текст" },
   { value: "ORIGINAL", label: "Шен произведени" },
@@ -30,6 +23,7 @@ const LICENSE_OPTIONS: { value: SubmissionLicenseType; label: string }[] = [
 
 export interface UserTextMobileMetaSheetProps {
   language: UserTextLanguage;
+  languageOptions: { value: UserTextLanguage; label: string }[];
   type: UserTextType | SubmissionType;
   author: string;
   sourceUrl: string;
@@ -60,7 +54,7 @@ export interface UserTextMobileMetaSheetProps {
 }
 
 export const UserTextMobileMetaSheet = ({
-  language, type, author, sourceUrl, isSaving,
+  language, languageOptions, type, author, sourceUrl, isSaving,
   onLanguageChange, onTypeChange, onAuthorChange, onSourceChange,
   onSaveDraft, onPrimaryAction, t,
   licenseType, publicationYear, licenseTypeError,
@@ -134,7 +128,7 @@ export const UserTextMobileMetaSheet = ({
                   <div>
                     <FieldLabel>{t("myTexts.fields.language")}</FieldLabel>
                     <FieldSelect value={language} onChange={handleLanguageChange}>
-                      {LANGUAGE_OPTIONS.map(opt => (
+                      {languageOptions.map(opt => (
                         <option key={opt.value} value={opt.value}>{opt.label}</option>
                       ))}
                     </FieldSelect>

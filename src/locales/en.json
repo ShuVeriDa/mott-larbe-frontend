@@ -7324,6 +7324,98 @@
 		"rejection": {
 			"label": "Rejection reason",
 			"resubmit": "Fix and resubmit"
+		},
+		"generate": {
+			"tabLabel": "Generate",
+			"modeTabs": {
+				"label": "Editor mode",
+				"write": "Write"
+			},
+			"wordsSection": {
+				"title": "Words for the text",
+				"fromDictionary": "From your dictionary",
+				"emptyDictionary": "Your dictionary is empty yet — add words while reading texts or in the Dictionary section.",
+				"unknownLanguage": "language unknown",
+				"customWordsPlaceholder": "Add your own word",
+				"limitReached": "Maximum 30 words",
+				"selectedCount": "{count} / 30 words"
+			},
+			"contentType": {
+				"label": "Text type",
+				"prose": "Plain text",
+				"dialogue": "Dialogue",
+				"story": "Story"
+			},
+			"topic": {
+				"label": "Topic",
+				"family": "Family",
+				"food": "Food",
+				"travel": "Travel",
+				"nature": "Nature",
+				"city": "City",
+				"work": "Work",
+				"holidays": "Holidays",
+				"friendship": "Friendship",
+				"custom": "Custom topic",
+				"customPlaceholder": "Describe the topic",
+				"customRequired": "Please specify a topic"
+			},
+			"tone": {
+				"label": "Tone",
+				"any": "Any",
+				"neutral": "Neutral",
+				"conversational": "Conversational",
+				"formal": "Formal"
+			},
+			"dialogueCharacterCount": {
+				"label": "Number of characters"
+			},
+			"grammarFocus": {
+				"label": "Grammar focus",
+				"none": "Any",
+				"pastTense": "Past tense",
+				"presentTense": "Present tense",
+				"futureTense": "Future tense",
+				"pluralFormation": "Plural formation",
+				"comparatives": "Comparatives",
+				"questions": "Questions",
+				"negation": "Negation",
+				"conditionals": "Conditionals",
+				"possessives": "Possessives",
+				"custom": "Custom",
+				"customPlaceholder": "e.g. articles, ergative case",
+				"customRequired": "Please specify a grammar topic"
+			},
+			"length": {
+				"label": "Length (words)"
+			},
+			"difficulty": {
+				"label": "Difficulty",
+				"any": "Any"
+			},
+			"submit": "Generate",
+			"generating": "Generating…",
+			"usedWordsFeedback": "Used {used} of {total} words",
+			"needsGeminiKey": {
+				"title": "Gemini key required",
+				"body": "To generate texts, connect your own Google Gemini API key in settings.",
+				"cta": "Set up key",
+				"cancel": "Cancel"
+			},
+			"errors": {
+				"parseError": "Could not parse the AI response, please try again",
+				"genericError": "Could not generate text"
+			},
+			"authorValue": "AI-generated",
+			"applyMode": {
+				"title": "How should the result be applied?",
+				"replace": "Replace",
+				"replaceWarning": "The current text on this page will be replaced",
+				"append": "Append to current text",
+				"newPage": "Create a new page",
+				"cancel": "Cancel",
+				"previewTitle": "Preview"
+			}
 		}
 	},
 	"notifications": {
@@ -7476,7 +7568,7 @@
 		},
 		"desktop": {
 			"step1": "Find the install icon in the address bar",
-			"step2": "Click \"Install\"",
+			"step2": "Click \"Install\" or \"Open in app\"",
 			"step3": "The app will open in its own window"
 		},
 		"guide": {

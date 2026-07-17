@@ -143,6 +143,7 @@ export const WordBottomSheet = ({ textId }: { textId: string }) => {
 	const { t, lang } = useI18n();
 	const surface = useWordLookupStore(s => s.surface);
 	const token = useWordLookupStore(s => s.activeToken);
+	const contentLanguage = useWordLookupStore(s => s.contentLanguage);
 	const closeSheet = useWordLookupStore(s => s.closeSheet);
 
 	const sheetExpanded = useWordLookupStore(s => s.sheetExpanded);
@@ -189,6 +190,7 @@ export const WordBottomSheet = ({ textId }: { textId: string }) => {
 							word={token.original}
 							normalized={token.normalized}
 							lang={lang}
+							contentLanguage={contentLanguage}
 							tokenId={token.id}
 							inDictionary={data.inDictionary}
 							dictionaryEntryId={data.dictionaryEntryId}

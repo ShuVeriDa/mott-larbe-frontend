@@ -220,6 +220,7 @@ export const WordPopup = () => {
 	const phrase = useWordLookupStore(s => s.activePhrase);
 	const contextSentence = useWordLookupStore(s => s.contextSentence);
 	const anchor = useWordLookupStore(s => s.anchor);
+	const contentLanguage = useWordLookupStore(s => s.contentLanguage);
 	const closePopup = useWordLookupStore(s => s.closePopup);
 	const openInPanel = useWordLookupStore(s => s.openInPanel);
 	const openInSheetExpanded = useWordLookupStore(s => s.openInSheetExpanded);
@@ -358,6 +359,7 @@ export const WordPopup = () => {
 										normalized={token.normalized}
 										contextSentence={contextSentence}
 										lang={lang}
+										contentLanguage={contentLanguage}
 										tokenId={token.id}
 										inDictionary={data.inDictionary}
 										dictionaryEntryId={data.dictionaryEntryId}

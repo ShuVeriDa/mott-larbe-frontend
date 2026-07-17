@@ -1,6 +1,7 @@
 "use client";
 
-import { useGeminiKeyStatus } from "@/entities/ai-translation";
+import { useGeminiKeyStatus, toSourceLanguage } from "@/entities/ai-translation";
+import type { TextLanguage } from "@/entities/text";
 import {
 	useAiSessionStore,
 	useAiWordLookup,
@@ -33,6 +34,7 @@ interface AiWordSheetBodyProps {
 	normalized: string;
 	contextSentence?: string;
 	lang: string;
+	contentLanguage: TextLanguage | null;
 	tokenId: string;
 	inDictionary: boolean;
 	dictionaryEntryId: string | null;
@@ -45,6 +47,7 @@ export const AiWordSheetBody = ({
 	normalized,
 	contextSentence,
 	lang,
+	contentLanguage,
 	tokenId,
 	inDictionary,
 	dictionaryEntryId,
@@ -62,9 +65,9 @@ export const AiWordSheetBody = ({
 
 	useEffect(() => {
 		if (hasKey) {
-			translate(normalized, contextSentence, targetLanguage);
+			translate(normalized, contextSentence, targetLanguage, toSourceLanguage(contentLanguage));
 		}
-	}, [normalized, contextSentence, hasKey, targetLanguage]);
+	}, [normalized, contextSentence, hasKey, targetLanguage, contentLanguage]);
 
 	useEffect(() => {
 		if (state.phase === "done") {

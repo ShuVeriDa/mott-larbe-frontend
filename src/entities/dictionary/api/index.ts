@@ -15,6 +15,7 @@ export type {
 	DictionaryEntryDetail,
 	DictionaryListQuery,
 	DictionaryListResponse,
+	DictionaryLemmaLanguage,
 	DictionaryNeighbor,
 	DictionaryNeighborsResponse,
 	DictionarySort,

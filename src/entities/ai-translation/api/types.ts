@@ -13,6 +13,11 @@ export const SUPPORTED_TRANSLATION_LANGUAGES: TranslationLanguage[] = [
   "tr",
 ];
 
+// Language a word/phrase is being translated FROM. Matches the backend's
+// SUPPORTED_SOURCE_LANGUAGES (src/ai-translation/dto/translation-language.ts) —
+// there is no "ru" source because texts are never authored in Russian here.
+export type SourceLanguage = "che" | "ar" | "en";
+
 export type GeminiModel =
   | "gemini-3.1-flash-lite"
   | "gemini-3.5-flash"
@@ -75,6 +80,7 @@ export interface TranslateWordDto {
   word: string;
   contextSentence?: string;
   targetLanguage?: TranslationLanguage;
+  sourceLanguage?: SourceLanguage;
 }
 
 export interface TranslatePhraseDto {
